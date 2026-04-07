@@ -1,9 +1,14 @@
 types:
-  UsernameCursor:
+  UsersListResponse:
     properties:
-      cursor: UsernamePage
-
-  UsernamePage:
-    properties:
-      after: optional<string>
+      limit: optional<integer>
+      count: optional<integer>
+      has_more: optional<boolean>
+      links: list<Link>
       data: list<string>
+
+  Link:
+    properties:
+      rel: string
+      method: string
+      href: string

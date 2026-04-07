@@ -1,5 +1,48 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.62.5
+  changelogEntry:
+    - summary: |
+        Fix replay init to create .gitattributes with linguist-generated markers and sync .fernignore entries with fern-replay.
+      type: fix
+  createdAt: "2026-04-07"
+  irVersion: 66
+
+- version: 4.62.4
+  changelogEntry:
+    - summary: |
+        Internal CLI improvements.
+      type: chore
+  createdAt: "2026-04-06"
+  irVersion: 66
+
+- version: 4.62.3
+  changelogEntry:
+    - summary: |
+        Make GitHub token optional for replay init. Public repos no longer require a token.
+      type: fix
+  createdAt: "2026-04-06"
+  irVersion: 66
+
+- version: 4.62.2
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer dropping request body examples when the request
+        body has no schema defined. Previously, endpoints with a JSON content
+        type but no schema were treated as having no request body at all,
+        causing valid example JSON to be lost. The importer now preserves the
+        request and its examples so they render in docs and code snippets.
+      type: fix
+  createdAt: "2026-04-03"
+  irVersion: 66
+
+- version: 4.62.1
+  changelogEntry:
+    - summary: |
+        Remove deprecated `private` field from `DocsInstance` configuration.
+      type: chore
+  createdAt: "2026-04-04"
+  irVersion: 66
 - version: 4.62.0
   changelogEntry:
     - summary: |
@@ -9,7 +52,6 @@
       type: feat
   createdAt: "2026-04-03"
   irVersion: 66
-
 - version: 4.61.0
   changelogEntry:
     - summary: |
@@ -83,7 +125,6 @@
       type: feat
   createdAt: "2026-04-01"
   irVersion: 65
-
 - version: 4.54.1
   changelogEntry:
     - summary: |

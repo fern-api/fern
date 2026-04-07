@@ -53,8 +53,9 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_usernames_custom(
-            &ListUsernamesCustomQueryRequest {
+        .list_with_custom_pager(
+            &ListWithCustomPagerQueryRequest {
+                limit: Some(1),
                 starting_after: Some("starting_after".to_string()),
                 ..Default::default()
             },
@@ -69,7 +70,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-match client.users.list_usernames_custom(None)?.await {
+match client.users.list_with_custom_pager(None)?.await {
     Ok(response) => {
         println!("Success: {:?}", response);
     },
@@ -99,7 +100,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-let response = client.users.list_usernames_custom(
+let response = client.users.list_with_custom_pager(
     Some(RequestOptions::new().max_retries(3))
 )?.await;
 ```
@@ -109,7 +110,7 @@ let response = client.users.list_usernames_custom(
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-let response = client.users.list_usernames_custom(
+let response = client.users.list_with_custom_pager(
     Some(RequestOptions::new().timeout_seconds(30))
 )?.await;
 ```
@@ -119,7 +120,7 @@ let response = client.users.list_usernames_custom(
 You can add custom headers to requests using `RequestOptions`.
 
 ```rust
-let response = client.users.list_usernames_custom(
+let response = client.users.list_with_custom_pager(
     Some(
         RequestOptions::new()
             .additional_header("X-Custom-Header", "custom-value")
@@ -134,7 +135,7 @@ let response = client.users.list_usernames_custom(
 You can add custom query parameters to requests using `RequestOptions`.
 
 ```rust
-let response = client.users.list_usernames_custom(
+let response = client.users.list_with_custom_pager(
     Some(
         RequestOptions::new()
             .additional_query_param("filter", "active")

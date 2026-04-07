@@ -3,7 +3,7 @@ import { execFileSync } from "child_process";
 import { existsSync } from "fs";
 import { join } from "path";
 import type { PipelineLogger } from "../pipeline/PipelineLogger";
-import { ensureReplayFernignoreEntries } from "./fernignore";
+import { ensureGitattributesEntries, ensureReplayFernignoreEntries } from "./fernignore";
 
 export interface ReplayRunParams {
     outputDir: string;
@@ -157,6 +157,7 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
     }
 
     const fernignoreUpdated = await ensureReplayFernignoreEntries(outputDir);
+    await ensureGitattributesEntries(outputDir);
 
     return {
         report,

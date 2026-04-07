@@ -4,7 +4,6 @@ groups:
     generators:
       - name: fernapi/fern-php-sdk
         version: latest
-        ir-version: v63
         github:
           token: ${GITHUB_TOKEN}
           mode: push

@@ -12,8 +12,7 @@ service:
       docs: GET request with basic auth scheme
       path: /basic-auth
       method: GET
-      response:
-        boolean
+      response: boolean
       examples:
         - response:
             body: true

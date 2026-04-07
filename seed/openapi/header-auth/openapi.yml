@@ -18,11 +18,11 @@ paths:
               schema:
                 type: string
       security:
-        - HeaderTokenAuthAuth: []
+        - Header: []
 components:
   schemas: {}
   securitySchemes:
-    HeaderTokenAuthAuth:
+    Header:
       type: apiKey
       in: header
       name: x-api-key

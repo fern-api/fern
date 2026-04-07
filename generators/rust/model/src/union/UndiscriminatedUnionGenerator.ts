@@ -179,8 +179,8 @@ export class UndiscriminatedUnionGenerator {
         switch (typeRef.type) {
             case "named":
                 return {
-                    variantName: typeRef.name.pascalCase.unsafeName,
-                    methodSuffix: typeRef.name.snakeCase.unsafeName
+                    variantName: this.context.case.pascalUnsafe(typeRef.name),
+                    methodSuffix: this.context.case.snakeUnsafe(typeRef.name)
                 };
             case "primitive":
                 return this.getPrimitiveNames(typeRef.primitive.v1);

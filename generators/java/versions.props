@@ -30,8 +30,6 @@ com.google.guava:guava = 32.0.1-jre
 
 # jersey
 
-# spring
-org.springframework:spring-web = 6.1.14
 
 # slf4j
 # Updated to 2.0.16 for compatibility with logback 1.5.x

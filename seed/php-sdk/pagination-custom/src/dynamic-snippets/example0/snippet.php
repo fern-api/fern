@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Users\Requests\ListUsernamesRequestCustom;
+use Seed\Users\Requests\ListWithCustomPagerRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,8 +11,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->users->listUsernamesCustom(
-    new ListUsernamesRequestCustom([
+$client->users->listWithCustomPager(
+    new ListWithCustomPagerRequest([
+        'limit' => 1,
         'startingAfter' => 'starting_after',
     ]),
 );

@@ -66,6 +66,7 @@ client.v_2.test()
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 import uuid
+from seed.submission import TestSubmissionStatus_Stopped
 
 client = SeedTrace(
     token="<token>",
@@ -74,9 +75,7 @@ client = SeedTrace(
 
 client.admin.update_test_submission_status(
     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    request={
-        "type": "stopped"
-    },
+    request=TestSubmissionStatus_Stopped(),
 )
 
 ```
@@ -138,6 +137,7 @@ from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 import uuid
 import datetime
+from seed.submission import TestSubmissionUpdateInfo_Running
 
 client = SeedTrace(
     token="<token>",
@@ -147,9 +147,9 @@ client = SeedTrace(
 client.admin.send_test_submission_update(
     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     update_time=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-    update_info={
-        "type": "running"
-    },
+    update_info=TestSubmissionUpdateInfo_Running(
+        running=,
+    ),
 )
 
 ```
@@ -210,6 +210,7 @@ client.admin.send_test_submission_update(
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 import uuid
+from seed.submission import WorkspaceSubmissionStatus_Stopped
 
 client = SeedTrace(
     token="<token>",
@@ -218,9 +219,7 @@ client = SeedTrace(
 
 client.admin.update_workspace_submission_status(
     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    request={
-        "type": "stopped"
-    },
+    request=WorkspaceSubmissionStatus_Stopped(),
 )
 
 ```
@@ -282,6 +281,7 @@ from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 import uuid
 import datetime
+from seed.submission import WorkspaceSubmissionUpdateInfo_Running
 
 client = SeedTrace(
     token="<token>",
@@ -291,9 +291,9 @@ client = SeedTrace(
 client.admin.send_workspace_submission_update(
     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     update_time=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-    update_info={
-        "type": "running"
-    },
+    update_info=WorkspaceSubmissionUpdateInfo_Running(
+        running=,
+    ),
 )
 
 ```
@@ -354,7 +354,8 @@ client.admin.send_workspace_submission_update(
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 import uuid
-from seed.submission import TestCaseResultWithStdout, TestCaseResult, TraceResponse, ExpressionLocation, StackInformation, StackFrame, Scope
+from seed.submission import TestCaseResultWithStdout, TestCaseResult, ActualResult_Value, TraceResponse, ExpressionLocation, StackInformation, StackFrame, Scope
+from seed.commons import VariableValue_IntegerValue, DebugVariableValue_IntegerValue
 
 client = SeedTrace(
     token="<token>",
@@ -366,15 +367,14 @@ client.admin.store_traced_test_case(
     test_case_id="testCaseId",
     result=TestCaseResultWithStdout(
         result=TestCaseResult(
-            expected_result={
-                "type": "integerValue"
-            },
-            actual_result={
-                "type": "value",
-                "value": {
-                    "type": "integerValue"
-                }
-            },
+            expected_result=VariableValue_IntegerValue(
+                integer_value=,
+            ),
+            actual_result=ActualResult_Value(
+                value=VariableValue_IntegerValue(
+                    integer_value=,
+                ),
+            ),
             passed=True,
         ),
         stdout="stdout",
@@ -383,9 +383,9 @@ client.admin.store_traced_test_case(
         TraceResponse(
             submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             line_number=1,
-            return_value={
-                "type": "integerValue"
-            },
+            return_value=DebugVariableValue_IntegerValue(
+                integer_value=,
+            ),
             expression_location=ExpressionLocation(
                 start=1,
                 offset=1,
@@ -398,16 +398,16 @@ client.admin.store_traced_test_case(
                     scopes=[
                         Scope(
                             variables={
-                                "variables": {
-                                    "type": "integerValue"
-                                }
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
                             },
                         ),
                         Scope(
                             variables={
-                                "variables": {
-                                    "type": "integerValue"
-                                }
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
                             },
                         )
                     ],
@@ -418,9 +418,9 @@ client.admin.store_traced_test_case(
         TraceResponse(
             submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             line_number=1,
-            return_value={
-                "type": "integerValue"
-            },
+            return_value=DebugVariableValue_IntegerValue(
+                integer_value=,
+            ),
             expression_location=ExpressionLocation(
                 start=1,
                 offset=1,
@@ -433,16 +433,16 @@ client.admin.store_traced_test_case(
                     scopes=[
                         Scope(
                             variables={
-                                "variables": {
-                                    "type": "integerValue"
-                                }
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
                             },
                         ),
                         Scope(
                             variables={
-                                "variables": {
-                                    "type": "integerValue"
-                                }
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
                             },
                         )
                     ],
@@ -528,6 +528,7 @@ from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 import uuid
 from seed.submission import TraceResponseV2, TracedFile, ExpressionLocation, StackInformation, StackFrame, Scope
+from seed.commons import DebugVariableValue_IntegerValue
 
 client = SeedTrace(
     token="<token>",
@@ -545,9 +546,9 @@ client.admin.store_traced_test_case_v_2(
                 filename="filename",
                 directory="directory",
             ),
-            return_value={
-                "type": "integerValue"
-            },
+            return_value=DebugVariableValue_IntegerValue(
+                integer_value=,
+            ),
             expression_location=ExpressionLocation(
                 start=1,
                 offset=1,
@@ -560,16 +561,16 @@ client.admin.store_traced_test_case_v_2(
                     scopes=[
                         Scope(
                             variables={
-                                "variables": {
-                                    "type": "integerValue"
-                                }
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
                             },
                         ),
                         Scope(
                             variables={
-                                "variables": {
-                                    "type": "integerValue"
-                                }
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
                             },
                         )
                     ],
@@ -584,9 +585,9 @@ client.admin.store_traced_test_case_v_2(
                 filename="filename",
                 directory="directory",
             ),
-            return_value={
-                "type": "integerValue"
-            },
+            return_value=DebugVariableValue_IntegerValue(
+                integer_value=,
+            ),
             expression_location=ExpressionLocation(
                 start=1,
                 offset=1,
@@ -599,16 +600,16 @@ client.admin.store_traced_test_case_v_2(
                     scopes=[
                         Scope(
                             variables={
-                                "variables": {
-                                    "type": "integerValue"
-                                }
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
                             },
                         ),
                         Scope(
                             variables={
-                                "variables": {
-                                    "type": "integerValue"
-                                }
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
                             },
                         )
                     ],
@@ -685,7 +686,8 @@ client.admin.store_traced_test_case_v_2(
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 import uuid
-from seed.submission import WorkspaceRunDetails, ExceptionInfo, TraceResponse, ExpressionLocation, StackInformation, StackFrame, Scope
+from seed.submission import WorkspaceRunDetails, ExceptionV2_Generic, ExceptionInfo, TraceResponse, ExpressionLocation, StackInformation, StackFrame, Scope
+from seed.commons import DebugVariableValue_IntegerValue
 
 client = SeedTrace(
     token="<token>",
@@ -695,12 +697,11 @@ client = SeedTrace(
 client.admin.store_traced_workspace(
     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     workspace_run_details=WorkspaceRunDetails(
-        exception_v_2={
-            "type": "generic",
-            "exception_type": "exceptionType",
-            "exception_message": "exceptionMessage",
-            "exception_stacktrace": "exceptionStacktrace"
-        },
+        exception_v_2=ExceptionV2_Generic(
+            exception_type="exceptionType",
+            exception_message="exceptionMessage",
+            exception_stacktrace="exceptionStacktrace",
+        ),
         exception=ExceptionInfo(
             exception_type="exceptionType",
             exception_message="exceptionMessage",
@@ -712,9 +713,9 @@ client.admin.store_traced_workspace(
         TraceResponse(
             submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             line_number=1,
-            return_value={
-                "type": "integerValue"
-            },
+            return_value=DebugVariableValue_IntegerValue(
+                integer_value=,
+            ),
             expression_location=ExpressionLocation(
                 start=1,
                 offset=1,
@@ -727,16 +728,16 @@ client.admin.store_traced_workspace(
                     scopes=[
                         Scope(
                             variables={
-                                "variables": {
-                                    "type": "integerValue"
-                                }
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
                             },
                         ),
                         Scope(
                             variables={
-                                "variables": {
-                                    "type": "integerValue"
-                                }
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
                             },
                         )
                     ],
@@ -747,9 +748,9 @@ client.admin.store_traced_workspace(
         TraceResponse(
             submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             line_number=1,
-            return_value={
-                "type": "integerValue"
-            },
+            return_value=DebugVariableValue_IntegerValue(
+                integer_value=,
+            ),
             expression_location=ExpressionLocation(
                 start=1,
                 offset=1,
@@ -762,16 +763,16 @@ client.admin.store_traced_workspace(
                     scopes=[
                         Scope(
                             variables={
-                                "variables": {
-                                    "type": "integerValue"
-                                }
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
                             },
                         ),
                         Scope(
                             variables={
-                                "variables": {
-                                    "type": "integerValue"
-                                }
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
                             },
                         )
                     ],
@@ -849,6 +850,7 @@ from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 import uuid
 from seed.submission import TraceResponseV2, TracedFile, ExpressionLocation, StackInformation, StackFrame, Scope
+from seed.commons import DebugVariableValue_IntegerValue
 
 client = SeedTrace(
     token="<token>",
@@ -865,9 +867,9 @@ client.admin.store_traced_workspace_v_2(
                 filename="filename",
                 directory="directory",
             ),
-            return_value={
-                "type": "integerValue"
-            },
+            return_value=DebugVariableValue_IntegerValue(
+                integer_value=,
+            ),
             expression_location=ExpressionLocation(
                 start=1,
                 offset=1,
@@ -880,16 +882,16 @@ client.admin.store_traced_workspace_v_2(
                     scopes=[
                         Scope(
                             variables={
-                                "variables": {
-                                    "type": "integerValue"
-                                }
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
                             },
                         ),
                         Scope(
                             variables={
-                                "variables": {
-                                    "type": "integerValue"
-                                }
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
                             },
                         )
                     ],
@@ -904,9 +906,9 @@ client.admin.store_traced_workspace_v_2(
                 filename="filename",
                 directory="directory",
             ),
-            return_value={
-                "type": "integerValue"
-            },
+            return_value=DebugVariableValue_IntegerValue(
+                integer_value=,
+            ),
             expression_location=ExpressionLocation(
                 start=1,
                 offset=1,
@@ -919,16 +921,16 @@ client.admin.store_traced_workspace_v_2(
                     scopes=[
                         Scope(
                             variables={
-                                "variables": {
-                                    "type": "integerValue"
-                                }
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
                             },
                         ),
                         Scope(
                             variables={
-                                "variables": {
-                                    "type": "integerValue"
-                                }
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
                             },
                         )
                     ],
@@ -1676,8 +1678,8 @@ Creates a problem
 ```python
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
-from seed.problem import ProblemDescription, ProblemFiles, VariableTypeAndName
-from seed.commons import FileInfo, TestCaseWithExpectedResult, TestCase
+from seed.problem import ProblemDescription, ProblemDescriptionBoard_Html, ProblemFiles, VariableTypeAndName
+from seed.commons import FileInfo, VariableType_IntegerType, TestCaseWithExpectedResult, TestCase, VariableValue_IntegerValue
 
 client = SeedTrace(
     token="<token>",
@@ -1688,12 +1690,12 @@ client.problem.create_problem(
     problem_name="problemName",
     problem_description=ProblemDescription(
         boards=[
-            {
-                "type": "html"
-            },
-            {
-                "type": "html"
-            }
+            ProblemDescriptionBoard_Html(
+                html=,
+            ),
+            ProblemDescriptionBoard_Html(
+                html=,
+            )
         ],
     ),
     files={
@@ -1716,53 +1718,47 @@ client.problem.create_problem(
     },
     input_params=[
         VariableTypeAndName(
-            variable_type={
-                "type": "integerType"
-            },
+            variable_type=VariableType_IntegerType(),
             name="name",
         ),
         VariableTypeAndName(
-            variable_type={
-                "type": "integerType"
-            },
+            variable_type=VariableType_IntegerType(),
             name="name",
         )
     ],
-    output_type={
-        "type": "integerType"
-    },
+    output_type=VariableType_IntegerType(),
     testcases=[
         TestCaseWithExpectedResult(
             test_case=TestCase(
                 id="id",
                 params=[
-                    {
-                        "type": "integerValue"
-                    },
-                    {
-                        "type": "integerValue"
-                    }
+                    VariableValue_IntegerValue(
+                        integer_value=,
+                    ),
+                    VariableValue_IntegerValue(
+                        integer_value=,
+                    )
                 ],
             ),
-            expected_result={
-                "type": "integerValue"
-            },
+            expected_result=VariableValue_IntegerValue(
+                integer_value=,
+            ),
         ),
         TestCaseWithExpectedResult(
             test_case=TestCase(
                 id="id",
                 params=[
-                    {
-                        "type": "integerValue"
-                    },
-                    {
-                        "type": "integerValue"
-                    }
+                    VariableValue_IntegerValue(
+                        integer_value=,
+                    ),
+                    VariableValue_IntegerValue(
+                        integer_value=,
+                    )
                 ],
             ),
-            expected_result={
-                "type": "integerValue"
-            },
+            expected_result=VariableValue_IntegerValue(
+                integer_value=,
+            ),
         )
     ],
     method_name="methodName",
@@ -1831,8 +1827,8 @@ Updates a problem
 ```python
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
-from seed.problem import ProblemDescription, ProblemFiles, VariableTypeAndName
-from seed.commons import FileInfo, TestCaseWithExpectedResult, TestCase
+from seed.problem import ProblemDescription, ProblemDescriptionBoard_Html, ProblemFiles, VariableTypeAndName
+from seed.commons import FileInfo, VariableType_IntegerType, TestCaseWithExpectedResult, TestCase, VariableValue_IntegerValue
 
 client = SeedTrace(
     token="<token>",
@@ -1844,12 +1840,12 @@ client.problem.update_problem(
     problem_name="problemName",
     problem_description=ProblemDescription(
         boards=[
-            {
-                "type": "html"
-            },
-            {
-                "type": "html"
-            }
+            ProblemDescriptionBoard_Html(
+                html=,
+            ),
+            ProblemDescriptionBoard_Html(
+                html=,
+            )
         ],
     ),
     files={
@@ -1872,53 +1868,47 @@ client.problem.update_problem(
     },
     input_params=[
         VariableTypeAndName(
-            variable_type={
-                "type": "integerType"
-            },
+            variable_type=VariableType_IntegerType(),
             name="name",
         ),
         VariableTypeAndName(
-            variable_type={
-                "type": "integerType"
-            },
+            variable_type=VariableType_IntegerType(),
             name="name",
         )
     ],
-    output_type={
-        "type": "integerType"
-    },
+    output_type=VariableType_IntegerType(),
     testcases=[
         TestCaseWithExpectedResult(
             test_case=TestCase(
                 id="id",
                 params=[
-                    {
-                        "type": "integerValue"
-                    },
-                    {
-                        "type": "integerValue"
-                    }
+                    VariableValue_IntegerValue(
+                        integer_value=,
+                    ),
+                    VariableValue_IntegerValue(
+                        integer_value=,
+                    )
                 ],
             ),
-            expected_result={
-                "type": "integerValue"
-            },
+            expected_result=VariableValue_IntegerValue(
+                integer_value=,
+            ),
         ),
         TestCaseWithExpectedResult(
             test_case=TestCase(
                 id="id",
                 params=[
-                    {
-                        "type": "integerValue"
-                    },
-                    {
-                        "type": "integerValue"
-                    }
+                    VariableValue_IntegerValue(
+                        integer_value=,
+                    ),
+                    VariableValue_IntegerValue(
+                        integer_value=,
+                    )
                 ],
             ),
-            expected_result={
-                "type": "integerValue"
-            },
+            expected_result=VariableValue_IntegerValue(
+                integer_value=,
+            ),
         )
     ],
     method_name="methodName",
@@ -2069,6 +2059,7 @@ Returns default starter files for problem
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 from seed.problem import VariableTypeAndName
+from seed.commons import VariableType_IntegerType
 
 client = SeedTrace(
     token="<token>",
@@ -2078,21 +2069,15 @@ client = SeedTrace(
 client.problem.get_default_starter_files(
     input_params=[
         VariableTypeAndName(
-            variable_type={
-                "type": "integerType"
-            },
+            variable_type=VariableType_IntegerType(),
             name="name",
         ),
         VariableTypeAndName(
-            variable_type={
-                "type": "integerType"
-            },
+            variable_type=VariableType_IntegerType(),
             name="name",
         )
     ],
-    output_type={
-        "type": "integerType"
-    },
+    output_type=VariableType_IntegerType(),
     method_name="methodName",
 )
 

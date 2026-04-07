@@ -22,7 +22,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
       security:
-        - BearerAuth: []
+        - Bearer: []
 components:
   schemas:
     User:
@@ -40,7 +40,7 @@ components:
         - name
         - email
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer
 servers:

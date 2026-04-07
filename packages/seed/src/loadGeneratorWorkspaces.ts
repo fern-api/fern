@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { findUp } from "find-up";
-import { readdir, readFile } from "fs/promises";
+import { access, readdir, readFile } from "fs/promises";
 import yaml from "js-yaml";
 
 import { FernSeedConfig } from "./config/index.js";
@@ -41,7 +42,14 @@ export async function loadGeneratorWorkspaces(): Promise<GeneratorWorkspace[]> {
 
     for (const workspace of workspaceDirectoryNames) {
         const absolutePathToWorkspace = join(seedDirectory, RelativeFilePath.of(workspace));
-        const seedConfig = await readFile(join(absolutePathToWorkspace, RelativeFilePath.of(SEED_CONFIG_FILENAME)));
+        const seedConfigPath = join(absolutePathToWorkspace, RelativeFilePath.of(SEED_CONFIG_FILENAME));
+        try {
+            await access(seedConfigPath);
+        } catch {
+            CONSOLE_LOGGER.warn(`Skipping ${workspace}: no ${SEED_CONFIG_FILENAME} found`);
+            continue;
+        }
+        const seedConfig = await readFile(seedConfigPath);
         workspaces.push({
             absolutePathToWorkspace,
             workspaceConfig: yaml.load(seedConfig.toString()) as unknown as FernSeedConfig.SeedWorkspaceConfiguration,

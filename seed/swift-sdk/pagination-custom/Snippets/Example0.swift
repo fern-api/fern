@@ -7,7 +7,10 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.users.listUsernamesCustom(startingAfter: "starting_after")
+    _ = try await client.users.listWithCustomPager(
+        limit: 1,
+        startingAfter: "starting_after"
+    )
 }
 
 try await main()

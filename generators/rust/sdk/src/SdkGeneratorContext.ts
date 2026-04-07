@@ -109,7 +109,7 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
     }
 
     public getDirectoryForFernFilepath(fernFilepath: FernIr.FernFilepath): string {
-        return fernFilepath.allParts.map((path) => path.snakeCase.safeName).join("/");
+        return fernFilepath.allParts.map((path) => this.case.snakeSafe(path)).join("/");
     }
 
     public toModelGeneratorContext(): ModelGeneratorContext {

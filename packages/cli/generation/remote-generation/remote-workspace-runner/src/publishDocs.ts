@@ -122,7 +122,6 @@ export async function publishDocs({
     preview,
     previewId,
     editThisPage,
-    isPrivate = false,
     disableTemplates = false,
     skipUpload = false,
     withAiExamples = true,
@@ -144,7 +143,6 @@ export async function publishDocs({
     preview: boolean;
     previewId: string | undefined;
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
-    isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
     withAiExamples?: boolean;
@@ -179,7 +177,7 @@ export async function publishDocs({
         token: token.value,
         ...(Object.keys(headers).length > 0 && { headers })
     });
-    const authConfig: DocsV2Write.AuthConfig = isPrivate ? { type: "private", authType: "sso" } : { type: "public" };
+    const authConfig: DocsV2Write.AuthConfig = { type: "public" };
 
     if (excludeApis) {
         context.logger.debug(
@@ -317,7 +315,7 @@ export async function publishDocs({
                     // The server accepts it, so we use a cast here until the client is migrated.
                     const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
                         orgId: CjsFdrSdk.OrgId(organization),
-                        authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
+                        authConfig: { type: "public" },
                         filepaths: filepaths,
                         images,
                         basePath,

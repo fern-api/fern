@@ -27,7 +27,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedRequestErrorBody'
       security:
-        - BasicAuth: []
+        - Basic: []
     post:
       description: POST request with basic auth scheme
       operationId: basicAuth_postWithBasicAuth
@@ -53,7 +53,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedRequestErrorBody'
       security:
-        - BasicAuth: []
+        - Basic: []
       requestBody:
         required: true
         content:
@@ -74,6 +74,6 @@ components:
       required:
         - message
   securitySchemes:
-    BasicAuth:
+    Basic:
       type: http
       scheme: basic

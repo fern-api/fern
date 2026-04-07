@@ -20,7 +20,8 @@ import Testing
         )
 
         do {
-            _ = try await client.users.listUsernamesCustom(
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
                 startingAfter: "starting_after",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -54,7 +55,8 @@ import Testing
         )
 
         do {
-            _ = try await client.users.listUsernamesCustom(
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
                 startingAfter: "starting_after",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -88,7 +90,8 @@ import Testing
         )
 
         do {
-            _ = try await client.users.listUsernamesCustom(
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
                 startingAfter: "starting_after",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -124,7 +127,8 @@ import Testing
         )
 
         do {
-            _ = try await client.users.listUsernamesCustom(
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
                 startingAfter: "starting_after",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -158,7 +162,8 @@ import Testing
         )
 
         do {
-            _ = try await client.users.listUsernamesCustom(
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
                 startingAfter: "starting_after",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -194,7 +199,8 @@ import Testing
         )
 
         do {
-            _ = try await client.users.listUsernamesCustom(
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
                 startingAfter: "starting_after",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -228,7 +234,8 @@ import Testing
         )
 
         do {
-            _ = try await client.users.listUsernamesCustom(
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
                 startingAfter: "starting_after",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )

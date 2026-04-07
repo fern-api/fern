@@ -19,7 +19,7 @@ export interface SeedWorkspaceConfiguration {
     /** Configuration that will be used for any custom fixture specified by --custom-fixture */
     customFixtureConfig?: FernSeedConfig.FixtureConfigurations | undefined;
     fixtures?: Record<string, FernSeedConfig.FixtureConfigurations[]> | undefined;
-    scripts?: FernSeedConfig.ContainerScriptConfig[] | undefined;
+    scripts?: FernSeedConfig.ScriptsConfiguration | undefined;
     /**
      * List any fixtures that are okay to fail. For normal fixtures
      * just list the fixture name. For configured fixture list {fixture}:{outputFolder}.

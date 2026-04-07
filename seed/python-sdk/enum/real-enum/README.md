@@ -34,16 +34,16 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedEnum
+from seed import SeedEnum, Operand, Color
 
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.headers.send(
-    operand=">",
-    maybe_operand=">",
-    operand_or_color="red",
+    operand=Operand.GREATER_THAN,
+    maybe_operand=Operand.GREATER_THAN,
+    operand_or_color=Color.RED,
 )
 ```
 
@@ -63,9 +63,9 @@ client = AsyncSeedEnum(
 
 async def main() -> None:
     await client.headers.send(
-        operand=">",
-        maybe_operand=">",
-        operand_or_color="red",
+        operand=Operand.GREATER_THAN,
+        maybe_operand=Operand.GREATER_THAN,
+        operand_or_color=Color.RED,
     )
 
 
