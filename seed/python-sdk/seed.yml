@@ -33,10 +33,14 @@ test:
       - chmod +x setup-python.sh && ./setup-python.sh
       - poetry config virtualenvs.in-project true
       - poetry install
-    # The envvar is needed to trick the generator to look in the right place for the core_utils files
+      - (cd ../../ && pnpm turbo run dist:cli --filter @fern-api/python-sdk)
     runCommand: poetry run python -m src.fern_python.generators.sdk.cli {CONFIG_PATH}
     env:
       PYTEST_CURRENT_TEST: "some value"
+      PYTHON_V2_PATH: ../../generators/python-v2/sdk/dist/cli.cjs
+      FERN_CORE_UTILITIES_PATH: ../../generators/python/core_utilities/sdk:../../generators/python/core_utilities/shared
+      FERN_ASSETS_PATH: ../../generators/python
+      FERN_FEATURES_YML_PATH: ../../generators/python/sdk/features.yml
 
 language: python
 generatorType: SDK
