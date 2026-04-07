@@ -389,16 +389,13 @@ export class EndpointSnippetGenerator {
         const authRecord = auth as unknown as Record<string, unknown>;
         const usernameOmitted = !!authRecord.usernameOmit;
         const passwordOmitted = !!authRecord.passwordOmit;
-        const arguments_: go.AstNode[] = [];
-        if (!usernameOmitted) {
-            arguments_.push(go.TypeInstantiation.string(values.username));
-        }
-        if (!passwordOmitted) {
-            arguments_.push(go.TypeInstantiation.string(values.password));
-        }
-        if (arguments_.length === 0) {
+        if (usernameOmitted && passwordOmitted) {
             return [];
         }
+        const arguments_: go.AstNode[] = [
+            go.TypeInstantiation.string(usernameOmitted ? "" : values.username),
+            go.TypeInstantiation.string(passwordOmitted ? "" : values.password)
+        ];
         return [
             go.codeblock((writer) => {
                 writer.writeNode(
