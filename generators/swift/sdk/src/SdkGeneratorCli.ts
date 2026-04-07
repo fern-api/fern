@@ -584,7 +584,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             context.project.addSourceAsIsFile({
                 nameCandidateWithoutExtension: "Version",
                 directory: RelativeFilePath.of(""),
-                contents: `let sdkVersion = "${version}"\n`
+                contents: `public let sdkVersion = "${version}"\n`
             });
         }
     }
