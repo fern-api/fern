@@ -63,6 +63,8 @@ class SeedApi:
 
     client = SeedApi(
         base_url="YOUR_BASE_URL",
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET",
     )
 
     # or ...
@@ -248,6 +250,8 @@ class AsyncSeedApi:
 
     client = AsyncSeedApi(
         base_url="YOUR_BASE_URL",
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET",
     )
 
     # or ...

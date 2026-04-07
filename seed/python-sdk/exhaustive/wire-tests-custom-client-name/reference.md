@@ -3246,6 +3246,7 @@ client.endpoints.put.add(
 
 ```python
 from seed import Exhaustive
+from seed.types.union import Animal_Dog
 
 client = Exhaustive(
     token="<token>",
@@ -3253,11 +3254,10 @@ client = Exhaustive(
 )
 
 client.endpoints.union.get_and_return_union(
-    request={
-        "animal": "dog",
-        "name": "name",
-        "likes_to_woof": True
-    },
+    request=Animal_Dog(
+        name="name",
+        likes_to_woof=True,
+    ),
 )
 
 ```
