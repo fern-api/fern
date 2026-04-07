@@ -14,7 +14,7 @@ const DOCS_PREFIX = chalk.cyan("[docs]:");
 const ETAG_FILENAME = "etag";
 
 // Progress bar label alignment - pad labels to the longest one for consistent bar positioning
-const PROGRESS_LABEL_WIDTH = "Downloading docs bundle".length;
+const PROGRESS_LABEL_WIDTH = "Removing old docs bundle".length;
 const formatProgressLabel = (label: string): string => label.padEnd(PROGRESS_LABEL_WIDTH, " ");
 const PREVIEW_FOLDER_NAME = "preview";
 const APP_PREVIEW_FOLDER_NAME = "app-preview";
@@ -226,7 +226,41 @@ export async function downloadBundle({
         const absolutePathToPreviewFolder = getPathToPreviewFolder({ app });
         if (await doesPathExist(absolutePathToPreviewFolder)) {
             logger.debug(`Removing previously cached bundle at: ${absolutePathToPreviewFolder}`);
-            await rm(absolutePathToPreviewFolder, { recursive: true });
+
+            let removeProgressBar: cliProgress.SingleBar | undefined;
+            let removeInterval: NodeJS.Timeout | undefined;
+
+            if (app) {
+                removeProgressBar = new cliProgress.SingleBar({
+                    format: `${DOCS_PREFIX} ${formatProgressLabel("Removing old docs bundle")} [{bar}] {percentage}%`,
+                    barCompleteChar: "\u2588",
+                    barIncompleteChar: "\u2591",
+                    hideCursor: true
+                });
+                removeProgressBar.start(100, 0);
+
+                const REMOVE_DURATION_MS = 10000;
+                const startTime = Date.now();
+                removeInterval = setInterval(() => {
+                    const elapsed = Date.now() - startTime;
+                    const t = Math.min(elapsed / REMOVE_DURATION_MS, 1);
+                    const p = 1 - Math.pow(1 - t, 3);
+                    const percentage = Math.min(99, Math.floor(p * 100));
+                    removeProgressBar?.update(percentage);
+                }, 50);
+            }
+
+            try {
+                await rm(absolutePathToPreviewFolder, { recursive: true });
+            } finally {
+                if (removeInterval) {
+                    clearInterval(removeInterval);
+                }
+                if (removeProgressBar) {
+                    removeProgressBar.update(100);
+                    removeProgressBar.stop();
+                }
+            }
         }
         await mkdir(absolutePathToPreviewFolder, { recursive: true });
 
