@@ -379,7 +379,7 @@ async function cleanNextCache(bundleRoot: string, context: TaskContext): Promise
     const cachePath = getNextCachePath(bundleRoot);
     try {
         // Check for both the primary cache path and any other cache artifacts
-        const cacheExists = await doesPathExist(cachePath);
+        const cacheExists = await doesPathExist(AbsoluteFilePath.of(cachePath));
         if (cacheExists) {
             context.logger.debug(`Cleaning Next.js cache at ${cachePath}`);
             await rm(cachePath, { recursive: true });
