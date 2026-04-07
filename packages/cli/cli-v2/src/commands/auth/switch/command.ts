@@ -4,7 +4,7 @@ import type { Argv } from "yargs";
 
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
+import { TaskAbortSignal } from "@fern-api/task-context";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 
@@ -21,14 +21,14 @@ export class SwitchCommand {
             context.stdout.warn(`${chalk.yellow("⚠")} You are not logged in to Fern.`);
             context.stdout.info("");
             context.stdout.info(chalk.dim("  To log in, run: fern auth login"));
-            throw CliError.exit();
+            throw new TaskAbortSignal();
         }
 
         if (accounts.length === 1) {
             const account = accounts[0];
             if (account == null) {
                 context.stdout.error(`${Icons.error} Internal error; no accounts found`);
-                throw CliError.exit();
+                throw new TaskAbortSignal();
             }
 
             context.stdout.warn(
@@ -60,7 +60,7 @@ export class SwitchCommand {
     ): Promise<void> {
         if (!context.isTTY) {
             context.stdout.error(`${Icons.error} Use --user to specify account in non-interactive mode`);
-            throw CliError.exit();
+            throw new TaskAbortSignal();
         }
 
         const choices = accounts.map((account) => ({
@@ -85,7 +85,7 @@ export class SwitchCommand {
         const success = await context.tokenService.switchAccount(user);
         if (!success) {
             context.stdout.error(`${Icons.error} Account not found: ${user}`);
-            throw CliError.exit();
+            throw new TaskAbortSignal();
         }
         context.stdout.info(`${Icons.success} Switched to ${chalk.bold(user)}`);
     }

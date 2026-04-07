@@ -1,7 +1,7 @@
+import { CliError } from "@fern-api/task-context";
 import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
 import { Migrator } from "../../../migrator/index.js";
 import { command } from "../../_internal/command.js";
 
@@ -50,7 +50,7 @@ export class MigrateCommand {
             return;
         }
 
-        throw new CliError({ message: "Migration failed" });
+        throw new CliError({ message: "Migration failed", code: "CONFIG_ERROR" });
     }
 }
 

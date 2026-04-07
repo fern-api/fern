@@ -10,12 +10,12 @@ import { schemas } from "@fern-api/config";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
+import { CliError, TaskAbortSignal } from "@fern-api/task-context";
 import chalk from "chalk";
 import inquirer from "inquirer";
 import { CredentialStore, TokenService } from "../auth/index.js";
 import { Cache } from "../cache/index.js";
 import { FernYmlSchemaLoader } from "../config/fern-yml/FernYmlSchemaLoader.js";
-import { CliError } from "../errors/CliError.js";
 import { Target } from "../sdk/config/Target.js";
 import { TelemetryClient } from "../telemetry/index.js";
 import { Icons } from "../ui/format.js";
@@ -145,7 +145,7 @@ export class Context {
                 this.stderr.info(
                     chalk.dim("  To authenticate, run: 'fern auth login' or set the FERN_TOKEN environment variable")
                 );
-                throw CliError.exit();
+                throw new TaskAbortSignal();
             }
             return await this.promptAndLogin();
         }
@@ -158,7 +158,7 @@ export class Context {
                 this.stderr.info(
                     chalk.dim("  To authenticate, run: 'fern auth login' or set the FERN_TOKEN environment variable")
                 );
-                throw CliError.exit();
+                throw new TaskAbortSignal();
             }
             return await this.promptAndLogin();
         }
@@ -177,7 +177,7 @@ export class Context {
         ]);
 
         if (!confirm) {
-            throw CliError.exit();
+            throw new TaskAbortSignal();
         }
 
         this.stderr.info(`${Icons.info} Opening browser to log in to Fern...`);
@@ -192,13 +192,13 @@ export class Context {
         const payload = await verifyAndDecodeJwt(idToken);
         if (payload == null) {
             this.stderr.error(`${Icons.error} Internal error; could not verify ID token`);
-            throw CliError.exit();
+            throw new TaskAbortSignal();
         }
 
         const email = payload.email;
         if (email == null) {
             this.stderr.error(`${Icons.error} Internal error; ID token does not contain email claim`);
-            throw CliError.exit();
+            throw new TaskAbortSignal();
         }
 
         await this.tokenService.login(email, accessToken);

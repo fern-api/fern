@@ -8,7 +8,6 @@ import {
 } from "@fern-api/task-context";
 import chalk from "chalk";
 import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError.js";
-import { CliError as CliErrorV2 } from "../errors/CliError.js";
 import { SourcedValidationError } from "../errors/SourcedValidationError.js";
 import { ValidationError } from "../errors/ValidationError.js";
 import { Icons } from "../ui/format.js";
@@ -91,7 +90,7 @@ function handleError(context: Context, error: unknown): void {
         return;
     }
 
-    if (error instanceof CliError || error instanceof CliErrorV2) {
+    if (error instanceof CliError) {
         if (error.message.length > 0) {
             process.stderr.write(`${chalk.red(error.message)}\n`);
         }
@@ -116,9 +115,6 @@ function shouldReportToSentry(error: unknown): boolean {
     if (error instanceof CliError) {
         return shouldReportCodeToSentry(error.code);
     }
-    if (error instanceof CliErrorV2) {
-        return error.code === "INTERNAL_ERROR";
-    }
     if (
         error instanceof ValidationError ||
         error instanceof SourcedValidationError ||
@@ -131,9 +127,6 @@ function shouldReportToSentry(error: unknown): boolean {
 
 function extractErrorCode(error: unknown): string {
     if (error instanceof CliError) {
-        return error.code;
-    }
-    if (error instanceof CliErrorV2 && error.code != null) {
         return error.code;
     }
     if (error instanceof ValidationError || error instanceof SourcedValidationError) {

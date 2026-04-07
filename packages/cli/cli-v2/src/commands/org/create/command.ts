@@ -1,10 +1,9 @@
 import { createOrganizationIfDoesNotExist, getOrganizationNameValidationError } from "@fern-api/auth";
+import { CliError, TaskAbortSignal } from "@fern-api/task-context";
 import type { Argv } from "yargs";
-
 import { TaskContextAdapter } from "../../../context/adapter/TaskContextAdapter.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
 import { Icons } from "../../../ui/format.js";
 import { withSpinner } from "../../../ui/withSpinner.js";
 import { command } from "../../_internal/command.js";
@@ -23,7 +22,7 @@ export class CreateCommand {
             context.stderr.error(
                 `${Icons.error} Organization tokens cannot create organizations. Unset the FERN_TOKEN environment variable and run 'fern auth login' to create an organization.`
             );
-            throw CliError.exit();
+            throw new TaskAbortSignal();
         }
 
         const validationError = getOrganizationNameValidationError(args.name);
