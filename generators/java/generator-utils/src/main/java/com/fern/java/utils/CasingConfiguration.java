@@ -172,60 +172,29 @@ public final class CasingConfiguration {
      * Splits a string into words, similar to lodash's words() function.
      * Handles camelCase, PascalCase, separators, and digit boundaries.
      */
+    /**
+     * Splits a string into words, matching lodash's words() behavior.
+     * Uses the same regex pattern: [A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+|[A-Z]+|[0-9]+
+     *
+     * Examples:
+     *   "AValue"       -> ["A", "Value"]
+     *   "HTTPSClient"  -> ["HTTPS", "Client"]
+     *   "userId"       -> ["user", "Id"]
+     *   "XMLParser"    -> ["XML", "Parser"]
+     *   "ABCDef"       -> ["ABC", "Def"]
+     *   "AB"           -> ["AB"]
+     */
     static List<String> splitWords(String s) {
         if (s == null || s.isEmpty()) {
             return Collections.emptyList();
         }
 
+        // Match lodash words() regex: [A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+|[A-Z]+|[0-9]+
+        Pattern pattern = Pattern.compile("[A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+|[A-Z]+|[0-9]+");
+        Matcher matcher = pattern.matcher(s);
         List<String> words = new ArrayList<>();
-        StringBuilder current = new StringBuilder();
-        char[] chars = s.toCharArray();
-
-        for (int i = 0; i < chars.length; i++) {
-            char c = chars[i];
-
-            if (Character.isUpperCase(c)) {
-                if (current.length() > 0) {
-                    if (i + 1 < chars.length && Character.isLowerCase(chars[i + 1])) {
-                        // Uppercase followed by lowercase starts new word
-                        if (Character.isUpperCase(current.charAt(current.length() - 1))
-                                && current.length() > 1) {
-                            words.add(current.toString());
-                            current.setLength(0);
-                        } else if (Character.isUpperCase(current.charAt(current.length() - 1))) {
-                            // Single uppercase char - keep as part of current
-                        } else {
-                            words.add(current.toString());
-                            current.setLength(0);
-                        }
-                    } else if (!Character.isUpperCase(current.charAt(current.length() - 1))) {
-                        words.add(current.toString());
-                        current.setLength(0);
-                    }
-                }
-                current.append(c);
-            } else if (Character.isDigit(c)) {
-                if (current.length() > 0 && !Character.isDigit(current.charAt(current.length() - 1))) {
-                    words.add(current.toString());
-                    current.setLength(0);
-                }
-                current.append(c);
-            } else if (Character.isLetter(c)) {
-                if (current.length() > 0 && Character.isDigit(current.charAt(current.length() - 1))) {
-                    words.add(current.toString());
-                    current.setLength(0);
-                }
-                current.append(c);
-            } else {
-                // separator character
-                if (current.length() > 0) {
-                    words.add(current.toString());
-                    current.setLength(0);
-                }
-            }
-        }
-        if (current.length() > 0) {
-            words.add(current.toString());
+        while (matcher.find()) {
+            words.add(matcher.group());
         }
         return words;
     }
