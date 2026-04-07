@@ -64,10 +64,9 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         } else if (displayNameOverrideSource === "discriminator_key") {
             // For discriminator keys, prefer title, fallback to discriminator key
             displayName = resolvedReference.value.title ?? displayNameOverride;
-        } else if (displayNameOverrideSource === "schema_identifier") {
-            // For schema identifiers (just the ref name), only use title if present
-            // Don't use the schema identifier as displayName
-            displayName = resolvedReference.value.title;
+        } else {
+            // No override source - use schema title or fallback to extracted schema name
+            displayName = resolvedReference.value.title ?? rawSchemaName;
         }
 
         let inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> | undefined;

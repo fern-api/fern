@@ -235,11 +235,24 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
                 // Extract raw schema name for display (not namespaced)
                 const rawSchemaName = reference.match(/\/schemas\/([^/]+)/)?.[1] ?? typeId;
+
+                // Determine variant display name with fallback priority:
+                // 1. Schema's title field (explicit user intention)
+                // 2. Schema name from $ref or typeId (e.g., "CircleShape")
+                const variantDisplayName =
+                    (resolvedSchema.resolved ? resolvedSchema.value.title : undefined) ?? rawSchemaName;
+
+                // Set displayName on the type declaration for discriminated union variants.
+                // Docs read the type definition's displayName, not just the union variant's displayName.
+                if (convertedSchema.schema?.typeDeclaration != null) {
+                    convertedSchema.schema.typeDeclaration.name.displayName = variantDisplayName;
+                }
+
                 unionTypes.push({
                     docs: undefined,
                     discriminantValue: nameAndWireValue,
                     availability: convertedSchema.availability,
-                    displayName: discriminant,
+                    displayName: variantDisplayName,
                     shape: SingleUnionTypeProperties.samePropertiesAsObject({
                         typeId,
                         name: this.context.casingsGenerator.generateName(rawSchemaName),
@@ -248,7 +261,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                             packagePath: [],
                             file: undefined
                         },
-                        displayName: discriminant
+                        displayName: variantDisplayName
                     })
                 });
                 inlinedTypes = {
@@ -330,11 +343,6 @@ export class OneOfSchemaConverter extends AbstractConverter<
         const referencedTypes: Set<string> = new Set();
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
 
-        // Collect all inlined object schemas for better naming
-        const allInlinedSchemas = [...(this.schema.oneOf ?? []), ...(this.schema.anyOf ?? [])].filter(
-            (schema) => !this.context.isReferenceObject(schema)
-        ) as OpenAPIV3_1.SchemaObject[];
-
         for (const [index, subSchema] of [
             ...(this.schema.oneOf ?? []).entries(),
             ...(this.schema.anyOf ?? []).entries()
@@ -357,10 +365,10 @@ export class OneOfSchemaConverter extends AbstractConverter<
                         displayNameOverrideSource: "discriminator_key"
                     });
                 } else {
+                    // Standard schema reference - use internal extraction
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
-                        displayNameOverride: subSchema.$ref.split("/").pop(),
-                        displayNameOverrideSource: "schema_identifier"
+                        breadcrumbs: this.breadcrumbs
                     });
                 }
 
