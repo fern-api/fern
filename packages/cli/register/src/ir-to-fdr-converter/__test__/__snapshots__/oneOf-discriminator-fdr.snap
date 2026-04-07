@@ -209,7 +209,7 @@
     "InvalidTypeError": {
       "availability": undefined,
       "description": "Invalid type error with discriminator",
-      "displayName": undefined,
+      "displayName": "InvalidTypeError",
       "name": "InvalidTypeError",
       "shape": {
         "extends": [],
@@ -256,7 +256,7 @@
     "OneOfDiscriminatedA": {
       "availability": undefined,
       "description": "First variant for discriminated oneOf",
-      "displayName": undefined,
+      "displayName": "OneOfDiscriminatedA",
       "name": "OneOfDiscriminatedA",
       "shape": {
         "extends": [],
@@ -286,7 +286,7 @@
     "OneOfDiscriminatedB": {
       "availability": undefined,
       "description": "Second variant for discriminated oneOf",
-      "displayName": undefined,
+      "displayName": "OneOfDiscriminatedB",
       "name": "OneOfDiscriminatedB",
       "shape": {
         "extends": [],
@@ -334,7 +334,7 @@
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "validation",
-            "displayName": "validation",
+            "displayName": "ValidationError",
           },
           {
             "additionalProperties": {
@@ -347,7 +347,7 @@
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "invalidType",
-            "displayName": "invalidType",
+            "displayName": "InvalidTypeError",
           },
         ],
       },
@@ -355,7 +355,7 @@
     "ValidationError": {
       "availability": undefined,
       "description": "Validation error with discriminator",
-      "displayName": undefined,
+      "displayName": "ValidationError",
       "name": "ValidationError",
       "shape": {
         "extends": [],
@@ -419,7 +419,7 @@
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "variantA",
-            "displayName": "variantA",
+            "displayName": "OneOfDiscriminatedA",
           },
           {
             "additionalProperties": {
@@ -432,7 +432,7 @@
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "variantB",
-            "displayName": "variantB",
+            "displayName": "OneOfDiscriminatedB",
           },
         ],
       },

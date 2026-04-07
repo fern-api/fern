@@ -72,7 +72,7 @@
       "type": {
         "_visit": [Function],
         "default": undefined,
-        "displayName": undefined,
+        "displayName": "Error",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -111,7 +111,7 @@
       "type": {
         "_visit": [Function],
         "default": undefined,
-        "displayName": undefined,
+        "displayName": "Error",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -234,7 +234,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "ProtectedResource",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -328,7 +328,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "ProtectedResource",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -411,7 +411,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "ProtectedResource",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -505,7 +505,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "ProtectedResource",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,

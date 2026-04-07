@@ -231,7 +231,7 @@ Examples should use the first available auth scheme (admin).
             "requestBodyType": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "ResourceRequest",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -266,7 +266,7 @@ Examples should use the first available auth scheme (admin).
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "ResourceResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -359,7 +359,7 @@ Examples should use the first available auth scheme (admin).
                 "requestBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "ResourceRequest",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -398,7 +398,7 @@ Examples should use the first available auth scheme (admin).
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "ResourceResponse",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,

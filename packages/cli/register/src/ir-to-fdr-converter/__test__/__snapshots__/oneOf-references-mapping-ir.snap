@@ -63,7 +63,7 @@
       "type": {
         "_visit": [Function],
         "default": undefined,
-        "displayName": undefined,
+        "displayName": "Error",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -186,7 +186,7 @@
             "requestBodyType": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "EventRequest",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -219,7 +219,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "EventResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -317,7 +317,7 @@
                 "requestBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "EventRequest",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -354,7 +354,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "EventResponse",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -797,11 +797,11 @@
           {
             "availability": undefined,
             "discriminantValue": "user",
-            "displayName": "user",
+            "displayName": "UserEvent",
             "docs": undefined,
             "shape": {
               "_visit": [Function],
-              "displayName": "user",
+              "displayName": "UserEvent",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -815,11 +815,11 @@
           {
             "availability": undefined,
             "discriminantValue": "system",
-            "displayName": "system",
+            "displayName": "SystemEvent",
             "docs": undefined,
             "shape": {
               "_visit": [Function],
-              "displayName": "system",
+              "displayName": "SystemEvent",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -833,11 +833,11 @@
           {
             "availability": undefined,
             "discriminantValue": "error",
-            "displayName": "error",
+            "displayName": "ErrorEvent",
             "docs": undefined,
             "shape": {
               "_visit": [Function],
-              "displayName": "error",
+              "displayName": "ErrorEvent",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -1021,7 +1021,7 @@
             "valueType": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "EventRequest",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,

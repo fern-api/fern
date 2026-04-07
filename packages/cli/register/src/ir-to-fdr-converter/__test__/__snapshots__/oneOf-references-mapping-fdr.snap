@@ -409,7 +409,7 @@
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "user",
-            "displayName": "user",
+            "displayName": "UserEvent",
           },
           {
             "additionalProperties": {
@@ -422,7 +422,7 @@
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "system",
-            "displayName": "system",
+            "displayName": "SystemEvent",
           },
           {
             "additionalProperties": {
@@ -435,7 +435,7 @@
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "error",
-            "displayName": "error",
+            "displayName": "ErrorEvent",
           },
         ],
       },
