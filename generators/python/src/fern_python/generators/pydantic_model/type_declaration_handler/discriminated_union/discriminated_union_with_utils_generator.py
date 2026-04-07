@@ -204,7 +204,19 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         single_union_type=single_union_type
                     )
 
-                    internal_pydantic_model_for_single_union_type.add_field(discriminant_field)
+                    # For samePropertiesAsObject variants, skip adding the discriminant field
+                    # if it already exists in the referenced type's property chain
+                    shape = single_union_type.shape.get_as_union()
+                    should_add_discriminant = True
+                    if shape.properties_type == "samePropertiesAsObject":
+                        all_props = self._context.get_all_properties_including_extensions(shape.type_id)
+                        for prop in all_props:
+                            if prop.name.wire_value == self._union.discriminant.wire_value:
+                                should_add_discriminant = False
+                                break
+
+                    if should_add_discriminant:
+                        internal_pydantic_model_for_single_union_type.add_field(discriminant_field)
 
                     shape = single_union_type.shape.get_as_union()
                     if shape.properties_type == "singleProperty":
