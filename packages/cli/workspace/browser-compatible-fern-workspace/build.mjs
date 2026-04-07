@@ -1,5 +1,6 @@
 import { readFile, rm, writeFile } from "fs/promises";
 import path from "path";
+import { polyfillNode } from "esbuild-plugin-polyfill-node";
 import tsup from "tsup";
 import { fileURLToPath } from "url";
 import packageJson from "./package.json" with { type: "json" };
@@ -31,7 +32,7 @@ async function main() {
 
     // Bundle all workspace:* deps (internal to fern monorepo) into the output.
     // Keep npm-published deps external so consumers manage them via package.json.
-    const externalDeps = ["@fern-api/fdr-sdk", "@open-rpc/meta-schema", "openapi-types"];
+    const externalDeps = ["@open-rpc/meta-schema", "openapi-types"];
 
     await tsup.build({
         entry: ["src/index.ts"],
@@ -44,11 +45,24 @@ async function main() {
         clean: true,
         // Bundle everything except external deps
         noExternal: [/.*/],
-        external: externalDeps
+        external: externalDeps,
+        esbuildPlugins: [
+            // Polyfill Node.js built-ins (util, path, assert) so transitive deps
+            // like object-inspect (qs → side-channel → object-inspect) don't break
+            // in Turbopack/browser environments with `require('util')`.
+            // Disable fs/crypto polyfills so workspace deps that use them keep
+            // the native Node.js externals intact.
+            polyfillNode({
+                globals: false,
+                polyfills: {
+                    fs: false,
+                    crypto: false
+                }
+            })
+        ]
     });
 
     const version = process.argv[2] || process.env.PACKAGE_VERSION || "0.0.1";
-    const fdrSdkVersion = await resolveCatalogVersion("@fern-api/fdr-sdk");
     const openRpcMetaSchemaVersion = await resolveCatalogVersion("@open-rpc/meta-schema");
 
     await writeFile(
@@ -72,17 +86,8 @@ async function main() {
                 types: "dist/index.d.ts",
                 files: ["**"],
                 dependencies: {
-                    "@fern-api/fdr-sdk": fdrSdkVersion,
                     "@open-rpc/meta-schema": openRpcMetaSchemaVersion,
                     "openapi-types": packageJson.dependencies["openapi-types"]
-                },
-                peerDependencies: {
-                    "@fern-api/fdr-sdk": ">=0.100.0"
-                },
-                peerDependenciesMeta: {
-                    "@fern-api/fdr-sdk": {
-                        optional: true
-                    }
                 },
                 license: "MIT"
             },
