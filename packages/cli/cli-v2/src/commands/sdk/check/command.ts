@@ -3,6 +3,7 @@ import chalk from "chalk";
 import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
+import { TaskAbortSignal } from "@fern-api/task-context";
 import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";

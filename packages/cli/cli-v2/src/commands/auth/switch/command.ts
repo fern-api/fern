@@ -4,6 +4,7 @@ import inquirer from "inquirer";
 import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
+import { TaskAbortSignal } from "@fern-api/task-context";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 
