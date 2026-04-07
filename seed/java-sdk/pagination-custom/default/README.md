@@ -57,7 +57,7 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;
+import com.seed.pagination.resources.users.requests.ListWithCustomPagerRequest;
 
 public class Example {
     public static void main(String[] args) {
@@ -66,9 +66,10 @@ public class Example {
             .token("<token>")
             .build();
 
-        client.users().listUsernamesCustom(
-            ListUsernamesRequestCustom
+        client.users().listWithCustomPager(
+            ListWithCustomPagerRequest
                 .builder()
+                .limit(1)
                 .startingAfter("starting_after")
                 .build()
         );
@@ -114,7 +115,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 import com.seed.pagination.core.SeedPaginationApiException;
 
 try{
-    client.users().listUsernamesCustom(...);
+    client.users().listWithCustomPager(...);
 } catch (SeedPaginationApiException e){
     // Do something with the API exception...
 }
@@ -178,7 +179,7 @@ SeedPaginationClient client = SeedPaginationClient
     .build();
 
 // Request level
-client.users().listUsernamesCustom(
+client.users().listWithCustomPager(
     ...,
     RequestOptions
         .builder()
@@ -204,7 +205,7 @@ SeedPaginationClient client = SeedPaginationClient
 ;
 
 // Request level
-client.users().listUsernamesCustom(
+client.users().listWithCustomPager(
     ...,
     RequestOptions
         .builder()
@@ -220,7 +221,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedPaginationHttpResponse response = client.users().withRawResponse().listUsernamesCustom(...);
+SeedPaginationHttpResponse response = client.users().withRawResponse().listWithCustomPager(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

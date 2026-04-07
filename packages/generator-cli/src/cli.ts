@@ -12,7 +12,9 @@ import {
     generateReferenceToStream,
     githubPr,
     githubPush,
-    replayInit
+    replayForget,
+    replayInit,
+    replayStatus
 } from "./api.js";
 import { loadGitHubConfig } from "./configuration/loadGitHubConfig.js";
 import { loadReadmeConfig } from "./configuration/loadReadmeConfig.js";
@@ -424,6 +426,90 @@ void yargs(hideBin(process.argv))
                         } catch (error) {
                             const errorMessage = extractErrorMessage(error);
                             process.stderr.write(`Bootstrap failed: ${errorMessage}\n`);
+                            process.exit(1);
+                        }
+                    }
+                )
+                .command(
+                    "status [directory]",
+                    false, // hidden from --help
+                    (subYargs) => {
+                        return subYargs.positional("directory", {
+                            type: "string",
+                            default: ".",
+                            description: "SDK directory containing .fern/replay.lock"
+                        });
+                    },
+                    (argv) => {
+                        try {
+                            const outputDir = resolve(cwd(), argv.directory ?? ".");
+                            const result = replayStatus({ outputDir });
+                            process.stdout.write(JSON.stringify(result, null, 2) + "\n");
+                            process.exit(0);
+                        } catch (error) {
+                            const errorMessage = extractErrorMessage(error);
+                            process.stderr.write(`Replay status failed: ${errorMessage}\n`);
+                            process.exit(1);
+                        }
+                    }
+                )
+                .command(
+                    "forget [args..]",
+                    false, // hidden from --help
+                    (subYargs) => {
+                        return subYargs
+                            .positional("args", {
+                                type: "string",
+                                array: true,
+                                description: "Patch IDs or search pattern"
+                            })
+                            .option("dry-run", {
+                                type: "boolean",
+                                default: false,
+                                description: "Show what would be removed without actually removing"
+                            })
+                            .option("all", {
+                                type: "boolean",
+                                default: false,
+                                description: "Remove all tracked patches"
+                            })
+                            .option("pattern", {
+                                type: "string",
+                                description: "Search pattern (file path, glob, or commit message substring)"
+                            });
+                    },
+                    (argv) => {
+                        try {
+                            const outputDir = resolve(cwd(), ".");
+                            const args = argv.args ?? [];
+                            const dryRun = argv["dry-run"];
+
+                            let result;
+                            if (argv.all) {
+                                result = replayForget({ outputDir, options: { all: true, dryRun } });
+                            } else if (argv.pattern) {
+                                result = replayForget({ outputDir, options: { pattern: argv.pattern, dryRun } });
+                            } else if (args.length > 0) {
+                                // Check if args look like patch IDs
+                                const allPatchIds = args.every((a) => a.startsWith("patch-"));
+                                if (allPatchIds) {
+                                    result = replayForget({ outputDir, options: { patchIds: args, dryRun } });
+                                } else {
+                                    // Treat single arg as pattern
+                                    result = replayForget({
+                                        outputDir,
+                                        options: { pattern: args[0], dryRun }
+                                    });
+                                }
+                            } else {
+                                result = replayForget({ outputDir, options: { dryRun } });
+                            }
+
+                            process.stdout.write(JSON.stringify(result, null, 2) + "\n");
+                            process.exit(0);
+                        } catch (error) {
+                            const errorMessage = extractErrorMessage(error);
+                            process.stderr.write(`Replay forget failed: ${errorMessage}\n`);
                             process.exit(1);
                         }
                     }

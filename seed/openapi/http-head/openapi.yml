@@ -4,6 +4,14 @@ info:
   version: ''
 paths:
   /users:
+    head:
+      operationId: user_head
+      tags:
+        - User
+      parameters: []
+      responses:
+        '204':
+          description: ''
     get:
       operationId: user_list
       tags:

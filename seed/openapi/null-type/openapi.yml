@@ -92,6 +92,7 @@ components:
           const: true
           description: Always true for this response.
       required:
+        - conversation_id
         - dry_run
     User:
       title: User
@@ -109,4 +110,5 @@ components:
       required:
         - id
         - name
+        - deleted_at
   securitySchemes: {}

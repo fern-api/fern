@@ -49,7 +49,7 @@ paths:
                 $ref: '#/components/schemas/PlainObject'
       summary: Post Nullable Request Body
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:

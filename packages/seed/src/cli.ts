@@ -14,7 +14,7 @@ import {
     resolveAffectedFixtures,
     resolveAffectedGenerators
 } from "./commands/affected/index.js";
-import { cleanOrphanedSeedFolders } from "./commands/clean/index.js";
+import { cleanEmptySeedDirectories, cleanOrphanedSeedFolders } from "./commands/clean/index.js";
 import { generateCliChangelog } from "./commands/generate/generateCliChangelog.js";
 import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog.js";
 import { buildGeneratorImage } from "./commands/img/buildGeneratorImage.js";
@@ -879,8 +879,9 @@ function addCleanCommand(cli: Argv) {
                     : generators;
 
             const result = await cleanOrphanedSeedFolders(targetGenerators, argv.dryRun);
+            const emptyResult = await cleanEmptySeedDirectories(argv.dryRun);
 
-            if (argv.dryRun && result.orphanedFolders.length > 0) {
+            if (argv.dryRun && (result.orphanedFolders.length > 0 || emptyResult.emptyDirectories.length > 0)) {
                 process.exit(1);
             }
         }

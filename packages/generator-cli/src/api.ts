@@ -28,6 +28,14 @@ export {
     type ReplayStepResult
 } from "./pipeline/index.js";
 export {
+    type DiffStat,
+    type ForgetOptions,
+    type ForgetResult,
+    type MatchedPatch,
+    type ReplayForgetParams,
+    replayForget
+} from "./replay/replay-forget.js";
+export {
     type BootstrapLogEntry,
     formatBootstrapSummary,
     type ReplayInitParams,
@@ -40,3 +48,10 @@ export {
     replayResolve
 } from "./replay/replay-resolve.js";
 export { type ReplayRunParams, type ReplayRunResult, replayRun } from "./replay/replay-run.js";
+export {
+    type ReplayStatusParams,
+    replayStatus,
+    type StatusGeneration,
+    type StatusPatch,
+    type StatusResult
+} from "./replay/replay-status.js";
