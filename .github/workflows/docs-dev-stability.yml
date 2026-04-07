@@ -59,3 +59,15 @@ jobs:
           path: /tmp/*/server.log
           retention-days: 7
           if-no-files-found: ignore
+
+      - name: Notify #docs-notifs on failure
+        if: failure()
+        uses: slackapi/slack-github-action@v3
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.FERNIE_SLACK_APP_TOKEN }}
+          payload: |
+            {
+              "channel": "#docs-notifs",
+              "text": "*Docs Dev Stability Test failed* :warning:\n\nThe hourly `fern docs dev` stability test detected an issue (process leak, disk growth, or server crash).\n\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View workflow run>"
+            }
