@@ -28,6 +28,6 @@ components:
         - data
         - timestamp
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

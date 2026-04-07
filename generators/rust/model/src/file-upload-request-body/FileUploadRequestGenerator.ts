@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     Attribute,
@@ -193,7 +194,7 @@ export class FileUploadRequestGenerator {
 
         // Add body properties as text fields
         for (const bodyProp of this.bodyProperties) {
-            const propName = bodyProp.name.name.originalName;
+            const propName = getOriginalName(bodyProp.name);
             const fieldName = this.getFieldName(propName);
             const isOptional = isOptionalType(bodyProp.valueType);
 
@@ -246,7 +247,7 @@ export class FileUploadRequestGenerator {
     }
 
     private generateRustFieldForProperty(property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty): rust.Field {
-        const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
+        const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(property.name));
         const fieldType = generateFieldType(property, this.context);
         const skipSerialization = this.queryParamFieldNames.has(fieldName);
         const attributes = generateFieldAttributes(property, this.context, { skipSerialization });

@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -136,7 +137,7 @@ export class EndpointSnippetsGenerator {
             }
 
             // Fallback: try to find by example name
-            const exampleName = example.name?.originalName;
+            const exampleName = example.name != null ? getOriginalName(example.name) : undefined;
             const nameMatchedSnippets = allSnippets.filter((s) => s.exampleIdentifier === exampleName);
             if (nameMatchedSnippets.length > 0) {
                 // Prefer snippets with request body data

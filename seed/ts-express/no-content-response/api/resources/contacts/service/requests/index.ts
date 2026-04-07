@@ -1,1 +1,0 @@
-export { CreateContactRequest } from "./CreateContactRequest";

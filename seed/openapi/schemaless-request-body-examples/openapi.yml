@@ -1,0 +1,153 @@
+openapi: 3.0.1
+info:
+  title: Schemaless Request Body Examples API
+  version: ''
+paths:
+  /plants:
+    post:
+      description: Creates a plant with example JSON but no request body schema.
+      operationId: createPlant
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePlantResponse'
+              examples:
+                Example1:
+                  value:
+                    id: plant_123
+                    name: Venus Flytrap
+      summary: Create a new plant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {}
+            examples:
+              Example1:
+                value:
+                  name: Venus Flytrap
+                  species: Dionaea muscipula
+                  care:
+                    light: full sun
+                    water: distilled only
+                    humidity: high
+                  tags:
+                    - carnivorous
+                    - tropical
+  /plants/{plantId}:
+    put:
+      description: Updates a plant with example JSON but no request body schema.
+      operationId: updatePlant
+      tags:
+        - ''
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+          example: plantId
+          examples:
+            Example1:
+              value: plantId
+      responses:
+        '200':
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePlantResponse'
+              examples:
+                Example1:
+                  value:
+                    id: plant_123
+                    name: Updated Venus Flytrap
+      summary: Update an existing plant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {}
+            examples:
+              Example1:
+                value:
+                  name: Updated Venus Flytrap
+                  care:
+                    light: partial shade
+  /plants/with-schema:
+    post:
+      description: A control endpoint that has both schema and example defined.
+      operationId: createPlantWithSchema
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePlantWithSchemaResponse'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+      summary: Create a plant with both schema and example
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  nullable: true
+                species:
+                  type: string
+                  nullable: true
+            examples:
+              Example1:
+                value:
+                  name: Sundew
+                  species: Drosera capensis
+components:
+  schemas:
+    CreatePlantResponse:
+      title: CreatePlantResponse
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+    UpdatePlantResponse:
+      title: UpdatePlantResponse
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+    CreatePlantWithSchemaResponse:
+      title: CreatePlantWithSchemaResponse
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+  securitySchemes: {}

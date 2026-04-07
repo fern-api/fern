@@ -394,7 +394,6 @@ export const EditThisPageConfig = z.object({
 export const DocsInstance = z.object({
     url: z.string(),
     "custom-domain": CustomDomain.optional(),
-    private: z.boolean().optional(),
     "edit-this-page": EditThisPageConfig.optional(),
     audiences: Audience.optional()
 });

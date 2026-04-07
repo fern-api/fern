@@ -69,6 +69,6 @@ components:
       required:
         - data
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

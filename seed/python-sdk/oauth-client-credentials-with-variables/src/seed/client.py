@@ -67,6 +67,8 @@ class SeedOauthClientCredentialsWithVariables:
     client = SeedOauthClientCredentialsWithVariables(
         base_url="YOUR_BASE_URL",
         root_variable="YOUR_ROOT_VARIABLE",
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET",
     )
 
     # or ...
@@ -286,6 +288,8 @@ class AsyncSeedOauthClientCredentialsWithVariables:
     client = AsyncSeedOauthClientCredentialsWithVariables(
         base_url="YOUR_BASE_URL",
         root_variable="YOUR_ROOT_VARIABLE",
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET",
     )
 
     # or ...
