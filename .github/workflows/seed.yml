@@ -326,6 +326,8 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
           determinism-exclude-paths: '["seed/*/.mock/*", "seed/**/Gemfile.lock"]'
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   pydantic:
     runs-on: ubuntu-latest
@@ -356,6 +358,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   python-sdk:
     runs-on: ubuntu-latest
@@ -387,6 +391,8 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
           determinism-exclude-paths: '["seed/*/.mock/*", "seed/**/poetry.lock"]'
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   openapi:
     runs-on: ubuntu-latest
@@ -417,6 +423,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   java-sdk:
     runs-on: ubuntu-latest
@@ -447,6 +455,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   java-model:
     runs-on: ubuntu-latest
@@ -477,6 +487,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   ts-sdk:
     runs-on: ubuntu-latest
@@ -508,6 +520,8 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
           determinism-exclude-paths: '["seed/*/.mock/*", "seed/ts-sdk/**/pnpm-lock.yaml"]'
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   go-model:
     runs-on: ubuntu-latest
@@ -538,6 +552,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   go-sdk:
     runs-on: ubuntu-latest
@@ -568,6 +584,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   csharp-model:
     runs-on: ubuntu-latest
@@ -598,6 +616,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   csharp-sdk:
     runs-on: ubuntu-latest
@@ -628,6 +648,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   php-model:
     runs-on: ubuntu-latest
@@ -658,6 +680,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   php-sdk:
     runs-on: ubuntu-latest
@@ -688,6 +712,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   swift-sdk:
     runs-on: ubuntu-latest
@@ -718,6 +744,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   rust-model:
     runs-on: ubuntu-latest
@@ -748,6 +776,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   rust-sdk:
     runs-on: ubuntu-latest
@@ -778,6 +808,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   # SDK Generation Benchmarks — runs affected SDK generators against large public OAS specs.
   # Uses --skip-scripts to measure generator-only time (no npm install/build/test noise).
@@ -833,6 +865,34 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Log in to Docker Hub
+        if: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY != '' }}
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          password: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
+
+      - name: Clear stale Docker image cache
+        run: rm -rf /tmp/docker-cache
+
+      - name: Cache Docker images
+        id: docker-cache
+        uses: actions/cache@v4
+        with:
+          path: /tmp/docker-cache
+          key: ${{ runner.os }}-docker-${{ matrix.generator }}-${{ hashFiles('**/Dockerfile*') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-${{ matrix.generator }}-
+
+      - name: Load cached Docker images
+        run: |
+          for f in /tmp/docker-cache/*.tar; do
+            [ -f "$f" ] && docker load -i "$f" || true
+          done
+
+      - name: Record pre-existing Docker images
+        run: docker images -q | sort -u > /tmp/docker-images-before.txt
+
       - name: Download shared specs
         uses: actions/download-artifact@v4
         with:
@@ -844,6 +904,21 @@ jobs:
         with:
           generator: ${{ matrix.generator }}
           skip-scripts: "true"
+
+      - name: Save Docker images for cache
+        if: always()
+        run: |
+          if [ ! -f /tmp/docker-images-before.txt ]; then
+            echo "Skipping cache save: docker-images-before.txt not found"
+            exit 0
+          fi
+          mkdir -p /tmp/docker-cache
+          comm -13 /tmp/docker-images-before.txt <(docker images -q | sort -u) | while read -r id; do
+            img=$(docker inspect --format '{{index .RepoTags 0}}' "$id" 2>/dev/null || true)
+            [ -z "$img" ] && continue
+            fname=$(echo "$img" | tr '/:' '_')
+            docker save "$img" -o "/tmp/docker-cache/${fname}.tar" 2>/dev/null || true
+          done
 
       - name: Upload PR results
         uses: actions/upload-artifact@v4

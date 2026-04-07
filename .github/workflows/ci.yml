@@ -179,6 +179,34 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Log in to Docker Hub
+        if: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY != '' }}
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          password: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
+
+      - name: Clear stale Docker image cache
+        run: rm -rf /tmp/docker-cache
+
+      - name: Cache Docker images
+        id: docker-cache
+        uses: actions/cache@v4
+        with:
+          path: /tmp/docker-cache
+          key: ${{ runner.os }}-docker-ete-${{ hashFiles('**/Dockerfile*') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-ete-
+
+      - name: Load cached Docker images
+        run: |
+          for f in /tmp/docker-cache/*.tar; do
+            [ -f "$f" ] && docker load -i "$f" || true
+          done
+
+      - name: Record pre-existing Docker images
+        run: docker images -q | sort -u > /tmp/docker-images-before.txt
+
       - name: Cache Fern bin dependencies
         uses: actions/cache@v4
         with:
@@ -231,6 +259,21 @@ jobs:
           else
             echo "No snapshot changes to commit"
           fi
+
+      - name: Save Docker images for cache
+        if: always()
+        run: |
+          if [ ! -f /tmp/docker-images-before.txt ]; then
+            echo "Skipping cache save: docker-images-before.txt not found"
+            exit 0
+          fi
+          mkdir -p /tmp/docker-cache
+          comm -13 /tmp/docker-images-before.txt <(docker images -q | sort -u) | while read -r id; do
+            img=$(docker inspect --format '{{index .RepoTags 0}}' "$id" 2>/dev/null || true)
+            [ -z "$img" ] && continue
+            fname=$(echo "$img" | tr '/:' '_')
+            docker save "$img" -o "/tmp/docker-cache/${fname}.tar" 2>/dev/null || true
+          done
 
       - name: Ensure no changes to git-tracked files
         if: ${{ !github.event.inputs.update_snapshots }}
