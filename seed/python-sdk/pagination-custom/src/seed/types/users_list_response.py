@@ -4,10 +4,14 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .link import Link
 
 
-class UsernamePage(UniversalBaseModel):
-    after: typing.Optional[str] = None
+class UsersListResponse(UniversalBaseModel):
+    limit: typing.Optional[int] = None
+    count: typing.Optional[int] = None
+    has_more: typing.Optional[bool] = None
+    links: typing.List[Link]
     data: typing.List[str]
 
     if IS_PYDANTIC_V2:
