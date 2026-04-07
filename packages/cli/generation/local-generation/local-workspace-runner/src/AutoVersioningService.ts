@@ -9,11 +9,20 @@ import { extname, join } from "path";
  * to extract or process version information.
  */
 export class AutoVersioningException extends Error {
-    constructor(message: string, cause?: Error) {
+    /**
+     * True when the magic version was not found at all in the diff,
+     * indicating a generator that doesn't embed versions in source files
+     * (e.g., Swift uses git tags via SPM). Only this case should fall back
+     * to reading git tags.
+     */
+    public readonly magicVersionAbsent: boolean;
+
+    constructor(message: string, options?: { cause?: Error; magicVersionAbsent?: boolean }) {
         super(message);
         this.name = "AutoVersioningException";
-        if (cause) {
-            this.cause = cause;
+        this.magicVersionAbsent = options?.magicVersionAbsent ?? false;
+        if (options?.cause) {
+            this.cause = options.cause;
         }
     }
 }
@@ -242,7 +251,8 @@ export class AutoVersioningService {
 
         throw new AutoVersioningException(
             "Failed to extract version from diff. This may indicate the version file format is not supported for" +
-                " auto-versioning, or the placeholder version was not found in any added lines."
+                " auto-versioning, or the placeholder version was not found in any added lines.",
+            { magicVersionAbsent: true }
         );
     }
 
