@@ -866,11 +866,13 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Log in to Docker Hub
-        if: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY != '' }}
+        if: ${{ env.DOCKER_USERNAME != '' }}
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
           password: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
 
       - name: Clear stale Docker image cache
         run: rm -rf /tmp/docker-cache
