@@ -557,6 +557,9 @@ export class WireTestGenerator {
     private buildExpectedAuthorizationHeader(): string | null {
         for (const scheme of this.context.ir.auth.schemes) {
             if (scheme.type === "basic") {
+                if (scheme.usernameOmit && scheme.passwordOmit) {
+                    continue;
+                }
                 const username = scheme.usernameOmit ? "" : "test-username";
                 const password = scheme.passwordOmit ? "" : "test-password";
                 const encoded = Buffer.from(`${username}:${password}`).toString("base64");
