@@ -107,8 +107,6 @@ class UnionWithDuplicativeDiscriminants(UniversalRootModel):
 
 class _UnionWithDuplicativeDiscriminants:
     class FirstItemType(types_types_first_item_type_FirstItemType):
-        type: typing.Literal["firstItemType"] = "firstItemType"
-
         if IS_PYDANTIC_V2:
             model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
@@ -118,8 +116,6 @@ class _UnionWithDuplicativeDiscriminants:
                 smart_union = True
 
     class SecondItemType(types_types_second_item_type_SecondItemType):
-        type: typing.Literal["secondItemType"] = "secondItemType"
-
         if IS_PYDANTIC_V2:
             model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
         else:
