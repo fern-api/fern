@@ -127,9 +127,16 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         const passwordName = this.case.snakeSafe(basicAuthScheme.password);
                         const usernameOmitted = !!basicAuthScheme.usernameOmit;
                         const passwordOmitted = !!basicAuthScheme.passwordOmit;
-                        // Omitted fields use empty string directly
-                        const usernameExpr = usernameOmitted ? `""` : usernameName;
-                        const passwordExpr = passwordOmitted ? `""` : passwordName;
+                        // Build the credential string for Base64 encoding.
+                        // Omitted fields become empty (e.g., password omitted → "#{username}:").
+                        let credentialStr: string;
+                        if (usernameOmitted && !passwordOmitted) {
+                            credentialStr = `":#{${passwordName}}"`;
+                        } else if (!usernameOmitted && passwordOmitted) {
+                            credentialStr = `"#{${usernameName}}:"`;
+                        } else {
+                            credentialStr = `"#{${usernameName}}:#{${passwordName}}"`;
+                        }
                         // Condition: only require non-omitted fields to be present
                         let condition: string;
                         if (!usernameOmitted && !passwordOmitted) {
@@ -151,11 +158,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                             isFirstBlock = false;
                             emittedAnyBlock = true;
                             writer.writeLine(
-                                `  headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameExpr}}:#{${passwordExpr}}")}"`
+                                `  headers["Authorization"] = "Basic #{Base64.strict_encode64(${credentialStr})}"`
                             );
                         } else {
                             writer.writeLine(
-                                `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameExpr}}:#{${passwordExpr}}")}"`
+                                `headers["Authorization"] = "Basic #{Base64.strict_encode64(${credentialStr})}"`
                             );
                         }
                     }
