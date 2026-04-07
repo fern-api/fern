@@ -13,7 +13,7 @@ describe("convertGitOutput", () => {
     it("converts pull-request mode to 'pr'", () => {
         const result = convertGitOutput({ repository: "acme/sdk", mode: "pull-request" });
         expect(result.gitOutput?.mode).toBe("pr");
-        expect(result.gitOutput?.repository).toBe("acme/sdk");
+        expect(result.gitOutput).toMatchObject({ repository: "acme/sdk" });
     });
 
     it("converts push mode to 'push'", () => {
@@ -100,7 +100,7 @@ describe("convertGitOutput", () => {
             token: "${GH_TOKEN}",
             mode: "pull-request"
         } as never);
-        expect(result.gitOutput?.repository).toBe("https://github.enterprise.com/acme/sdk");
+        expect(result.gitOutput).toMatchObject({ repository: "https://github.enterprise.com/acme/sdk" });
         const warn = result.warnings.find((w) => w.message.includes("Self-hosted"));
         expect(warn).toBeDefined();
         expect(warn?.type).toBe("unsupported");

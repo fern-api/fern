@@ -1,4 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import type { Logger } from "@fern-api/logger";
 import { randomUUID } from "crypto";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -10,6 +11,19 @@ import { Migrator } from "../Migrator.js";
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+
+function makeLogger(): Logger {
+    return {
+        disable: () => undefined,
+        enable: () => undefined,
+        trace: () => undefined,
+        debug: () => undefined,
+        info: () => undefined,
+        warn: () => undefined,
+        error: () => undefined,
+        log: () => undefined
+    };
+}
 
 async function createProjectDir(base: string) {
     const projectDir = join(base, `migrator-test-${randomUUID()}`);
@@ -43,7 +57,7 @@ describe("Migrator", () => {
         const projectDir = await createProjectDir(base);
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(projectDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined }
+            logger: makeLogger()
         });
         const result = await migrator.migrate();
         expect(result.success).toBe(false);
@@ -59,7 +73,7 @@ describe("Migrator", () => {
 
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(projectDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined }
+            logger: makeLogger()
         });
         const result = await migrator.migrate();
         expect(result.success).toBe(false);
@@ -88,7 +102,7 @@ describe("Migrator", () => {
 
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(projectDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined },
+            logger: makeLogger(),
             deleteOriginals: false
         });
         const result = await migrator.migrate();
@@ -128,7 +142,7 @@ groups:
 
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(projectDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined },
+            logger: makeLogger(),
             deleteOriginals: false
         });
         const result = await migrator.migrate();
@@ -152,7 +166,7 @@ groups:
 
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(projectDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined },
+            logger: makeLogger(),
             deleteOriginals: true
         });
         await migrator.migrate();
@@ -174,7 +188,7 @@ groups:
 
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(projectDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined },
+            logger: makeLogger(),
             deleteOriginals: false
         });
         await migrator.migrate();
@@ -209,7 +223,7 @@ navigation:
 
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(projectDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined },
+            logger: makeLogger(),
             deleteOriginals: false
         });
         const result = await migrator.migrate();
@@ -232,7 +246,7 @@ navigation:
 
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(projectDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined },
+            logger: makeLogger(),
             deleteOriginals: false
         });
         await migrator.migrate();
@@ -262,7 +276,7 @@ tabs:
 
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(projectDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined },
+            logger: makeLogger(),
             deleteOriginals: false
         });
         await migrator.migrate();
@@ -359,7 +373,7 @@ groups:
 
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(projectDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined },
+            logger: makeLogger(),
             deleteOriginals: false
         });
         const result = await migrator.migrate();
@@ -425,7 +439,7 @@ navigation:
 
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(projectDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined },
+            logger: makeLogger(),
             deleteOriginals: false
         });
         const result = await migrator.migrate();
@@ -456,7 +470,7 @@ groups: {}
 
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(projectDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined },
+            logger: makeLogger(),
             deleteOriginals: false
         });
         await migrator.migrate();
@@ -495,7 +509,7 @@ groups:
 
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(projectDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined },
+            logger: makeLogger(),
             deleteOriginals: false
         });
         await migrator.migrate();
@@ -538,7 +552,7 @@ jobs:
 
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(projectDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined },
+            logger: makeLogger(),
             deleteOriginals: false
         });
         const result = await migrator.migrate();
@@ -572,7 +586,7 @@ jobs:
 
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(projectDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined },
+            logger: makeLogger(),
             deleteOriginals: false
         });
         const result = await migrator.migrate();
@@ -594,7 +608,7 @@ jobs:
         // Run from inside the fern directory itself
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(fernDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined },
+            logger: makeLogger(),
             deleteOriginals: false
         });
         const result = await migrator.migrate();
@@ -619,7 +633,7 @@ jobs:
 
         const migrator = new Migrator({
             cwd: AbsoluteFilePath.of(projectDir),
-            logger: { debug: () => undefined, info: () => undefined, warn: () => undefined, error: () => undefined },
+            logger: makeLogger(),
             deleteOriginals: false
         });
         const result = await migrator.migrate();

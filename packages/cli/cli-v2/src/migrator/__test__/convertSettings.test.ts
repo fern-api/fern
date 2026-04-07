@@ -62,7 +62,7 @@ describe("convertSettings", () => {
 
     it("converts message-naming for AsyncAPI", () => {
         const result = convertSettings({ "message-naming": "operation-id" } as never);
-        expect(result.settings.messageNaming).toBe("operation-id");
+        expect(result.settings).toHaveProperty("messageNaming", "operation-id");
     });
 
     it("converts a full real-world settings block", () => {
