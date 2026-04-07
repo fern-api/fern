@@ -3,7 +3,11 @@ import { type BootstrapResult, bootstrap } from "@fern-api/replay";
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import tmp from "tmp-promise";
-import { ensureGitattributesEntriesSync, ensureReplayFernignoreEntriesSync, REPLAY_FERNIGNORE_ENTRIES } from "./fernignore";
+import {
+    ensureGitattributesEntriesSync,
+    ensureReplayFernignoreEntriesSync,
+    REPLAY_FERNIGNORE_ENTRIES
+} from "./fernignore";
 
 export interface ReplayInitParams {
     /** GitHub repo URI (e.g., "fern-demo/fern-replay-testbed-java-sdk") */
