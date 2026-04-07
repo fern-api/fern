@@ -209,6 +209,9 @@ export class LocalTaskHandler {
             try {
                 previousVersion = autoVersioningService.extractPreviousVersion(diffContent, this.version);
             } catch (magicVersionNotFound) {
+                if (!(magicVersionNotFound instanceof AutoVersioningException)) {
+                    throw magicVersionNotFound;
+                }
                 // Magic version not found in diff — fall back to git tags.
                 // This happens for generators that don't embed versions in files (e.g., Swift
                 // uses git tags for versioning via SPM, not a version field in Package.swift).
