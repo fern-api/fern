@@ -100,7 +100,7 @@ func TestEndpointsDuplicateNamesCGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.GetRequestC{
-		Id: "id",
+		ID: "id",
 		Verbose: fern.Bool(
 			true,
 		),

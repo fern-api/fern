@@ -10,11 +10,11 @@ import (
 )
 
 func TestSettersGetTokenRequest(t *testing.T) {
-	t.Run("SetClientId", func(t *testing.T) {
+	t.Run("SetClientID", func(t *testing.T) {
 		obj := &GetTokenRequest{}
-		var fernTestValueClientId string
-		obj.SetClientId(fernTestValueClientId)
-		assert.Equal(t, fernTestValueClientId, obj.ClientId)
+		var fernTestValueClientID string
+		obj.SetClientID(fernTestValueClientID)
+		assert.Equal(t, fernTestValueClientID, obj.ClientID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -37,18 +37,18 @@ func TestSettersGetTokenRequest(t *testing.T) {
 }
 
 func TestGettersGetTokenRequest(t *testing.T) {
-	t.Run("GetClientId", func(t *testing.T) {
+	t.Run("GetClientID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetTokenRequest{}
 		var expected string
-		obj.ClientId = expected
+		obj.ClientID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetClientId(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetClientID(), "getter should return the property value")
 	})
 
-	t.Run("GetClientId_NilReceiver", func(t *testing.T) {
+	t.Run("GetClientID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetTokenRequest
 		// Should not panic - getters should handle nil receiver gracefully
@@ -57,7 +57,7 @@ func TestGettersGetTokenRequest(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetClientId() // Should return zero value
+		_ = obj.GetClientID() // Should return zero value
 	})
 
 	t.Run("GetClientSecret", func(t *testing.T) {
@@ -119,14 +119,14 @@ func TestGettersGetTokenRequest(t *testing.T) {
 }
 
 func TestSettersMarkExplicitGetTokenRequest(t *testing.T) {
-	t.Run("SetClientId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetClientID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetTokenRequest{}
-		var fernTestValueClientId string
+		var fernTestValueClientID string
 
 		// Act
-		obj.SetClientId(fernTestValueClientId)
+		obj.SetClientID(fernTestValueClientID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -215,11 +215,11 @@ func TestSettersMarkExplicitGetTokenRequest(t *testing.T) {
 }
 
 func TestSettersRefreshTokenRequest(t *testing.T) {
-	t.Run("SetClientId", func(t *testing.T) {
+	t.Run("SetClientID", func(t *testing.T) {
 		obj := &RefreshTokenRequest{}
-		var fernTestValueClientId string
-		obj.SetClientId(fernTestValueClientId)
-		assert.Equal(t, fernTestValueClientId, obj.ClientId)
+		var fernTestValueClientID string
+		obj.SetClientID(fernTestValueClientID)
+		assert.Equal(t, fernTestValueClientID, obj.ClientID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -250,18 +250,18 @@ func TestSettersRefreshTokenRequest(t *testing.T) {
 }
 
 func TestGettersRefreshTokenRequest(t *testing.T) {
-	t.Run("GetClientId", func(t *testing.T) {
+	t.Run("GetClientID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &RefreshTokenRequest{}
 		var expected string
-		obj.ClientId = expected
+		obj.ClientID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetClientId(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetClientID(), "getter should return the property value")
 	})
 
-	t.Run("GetClientId_NilReceiver", func(t *testing.T) {
+	t.Run("GetClientID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *RefreshTokenRequest
 		// Should not panic - getters should handle nil receiver gracefully
@@ -270,7 +270,7 @@ func TestGettersRefreshTokenRequest(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetClientId() // Should return zero value
+		_ = obj.GetClientID() // Should return zero value
 	})
 
 	t.Run("GetClientSecret", func(t *testing.T) {
@@ -355,14 +355,14 @@ func TestGettersRefreshTokenRequest(t *testing.T) {
 }
 
 func TestSettersMarkExplicitRefreshTokenRequest(t *testing.T) {
-	t.Run("SetClientId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetClientID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &RefreshTokenRequest{}
-		var fernTestValueClientId string
+		var fernTestValueClientID string
 
 		// Act
-		obj.SetClientId(fernTestValueClientId)
+		obj.SetClientID(fernTestValueClientID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

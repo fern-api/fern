@@ -9,17 +9,17 @@ import (
 )
 
 var (
-	getPresignedUrlRequestFieldS3Key = big.NewInt(1 << 0)
+	getPresignedURLRequestFieldS3Key = big.NewInt(1 << 0)
 )
 
-type GetPresignedUrlRequest struct {
+type GetPresignedURLRequest struct {
 	S3Key string `json:"s3Key" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetPresignedUrlRequest) require(field *big.Int) {
+func (g *GetPresignedURLRequest) require(field *big.Int) {
 	if g.explicitFields == nil {
 		g.explicitFields = big.NewInt(0)
 	}
@@ -28,23 +28,23 @@ func (g *GetPresignedUrlRequest) require(field *big.Int) {
 
 // SetS3Key sets the S3Key field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetPresignedUrlRequest) SetS3Key(s3Key string) {
+func (g *GetPresignedURLRequest) SetS3Key(s3Key string) {
 	g.S3Key = s3Key
-	g.require(getPresignedUrlRequestFieldS3Key)
+	g.require(getPresignedURLRequestFieldS3Key)
 }
 
-func (g *GetPresignedUrlRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler GetPresignedUrlRequest
+func (g *GetPresignedURLRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetPresignedURLRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*g = GetPresignedUrlRequest(body)
+	*g = GetPresignedURLRequest(body)
 	return nil
 }
 
-func (g *GetPresignedUrlRequest) MarshalJSON() ([]byte, error) {
-	type embed GetPresignedUrlRequest
+func (g *GetPresignedURLRequest) MarshalJSON() ([]byte, error) {
+	type embed GetPresignedURLRequest
 	var marshaler = struct {
 		embed
 	}{

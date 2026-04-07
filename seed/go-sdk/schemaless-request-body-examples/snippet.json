@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/schemaless-request-body-examples/fern\"\n\tfernclient \"github.com/schemaless-request-body-examples/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.UpdatePlant(\n\tcontext.TODO(),\n\t\u0026fern.UpdatePlantRequest{\n\t\tPlantId: \"plantId\",\n\t\tBody: map[string]interface{}{\n\t\t\t\"care\": map[string]interface{}{\n\t\t\t\t\"light\": \"partial shade\",\n\t\t\t},\n\t\t\t\"name\": \"Updated Venus Flytrap\",\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/schemaless-request-body-examples/fern\"\n\tfernclient \"github.com/schemaless-request-body-examples/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.UpdatePlant(\n\tcontext.TODO(),\n\t\u0026fern.UpdatePlantRequest{\n\t\tPlantID: \"plantId\",\n\t\tBody: map[string]interface{}{\n\t\t\t\"care\": map[string]interface{}{\n\t\t\t\t\"light\": \"partial shade\",\n\t\t\t},\n\t\t\t\"name\": \"Updated Venus Flytrap\",\n\t\t},\n\t},\n)\n"
             }
         }
     ]

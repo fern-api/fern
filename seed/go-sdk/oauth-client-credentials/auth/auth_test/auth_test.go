@@ -74,7 +74,7 @@ func TestAuthGetTokenWithClientCredentialsWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.GetTokenRequest{
-		ClientId:     "my_oauth_app_123",
+		ClientID:     "my_oauth_app_123",
 		ClientSecret: "sk_live_abcdef123456789",
 		Scope: fern.String(
 			"read:users",
@@ -103,7 +103,7 @@ func TestAuthRefreshTokenWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.RefreshTokenRequest{
-		ClientId:     "my_oauth_app_123",
+		ClientID:     "my_oauth_app_123",
 		ClientSecret: "sk_live_abcdef123456789",
 		RefreshToken: "refresh_token",
 		Scope: fern.String(

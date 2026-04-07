@@ -35,7 +35,7 @@ func (r *RawClient) UploadFile(
 	ctx context.Context,
 	request *fern.UploadFileRequest,
 	opts ...option.RequestOption,
-) (*core.Response[fern.FileId], error) {
+) (*core.Response[fern.FileID], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -59,7 +59,7 @@ func (r *RawClient) UploadFile(
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
-	var response fern.FileId
+	var response fern.FileID
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -77,7 +77,7 @@ func (r *RawClient) UploadFile(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[fern.FileId]{
+	return &core.Response[fern.FileID]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

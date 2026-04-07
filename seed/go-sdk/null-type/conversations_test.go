@@ -94,29 +94,29 @@ func TestSettersMarkExplicitOutboundCallConversationsRequest(t *testing.T) {
 }
 
 func TestSettersOutboundCallConversationsResponse(t *testing.T) {
-	t.Run("SetConversationId", func(t *testing.T) {
+	t.Run("SetConversationID", func(t *testing.T) {
 		obj := &OutboundCallConversationsResponse{}
-		var fernTestValueConversationId any
-		obj.SetConversationId(fernTestValueConversationId)
-		assert.Equal(t, fernTestValueConversationId, obj.ConversationId)
+		var fernTestValueConversationID any
+		obj.SetConversationID(fernTestValueConversationID)
+		assert.Equal(t, fernTestValueConversationID, obj.ConversationID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 }
 
 func TestGettersOutboundCallConversationsResponse(t *testing.T) {
-	t.Run("GetConversationId", func(t *testing.T) {
+	t.Run("GetConversationID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &OutboundCallConversationsResponse{}
 		var expected any
-		obj.ConversationId = expected
+		obj.ConversationID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetConversationId(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConversationID(), "getter should return the property value")
 	})
 
-	t.Run("GetConversationId_NilReceiver", func(t *testing.T) {
+	t.Run("GetConversationID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *OutboundCallConversationsResponse
 		// Should not panic - getters should handle nil receiver gracefully
@@ -125,20 +125,20 @@ func TestGettersOutboundCallConversationsResponse(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetConversationId() // Should return zero value
+		_ = obj.GetConversationID() // Should return zero value
 	})
 
 }
 
 func TestSettersMarkExplicitOutboundCallConversationsResponse(t *testing.T) {
-	t.Run("SetConversationId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetConversationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &OutboundCallConversationsResponse{}
-		var fernTestValueConversationId any
+		var fernTestValueConversationID any
 
 		// Act
-		obj.SetConversationId(fernTestValueConversationId)
+		obj.SetConversationID(fernTestValueConversationID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

@@ -74,7 +74,7 @@ func TestEndpointsPutAddWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.PutRequest{
-		Id: "id",
+		ID: "id",
 	}
 	_, invocationErr := client.Endpoints.Put.Add(
 		context.TODO(),
