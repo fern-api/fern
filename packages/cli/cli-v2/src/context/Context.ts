@@ -41,7 +41,7 @@ export class Context {
     public readonly tokenService: TokenService;
     public readonly ttyAwareLogger: TtyAwareLogger;
 
-    constructor({
+    public static async create({
         stdout,
         stderr,
         cwd,
@@ -51,6 +51,24 @@ export class Context {
         stderr: NodeJS.WriteStream;
         cwd?: AbsoluteFilePath;
         logLevel?: LogLevel;
+    }): Promise<Context> {
+        const ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
+        const telemetry = await TelemetryClient.create({ isTTY: ttyAwareLogger.isTTY });
+        return new Context({ stdout, stderr, cwd, logLevel, ttyAwareLogger, telemetry });
+    }
+
+    private constructor({
+        cwd,
+        logLevel,
+        ttyAwareLogger,
+        telemetry
+    }: {
+        stdout: NodeJS.WriteStream;
+        stderr: NodeJS.WriteStream;
+        cwd?: AbsoluteFilePath;
+        logLevel?: LogLevel;
+        ttyAwareLogger: TtyAwareLogger;
+        telemetry: TelemetryClient;
     }) {
         this.cwd = cwd ?? AbsoluteFilePath.of(process.cwd());
         this.logLevel = logLevel ?? LogLevel.Info;
@@ -59,8 +77,8 @@ export class Context {
         this.stderr = createLogger((level: LogLevel, ...args: string[]) => this.logStderr(level, ...args));
         this.cache = new Cache({ logger: this.stderr });
         this.logs = new LogFileWriter(this.cache.logs.absoluteFilePath);
-        this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
-        this.telemetry = new TelemetryClient({ isTTY: this.isTTY });
+        this.ttyAwareLogger = ttyAwareLogger;
+        this.telemetry = telemetry;
         this.tokenService = new TokenService({ credential: new CredentialStore() });
     }
 

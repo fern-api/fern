@@ -34,7 +34,7 @@ describe("SdkChecker", () => {
             const workspace = await loadWorkspace("simple-api");
 
             const checker = new SdkChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
@@ -61,7 +61,7 @@ api:
             const workspace = await loadTempWorkspace(testDir);
 
             const checker = new SdkChecker({
-                context: createTestContext({ cwd: testDir }),
+                context: await createTestContext({ cwd: testDir }),
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
@@ -98,7 +98,7 @@ sdks:
 
             const workspace = await loadTempWorkspace(testDir);
             const checker = new SdkChecker({
-                context: createTestContext({ cwd: testDir }),
+                context: await createTestContext({ cwd: testDir }),
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
@@ -113,7 +113,7 @@ sdks:
             const workspace = await loadWorkspace("simple-api");
 
             const checker = new SdkChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
@@ -146,7 +146,7 @@ sdks:
 
             const workspace = await loadTempWorkspace(testDir);
             const checker = new SdkChecker({
-                context: createTestContext({ cwd: testDir }),
+                context: await createTestContext({ cwd: testDir }),
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
@@ -163,7 +163,7 @@ sdks:
             const workspace = await loadWorkspace("simple-api");
 
             const checker = new SdkChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
@@ -198,7 +198,7 @@ sdks:
 
             const workspace = await loadTempWorkspace(testDir);
             const checker = new SdkChecker({
-                context: createTestContext({ cwd: testDir }),
+                context: await createTestContext({ cwd: testDir }),
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
@@ -213,7 +213,7 @@ sdks:
             const workspace = await loadWorkspace("simple-api");
 
             const checker = new SdkChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
@@ -229,7 +229,7 @@ sdks:
             const workspace = await loadWorkspace("simple-api");
 
             const checker = new SdkChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 versionChecker: async ({ target }) => ({
                     violation: {
                         severity: "warning",

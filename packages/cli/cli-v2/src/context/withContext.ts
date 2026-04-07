@@ -25,13 +25,13 @@ export function withContext<T extends GlobalArgs>(
     handler: (context: Context, args: T) => Promise<void>
 ): (args: T) => Promise<void> {
     return async (args: T) => {
-        const context = createContext(args);
+        const context = await createContext(args);
         const startTime = Date.now();
         setupSignalHandler(context);
 
         try {
             await handler(context, args);
-            await context.telemetry.sendLifecycleEvent({
+            context.telemetry.sendLifecycleEvent({
                 command: context.info.command,
                 status: "success",
                 durationMs: Date.now() - startTime
@@ -41,9 +41,9 @@ export function withContext<T extends GlobalArgs>(
             await exitGracefully(0);
         } catch (error) {
             if (shouldReportToSentry(error)) {
-                await context.telemetry.captureException(error);
+                context.telemetry.captureException(error);
             }
-            await context.telemetry.sendLifecycleEvent({
+            context.telemetry.sendLifecycleEvent({
                 command: context.info.command,
                 status: "error",
                 durationMs: Date.now() - startTime,
@@ -57,9 +57,9 @@ export function withContext<T extends GlobalArgs>(
     };
 }
 
-function createContext(options: GlobalArgs): Context {
+async function createContext(options: GlobalArgs): Promise<Context> {
     const logLevel = parseLogLevel(options["log-level"] ?? "info");
-    return new Context({
+    return Context.create({
         stdout: process.stdout,
         stderr: process.stderr,
         logLevel
