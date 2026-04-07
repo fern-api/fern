@@ -42,7 +42,7 @@ export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContex
                 description: "The location to output the organization name as a text file, defaults to standard out."
             }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern organization",
                 properties: {
                     outputLocation: argv.output
@@ -110,7 +110,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             description: "The generator output modes to exclude within the outputted list."
                         }),
                 async (argv) => {
-                    await cliContext.instrumentPostHogEvent({
+                    cliContext.instrumentPostHogEvent({
                         command: "fern generator list",
                         properties: {
                             outputLocation: argv.output
@@ -183,7 +183,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                                 "Skip upgrading generators that have autorelease: false set in their configuration."
                         }),
                 async (argv) => {
-                    await cliContext.instrumentPostHogEvent({
+                    cliContext.instrumentPostHogEvent({
                         command: "fern generator upgrade",
                         properties: {
                             generator: argv.generator,
@@ -282,7 +282,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         }),
                 async (argv) => {
                     const correctedGetGenerator = warnAndCorrectIncorrectDockerOrgV2(argv.generator, cliContext);
-                    await cliContext.instrumentPostHogEvent({
+                    cliContext.instrumentPostHogEvent({
                         command: "fern generator get",
                         properties: {
                             generator: correctedGetGenerator,

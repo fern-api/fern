@@ -8,7 +8,14 @@ export class MockCliContext extends CliContext {
         process.env.CLI_VERSION = "0.0.0";
         process.env.CLI_NAME = "test-cli";
 
-        super(process.stdout, process.stderr, { isLocal: true });
+        super(process.stdout, process.stderr, {
+            isLocal: true,
+            posthogManager: {
+                sendEvent: () => undefined,
+                identify: () => undefined,
+                flush: async () => undefined
+            }
+        });
     }
 
     // Override exit to prevent process.exit in tests

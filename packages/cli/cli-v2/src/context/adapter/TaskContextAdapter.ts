@@ -115,8 +115,8 @@ export class TaskContextAdapter implements TaskContext {
         }
     }
 
-    public async instrumentPostHogEvent(_event: PosthogEvent): Promise<void> {
-        // no-op for now
+    public instrumentPostHogEvent(_event: PosthogEvent): void {
+        // no-op — v2 uses TelemetryClient.sendEvent directly
     }
 
     private formatError(error: unknown): string | undefined {
