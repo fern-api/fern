@@ -20,12 +20,51 @@ inputs:
     description: Whether to allow unexpected failures during seed generation
     required: false
     default: "false"
+  dockerhub-username:
+    description: Docker Hub username for authenticated pulls (avoids rate limits)
+    required: false
+    default: ""
+  dockerhub-token:
+    description: Docker Hub token for authenticated pulls (avoids rate limits)
+    required: false
+    default: ""
 
 runs:
   using: "composite"
   steps:
     - name: Install
       uses: ./.github/actions/install
+
+    - name: Log in to Docker Hub
+      if: ${{ inputs.dockerhub-username != '' }}
+      uses: docker/login-action@v3
+      with:
+        username: ${{ inputs.dockerhub-username }}
+        password: ${{ inputs.dockerhub-token }}
+
+    - name: Clear stale Docker image cache
+      shell: bash
+      run: rm -rf /tmp/docker-cache
+
+    - name: Cache Docker images
+      id: docker-cache
+      uses: actions/cache@v4
+      with:
+        path: /tmp/docker-cache
+        key: ${{ runner.os }}-docker-${{ inputs.generator-name }}-${{ hashFiles('**/Dockerfile*') }}
+        restore-keys: |
+          ${{ runner.os }}-docker-${{ inputs.generator-name }}-
+
+    - name: Load cached Docker images
+      shell: bash
+      run: |
+        for f in /tmp/docker-cache/*.tar; do
+          [ -f "$f" ] && docker load -i "$f" || true
+        done
+
+    - name: Record pre-existing Docker images
+      shell: bash
+      run: docker images -q | sort -u > /tmp/docker-images-before.txt
 
     - name: Seed Test
       shell: bash
@@ -54,4 +93,20 @@ runs:
           fi
           echo "Seed test failed (attempt $attempt/3), retrying in 10s..."
           sleep 10
+        done
+
+    - name: Save Docker images for cache
+      if: always()
+      shell: bash
+      run: |
+        if [ ! -f /tmp/docker-images-before.txt ]; then
+          echo "Skipping cache save: docker-images-before.txt not found"
+          exit 0
+        fi
+        mkdir -p /tmp/docker-cache
+        comm -13 /tmp/docker-images-before.txt <(docker images -q | sort -u) | while read -r id; do
+          img=$(docker inspect --format '{{index .RepoTags 0}}' "$id" 2>/dev/null || true)
+          [ -z "$img" ] && continue
+          fname=$(echo "$img" | tr '/:' '_')
+          docker save "$img" -o "/tmp/docker-cache/${fname}.tar" 2>/dev/null || true
         done

@@ -8,6 +8,7 @@ import tmp from "tmp-promise";
 
 import { ContainerScriptConfig, ScriptCommands } from "../../../config/api/index.js";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces.js";
+import { resolveContainerScripts } from "../../../utils/resolveScriptsConfiguration.js";
 import { ScriptRunner } from "./ScriptRunner.js";
 
 interface RunningScriptConfig extends ContainerScriptConfig {
@@ -60,8 +61,7 @@ export class ContainerScriptRunner extends ScriptRunner {
 
         if (runner != null) {
             this.runner = runner;
-            const hasScripts =
-                this.workspace.workspaceConfig.scripts != null && this.workspace.workspaceConfig.scripts.length > 0;
+            const hasScripts = resolveContainerScripts(this.workspace.workspaceConfig.scripts).length > 0;
 
             if (!hasScripts) {
                 throw new Error(
@@ -369,7 +369,7 @@ export class ContainerScriptRunner extends ScriptRunner {
     }
 
     private async startContainers(context: TaskContext): Promise<void> {
-        const scriptConfigs = this.workspace.workspaceConfig.scripts ?? [];
+        const scriptConfigs = resolveContainerScripts(this.workspace.workspaceConfig.scripts);
         if (scriptConfigs.length === 0) {
             return;
         }

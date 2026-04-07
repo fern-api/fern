@@ -915,8 +915,28 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
      * conditionally via {@link getLegacyFrameworkDependencies}.
      */
     private getDependencies(): string[] {
+        // Collect extra dependency names (case-insensitive) so user-specified
+        // versions take precedence over bundled ones.
+        const extraDeps = this.generation.settings.extraDependencies;
+        const extraDepNames = new Set(Object.keys(extraDeps).map((n) => n.toLowerCase()));
+
+        const pushIfNotOverridden = (result: string[], packageName: string, line: string) => {
+            if (!extraDepNames.has(packageName.toLowerCase())) {
+                result.push(line);
+            }
+        };
+
         const result: string[] = [];
-        result.push('<PackageReference Include="PolySharp" Version="1.15.0">');
+        // PolySharp always needs <IncludeAssets> and <PrivateAssets> metadata,
+        // even when the user overrides the version via extra-dependencies.
+        let polySharpVersion = "1.15.0";
+        for (const [name, version] of Object.entries(extraDeps)) {
+            if (name.toLowerCase() === "polysharp") {
+                polySharpVersion = version;
+                break;
+            }
+        }
+        result.push(`<PackageReference Include="PolySharp" Version="${polySharpVersion}">`);
         result.push(
             `${this.generation.constants.formatting.indent}<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>`
         );
@@ -929,23 +949,55 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
         // HttpClient assembly reference, which is handled separately via
         // getLegacyFrameworkDependencies().
         if (!this.generation.settings.shouldGenerateUndiscriminatedUnions) {
-            result.push('<PackageReference Include="OneOf" Version="3.0.271" />');
-            result.push('<PackageReference Include="OneOf.Extended" Version="3.0.271" />');
-            result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
-            result.push('<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />');
+            pushIfNotOverridden(result, "OneOf", '<PackageReference Include="OneOf" Version="3.0.271" />');
+            pushIfNotOverridden(
+                result,
+                "OneOf.Extended",
+                '<PackageReference Include="OneOf.Extended" Version="3.0.271" />'
+            );
+            pushIfNotOverridden(
+                result,
+                "System.Net.Http",
+                '<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />'
+            );
+            pushIfNotOverridden(
+                result,
+                "System.Text.RegularExpressions",
+                '<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />'
+            );
         }
-        for (const [name, version] of Object.entries(this.generation.settings.extraDependencies)) {
+        for (const [name, version] of Object.entries(extraDeps)) {
+            // PolySharp is already handled above with its required metadata.
+            if (name.toLowerCase() === "polysharp") {
+                continue;
+            }
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
         }
         if (this.context.hasWebSocketEndpoints) {
-            result.push('<PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />');
-            result.push('<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.13" />');
-            result.push('<PackageReference Include="System.Threading.Channels" Version="9.0.13" />');
+            pushIfNotOverridden(
+                result,
+                "Microsoft.IO.RecyclableMemoryStream",
+                '<PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />'
+            );
+            pushIfNotOverridden(
+                result,
+                "Microsoft.Extensions.Logging.Abstractions",
+                '<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.13" />'
+            );
+            pushIfNotOverridden(
+                result,
+                "System.Threading.Channels",
+                '<PackageReference Include="System.Threading.Channels" Version="9.0.13" />'
+            );
         }
         // SSE package — only in-box starting with net9.0, so keep unconditional for
         // multi-targeted projects that include net8.0
         if (this.context.hasSseEndpoints) {
-            result.push('<PackageReference Include="System.Net.ServerSentEvents" Version="9.0.14" />');
+            pushIfNotOverridden(
+                result,
+                "System.Net.ServerSentEvents",
+                '<PackageReference Include="System.Net.ServerSentEvents" Version="9.0.14" />'
+            );
         }
         return result;
     }
@@ -955,15 +1007,20 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
      * These packages are included in the .NET shared framework starting with net8.0.
      */
     private getLegacyFrameworkDependencies(): string[] {
+        const extraDepNames = new Set(
+            Object.keys(this.generation.settings.extraDependencies).map((n) => n.toLowerCase())
+        );
         const result: string[] = [];
         for (const pkg of NET8_INBOX_PACKAGES) {
-            result.push(`<PackageReference Include="${pkg.name}" Version="${pkg.version}" />`);
+            if (!extraDepNames.has(pkg.name.toLowerCase())) {
+                result.push(`<PackageReference Include="${pkg.name}" Version="${pkg.version}" />`);
+            }
         }
         // System.Net.Http is in-box on net8.0+ but needed on legacy TFMs for the
         // net462 assembly reference. When OneOf is used, it's already in the
         // unconditional group as a security version-floor override, so skip here
         // to avoid a duplicate PackageReference.
-        if (this.generation.settings.shouldGenerateUndiscriminatedUnions) {
+        if (this.generation.settings.shouldGenerateUndiscriminatedUnions && !extraDepNames.has("system.net.http")) {
             result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
         }
         return result;

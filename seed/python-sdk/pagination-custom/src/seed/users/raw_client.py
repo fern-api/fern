@@ -9,7 +9,7 @@ from ..core.custom_pagination import AsyncCustomPager, SyncCustomPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..types.username_cursor import UsernameCursor
+from ..types.users_list_response import UsersListResponse
 from pydantic import ValidationError
 
 
@@ -17,27 +17,34 @@ class RawUsersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list_usernames_custom(
-        self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncCustomPager[str, UsernameCursor]:
+    def list_with_custom_pager(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        starting_after: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncCustomPager[str, UsersListResponse]:
         """
         Parameters
         ----------
+        limit : typing.Optional[int]
+            The maximum number of results to return.
+
         starting_after : typing.Optional[str]
-            The cursor used for pagination in order to fetch
-            the next page of results.
+            The cursor used for pagination.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SyncCustomPager[str, UsernameCursor]
+        SyncCustomPager[str, UsersListResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
+                "limit": limit,
                 "starting_after": starting_after,
             },
             request_options=request_options,
@@ -45,9 +52,9 @@ class RawUsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    UsernameCursor,
+                    UsersListResponse,
                     parse_obj_as(
-                        type_=UsernameCursor,  # type: ignore
+                        type_=UsersListResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -66,27 +73,34 @@ class AsyncRawUsersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list_usernames_custom(
-        self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncCustomPager[str, UsernameCursor]:
+    async def list_with_custom_pager(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        starting_after: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncCustomPager[str, UsersListResponse]:
         """
         Parameters
         ----------
+        limit : typing.Optional[int]
+            The maximum number of results to return.
+
         starting_after : typing.Optional[str]
-            The cursor used for pagination in order to fetch
-            the next page of results.
+            The cursor used for pagination.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncCustomPager[str, UsernameCursor]
+        AsyncCustomPager[str, UsersListResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
+                "limit": limit,
                 "starting_after": starting_after,
             },
             request_options=request_options,
@@ -94,9 +108,9 @@ class AsyncRawUsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    UsernameCursor,
+                    UsersListResponse,
                     parse_obj_as(
-                        type_=UsernameCursor,  # type: ignore
+                        type_=UsersListResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
