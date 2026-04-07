@@ -6,11 +6,6 @@
       "request": {
         "urlPathTemplate": "/users/{id}",
         "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "pathParameters": {
           "id": {
             "equalTo": "id"
