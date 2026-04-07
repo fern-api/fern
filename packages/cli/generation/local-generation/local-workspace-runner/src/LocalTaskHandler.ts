@@ -215,9 +215,7 @@ export class LocalTaskHandler {
                 // Magic version not found in diff — fall back to git tags.
                 // This happens for generators that don't embed versions in files (e.g., Swift
                 // uses git tags for versioning via SPM, not a version field in Package.swift).
-                this.context.logger.info(
-                    `Magic version not found in diff, falling back to git tags: ${e}`
-                );
+                this.context.logger.info(`Magic version not found in diff, falling back to git tags: ${e}`);
                 previousVersion = await autoVersioningService.getLatestVersionFromGitTags(
                     this.absolutePathToLocalOutput
                 );
