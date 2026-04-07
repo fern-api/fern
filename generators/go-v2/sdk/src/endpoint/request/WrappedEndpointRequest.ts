@@ -119,18 +119,29 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }): void {
         switch (fileProperty.type) {
             case "file": {
+                const fileRef = this.getRequestPropertyReference({
+                    fieldName: fileProperty.key,
+                    isFile: true
+                });
+                if (fileProperty.isOptional) {
+                    writer.writeNewLineIfLastLineNot();
+                    writer.writeLine(`if ${fileRef} != nil {`);
+                    writer.indent();
+                }
                 this.writeFileUploadField({
                     writer,
                     key: getWireValue(fileProperty.key),
-                    value: go.codeblock(
-                        this.getRequestPropertyReference({ fieldName: fileProperty.key, isFile: true })
-                    ),
+                    value: go.codeblock(fileRef),
                     contentType: fileProperty.contentType,
                     format: "file"
                 });
+                if (fileProperty.isOptional) {
+                    writer.dedent();
+                    writer.writeLine("}");
+                }
                 break;
             }
-            case "fileArray": {
+            case "fileArray":
                 writer.writeLine(
                     `for _, f := range ${this.getRequestPropertyReference({ fieldName: fileProperty.key, isFile: true })} {`
                 );

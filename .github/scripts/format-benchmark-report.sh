@@ -6,7 +6,8 @@
 #   {"generator":"ts-sdk","spec":"square","duration_seconds":45}
 #
 # The main-results-dir may contain either:
-#   - Flat .jsonl files (single baseline, legacy format)
+#   - Flat .jsonl files (single baseline) with optional e2e/ subdirectory
+#     for E2E results (artifacts API format)
 #   - A history/ subdirectory with dated run folders, each containing .jsonl files.
 #     When history exists, the median of all historical runs is used as the baseline.
 #     E2E results are stored in history/<run>/e2e/ subdirectories.
@@ -26,7 +27,8 @@ compute_median() {
 }
 
 # Look up E2E baseline duration for a given generator+spec.
-# Reads from history/<run>/e2e/ subdirectories.
+# Checks flat e2e/ subdirectory first (artifacts API format),
+# then falls back to history/<run>/e2e/ subdirectories.
 # Sets: E2E_BASELINE_VAL, E2E_BASELINE_RUNS
 lookup_e2e_baseline() {
   local generator="$1"
@@ -50,6 +52,17 @@ lookup_e2e_baseline() {
     E2E_BASELINE_RUNS=${#durations[@]}
     if [ "$E2E_BASELINE_RUNS" -gt 0 ]; then
       E2E_BASELINE_VAL=$(printf '%s\n' "${durations[@]}" | compute_median)
+    fi
+  else
+    # Flat E2E layout: MAIN_DIR/e2e/{generator}.jsonl (artifacts API format)
+    local e2e_file="${MAIN_DIR}/e2e/${generator}.jsonl"
+    if [ -f "$e2e_file" ]; then
+      local dur
+      dur=$(jq -r --arg spec "$spec" 'select(.spec == $spec) | .duration_seconds' "$e2e_file" 2>/dev/null || true)
+      if [ -n "$dur" ] && [ "$dur" != "null" ] && [ "$dur" != "0" ]; then
+        E2E_BASELINE_VAL="$dur"
+        E2E_BASELINE_RUNS=1
+      fi
     fi
   fi
 }
@@ -105,7 +118,7 @@ if [ -n "${BASELINE_TIMESTAMP:-}" ]; then
     HISTORY_COUNT=$(ls -d "${MAIN_DIR}/history"/*/ 2>/dev/null | wc -l)
     echo "Comparing PR branch against **median of ${HISTORY_COUNT} nightly run(s)** on \`main\` (latest: ${BASELINE_TIMESTAMP})."
   else
-    echo "Comparing PR branch against cached \`main\` baseline (generated ${BASELINE_TIMESTAMP})."
+    echo "Comparing PR branch against latest nightly baseline on \`main\` (${BASELINE_TIMESTAMP})."
   fi
 else
   echo "Comparing PR branch against \`main\` baseline."

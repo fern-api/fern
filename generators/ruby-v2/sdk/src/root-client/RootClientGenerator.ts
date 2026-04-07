@@ -116,6 +116,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     writer.write(`headers = `);
                     writer.writeNode(this.getRawClientHeaders());
                     writer.newLine();
+                    let isFirstBlock = true;
+                    let emittedAnyBlock = false;
                     for (let i = 0; i < basicAuthSchemes.length; i++) {
                         const basicAuthScheme = basicAuthSchemes[i];
                         if (basicAuthScheme == null) {
@@ -123,23 +125,49 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         }
                         const usernameName = this.case.snakeSafe(basicAuthScheme.username);
                         const passwordName = this.case.snakeSafe(basicAuthScheme.password);
+                        const usernameOmitted = !!basicAuthScheme.usernameOmit;
+                        const passwordOmitted = !!basicAuthScheme.passwordOmit;
+                        // Build the credential string for Base64 encoding.
+                        // Omitted fields become empty (e.g., password omitted → "#{username}:").
+                        let credentialStr: string;
+                        if (usernameOmitted && !passwordOmitted) {
+                            credentialStr = `":#{${passwordName}}"`;
+                        } else if (!usernameOmitted && passwordOmitted) {
+                            credentialStr = `"#{${usernameName}}:"`;
+                        } else {
+                            credentialStr = `"#{${usernameName}}:#{${passwordName}}"`;
+                        }
+                        // Condition: only require non-omitted fields to be present
+                        let condition: string;
+                        if (!usernameOmitted && !passwordOmitted) {
+                            condition = `!${usernameName}.nil? && !${passwordName}.nil?`;
+                        } else if (usernameOmitted && !passwordOmitted) {
+                            condition = `!${passwordName}.nil?`;
+                        } else if (!usernameOmitted && passwordOmitted) {
+                            condition = `!${usernameName}.nil?`;
+                        } else {
+                            // Both fields omitted — skip auth header entirely when auth is non-mandatory
+                            continue;
+                        }
                         if (isAuthOptional || basicAuthSchemes.length > 1) {
-                            if (i === 0) {
-                                writer.writeLine(`if !${usernameName}.nil? && !${passwordName}.nil?`);
+                            if (isFirstBlock) {
+                                writer.writeLine(`if ${condition}`);
                             } else {
-                                writer.writeLine(`elsif !${usernameName}.nil? && !${passwordName}.nil?`);
+                                writer.writeLine(`elsif ${condition}`);
                             }
+                            isFirstBlock = false;
+                            emittedAnyBlock = true;
                             writer.writeLine(
-                                `  headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}"`
+                                `  headers["Authorization"] = "Basic #{Base64.strict_encode64(${credentialStr})}"`
                             );
-                            if (i === basicAuthSchemes.length - 1) {
-                                writer.writeLine(`end`);
-                            }
                         } else {
                             writer.writeLine(
-                                `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}"`
+                                `headers["Authorization"] = "Basic #{Base64.strict_encode64(${credentialStr})}"`
                             );
                         }
+                    }
+                    if (emittedAnyBlock && (isAuthOptional || basicAuthSchemes.length > 1)) {
+                        writer.writeLine(`end`);
                     }
                 }
                 writer.write(`@raw_client = `);
@@ -344,30 +372,37 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     break;
                 }
                 case "basic": {
-                    const usernameParam = ruby.parameters.keyword({
-                        name: this.case.snakeSafe(scheme.username),
-                        type: ruby.Type.string(),
-                        initializer:
-                            scheme.usernameEnvVar != null
-                                ? ruby.codeblock((writer) => {
-                                      writer.write(`ENV.fetch("${scheme.usernameEnvVar}", nil)`);
-                                  })
-                                : undefined,
-                        docs: undefined
-                    });
-                    parameters.push(usernameParam);
-                    const passwordParam = ruby.parameters.keyword({
-                        name: this.case.snakeSafe(scheme.password),
-                        type: ruby.Type.string(),
-                        initializer:
-                            scheme.passwordEnvVar != null
-                                ? ruby.codeblock((writer) => {
-                                      writer.write(`ENV.fetch("${scheme.passwordEnvVar}", nil)`);
-                                  })
-                                : undefined,
-                        docs: undefined
-                    });
-                    parameters.push(passwordParam);
+                    // When omit is true, the field is completely removed from the end-user API.
+                    const usernameOmitted = !!scheme.usernameOmit;
+                    const passwordOmitted = !!scheme.passwordOmit;
+                    if (!usernameOmitted) {
+                        const usernameParam = ruby.parameters.keyword({
+                            name: this.case.snakeSafe(scheme.username),
+                            type: ruby.Type.string(),
+                            initializer:
+                                scheme.usernameEnvVar != null
+                                    ? ruby.codeblock((writer) => {
+                                          writer.write(`ENV.fetch("${scheme.usernameEnvVar}", nil)`);
+                                      })
+                                    : undefined,
+                            docs: undefined
+                        });
+                        parameters.push(usernameParam);
+                    }
+                    if (!passwordOmitted) {
+                        const passwordParam = ruby.parameters.keyword({
+                            name: this.case.snakeSafe(scheme.password),
+                            type: ruby.Type.string(),
+                            initializer:
+                                scheme.passwordEnvVar != null
+                                    ? ruby.codeblock((writer) => {
+                                          writer.write(`ENV.fetch("${scheme.passwordEnvVar}", nil)`);
+                                      })
+                                    : undefined,
+                            docs: undefined
+                        });
+                        parameters.push(passwordParam);
+                    }
                     break;
                 }
                 case "inferred": {

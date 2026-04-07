@@ -86,7 +86,7 @@ match client.headers.send(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_enum::prelude::*;
+use seed_enum::prelude::{*};
 
 let request = SendEnumInlinedRequest {
     ...
