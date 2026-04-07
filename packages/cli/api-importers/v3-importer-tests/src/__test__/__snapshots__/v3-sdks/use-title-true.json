@@ -21,7 +21,7 @@
         "types": [
           {
             "discriminantValue": "EMBEDDING_GENERATION",
-            "displayName": "UnionJob_Job<EmbeddingGeneration>",
+            "displayName": "EMBEDDING_GENERATION",
             "shape": {
               "typeId": "UnionJob_Job<EmbeddingGeneration>",
               "name": "UnionJob_Job<EmbeddingGeneration>",
@@ -29,13 +29,13 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "displayName": "UnionJob_Job<EmbeddingGeneration>",
+              "displayName": "EMBEDDING_GENERATION",
               "propertiesType": "samePropertiesAsObject"
             }
           },
           {
             "discriminantValue": "INFERENCE",
-            "displayName": "UnionJob_Job<Inference>",
+            "displayName": "INFERENCE",
             "shape": {
               "typeId": "UnionJob_Job<Inference>",
               "name": "UnionJob_Job<Inference>",
@@ -43,13 +43,13 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "displayName": "UnionJob_Job<Inference>",
+              "displayName": "INFERENCE",
               "propertiesType": "samePropertiesAsObject"
             }
           },
           {
             "discriminantValue": "TL_INFERENCE",
-            "displayName": "UnionJob_Job<TlInference>",
+            "displayName": "TL_INFERENCE",
             "shape": {
               "typeId": "UnionJob_Job<TlInference>",
               "name": "UnionJob_Job<TlInference>",
@@ -57,13 +57,13 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "displayName": "UnionJob_Job<TlInference>",
+              "displayName": "TL_INFERENCE",
               "propertiesType": "samePropertiesAsObject"
             }
           },
           {
             "discriminantValue": "TRAINING",
-            "displayName": "UnionJob_Job<Training>",
+            "displayName": "TRAINING",
             "shape": {
               "typeId": "UnionJob_Job<Training>",
               "name": "UnionJob_Job<Training>",
@@ -71,7 +71,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "displayName": "UnionJob_Job<Training>",
+              "displayName": "TRAINING",
               "propertiesType": "samePropertiesAsObject"
             }
           }

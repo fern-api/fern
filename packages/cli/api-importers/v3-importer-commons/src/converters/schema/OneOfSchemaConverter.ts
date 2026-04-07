@@ -238,9 +238,10 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
                 // Determine variant display name with fallback priority:
                 // 1. Schema's title field (explicit user intention)
-                // 2. Schema name from $ref or typeId (e.g., "CircleShape")
+                // 2. Discriminant key (e.g., "EMBEDDING_GENERATION")
+                // 3. Schema name from $ref or typeId (e.g., "CircleShape")
                 const variantDisplayName =
-                    (resolvedSchema.resolved ? resolvedSchema.value.title : undefined) ?? rawSchemaName;
+                    (resolvedSchema.resolved ? resolvedSchema.value.title : undefined) ?? discriminant ?? rawSchemaName;
 
                 // Set displayName on the type declaration for discriminated union variants.
                 // Docs read the type definition's displayName, not just the union variant's displayName.
