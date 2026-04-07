@@ -773,15 +773,10 @@ export class AutoVersioningService {
             // Use ls-remote to query tags from the remote directly.
             // This works even with shallow clones (--depth 1) which don't fetch
             // tags pointing to commits outside the shallow boundary.
-            const result = await loggingExeca(
-                this.logger,
-                "git",
-                ["ls-remote", "--tags", "origin"],
-                {
-                    cwd: workingDirectory,
-                    doNotPipeOutput: true
-                }
-            );
+            const result = await loggingExeca(this.logger, "git", ["ls-remote", "--tags", "origin"], {
+                cwd: workingDirectory,
+                doNotPipeOutput: true
+            });
             const output = result.stdout;
             if (!output || output.trim().length === 0) {
                 this.logger.info("No git tags found in repository");
@@ -805,7 +800,7 @@ export class AutoVersioningService {
             // v1.0.0-beta after v1.0.0, but semver says v1.0.0 > v1.0.0-beta).
             const validTags = tags.filter((tag) => semver.valid(tag) != null).sort((a, b) => semver.rcompare(a, b));
             if (validTags.length > 0) {
-                const latest = validTags[0]!;
+                const latest = validTags[0];
                 this.logger.info(`Found latest version from git tags: ${latest}`);
                 return latest;
             }
