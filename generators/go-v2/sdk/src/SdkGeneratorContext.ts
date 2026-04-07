@@ -1,4 +1,4 @@
-import { CaseConverter, GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
+import { GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
@@ -15,8 +15,6 @@ import { Streamer } from "./internal/Streamer.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "go", keywords: undefined, smartCasing: true });
 
 export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomConfigSchema> {
     public readonly caller: Caller;
@@ -131,11 +129,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public getMethodName(name: NameInput): string {
-        return caseConverter.pascalUnsafe(name);
+        return this.caseConverter.pascalUnsafe(name);
     }
 
     public getReceiverName(name: NameInput): string {
-        return caseConverter.camelUnsafe(name).charAt(0);
+        return this.caseConverter.camelUnsafe(name).charAt(0);
     }
 
     public getRootClientReceiverName(): string {
@@ -203,7 +201,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
         for (const baseUrl of environments.baseUrls) {
             if (baseUrl.id === baseUrlId) {
-                return caseConverter.pascalUnsafe(baseUrl.name);
+                return this.caseConverter.pascalUnsafe(baseUrl.name);
             }
         }
         return undefined;
@@ -759,11 +757,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         if (subpackage != null && subpackage.subpackages.length > 0 && subpackage.fernFilepath.file != null) {
             // This represents a nested root package, so we need to deposit
             // the client in a 'client' subpackage (e.g. user/client).
-            parts.push(...fernFilepath.allParts.map((part) => caseConverter.camelSafe(part).toLowerCase()));
+            parts.push(...fernFilepath.allParts.map((part) => this.caseConverter.camelSafe(part).toLowerCase()));
             parts.push("client");
         } else {
-            parts.push(...fernFilepath.packagePath.map((part) => caseConverter.camelSafe(part).toLowerCase()));
-            parts.push(fernFilepath.file != null ? caseConverter.camelSafe(fernFilepath.file).toLowerCase() : "client");
+            parts.push(...fernFilepath.packagePath.map((part) => this.caseConverter.camelSafe(part).toLowerCase()));
+            parts.push(fernFilepath.file != null ? this.caseConverter.camelSafe(fernFilepath.file).toLowerCase() : "client");
         }
         return {
             importPath: [this.getRootImportPath(), ...parts].join("/"),
@@ -854,7 +852,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
                 const streamingResponse = this.getStreamingResponse(httpEndpoint);
                 if (!streamingResponse) {
                     throw new Error(
-                        `Unable to parse streaming response for endpoint ${caseConverter.camelSafe(httpEndpoint.name)}`
+                        `Unable to parse streaming response for endpoint ${this.caseConverter.camelSafe(httpEndpoint.name)}`
                     );
                 }
                 return this.getStreamPayload(streamingResponse);

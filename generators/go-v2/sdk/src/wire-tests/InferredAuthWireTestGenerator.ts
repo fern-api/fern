@@ -119,7 +119,7 @@ export class InferredAuthWireTestGenerator {
             return undefined;
         }
 
-        const authAccessPath = getClientAccessPath(service);
+        const authAccessPath = getClientAccessPath(service, this.context.caseConverter);
         const tokenMethodName = this.context.getMethodName(endpoint.name);
         const tokenEndpointPath = getEndpointPath(endpoint);
         const credentialParams = this.getCredentialParameters(endpoint);
@@ -146,7 +146,7 @@ export class InferredAuthWireTestGenerator {
             for (const endpoint of service.endpoints) {
                 if (endpoint.sdkRequest == null && endpoint.pathParameters.length === 0) {
                     return {
-                        accessPath: getClientAccessPath(service),
+                        accessPath: getClientAccessPath(service, this.context.caseConverter),
                         methodName: this.context.getMethodName(endpoint.name),
                         hasResponseBody: endpoint.response?.body != null,
                         hasRequestParam: false
@@ -164,7 +164,7 @@ export class InferredAuthWireTestGenerator {
                 if (endpoint.pathParameters.length === 0) {
                     const requestTypeInfo = this.getRequestTypeInfo(serviceId, endpoint);
                     return {
-                        accessPath: getClientAccessPath(service),
+                        accessPath: getClientAccessPath(service, this.context.caseConverter),
                         methodName: this.context.getMethodName(endpoint.name),
                         hasResponseBody: endpoint.response?.body != null,
                         hasRequestParam: endpoint.sdkRequest != null,

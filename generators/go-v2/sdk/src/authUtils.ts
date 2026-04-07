@@ -2,13 +2,11 @@ import { CaseConverter, NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "go", keywords: undefined, smartCasing: true });
-
 /**
  * Gets the client accessor path for a service (e.g., "Auth" or "Nested.Api").
  * Builds the dot-separated path from the service's fernFilepath parts using PascalCase.
  */
-export function getClientAccessPath(service: FernIr.HttpService): string {
+export function getClientAccessPath(service: FernIr.HttpService, caseConverter: CaseConverter): string {
     const parts = service.name.fernFilepath.allParts.map((part) => caseConverter.pascalUnsafe(part));
     return parts.join(".");
 }

@@ -14,7 +14,6 @@ import { GoTypeMapper } from "./GoTypeMapper.js";
 import { GoValueFormatter } from "./GoValueFormatter.js";
 import { GoZeroValueMapper } from "./GoZeroValueMapper.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "go", keywords: undefined, smartCasing: true });
 
 export interface FileLocation {
     importPath: string;
@@ -31,6 +30,8 @@ export abstract class AbstractGoGeneratorContext<
     public readonly goValueFormatter: GoValueFormatter;
     public readonly goZeroValueMapper: GoZeroValueMapper;
 
+    public readonly caseConverter: CaseConverter;
+
     public constructor(
         public readonly ir: FernIr.IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
@@ -38,6 +39,11 @@ export abstract class AbstractGoGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
+        this.caseConverter = new CaseConverter({
+            generationLanguage: "go",
+            keywords: ir.casingsConfig?.keywords,
+            smartCasing: ir.casingsConfig?.smartCasing ?? true
+        });
         this.project = new GoProject({ context: this });
         this.goFieldMapper = new GoFieldMapper(this);
         this.goTypeMapper = new GoTypeMapper(this);
@@ -74,19 +80,19 @@ export abstract class AbstractGoGeneratorContext<
     }
 
     public getClassName(name: NameInput): string {
-        return caseConverter.pascalUnsafe(name);
+        return this.caseConverter.pascalUnsafe(name);
     }
 
     public getPackageName(name: NameInput): string {
-        return caseConverter.snakeUnsafe(name).toLowerCase();
+        return this.caseConverter.snakeUnsafe(name).toLowerCase();
     }
 
     public getFilename(name: NameInput): string {
-        return caseConverter.snakeUnsafe(name);
+        return this.caseConverter.snakeUnsafe(name);
     }
 
     public getReceiverName(name: NameInput): string {
-        return caseConverter.camelUnsafe(name).charAt(0).toLowerCase();
+        return this.caseConverter.camelUnsafe(name).charAt(0).toLowerCase();
     }
 
     public getRootImportPath(): string {
@@ -97,7 +103,7 @@ export abstract class AbstractGoGeneratorContext<
         if (this.customConfig.packageName != null) {
             return this.customConfig.packageName;
         }
-        return caseConverter.camelSafe(this.ir.apiName).toLowerCase();
+        return this.caseConverter.camelSafe(this.ir.apiName).toLowerCase();
     }
 
     public getCoreImportPath(): string {
@@ -113,15 +119,15 @@ export abstract class AbstractGoGeneratorContext<
     }
 
     public getFieldName(name: NameInput): string {
-        return goExportedFieldName(caseConverter.pascalUnsafe(name));
+        return goExportedFieldName(this.caseConverter.pascalUnsafe(name));
     }
 
     public getLiteralFieldName(name: NameInput): string {
-        return caseConverter.camelSafe(name);
+        return this.caseConverter.camelSafe(name);
     }
 
     public getParameterName(name: NameInput): string {
-        return caseConverter.camelSafe(name);
+        return this.caseConverter.camelSafe(name);
     }
 
     public getDateTypeReference(): go.TypeReference {
@@ -645,7 +651,7 @@ export abstract class AbstractGoGeneratorContext<
     }
 
     private getLocation(names: FernIr.NameOrString[], suffix?: string): FileLocation {
-        let parts = names.map((name) => caseConverter.camelSafe(name).toLowerCase());
+        let parts = names.map((name) => this.caseConverter.camelSafe(name).toLowerCase());
         parts = suffix != null ? [...parts, suffix] : parts;
         return {
             importPath: [this.getRootImportPath(), ...parts].join("/"),

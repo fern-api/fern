@@ -1,9 +1,6 @@
-import { CaseConverter } from "@fern-api/base-generator";
 import { AbstractGoGeneratorContext, AsIsFiles } from "@fern-api/go-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "go", keywords: undefined, smartCasing: true });
 
 export class ModelGeneratorContext extends AbstractGoGeneratorContext<ModelCustomConfigSchema> {
     public getTypePackageName({ fernFilepath }: { fernFilepath: FernIr.FernFilepath }): string {
@@ -16,7 +13,7 @@ export class ModelGeneratorContext extends AbstractGoGeneratorContext<ModelCusto
 
     public getTypeFilename({ fernFilepath }: { fernFilepath: FernIr.FernFilepath }): string {
         if (fernFilepath.file != null) {
-            return `${caseConverter.snakeUnsafe(fernFilepath.file)}.go`;
+            return `${this.caseConverter.snakeUnsafe(fernFilepath.file)}.go`;
         }
         return "types.go";
     }

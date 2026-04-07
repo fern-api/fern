@@ -3,8 +3,6 @@ import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-const caseConverter = new CaseConverter({ generationLanguage: "go", keywords: undefined, smartCasing: true });
-
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
 import { PaginationInfo } from "../PaginationInfo.js";
@@ -31,7 +29,7 @@ export function getPaginationInfo({
     const pageType = getPageType({ context, pagination });
     const nextPageType = getNextPageType({ context, pagination });
     const pageRequestType = getPageRequestType({ context, pageType });
-    const requestPagePropertyReference = getPagePropertyReference({ variableName: "request", pagination });
+    const requestPagePropertyReference = getPagePropertyReference({ variableName: "request", pagination, caseConverter: context.caseConverter });
     const pagePropertyFormat = getPageValueFormat({ context, pagination });
     const requestPagePropertyFormat = getPageValueFormat({ context, pagination });
     return {
@@ -452,7 +450,8 @@ function getResponsePropertySetter({
             writer.writeNode(
                 getPropertyNilCheckCondition({
                     variableName: "response",
-                    propertyPath: responsePropertyPath.map((item) => item.name)
+                    propertyPath: responsePropertyPath.map((item) => item.name),
+                    caseConverter: context.caseConverter
                 })
             );
             writer.writeLine(" {");
@@ -463,7 +462,8 @@ function getResponsePropertySetter({
                     variableName: "response",
                     propertyPath: responsePropertyPath.map((item) => item.name),
                     name: responseProperty.property.name,
-                    dereference
+                    dereference,
+                    caseConverter: context.caseConverter
                 })
             );
             writer.newLine();
@@ -476,7 +476,8 @@ function getResponsePropertySetter({
         writer.writeNode(
             getResponsePropertyReference({
                 results: responseProperty,
-                withGetter: context.customConfig.gettersPassByValue !== true
+                withGetter: context.customConfig.gettersPassByValue !== true,
+                caseConverter: context.caseConverter
             })
         );
         writer.newLine();
@@ -832,11 +833,13 @@ function getResponseElementType({
 function getPagePropertyReference({
     variableName,
     pagination,
-    withGetter
+    withGetter,
+    caseConverter
 }: {
     variableName: string;
     pagination: FernIr.Pagination;
     withGetter?: boolean;
+    caseConverter: CaseConverter;
 }): go.AstNode {
     switch (pagination.type) {
         case "cursor":
@@ -845,7 +848,8 @@ function getPagePropertyReference({
                 variableName,
                 propertyPath: pagination.page.propertyPath?.map((item) => item.name) ?? [],
                 name: pagination.page.property.name,
-                withGetter
+                withGetter,
+                caseConverter
             });
         }
         case "custom":
@@ -859,16 +863,19 @@ function getPagePropertyReference({
 
 function getResponsePropertyReference({
     results,
-    withGetter
+    withGetter,
+    caseConverter
 }: {
     results: FernIr.ResponseProperty;
     withGetter?: boolean;
+    caseConverter: CaseConverter;
 }): go.AstNode {
     return getPropertyReference({
         variableName: "response",
         propertyPath: results.propertyPath?.map((item) => item.name) ?? [],
         name: results.property.name,
-        withGetter
+        withGetter,
+        caseConverter
     });
 }
 
@@ -877,34 +884,38 @@ function getPropertyReference({
     propertyPath,
     name,
     withGetter,
-    dereference
+    dereference,
+    caseConverter
 }: {
     variableName: string;
     propertyPath: NameInput[] | undefined;
     name: NameInput;
     withGetter?: boolean;
     dereference?: boolean;
+    caseConverter: CaseConverter;
 }): go.AstNode {
     const fullPath = [...(propertyPath ?? []), name];
     return go.codeblock((writer) => {
         if (dereference) {
             writer.write("*");
         }
-        writer.write(`${variableName}.${fullPath.map((name) => getPropertyAccessor({ name, withGetter })).join(".")}`);
+        writer.write(`${variableName}.${fullPath.map((name) => getPropertyAccessor({ name, withGetter, caseConverter })).join(".")}`);
     });
 }
 
 function getPropertyNilCheckCondition({
     variableName,
-    propertyPath
+    propertyPath,
+    caseConverter
 }: {
     variableName: string;
     propertyPath: NameInput[];
+    caseConverter: CaseConverter;
 }): go.AstNode {
     const checks = propertyPath.map((_, index) => {
         const pathSegment = propertyPath
             .slice(0, index + 1)
-            .map((name) => getPropertyAccessor({ name }))
+            .map((name) => getPropertyAccessor({ name, caseConverter }))
             .join(".");
         return `${variableName}.${pathSegment} != nil`;
     });
@@ -948,7 +959,7 @@ function encodeQuery({ writer }: { writer: go.Writer }): void {
     writer.writeLine("}");
 }
 
-function getPropertyAccessor({ name, withGetter }: { name: NameInput; withGetter?: boolean }): string {
+function getPropertyAccessor({ name, withGetter, caseConverter }: { name: NameInput; withGetter?: boolean; caseConverter: CaseConverter }): string {
     if (withGetter) {
         return `Get${caseConverter.pascalUnsafe(name)}()`;
     }
