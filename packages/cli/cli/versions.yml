@@ -3,7 +3,7 @@
 - version: 4.62.6
   changelogEntry:
     - summary: |
-        Clean up Fern Docs cache on `fern docs dev` startup and shutdown to prevent the cache from growing and taking up disk space.
+        Clean up Fern Docs cache on `fern docs dev` startup and shutdown.
       type: fix
   createdAt: "2026-04-07"
   irVersion: 66

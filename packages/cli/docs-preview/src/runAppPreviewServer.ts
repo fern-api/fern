@@ -373,7 +373,7 @@ function getFernDocsCachePath(bundleRoot: string): string {
 }
 
 /**
- * Removes the Fern Docs cache directory to prevent the cache from growing and taking up disk space.
+ * Removes the Fern Docs cache directory.
  */
 async function cleanFernDocsCache(bundleRoot: string, context: TaskContext): Promise<void> {
     const cachePath = getFernDocsCachePath(bundleRoot);
