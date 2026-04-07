@@ -1,10 +1,6 @@
 import { getPackageNameFromGeneratorConfig } from "@fern-api/api-workspace-commons";
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
-import {
-    DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
-    GENERATORS_CONFIGURATION_FILENAME,
-    generatorsYml
-} from "@fern-api/configuration-loader";
+import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY, GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { getGeneratorOutputSubfolder, runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";

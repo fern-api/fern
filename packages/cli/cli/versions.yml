@@ -7,6 +7,8 @@
         When provided, the generator writes SDK files to the specified directory
         in addition to publishing to the preview registry.
       type: feat
+  createdAt: "2026-04-07"
+  irVersion: 66
 
 - version: 4.62.4
   changelogEntry:
