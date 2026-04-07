@@ -8,7 +8,7 @@
         not already set in the environment (e.g. by the `fern-api/actions/setup-cli`
         GitHub Action), threading a single correlation ID through all CLI
         invocations in a workflow run.
-      type: feat
+      type: chore
   createdAt: "2026-04-07"
   irVersion: 66
 
