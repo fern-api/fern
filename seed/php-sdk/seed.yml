@@ -29,6 +29,10 @@ fixtures:
     - outputFolder: wire-tests
       customConfig:
         enable-wire-tests: true
+  basic-auth-pw-omitted:
+    - outputFolder: wire-tests
+      customConfig:
+        enable-wire-tests: true
   exhaustive:
     - outputFolder: no-custom-config
       customConfig: null

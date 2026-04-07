@@ -1,0 +1,10 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-php-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "enable-wire-tests": true
+  },
+  "originGitCommit": "DUMMY",
+  "sdkVersion": "0.0.1"
+}
