@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.62.5
+  changelogEntry:
+    - summary: |
+        Fix replay init to create .gitattributes with linguist-generated markers and sync .fernignore entries with fern-replay.
+      type: fix
+  createdAt: "2026-04-07"
+  irVersion: 66
+
 - version: 4.62.4
   changelogEntry:
     - summary: |
