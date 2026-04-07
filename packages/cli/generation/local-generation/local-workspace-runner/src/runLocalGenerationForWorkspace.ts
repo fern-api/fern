@@ -417,8 +417,6 @@ export async function runLocalGenerationForWorkspace({
     }
 }
 
-export { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
-
 function resolveAbsolutePathToLocalPreview(
     absolutePathToPreview: AbsoluteFilePath | undefined,
     generatorInvocation: generatorsYml.GeneratorInvocation
