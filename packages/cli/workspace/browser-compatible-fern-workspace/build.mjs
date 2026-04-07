@@ -1,6 +1,6 @@
+import { polyfillNode } from "esbuild-plugin-polyfill-node";
 import { readFile, rm, writeFile } from "fs/promises";
 import path from "path";
-import { polyfillNode } from "esbuild-plugin-polyfill-node";
 import tsup from "tsup";
 import { fileURLToPath } from "url";
 import packageJson from "./package.json" with { type: "json" };
