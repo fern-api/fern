@@ -8,6 +8,7 @@ import type { MigratorWarning } from "../types/index.js";
 const SETTINGS_KEY_MAP: Record<string, string> = {
     // Base settings
     "use-title": "titleAsSchemaName",
+    "title-as-schema-name": "titleAsSchemaName",
     "respect-nullable-schemas": "respectNullableSchemas",
     "wrap-references-to-nullable-in-optional": "wrapReferencesToNullableInOptional",
     "coerce-optional-schemas-to-nullable": "coerceOptionalSchemasToNullable",
