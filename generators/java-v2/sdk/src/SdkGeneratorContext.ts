@@ -1,12 +1,10 @@
-import { CaseConverter, GeneratorNotificationService, getOriginalName } from "@fern-api/base-generator";
+import { GeneratorNotificationService, getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { java } from "@fern-api/java-ast";
 import { AbstractJavaGeneratorContext } from "@fern-api/java-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { camelCase } from "lodash-es";
-
-const caseConverter = new CaseConverter({ generationLanguage: "java", keywords: undefined, smartCasing: true });
 
 import { TYPES_DIRECTORY } from "./constants.js";
 import { JavaGeneratorAgent } from "./JavaGeneratorAgent.js";
@@ -115,7 +113,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         typeDeclaration: FernIr.TypeDeclaration;
     }): java.ClassReference {
         return java.classReference({
-            name: caseConverter.pascalUnsafe(typeDeclaration.name.name),
+            name: this.caseConverter.pascalUnsafe(typeDeclaration.name.name),
             packageName: this.getTypesPackageName(typeDeclaration.name.fernFilepath)
         });
     }
@@ -356,7 +354,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     }
 
     private getPackageNameSegment(name: FernIr.Name): string {
-        return caseConverter.camelSafe(name).toLowerCase();
+        return this.caseConverter.camelSafe(name).toLowerCase();
     }
 
     public getExampleEndpointCallOrThrow(endpoint: FernIr.HttpEndpoint): FernIr.ExampleEndpointCall {

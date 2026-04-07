@@ -12,13 +12,12 @@ import { JavaProject } from "../project/JavaProject.js";
 
 import { JavaTypeMapper } from "./JavaTypeMapper.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "java", keywords: undefined, smartCasing: true });
-
 export abstract class AbstractJavaGeneratorContext<
     CustomConfig extends BaseJavaCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly javaTypeMapper: JavaTypeMapper;
     public readonly project: JavaProject;
+    public readonly caseConverter: CaseConverter;
 
     public constructor(
         public readonly ir: FernIr.IntermediateRepresentation,
@@ -27,6 +26,11 @@ export abstract class AbstractJavaGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
+        this.caseConverter = new CaseConverter({
+            generationLanguage: "java",
+            keywords: ir.casingsConfig?.keywords,
+            smartCasing: ir.casingsConfig?.smartCasing ?? true
+        });
         this.javaTypeMapper = new JavaTypeMapper(this);
         this.project = new JavaProject({ context: this });
     }
@@ -46,7 +50,7 @@ export abstract class AbstractJavaGeneratorContext<
         typeDeclaration: FernIr.TypeDeclaration;
     }): java.ClassReference {
         return java.classReference({
-            name: caseConverter.pascalUnsafe(typeDeclaration.name.name),
+            name: this.caseConverter.pascalUnsafe(typeDeclaration.name.name),
             packageName: this.getTypesPackageName(typeDeclaration.name.fernFilepath)
         });
     }
@@ -64,11 +68,11 @@ export abstract class AbstractJavaGeneratorContext<
     }
 
     public getClassName(name: FernIr.Name): string {
-        return caseConverter.pascalSafe(name);
+        return this.caseConverter.pascalSafe(name);
     }
 
     public getCaseConverter(): CaseConverter {
-        return caseConverter;
+        return this.caseConverter;
     }
 
     public getOriginalName(name: NameInput): string {
