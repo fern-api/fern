@@ -6,7 +6,7 @@ package com.seed.pagination.resources.users;
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.RequestOptions;
 import com.seed.pagination.core.pagination.FernCustomPaginator;
-import com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;
+import com.seed.pagination.resources.users.requests.ListWithCustomPagerRequest;
 
 public class UsersClient {
     protected final ClientOptions clientOptions;
@@ -25,20 +25,20 @@ public class UsersClient {
         return this.rawClient;
     }
 
-    public FernCustomPaginator<String> listUsernamesCustom() {
-        return this.rawClient.listUsernamesCustom().body();
+    public FernCustomPaginator<String> listWithCustomPager() {
+        return this.rawClient.listWithCustomPager().body();
     }
 
-    public FernCustomPaginator<String> listUsernamesCustom(RequestOptions requestOptions) {
-        return this.rawClient.listUsernamesCustom(requestOptions).body();
+    public FernCustomPaginator<String> listWithCustomPager(RequestOptions requestOptions) {
+        return this.rawClient.listWithCustomPager(requestOptions).body();
     }
 
-    public FernCustomPaginator<String> listUsernamesCustom(ListUsernamesRequestCustom request) {
-        return this.rawClient.listUsernamesCustom(request).body();
+    public FernCustomPaginator<String> listWithCustomPager(ListWithCustomPagerRequest request) {
+        return this.rawClient.listWithCustomPager(request).body();
     }
 
-    public FernCustomPaginator<String> listUsernamesCustom(
-            ListUsernamesRequestCustom request, RequestOptions requestOptions) {
-        return this.rawClient.listUsernamesCustom(request, requestOptions).body();
+    public FernCustomPaginator<String> listWithCustomPager(
+            ListWithCustomPagerRequest request, RequestOptions requestOptions) {
+        return this.rawClient.listWithCustomPager(request, requestOptions).body();
     }
 }

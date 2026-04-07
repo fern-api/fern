@@ -303,6 +303,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         }
         context.logger.debug(`[TIMING] code generation took ${Date.now() - generateStartTime}ms`);
         await context.project.persist();
+        context.formatter.dispose();
     }
 
     private async generateReadme({

@@ -8,7 +8,7 @@ pub struct Request {
 
 impl Request {
     pub fn builder() -> RequestBuilder {
-        RequestBuilder::default()
+        <RequestBuilder as Default>::default()
     }
 }
 

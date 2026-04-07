@@ -76,6 +76,7 @@ async fn main() {
             &BigUnion::NormalSweet {
                 data: NormalSweet {
                     value: "value".to_string(),
+                    ..Default::default()
                 },
             },
             None,
@@ -121,11 +122,13 @@ async fn main() {
                 BigUnion::NormalSweet {
                     data: NormalSweet {
                         value: "value".to_string(),
+                        ..Default::default()
                     },
                 },
                 BigUnion::NormalSweet {
                     data: NormalSweet {
                         value: "value".to_string(),
+                        ..Default::default()
                     },
                 },
             ],
@@ -219,7 +222,10 @@ async fn main() {
         .union_
         .update(
             &Shape::Circle {
-                data: Circle { radius: 1.1 },
+                data: Circle {
+                    radius: 1.1,
+                    ..Default::default()
+                },
             },
             None,
         )

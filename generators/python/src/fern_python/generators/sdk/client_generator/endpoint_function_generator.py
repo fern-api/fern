@@ -1069,6 +1069,20 @@ class EndpointFunctionGenerator:
                     map_=lambda _: None,
                     literal=lambda _: None,
                 )
+            elif union.type == "named":
+                type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(union.type_id)
+                shape = type_declaration.shape.get_as_union()
+                if shape.type == "alias":
+                    resolved_type = shape.resolved_type.get_as_union()
+                    if resolved_type.type == "container":
+                        unwrapped_type = resolved_type.container.visit(
+                            list_=lambda item_type: item_type,
+                            set_=lambda item_type: item_type,
+                            optional=lambda item_type: self._unwrap_container_types(item_type),
+                            nullable=lambda item_type: self._unwrap_container_types(item_type),
+                            map_=lambda _: None,
+                            literal=lambda _: None,
+                        )
         return unwrapped_type
 
     def _get_pagination_results_type(self, fallback_typehint: AST.TypeHint) -> AST.TypeHint:

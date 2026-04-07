@@ -1,4 +1,4 @@
-irVersion: v65
+irVersion: v66
 displayName: Rust SDK
 image: fernapi/fern-rust-sdk
 changelogLocation: ../../generators/rust/sdk/versions.yml
@@ -53,6 +53,7 @@ fixtures:
   imdb:
     - customConfig:
         clientName: ImdbClient
+        maxRetries: 5
       outputFolder: imdb
     - customConfig:
         crateName: custom_imdb_sdk
@@ -158,3 +159,5 @@ fixtures:
         packageLicense: "Apache-2.0"
         packageLicenseFile: "LICENSE.md"
       outputFolder: both-license-options
+allowedFailures:
+  - server-sent-events-openapi

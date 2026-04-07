@@ -5,6 +5,6 @@ import type * as FernIr from "../../../index.js";
 export interface SdkRequest {
     /** The request property that controls whether or not the response is streamed. */
     streamParameter: FernIr.RequestProperty | undefined;
-    requestParameterName: FernIr.Name;
+    requestParameterName: FernIr.NameOrString;
     shape: FernIr.SdkRequestShape;
 }

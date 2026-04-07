@@ -413,7 +413,8 @@ export class DynamicTypeLiteralMapper {
                 }
                 return ruby.TypeLiteral.string(str);
             }
-            case "DATE_TIME": {
+            case "DATE_TIME":
+            case "DATE_TIME_RFC_2822": {
                 const str = this.context.getValueAsString({ value });
                 if (str == null) {
                     return ruby.TypeLiteral.nop();

@@ -7,8 +7,6 @@ export interface DocsInstance {
     url: string;
     /** The custom domain where your documentation is hosted. Learn more about setting up a custom domain. */
     customDomain?: FernDocsConfig.CustomDomain;
-    /** This config option is no longer used. Please reach out to the Fern Team if you want to enable private docs. */
-    private?: boolean;
     /** If specified, adds an "Edit this page" link to the bottom of each page that links to the given public GitHub repository. */
     editThisPage?: FernDocsConfig.EditThisPageConfig;
     /**

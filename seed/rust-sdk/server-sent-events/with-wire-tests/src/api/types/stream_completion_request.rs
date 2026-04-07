@@ -8,7 +8,7 @@ pub struct StreamCompletionRequest {
 
 impl StreamCompletionRequest {
     pub fn builder() -> StreamCompletionRequestBuilder {
-        StreamCompletionRequestBuilder::default()
+        <StreamCompletionRequestBuilder as Default>::default()
     }
 }
 

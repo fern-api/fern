@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:inferred-auth-implicit-api-key'
+  implementation 'com.fern:inferred-auth-implicit-api-key:0.0.1'
 }
 ```
 

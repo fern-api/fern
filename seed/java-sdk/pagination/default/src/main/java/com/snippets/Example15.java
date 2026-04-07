@@ -1,7 +1,8 @@
 package com.snippets;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsersBodyCursorPaginationRequest;
+import com.seed.pagination.resources.users.types.WithCursor;
 
 public class Example15 {
     public static void main(String[] args) {
@@ -11,7 +12,8 @@ public class Example15 {
                 .build();
 
         client.users()
-                .listWithMixedTypeCursorPagination(
-                        ListUsersMixedTypeCursorPaginationRequest.builder().build());
+                .listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest.builder()
+                        .pagination(WithCursor.builder().cursor("cursor").build())
+                        .build());
     }
 }

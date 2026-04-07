@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import {
+    caseConverter,
     casingsGenerator,
     createInlinedRequestBodyProperty,
     createNameAndWireValue
@@ -15,7 +16,7 @@ const LIST_STRING_TYPE = FernIr.TypeReference.container(FernIr.ContainerType.lis
 const SET_STRING_TYPE = FernIr.TypeReference.container(FernIr.ContainerType.set(STRING_TYPE));
 const UNKNOWN_TYPE = FernIr.TypeReference.unknown();
 
-// biome-ignore lint/suspicious/noExplicitAny: test mock for SdkContext
+// biome-ignore lint/suspicious/noExplicitAny: test mock for FileContext
 function createMockContext(): any {
     return {
         includeSerdeLayer: true,
@@ -91,7 +92,8 @@ function createMockContext(): any {
             getReferenceToToJson: () => ({
                 getExpression: () => ts.factory.createIdentifier("JSON.stringify")
             })
-        }
+        },
+        case: caseConverter
     };
 }
 
@@ -128,7 +130,7 @@ function createMockRequestParameter(): any {
         getReferenceToBodyProperty: (property: FernIr.InlinedRequestBodyProperty) =>
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createIdentifier("request"),
-                property.name.name.camelCase.unsafeName
+                caseConverter.camelUnsafe(property.name)
             )
     };
 }
@@ -635,14 +637,16 @@ describe("appendPropertyToFormData", () => {
                 "MyEnum",
                 FernIr.Type.enum({
                     values: [],
-                    default: undefined
+                    default: undefined,
+                    forwardCompatible: undefined
                 })
             );
             const property = createBodyProperty("status", enumType);
             const context = createMockContextWithDeclarations({
                 type_MyEnum: FernIr.Type.enum({
                     values: [],
-                    default: undefined
+                    default: undefined,
+                    forwardCompatible: undefined
                 })
             });
             const stmt = appendPropertyToFormData({
@@ -816,7 +820,7 @@ function createNamedType(name: string, _shape: FernIr.Type): FernIr.TypeReferenc
     });
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: test mock for SdkContext with custom type declarations
+// biome-ignore lint/suspicious/noExplicitAny: test mock for FileContext with custom type declarations
 function createMockContextWithDeclarations(declarations: Record<string, FernIr.Type>): any {
     const base = createMockContext();
     base.type.getTypeDeclaration = (typeName: FernIr.DeclaredTypeName) => {

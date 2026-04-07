@@ -7,12 +7,15 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import imdb
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedApi, SeedApi
     from .imdb import CreateMovieRequest, Movie, MovieDoesNotExistError, MovieId
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedApi": ".client",
     "CreateMovieRequest": ".imdb",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "Movie": ".imdb",
     "MovieDoesNotExistError": ".imdb",
     "MovieId": ".imdb",
@@ -46,6 +49,8 @@ def __dir__():
 __all__ = [
     "AsyncSeedApi",
     "CreateMovieRequest",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "Movie",
     "MovieDoesNotExistError",
     "MovieId",

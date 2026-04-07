@@ -9,7 +9,7 @@ pub struct GetPresignedUrlRequest {
 
 impl GetPresignedUrlRequest {
     pub fn builder() -> GetPresignedUrlRequestBuilder {
-        GetPresignedUrlRequestBuilder::default()
+        <GetPresignedUrlRequestBuilder as Default>::default()
     }
 }
 

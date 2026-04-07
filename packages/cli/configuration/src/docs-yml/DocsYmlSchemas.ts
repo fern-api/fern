@@ -236,6 +236,13 @@ export const AIChatWebsiteDatasource = z.object({
 
 export const AIChatDatasource = AIChatWebsiteDatasource;
 
+export const PageDescriptionSource = z.enum(["description", "subtitle"]);
+
+export const AgentsConfig = z.object({
+    "page-directive": z.string().optional(),
+    "page-description-source": PageDescriptionSource.optional()
+});
+
 export const AIChatConfig = z.object({
     model: AIChatModel.optional(),
     "system-prompt": z.string().optional(),
@@ -387,7 +394,6 @@ export const EditThisPageConfig = z.object({
 export const DocsInstance = z.object({
     url: z.string(),
     "custom-domain": CustomDomain.optional(),
-    private: z.boolean().optional(),
     "edit-this-page": EditThisPageConfig.optional(),
     audiences: Audience.optional()
 });
@@ -560,10 +566,29 @@ export const RedirectConfig = z.object({
     permanent: z.boolean().optional()
 });
 
+// ===== Check =====
+
+export const CheckRuleSeverity = z.enum(["warn", "error"]);
+
+export const CheckRulesConfig = z.object({
+    "example-validation": CheckRuleSeverity.optional(),
+    "broken-links": CheckRuleSeverity.optional(),
+    "no-non-component-refs": CheckRuleSeverity.optional(),
+    "valid-local-references": CheckRuleSeverity.optional(),
+    "no-circular-redirects": CheckRuleSeverity.optional(),
+    "valid-docs-endpoints": CheckRuleSeverity.optional(),
+    "missing-redirects": CheckRuleSeverity.optional()
+});
+
+export const CheckConfig = z.object({
+    rules: CheckRulesConfig.optional()
+});
+
 // ===== Integrations =====
 
 export const IntegrationsConfig = z.object({
-    intercom: z.string().optional()
+    intercom: z.string().optional(),
+    context7: z.string().optional()
 });
 
 // ===== Experimental =====
@@ -929,8 +954,10 @@ export const DocsConfiguration = z.object({
     "ai-chat": AIChatConfig.optional(),
     "ai-search": AIChatConfig.optional(),
     "ai-examples": AiExamplesConfig.optional(),
+    agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: z.array(RedirectConfig).optional(),
+    check: CheckConfig.optional(),
     logo: LogoConfiguration.optional(),
     favicon: z.string().optional(),
     "background-image": BackgroundImageConfiguration.optional(),

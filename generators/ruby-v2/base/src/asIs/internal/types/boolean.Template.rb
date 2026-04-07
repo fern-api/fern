@@ -17,7 +17,7 @@ module <%= gem_namespace %>
         def self.coerce(value, strict: strict?)
           case value
           when TrueClass, FalseClass
-            value
+            return value
           when Integer
             return value == 1
           when String

@@ -142,7 +142,7 @@ impl PostRequest {
 
 impl PostRequest {
     pub fn builder() -> PostRequestBuilder {
-        PostRequestBuilder::default()
+        <PostRequestBuilder as Default>::default()
     }
 }
 

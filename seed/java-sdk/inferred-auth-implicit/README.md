@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:inferred-auth-implicit'
+  implementation 'com.fern:inferred-auth-implicit:0.0.1'
 }
 ```
 

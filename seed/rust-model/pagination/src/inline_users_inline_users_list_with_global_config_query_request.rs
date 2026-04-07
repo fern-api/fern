@@ -9,7 +9,7 @@ pub struct InlineUsersInlineUsersListWithGlobalConfigQueryRequest {
 
 impl InlineUsersInlineUsersListWithGlobalConfigQueryRequest {
     pub fn builder() -> InlineUsersInlineUsersListWithGlobalConfigQueryRequestBuilder {
-        InlineUsersInlineUsersListWithGlobalConfigQueryRequestBuilder::default()
+        <InlineUsersInlineUsersListWithGlobalConfigQueryRequestBuilder as Default>::default()
     }
 }
 

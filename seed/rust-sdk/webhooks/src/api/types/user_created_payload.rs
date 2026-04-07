@@ -14,7 +14,7 @@ pub struct UserCreatedPayload {
 
 impl UserCreatedPayload {
     pub fn builder() -> UserCreatedPayloadBuilder {
-        UserCreatedPayloadBuilder::default()
+        <UserCreatedPayloadBuilder as Default>::default()
     }
 }
 

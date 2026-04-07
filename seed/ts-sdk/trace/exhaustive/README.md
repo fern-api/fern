@@ -10,6 +10,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -45,6 +46,18 @@ import { SeedTrace, SeedTraceClient } from "@fern/trace";
 const client = new SeedTraceClient({ token: "YOUR_TOKEN", xRandomHeader: "YOUR_X_RANDOM_HEADER" });
 await client.admin.updateTestSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
     type: "stopped"
+});
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```typescript
+import { SeedTraceClient, SeedTraceEnvironment } from "@fern/trace";
+
+const client = new SeedTraceClient({
+    environment: SeedTraceEnvironment.Prod,
 });
 ```
 

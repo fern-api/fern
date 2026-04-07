@@ -8,7 +8,7 @@ pub struct NoAuthReceiveEvent {
 
 impl NoAuthReceiveEvent {
     pub fn builder() -> NoAuthReceiveEventBuilder {
-        NoAuthReceiveEventBuilder::default()
+        <NoAuthReceiveEventBuilder as Default>::default()
     }
 }
 

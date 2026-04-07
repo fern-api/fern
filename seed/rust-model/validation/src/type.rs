@@ -4,6 +4,7 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Type {
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub decimal: f64,
     #[serde(default)]
     pub even: i64,
@@ -14,7 +15,7 @@ pub struct Type {
 
 impl Type {
     pub fn builder() -> TypeBuilder {
-        TypeBuilder::default()
+        <TypeBuilder as Default>::default()
     }
 }
 

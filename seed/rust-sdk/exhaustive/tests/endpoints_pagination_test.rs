@@ -13,6 +13,7 @@ async fn test_endpoints_pagination_list_items_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -22,6 +23,7 @@ async fn test_endpoints_pagination_list_items_with_wiremock() {
             &ListItemsQueryRequest {
                 cursor: Some("cursor".to_string()),
                 limit: Some(1),
+                ..Default::default()
             },
             None,
         )

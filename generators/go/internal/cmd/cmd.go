@@ -408,9 +408,13 @@ func moduleConfigFromCustomConfig(customConfig *customConfig, outputMode writer.
 		// The user explicitly specified a module path, so we should use it.
 		modulePath = customConfig.Module.Path
 	}
-	imports := customConfig.Module.Imports
-	if imports == nil {
-		imports = defaultImports
+	// Merge user-specified imports with defaults, allowing user versions to override bundled ones.
+	imports := make(map[string]string)
+	for k, v := range defaultImports {
+		imports[k] = v
+	}
+	for k, v := range customConfig.Module.Imports {
+		imports[k] = v
 	}
 	return &generator.ModuleConfig{
 		Path:    modulePath,

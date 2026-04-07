@@ -21,7 +21,7 @@ pub struct OptionalMergePatchRequest {
 
 impl OptionalMergePatchRequest {
     pub fn builder() -> OptionalMergePatchRequestBuilder {
-        OptionalMergePatchRequestBuilder::default()
+        <OptionalMergePatchRequestBuilder as Default>::default()
     }
 }
 

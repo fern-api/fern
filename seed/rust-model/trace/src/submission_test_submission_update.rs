@@ -12,7 +12,7 @@ pub struct TestSubmissionUpdate {
 
 impl TestSubmissionUpdate {
     pub fn builder() -> TestSubmissionUpdateBuilder {
-        TestSubmissionUpdateBuilder::default()
+        <TestSubmissionUpdateBuilder as Default>::default()
     }
 }
 

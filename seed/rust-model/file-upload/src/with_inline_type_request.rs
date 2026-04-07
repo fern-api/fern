@@ -29,7 +29,7 @@ impl WithInlineTypeRequest {
 
 impl WithInlineTypeRequest {
     pub fn builder() -> WithInlineTypeRequestBuilder {
-        WithInlineTypeRequestBuilder::default()
+        <WithInlineTypeRequestBuilder as Default>::default()
     }
 }
 

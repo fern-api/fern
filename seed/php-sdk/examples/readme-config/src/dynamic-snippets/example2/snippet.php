@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Types\BasicType;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,6 +11,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->echo_(
-    'primitive',
+$client->createType(
+    BasicType::Primitive->value,
 );

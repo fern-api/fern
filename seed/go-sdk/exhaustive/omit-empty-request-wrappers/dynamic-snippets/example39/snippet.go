@@ -16,9 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    request := 1
-    client.Endpoints.Primitive.GetAndReturnInt(
+    client.Endpoints.Params.GetWithPathAndErrors(
         context.TODO(),
-        request,
+        "param",
     )
 }

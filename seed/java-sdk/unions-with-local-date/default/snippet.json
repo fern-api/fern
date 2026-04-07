@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "fd605b3b",
+            "example_identifier": "612e2c19",
             "id": {
                 "method": "GET",
                 "path": "/{id}",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "ca00d2fd",
+            "example_identifier": "a8b3f22c",
             "id": {
                 "method": "PATCH",
                 "path": "/",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "eaf6af3e",
+            "example_identifier": "27b5bc61",
             "id": {
                 "method": "PATCH",
                 "path": "/many",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "bb443545",
+            "example_identifier": "a4d5ff80",
             "id": {
                 "method": "GET",
                 "path": "/time/{id}",
@@ -105,7 +105,7 @@
             }
         },
         {
-            "example_identifier": "67ce62b7",
+            "example_identifier": "1df5e477",
             "id": {
                 "method": "PATCH",
                 "path": "/time",
@@ -118,7 +118,7 @@
             }
         },
         {
-            "example_identifier": "db2e6c32",
+            "example_identifier": "f11647a",
             "id": {
                 "method": "GET",
                 "path": "/{id}",
@@ -131,7 +131,7 @@
             }
         },
         {
-            "example_identifier": "c9a657a8",
+            "example_identifier": "68950139",
             "id": {
                 "method": "PATCH",
                 "path": "/",

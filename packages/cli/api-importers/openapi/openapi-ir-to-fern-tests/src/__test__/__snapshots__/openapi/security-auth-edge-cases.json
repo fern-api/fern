@@ -77,7 +77,7 @@
               },
             },
             "getPublic": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "examples": [
                 {
@@ -170,6 +170,7 @@ service:
     getPublic:
       path: /public
       method: GET
+      auth: false
       source:
         openapi: ../openapi.yml
       examples:

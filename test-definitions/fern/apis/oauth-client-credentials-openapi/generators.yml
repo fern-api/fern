@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+auth-schemes:
+  CustomAuth:
+    scheme: oauth
+    type: client-credentials
+    token-header: token
+    token-prefix: ""
+    get-token:
+      endpoint: POST /identity/token
+      request-properties:
+        client-id: $request.username
+        client-secret: $request.password
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+        refresh-token: $response.refresh_token
+api:
+  auth: CustomAuth
+  specs:
+    - openapi: ./openapi.yml
+groups: {}

@@ -24,7 +24,7 @@ pub struct TraceResponseV2 {
 
 impl TraceResponseV2 {
     pub fn builder() -> TraceResponseV2Builder {
-        TraceResponseV2Builder::default()
+        <TraceResponseV2Builder as Default>::default()
     }
 }
 

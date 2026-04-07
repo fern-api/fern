@@ -39,7 +39,10 @@ export async function addGenerator({
             // Check for duplicates using normalized name (handles both shorthand and full names in existing config)
             if (
                 group.generators.some(
-                    (generator) => addDefaultDockerOrgIfNotPresent(generator.name) === normalizedGeneratorName
+                    (generator) =>
+                        addDefaultDockerOrgIfNotPresent(
+                            "image" in generator ? generator.image.name : generator.name
+                        ) === normalizedGeneratorName
                 )
             ) {
                 context.failAndThrow(`${generatorName} is already installed in group ${groupName}.`);

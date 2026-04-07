@@ -10,7 +10,7 @@ pub struct Json {
 
 impl Json {
     pub fn builder() -> JsonBuilder {
-        JsonBuilder::default()
+        <JsonBuilder as Default>::default()
     }
 }
 

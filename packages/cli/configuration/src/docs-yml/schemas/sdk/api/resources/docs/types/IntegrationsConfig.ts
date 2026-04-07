@@ -2,4 +2,9 @@
 
 export interface IntegrationsConfig {
     intercom?: string;
+    /**
+     * Relative filepath to a `context7.json` file that Fern should host at `/context7.json`.
+     * Fern only checks that the file exists and is valid JSON, then passes it through as-is.
+     */
+    context7?: string;
 }

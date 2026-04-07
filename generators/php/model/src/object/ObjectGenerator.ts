@@ -38,10 +38,10 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
         for (const property of this.objectDeclaration.properties) {
             const field = this.toField({ property });
             if (includeGetter) {
-                clazz.addMethod(this.context.getGetterMethod({ name: property.name.name, field }));
+                clazz.addMethod(this.context.getGetterMethod({ name: property.name, field }));
             }
             if (includeSetter) {
-                clazz.addMethod(this.context.getSetterMethod({ name: property.name.name, field }));
+                clazz.addMethod(this.context.getSetterMethod({ name: property.name, field }));
             }
             clazz.addField(field);
         }
@@ -58,7 +58,7 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
         const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
         return php.field({
             type: convertedType,
-            name: this.context.getPropertyName(property.name.name),
+            name: this.context.getPropertyName(property.name),
             access: this.context.getPropertyAccess(),
             docs: property.docs,
             attributes: this.context.phpAttributeMapper.convert({

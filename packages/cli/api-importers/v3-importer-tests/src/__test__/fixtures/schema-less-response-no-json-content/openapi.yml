@@ -1,0 +1,42 @@
+openapi: 3.1.0
+info:
+  title: No JSON Content Response API
+  version: 1.0.0
+  description: Edge case where 2xx response has no JSON content types at all
+
+paths:
+  /plants/{plantId}/image:
+    post:
+      summary: Upload Plant Image
+      operationId: uploadPlantImage
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                imageUrl:
+                  type: string
+                  format: uri
+            examples:
+              succulent:
+                summary: Succulent photo
+                value:
+                  imageUrl: "https://example.com/succulent.jpg"
+      responses:
+        "200":
+          description: Image uploaded successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Upload complete"
+
+components: {}

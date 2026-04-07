@@ -2,25 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": {
-        "originalName": "api",
-        "camelCase": {
-            "unsafeName": "api",
-            "safeName": "api"
-        },
-        "snakeCase": {
-            "unsafeName": "api",
-            "safeName": "api"
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "API",
-            "safeName": "API"
-        },
-        "pascalCase": {
-            "unsafeName": "API",
-            "safeName": "API"
-        }
-    },
+    "apiName": "api",
     "apiDisplayName": "Nullable AllOf Extends Test",
     "apiDocs": null,
     "auth": {
@@ -34,25 +16,7 @@
         "type_:RootObject": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "RootObject",
-                    "camelCase": {
-                        "unsafeName": "rootObject",
-                        "safeName": "rootObject"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "root_object",
-                        "safeName": "root_object"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ROOT_OBJECT",
-                        "safeName": "ROOT_OBJECT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "RootObject",
-                        "safeName": "RootObject"
-                    }
-                },
+                "name": "RootObject",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -65,25 +29,7 @@
                 "_type": "object",
                 "extends": [
                     {
-                        "name": {
-                            "originalName": "NormalObject",
-                            "camelCase": {
-                                "unsafeName": "normalObject",
-                                "safeName": "normalObject"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "normal_object",
-                                "safeName": "normal_object"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "NORMAL_OBJECT",
-                                "safeName": "NORMAL_OBJECT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "NormalObject",
-                                "safeName": "NormalObject"
-                            }
-                        },
+                        "name": "NormalObject",
                         "fernFilepath": {
                             "allParts": [],
                             "packagePath": [],
@@ -93,25 +39,7 @@
                         "typeId": "type_:NormalObject"
                     },
                     {
-                        "name": {
-                            "originalName": "NullableObject",
-                            "camelCase": {
-                                "unsafeName": "nullableObject",
-                                "safeName": "nullableObject"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "nullable_object",
-                                "safeName": "nullable_object"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "NULLABLE_OBJECT",
-                                "safeName": "NULLABLE_OBJECT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "NullableObject",
-                                "safeName": "NullableObject"
-                            }
-                        },
+                        "name": "NullableObject",
                         "fernFilepath": {
                             "allParts": [],
                             "packagePath": [],
@@ -125,28 +53,7 @@
                 "extra-properties": false,
                 "extendedProperties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "normalField",
-                                "camelCase": {
-                                    "unsafeName": "normalField",
-                                    "safeName": "normalField"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "normal_field",
-                                    "safeName": "normal_field"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "NORMAL_FIELD",
-                                    "safeName": "NORMAL_FIELD"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "NormalField",
-                                    "safeName": "NormalField"
-                                }
-                            },
-                            "wireValue": "normalField"
-                        },
+                        "name": "normalField",
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -173,28 +80,7 @@
                         "docs": null
                     },
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "nullableField",
-                                "camelCase": {
-                                    "unsafeName": "nullableField",
-                                    "safeName": "nullableField"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "nullable_field",
-                                    "safeName": "nullable_field"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "NULLABLE_FIELD",
-                                    "safeName": "NULLABLE_FIELD"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "NullableField",
-                                    "safeName": "NullableField"
-                                }
-                            },
-                            "wireValue": "nullableField"
-                        },
+                        "name": "nullableField",
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -240,25 +126,7 @@
         "type_:NormalObject": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "NormalObject",
-                    "camelCase": {
-                        "unsafeName": "normalObject",
-                        "safeName": "normalObject"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "normal_object",
-                        "safeName": "normal_object"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "NORMAL_OBJECT",
-                        "safeName": "NORMAL_OBJECT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "NormalObject",
-                        "safeName": "NormalObject"
-                    }
-                },
+                "name": "NormalObject",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -272,28 +140,7 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "normalField",
-                                "camelCase": {
-                                    "unsafeName": "normalField",
-                                    "safeName": "normalField"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "normal_field",
-                                    "safeName": "normal_field"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "NORMAL_FIELD",
-                                    "safeName": "NORMAL_FIELD"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "NormalField",
-                                    "safeName": "NormalField"
-                                }
-                            },
-                            "wireValue": "normalField"
-                        },
+                        "name": "normalField",
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -338,25 +185,7 @@
         "type_:NullableObject": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "NullableObject",
-                    "camelCase": {
-                        "unsafeName": "nullableObject",
-                        "safeName": "nullableObject"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "nullable_object",
-                        "safeName": "nullable_object"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "NULLABLE_OBJECT",
-                        "safeName": "NULLABLE_OBJECT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "NullableObject",
-                        "safeName": "NullableObject"
-                    }
-                },
+                "name": "NullableObject",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -370,28 +199,7 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "nullableField",
-                                "camelCase": {
-                                    "unsafeName": "nullableField",
-                                    "safeName": "nullableField"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "nullable_field",
-                                    "safeName": "nullable_field"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "NULLABLE_FIELD",
-                                    "safeName": "NULLABLE_FIELD"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "NullableField",
-                                    "safeName": "NullableField"
-                                }
-                            },
-                            "wireValue": "nullableField"
-                        },
+                        "name": "nullableField",
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -462,25 +270,7 @@
             "endpoints": [
                 {
                     "id": "endpoint_.getTest",
-                    "name": {
-                        "originalName": "getTest",
-                        "camelCase": {
-                            "unsafeName": "getTest",
-                            "safeName": "getTest"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "get_test",
-                            "safeName": "get_test"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "GET_TEST",
-                            "safeName": "GET_TEST"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "GetTest",
-                            "safeName": "GetTest"
-                        }
-                    },
+                    "name": "getTest",
                     "displayName": "Get Test",
                     "auth": false,
                     "security": null,
@@ -511,25 +301,7 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "RootObject",
-                                        "camelCase": {
-                                            "unsafeName": "rootObject",
-                                            "safeName": "rootObject"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "root_object",
-                                            "safeName": "root_object"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ROOT_OBJECT",
-                                            "safeName": "ROOT_OBJECT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "RootObject",
-                                            "safeName": "RootObject"
-                                        }
-                                    },
+                                    "name": "RootObject",
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -577,53 +349,14 @@
                                                         "packagePath": [],
                                                         "file": null
                                                     },
-                                                    "name": {
-                                                        "originalName": "RootObject",
-                                                        "camelCase": {
-                                                            "unsafeName": "rootObject",
-                                                            "safeName": "rootObject"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "root_object",
-                                                            "safeName": "root_object"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "ROOT_OBJECT",
-                                                            "safeName": "ROOT_OBJECT"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "RootObject",
-                                                            "safeName": "RootObject"
-                                                        }
-                                                    },
+                                                    "name": "RootObject",
                                                     "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "normalField",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "normalField",
-                                                                        "safeName": "normalField"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "normal_field",
-                                                                        "safeName": "normal_field"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NORMAL_FIELD",
-                                                                        "safeName": "NORMAL_FIELD"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "NormalField",
-                                                                        "safeName": "NormalField"
-                                                                    }
-                                                                },
-                                                                "wireValue": "normalField"
-                                                            },
+                                                            "name": "normalField",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -657,25 +390,7 @@
                                                                 "jsonExample": "normalField"
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "NormalObject",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "normalObject",
-                                                                        "safeName": "normalObject"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "normal_object",
-                                                                        "safeName": "normal_object"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NORMAL_OBJECT",
-                                                                        "safeName": "NORMAL_OBJECT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "NormalObject",
-                                                                        "safeName": "NormalObject"
-                                                                    }
-                                                                },
+                                                                "name": "NormalObject",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -704,7 +419,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "7a8b2c9d",
+                                "id": "569fd84e",
                                 "url": "/test",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -725,48 +440,9 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "normalField",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "normalField",
-                                                                        "safeName": "normalField"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "normal_field",
-                                                                        "safeName": "normal_field"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NORMAL_FIELD",
-                                                                        "safeName": "NORMAL_FIELD"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "NormalField",
-                                                                        "safeName": "NormalField"
-                                                                    }
-                                                                },
-                                                                "wireValue": "normalField"
-                                                            },
+                                                            "name": "normalField",
                                                             "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "RootObject",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "rootObject",
-                                                                        "safeName": "rootObject"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "root_object",
-                                                                        "safeName": "root_object"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "ROOT_OBJECT",
-                                                                        "safeName": "ROOT_OBJECT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "RootObject",
-                                                                        "safeName": "RootObject"
-                                                                    }
-                                                                },
+                                                                "name": "RootObject",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -810,48 +486,9 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "nullableField",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "nullableField",
-                                                                        "safeName": "nullableField"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "nullable_field",
-                                                                        "safeName": "nullable_field"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NULLABLE_FIELD",
-                                                                        "safeName": "NULLABLE_FIELD"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "NullableField",
-                                                                        "safeName": "NullableField"
-                                                                    }
-                                                                },
-                                                                "wireValue": "nullableField"
-                                                            },
+                                                            "name": "nullableField",
                                                             "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "RootObject",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "rootObject",
-                                                                        "safeName": "rootObject"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "root_object",
-                                                                        "safeName": "root_object"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "ROOT_OBJECT",
-                                                                        "safeName": "ROOT_OBJECT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "RootObject",
-                                                                        "safeName": "RootObject"
-                                                                    }
-                                                                },
+                                                                "name": "RootObject",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -898,25 +535,7 @@
                                                     "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": {
-                                                        "originalName": "RootObject",
-                                                        "camelCase": {
-                                                            "unsafeName": "rootObject",
-                                                            "safeName": "rootObject"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "root_object",
-                                                            "safeName": "root_object"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "ROOT_OBJECT",
-                                                            "safeName": "ROOT_OBJECT"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "RootObject",
-                                                            "safeName": "RootObject"
-                                                        }
-                                                    },
+                                                    "name": "RootObject",
                                                     "fernFilepath": {
                                                         "allParts": [],
                                                         "packagePath": [],
@@ -950,25 +569,7 @@
                 },
                 {
                     "id": "endpoint_.createTest",
-                    "name": {
-                        "originalName": "createTest",
-                        "camelCase": {
-                            "unsafeName": "createTest",
-                            "safeName": "createTest"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "create_test",
-                            "safeName": "create_test"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CREATE_TEST",
-                            "safeName": "CREATE_TEST"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "CreateTest",
-                            "safeName": "CreateTest"
-                        }
-                    },
+                    "name": "createTest",
                     "displayName": "Create Test",
                     "auth": false,
                     "security": null,
@@ -993,25 +594,7 @@
                         "type": "reference",
                         "requestBodyType": {
                             "_type": "named",
-                            "name": {
-                                "originalName": "RootObject",
-                                "camelCase": {
-                                    "unsafeName": "rootObject",
-                                    "safeName": "rootObject"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "root_object",
-                                    "safeName": "root_object"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ROOT_OBJECT",
-                                    "safeName": "ROOT_OBJECT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "RootObject",
-                                    "safeName": "RootObject"
-                                }
-                            },
+                            "name": "RootObject",
                             "fernFilepath": {
                                 "allParts": [],
                                 "packagePath": [],
@@ -1034,25 +617,7 @@
                                 "type": "typeReference",
                                 "requestBodyType": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "RootObject",
-                                        "camelCase": {
-                                            "unsafeName": "rootObject",
-                                            "safeName": "rootObject"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "root_object",
-                                            "safeName": "root_object"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ROOT_OBJECT",
-                                            "safeName": "ROOT_OBJECT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "RootObject",
-                                            "safeName": "RootObject"
-                                        }
-                                    },
+                                    "name": "RootObject",
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -1068,25 +633,7 @@
                                 "v2Examples": null
                             }
                         },
-                        "requestParameterName": {
-                            "originalName": "request",
-                            "camelCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REQUEST",
-                                "safeName": "REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Request",
-                                "safeName": "Request"
-                            }
-                        },
+                        "requestParameterName": "request",
                         "streamParameter": null
                     },
                     "response": {
@@ -1096,25 +643,7 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "RootObject",
-                                        "camelCase": {
-                                            "unsafeName": "rootObject",
-                                            "safeName": "rootObject"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "root_object",
-                                            "safeName": "root_object"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ROOT_OBJECT",
-                                            "safeName": "ROOT_OBJECT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "RootObject",
-                                            "safeName": "RootObject"
-                                        }
-                                    },
+                                    "name": "RootObject",
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -1158,25 +687,7 @@
                                                 "packagePath": [],
                                                 "file": null
                                             },
-                                            "name": {
-                                                "originalName": "RootObject",
-                                                "camelCase": {
-                                                    "unsafeName": "rootObject",
-                                                    "safeName": "rootObject"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "root_object",
-                                                    "safeName": "root_object"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "ROOT_OBJECT",
-                                                    "safeName": "ROOT_OBJECT"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "RootObject",
-                                                    "safeName": "RootObject"
-                                                }
-                                            },
+                                            "name": "RootObject",
                                             "displayName": null
                                         },
                                         "shape": {
@@ -1201,53 +712,14 @@
                                                         "packagePath": [],
                                                         "file": null
                                                     },
-                                                    "name": {
-                                                        "originalName": "RootObject",
-                                                        "camelCase": {
-                                                            "unsafeName": "rootObject",
-                                                            "safeName": "rootObject"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "root_object",
-                                                            "safeName": "root_object"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "ROOT_OBJECT",
-                                                            "safeName": "ROOT_OBJECT"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "RootObject",
-                                                            "safeName": "RootObject"
-                                                        }
-                                                    },
+                                                    "name": "RootObject",
                                                     "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "normalField",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "normalField",
-                                                                        "safeName": "normalField"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "normal_field",
-                                                                        "safeName": "normal_field"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NORMAL_FIELD",
-                                                                        "safeName": "NORMAL_FIELD"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "NormalField",
-                                                                        "safeName": "NormalField"
-                                                                    }
-                                                                },
-                                                                "wireValue": "normalField"
-                                                            },
+                                                            "name": "normalField",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -1281,25 +753,7 @@
                                                                 "jsonExample": "normalField"
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "NormalObject",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "normalObject",
-                                                                        "safeName": "normalObject"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "normal_object",
-                                                                        "safeName": "normal_object"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NORMAL_OBJECT",
-                                                                        "safeName": "NORMAL_OBJECT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "NormalObject",
-                                                                        "safeName": "NormalObject"
-                                                                    }
-                                                                },
+                                                                "name": "NormalObject",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -1328,7 +782,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "abf5ebab",
+                                "id": "d56515b1",
                                 "url": "/test",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1345,48 +799,9 @@
                                             "type": "object",
                                             "properties": [
                                                 {
-                                                    "name": {
-                                                        "name": {
-                                                            "originalName": "normalField",
-                                                            "camelCase": {
-                                                                "unsafeName": "normalField",
-                                                                "safeName": "normalField"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "normal_field",
-                                                                "safeName": "normal_field"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "NORMAL_FIELD",
-                                                                "safeName": "NORMAL_FIELD"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "NormalField",
-                                                                "safeName": "NormalField"
-                                                            }
-                                                        },
-                                                        "wireValue": "normalField"
-                                                    },
+                                                    "name": "normalField",
                                                     "originalTypeDeclaration": {
-                                                        "name": {
-                                                            "originalName": "RootObject",
-                                                            "camelCase": {
-                                                                "unsafeName": "rootObject",
-                                                                "safeName": "rootObject"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "root_object",
-                                                                "safeName": "root_object"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "ROOT_OBJECT",
-                                                                "safeName": "ROOT_OBJECT"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "RootObject",
-                                                                "safeName": "RootObject"
-                                                            }
-                                                        },
+                                                        "name": "RootObject",
                                                         "fernFilepath": {
                                                             "allParts": [],
                                                             "packagePath": [],
@@ -1418,48 +833,9 @@
                                                     "propertyAccess": null
                                                 },
                                                 {
-                                                    "name": {
-                                                        "name": {
-                                                            "originalName": "nullableField",
-                                                            "camelCase": {
-                                                                "unsafeName": "nullableField",
-                                                                "safeName": "nullableField"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "nullable_field",
-                                                                "safeName": "nullable_field"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "NULLABLE_FIELD",
-                                                                "safeName": "NULLABLE_FIELD"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "NullableField",
-                                                                "safeName": "NullableField"
-                                                            }
-                                                        },
-                                                        "wireValue": "nullableField"
-                                                    },
+                                                    "name": "nullableField",
                                                     "originalTypeDeclaration": {
-                                                        "name": {
-                                                            "originalName": "RootObject",
-                                                            "camelCase": {
-                                                                "unsafeName": "rootObject",
-                                                                "safeName": "rootObject"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "root_object",
-                                                                "safeName": "root_object"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "ROOT_OBJECT",
-                                                                "safeName": "ROOT_OBJECT"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "RootObject",
-                                                                "safeName": "RootObject"
-                                                            }
-                                                        },
+                                                        "name": "RootObject",
                                                         "fernFilepath": {
                                                             "allParts": [],
                                                             "packagePath": [],
@@ -1494,25 +870,7 @@
                                             "extraProperties": null
                                         },
                                         "typeName": {
-                                            "name": {
-                                                "originalName": "RootObject",
-                                                "camelCase": {
-                                                    "unsafeName": "rootObject",
-                                                    "safeName": "rootObject"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "root_object",
-                                                    "safeName": "root_object"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "ROOT_OBJECT",
-                                                    "safeName": "ROOT_OBJECT"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "RootObject",
-                                                    "safeName": "RootObject"
-                                                }
-                                            },
+                                            "name": "RootObject",
                                             "fernFilepath": {
                                                 "allParts": [],
                                                 "packagePath": [],
@@ -1535,48 +893,9 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "normalField",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "normalField",
-                                                                        "safeName": "normalField"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "normal_field",
-                                                                        "safeName": "normal_field"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NORMAL_FIELD",
-                                                                        "safeName": "NORMAL_FIELD"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "NormalField",
-                                                                        "safeName": "NormalField"
-                                                                    }
-                                                                },
-                                                                "wireValue": "normalField"
-                                                            },
+                                                            "name": "normalField",
                                                             "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "RootObject",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "rootObject",
-                                                                        "safeName": "rootObject"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "root_object",
-                                                                        "safeName": "root_object"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "ROOT_OBJECT",
-                                                                        "safeName": "ROOT_OBJECT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "RootObject",
-                                                                        "safeName": "RootObject"
-                                                                    }
-                                                                },
+                                                                "name": "RootObject",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -1620,48 +939,9 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "nullableField",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "nullableField",
-                                                                        "safeName": "nullableField"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "nullable_field",
-                                                                        "safeName": "nullable_field"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NULLABLE_FIELD",
-                                                                        "safeName": "NULLABLE_FIELD"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "NullableField",
-                                                                        "safeName": "NullableField"
-                                                                    }
-                                                                },
-                                                                "wireValue": "nullableField"
-                                                            },
+                                                            "name": "nullableField",
                                                             "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "RootObject",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "rootObject",
-                                                                        "safeName": "rootObject"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "root_object",
-                                                                        "safeName": "root_object"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "ROOT_OBJECT",
-                                                                        "safeName": "ROOT_OBJECT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "RootObject",
-                                                                        "safeName": "RootObject"
-                                                                    }
-                                                                },
+                                                                "name": "RootObject",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -1708,25 +988,7 @@
                                                     "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": {
-                                                        "originalName": "RootObject",
-                                                        "camelCase": {
-                                                            "unsafeName": "rootObject",
-                                                            "safeName": "rootObject"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "root_object",
-                                                            "safeName": "root_object"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "ROOT_OBJECT",
-                                                            "safeName": "ROOT_OBJECT"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "RootObject",
-                                                            "safeName": "RootObject"
-                                                        }
-                                                    },
+                                                    "name": "RootObject",
                                                     "fernFilepath": {
                                                         "allParts": [],
                                                         "packagePath": [],
@@ -1763,28 +1025,7 @@
         }
     },
     "constants": {
-        "errorInstanceIdKey": {
-            "name": {
-                "originalName": "errorInstanceId",
-                "camelCase": {
-                    "unsafeName": "errorInstanceID",
-                    "safeName": "errorInstanceID"
-                },
-                "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
-                },
-                "pascalCase": {
-                    "unsafeName": "ErrorInstanceID",
-                    "safeName": "ErrorInstanceID"
-                }
-            },
-            "wireValue": "errorInstanceId"
-        }
+        "errorInstanceIdKey": "errorInstanceId"
     },
     "environments": {
         "defaultEnvironment": "Default",
@@ -1793,25 +1034,7 @@
             "environments": [
                 {
                     "id": "Default",
-                    "name": {
-                        "originalName": "Default",
-                        "camelCase": {
-                            "unsafeName": "default",
-                            "safeName": "default"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "default",
-                            "safeName": "default"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "DEFAULT",
-                            "safeName": "DEFAULT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Default",
-                            "safeName": "Default"
-                        }
-                    },
+                    "name": "Default",
                     "url": "https://api.example.com",
                     "audiences": null,
                     "defaultUrl": null,
@@ -1877,6 +1100,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "normalField",
                             "name": {
                                 "originalName": "normalField",
                                 "camelCase": {
@@ -1895,8 +1119,7 @@
                                     "unsafeName": "NormalField",
                                     "safeName": "NormalField"
                                 }
-                            },
-                            "wireValue": "normalField"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -1910,6 +1133,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "nullableField",
                             "name": {
                                 "originalName": "nullableField",
                                 "camelCase": {
@@ -1928,8 +1152,7 @@
                                     "unsafeName": "NullableField",
                                     "safeName": "NullableField"
                                 }
-                            },
-                            "wireValue": "nullableField"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -1979,6 +1202,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "normalField",
                             "name": {
                                 "originalName": "normalField",
                                 "camelCase": {
@@ -1997,8 +1221,7 @@
                                     "unsafeName": "NormalField",
                                     "safeName": "NormalField"
                                 }
-                            },
-                            "wireValue": "normalField"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -2045,6 +1268,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "nullableField",
                             "name": {
                                 "originalName": "nullableField",
                                 "camelCase": {
@@ -2063,8 +1287,7 @@
                                     "unsafeName": "NullableField",
                                     "safeName": "NullableField"
                                 }
-                            },
-                            "wireValue": "nullableField"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -2213,6 +1436,11 @@
     "audiences": null,
     "generationMetadata": null,
     "apiPlayground": true,
+    "casingsConfig": {
+        "generationLanguage": null,
+        "keywords": null,
+        "smartCasing": true
+    },
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {

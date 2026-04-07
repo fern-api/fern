@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:mixed-file-directory'
+  implementation 'com.fern:mixed-file-directory:0.0.1'
 }
 ```
 

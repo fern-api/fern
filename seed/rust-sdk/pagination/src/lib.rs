@@ -22,11 +22,13 @@
 //!                 pagination: Some(StartingAfterPaging {
 //!                     per_page: 1,
 //!                     starting_after: Some("starting_after".to_string()),
+//!                     ..Default::default()
 //!                 }),
 //!                 query: SearchRequestQuery::SingleFilterSearchRequest(SingleFilterSearchRequest {
 //!                     field: Some("field".to_string()),
 //!                     operator: Some(SingleFilterSearchRequestOperator::Equals),
 //!                     value: Some("value".to_string()),
+//!                     ..Default::default()
 //!                 }),
 //!             },
 //!             None,

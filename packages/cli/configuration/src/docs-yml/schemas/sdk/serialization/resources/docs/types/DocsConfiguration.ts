@@ -3,11 +3,13 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { AgentsConfig } from "./AgentsConfig.js";
 import { AiChatConfig } from "./AiChatConfig.js";
 import { AiExamplesConfig } from "./AiExamplesConfig.js";
 import { AnalyticsConfig } from "./AnalyticsConfig.js";
 import { AnnouncementConfig } from "./AnnouncementConfig.js";
 import { BackgroundImageConfiguration } from "./BackgroundImageConfiguration.js";
+import { CheckConfig } from "./CheckConfig.js";
 import { ColorsConfiguration } from "./ColorsConfiguration.js";
 import { CssConfig } from "./CssConfig.js";
 import { DocsInstance } from "./DocsInstance.js";
@@ -60,8 +62,10 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     aiChat: core.serialization.property("ai-chat", AiChatConfig.optional()),
     aiSearch: core.serialization.property("ai-search", AiChatConfig.optional()),
     aiExamples: core.serialization.property("ai-examples", AiExamplesConfig.optional()),
+    agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: core.serialization.list(RedirectConfig).optional(),
+    check: CheckConfig.optional(),
     logo: LogoConfiguration.optional(),
     favicon: core.serialization.string().optional(),
     backgroundImage: core.serialization.property("background-image", BackgroundImageConfiguration.optional()),
@@ -99,8 +103,10 @@ export declare namespace DocsConfiguration {
         "ai-chat"?: AiChatConfig.Raw | null;
         "ai-search"?: AiChatConfig.Raw | null;
         "ai-examples"?: AiExamplesConfig.Raw | null;
+        agents?: AgentsConfig.Raw | null;
         metadata?: MetadataConfig.Raw | null;
         redirects?: RedirectConfig.Raw[] | null;
+        check?: CheckConfig.Raw | null;
         logo?: LogoConfiguration.Raw | null;
         favicon?: string | null;
         "background-image"?: BackgroundImageConfiguration.Raw | null;

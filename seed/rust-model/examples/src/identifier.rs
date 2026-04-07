@@ -11,7 +11,7 @@ pub struct Identifier {
 
 impl Identifier {
     pub fn builder() -> IdentifierBuilder {
-        IdentifierBuilder::default()
+        <IdentifierBuilder as Default>::default()
     }
 }
 

@@ -5,7 +5,21 @@ import json
 import logging
 from collections import defaultdict
 from dataclasses import asdict
-from typing import TYPE_CHECKING, Any, Callable, Dict, List, Mapping, Optional, Tuple, Type, TypeVar, Union, cast
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    ClassVar,
+    Dict,
+    List,
+    Mapping,
+    Optional,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+    cast,
+)
 
 import pydantic
 import typing_extensions
@@ -296,13 +310,37 @@ def to_jsonable_with_fallback(obj: Any, fallback_serializer: Callable[[Any], Any
 
 
 class UniversalBaseModel(pydantic.BaseModel):
-    class Config:
-        populate_by_name = True
-        smart_union = True
-        allow_population_by_field_name = True
-        json_encoders = {dt.datetime: serialize_datetime}
-        # Allow fields beginning with `model_` to be used in the model
-        protected_namespaces = ()
+    if IS_PYDANTIC_V2:
+        model_config: ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(  # type: ignore[typeddict-unknown-key]
+            validate_by_name=True,
+            validate_by_alias=True,
+            # Allow fields beginning with `model_` to be used in the model
+            protected_namespaces=(),
+        )
+
+        @pydantic.model_serializer(mode="plain", when_used="json")  # type: ignore[attr-defined]
+        def serialize_model(self) -> Any:  # type: ignore[name-defined]
+            def _serialize_recursive(obj: Any) -> Any:
+                if isinstance(obj, dt.datetime):
+                    return serialize_datetime(obj)
+                elif isinstance(obj, dict):
+                    return {k: _serialize_recursive(v) for k, v in obj.items()}
+                elif isinstance(obj, list):
+                    return [_serialize_recursive(item) for item in obj]
+                return obj
+
+            serialized = self.model_dump()  # type: ignore[attr-defined]
+            return _serialize_recursive(serialized)
+
+    else:
+
+        class Config:
+            populate_by_name = True
+            smart_union = True
+            allow_population_by_field_name = True
+            json_encoders = {dt.datetime: serialize_datetime}
+            # Allow fields beginning with `model_` to be used in the model
+            protected_namespaces = ()
 
     def json(self, **kwargs: Any) -> str:
         kwargs_with_defaults = {

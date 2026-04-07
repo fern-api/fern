@@ -46,7 +46,7 @@ export class ReferenceConfigAssembler {
 
     private getReferenceSectionTitle(service: FernIr.HttpService): string {
         return (
-            service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ")
+            service.displayName ?? service.name.fernFilepath.allParts.map((part) => this.context.case.pascalSafe(part)).join(" ")
         );
     }
 
@@ -127,7 +127,7 @@ export class ReferenceConfigAssembler {
         const clientPath = servicePath ? `client.${servicePath}.` : "client.";
 
         // Method name in snake_case
-        const methodName = endpoint.name.snakeCase.safeName;
+        const methodName = this.context.case.snakeSafe(endpoint.name);
 
         // Build parameters - simplified for reference docs
         const parameters = this.buildParameterSignature(endpoint);
@@ -150,7 +150,7 @@ export class ReferenceConfigAssembler {
         }
 
         // For subpackage services, use snake_case path
-        return service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName).join("().");
+        return service.name.fernFilepath.allParts.map((part) => this.context.case.snakeSafe(part)).join("().");
     }
 
     private buildParameterSignature(endpoint: FernIr.HttpEndpoint): string {
@@ -159,13 +159,13 @@ export class ReferenceConfigAssembler {
         // Add path parameters
         endpoint.allPathParameters.forEach((pathParam) => {
             const rustType = this.getRustTypeForTypeReference(pathParam.valueType);
-            params.push(`${pathParam.name.snakeCase.safeName}: ${rustType}`);
+            params.push(`${this.context.case.snakeSafe(pathParam.name)}: ${rustType}`);
         });
 
         // Add request body parameter
         if (endpoint.requestBody) {
             if (endpoint.requestBody.type === "inlinedRequestBody") {
-                params.push(`request: ${endpoint.requestBody.name.pascalCase.safeName}`);
+                params.push(`request: ${this.context.case.pascalSafe(endpoint.requestBody.name)}`);
             } else if (endpoint.requestBody.type === "reference") {
                 const typeName = this.getRustTypeForTypeReference(endpoint.requestBody.requestBodyType);
                 params.push(`request: ${typeName}`);
@@ -178,7 +178,7 @@ export class ReferenceConfigAssembler {
             .forEach((qp) => {
                 const rustType = this.getRustTypeForTypeReference(qp.valueType);
                 const optional = qp.allowMultiple ? rustType : `Option<${rustType}>`;
-                params.push(`${qp.name.name.snakeCase.safeName}: ${optional}`);
+                params.push(`${this.context.case.snakeSafe(qp.name)}: ${optional}`);
             });
 
         return `(${params.join(", ")})`;
@@ -208,7 +208,7 @@ export class ReferenceConfigAssembler {
         // Path parameters
         endpoint.allPathParameters.forEach((pathParam) => {
             params.push({
-                name: pathParam.name.snakeCase.safeName,
+                name: this.context.case.snakeSafe(pathParam.name),
                 type: this.getRustTypeForTypeReference(pathParam.valueType),
                 required: true,
                 description: pathParam.docs
@@ -219,7 +219,7 @@ export class ReferenceConfigAssembler {
         if (endpoint.requestBody?.type === "inlinedRequestBody") {
             endpoint.requestBody.properties.forEach((prop) => {
                 params.push({
-                    name: prop.name.name.snakeCase.safeName,
+                    name: this.context.case.snakeSafe(prop.name),
                     type: this.getRustTypeForTypeReference(prop.valueType),
                     required: !this.isOptionalType(prop.valueType),
                     description: prop.docs
@@ -230,7 +230,7 @@ export class ReferenceConfigAssembler {
         // Query parameters
         endpoint.queryParameters.forEach((qp) => {
             params.push({
-                name: qp.name.name.snakeCase.safeName,
+                name: this.context.case.snakeSafe(qp.name),
                 type: this.getRustTypeForTypeReference(qp.valueType),
                 required: !qp.allowMultiple,
                 description: qp.docs
@@ -275,7 +275,7 @@ export class ReferenceConfigAssembler {
                 }
             },
             named: (named) => {
-                return named.name.pascalCase.safeName;
+                return this.context.case.pascalSafe(named.name);
             },
             container: (container) => {
                 return container._visit<string>({

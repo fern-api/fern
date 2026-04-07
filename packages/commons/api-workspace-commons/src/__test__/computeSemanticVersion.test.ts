@@ -279,51 +279,106 @@ describe("getLatestVersionFromGoProxy", () => {
         vi.unstubAllGlobals();
     });
 
-    it("returns version with v prefix stripped", async () => {
-        vi.mocked(fetch).mockResolvedValueOnce(
-            mockFetchResponse({
-                Version: "v0.22.0",
-                Time: "2024-12-06T17:06:22Z"
-            })
-        );
+    /**
+     * Helper: mock fetch so that only the given module paths return versions.
+     * All other paths return 404. The map keys are full proxy URLs.
+     */
+    function mockGoProxyFetch(pathToVersion: Record<string, string>): void {
+        vi.mocked(fetch).mockImplementation((input: string | URL | Request) => {
+            const url = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
+            const version = pathToVersion[url];
+            if (version != null) {
+                return Promise.resolve(mockFetchResponse({ Version: version }));
+            }
+            return Promise.resolve(mockFetchResponse({}, false, 404));
+        });
+    }
+
+    it("returns version from v0.x module (no higher major versions)", async () => {
+        mockGoProxyFetch({
+            "https://proxy.golang.org/golang.org/x/text/@latest": "v0.22.0"
+        });
 
         const version = await getLatestVersionFromGoProxy("golang.org/x/text");
         expect(version).toBe("0.22.0");
-        // All lowercase path should pass through unchanged
-        expect(fetch).toHaveBeenCalledWith("https://proxy.golang.org/golang.org/x/text/@latest");
+    });
+
+    it("returns v2 version when base path has v0.x and /v2 has higher version", async () => {
+        // This is the cohere-go bug scenario:
+        // base path returns v0.2.0 (ancient), /v2 returns v2.18.0 (current)
+        mockGoProxyFetch({
+            "https://proxy.golang.org/github.com/cohere-ai/cohere-go/@latest": "v0.2.0",
+            "https://proxy.golang.org/github.com/cohere-ai/cohere-go/v2/@latest": "v2.18.0"
+        });
+
+        const version = await getLatestVersionFromGoProxy("github.com/cohere-ai/cohere-go");
+        expect(version).toBe("2.18.0");
+    });
+
+    it("returns v2 version when base path returns nothing", async () => {
+        mockGoProxyFetch({
+            "https://proxy.golang.org/github.com/owner/repo/v2/@latest": "v2.5.0"
+        });
+
+        const version = await getLatestVersionFromGoProxy("github.com/owner/repo");
+        expect(version).toBe("2.5.0");
+    });
+
+    it("returns highest major version when multiple major versions exist", async () => {
+        mockGoProxyFetch({
+            "https://proxy.golang.org/github.com/owner/repo/@latest": "v1.9.0",
+            "https://proxy.golang.org/github.com/owner/repo/v2/@latest": "v2.3.0",
+            "https://proxy.golang.org/github.com/owner/repo/v3/@latest": "v3.1.0"
+        });
+
+        const version = await getLatestVersionFromGoProxy("github.com/owner/repo");
+        expect(version).toBe("3.1.0");
+    });
+
+    it("queries path directly when module path already has /v2 suffix", async () => {
+        mockGoProxyFetch({
+            "https://proxy.golang.org/github.com/owner/repo/v2/@latest": "v2.5.0"
+        });
+
+        const version = await getLatestVersionFromGoProxy("github.com/owner/repo/v2");
+        expect(version).toBe("2.5.0");
+        // Should only have made one fetch call (no probing)
+        expect(fetch).toHaveBeenCalledTimes(1);
+        expect(fetch).toHaveBeenCalledWith("https://proxy.golang.org/github.com/owner/repo/v2/@latest");
     });
 
     it("case-encodes uppercase letters in module path", async () => {
-        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ Version: "v1.0.0" }));
+        mockGoProxyFetch({
+            "https://proxy.golang.org/github.com/!azure/azure-sdk-for-go/@latest": "v1.0.0"
+        });
 
-        await getLatestVersionFromGoProxy("github.com/Azure/azure-sdk-for-go");
-        // "Azure" -> "!azure"
+        const version = await getLatestVersionFromGoProxy("github.com/Azure/azure-sdk-for-go");
+        expect(version).toBe("1.0.0");
+        // Verify the base path was case-encoded
         expect(fetch).toHaveBeenCalledWith("https://proxy.golang.org/github.com/!azure/azure-sdk-for-go/@latest");
     });
 
-    it("handles version without v prefix", async () => {
-        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ Version: "1.2.3" }));
-
-        const version = await getLatestVersionFromGoProxy("example.com/mod");
-        expect(version).toBe("1.2.3");
-    });
-
     it("case-encodes multiple uppercase letters", async () => {
-        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ Version: "v2.0.0" }));
+        mockGoProxyFetch({
+            "https://proxy.golang.org/github.com/!my!org/!my!repo/@latest": "v1.0.0"
+        });
 
-        await getLatestVersionFromGoProxy("github.com/MyOrg/MyRepo");
+        const version = await getLatestVersionFromGoProxy("github.com/MyOrg/MyRepo");
+        expect(version).toBe("1.0.0");
         expect(fetch).toHaveBeenCalledWith("https://proxy.golang.org/github.com/!my!org/!my!repo/@latest");
     });
 
-    it("returns undefined when module does not exist", async () => {
-        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 404));
+    it("returns undefined when module does not exist at any major version", async () => {
+        mockGoProxyFetch({});
 
         const version = await getLatestVersionFromGoProxy("nonexistent.example.com/mod");
         expect(version).toBeUndefined();
     });
 
     it("returns undefined on network error", async () => {
-        vi.mocked(fetch).mockImplementationOnce(mockFetchError);
+        vi.mocked(fetch).mockImplementation(() => {
+            throw new TypeError("fetch failed");
+        });
 
         const version = await getLatestVersionFromGoProxy("golang.org/x/text");
         expect(version).toBeUndefined();
@@ -783,6 +838,10 @@ describe.skipIf(!INTEGRATION)("registry integration tests", () => {
         TIMEOUT
     );
 
+    // Go proxy tests need a longer timeout because the function now probes
+    // multiple major version paths in parallel (base + /v2../v10).
+    const GO_PROXY_TIMEOUT = 30_000;
+
     it(
         "Go proxy: fetches latest version of a well-known module",
         async () => {
@@ -792,7 +851,19 @@ describe.skipIf(!INTEGRATION)("registry integration tests", () => {
             // Should NOT have the v prefix
             expect(version).not.toMatch(/^v/);
         },
-        TIMEOUT
+        GO_PROXY_TIMEOUT
+    );
+
+    it(
+        "Go proxy: discovers v2 module when base path has old v0.x version (cohere-go scenario)",
+        async () => {
+            // github.com/cohere-ai/cohere-go is a v2 module; querying without /v2
+            // should still return the v2.x version via major version probing
+            const version = await getLatestVersionFromGoProxy("github.com/cohere-ai/cohere-go");
+            expect(version).toBeDefined();
+            expect(version).toMatch(/^2\.\d+/);
+        },
+        GO_PROXY_TIMEOUT
     );
 
     it(
@@ -801,7 +872,7 @@ describe.skipIf(!INTEGRATION)("registry integration tests", () => {
             const version = await getLatestVersionFromGoProxy("nonexistent.example.com/zzz-fern-test-12345");
             expect(version).toBeUndefined();
         },
-        TIMEOUT
+        GO_PROXY_TIMEOUT
     );
 
     it(

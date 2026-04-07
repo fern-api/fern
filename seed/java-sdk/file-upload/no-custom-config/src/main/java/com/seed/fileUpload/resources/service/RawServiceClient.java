@@ -69,12 +69,9 @@ public class RawServiceClient {
         try {
             if (request.getMaybeString().isPresent()) {
                 multipartBodyBuilder.addFormDataPart(
-                        "maybe_string",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(
-                                request.getMaybeString().get()));
+                        "maybe_string", request.getMaybeString().get());
             }
-            multipartBodyBuilder.addFormDataPart(
-                    "integer", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getInteger()));
+            multipartBodyBuilder.addFormDataPart("integer", Integer.toString(request.getInteger()));
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
             multipartBodyBuilder.addFormDataPart(
@@ -105,18 +102,11 @@ public class RawServiceClient {
             }
             if (request.getMaybeInteger().isPresent()) {
                 multipartBodyBuilder.addFormDataPart(
-                        "maybe_integer",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(
-                                request.getMaybeInteger().get()));
+                        "maybe_integer", request.getMaybeInteger().get().toString());
             }
             if (request.getOptionalListOfStrings().isPresent()) {
                 request.getOptionalListOfStrings().get().forEach(item -> {
-                    try {
-                        multipartBodyBuilder.addFormDataPart(
-                                "optional_list_of_strings", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
-                    } catch (JsonProcessingException e) {
-                        throw new RuntimeException("Failed to write value as JSON", e);
-                    }
+                    multipartBodyBuilder.addFormDataPart("optional_list_of_strings", String.valueOf(item));
                 });
             }
             request.getListOfObjects().forEach(item -> {
@@ -136,14 +126,11 @@ public class RawServiceClient {
             if (request.getOptionalObjectType().isPresent()) {
                 multipartBodyBuilder.addFormDataPart(
                         "optional_object_type",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(
-                                request.getOptionalObjectType().get()));
+                        request.getOptionalObjectType().get().toString());
             }
             if (request.getOptionalId().isPresent()) {
                 multipartBodyBuilder.addFormDataPart(
-                        "optional_id",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(
-                                request.getOptionalId().get()));
+                        "optional_id", request.getOptionalId().get());
             }
             multipartBodyBuilder.addFormDataPart(
                     "alias_object", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getAliasObject()));
@@ -503,7 +490,7 @@ public class RawServiceClient {
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
             multipartBodyBuilder.addFormDataPart(
                     "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
-            multipartBodyBuilder.addFormDataPart("foo", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFoo()));
+            multipartBodyBuilder.addFormDataPart("foo", request.getFoo());
             multipartBodyBuilder.addFormDataPart("bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getBar()));
             if (request.getFooBar().isPresent()) {
                 multipartBodyBuilder.addFormDataPart(
@@ -1615,21 +1602,15 @@ public class RawServiceClient {
                     "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
             if (request.getModelType().isPresent()) {
                 multipartBodyBuilder.addFormDataPart(
-                        "model_type",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(
-                                request.getModelType().get()));
+                        "model_type", request.getModelType().get());
             }
             if (request.getOpenEnum().isPresent()) {
                 multipartBodyBuilder.addFormDataPart(
-                        "open_enum",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(
-                                request.getOpenEnum().get()));
+                        "open_enum", request.getOpenEnum().get().toString());
             }
             if (request.getMaybeName().isPresent()) {
                 multipartBodyBuilder.addFormDataPart(
-                        "maybe_name",
-                        ObjectMappers.JSON_MAPPER.writeValueAsString(
-                                request.getMaybeName().get()));
+                        "maybe_name", request.getMaybeName().get());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

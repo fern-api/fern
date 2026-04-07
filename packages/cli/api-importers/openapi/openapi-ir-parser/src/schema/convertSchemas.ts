@@ -113,7 +113,10 @@ function isInlinable(
         case undefined:
             return false;
         default:
-            // TODO(thomas): Handle null literal and type array that is not a SchemaObject and return to the promised land of assertNever
+            if ((resolvedSchema as OpenAPIV3.SchemaObject).type === ("null" as unknown)) {
+                return true;
+            }
+            // TODO(thomas): Handle type array that is not a SchemaObject and return to the promised land of assertNever
             // return assertNever(resolvedSchema);
             context.logger.warn("Unhandled schema type. Will not inline this schema", JSON.stringify(resolvedSchema));
             return false;
@@ -602,12 +605,13 @@ export function convertSchemaObject(
         // primitive types
         if (schema.type === "boolean") {
             const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL);
-            if (literalValue != null) {
+            const resolvedLiteral = literalValue ?? getSingleBooleanEnumValue(schema, blockConstCoercionToLiteral);
+            if (resolvedLiteral != null) {
                 return wrapLiteral({
                     nameOverride,
                     generatedName,
                     title,
-                    literal: LiteralSchemaValue.boolean(literalValue),
+                    literal: LiteralSchemaValue.boolean(resolvedLiteral),
                     wrapAsOptional,
                     wrapAsNullable,
                     description,
@@ -1355,6 +1359,46 @@ export function convertSchemaObject(
             });
         }
 
+        // handle null type (OpenAPI 3.1)
+        // `type: "null"` means the value is always null.
+        // Represent as nullable wrapping an unknown inner type.
+        if ((schema.type as string) === "null") {
+            let result: SchemaWithExample = SchemaWithExample.nullable({
+                availability,
+                namespace,
+                groupName,
+                description,
+                generatedName,
+                inline: undefined,
+                nameOverride,
+                title,
+                value: SchemaWithExample.unknown({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    description: undefined,
+                    availability: undefined,
+                    namespace,
+                    groupName,
+                    example: undefined
+                })
+            });
+            if (wrapAsOptional) {
+                result = SchemaWithExample.optional({
+                    availability,
+                    namespace,
+                    groupName,
+                    description,
+                    generatedName,
+                    inline: undefined,
+                    nameOverride,
+                    title,
+                    value: result
+                });
+            }
+            return result;
+        }
+
         // handle vanilla object
         if (schema.type === "object" && hasNoOneOf(schema) && hasNoAllOf(schema) && hasNoProperties(schema)) {
             return wrapMap({
@@ -1460,6 +1504,23 @@ export function convertSchemaObject(
             example: undefined
         });
     }
+}
+
+/**
+ * Extracts a boolean literal from a single-value enum (e.g. `type: boolean, enum: [true]`).
+ * Returns undefined if the schema doesn't match or if const-to-literal coercion is blocked.
+ */
+function getSingleBooleanEnumValue(
+    schema: OpenAPIV3.SchemaObject,
+    blockConstCoercionToLiteral: boolean
+): boolean | undefined {
+    if (blockConstCoercionToLiteral) {
+        return undefined;
+    }
+    if (schema.enum != null && schema.enum.length === 1 && typeof schema.enum[0] === "boolean") {
+        return schema.enum[0] as boolean;
+    }
+    return undefined;
 }
 
 function getBooleanFromDefault(defaultValue: unknown): boolean | undefined {

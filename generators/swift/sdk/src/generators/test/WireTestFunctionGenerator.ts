@@ -202,8 +202,16 @@ export class WireTestFunctionGenerator {
                         return literalContainer.literal._visit({
                             string: (val) =>
                                 swift.Expression.enumCaseShorthand(LiteralEnum.generateEnumCaseLabel(val.original)),
-                            // Only string literals are supported
-                            boolean: () => swift.Expression.nop(),
+                            boolean: (val) =>
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("JSONValue"),
+                                    methodName: "bool",
+                                    arguments_: [
+                                        swift.functionArgument({
+                                            value: swift.Expression.boolLiteral(val)
+                                        })
+                                    ]
+                                }),
                             integer: () => swift.Expression.nop(),
                             uint: () => swift.Expression.nop(),
                             uint64: () => swift.Expression.nop(),

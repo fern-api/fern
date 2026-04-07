@@ -27,7 +27,7 @@
     <Using Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup Condition="'$(UsePortableDateOnly)' == 'true'">
-    <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" />
+    <PackageReference Include="Portable.System.DateTimeOnly" Version="9.0.1" />
   </ItemGroup>
   <ItemGroup Condition="'$(UsePortableDateOnly)' == 'false'">
     <Compile Remove="Core\DateOnlyConverter.cs" />
@@ -45,7 +45,7 @@
     <PackageReference Include="Moq.Contrib.HttpClient" Version="1.4.0" />
   </ItemGroup>
   <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
-    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+    <PackageReference Include="System.Text.Json" Version="9.0.9" />
   </ItemGroup>
 
   <ItemGroup>

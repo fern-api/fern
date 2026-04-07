@@ -29,7 +29,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:simple-api'
+  implementation 'com.fern:simple-api:0.0.1'
 }
 ```
 

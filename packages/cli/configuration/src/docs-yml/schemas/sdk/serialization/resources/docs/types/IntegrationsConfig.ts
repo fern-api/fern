@@ -9,10 +9,12 @@ export const IntegrationsConfig: core.serialization.ObjectSchema<
     FernDocsConfig.IntegrationsConfig
 > = core.serialization.object({
     intercom: core.serialization.string().optional(),
+    context7: core.serialization.string().optional(),
 });
 
 export declare namespace IntegrationsConfig {
     export interface Raw {
         intercom?: string | null;
+        context7?: string | null;
     }
 }

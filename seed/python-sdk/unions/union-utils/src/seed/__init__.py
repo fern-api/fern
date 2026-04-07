@@ -12,6 +12,7 @@ if typing.TYPE_CHECKING:
         Foo,
         FooExtended,
         SecondItemType,
+        TypeWithOptionalMap,
         Union,
         UnionWithBaseProperties,
         UnionWithDiscriminant,
@@ -33,6 +34,7 @@ if typing.TYPE_CHECKING:
         UnionWithoutKey,
     )
     from . import bigunion, types, union
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .bigunion import (
         ActiveDiamond,
         AttractiveScript,
@@ -77,6 +79,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Circle": ".union",
     "CircularCard": ".bigunion",
     "ColorfulCover": ".bigunion",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "DiligentDeal": ".bigunion",
     "DisloyalValue": ".bigunion",
     "DistinctFailure": ".bigunion",
@@ -107,6 +111,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ThankfulFactor": ".bigunion",
     "TotalWork": ".bigunion",
     "TriangularRepair": ".bigunion",
+    "TypeWithOptionalMap": ".types",
     "Union": ".types",
     "UnionWithBaseProperties": ".types",
     "UnionWithDiscriminant": ".types",
@@ -167,6 +172,8 @@ __all__ = [
     "Circle",
     "CircularCard",
     "ColorfulCover",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "DiligentDeal",
     "DisloyalValue",
     "DistinctFailure",
@@ -197,6 +204,7 @@ __all__ = [
     "ThankfulFactor",
     "TotalWork",
     "TriangularRepair",
+    "TypeWithOptionalMap",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithDiscriminant",

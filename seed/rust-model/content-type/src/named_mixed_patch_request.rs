@@ -13,7 +13,7 @@ pub struct NamedMixedPatchRequest {
 
 impl NamedMixedPatchRequest {
     pub fn builder() -> NamedMixedPatchRequestBuilder {
-        NamedMixedPatchRequestBuilder::default()
+        <NamedMixedPatchRequestBuilder as Default>::default()
     }
 }
 

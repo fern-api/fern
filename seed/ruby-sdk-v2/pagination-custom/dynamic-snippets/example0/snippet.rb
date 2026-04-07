@@ -5,4 +5,7 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.users.list_usernames_custom(starting_after: "starting_after")
+client.users.list_with_custom_pager(
+  limit: 1,
+  starting_after: "starting_after"
+)

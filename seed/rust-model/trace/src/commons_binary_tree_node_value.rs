@@ -6,6 +6,7 @@ pub struct BinaryTreeNodeValue {
     #[serde(default)]
     pub node_id: NodeId,
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub val: f64,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub right: Option<NodeId>,
@@ -15,7 +16,7 @@ pub struct BinaryTreeNodeValue {
 
 impl BinaryTreeNodeValue {
     pub fn builder() -> BinaryTreeNodeValueBuilder {
-        BinaryTreeNodeValueBuilder::default()
+        <BinaryTreeNodeValueBuilder as Default>::default()
     }
 }
 

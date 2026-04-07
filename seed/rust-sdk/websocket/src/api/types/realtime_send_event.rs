@@ -12,7 +12,7 @@ pub struct SendEvent {
 
 impl SendEvent {
     pub fn builder() -> SendEventBuilder {
-        SendEventBuilder::default()
+        <SendEventBuilder as Default>::default()
     }
 }
 

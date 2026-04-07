@@ -15,6 +15,7 @@ async fn test_endpoints_http_methods_test_get_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -41,6 +42,7 @@ async fn test_endpoints_http_methods_test_post_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -49,6 +51,7 @@ async fn test_endpoints_http_methods_test_post_with_wiremock() {
         .test_post(
             &ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -72,6 +75,7 @@ async fn test_endpoints_http_methods_test_put_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -81,6 +85,7 @@ async fn test_endpoints_http_methods_test_put_with_wiremock() {
             &"id".to_string(),
             &ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -104,6 +109,7 @@ async fn test_endpoints_http_methods_test_patch_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -129,6 +135,7 @@ async fn test_endpoints_http_methods_test_patch_with_wiremock() {
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
                 bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                ..Default::default()
             },
             None,
         )
@@ -152,6 +159,7 @@ async fn test_endpoints_http_methods_test_delete_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client

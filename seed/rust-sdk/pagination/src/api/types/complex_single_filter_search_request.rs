@@ -12,7 +12,7 @@ pub struct SingleFilterSearchRequest {
 
 impl SingleFilterSearchRequest {
     pub fn builder() -> SingleFilterSearchRequestBuilder {
-        SingleFilterSearchRequestBuilder::default()
+        <SingleFilterSearchRequestBuilder as Default>::default()
     }
 }
 

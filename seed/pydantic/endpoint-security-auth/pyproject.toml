@@ -43,7 +43,7 @@ Repository = 'https://github.com/endpoint-security-auth/fern'
 [tool.poetry.dependencies]
 python = "^3.10"
 pydantic = ">= 1.9.2"
-pydantic-core = ">=2.18.2"
+pydantic-core = ">=2.18.2,<2.44.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"
@@ -57,6 +57,9 @@ ruff = "==0.11.5"
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
 asyncio_mode = "auto"
+markers = [
+    "aiohttp: tests that require httpx_aiohttp to be installed",
+]
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]

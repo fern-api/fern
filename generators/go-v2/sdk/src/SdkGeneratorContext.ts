@@ -59,7 +59,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
 
         if (this.ir.sdkConfig.hasStreamingEndpoints) {
-            files.push(AsIsFiles.Stream);
+            files.push(AsIsFiles.Stream, AsIsFiles.StreamTest);
         }
 
         if (getOAuthClientCredentialsScheme(this.ir) != null || getInferredAuthScheme(this.ir) != null) {
