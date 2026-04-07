@@ -900,7 +900,8 @@ ${clientClassName} client = ${clientClassName}.builder()
         if (this.context.ir.auth.schemes.length > 0) {
             const authScheme = this.context.ir.auth.schemes[0];
             if (authScheme?.type === "bearer") {
-                const tokenName = authScheme.token != null ? this.context.caseConverter.camelUnsafe(authScheme.token) : "token";
+                const tokenName =
+                    authScheme.token != null ? this.context.caseConverter.camelUnsafe(authScheme.token) : "token";
                 builderParameters.push({
                     name: tokenName,
                     value: java.TypeLiteral.string("<token>")
@@ -915,7 +916,8 @@ ${clientClassName} client = ${clientClassName}.builder()
                     value: java.TypeLiteral.string("<password>")
                 });
             } else if (authScheme?.type === "header") {
-                const headerName = authScheme.name != null ? this.context.caseConverter.camelUnsafe(authScheme.name) : "apiKey";
+                const headerName =
+                    authScheme.name != null ? this.context.caseConverter.camelUnsafe(authScheme.name) : "apiKey";
                 builderParameters.push({
                     name: headerName,
                     value: java.TypeLiteral.string("<api-key>")
@@ -927,7 +929,9 @@ ${clientClassName} client = ${clientClassName}.builder()
             for (const variable of this.context.ir.variables) {
                 builderParameters.push({
                     name: this.context.caseConverter.camelUnsafe(variable.name),
-                    value: java.TypeLiteral.string(`YOUR_${this.context.caseConverter.screamingSnakeUnsafe(variable.name)}`)
+                    value: java.TypeLiteral.string(
+                        `YOUR_${this.context.caseConverter.screamingSnakeUnsafe(variable.name)}`
+                    )
                 });
             }
         }
@@ -936,7 +940,9 @@ ${clientClassName} client = ${clientClassName}.builder()
             for (const param of this.context.ir.pathParameters.filter((p) => p.variable == null)) {
                 builderParameters.push({
                     name: this.context.caseConverter.camelUnsafe(param.name),
-                    value: java.TypeLiteral.string(`YOUR_${this.context.caseConverter.screamingSnakeUnsafe(param.name)}`)
+                    value: java.TypeLiteral.string(
+                        `YOUR_${this.context.caseConverter.screamingSnakeUnsafe(param.name)}`
+                    )
                 });
             }
         }
@@ -944,7 +950,9 @@ ${clientClassName} client = ${clientClassName}.builder()
         for (const urlVariable of this.getEnvironmentUrlVariables()) {
             builderParameters.push({
                 name: this.context.caseConverter.camelUnsafe(urlVariable.name),
-                value: java.TypeLiteral.string(`YOUR_${this.context.caseConverter.screamingSnakeUnsafe(urlVariable.name)}`)
+                value: java.TypeLiteral.string(
+                    `YOUR_${this.context.caseConverter.screamingSnakeUnsafe(urlVariable.name)}`
+                )
             });
         }
     }

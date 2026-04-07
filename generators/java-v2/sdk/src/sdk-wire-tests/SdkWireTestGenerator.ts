@@ -389,8 +389,9 @@ export class SdkWireTestGenerator {
 
         for (const service of Object.values(this.context.ir.services)) {
             const serviceName =
-                service.name?.fernFilepath?.allParts?.map((part) => this.context.caseConverter.pascalSafe(part)).join("") ||
-                "Service";
+                service.name?.fernFilepath?.allParts
+                    ?.map((part) => this.context.caseConverter.pascalSafe(part))
+                    .join("") || "Service";
 
             endpointsByService.set(serviceName, service.endpoints);
         }
