@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add .gitattributes with linguist-generated markers for replay lockfile. Sync .fernignore entries with fern-replay to include .fern/replay.yml and .gitattributes.
+      type: fix
+  createdAt: "2026-04-07"
+  version: 0.9.3
+
+- changelogEntry:
+    - summary: |
         Re-publish to include Go SDK after upgrading fern-go-sdk from 0.22.0 to 1.33.2.
       type: chore
   createdAt: "2026-04-07"

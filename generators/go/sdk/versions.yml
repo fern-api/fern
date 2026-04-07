@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.33.3
+  changelogEntry:
+    - summary: |
+        Fix nil pointer dereference panic when optional file fields are not
+        provided in multipart form-data requests. The generated code now wraps
+        `WriteFile` calls for optional binary fields in a nil guard, matching
+        the existing behavior for optional non-file body properties. Required
+        file fields remain unconditional.
+      type: fix
+  createdAt: "2026-04-07"
+  irVersion: 61
+
 - version: 1.33.2
   changelogEntry:
     - summary: |
