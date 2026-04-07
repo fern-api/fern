@@ -1,4 +1,4 @@
-import { GeneratorNotificationService, getOriginalName } from "@fern-api/base-generator";
+import { GeneratorNotificationService, getOriginalName, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { java } from "@fern-api/java-ast";
 import { AbstractJavaGeneratorContext } from "@fern-api/java-base";
@@ -353,7 +353,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         return this.joinPackageTokens(tokens);
     }
 
-    private getPackageNameSegment(name: FernIr.Name): string {
+    private getPackageNameSegment(name: NameInput): string {
         return this.caseConverter.camelSafe(name).toLowerCase();
     }
 
