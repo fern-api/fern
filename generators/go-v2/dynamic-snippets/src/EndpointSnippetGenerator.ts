@@ -1,7 +1,7 @@
 import { AbstractFormatter, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { applyGoInitialisms, go } from "@fern-api/go-ast";
+import { go } from "@fern-api/go-ast";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
 import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
@@ -476,7 +476,7 @@ export class EndpointSnippetGenerator {
             writer.writeNode(
                 go.invokeFunc({
                     func: go.typeReference({
-                        name: `With${applyGoInitialisms(auth.token.pascalCase.unsafeName)}`,
+                        name: `With${auth.token.pascalCase.unsafeName}`,
                         importPath: this.context.getOptionImportPath()
                     }),
                     arguments_: [go.TypeInstantiation.string(values.token)]
@@ -496,7 +496,7 @@ export class EndpointSnippetGenerator {
             writer.writeNode(
                 go.invokeFunc({
                     func: go.typeReference({
-                        name: `With${applyGoInitialisms(auth.header.name.name.pascalCase.unsafeName)}`,
+                        name: `With${auth.header.name.name.pascalCase.unsafeName}`,
                         importPath: this.context.getOptionImportPath()
                     }),
                     arguments_: [
@@ -558,7 +558,7 @@ export class EndpointSnippetGenerator {
                     writer.writeNode(
                         go.invokeFunc({
                             func: go.typeReference({
-                                name: `With${applyGoInitialisms(param.name.name.pascalCase.unsafeName)}`,
+                                name: `With${param.name.name.pascalCase.unsafeName}`,
                                 importPath: this.context.getOptionImportPath()
                             }),
                             arguments_: [typeInstantiation]
@@ -608,7 +608,7 @@ export class EndpointSnippetGenerator {
             writer.writeNode(
                 go.invokeFunc({
                     func: go.typeReference({
-                        name: `With${applyGoInitialisms(header.name.name.pascalCase.unsafeName)}`,
+                        name: `With${header.name.name.pascalCase.unsafeName}`,
                         importPath: this.context.getOptionImportPath()
                     }),
                     arguments_: [typeInstantiation]
@@ -791,7 +791,7 @@ export class EndpointSnippetGenerator {
             values: snippet.queryParameters ?? {}
         });
         const queryParameterFields = queryParameters.map((queryParameter) => ({
-            name: applyGoInitialisms(queryParameter.name.name.pascalCase.unsafeName),
+            name: queryParameter.name.name.pascalCase.unsafeName,
             value: this.context.dynamicTypeInstantiationMapper.convert(queryParameter)
         }));
         this.context.errors.unscope();
@@ -802,7 +802,7 @@ export class EndpointSnippetGenerator {
             values: snippet.headers ?? {}
         });
         const headerFields = headers.map((header) => ({
-            name: applyGoInitialisms(header.name.name.pascalCase.unsafeName),
+            name: header.name.name.pascalCase.unsafeName,
             value: this.context.dynamicTypeInstantiationMapper.convert(header)
         }));
         this.context.errors.unscope();

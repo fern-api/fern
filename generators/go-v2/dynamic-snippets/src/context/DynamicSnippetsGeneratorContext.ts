@@ -4,13 +4,7 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import type { FernIr } from "@fern-api/dynamic-ir-sdk";
-import {
-    applyGoInitialisms,
-    type BaseGoCustomConfigSchema,
-    go,
-    goExportedFieldName,
-    resolveRootImportPath
-} from "@fern-api/go-ast";
+import { type BaseGoCustomConfigSchema, go, goExportedFieldName, resolveRootImportPath } from "@fern-api/go-ast";
 
 import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper.js";
 import { DynamicTypeMapper } from "./DynamicTypeMapper.js";
@@ -67,23 +61,22 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getMethodName(name: FernIr.Name): string {
-        return applyGoInitialisms(name.pascalCase.unsafeName);
+        return name.pascalCase.unsafeName;
     }
 
     public getTestMethodName(endpoint: FernIr.dynamic.Endpoint): string {
         return (
-            endpoint.declaration.fernFilepath.allParts
-                .map((name) => applyGoInitialisms(name.pascalCase.unsafeName))
-                .join("") + applyGoInitialisms(endpoint.declaration.name.pascalCase.unsafeName)
+            endpoint.declaration.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName).join("") +
+            endpoint.declaration.name.pascalCase.unsafeName
         );
     }
 
     public getTypeName(name: FernIr.Name): string {
-        return applyGoInitialisms(name.pascalCase.unsafeName);
+        return name.pascalCase.unsafeName;
     }
 
     public getFieldName(name: FernIr.Name): string {
-        return goExportedFieldName(applyGoInitialisms(name.pascalCase.unsafeName));
+        return goExportedFieldName(name.pascalCase.unsafeName);
     }
 
     public getImportPath(fernFilepath: FernIr.dynamic.FernFilepath): string {
@@ -170,7 +163,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         declaration: FernIr.dynamic.Declaration;
     }): go.TypeReference {
         return go.typeReference({
-            name: applyGoInitialisms(declaration.name.pascalCase.unsafeName),
+            name: declaration.name.pascalCase.unsafeName,
             importPath: this.getImportPath(declaration.fernFilepath)
         });
     }
