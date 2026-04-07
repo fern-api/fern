@@ -51,8 +51,10 @@ func (r *RawClient) UploadFile(
 	if err := writer.WriteField("name", request.Name); err != nil {
 		return nil, err
 	}
-	if err := writer.WriteFile("file", request.File); err != nil {
-		return nil, err
+	if request.File != nil {
+		if err := writer.WriteFile("file", request.File); err != nil {
+			return nil, err
+		}
 	}
 	if err := writer.Close(); err != nil {
 		return nil, err
