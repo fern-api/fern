@@ -770,20 +770,37 @@ export class AutoVersioningService {
     public async getLatestVersionFromGitTags(workingDirectory: string): Promise<string | undefined> {
         const SEMVER_TAG_PATTERN = /^v?\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?$/;
         try {
-            const result = await loggingExeca(this.logger, "git", ["tag", "-l", "--sort=-v:refname"], {
-                cwd: workingDirectory,
-                doNotPipeOutput: true
-            });
+            // Use ls-remote to query tags from the remote directly.
+            // This works even with shallow clones (--depth 1) which don't fetch
+            // tags pointing to commits outside the shallow boundary.
+            const result = await loggingExeca(
+                this.logger,
+                "git",
+                ["ls-remote", "--tags", "--sort=-v:refname", "origin"],
+                {
+                    cwd: workingDirectory,
+                    doNotPipeOutput: true
+                }
+            );
             const output = result.stdout;
             if (!output || output.trim().length === 0) {
                 this.logger.info("No git tags found in repository");
                 return undefined;
             }
+            // ls-remote output format: "<sha>\trefs/tags/<tagname>"
+            // Some tags have ^{} suffix for annotated tag dereferences — skip those.
+            const tags: string[] = [];
             for (const line of output.split("\n")) {
-                const tag = line.trim();
-                if (tag.length === 0) {
+                const trimmed = line.trim();
+                if (trimmed.length === 0 || trimmed.includes("^{}")) {
                     continue;
                 }
+                const lastSlash = trimmed.lastIndexOf("/");
+                if (lastSlash >= 0 && lastSlash < trimmed.length - 1) {
+                    tags.push(trimmed.substring(lastSlash + 1));
+                }
+            }
+            for (const tag of tags) {
                 if (SEMVER_TAG_PATTERN.test(tag)) {
                     this.logger.info(`Found latest version from git tags: ${tag}`);
                     return tag;
