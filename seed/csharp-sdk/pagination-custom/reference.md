@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListUsernamesCustomAsync</a>(ListUsernamesRequestCustom { ... }) -> SeedPaginationPager&lt;string&gt;</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithCustomPagerAsync</a>(ListWithCustomPagerRequest { ... }) -> SeedPaginationPager&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,8 @@
 <dd>
 
 ```csharp
-await client.Users.ListUsernamesCustomAsync(
-    new ListUsernamesRequestCustom { StartingAfter = "starting_after" }
+await client.Users.ListWithCustomPagerAsync(
+    new ListWithCustomPagerRequest { Limit = 1, StartingAfter = "starting_after" }
 );
 ```
 </dd>
@@ -30,7 +30,7 @@ await client.Users.ListUsernamesCustomAsync(
 <dl>
 <dd>
 
-**request:** `ListUsernamesRequestCustom` 
+**request:** `ListWithCustomPagerRequest` 
     
 </dd>
 </dl>

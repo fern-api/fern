@@ -93,7 +93,7 @@ match client.service.search_resources(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_client_side_params::prelude::*;
+use seed_client_side_params::prelude::{*};
 
 let request = SearchResourcesRequest {
     ...

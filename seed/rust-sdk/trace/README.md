@@ -69,7 +69,7 @@ async fn main() {
 This SDK allows you to configure different environments for API requests.
 
 ```rust
-use seed_trace::prelude::*;
+use seed_trace::prelude::{*};
 
 let config = ClientConfig {
     base_url: Environment::Prod.url().to_string(),
@@ -101,7 +101,7 @@ match client.admin.update_test_submission_status(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_trace::prelude::*;
+use seed_trace::prelude::{*};
 
 let request = StoreTracedTestCaseRequest {
     ...
