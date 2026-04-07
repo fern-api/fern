@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
@@ -8,7 +9,6 @@ import { FERN_YML_FILENAME } from "../../config/fern-yml/constants";
 import { FernYmlBuilder } from "../../config/fern-yml/FernYmlBuilder";
 import type { Context } from "../../context/Context";
 import type { GlobalArgs } from "../../context/GlobalArgs";
-import { CliError } from "../../errors/CliError";
 import { PETSTORE_OPENAPI_YML } from "../../init/templates/openapi.yml";
 import { Wizard } from "../../init/Wizard";
 import { Icons } from "../../ui/format";
@@ -142,7 +142,8 @@ export class InitCommand {
     }): Promise<void> {
         if (await doesPathExist(fernYmlPath)) {
             throw new CliError({
-                message: `A ${FERN_YML_FILENAME} file already exists at ${fernYmlPath}`
+                message: `A ${FERN_YML_FILENAME} file already exists at ${fernYmlPath}`,
+                code: "CONFIG_ERROR"
             });
         }
         if (args.api != null) {
@@ -150,13 +151,14 @@ export class InitCommand {
             if (!api.startsWith("http://") && !api.startsWith("https://")) {
                 const resolved = path.resolve(context.cwd, api);
                 if (!(await doesPathExist(AbsoluteFilePath.of(resolved)))) {
-                    throw new CliError({ message: `File not found: ${api}` });
+                    throw new CliError({ message: `File not found: ${api}`, code: "CONFIG_ERROR" });
                 }
             }
         }
         if (!context.isTTY && !args.yes) {
             throw new CliError({
-                message: "Cannot run interactive init in non-TTY environment. Use --yes for defaults."
+                message: "Cannot run interactive init in non-TTY environment. Use --yes for defaults.",
+                code: "CONFIG_ERROR"
             });
         }
     }

@@ -1,7 +1,7 @@
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
-import { CliError } from "../../../errors/CliError.js";
 import { isEnoentError } from "./isEnoentError.js";
 
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI specs can have any shape
@@ -17,9 +17,9 @@ export async function loadSpec(filepath: AbsoluteFilePath): Promise<Spec> {
         contents = await readFile(filepath, "utf8");
     } catch (error) {
         if (isEnoentError(error)) {
-            throw new CliError({ message: `File does not exist: ${filepath}` });
+            throw new CliError({ message: `File does not exist: ${filepath}`, code: "CONFIG_ERROR" });
         }
-        throw new CliError({ message: `Failed to read file: ${filepath}` });
+        throw new CliError({ message: `Failed to read file: ${filepath}`, code: "PARSE_ERROR" });
     }
     return parseSpec(contents, filepath);
 }
@@ -35,7 +35,10 @@ export function parseSpec(contents: string, filepath: string): Spec {
         try {
             return yaml.load(contents) as Spec;
         } catch {
-            throw new CliError({ message: `Failed to parse file as JSON or YAML: ${filepath}` });
+            throw new CliError({
+                message: `Failed to parse file as JSON or YAML: ${filepath}`,
+                code: "PARSE_ERROR"
+            });
         }
     }
 }

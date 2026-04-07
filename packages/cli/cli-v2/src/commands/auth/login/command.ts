@@ -7,7 +7,7 @@ import type { Argv } from "yargs";
 import { TaskContextAdapter } from "../../../context/adapter/TaskContextAdapter.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
+import { TaskAbortSignal } from "@fern-api/task-context";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 
@@ -42,13 +42,13 @@ export class LoginCommand {
         const payload = await verifyAndDecodeJwt(idToken);
         if (payload == null) {
             context.stdout.error(`${Icons.error} Internal error; could not verify ID token`);
-            throw CliError.exit();
+            throw new TaskAbortSignal();
         }
 
         const email = payload.email;
         if (email == null) {
             context.stdout.error(`${Icons.error} Internal error; ID token does not contain email claim`);
-            throw CliError.exit();
+            throw new TaskAbortSignal();
         }
 
         const { isNew, totalAccounts } = await context.tokenService.login(email, accessToken);

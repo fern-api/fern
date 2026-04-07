@@ -1,9 +1,9 @@
+import { CliError, TaskAbortSignal } from "@fern-api/task-context";
 import chalk from "chalk";
 import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { DocsChecker } from "../../../docs/checker/DocsChecker.js";
-import { CliError } from "../../../errors/CliError.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 import { type JsonOutput, toJsonViolation } from "../../_internal/toJsonViolation.js";
@@ -25,7 +25,8 @@ export class CheckCommand {
             throw new CliError({
                 message:
                     "No docs configuration found in fern.yml.\n\n" +
-                    "  Add a 'docs:' section to your fern.yml to get started."
+                    "  Add a 'docs:' section to your fern.yml to get started.",
+                code: "CONFIG_ERROR"
             });
         }
 
@@ -38,7 +39,7 @@ export class CheckCommand {
             const response = this.buildJsonResponse({ result, hasErrors });
             context.stdout.info(JSON.stringify(response, null, 2));
             if (hasErrors) {
-                throw CliError.exit();
+                throw new TaskAbortSignal();
             }
             return;
         }
@@ -51,7 +52,7 @@ export class CheckCommand {
         }
 
         if (hasErrors) {
-            throw CliError.exit();
+            throw new TaskAbortSignal();
         }
 
         if (result.warningCount > 0) {
