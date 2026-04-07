@@ -259,6 +259,19 @@ function multipartOrJsonOrNone<TResult, TNone>({
     const [, multipartMediaTypeObject] = multipart ?? [undefined, undefined];
 
     if (!jsonMediaTypeObject?.schema && !multipartMediaTypeObject?.schema) {
+        // Allow JSON content types through even without a schema so that
+        // raw examples are preserved for rendering in docs and code snippets.
+        // Only do this when the media type object actually contains examples;
+        // otherwise (e.g. google.protobuf.Empty → empty JSON body) we correctly
+        // treat the endpoint as having no request body.
+        if (json) {
+            const hasExamples =
+                jsonMediaTypeObject?.example != null ||
+                (jsonMediaTypeObject?.examples != null && Object.keys(jsonMediaTypeObject.examples).length > 0);
+            if (hasExamples) {
+                return visitor.json(json);
+            }
+        }
         return visitor.neither();
     }
 

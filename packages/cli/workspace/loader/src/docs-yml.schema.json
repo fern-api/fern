@@ -511,16 +511,6 @@
             }
           ]
         },
-        "private": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "edit-this-page": {
           "oneOf": [
             {

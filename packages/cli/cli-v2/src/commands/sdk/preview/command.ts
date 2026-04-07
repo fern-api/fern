@@ -97,5 +97,11 @@ export function addPreviewCommand(cli: Argv<GlobalArgs>): void {
                     description: "Path to .fernignore file",
                     hidden: true
                 })
+                .option("require-env-vars", {
+                    type: "boolean",
+                    default: true,
+                    description:
+                        "Require all referenced environment variables to be defined (use --no-require-env-vars to substitute empty strings for missing variables)"
+                })
     );
 }

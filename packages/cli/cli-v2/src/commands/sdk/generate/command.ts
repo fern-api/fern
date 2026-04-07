@@ -74,6 +74,9 @@ export declare namespace GenerateCommand {
 
         /** Ignore the .fernignore file and generate all files */
         "skip-fernignore": boolean;
+
+        /** Require all referenced environment variables to be defined */
+        "require-env-vars": boolean;
     }
 }
 
@@ -331,7 +334,8 @@ export class GenerateCommand {
                     token,
                     version: args["output-version"],
                     fernignorePath: args.fernignore,
-                    skipFernignore: args["skip-fernignore"]
+                    skipFernignore: args["skip-fernignore"],
+                    requireEnvVars: args["require-env-vars"]
                 });
                 if (!pipelineResult.success) {
                     task.stage.generator.fail(pipelineResult.error);
@@ -683,6 +687,12 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
                     default: false,
                     description:
                         "Skip the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
+                })
+                .option("require-env-vars", {
+                    type: "boolean",
+                    default: true,
+                    description:
+                        "Require all referenced environment variables to be defined (use --no-require-env-vars to substitute empty strings for missing variables)"
                 })
     );
 }

@@ -67,7 +67,7 @@ paths:
                       species: species
       summary: List all plants
       security:
-        - BearerAuth: []
+        - CustomAuth: []
   /plants/{plantId}:
     get:
       operationId: plants_get
@@ -98,7 +98,7 @@ paths:
                     species: species
       summary: Get a plant by ID
       security:
-        - BearerAuth: []
+        - CustomAuth: []
 components:
   schemas:
     TokenResponse:
@@ -134,6 +134,6 @@ components:
         - id
         - name
   securitySchemes:
-    BearerAuth:
+    CustomAuth:
       type: http
       scheme: bearer

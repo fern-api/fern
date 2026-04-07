@@ -495,10 +495,6 @@ types:
       "custom-domain":
         type: optional<CustomDomain>
         docs: The custom domain where your documentation is hosted. Learn more about setting up a custom domain.
-      private:
-        type: optional<boolean>
-        docs: This config option is no longer used. Please reach out to the Fern Team if you want to enable private docs.
-        availability: deprecated
       "edit-this-page":
         type: optional<EditThisPageConfig>
         docs: |

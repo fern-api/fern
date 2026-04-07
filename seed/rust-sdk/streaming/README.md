@@ -87,7 +87,7 @@ match client.dummy.generate_stream(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_streaming::prelude::{*};
+use seed_streaming::prelude::*;
 
 let request = GenerateStreamRequest {
     ...

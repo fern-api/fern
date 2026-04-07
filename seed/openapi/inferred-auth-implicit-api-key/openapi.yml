@@ -40,7 +40,7 @@ paths:
         '204':
           description: ''
       security:
-        - {}
+        - InferredAuthScheme: []
   /get-something:
     get:
       operationId: simple_getSomething
@@ -51,7 +51,7 @@ paths:
         '204':
           description: ''
       security:
-        - {}
+        - InferredAuthScheme: []
 components:
   schemas:
     TokenResponse:
@@ -72,4 +72,7 @@ components:
         - access_token
         - token_type
         - expires_in
-  securitySchemes: {}
+  securitySchemes:
+    InferredAuthScheme:
+      type: http
+      scheme: bearer

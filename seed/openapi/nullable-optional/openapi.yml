@@ -119,7 +119,7 @@ paths:
             type: string
         - name: department
           in: query
-          required: false
+          required: true
           schema:
             type: string
             nullable: true
@@ -254,7 +254,7 @@ paths:
       parameters:
         - name: role
           in: query
-          required: false
+          required: true
           schema:
             $ref: '#/components/schemas/UserRole'
             nullable: true
@@ -342,6 +342,8 @@ paths:
                   items:
                     type: string
                   nullable: true
+              required:
+                - tags
   /api/search:
     post:
       description: Get search results with nullable unions
@@ -381,6 +383,7 @@ paths:
                   nullable: true
               required:
                 - query
+                - includeTypes
 components:
   schemas:
     NullableUserId:
@@ -463,6 +466,13 @@ components:
       required:
         - id
         - username
+        - nullableString
+        - nullableInteger
+        - nullableBoolean
+        - nullableDate
+        - nullableObject
+        - nullableList
+        - nullableMap
     Address:
       title: Address
       type: object
@@ -487,6 +497,7 @@ components:
           $ref: '#/components/schemas/OptionalUserId'
       required:
         - street
+        - city
         - zipCode
         - buildingId
         - tenantId
@@ -507,6 +518,7 @@ components:
           nullable: true
       required:
         - username
+        - email
     UpdateUserRequest:
       title: UpdateUserRequest
       type: object
@@ -678,6 +690,7 @@ components:
       required:
         - id
         - name
+        - domain
     Document:
       title: Document
       type: object
@@ -700,6 +713,7 @@ components:
         - id
         - title
         - content
+        - author
     ComplexProfile:
       title: ComplexProfile
       type: object
@@ -779,6 +793,14 @@ components:
           nullable: true
       required:
         - id
+        - nullableRole
+        - nullableStatus
+        - nullableNotification
+        - nullableSearchResult
+        - nullableArray
+        - nullableListOfNullables
+        - nullableMapOfNullables
+        - nullableListOfUnions
     DeserializationTestRequest:
       title: DeserializationTestRequest
       type: object
@@ -825,6 +847,12 @@ components:
           nullable: true
       required:
         - requiredString
+        - nullableString
+        - nullableEnum
+        - nullableUnion
+        - nullableList
+        - nullableMap
+        - nullableObject
     DeserializationTestResponse:
       title: DeserializationTestResponse
       type: object
@@ -871,5 +899,7 @@ components:
       required:
         - id
         - username
+        - email
         - createdAt
+        - updatedAt
   securitySchemes: {}

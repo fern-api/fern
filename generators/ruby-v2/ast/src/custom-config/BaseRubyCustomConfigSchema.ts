@@ -10,13 +10,25 @@ export const BaseRubyCustomConfigSchema = z.object({
     // Generate wire tests for serialization/deserialization
     enableWireTests: z.boolean().optional(),
     // Extra dependencies to add to the gemspec (e.g., { "my-gem": "~> 6.0" })
-    extraDependencies: z.optional(z.record(z.string())),
+    extraDependencies: z.optional(
+        z.record(
+            z.string().regex(/^[^"\r\n\\]+$/, "Must not contain quotes, backslashes, or newlines"),
+            z.string().regex(/^[^"\r\n\\]+$/, "Must not contain quotes, backslashes, or newlines")
+        )
+    ),
     // Extra dev dependencies to add to the Gemfile (e.g., { "my-gem": "~> 6.0" })
-    extraDevDependencies: z.optional(z.record(z.string())),
+    extraDevDependencies: z.optional(
+        z.record(
+            z.string().regex(/^[^"\r\n\\]+$/, "Must not contain quotes, backslashes, or newlines"),
+            z.string().regex(/^[^"\r\n\\]+$/, "Must not contain quotes, backslashes, or newlines")
+        )
+    ),
     // Paths to files that will be auto-loaded when the gem is required
     // (e.g., ["custom_integration", "sentry_integration"] will load lib/<gem>/custom_integration.rb
     // and lib/<gem>/sentry_integration.rb if they exist)
-    requirePaths: z.optional(z.array(z.string())),
+    requirePaths: z.optional(
+        z.array(z.string().regex(/^[^"\r\n\\]+$/, "Must not contain quotes, backslashes, or newlines"))
+    ),
     // Apply IR-defined default values to query parameters and headers in request wrappers
     useDefaultRequestParameterValues: z.boolean().optional(),
     omitFernHeaders: z.boolean().optional(),
