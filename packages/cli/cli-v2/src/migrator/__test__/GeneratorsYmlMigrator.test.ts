@@ -289,9 +289,7 @@ groups: {}
 
         // Should either parse successfully (if YAML handles it) or emit a hint about quoting
         if (!result.success) {
-            expect(
-                result.warnings.some((w) => w.message.includes("quote") || w.message.includes("@"))
-            ).toBe(true);
+            expect(result.warnings.some((w) => w.message.includes("quote") || w.message.includes("@"))).toBe(true);
         }
     });
 

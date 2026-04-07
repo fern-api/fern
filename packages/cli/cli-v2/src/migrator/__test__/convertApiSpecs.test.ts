@@ -4,11 +4,7 @@ import { mkdir, rm } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import {
-    convertApiSpecs,
-    convertMultiApi,
-    convertSingleApi
-} from "../converters/convertApiSpecs.js";
+import { convertApiSpecs, convertMultiApi, convertSingleApi } from "../converters/convertApiSpecs.js";
 
 // ---------------------------------------------------------------------------
 // convertApiSpecs (unit)
@@ -268,18 +264,13 @@ describe("convertMultiApi", () => {
             apisDir: AbsoluteFilePath.of(apisDir),
             generatorsYmlApis: {
                 rest: {
-                    specs: [
-                        { openapi: "./openapi.yml", overrides: "./overrides.yml" },
-                        { asyncapi: "./asyncapi.yml" }
-                    ]
+                    specs: [{ openapi: "./openapi.yml", overrides: "./overrides.yml" }, { asyncapi: "./asyncapi.yml" }]
                 }
             }
         });
 
         const restSpecs = result.apis["rest"]?.specs ?? [];
-        const openapiSpec = restSpecs.find((s) => "openapi" in s) as
-            | { openapi: string; overrides: string }
-            | undefined;
+        const openapiSpec = restSpecs.find((s) => "openapi" in s) as { openapi: string; overrides: string } | undefined;
         expect(openapiSpec?.openapi).toBe("./fern/apis/rest/openapi.yml");
         expect(openapiSpec?.overrides).toBe("./fern/apis/rest/overrides.yml");
 

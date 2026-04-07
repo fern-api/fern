@@ -230,8 +230,7 @@ function convertGeneratorToTarget(options: ConvertGeneratorOptions): ConvertGene
         }
         if (meta.license != null && typeof target.output !== "string" && target.output.git != null) {
             const license = meta.license;
-            target.output.git.license =
-                typeof license === "string" ? license : (license as { custom: string }).custom;
+            target.output.git.license = typeof license === "string" ? license : (license as { custom: string }).custom;
         }
         if (targetMetadata.description != null || targetMetadata.authors != null) {
             target.metadata = targetMetadata;
@@ -645,9 +644,7 @@ function convertRawGeneratorToTarget(options: ConvertRawGeneratorOptions): Conve
             targetMetadata.description = generatorMetadata["package-description"];
         }
         if (generatorMetadata.author != null || generatorMetadata.email != null) {
-            targetMetadata.authors = [
-                { name: generatorMetadata.author ?? "", email: generatorMetadata.email ?? "" }
-            ];
+            targetMetadata.authors = [{ name: generatorMetadata.author ?? "", email: generatorMetadata.email ?? "" }];
         }
         if (generatorMetadata["reference-url"] != null) {
             warnings.push({
@@ -657,14 +654,9 @@ function convertRawGeneratorToTarget(options: ConvertRawGeneratorOptions): Conve
             });
         }
         // Migrate license to output.git.license if a git output is configured.
-        if (
-            generatorMetadata.license != null &&
-            typeof target.output !== "string" &&
-            target.output.git != null
-        ) {
+        if (generatorMetadata.license != null && typeof target.output !== "string" && target.output.git != null) {
             const license = generatorMetadata.license;
-            target.output.git.license =
-                typeof license === "string" ? license : (license as { custom: string }).custom;
+            target.output.git.license = typeof license === "string" ? license : (license as { custom: string }).custom;
         }
         if (targetMetadata.description != null || targetMetadata.authors != null) {
             target.metadata = targetMetadata;

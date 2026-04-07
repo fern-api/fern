@@ -45,10 +45,7 @@ describe("FernConfigJsonMigrator", () => {
     });
 
     it("migrate extracts version from fern.config.json", async () => {
-        await writeFile(
-            join(testDir, "fern.config.json"),
-            JSON.stringify({ organization: "acme", version: "1.2.3" })
-        );
+        await writeFile(join(testDir, "fern.config.json"), JSON.stringify({ organization: "acme", version: "1.2.3" }));
         const migrator = new FernConfigJsonMigrator({ cwd: AbsoluteFilePath.of(testDir) });
         const result = await migrator.migrate();
         expect(result.success).toBe(true);
@@ -86,10 +83,7 @@ describe("FernConfigJsonMigrator", () => {
     });
 
     it("migrate returns absolute file path when file exists", async () => {
-        await writeFile(
-            join(testDir, "fern.config.json"),
-            JSON.stringify({ organization: "acme", version: "0.44.0" })
-        );
+        await writeFile(join(testDir, "fern.config.json"), JSON.stringify({ organization: "acme", version: "0.44.0" }));
         const migrator = new FernConfigJsonMigrator({ cwd: AbsoluteFilePath.of(testDir) });
         const result = await migrator.migrate();
         expect(result.absoluteFilePath).toBeDefined();
