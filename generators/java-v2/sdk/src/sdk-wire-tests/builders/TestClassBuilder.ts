@@ -1,9 +1,6 @@
-import { CaseConverter } from "@fern-api/base-generator";
 import { Writer } from "@fern-api/java-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "java", keywords: undefined, smartCasing: true });
 
 interface MultiUrlEnvironment {
     urls?: Record<string, unknown>;
@@ -218,7 +215,7 @@ export class TestClassBuilder {
         writer.indent();
 
         for (const baseUrl of baseUrls) {
-            const methodName = caseConverter.camelSafe(baseUrl.name);
+            const methodName = this.context.caseConverter.camelSafe(baseUrl.name);
             writer.writeLine(`.${methodName}(server.url("/").toString())`);
         }
 
@@ -266,7 +263,7 @@ export class TestClassBuilder {
                 return '.credentials("testuser", "testpass")';
             case "header": {
                 if (scheme.name != null) {
-                    const methodName = caseConverter.camelUnsafe(scheme.name);
+                    const methodName = this.context.caseConverter.camelUnsafe(scheme.name);
                     return `.${methodName}("test-api-key")`;
                 }
                 return '.apiKey("test-api-key")';
@@ -287,7 +284,7 @@ export class TestClassBuilder {
                             if (endpoint.id === endpointId) {
                                 // Check for header parameters that aren't part of standard OAuth
                                 for (const header of endpoint.headers) {
-                                    const headerName = caseConverter.camelSafe(header.name);
+                                    const headerName = this.context.caseConverter.camelSafe(header.name);
                                     if (headerName !== "authorization" && headerName !== "contentType") {
                                         oauthCalls.push(`.${headerName}("test-${headerName}")`);
                                     }

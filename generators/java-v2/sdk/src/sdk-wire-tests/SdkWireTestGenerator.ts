@@ -1,4 +1,4 @@
-import { CaseConverter, File, getOriginalName } from "@fern-api/base-generator";
+import { File, getOriginalName } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { java } from "@fern-api/java-ast";
@@ -12,8 +12,6 @@ import { TestMethodBuilder } from "./builders/TestMethodBuilder.js";
 import { SnippetExtractor } from "./extractors/SnippetExtractor.js";
 import { WireTestDataExtractor, WireTestExample } from "./extractors/TestDataExtractor.js";
 import { TestResourceWriter } from "./resources/TestResourceWriter.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "java", keywords: undefined, smartCasing: true });
 
 /**
  * Generates wire tests that validate SDK adherence to API specifications.
@@ -363,7 +361,7 @@ export class SdkWireTestGenerator {
         testExample: WireTestExample
     ): string {
         const serviceNameLower = serviceName.toLowerCase();
-        const methodName = caseConverter.camelSafe(endpoint.name);
+        const methodName = this.context.caseConverter.camelSafe(endpoint.name);
 
         let pathParamsStr = "";
         if (testExample.request.pathParams && Object.keys(testExample.request.pathParams).length > 0) {
@@ -391,7 +389,7 @@ export class SdkWireTestGenerator {
 
         for (const service of Object.values(this.context.ir.services)) {
             const serviceName =
-                service.name?.fernFilepath?.allParts?.map((part) => caseConverter.pascalSafe(part)).join("") ||
+                service.name?.fernFilepath?.allParts?.map((part) => this.context.caseConverter.pascalSafe(part)).join("") ||
                 "Service";
 
             endpointsByService.set(serviceName, service.endpoints);

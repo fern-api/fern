@@ -1,12 +1,10 @@
-import { CaseConverter, ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { java } from "@fern-api/java-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "java", keywords: undefined, smartCasing: true });
 
 export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
     const builder = new ReferenceConfigBuilder();
@@ -15,7 +13,7 @@ export function buildReference({ context }: { context: SdkGeneratorContext }): R
     serviceEntries.forEach(([serviceId, service]) => {
         const section = isRootServiceId({ context, serviceId })
             ? builder.addRootSection()
-            : builder.addSection({ title: getSectionTitle({ service }) });
+            : builder.addSection({ title: getSectionTitle({ context, service }) });
         const endpoints = getEndpointReferencesForService({ context, serviceId, service });
         for (const endpoint of endpoints) {
             section.addEndpoint(endpoint);
@@ -85,7 +83,7 @@ function getEndpointReference({
                     text: getAccessFromRootClient({ context, service }) + "."
                 },
                 {
-                    text: getEndpointMethodName({ endpoint })
+                    text: getEndpointMethodName({ context, endpoint })
                 },
                 {
                     text: getReferenceEndpointInvocationParameters({ context, endpoint })
@@ -107,12 +105,12 @@ function getAccessFromRootClient({
     service: FernIr.HttpService;
 }): string {
     const clientVariableName = "client";
-    const servicePath = service.name.fernFilepath.allParts.map((part) => caseConverter.camelSafe(part));
+    const servicePath = service.name.fernFilepath.allParts.map((part) => context.caseConverter.camelSafe(part));
     return servicePath.length > 0 ? `${clientVariableName}.${servicePath.join(".")}` : clientVariableName;
 }
 
-function getEndpointMethodName({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string {
-    return caseConverter.camelSafe(endpoint.name);
+function getEndpointMethodName({ context, endpoint }: { context: SdkGeneratorContext; endpoint: FernIr.HttpEndpoint }): string {
+    return context.caseConverter.camelSafe(endpoint.name);
 }
 
 function getReferenceEndpointInvocationParameters({
@@ -125,7 +123,7 @@ function getReferenceEndpointInvocationParameters({
     const parameters: string[] = [];
 
     endpoint.allPathParameters.forEach((pathParam) => {
-        parameters.push(caseConverter.camelSafe(pathParam.name));
+        parameters.push(context.caseConverter.camelSafe(pathParam.name));
     });
 
     if (endpoint.requestBody != null) {
@@ -198,7 +196,7 @@ function getEndpointParameters({
 
     endpoint.allPathParameters.forEach((pathParam) => {
         parameters.push({
-            name: caseConverter.camelSafe(pathParam.name),
+            name: context.caseConverter.camelSafe(pathParam.name),
             type: getJavaTypeString({ context, typeReference: pathParam.valueType }),
             description: pathParam.docs,
             required: true
@@ -207,7 +205,7 @@ function getEndpointParameters({
 
     endpoint.queryParameters.forEach((queryParam) => {
         parameters.push({
-            name: caseConverter.camelSafe(queryParam.name),
+            name: context.caseConverter.camelSafe(queryParam.name),
             type: getJavaTypeString({ context, typeReference: queryParam.valueType }),
             description: queryParam.docs,
             required: !queryParam.allowMultiple
@@ -216,7 +214,7 @@ function getEndpointParameters({
 
     endpoint.headers.forEach((header) => {
         parameters.push({
-            name: caseConverter.camelSafe(header.name),
+            name: context.caseConverter.camelSafe(header.name),
             type: getJavaTypeString({ context, typeReference: header.valueType }),
             description: header.docs,
             required: true
@@ -226,7 +224,7 @@ function getEndpointParameters({
     if (endpoint.requestBody != null && endpoint.requestBody.type === "inlinedRequestBody") {
         endpoint.requestBody.properties.forEach((property) => {
             parameters.push({
-                name: caseConverter.camelSafe(property.name),
+                name: context.caseConverter.camelSafe(property.name),
                 type: getJavaTypeString({ context, typeReference: property.valueType }),
                 description: property.docs,
                 required: true
@@ -291,9 +289,9 @@ function isRootServiceId({
     return context.ir.rootPackage.service === serviceId;
 }
 
-function getSectionTitle({ service }: { service: FernIr.HttpService }): string {
+function getSectionTitle({ context, service }: { context: SdkGeneratorContext; service: FernIr.HttpService }): string {
     return (
         service.displayName ??
-        service.name.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part)).join(" ")
+        service.name.fernFilepath.allParts.map((part) => context.caseConverter.pascalSafe(part)).join(" ")
     );
 }
