@@ -94,7 +94,7 @@ async function runCli() {
     getOrCreateFernRunId();
 
     const isLocal = process.argv.includes("--local");
-    const cliContext = new CliContext(process.stdout, process.stderr, { isLocal });
+    const cliContext = await CliContext.create(process.stdout, process.stderr, { isLocal });
 
     const exit = async () => {
         await cliContext.exit();
@@ -134,7 +134,7 @@ async function runCli() {
             });
         }
     } catch (error) {
-        await cliContext.instrumentPostHogEvent({
+        cliContext.instrumentPostHogEvent({
             command: process.argv.join(" "),
             properties: {
                 failed: true,
@@ -535,7 +535,7 @@ function addSdkDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     description: "Output result as JSON"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern sdk-diff"
             });
 
@@ -1350,7 +1350,7 @@ function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     default: 2
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern api update"
             });
             await updateApiSpec({
@@ -1381,7 +1381,7 @@ function addSelfUpdateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     default: false
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern self-update"
             });
             await selfUpdate({
@@ -1410,7 +1410,7 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
         async (argv) => {
             await cliContext.runTask(async (context) => {
-                await cliContext.instrumentPostHogEvent({
+                cliContext.instrumentPostHogEvent({
                     command: "fern login"
                 });
                 await login(context, { useDeviceCodeFlow: argv.deviceCode, email: argv.email });
@@ -1426,7 +1426,7 @@ function addLogoutCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         (yargs) => yargs,
         async () => {
             await cliContext.runTask(async (context) => {
-                await cliContext.instrumentPostHogEvent({
+                cliContext.instrumentPostHogEvent({
                     command: "fern logout"
                 });
                 await logout(context);
@@ -1451,7 +1451,7 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Only run the command on the provided API"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern format"
             });
             await formatWorkspaces({
@@ -1485,7 +1485,7 @@ function addTestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Run the tests configured to a specific language"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern test"
             });
             await testOutput({
@@ -1518,7 +1518,7 @@ function addMockCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "The API to mock."
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern mock"
             });
             await mockServer({
@@ -1563,7 +1563,7 @@ function addOverridesCompareCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
                     description: "Path to write the overrides file (defaults to <original>-overrides.yml)"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern overrides compare"
             });
             const originalPath = resolve(cwd(), argv.original as string);
@@ -1596,7 +1596,7 @@ function addOverridesWriteCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
             })
         ],
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern overrides write"
             });
             await writeOverridesForWorkspaces({
@@ -1632,7 +1632,7 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
         ],
         async (argv) => {
             cliContext.logger.warn("The 'write-overrides' command is deprecated. Use 'fern overrides write' instead.");
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern write-overrides"
             });
             await writeOverridesForWorkspaces({
@@ -1667,7 +1667,7 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 }),
         async (argv) => {
             const preserveSchemaIds = argv.preserveSchemas != null;
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern write-definition"
             });
             await writeDefinitionForWorkspaces({
@@ -1716,7 +1716,7 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 description: "Name of a specific library defined in docs.yml to generate docs for"
             }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern docs md generate"
             });
 
@@ -1757,7 +1757,7 @@ function addDocsDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "Output directory for diff images"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern docs diff"
             });
 
@@ -1802,7 +1802,7 @@ function addDocsPreviewListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                     description: "Page number for pagination (starts at 1)"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern docs preview list"
             });
             await listDocsPreview({
@@ -1826,7 +1826,7 @@ function addDocsPreviewDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: Cl
                 demandOption: true
             }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern docs preview delete"
             });
             await deleteDocsPreview({
@@ -1945,7 +1945,7 @@ function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
             // No additional options for this command
         },
         async () => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern docs md check"
             });
 
@@ -2001,7 +2001,7 @@ function addGenerateJsonschemaCommand(cli: Argv<GlobalCliOptions>, cliContext: C
                     description: "The type to generate JSON Schema for (e.g. 'MySchema' or 'mypackage.MySchema')"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern jsonschema",
                 properties: {
                     output: argv.output
@@ -2031,7 +2031,7 @@ function addWriteDocsDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: 
                 demandOption: true
             }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern write-docs-definition",
                 properties: {
                     outputPath: argv.outputPath
@@ -2062,7 +2062,7 @@ function addWriteTranslationCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
                 description: "Return content as-is without calling the translation service"
             }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern write-translation"
             });
 
@@ -2099,7 +2099,7 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     default: 2
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern export",
                 properties: {
                     outputPath: argv.outputPath
@@ -2143,7 +2143,7 @@ function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     demandOption: true
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern api enrich"
             });
             const openapiPath = resolve(cwd(), argv.openapi as string);
@@ -2197,7 +2197,7 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                         "Omit to publish to the default preview registry and write to a temp directory."
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern sdk preview"
             });
             const generatorFilter =
@@ -2357,7 +2357,7 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     description: "Overwrite existing lockfile if Replay is already initialized"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern replay init"
             });
 
@@ -2479,7 +2479,7 @@ function addReplayResolveCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     description: "Skip checking for remaining conflict markers before committing"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern replay resolve"
             });
 

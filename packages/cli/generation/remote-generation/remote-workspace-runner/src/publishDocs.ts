@@ -721,7 +721,7 @@ async function startDocsRegisterFailed(
     organization: string,
     domain: string
 ): Promise<never> {
-    await context.instrumentPostHogEvent({
+    context.instrumentPostHogEvent({
         command: "docs-generation",
         properties: {
             error: JSON.stringify(error)
