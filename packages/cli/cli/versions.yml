@@ -1,5 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.63.4
+  changelogEntry:
+    - summary: |
+        Add `no-conflicting-parameter-names` OSS validation rule to `fern check`.
+        Detects when header parameters and query/path parameters on the same endpoint
+        normalize to the same camelCase name, which causes broken generated SDK code
+        (Python SyntaxError from duplicate keyword arguments, TypeScript duplicate
+        interface properties). The rule reports an error at validation time so the
+        collision is caught before code generation.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 66
+
 - version: 4.63.3
   changelogEntry:
     - summary: |
@@ -11,7 +24,6 @@
       type: fix
   createdAt: "2026-04-08"
   irVersion: 66
-
 - version: 4.63.2
   changelogEntry:
     - summary: |
@@ -48,7 +60,6 @@
       type: fix
   createdAt: "2026-04-07"
   irVersion: 66
-
 - version: 4.62.5
   changelogEntry:
     - summary: |
