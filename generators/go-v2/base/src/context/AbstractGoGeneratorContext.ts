@@ -14,7 +14,6 @@ import { GoTypeMapper } from "./GoTypeMapper.js";
 import { GoValueFormatter } from "./GoValueFormatter.js";
 import { GoZeroValueMapper } from "./GoZeroValueMapper.js";
 
-
 export interface FileLocation {
     importPath: string;
     directory: RelativeFilePath;

@@ -104,7 +104,13 @@ function getAccessFromRootClient({
     return servicePath.length > 0 ? `${clientVariableName}.${servicePath.join(".")}` : clientVariableName;
 }
 
-function getEndpointMethodName({ context, endpoint }: { context: SdkGeneratorContext; endpoint: FernIr.HttpEndpoint }): string {
+function getEndpointMethodName({
+    context,
+    endpoint
+}: {
+    context: SdkGeneratorContext;
+    endpoint: FernIr.HttpEndpoint;
+}): string {
     return context.caseConverter.pascalSafe(endpoint.name);
 }
 

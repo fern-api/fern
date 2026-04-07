@@ -761,7 +761,9 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             parts.push("client");
         } else {
             parts.push(...fernFilepath.packagePath.map((part) => this.caseConverter.camelSafe(part).toLowerCase()));
-            parts.push(fernFilepath.file != null ? this.caseConverter.camelSafe(fernFilepath.file).toLowerCase() : "client");
+            parts.push(
+                fernFilepath.file != null ? this.caseConverter.camelSafe(fernFilepath.file).toLowerCase() : "client"
+            );
         }
         return {
             importPath: [this.getRootImportPath(), ...parts].join("/"),

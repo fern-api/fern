@@ -29,7 +29,11 @@ export function getPaginationInfo({
     const pageType = getPageType({ context, pagination });
     const nextPageType = getNextPageType({ context, pagination });
     const pageRequestType = getPageRequestType({ context, pageType });
-    const requestPagePropertyReference = getPagePropertyReference({ variableName: "request", pagination, caseConverter: context.caseConverter });
+    const requestPagePropertyReference = getPagePropertyReference({
+        variableName: "request",
+        pagination,
+        caseConverter: context.caseConverter
+    });
     const pagePropertyFormat = getPageValueFormat({ context, pagination });
     const requestPagePropertyFormat = getPageValueFormat({ context, pagination });
     return {
@@ -899,7 +903,9 @@ function getPropertyReference({
         if (dereference) {
             writer.write("*");
         }
-        writer.write(`${variableName}.${fullPath.map((name) => getPropertyAccessor({ name, withGetter, caseConverter })).join(".")}`);
+        writer.write(
+            `${variableName}.${fullPath.map((name) => getPropertyAccessor({ name, withGetter, caseConverter })).join(".")}`
+        );
     });
 }
 
@@ -959,7 +965,15 @@ function encodeQuery({ writer }: { writer: go.Writer }): void {
     writer.writeLine("}");
 }
 
-function getPropertyAccessor({ name, withGetter, caseConverter }: { name: NameInput; withGetter?: boolean; caseConverter: CaseConverter }): string {
+function getPropertyAccessor({
+    name,
+    withGetter,
+    caseConverter
+}: {
+    name: NameInput;
+    withGetter?: boolean;
+    caseConverter: CaseConverter;
+}): string {
     if (withGetter) {
         return `Get${caseConverter.pascalUnsafe(name)}()`;
     }

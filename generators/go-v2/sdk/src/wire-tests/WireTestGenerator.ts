@@ -933,7 +933,10 @@ export class WireTestGenerator {
     }
 
     private getFormattedServiceName(service: FernIr.HttpService): string {
-        return service.name?.fernFilepath?.allParts?.map((part) => this.context.caseConverter.snakeSafe(part)).join("_") || "root";
+        return (
+            service.name?.fernFilepath?.allParts?.map((part) => this.context.caseConverter.snakeSafe(part)).join("_") ||
+            "root"
+        );
     }
 
     /**
