@@ -1,0 +1,350 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createInput": {
+              "auth": undefined,
+              "display-name": "Create an input",
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "result": "result",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/v2/inputs",
+              "response": {
+                "docs": "",
+                "status-code": 200,
+                "type": "InputFullResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "createInput_stream": {
+              "auth": undefined,
+              "display-name": "Create an input",
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "stream": [
+                      {
+                        "chunk": "chunk",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/v2/inputs",
+              "response-stream": {
+                "docs": "",
+                "format": "json",
+                "terminator": undefined,
+                "type": "InputStreamedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "validateInput": {
+              "auth": undefined,
+              "display-name": "Validate an input request",
+              "docs": "This endpoint also references CreateInputRequestBase, ensuring the base schema cannot be excluded from the context.
+",
+              "examples": [
+                {
+                  "request": {
+                    "prompt": "prompt",
+                  },
+                  "response": {
+                    "body": {
+                      "valid": true,
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/v2/inputs/validate",
+              "request": {
+                "body": "CreateInputRequestBase",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Validation result.",
+                "status-code": 200,
+                "type": "ValidateInputResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "CreateInputCompactRequest": {
+            "docs": undefined,
+            "extends": [
+              "CreateInputRequestBase",
+            ],
+            "inline": undefined,
+            "properties": {
+              "data": {
+                "docs": "Compact data payload.",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreateInputMessageRequest": {
+            "docs": undefined,
+            "extends": [
+              "CreateInputRequestBase",
+            ],
+            "inline": undefined,
+            "properties": {
+              "message": {
+                "docs": "The message content.",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreateInputRequest": {
+            "availability": undefined,
+            "base-properties": {},
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "compact": "CreateInputCompactRequest",
+              "message": "CreateInputMessageRequest",
+            },
+          },
+          "CreateInputRequestBase": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "prompt": {
+                "docs": "The input prompt.",
+                "type": "string",
+              },
+              "stream_response": {
+                "default": false,
+                "docs": "Whether to stream the response.",
+                "type": "optional<boolean>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "InputFullResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "result": {
+                "docs": "The full result.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "InputStreamedResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "chunk": {
+                "docs": "A streamed chunk.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ValidateInputResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "valid": "optional<boolean>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createInput_stream:
+      path: /v2/inputs
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Create an input
+      response-stream:
+        docs: ''
+        type: InputStreamedResponse
+        format: json
+      examples:
+        - response:
+            stream:
+              - chunk: chunk
+    createInput:
+      path: /v2/inputs
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Create an input
+      response:
+        docs: ''
+        type: InputFullResponse
+        status-code: 200
+      examples:
+        - response:
+            body:
+              result: result
+    validateInput:
+      path: /v2/inputs/validate
+      method: POST
+      docs: >
+        This endpoint also references CreateInputRequestBase, ensuring the base
+        schema cannot be excluded from the context.
+      source:
+        openapi: ../openapi.yml
+      display-name: Validate an input request
+      request:
+        body: CreateInputRequestBase
+        content-type: application/json
+      response:
+        docs: Validation result.
+        type: ValidateInputResponse
+        status-code: 200
+      examples:
+        - request:
+            prompt: prompt
+          response:
+            body:
+              valid: true
+  source:
+    openapi: ../openapi.yml
+types:
+  ValidateInputResponse:
+    properties:
+      valid: optional<boolean>
+    source:
+      openapi: ../openapi.yml
+  CreateInputRequestBase:
+    properties:
+      stream_response:
+        type: optional<boolean>
+        docs: Whether to stream the response.
+        default: false
+      prompt:
+        type: string
+        docs: The input prompt.
+    source:
+      openapi: ../openapi.yml
+  CreateInputMessageRequest:
+    properties:
+      message:
+        type: string
+        docs: The message content.
+    extends:
+      - CreateInputRequestBase
+    source:
+      openapi: ../openapi.yml
+  CreateInputCompactRequest:
+    properties:
+      data:
+        type: string
+        docs: Compact data payload.
+    extends:
+      - CreateInputRequestBase
+    source:
+      openapi: ../openapi.yml
+  CreateInputRequest:
+    discriminant:
+      value: type
+      context: data
+    base-properties: {}
+    union:
+      message: CreateInputMessageRequest
+      compact: CreateInputCompactRequest
+    source:
+      openapi: ../openapi.yml
+  InputFullResponse:
+    properties:
+      result:
+        type: optional<string>
+        docs: The full result.
+    source:
+      openapi: ../openapi.yml
+  InputStreamedResponse:
+    properties:
+      chunk:
+        type: optional<string>
+        docs: A streamed chunk.
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "Default",
+      "display-name": "Stream Condition Union Test",
+      "environments": {
+        "Default": "https://api.test.io",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Stream Condition Union Test
+environments:
+  Default: https://api.test.io
+default-environment: Default
+",
+  },
+}

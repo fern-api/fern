@@ -206,6 +206,35 @@ function getRequestBody({
         required: [...(resolvedRequestBodySchema.required ?? []), streamingExtension.streamConditionProperty]
     };
 
+    // Strip the streamConditionProperty from allOf-inherited base schemas inside oneOf variants.
+    // When the request body is a discriminated union (oneOf) whose variants inherit the stream
+    // condition field from a shared base schema via allOf, the literal pinned at the top level
+    // would conflict with the inherited boolean in each variant. We create copies of the allOf
+    // entries with the property removed so the original schemas in the context stay untouched.
+    if (requestBodySchemaWithLiteralProperty.oneOf != null) {
+        requestBodySchemaWithLiteralProperty.oneOf = requestBodySchemaWithLiteralProperty.oneOf.map((variant) => {
+            if (isReferenceObject(variant)) {
+                const resolvedVariant = context.resolveSchemaReference(variant);
+                if (resolvedVariant.allOf == null) {
+                    return variant;
+                }
+                return stripStreamConditionPropertyFromAllOf({
+                    schema: resolvedVariant,
+                    streamConditionProperty: streamingExtension.streamConditionProperty,
+                    context
+                });
+            }
+            if (variant.allOf == null) {
+                return variant;
+            }
+            return stripStreamConditionPropertyFromAllOf({
+                schema: variant,
+                streamConditionProperty: streamingExtension.streamConditionProperty,
+                context
+            });
+        });
+    }
+
     return {
         requestBody: {
             content: {
@@ -235,6 +264,50 @@ function getResponses({
                 }
             }
         } as OpenAPIV3.ResponseObject
+    };
+}
+
+/**
+ * Returns a copy of the schema with the streamConditionProperty removed from any
+ * allOf entries that contain it. Only copies are modified — the original schemas
+ * stored in the parser context are never mutated.
+ */
+function stripStreamConditionPropertyFromAllOf({
+    schema,
+    streamConditionProperty,
+    context
+}: {
+    schema: OpenAPIV3.SchemaObject;
+    streamConditionProperty: string;
+    context: AbstractOpenAPIV3ParserContext;
+}): OpenAPIV3.SchemaObject {
+    if (schema.allOf == null) {
+        return schema;
+    }
+
+    let modified = false;
+    const newAllOf = schema.allOf.map((entry) => {
+        const resolved = isReferenceObject(entry) ? context.resolveSchemaReference(entry) : entry;
+        if (resolved.properties?.[streamConditionProperty] == null) {
+            return entry;
+        }
+        modified = true;
+        const { [streamConditionProperty]: _, ...remainingProperties } = resolved.properties;
+        const filteredRequired = resolved.required?.filter((r) => r !== streamConditionProperty);
+        return {
+            ...resolved,
+            properties: remainingProperties,
+            ...(filteredRequired != null ? { required: filteredRequired } : {})
+        };
+    });
+
+    if (!modified) {
+        return schema;
+    }
+
+    return {
+        ...schema,
+        allOf: newAllOf
     };
 }
 

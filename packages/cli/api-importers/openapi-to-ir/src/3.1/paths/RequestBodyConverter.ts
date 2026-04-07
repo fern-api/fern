@@ -448,18 +448,42 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         if (this.streamingExtension == null || this.streamingExtension.type !== "streamCondition") {
             return undefined;
         }
-        const modifiedSchema = {
+        const streamConditionPropertyName = this.streamingExtension.streamConditionProperty;
+        const modifiedSchema: OpenAPIV3_1.SchemaObject = {
             ...resolvedMediaTypeSchema,
             properties: {
                 ...resolvedMediaTypeSchema.properties,
-                [this.streamingExtension.streamConditionProperty]: {
+                [streamConditionPropertyName]: {
                     ...streamConditionProperty,
                     type: "boolean",
                     const: isStreaming
                 } as OpenAPIV3_1.SchemaObject
             },
-            required: [...(resolvedMediaTypeSchema.required ?? []), this.streamingExtension.streamConditionProperty]
+            required: [...(resolvedMediaTypeSchema.required ?? []), streamConditionPropertyName]
         };
+
+        // Strip the streamConditionProperty from allOf-inherited base schemas inside oneOf variants.
+        // When the request body is a discriminated union (oneOf) whose variants inherit the stream
+        // condition field from a shared base schema via allOf, the literal pinned at the top level
+        // would conflict with the inherited boolean in each variant. We create copies of the allOf
+        // entries with the property removed so the original schemas in the context stay untouched.
+        if (modifiedSchema.oneOf != null) {
+            modifiedSchema.oneOf = modifiedSchema.oneOf.map((variant) => {
+                const resolvedVariant = this.context.isReferenceObject(variant)
+                    ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                          schemaOrReference: variant,
+                          breadcrumbs: this.breadcrumbs
+                      })
+                    : variant;
+                if (resolvedVariant == null || resolvedVariant.allOf == null) {
+                    return variant;
+                }
+                return this.stripStreamConditionPropertyFromAllOf({
+                    schema: resolvedVariant,
+                    streamConditionProperty: streamConditionPropertyName
+                });
+            });
+        }
 
         const modifiedMediaTypeObject = {
             ...mediaTypeObject,
@@ -540,6 +564,53 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             isFile: this.context.isFile(typeReference),
             isOptional: isOptional ?? false,
             isArray: isArray ?? false
+        };
+    }
+
+    /**
+     * Returns a copy of the schema with the streamConditionProperty removed from any
+     * allOf entries that contain it. Only copies are modified — the original schemas
+     * stored in the converter context are never mutated.
+     */
+    private stripStreamConditionPropertyFromAllOf({
+        schema,
+        streamConditionProperty
+    }: {
+        schema: OpenAPIV3_1.SchemaObject;
+        streamConditionProperty: string;
+    }): OpenAPIV3_1.SchemaObject {
+        if (schema.allOf == null) {
+            return schema;
+        }
+
+        let modified = false;
+        const newAllOf = schema.allOf.map((entry) => {
+            const resolved = this.context.isReferenceObject(entry)
+                ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                      schemaOrReference: entry,
+                      breadcrumbs: this.breadcrumbs
+                  })
+                : entry;
+            if (resolved == null || resolved.properties?.[streamConditionProperty] == null) {
+                return entry;
+            }
+            modified = true;
+            const { [streamConditionProperty]: _, ...remainingProperties } = resolved.properties;
+            const filteredRequired = resolved.required?.filter((r) => r !== streamConditionProperty);
+            return {
+                ...resolved,
+                properties: remainingProperties,
+                ...(filteredRequired != null ? { required: filteredRequired } : {})
+            };
+        });
+
+        if (!modified) {
+            return schema;
+        }
+
+        return {
+            ...schema,
+            allOf: newAllOf
         };
     }
 

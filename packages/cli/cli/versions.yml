@@ -1,5 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.62.7
+  changelogEntry:
+    - summary: |
+        Fix stream condition property duplication when the request body is a
+        discriminated union (`oneOf`) whose variants inherit the stream condition
+        field from a shared base schema via `allOf`. The literal pinned by
+        `x-fern-boolean-literal` at the top level now correctly strips the
+        inherited property from each variant's `allOf` chain, preventing
+        conflicting type assignments in generated SDKs (e.g. mypy errors in
+        Python). Both the legacy and new OpenAPI importers are fixed.
+      type: fix
+  createdAt: "2026-04-07"
+  irVersion: 66
+
 - version: 4.62.6
   changelogEntry:
     - summary: |
@@ -7,7 +21,6 @@
       type: fix
   createdAt: "2026-04-07"
   irVersion: 66
-
 - version: 4.62.5
   changelogEntry:
     - summary: |

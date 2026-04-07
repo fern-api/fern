@@ -1,0 +1,123 @@
+openapi: 3.1.0
+info:
+  version: 0.1.0
+  title: Stream Condition Union Test
+  description: >
+    Tests that stream condition property is not duplicated when the request body
+    is a discriminated union (oneOf) whose variants inherit the stream condition
+    field from a shared base schema via allOf.
+servers:
+  - url: https://api.test.io
+paths:
+  /v2/inputs:
+    post:
+      summary: Create an input
+      operationId: createInput
+      x-fern-streaming:
+        stream-condition: $request.stream_response
+        response:
+          $ref: "#/components/schemas/InputFullResponse"
+        response-stream:
+          $ref: "#/components/schemas/InputStreamedResponse"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateInputRequest"
+      responses:
+        "200":
+          description: A response to an input request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InputFullResponse"
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/InputStreamedResponse"
+  /v2/inputs/validate:
+    post:
+      summary: Validate an input request
+      description: >
+        This endpoint also references CreateInputRequestBase, ensuring
+        the base schema cannot be excluded from the context.
+      operationId: validateInput
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateInputRequestBase"
+      responses:
+        "200":
+          description: Validation result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+components:
+  schemas:
+    CreateInputRequestBase:
+      type: object
+      properties:
+        stream_response:
+          description: Whether to stream the response.
+          type: boolean
+          default: false
+        prompt:
+          description: The input prompt.
+          type: string
+      required:
+        - prompt
+    CreateInputMessageRequest:
+      allOf:
+        - $ref: "#/components/schemas/CreateInputRequestBase"
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - message
+            message:
+              description: The message content.
+              type: string
+          required:
+            - type
+            - message
+    CreateInputCompactRequest:
+      allOf:
+        - $ref: "#/components/schemas/CreateInputRequestBase"
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - compact
+            data:
+              description: Compact data payload.
+              type: string
+          required:
+            - type
+            - data
+    CreateInputRequest:
+      oneOf:
+        - $ref: "#/components/schemas/CreateInputMessageRequest"
+        - $ref: "#/components/schemas/CreateInputCompactRequest"
+      discriminator:
+        propertyName: type
+        mapping:
+          message: "#/components/schemas/CreateInputMessageRequest"
+          compact: "#/components/schemas/CreateInputCompactRequest"
+    InputFullResponse:
+      type: object
+      properties:
+        result:
+          description: The full result.
+          type: string
+    InputStreamedResponse:
+      type: object
+      properties:
+        chunk:
+          description: A streamed chunk.
+          type: string

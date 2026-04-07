@@ -1,0 +1,508 @@
+{
+  "title": "Stream Condition Union Test",
+  "description": "Tests that stream condition property is not duplicated when the request body is a discriminated union (oneOf) whose variants inherit the stream condition field from a shared base schema via allOf.\n",
+  "servers": [
+    {
+      "url": "https://api.test.io"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Create an input",
+      "audiences": [],
+      "operationId": "createInput_stream",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateInputStreamRequest",
+      "response": {
+        "description": "",
+        "fullExamples": [],
+        "schema": {
+          "generatedName": "CreateInputStreamResponse",
+          "schema": "InputStreamedResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "streamingJson"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/v2/inputs",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "sse": false,
+            "events": [
+              {
+                "properties": {
+                  "chunk": {
+                    "value": {
+                      "value": "chunk",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Create an input",
+      "audiences": [],
+      "operationId": "createInput",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateInputRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "CreateInputResponse",
+          "schema": "InputFullResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/v2/inputs",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "result": {
+                  "value": {
+                    "value": "result",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Validate an input request",
+      "audiences": [],
+      "operationId": "validateInput",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ValidateInputRequest",
+      "request": {
+        "schema": {
+          "generatedName": "ValidateInputRequest",
+          "schema": "CreateInputRequestBase",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Validation result.",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "validateInputResponseValid",
+              "key": "valid",
+              "schema": {
+                "generatedName": "ValidateInputResponseValid",
+                "value": {
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "ValidateInputResponseValid",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ValidateInputResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "This endpoint also references CreateInputRequestBase, ensuring the base schema cannot be excluded from the context.\n",
+      "authed": false,
+      "method": "POST",
+      "path": "/v2/inputs/validate",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "prompt": {
+                "value": {
+                  "value": "prompt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "valid": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "CreateInputRequestBase": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "createInputRequestBaseStreamResponse",
+            "key": "stream_response",
+            "schema": {
+              "generatedName": "CreateInputRequestBaseStreamResponse",
+              "description": "Whether to stream the response.",
+              "value": {
+                "description": "Whether to stream the response.",
+                "schema": {
+                  "default": false,
+                  "type": "boolean"
+                },
+                "generatedName": "CreateInputRequestBaseStreamResponse",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "createInputRequestBasePrompt",
+            "key": "prompt",
+            "schema": {
+              "description": "The input prompt.",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "CreateInputRequestBasePrompt",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CreateInputRequestBase",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "CreateInputMessageRequest": {
+        "allOf": [
+          {
+            "generatedName": "CreateInputRequestBase",
+            "schema": "CreateInputRequestBase",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "createInputMessageRequestMessage",
+            "key": "message",
+            "schema": {
+              "description": "The message content.",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "CreateInputMessageRequestMessage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CreateInputMessageRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "CreateInputCompactRequest": {
+        "allOf": [
+          {
+            "generatedName": "CreateInputRequestBase",
+            "schema": "CreateInputRequestBase",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "createInputCompactRequestData",
+            "key": "data",
+            "schema": {
+              "description": "Compact data payload.",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "CreateInputCompactRequestData",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CreateInputCompactRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "CreateInputRequest": {
+        "value": {
+          "commonProperties": [],
+          "discriminantProperty": "type",
+          "discriminatorContext": "data",
+          "generatedName": "CreateInputRequest",
+          "schemas": {
+            "message": {
+              "generatedName": "ComponentsSchemasCreateInputMessageRequest",
+              "schema": "CreateInputMessageRequest",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "compact": {
+              "generatedName": "ComponentsSchemasCreateInputCompactRequest",
+              "schema": "CreateInputCompactRequest",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          },
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "discriminated"
+        },
+        "type": "oneOf"
+      },
+      "InputFullResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "inputFullResponseResult",
+            "key": "result",
+            "schema": {
+              "generatedName": "InputFullResponseResult",
+              "description": "The full result.",
+              "value": {
+                "description": "The full result.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InputFullResponseResult",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "InputFullResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "InputStreamedResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "inputStreamedResponseChunk",
+            "key": "chunk",
+            "schema": {
+              "generatedName": "InputStreamedResponseChunk",
+              "description": "A streamed chunk.",
+              "value": {
+                "description": "A streamed chunk.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InputStreamedResponseChunk",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "InputStreamedResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
