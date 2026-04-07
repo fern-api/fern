@@ -1,8 +1,14 @@
 import { LogLevel } from "@fern-api/logger";
-import { TaskAbortSignal } from "@fern-api/task-context";
+import {
+    CliError,
+    type CliErrorCode,
+    resolveErrorCode,
+    shouldReportToSentry as shouldReportCodeToSentry,
+    TaskAbortSignal
+} from "@fern-api/task-context";
 import chalk from "chalk";
 import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError.js";
-import { CliError } from "../errors/CliError.js";
+import { CliError as CliErrorV2 } from "../errors/CliError.js";
 import { SourcedValidationError } from "../errors/SourcedValidationError.js";
 import { ValidationError } from "../errors/ValidationError.js";
 import { Icons } from "../ui/format.js";
@@ -26,7 +32,6 @@ export function withContext<T extends GlobalArgs>(
 ): (args: T) => Promise<void> {
     return async (args: T) => {
         const context = await createContext(args);
-        const startTime = Date.now();
         setupSignalHandler(context);
 
         try {
@@ -34,21 +39,13 @@ export function withContext<T extends GlobalArgs>(
             context.telemetry.sendLifecycleEvent({
                 command: context.info.command,
                 status: "success",
-                durationMs: Date.now() - startTime
+                durationMs: Date.now() - context.createdAt
             });
             await context.telemetry.flush();
             context.finish();
             await exitGracefully(0);
         } catch (error) {
-            if (shouldReportToSentry(error)) {
-                context.telemetry.captureException(error);
-            }
-            context.telemetry.sendLifecycleEvent({
-                command: context.info.command,
-                status: "error",
-                durationMs: Date.now() - startTime,
-                errorCode: extractErrorCode(error)
-            });
+            reportError(context, error);
             await context.telemetry.flush();
             handleError(context, error);
             context.finish();
@@ -94,7 +91,7 @@ function handleError(context: Context, error: unknown): void {
         return;
     }
 
-    if (error instanceof CliError) {
+    if (error instanceof CliError || error instanceof CliErrorV2) {
         if (error.message.length > 0) {
             process.stderr.write(`${chalk.red(error.message)}\n`);
         }
@@ -112,17 +109,14 @@ function handleError(context: Context, error: unknown): void {
     process.stderr.write(`${chalk.red(String(error))}\n`);
 }
 
-/**
- * Determines whether an error should be reported to Sentry.
- *
- * Only unexpected/internal errors are reported. User-facing errors
- * (validation, auth, CLI usage) are not bugs and should not be tracked.
- */
 function shouldReportToSentry(error: unknown): boolean {
     if (error instanceof TaskAbortSignal) {
         return false;
     }
     if (error instanceof CliError) {
+        return shouldReportCodeToSentry(error.code);
+    }
+    if (error instanceof CliErrorV2) {
         return error.code === "INTERNAL_ERROR";
     }
     if (
@@ -135,17 +129,38 @@ function shouldReportToSentry(error: unknown): boolean {
     return true;
 }
 
-function extractErrorCode(error: unknown): CliError.Code {
-    if (error instanceof CliError && error.code != null) {
+function extractErrorCode(error: unknown): string {
+    if (error instanceof CliError) {
+        return error.code;
+    }
+    if (error instanceof CliErrorV2 && error.code != null) {
         return error.code;
     }
     if (error instanceof ValidationError || error instanceof SourcedValidationError) {
         return "VALIDATION_ERROR";
     }
     if (error instanceof KeyringUnavailableError) {
-        return "UNAUTHORIZED_ERROR";
+        return "AUTH_ERROR";
     }
     return "INTERNAL_ERROR";
+}
+
+/**
+ * Reports an error to Sentry (conditionally) and PostHog.
+ * Called from the top-level catch in withContext and from
+ * TaskContextAdapter.failWithoutThrowing.
+ */
+export function reportError(context: Context, error: unknown, options?: { code?: CliErrorCode }): void {
+    const code = resolveErrorCode(error, options?.code) ?? extractErrorCode(error);
+    if (shouldReportToSentry(error)) {
+        context.telemetry.captureException(error);
+    }
+    context.telemetry.sendLifecycleEvent({
+        status: "error",
+        command: context.info.command,
+        durationMs: Date.now() - context.createdAt,
+        errorCode: code
+    });
 }
 
 function setupSignalHandler(context: Context): void {

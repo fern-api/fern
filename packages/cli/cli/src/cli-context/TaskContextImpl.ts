@@ -2,11 +2,15 @@ import { Log, logErrorMessage } from "@fern-api/cli-logger";
 import { addPrefixToString } from "@fern-api/core-utils";
 import { createLogger, LogLevel } from "@fern-api/logger";
 import {
+    CliError,
+    type CliErrorCode,
     CreateInteractiveTaskParams,
     Finishable,
     InteractiveTaskContext,
     PosthogEvent,
+    resolveErrorCode,
     Startable,
+    shouldReportToSentry,
     TaskAbortSignal,
     TaskContext,
     TaskResult
@@ -24,6 +28,7 @@ export declare namespace TaskContextImpl {
         onResult?: (result: TaskResult) => void;
         shouldBufferLogs: boolean;
         instrumentPostHogEvent: (event: PosthogEvent) => void;
+        captureException?: (error: unknown, code?: CliErrorCode) => void;
     }
 }
 
@@ -37,13 +42,15 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     protected status: "notStarted" | "running" | "finished" = "notStarted";
     private onResult: ((result: TaskResult) => void) | undefined;
     private instrumentPostHogEventImpl: (event: PosthogEvent) => void;
+    private captureExceptionImpl?: (error: unknown, code?: CliErrorCode) => void;
     public constructor({
         logImmediately,
         logPrefix,
         takeOverTerminal,
         onResult,
         shouldBufferLogs,
-        instrumentPostHogEvent
+        instrumentPostHogEvent,
+        captureException
     }: TaskContextImpl.Init) {
         this.logImmediately = logImmediately;
         this.logPrefix = logPrefix ?? "";
@@ -51,6 +58,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         this.onResult = onResult;
         this.shouldBufferLogs = shouldBufferLogs;
         this.instrumentPostHogEventImpl = instrumentPostHogEvent;
+        this.captureExceptionImpl = captureException;
     }
 
     public start(): Finishable & TaskContext {
@@ -74,15 +82,41 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
 
     public takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
 
-    public failAndThrow(message?: string, error?: unknown): never {
-        this.failWithoutThrowing(message, error);
+    public failAndThrow(message?: string, error?: unknown, options?: { code?: CliErrorCode }): never {
+        this.failWithoutThrowing(message, error, options);
         this.finish();
         throw new TaskAbortSignal();
     }
 
-    public failWithoutThrowing(message?: string, error?: unknown): void {
-        logErrorMessage({ message, error, logger: this.logger });
+    public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliErrorCode }): void {
         this.result = TaskResult.Failure;
+
+        if (error instanceof TaskAbortSignal) {
+            // We already tracked the true error, so we can just return.
+            return;
+        }
+
+        logErrorMessage({ message, error, logger: this.logger });
+
+        const code = resolveErrorCode(error, options?.code);
+
+        this.instrumentPostHogEventImpl({
+            command: process.argv.join(" "),
+            properties: {
+                failed: true,
+                source: "task",
+                error,
+                errorCode: code
+            }
+        });
+
+        if (shouldReportToSentry(code)) {
+            this.captureException(error ?? new CliError({ message: message ?? "", code }), code);
+        }
+    }
+
+    public captureException(error: unknown, code?: CliErrorCode): void {
+        this.captureExceptionImpl?.(error, code);
     }
 
     public getResult(): TaskResult {
@@ -132,7 +166,8 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
             takeOverTerminal: this.takeOverTerminal,
             onResult: this.onResult,
             shouldBufferLogs: this.shouldBufferLogs,
-            instrumentPostHogEvent: (event) => this.instrumentPostHogEventImpl(event)
+            instrumentPostHogEvent: (event) => this.instrumentPostHogEventImpl(event),
+            captureException: this.captureExceptionImpl
         });
         this.subtasks.push(subtask);
         return subtask;

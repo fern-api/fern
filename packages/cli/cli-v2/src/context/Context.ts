@@ -30,6 +30,7 @@ export class Context {
     private isShuttingDown = false;
     private logFilePathPrinted = false;
 
+    public readonly createdAt: number = Date.now();
     public readonly cwd: AbsoluteFilePath;
     public readonly logLevel: LogLevel;
     public readonly info: CommandInfo;

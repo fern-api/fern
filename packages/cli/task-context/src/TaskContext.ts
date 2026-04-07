@@ -1,10 +1,13 @@
 import { Logger } from "@fern-api/logger";
 
+import { type CliErrorCode } from "./CliError.js";
+
 export interface TaskContext {
     logger: Logger;
     takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
-    failAndThrow: (message?: string, error?: unknown) => never;
-    failWithoutThrowing: (message?: string, error?: unknown) => void;
+    failAndThrow: (message?: string, error?: unknown, options?: { code?: CliErrorCode }) => never;
+    failWithoutThrowing: (message?: string, error?: unknown, options?: { code?: CliErrorCode }) => void;
+    captureException: (error: unknown, code?: CliErrorCode) => void;
     getResult: () => TaskResult;
     addInteractiveTask: (params: CreateInteractiveTaskParams) => Startable<InteractiveTaskContext>;
     runInteractiveTask: (
