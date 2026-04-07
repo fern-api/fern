@@ -616,7 +616,10 @@ class SdkGenerator(AbstractGenerator):
         ]
 
         def write_super_init(writer: AST.NodeWriter) -> None:
-            writer.write_line("super().__init__(")
+            if root_client.has_overloaded_init:
+                writer.write_line("super().__init__(  # type: ignore[call-overload, misc]")
+            else:
+                writer.write_line("super().__init__(")
             with writer.indent():
                 for param in params:
                     writer.write_line(f"{param.constructor_parameter_name}={param.constructor_parameter_name},")

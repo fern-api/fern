@@ -1831,11 +1831,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     class_reference=async_class_reference,
                     parameters=self._constructor_parameters,
                     init_parameters=self._async_init_parameters,
+                    has_overloaded_init=self._oauth_token_override,
                 ),
                 sync_instantiations=sync_instantiations,
                 sync_client=RootClient(
                     class_reference=sync_class_reference,
                     parameters=self._constructor_parameters,
                     init_parameters=self._sync_init_parameters,
+                    has_overloaded_init=self._oauth_token_override,
                 ),
             )
