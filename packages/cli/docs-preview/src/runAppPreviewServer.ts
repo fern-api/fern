@@ -401,7 +401,7 @@ function cleanFernDocsCacheSync(bundleRoot: string, context: TaskContext): void 
     try {
         if (fs.existsSync(cachePath)) {
             context.logger.debug(`Cleaning Fern Docs cache at ${cachePath}`);
-            fs.rmSync(cachePath, { recursive: true });
+            fs.rmSync(cachePath, { recursive: true, maxRetries: 5, retryDelay: 500 });
             context.logger.debug("Fern Docs cache cleaned successfully");
         }
     } catch (err) {
@@ -927,7 +927,13 @@ export async function runAppPreviewServer({
         }, RELOAD_DEBOUNCE_MS);
     });
 
+    let cleanedUp = false;
     const cleanup = () => {
+        if (cleanedUp) {
+            return;
+        }
+        cleanedUp = true;
+
         if (serverProcess != null && !serverProcess.killed) {
             context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
             try {
@@ -948,6 +954,7 @@ export async function runAppPreviewServer({
         }
 
         // Clean Fern Docs cache on shutdown (sync since cleanup runs in signal handlers)
+        // Uses maxRetries to handle ENOTEMPTY if the server process is still writing
         cleanFernDocsCacheSync(bundleRoot, context);
 
         context.logger.debug("Cleaning up WebSocket connections...");
