@@ -226,11 +226,19 @@ export class DynamicTypeLiteralMapper {
         if (unionProperties == null) {
             return python.TypeInstantiation.nop();
         }
-        const discriminantProperty = {
-            name: this.context.getPropertyName(discriminatedUnion.discriminant.name),
-            value: python.TypeInstantiation.str(unionVariant.discriminantValue.wireValue)
-        };
-        return python.TypeInstantiation.typedDict([discriminantProperty, ...unionProperties], { multiline: true });
+        const variantClassReference = this.context.getDiscriminatedUnionVariantClassReference({
+            unionDeclaration: discriminatedUnion.declaration,
+            discriminantValue: unionVariant.discriminantValue
+        });
+        return python.TypeInstantiation.reference(
+            python.instantiateClass({
+                classReference: variantClassReference,
+                arguments_: unionProperties.map((entry) =>
+                    python.methodArgument({ name: entry.name, value: entry.value })
+                ),
+                multiline: true
+            })
+        );
     }
 
     private convertDiscriminatedUnionProperties({
@@ -387,13 +395,6 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
     }): python.TypeInstantiation {
         const entries = this.convertObjectEntries({ object_, value });
-
-        // biome-ignore lint/correctness/useHookAtTopLevel: not a React hook
-        if (this.context.useTypedDictRequests()) {
-            return python.TypeInstantiation.typedDict(entries, { multiline: true });
-        }
-
-        // Pydantic model style: ClassName(key=value)
         const classReference = this.context.getTypeClassReference(object_.declaration);
         return python.TypeInstantiation.reference(
             python.instantiateClass({
@@ -632,10 +633,6 @@ export class DynamicTypeLiteralMapper {
                             value: defaultValue
                         });
                     }
-                }
-                // biome-ignore lint/correctness/useHookAtTopLevel: not a React hook
-                if (this.context.useTypedDictRequests()) {
-                    return python.TypeInstantiation.typedDict(entries, { multiline: true });
                 }
                 const classReference = this.context.getTypeClassReference(named.declaration);
                 return python.TypeInstantiation.reference(
