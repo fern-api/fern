@@ -61,7 +61,7 @@ class BasicAuthWireTest extends WireMockTestCase
         parent::setUp();
         $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
         $this->client = new SeedClient(
-            username: 'test-user',
+            username: 'test-username',
         options: [
             'baseUrl' => $wiremockUrl,
         ],

@@ -491,7 +491,7 @@ export class WireTestGenerator {
                 },
                 basic: (basicScheme) => {
                     if (!basicScheme.usernameOmit) {
-                        authParams.push("username: 'test-user'");
+                        authParams.push("username: 'test-username'");
                     }
                     if (!basicScheme.passwordOmit) {
                         authParams.push("password: 'test-password'");
