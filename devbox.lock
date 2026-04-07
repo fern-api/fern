@@ -483,54 +483,6 @@
         }
       }
     },
-    "php84Packages.composer@2.7": {
-      "last_modified": "2024-10-02T21:32:52Z",
-      "resolved": "github:NixOS/nixpkgs/fd698a4ab779fb7fb95425f1b56974ba9c2fa16c#php84Packages.composer",
-      "source": "devbox-search",
-      "version": "2.7.9",
-      "systems": {
-        "aarch64-darwin": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/nh3pqv4bsgivzvmc919sqvv8km265c77-composer-2.7.9",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/nh3pqv4bsgivzvmc919sqvv8km265c77-composer-2.7.9"
-        },
-        "aarch64-linux": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/iardqmy3i0cy4l9r045p7g5qb9dca8p9-composer-2.7.9",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/iardqmy3i0cy4l9r045p7g5qb9dca8p9-composer-2.7.9"
-        },
-        "x86_64-darwin": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/x6z4hy24dn5l9inqcs4a5wm5layiil67-composer-2.7.9",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/x6z4hy24dn5l9inqcs4a5wm5layiil67-composer-2.7.9"
-        },
-        "x86_64-linux": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/9ajnzd7i6ywxv7mav92032iryrc4jm0g-composer-2.7.9",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/9ajnzd7i6ywxv7mav92032iryrc4jm0g-composer-2.7.9"
-        }
-      }
-    },
     "php@8.4": {
       "last_modified": "2026-03-21T07:29:51Z",
       "plugin_version": "0.0.3",
