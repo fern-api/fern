@@ -111,6 +111,7 @@ seed/**/.pytest_cache/
 seed/**/.mypy_cache/
 seed/**/.ruff_cache/
 seed/**/*.egg-info/
+seed/**/.golangci.yml
 
 # Seed remote-local test outputs, except for seed.yml files
 seed-remote-local/*

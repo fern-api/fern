@@ -28,6 +28,7 @@
       "printf '\\033]0;%s\\007' 'fern (devbox)'",
       "unset GOROOT # Unset GOROOT from parent shell to avoid conflicts with devbox's Go",
       "export PATH=\"$(go env GOPATH)/bin:$PATH\"",
+      "command -v golangci-lint &>/dev/null || { echo 'Installing golangci-lint...'; go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.10.1 2>/dev/null || true; }",
       "rustup default stable 2>/dev/null || true",
       "rustup component add rustfmt 2>/dev/null || true",
       "bash scripts/setup-dotnet.sh 2>/dev/null || true",
