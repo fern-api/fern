@@ -2,7 +2,6 @@ package com.fern.java.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -11,26 +10,23 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Replicates the TypeScript CasingsGenerator's computeName logic in Java, handling:
- * - camelCase, PascalCase, snake_case, SCREAMING_SNAKE_CASE conversions
- * - smartCasing (smart snake_case that keeps numbers adjacent to letters: "v2" stays "v2")
- * - initialism capitalization for Go/Ruby (not Java)
- * - keyword sanitization
+ * Replicates the TypeScript CasingsGenerator's computeName logic in Java, handling: - camelCase, PascalCase,
+ * snake_case, SCREAMING_SNAKE_CASE conversions - smartCasing (smart snake_case that keeps numbers adjacent to letters:
+ * "v2" stays "v2") - initialism capitalization for Go/Ruby (not Java) - keyword sanitization
  *
- * This is used by the custom Jackson deserializers to inflate compressed string names
- * in v66 IR back into full Name objects that the v65 IR SDK expects.
+ * <p>This is used by the custom Jackson deserializers to inflate compressed string names in v66 IR back into full Name
+ * objects that the v65 IR SDK expects.
  */
 public final class CasingConfiguration {
 
     private static final Set<String> COMMON_INITIALISMS = Set.of(
-            "ACL", "API", "ASCII", "CPU", "CSS", "DNS", "EOF", "GUID", "HTML", "HTTP", "HTTPS",
-            "ID", "IP", "JSON", "LHS", "QPS", "RAM", "RHS", "RPC", "SAML", "SCIM", "SLA", "SMTP",
-            "SQL", "SSH", "SSO", "TCP", "TLS", "TTL", "UDP", "UI", "UID", "UUID", "URI", "URL",
-            "UTF8", "VM", "XML", "XMPP", "XSRF", "XSS");
+            "ACL", "API", "ASCII", "CPU", "CSS", "DNS", "EOF", "GUID", "HTML", "HTTP", "HTTPS", "ID", "IP", "JSON",
+            "LHS", "QPS", "RAM", "RHS", "RPC", "SAML", "SCIM", "SLA", "SMTP", "SQL", "SSH", "SSO", "TCP", "TLS", "TTL",
+            "UDP", "UI", "UID", "UUID", "URI", "URL", "UTF8", "VM", "XML", "XMPP", "XSRF", "XSS");
 
     private static final java.util.Map<String, String> PLURAL_COMMON_INITIALISMS = java.util.Map.of(
-            "ACLS", "ACLs", "APIS", "APIs", "CPUS", "CPUs", "GUIDS", "GUIDs",
-            "IDS", "IDs", "UIDS", "UIDs", "UUIDS", "UUIDs", "URIS", "URIs", "URLS", "URLs");
+            "ACLS", "ACLs", "APIS", "APIs", "CPUS", "CPUs", "GUIDS", "GUIDs", "IDS", "IDs", "UIDS", "UIDs", "UUIDS",
+            "UUIDs", "URIS", "URIs", "URLS", "URLs");
 
     private static final Set<String> CAPITALIZE_INITIALISM_LANGUAGES = Set.of("go", "ruby");
 
@@ -38,12 +34,56 @@ public final class CasingConfiguration {
 
     // Java reserved keywords for keyword sanitization
     private static final Set<String> JAVA_RESERVED_KEYWORDS = Set.of(
-            "abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class",
-            "const", "continue", "default", "do", "double", "else", "enum", "extends", "final",
-            "finally", "float", "for", "goto", "if", "implements", "import", "instanceof", "int",
-            "interface", "long", "native", "new", "package", "private", "protected", "public",
-            "return", "short", "static", "strictfp", "super", "switch", "synchronized", "this",
-            "throw", "throws", "transient", "try", "void", "volatile", "while");
+            "abstract",
+            "assert",
+            "boolean",
+            "break",
+            "byte",
+            "case",
+            "catch",
+            "char",
+            "class",
+            "const",
+            "continue",
+            "default",
+            "do",
+            "double",
+            "else",
+            "enum",
+            "extends",
+            "final",
+            "finally",
+            "float",
+            "for",
+            "goto",
+            "if",
+            "implements",
+            "import",
+            "instanceof",
+            "int",
+            "interface",
+            "long",
+            "native",
+            "new",
+            "package",
+            "private",
+            "protected",
+            "public",
+            "return",
+            "short",
+            "static",
+            "strictfp",
+            "super",
+            "switch",
+            "synchronized",
+            "this",
+            "throw",
+            "throws",
+            "transient",
+            "try",
+            "void",
+            "volatile",
+            "while");
 
     private final boolean smartCasing;
     private final String generationLanguage;
@@ -56,8 +96,8 @@ public final class CasingConfiguration {
     }
 
     /**
-     * Extracts the casingsConfig from the IR JSON root node and constructs a CasingConfiguration.
-     * Mirrors the TypeScript constructFullCasingsGenerator behavior.
+     * Extracts the casingsConfig from the IR JSON root node and constructs a CasingConfiguration. Mirrors the
+     * TypeScript constructFullCasingsGenerator behavior.
      */
     public static CasingConfiguration fromIrJson(JsonNode rootNode) {
         boolean smartCasing = true; // default to true, matching latest CLI behavior
@@ -89,8 +129,8 @@ public final class CasingConfiguration {
     }
 
     /**
-     * Computes a full Name JSON-equivalent from a plain string, replicating TypeScript's computeName.
-     * Returns a NameParts object with all casing variants.
+     * Computes a full Name JSON-equivalent from a plain string, replicating TypeScript's computeName. Returns a
+     * NameParts object with all casing variants.
      */
     public NameParts computeName(String inputName) {
         String name = preprocessName(inputName);
@@ -169,20 +209,15 @@ public final class CasingConfiguration {
     // ===== Casing conversion methods =====
 
     /**
-     * Splits a string into words, similar to lodash's words() function.
-     * Handles camelCase, PascalCase, separators, and digit boundaries.
+     * Splits a string into words, similar to lodash's words() function. Handles camelCase, PascalCase, separators, and
+     * digit boundaries.
      */
     /**
-     * Splits a string into words, matching lodash's words() behavior.
-     * Uses the same regex pattern: [A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+|[A-Z]+|[0-9]+
+     * Splits a string into words, matching lodash's words() behavior. Uses the same regex pattern:
+     * [A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+|[A-Z]+|[0-9]+
      *
-     * Examples:
-     *   "AValue"       -> ["A", "Value"]
-     *   "HTTPSClient"  -> ["HTTPS", "Client"]
-     *   "userId"       -> ["user", "Id"]
-     *   "XMLParser"    -> ["XML", "Parser"]
-     *   "ABCDef"       -> ["ABC", "Def"]
-     *   "AB"           -> ["AB"]
+     * <p>Examples: "AValue" -> ["A", "Value"] "HTTPSClient" -> ["HTTPS", "Client"] "userId" -> ["user", "Id"]
+     * "XMLParser" -> ["XML", "Parser"] "ABCDef" -> ["ABC", "Def"] "AB" -> ["AB"]
      */
     static List<String> splitWords(String s) {
         if (s == null || s.isEmpty()) {
@@ -240,8 +275,8 @@ public final class CasingConfiguration {
     }
 
     /**
-     * Smart snake_case: keeps numbers adjacent to letters ("v2" stays "v2" instead of "v_2").
-     * Matches TypeScript: split on spaces, then each part split on digits, snake_case each non-digit segment.
+     * Smart snake_case: keeps numbers adjacent to letters ("v2" stays "v2" instead of "v_2"). Matches TypeScript: split
+     * on spaces, then each part split on digits, snake_case each non-digit segment.
      */
     static String toSmartSnakeCase(String s) {
         String[] spaceParts = s.split(" ");
@@ -350,9 +385,7 @@ public final class CasingConfiguration {
         return result.toString();
     }
 
-    /**
-     * Holds all casing variants for a name, used to construct the full Name JSON object.
-     */
+    /** Holds all casing variants for a name, used to construct the full Name JSON object. */
     public static final class NameParts {
         public final String originalName;
         public final String camelUnsafe;

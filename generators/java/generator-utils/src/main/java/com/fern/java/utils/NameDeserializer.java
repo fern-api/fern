@@ -11,13 +11,14 @@ import java.io.IOException;
 
 /**
  * Custom Jackson deserializer for {@link Name} that handles both:
+ *
  * <ul>
- *   <li>v65 object form: {@code {"originalName": "...", "camelCase": {...}, ...}}</li>
- *   <li>v66 compressed string form: {@code "myFieldName"}</li>
+ *   <li>v65 object form: {@code {"originalName": "...", "camelCase": {...}, ...}}
+ *   <li>v66 compressed string form: {@code "myFieldName"}
  * </ul>
  *
- * When a string is encountered, uses {@link CasingConfiguration} to compute all casing variants,
- * replicating the TypeScript CasingsGenerator's computeName behavior.
+ * When a string is encountered, uses {@link CasingConfiguration} to compute all casing variants, replicating the
+ * TypeScript CasingsGenerator's computeName behavior.
  */
 public final class NameDeserializer extends JsonDeserializer<Name> {
 

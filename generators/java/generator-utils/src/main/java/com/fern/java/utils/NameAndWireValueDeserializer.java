@@ -12,14 +12,15 @@ import java.io.IOException;
 
 /**
  * Custom Jackson deserializer for {@link NameAndWireValue} that handles both:
+ *
  * <ul>
- *   <li>v65 object form: {@code {"wireValue": "...", "name": {...}}}</li>
- *   <li>v66 compressed string form: {@code "myFieldName"} (wireValue == name)</li>
- *   <li>v66 partial object form: {@code {"wireValue": "...", "name": "..."}} (name is a string)</li>
+ *   <li>v65 object form: {@code {"wireValue": "...", "name": {...}}}
+ *   <li>v66 compressed string form: {@code "myFieldName"} (wireValue == name)
+ *   <li>v66 partial object form: {@code {"wireValue": "...", "name": "..."}} (name is a string)
  * </ul>
  *
- * When a string is encountered, the string serves as both the wireValue and the name.
- * Uses {@link CasingConfiguration} to compute full Name from a string.
+ * When a string is encountered, the string serves as both the wireValue and the name. Uses {@link CasingConfiguration}
+ * to compute full Name from a string.
  */
 public final class NameAndWireValueDeserializer extends JsonDeserializer<NameAndWireValue> {
 
@@ -59,10 +60,7 @@ public final class NameAndWireValueDeserializer extends JsonDeserializer<NameAnd
             name = nameFromObjectNode(nameNode);
         }
 
-        return NameAndWireValue.builder()
-                .wireValue(wireValue)
-                .name(name)
-                .build();
+        return NameAndWireValue.builder().wireValue(wireValue).name(name).build();
     }
 
     private Name nameFromString(String input) {
