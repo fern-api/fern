@@ -2,8 +2,49 @@ package common
 
 import (
 	"strings"
+	"sync"
 	"unicode"
 )
+
+// casingConfig holds the IR's casingsConfig values, used by nameFromString
+// to match the TypeScript CasingsGenerator's computeName behavior.
+type casingConfig struct {
+	smartCasing        bool
+	generationLanguage string
+}
+
+var (
+	casingCfg     casingConfig
+	casingCfgOnce sync.Once
+	// casingCfgSet tracks whether ConfigureCasing has been called.
+	casingCfgSet bool
+)
+
+// capitalizeInitialismLanguages mirrors the TypeScript CAPITALIZE_INITIALISM list.
+var capitalizeInitialismLanguages = map[string]bool{
+	"go":   true,
+	"ruby": true,
+}
+
+// ConfigureCasing sets the casing configuration extracted from the IR's casingsConfig.
+// Must be called before json.Unmarshal of the IR (i.e. before Name.UnmarshalJSON runs).
+// Safe to call multiple times; only the first call takes effect.
+func ConfigureCasing(smartCasing bool, generationLanguage string) {
+	casingCfgOnce.Do(func() {
+		casingCfg = casingConfig{
+			smartCasing:        smartCasing,
+			generationLanguage: generationLanguage,
+		}
+		casingCfgSet = true
+	})
+}
+
+// resetCasingConfig resets the casing configuration for testing.
+func resetCasingConfig() {
+	casingCfg = casingConfig{}
+	casingCfgOnce = sync.Once{}
+	casingCfgSet = false
+}
 
 // commonInitialisms is the set of common initialisms that should be fully
 // capitalized when used in Go identifiers (e.g. HTTP, JSON, API).
@@ -85,21 +126,33 @@ var goReservedKeywords = map[string]bool{
 }
 
 // nameFromString computes a full Name from a plain string, replicating the
-// TypeScript CasingsGenerator's computeName logic with smartCasing enabled
-// and generationLanguage="go".
+// TypeScript CasingsGenerator's computeName logic. Behavior depends on the
+// IR's casingsConfig (set via ConfigureCasing):
+//   - smartCasing=false: standard lodash-style casing, no initialisms
+//   - smartCasing=true + language in CAPITALIZE_INITIALISM: apply Go/Ruby initialisms
 func nameFromString(input string) *Name {
 	preprocessed := preprocessName(input)
 
 	camel := toCamelCase(preprocessed)
 	pascal := toPascalCase(preprocessed)
-	snake := toSmartSnakeCase(preprocessed)
+
+	var snake string
+	if casingCfg.smartCasing {
+		snake = toSmartSnakeCase(preprocessed)
+	} else {
+		snake = toBasicSnakeCase(preprocessed)
+	}
 	screaming := strings.ToUpper(snake)
 
-	// Apply smart initialism casing (Go is in the CAPITALIZE_INITIALISM list).
-	camelWords := splitWords(camel)
-	if !hasAdjacentCommonInitialisms(camelWords) {
-		camel = applyInitialismsCamel(camelWords)
-		pascal = applyInitialismsPascal(camelWords)
+	// Apply initialism casing only when smartCasing is enabled and
+	// the generation language is in the CAPITALIZE_INITIALISM list.
+	if casingCfg.smartCasing &&
+		(casingCfg.generationLanguage == "" || capitalizeInitialismLanguages[casingCfg.generationLanguage]) {
+		camelWords := splitWords(camel)
+		if !hasAdjacentCommonInitialisms(camelWords) {
+			camel = applyInitialismsCamel(camelWords)
+			pascal = applyInitialismsPascal(camelWords)
+		}
 	}
 
 	return &Name{
