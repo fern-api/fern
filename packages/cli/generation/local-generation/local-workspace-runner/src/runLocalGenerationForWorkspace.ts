@@ -29,6 +29,7 @@ import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
 import { AutoVersioningCache } from "./AutoVersioningCache.js";
+import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 import { isAutoVersion } from "./VersionUtils.js";
 
@@ -416,14 +417,7 @@ export async function runLocalGenerationForWorkspace({
     }
 }
 
-/**
- * Derives a filesystem-safe subfolder name from a generator name.
- * e.g. "fernapi/fern-typescript-sdk" → "fern-typescript-sdk"
- */
-export function getGeneratorOutputSubfolder(generatorName: string): string {
-    const baseName = generatorName.split("/").pop() ?? "sdk";
-    return baseName.replace(/[^a-zA-Z0-9-_]/g, "_");
-}
+export { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 
 function resolveAbsolutePathToLocalPreview(
     absolutePathToPreview: AbsoluteFilePath | undefined,
