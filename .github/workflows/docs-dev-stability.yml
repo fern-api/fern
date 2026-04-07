@@ -1,0 +1,61 @@
+name: Docs Dev Stability Test
+
+on:
+  schedule:
+    # Run every hour
+    - cron: "0 * * * *"
+  workflow_dispatch:
+    inputs:
+      cycles:
+        description: "Number of edit/check cycles to run"
+        required: false
+        default: "10"
+        type: string
+      cycle_delay:
+        description: "Seconds to wait between mutations"
+        required: false
+        default: "5"
+        type: string
+
+concurrency:
+  group: docs-dev-stability
+  cancel-in-progress: true
+
+env:
+  DO_NOT_TRACK: "1"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
+
+jobs:
+  stability-test:
+    if: github.repository == 'fern-api/fern'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Build CLI
+        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
+
+      - name: Run docs dev stability test
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+        run: |
+          CYCLES="${{ github.event.inputs.cycles || '10' }}"
+          CYCLE_DELAY="${{ github.event.inputs.cycle_delay || '5' }}"
+          bash scripts/docs-dev-stability-test.sh --cycles "$CYCLES" --cycle-delay "$CYCLE_DELAY"
+
+      - name: Upload server log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-dev-server-log
+          path: /tmp/*/server.log
+          retention-days: 7
+          if-no-files-found: ignore
