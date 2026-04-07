@@ -208,7 +208,7 @@ export class PublishCommand {
                     `Multiple docs instances configured. Please specify which instance to publish.\n\n` +
                     `Available instances:\n${available}\n\n` +
                     `  Use --instance <url> to select one.`,
-                code: CliError.Code.ConfigError
+                flagHint: (value) => `--instance ${value}`
             });
         }
 

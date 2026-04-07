@@ -506,7 +506,8 @@ export class GenerateCommand {
                         isTTY: context.isTTY,
                         message: `Target '${args.target}' not found. Select a target:`,
                         choices: available.map((name) => ({ name, value: name })),
-                        nonInteractiveError: `Target '${args.target}' not found. Available targets: ${available.join(", ")}`
+                        nonInteractiveError: `Target '${args.target}' not found. Available targets: ${available.join(", ")}`,
+                        flagHint: (value) => `--target ${value}`
                     });
                     matched = allTargets.filter((t) => t.name === selectedTarget);
                 } else {
@@ -521,21 +522,41 @@ export class GenerateCommand {
             throw new Error("No targets configured in fern.yml");
         }
 
-        // When multiple groups exist and no group was specified, prompt for selection
+        // When multiple targets exist and no group/target was specified, prompt for selection.
+        // Prefer group-based selection when groups are defined; fall back to target selection otherwise.
+        const ALL_SENTINEL = "__all__";
         if (groupName == null && args.target == null && matched.length > 1) {
             const allGroups = this.collectGroups(matched);
             if (allGroups.length > 1) {
-                const selectedGroup = await promptSelect<string | undefined>({
+                // Multiple groups defined — prompt by group
+                const selectedGroup = await promptSelect<string>({
                     isTTY: context.isTTY,
                     message: "Multiple SDK groups found. Select one:",
                     choices: [
-                        { name: `all (${matched.length} targets)`, value: undefined },
+                        { name: `all (${matched.length} targets)`, value: ALL_SENTINEL },
                         ...allGroups.map((g) => ({ name: g, value: g }))
                     ],
-                    nonInteractiveError: `Multiple SDK groups found: ${allGroups.join(", ")}. Use --group to select one.`
+                    nonInteractiveError: `Multiple SDK groups found: ${allGroups.join(", ")}. Use --group to select one.`,
+                    flagHint: (value) => (value !== ALL_SENTINEL ? `--group ${value}` : undefined)
                 });
-                if (selectedGroup != null) {
+                if (selectedGroup !== ALL_SENTINEL) {
                     matched = this.filterTargetsByGroup(matched, selectedGroup);
+                }
+            } else {
+                // No groups defined — prompt by target name
+                const targetNames = matched.map((t) => t.name);
+                const selectedTarget = await promptSelect<string>({
+                    isTTY: context.isTTY,
+                    message: "Multiple SDK targets found. Select one:",
+                    choices: [
+                        { name: `all (${matched.length} targets)`, value: ALL_SENTINEL },
+                        ...targetNames.map((name) => ({ name, value: name }))
+                    ],
+                    nonInteractiveError: `Multiple SDK targets found: ${targetNames.join(", ")}. Use --target to select one.`,
+                    flagHint: (value) => (value !== ALL_SENTINEL ? `--target ${value}` : undefined)
+                });
+                if (selectedTarget !== ALL_SENTINEL) {
+                    matched = matched.filter((t) => t.name === selectedTarget);
                 }
             }
         }

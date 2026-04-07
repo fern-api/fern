@@ -194,7 +194,22 @@ export class YamlConfigLoader {
                 return `unknown key(s): ${issue.keys.join(", ")}`;
 
             case "invalid_union": {
-                // For union errors, collect unique expected types from nested errors
+                // Prefer surfacing unrecognized_keys errors — these occur when the input
+                // object matches a union variant structurally but has unknown fields. They
+                // give the user a much more actionable message than generic type errors.
+                const unknownKeys: string[] = [];
+                for (const errorGroup of issue.errors) {
+                    for (const err of errorGroup) {
+                        if (err.code === "unrecognized_keys") {
+                            unknownKeys.push(...err.keys);
+                        }
+                    }
+                }
+                if (unknownKeys.length > 0) {
+                    return `unknown key(s): ${[...new Set(unknownKeys)].join(", ")}`;
+                }
+
+                // Fall back to collecting unique expected types from nested invalid_type errors
                 const expectedTypes = new Set<string>();
                 for (const errorGroup of issue.errors) {
                     for (const err of errorGroup) {

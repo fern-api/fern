@@ -100,7 +100,8 @@ export class CompileCommand {
             isTTY: context.isTTY,
             message: "Multiple APIs found. Select one:",
             choices: apiNames.map((name) => ({ name, value: name })),
-            nonInteractiveError: `Multiple APIs found: ${available}. Use --api to select one.`
+            nonInteractiveError: `Multiple APIs found: ${available}. Use --api to select one.`,
+            flagHint: (value) => `--api ${value}`
         });
 
         const definition = workspace.apis[selectedApi];
