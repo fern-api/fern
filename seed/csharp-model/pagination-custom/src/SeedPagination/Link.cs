@@ -5,14 +5,20 @@ using SeedPagination.Core;
 namespace SeedPagination;
 
 [Serializable]
-public record UsernameCursor : IJsonOnDeserialized
+public record Link : IJsonOnDeserialized
 {
     [JsonExtensionData]
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [JsonPropertyName("cursor")]
-    public required UsernamePage Cursor { get; set; }
+    [JsonPropertyName("rel")]
+    public required string Rel { get; set; }
+
+    [JsonPropertyName("method")]
+    public required string Method { get; set; }
+
+    [JsonPropertyName("href")]
+    public required string Href { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
