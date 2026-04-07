@@ -1105,12 +1105,17 @@ func readIR(irFilename string) (*fernir.IntermediateRepresentation, error) {
 	// Name.UnmarshalJSON (called during Unmarshal) uses the correct settings.
 	var irHeader struct {
 		CasingsConfig *struct {
-			SmartCasing        bool   `json:"smartCasing"`
-			GenerationLanguage string `json:"generationLanguage"`
+			SmartCasing        bool     `json:"smartCasing"`
+			GenerationLanguage string   `json:"generationLanguage"`
+			Keywords           []string `json:"keywords"`
 		} `json:"casingsConfig"`
 	}
 	if err := json.Unmarshal(bytes, &irHeader); err == nil && irHeader.CasingsConfig != nil {
-		common.ConfigureCasing(irHeader.CasingsConfig.SmartCasing, irHeader.CasingsConfig.GenerationLanguage)
+		common.ConfigureCasing(
+			irHeader.CasingsConfig.SmartCasing,
+			irHeader.CasingsConfig.GenerationLanguage,
+			irHeader.CasingsConfig.Keywords,
+		)
 	}
 
 	result := new(fernir.IntermediateRepresentation)

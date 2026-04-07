@@ -11,6 +11,9 @@ import (
 type casingConfig struct {
 	smartCasing        bool
 	generationLanguage string
+	// keywords from the IR's casingsConfig. When non-nil, these override the
+	// default reserved keywords for the generation language.
+	keywords map[string]bool
 }
 
 var (
@@ -29,11 +32,24 @@ var capitalizeInitialismLanguages = map[string]bool{
 // ConfigureCasing sets the casing configuration extracted from the IR's casingsConfig.
 // Must be called before json.Unmarshal of the IR (i.e. before Name.UnmarshalJSON runs).
 // Safe to call multiple times; only the first call takes effect.
-func ConfigureCasing(smartCasing bool, generationLanguage string) {
+//
+// The keywords parameter mirrors the TypeScript CaseConverter constructor:
+//   - If keywords is non-nil, those exact keywords are used for sanitization.
+//   - If keywords is nil, the default reserved keywords for the generation
+//     language are used (matching getKeywords() in CasingsGenerator.ts).
+func ConfigureCasing(smartCasing bool, generationLanguage string, keywords []string) {
 	casingCfgOnce.Do(func() {
+		var kwSet map[string]bool
+		if keywords != nil {
+			kwSet = make(map[string]bool, len(keywords))
+			for _, kw := range keywords {
+				kwSet[kw] = true
+			}
+		}
 		casingCfg = casingConfig{
 			smartCasing:        smartCasing,
 			generationLanguage: generationLanguage,
+			keywords:           kwSet,
 		}
 		casingCfgSet = true
 	})
@@ -180,14 +196,48 @@ func makeSafeAndUnsafe(unsafeName string) *SafeAndUnsafeString {
 	}
 }
 
+// sanitizeName escapes names that conflict with reserved keywords, matching
+// the TypeScript CasingsGenerator's sanitizeName + getKeywords logic:
+//   - If IR provided explicit keywords, use those.
+//   - Otherwise fall back to the default reserved keywords for the generation language.
+//   - If neither keywords nor language are set, no keyword escaping is applied.
 func sanitizeName(name string) string {
-	if goReservedKeywords[name] {
+	keywords := getEffectiveKeywords()
+	if keywords != nil && keywords[name] {
 		return name + "_"
 	}
 	if len(name) > 0 && name[0] >= '0' && name[0] <= '9' {
 		return "_" + name
 	}
 	return name
+}
+
+// getEffectiveKeywords returns the keyword set to use for sanitization,
+// mirroring the TypeScript getKeywords() function in CasingsGenerator.ts:
+//   - If IR provided explicit keywords, use those.
+//   - Else if generationLanguage is set, use default keywords for that language.
+//   - Else return nil (no sanitization).
+func getEffectiveKeywords() map[string]bool {
+	if casingCfg.keywords != nil {
+		return casingCfg.keywords
+	}
+	if casingCfg.generationLanguage != "" {
+		return defaultKeywordsForLanguage(casingCfg.generationLanguage)
+	}
+	return nil
+}
+
+// defaultKeywordsForLanguage returns the default reserved keywords for a given
+// generation language, mirroring RESERVED_KEYWORDS in reserved.ts.
+func defaultKeywordsForLanguage(lang string) map[string]bool {
+	switch lang {
+	case "go":
+		return goReservedKeywords
+	default:
+		// For non-Go languages, no default keywords are defined in the Go v1
+		// binary. The Go v1 generator only runs for Go, so this is safe.
+		return nil
+	}
 }
 
 // preprocessName applies preprocessing replacements to names before casing transformations.

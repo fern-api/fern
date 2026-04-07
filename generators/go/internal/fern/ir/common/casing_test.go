@@ -24,7 +24,8 @@ func TestNameFromStringNoSmartCasing(t *testing.T) {
 		{"myApiKey", "myApiKey", "myApiKey", "MyApiKey", "my_api_key", "MY_API_KEY"},
 		{"getUrl", "getUrl", "getUrl", "GetUrl", "get_url", "GET_URL"},
 		{"user_name", "user_name", "userName", "UserName", "user_name", "USER_NAME"},
-		{"type", "type", "type_", "Type", "type_", "TYPE"},
+		// No language/keywords configured => no keyword sanitization (matches TS getKeywords returning undefined)
+		{"type", "type", "type", "Type", "type", "TYPE"},
 		// Standard snake_case separates digits: EC2 -> ec_2
 		{"EC2", "EC2", "ec2", "Ec2", "ec_2", "EC_2"},
 		{"S3", "S3", "s3", "S3", "s_3", "S_3"},
@@ -55,7 +56,7 @@ func TestNameFromStringNoSmartCasing(t *testing.T) {
 func TestNameFromStringSmartCasing(t *testing.T) {
 	// smartCasing=true with generationLanguage="go" (Go is in CAPITALIZE_INITIALISM)
 	resetCasingConfig()
-	ConfigureCasing(true, "go")
+	ConfigureCasing(true, "go", nil)
 
 	tests := []struct {
 		input         string
@@ -167,13 +168,36 @@ func TestNameAndWireValueUnmarshalJSONObjectWithStringName(t *testing.T) {
 }
 
 func TestKeywordSanitization(t *testing.T) {
+	// No language set, no keywords => no sanitization (matches TS getKeywords returning undefined)
 	resetCasingConfig()
 	n := nameFromString("type")
+	if n.CamelCase.SafeName != "type" {
+		t.Errorf("CamelCase.SafeName: got %q, want %q", n.CamelCase.SafeName, "type")
+	}
+
+	// With generationLanguage="go" but no explicit keywords => uses Go reserved keywords
+	resetCasingConfig()
+	ConfigureCasing(false, "go", nil)
+	n = nameFromString("type")
 	if n.CamelCase.SafeName != "type_" {
-		t.Errorf("CamelCase.SafeName: got %q, want %q", n.CamelCase.SafeName, "type_")
+		t.Errorf("CamelCase.SafeName with go lang: got %q, want %q", n.CamelCase.SafeName, "type_")
 	}
 	if n.SnakeCase.SafeName != "type_" {
-		t.Errorf("SnakeCase.SafeName: got %q, want %q", n.SnakeCase.SafeName, "type_")
+		t.Errorf("SnakeCase.SafeName with go lang: got %q, want %q", n.SnakeCase.SafeName, "type_")
+	}
+
+	// With explicit keywords from IR => uses those instead of defaults
+	resetCasingConfig()
+	ConfigureCasing(false, "go", []string{"custom", "reserved"})
+	n = nameFromString("type")
+	// "type" is NOT in the custom keywords, so should NOT be sanitized
+	if n.CamelCase.SafeName != "type" {
+		t.Errorf("CamelCase.SafeName with custom keywords: got %q, want %q", n.CamelCase.SafeName, "type")
+	}
+	n = nameFromString("custom")
+	// "custom" IS in the custom keywords, so should be sanitized
+	if n.CamelCase.SafeName != "custom_" {
+		t.Errorf("CamelCase.SafeName custom keyword: got %q, want %q", n.CamelCase.SafeName, "custom_")
 	}
 }
 
