@@ -364,48 +364,48 @@ class SnippetDependencyTracker {
 }
 
 /**
- * Resolves the path to the Next.js cache directory within the standalone server bundle.
+ * Resolves the path to the Fern Docs cache directory within the standalone server bundle.
  * The standalone server runs from `<bundleRoot>/standalone/packages/fern-docs/bundle/server.js`,
  * so its runtime cache is written to `<bundleRoot>/standalone/packages/fern-docs/bundle/.next/cache/`.
  */
-function getNextCachePath(bundleRoot: string): string {
+function getFernDocsCachePath(bundleRoot: string): string {
     return path.join(bundleRoot, "standalone/packages/fern-docs/bundle/.next/cache");
 }
 
 /**
- * Removes the Next.js cache directory to ensure a clean state.
+ * Removes the Fern Docs cache directory to ensure a clean state.
  * This prevents stale cache from previous dev server runs from causing issues.
  */
-async function cleanNextCache(bundleRoot: string, context: TaskContext): Promise<void> {
-    const cachePath = getNextCachePath(bundleRoot);
+async function cleanFernDocsCache(bundleRoot: string, context: TaskContext): Promise<void> {
+    const cachePath = getFernDocsCachePath(bundleRoot);
     try {
         const cacheExists = await doesPathExist(AbsoluteFilePath.of(cachePath));
         if (cacheExists) {
-            context.logger.debug(`Cleaning Next.js cache at ${cachePath}`);
+            context.logger.debug(`Cleaning Fern Docs cache at ${cachePath}`);
             await rm(cachePath, { recursive: true });
-            context.logger.debug("Next.js cache cleaned successfully");
+            context.logger.debug("Fern Docs cache cleaned successfully");
         } else {
-            context.logger.debug("No Next.js cache to clean");
+            context.logger.debug("No Fern Docs cache to clean");
         }
     } catch (err) {
-        context.logger.debug(`Failed to clean Next.js cache: ${err}`);
+        context.logger.debug(`Failed to clean Fern Docs cache: ${err}`);
     }
 }
 
 /**
- * Synchronous version of cleanNextCache for use in signal handlers
+ * Synchronous version of cleanFernDocsCache for use in signal handlers
  * where async operations cannot be awaited.
  */
-function cleanNextCacheSync(bundleRoot: string, context: TaskContext): void {
-    const cachePath = getNextCachePath(bundleRoot);
+function cleanFernDocsCacheSync(bundleRoot: string, context: TaskContext): void {
+    const cachePath = getFernDocsCachePath(bundleRoot);
     try {
         if (fs.existsSync(cachePath)) {
-            context.logger.debug(`Cleaning Next.js cache at ${cachePath}`);
+            context.logger.debug(`Cleaning Fern Docs cache at ${cachePath}`);
             fs.rmSync(cachePath, { recursive: true });
-            context.logger.debug("Next.js cache cleaned successfully");
+            context.logger.debug("Fern Docs cache cleaned successfully");
         }
     } catch (err) {
-        context.logger.debug(`Failed to clean Next.js cache: ${err}`);
+        context.logger.debug(`Failed to clean Fern Docs cache: ${err}`);
     }
 }
 
@@ -782,8 +782,8 @@ export async function runAppPreviewServer({
         });
     }
 
-    // Clean Next.js cache from previous runs before starting the server
-    await cleanNextCache(bundleRoot, context);
+    // Clean Fern Docs cache from previous runs before starting the server
+    await cleanFernDocsCache(bundleRoot, context);
 
     // Now start Next.js after backend is ready
     const env = {
@@ -947,8 +947,8 @@ export async function runAppPreviewServer({
             }
         }
 
-        // Clean Next.js cache on shutdown (sync since cleanup runs in signal handlers)
-        cleanNextCacheSync(bundleRoot, context);
+        // Clean Fern Docs cache on shutdown (sync since cleanup runs in signal handlers)
+        cleanFernDocsCacheSync(bundleRoot, context);
 
         context.logger.debug("Cleaning up WebSocket connections...");
         for (const [ws, metadata] of connections) {
