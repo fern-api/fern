@@ -1,7 +1,7 @@
 # Seed TypeScript Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
-[![npm shield](https://img.shields.io/npm/v/@fern/pagination-custom)](https://www.npmjs.com/package/@fern/pagination-custom)
+[![npm shield](https://img.shields.io/npm/v/@fern/schemaless-request-body-examples)](https://www.npmjs.com/package/@fern/schemaless-request-body-examples)
 
 The Seed TypeScript library provides convenient access to the Seed APIs from TypeScript.
 
@@ -12,9 +12,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Usage](#usage)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
-- [Pagination](#pagination)
 - [Advanced](#advanced)
-  - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
   - [Retries](#retries)
@@ -29,7 +27,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 ## Installation
 
 ```sh
-npm i -s @fern/pagination-custom
+npm i -s @fern/schemaless-request-body-examples
 ```
 
 ## Reference
@@ -41,28 +39,22 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedPaginationClient } from "@fern/pagination-custom";
+import { SeedApiClient } from "@fern/schemaless-request-body-examples";
 
-const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const pageableResponse = await client.users.listWithCustomPager({
-    limit: 1,
-    starting_after: "starting_after"
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+await client.createPlant({
+    "name": "Venus Flytrap",
+    "species": "Dionaea muscipula",
+    "care": {
+        "light": "full sun",
+        "water": "distilled only",
+        "humidity": "high"
+    },
+    "tags": [
+        "carnivorous",
+        "tropical"
+    ]
 });
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithCustomPager({
-    limit: 1,
-    starting_after: "starting_after"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
 ```
 
 ## Request and Response Types
@@ -71,9 +63,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedPagination } from "@fern/pagination-custom";
+import { SeedApi } from "@fern/schemaless-request-body-examples";
 
-const request: SeedPagination.ListWithCustomPagerRequest = {
+const request: SeedApi.UpdatePlantRequest = {
     ...
 };
 ```
@@ -84,12 +76,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedPaginationError } from "@fern/pagination-custom";
+import { SeedApiError } from "@fern/schemaless-request-body-examples";
 
 try {
-    await client.users.listWithCustomPager(...);
+    await client.createPlant(...);
 } catch (err) {
-    if (err instanceof SeedPaginationError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -98,62 +90,23 @@ try {
 }
 ```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import { SeedPaginationClient } from "@fern/pagination-custom";
-
-const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const pageableResponse = await client.users.listWithCustomPager({
-    limit: 1,
-    starting_after: "starting_after"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithCustomPager({
-    limit: 1,
-    starting_after: "starting_after"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
-```
-
 ## Advanced
-
-### Subpackage Exports
-
-This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
-
-```typescript
-import { UsersClient } from '@fern/pagination-custom/users';
-
-const client = new UsersClient({...});
-```
 
 ### Additional Headers
 
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedPaginationClient } from "@fern/pagination-custom";
+import { SeedApiClient } from "@fern/schemaless-request-body-examples";
 
-const client = new SeedPaginationClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.users.listWithCustomPager(..., {
+const response = await client.createPlant(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -165,7 +118,7 @@ const response = await client.users.listWithCustomPager(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.users.listWithCustomPager(..., {
+const response = await client.createPlant(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -187,7 +140,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.users.listWithCustomPager(..., {
+const response = await client.createPlant(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -197,7 +150,7 @@ const response = await client.users.listWithCustomPager(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.users.listWithCustomPager(..., {
+const response = await client.createPlant(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -208,7 +161,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.users.listWithCustomPager(..., {
+const response = await client.createPlant(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -220,7 +173,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.users.listWithCustomPager(...).withRawResponse();
+const { data, rawResponse } = await client.createPlant(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -231,9 +184,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedPaginationClient, logging } from "@fern/pagination-custom";
+import { SeedApiClient, logging } from "@fern/schemaless-request-body-examples";
 
-const client = new SeedPaginationClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info
