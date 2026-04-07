@@ -226,9 +226,7 @@ function convertRequestWrapperPropertyToString(property: RequestWrapperProperty)
  * Only reports collisions that were NOT already caught by the raw-name check above
  * (i.e., properties that have different raw names but the same camelCase name).
  */
-function getCamelCaseNormalizedCollisions(
-    nameToProperties: Record<string, RequestWrapperProperty[]>
-): RuleViolation[] {
+function getCamelCaseNormalizedCollisions(nameToProperties: Record<string, RequestWrapperProperty[]>): RuleViolation[] {
     // Build a map from camelCase-normalized name to all properties across all raw-name groups.
     const camelCaseToEntries: Record<string, { rawName: string; property: RequestWrapperProperty }[]> = {};
 
