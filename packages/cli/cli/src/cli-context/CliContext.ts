@@ -3,7 +3,7 @@ import { createLogger, LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { getPosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
-import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
+import { Finishable, PosthogEvent, Startable, TaskAbortSignal, TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import { input, select } from "@inquirer/prompts";
 import chalk from "chalk";
@@ -95,7 +95,7 @@ export class CliContext {
 
     public failAndThrow(message?: string, error?: unknown): never {
         this.failWithoutThrowing(message, error);
-        throw new FernCliError();
+        throw new TaskAbortSignal();
     }
 
     public failWithoutThrowing(message?: string, error?: unknown): void {
@@ -229,7 +229,7 @@ export class CliContext {
             } else {
                 context.failWithoutThrowing(undefined, error);
             }
-            throw new FernCliError();
+            throw new TaskAbortSignal();
         } finally {
             context.finish();
         }
@@ -398,7 +398,7 @@ export class CliContext {
             // User pressed Ctrl+C
             if ((error as Error)?.name === "ExitPromptError") {
                 this.logger.info("\nCancelled by user.");
-                throw new FernCliError();
+                throw new TaskAbortSignal();
             }
             throw error;
         }
