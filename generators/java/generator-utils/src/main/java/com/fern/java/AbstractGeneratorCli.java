@@ -3,8 +3,12 @@ package com.fern.java;
 import static com.fern.java.GeneratorLogging.log;
 import static com.fern.java.GeneratorLogging.logError;
 
+import com.fasterxml.jackson.databind.BeanDescription;
+import com.fasterxml.jackson.databind.DeserializationConfig;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -119,10 +123,31 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
             // Extract casingsConfig from IR JSON before full deserialization,
             // then register custom deserializers for v66 compressed names.
+            // We use BeanDeserializerModifier to override the @JsonDeserialize(builder=...)
+            // annotations on the generated Name and NameAndWireValue classes, since
+            // module-level addDeserializer() does not take precedence over annotation-based
+            // builder deserializers.
             CasingConfiguration casingConfig = CasingConfiguration.fromIrJson(rootNode);
+            NameDeserializer nameDeserializer = new NameDeserializer(casingConfig);
+            NameAndWireValueDeserializer nameAndWireValueDeserializer =
+                    new NameAndWireValueDeserializer(casingConfig);
+
             SimpleModule nameModule = new SimpleModule("NameOrStringModule");
-            nameModule.addDeserializer(Name.class, new NameDeserializer(casingConfig));
-            nameModule.addDeserializer(NameAndWireValue.class, new NameAndWireValueDeserializer(casingConfig));
+            nameModule.setDeserializerModifier(new BeanDeserializerModifier() {
+                @Override
+                public JsonDeserializer<?> modifyDeserializer(
+                        DeserializationConfig config,
+                        BeanDescription beanDesc,
+                        JsonDeserializer<?> deserializer) {
+                    if (Name.class.isAssignableFrom(beanDesc.getBeanClass())) {
+                        return nameDeserializer;
+                    }
+                    if (NameAndWireValue.class.isAssignableFrom(beanDesc.getBeanClass())) {
+                        return nameAndWireValueDeserializer;
+                    }
+                    return deserializer;
+                }
+            });
 
             ObjectMapper irMapper = ObjectMappers.JSON_MAPPER.copy();
             irMapper.registerModule(nameModule);
