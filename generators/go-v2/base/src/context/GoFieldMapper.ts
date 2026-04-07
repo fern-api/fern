@@ -1,4 +1,4 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { BaseGoCustomConfigSchema, go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -31,7 +31,7 @@ export class GoFieldMapper {
     }
 
     public convert({ name, reference, docs, includeTags = ["json", "url"] }: GoFieldMapper.Args): go.Field {
-        const nameValue = typeof name === "string" ? name : name.name;
+        const nameValue = getNameFromWireValue(name);
         switch (reference.type) {
             case "container":
                 return this.convertContainer({
@@ -68,7 +68,7 @@ export class GoFieldMapper {
         docs?: string;
         includeTags: GoFieldMapper.Tag[];
     }): go.Field {
-        const nameValue = typeof name === "string" ? name : name.name;
+        const nameValue = getNameFromWireValue(name);
         switch (container.type) {
             case "literal":
                 return this.convertLiteral({ name, literal: container.literal });
@@ -95,7 +95,7 @@ export class GoFieldMapper {
         name: FernIr.NameAndWireValueOrString;
         literal: FernIr.Literal;
     }): go.Field {
-        const nameValue = typeof name === "string" ? name : name.name;
+        const nameValue = getNameFromWireValue(name);
         switch (literal.type) {
             case "boolean":
                 return go.field({

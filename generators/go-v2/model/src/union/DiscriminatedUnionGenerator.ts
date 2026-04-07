@@ -1,3 +1,4 @@
+import { getNameFromWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
@@ -43,10 +44,7 @@ export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
     }
 
     private getDiscriminantField(): go.Field {
-        const discName =
-            typeof this.unionDeclaration.discriminant === "string"
-                ? this.unionDeclaration.discriminant
-                : this.unionDeclaration.discriminant.name;
+        const discName = getNameFromWireValue(this.unionDeclaration.discriminant);
         return go.field({
             name: this.context.getFieldName(discName),
             type: go.Type.string(),
@@ -59,10 +57,7 @@ export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
         switch (shape.propertiesType) {
             case "samePropertiesAsObject": {
                 const typeDeclaration = this.context.getTypeDeclarationOrThrow(shape.typeId);
-                const dvName =
-                    typeof unionType.discriminantValue === "string"
-                        ? unionType.discriminantValue
-                        : unionType.discriminantValue.name;
+                const dvName = getNameFromWireValue(unionType.discriminantValue);
                 return go.field({
                     name: this.context.getFieldName(dvName),
                     type: go.Type.reference(this.context.goTypeMapper.convertToTypeReference(typeDeclaration.name)),
@@ -70,20 +65,14 @@ export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
                 });
             }
             case "singleProperty": {
-                const dvName =
-                    typeof unionType.discriminantValue === "string"
-                        ? unionType.discriminantValue
-                        : unionType.discriminantValue.name;
+                const dvName = getNameFromWireValue(unionType.discriminantValue);
                 return go.field({
                     name: this.context.getFieldName(dvName),
                     type: this.context.goTypeMapper.convert({ reference: shape.type })
                 });
             }
             case "noProperties": {
-                const dvName =
-                    typeof unionType.discriminantValue === "string"
-                        ? unionType.discriminantValue
-                        : unionType.discriminantValue.name;
+                const dvName = getNameFromWireValue(unionType.discriminantValue);
                 return go.field({
                     name: this.context.getFieldName(dvName),
                     type: go.Type.any(),

@@ -157,7 +157,7 @@ export abstract class AbstractEndpointGenerator {
     }
 
     private getSingleFileParameter({ fileProperty }: { fileProperty: FernIr.FilePropertySingle }): go.Parameter {
-        const keyName = typeof fileProperty.key === "string" ? fileProperty.key : fileProperty.key.name;
+        const keyName = getOriginalName(fileProperty.key);
         return go.parameter({
             docs: fileProperty.docs,
             type: go.Type.reference(this.context.getIoReaderTypeReference()),
@@ -166,7 +166,7 @@ export abstract class AbstractEndpointGenerator {
     }
 
     private getFileArrayParameter({ fileProperty }: { fileProperty: FernIr.FilePropertyArray }): go.Parameter {
-        const keyName = typeof fileProperty.key === "string" ? fileProperty.key : fileProperty.key.name;
+        const keyName = getOriginalName(fileProperty.key);
         return go.parameter({
             docs: fileProperty.docs,
             type: go.Type.slice(go.Type.reference(this.context.getIoReaderTypeReference())),
