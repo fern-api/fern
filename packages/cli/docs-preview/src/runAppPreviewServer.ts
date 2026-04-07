@@ -8,6 +8,7 @@ import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import cors from "cors";
 import express from "express";
+import fs from "fs";
 import { readFile, rm } from "fs/promises";
 import http, { type IncomingMessage } from "http";
 import path from "path";
@@ -378,7 +379,6 @@ function getNextCachePath(bundleRoot: string): string {
 async function cleanNextCache(bundleRoot: string, context: TaskContext): Promise<void> {
     const cachePath = getNextCachePath(bundleRoot);
     try {
-        // Check for both the primary cache path and any other cache artifacts
         const cacheExists = await doesPathExist(AbsoluteFilePath.of(cachePath));
         if (cacheExists) {
             context.logger.debug(`Cleaning Next.js cache at ${cachePath}`);
@@ -386,6 +386,23 @@ async function cleanNextCache(bundleRoot: string, context: TaskContext): Promise
             context.logger.debug("Next.js cache cleaned successfully");
         } else {
             context.logger.debug("No Next.js cache to clean");
+        }
+    } catch (err) {
+        context.logger.debug(`Failed to clean Next.js cache: ${err}`);
+    }
+}
+
+/**
+ * Synchronous version of cleanNextCache for use in signal handlers
+ * where async operations cannot be awaited.
+ */
+function cleanNextCacheSync(bundleRoot: string, context: TaskContext): void {
+    const cachePath = getNextCachePath(bundleRoot);
+    try {
+        if (fs.existsSync(cachePath)) {
+            context.logger.debug(`Cleaning Next.js cache at ${cachePath}`);
+            fs.rmSync(cachePath, { recursive: true });
+            context.logger.debug("Next.js cache cleaned successfully");
         }
     } catch (err) {
         context.logger.debug(`Failed to clean Next.js cache: ${err}`);
@@ -930,8 +947,8 @@ export async function runAppPreviewServer({
             }
         }
 
-        // Clean Next.js cache on shutdown
-        void cleanNextCache(bundleRoot, context);
+        // Clean Next.js cache on shutdown (sync since cleanup runs in signal handlers)
+        cleanNextCacheSync(bundleRoot, context);
 
         context.logger.debug("Cleaning up WebSocket connections...");
         for (const [ws, metadata] of connections) {
