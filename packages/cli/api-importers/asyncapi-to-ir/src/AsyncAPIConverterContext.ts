@@ -100,6 +100,10 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
             displayName = displayNameOverride ?? resolvedReference.value.title;
         } else if (displayNameOverrideSource === "discriminator_key") {
             displayName = resolvedReference.value.title ?? displayNameOverride;
+        } else {
+            // No override source - use schema title or fallback to extracted schema name
+            const rawSchemaName = reference.$ref.match(/\/schemas\/([^/]+)/)?.[1] ?? typeId;
+            displayName = resolvedReference.value.title ?? rawSchemaName;
         }
 
         return {
@@ -142,6 +146,9 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
             displayName = displayNameOverride ?? resolvedReference.value.name;
         } else if (displayNameOverrideSource === "discriminator_key") {
             displayName = resolvedReference.value.name ?? displayNameOverride;
+        } else {
+            // No override source - use message name or fallback to typeId
+            displayName = resolvedReference.value.name ?? typeId;
         }
 
         return {
@@ -181,6 +188,9 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
             displayName = displayNameOverride ?? resolvedReference.value.messageId ?? resolvedReference.value.name;
         } else if (displayNameOverrideSource === "discriminator_key") {
             displayName = resolvedReference.value.messageId ?? resolvedReference.value.name ?? displayNameOverride;
+        } else {
+            // No override source - use message identifiers or fallback to typeId
+            displayName = resolvedReference.value.messageId ?? resolvedReference.value.name ?? typeId;
         }
 
         return {

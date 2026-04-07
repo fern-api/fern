@@ -46,6 +46,10 @@ export class OpenRPCConverterContext3_1 extends AbstractConverterContext<Openrpc
             displayName = displayNameOverride ?? resolvedReference.value.title;
         } else if (displayNameOverrideSource === "discriminator_key") {
             displayName = resolvedReference.value.title ?? displayNameOverride;
+        } else {
+            // No override source - use schema title or fallback to extracted schema name
+            const rawSchemaName = reference.$ref.match(/\/schemas\/([^/]+)/)?.[1] ?? typeId;
+            displayName = resolvedReference.value.title ?? rawSchemaName;
         }
 
         return {

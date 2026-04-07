@@ -209,7 +209,7 @@
     "InvalidTypeError": {
       "availability": undefined,
       "description": "Invalid type error with discriminator",
-      "displayName": "invalidType",
+      "displayName": undefined,
       "name": "InvalidTypeError",
       "shape": {
         "extends": [],
@@ -256,7 +256,7 @@
     "OneOfDiscriminatedA": {
       "availability": undefined,
       "description": "First variant for discriminated oneOf",
-      "displayName": "variantA",
+      "displayName": undefined,
       "name": "OneOfDiscriminatedA",
       "shape": {
         "extends": [],
@@ -286,7 +286,7 @@
     "OneOfDiscriminatedB": {
       "availability": undefined,
       "description": "Second variant for discriminated oneOf",
-      "displayName": "variantB",
+      "displayName": undefined,
       "name": "OneOfDiscriminatedB",
       "shape": {
         "extends": [],
@@ -355,7 +355,7 @@
     "ValidationError": {
       "availability": undefined,
       "description": "Validation error with discriminator",
-      "displayName": "validation",
+      "displayName": undefined,
       "name": "ValidationError",
       "shape": {
         "extends": [],

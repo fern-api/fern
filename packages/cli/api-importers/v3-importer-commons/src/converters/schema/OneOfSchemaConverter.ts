@@ -243,10 +243,11 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 const variantDisplayName =
                     (resolvedSchema.resolved ? resolvedSchema.value.title : undefined) ?? discriminant ?? rawSchemaName;
 
-                // Set displayName on the type declaration for discriminated union variants.
-                // Docs read the type definition's displayName, not just the union variant's displayName.
-                if (convertedSchema.schema?.typeDeclaration != null) {
-                    convertedSchema.schema.typeDeclaration.name.displayName = variantDisplayName;
+                // Set displayName on the type declaration only when the schema has an explicit title.
+                // The discriminant key is context-specific to the union and should not be applied globally.
+                const schemaTitle = resolvedSchema.resolved ? resolvedSchema.value.title : undefined;
+                if (convertedSchema.schema?.typeDeclaration != null && schemaTitle != null) {
+                    convertedSchema.schema.typeDeclaration.name.displayName = schemaTitle;
                 }
 
                 unionTypes.push({

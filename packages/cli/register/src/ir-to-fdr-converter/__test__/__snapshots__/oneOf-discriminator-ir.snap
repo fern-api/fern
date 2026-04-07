@@ -412,7 +412,7 @@
       "encoding": undefined,
       "inline": false,
       "name": {
-        "displayName": "invalidType",
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -510,7 +510,7 @@
       "encoding": undefined,
       "inline": false,
       "name": {
-        "displayName": "variantA",
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -577,7 +577,7 @@
       "encoding": undefined,
       "inline": false,
       "name": {
-        "displayName": "variantB",
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -724,7 +724,7 @@
       "encoding": undefined,
       "inline": false,
       "name": {
-        "displayName": "validation",
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
