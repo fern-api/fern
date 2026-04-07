@@ -4,7 +4,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import chalk from "chalk";
 import cliProgress from "cli-progress";
 import decompress from "decompress";
-import { mkdir, readFile, rm, writeFile } from "fs/promises";
+import { mkdir, readFile, rename, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
@@ -14,7 +14,7 @@ const DOCS_PREFIX = chalk.cyan("[docs]:");
 const ETAG_FILENAME = "etag";
 
 // Progress bar label alignment - pad labels to the longest one for consistent bar positioning
-const PROGRESS_LABEL_WIDTH = "Removing old docs bundle".length;
+const PROGRESS_LABEL_WIDTH = "Downloading docs bundle".length;
 const formatProgressLabel = (label: string): string => label.padEnd(PROGRESS_LABEL_WIDTH, " ");
 const PREVIEW_FOLDER_NAME = "preview";
 const APP_PREVIEW_FOLDER_NAME = "app-preview";
@@ -225,42 +225,14 @@ export async function downloadBundle({
 
         const absolutePathToPreviewFolder = getPathToPreviewFolder({ app });
         if (await doesPathExist(absolutePathToPreviewFolder)) {
-            logger.debug(`Removing previously cached bundle at: ${absolutePathToPreviewFolder}`);
+            const oldBundlePath = AbsoluteFilePath.of(`${absolutePathToPreviewFolder}-old-${Date.now()}`);
+            logger.debug(`Moving previously cached bundle to: ${oldBundlePath}`);
+            await rename(absolutePathToPreviewFolder, oldBundlePath);
 
-            let removeProgressBar: cliProgress.SingleBar | undefined;
-            let removeInterval: NodeJS.Timeout | undefined;
-
-            if (app) {
-                removeProgressBar = new cliProgress.SingleBar({
-                    format: `${DOCS_PREFIX} ${formatProgressLabel("Removing old docs bundle")} [{bar}] {percentage}%`,
-                    barCompleteChar: "\u2588",
-                    barIncompleteChar: "\u2591",
-                    hideCursor: true
-                });
-                removeProgressBar.start(100, 0);
-
-                const REMOVE_DURATION_MS = 10000;
-                const startTime = Date.now();
-                removeInterval = setInterval(() => {
-                    const elapsed = Date.now() - startTime;
-                    const t = Math.min(elapsed / REMOVE_DURATION_MS, 1);
-                    const p = 1 - Math.pow(1 - t, 3);
-                    const percentage = Math.min(99, Math.floor(p * 100));
-                    removeProgressBar?.update(percentage);
-                }, 50);
-            }
-
-            try {
-                await rm(absolutePathToPreviewFolder, { recursive: true });
-            } finally {
-                if (removeInterval) {
-                    clearInterval(removeInterval);
-                }
-                if (removeProgressBar) {
-                    removeProgressBar.update(100);
-                    removeProgressBar.stop();
-                }
-            }
+            // Delete the old bundle asynchronously so it doesn't block the rest of the setup
+            rm(oldBundlePath, { recursive: true }).catch((error) => {
+                logger.debug(`Failed to remove old bundle at ${oldBundlePath}: ${error}`);
+            });
         }
         await mkdir(absolutePathToPreviewFolder, { recursive: true });
 

@@ -3,8 +3,8 @@
 - version: 4.63.0
   changelogEntry:
     - summary: |
-        Show a progress bar for the "Removing old docs bundle" step during
-        `fern docs dev`, filling the gap between the download and unzip bars.
+        Speed up `fern docs dev` bundle refresh by renaming the old bundle
+        and deleting it asynchronously instead of blocking on removal.
       type: feat
   createdAt: "2026-04-07"
   irVersion: 66
