@@ -681,7 +681,7 @@ export async function runAppPreviewServer({
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
 
-    // Create watcher but don't attach the event handler yet - we'll do that after restartNextJsServer is defined
+    // Create watcher but don't attach the event handler yet - we'll do that after the Next.js server starts
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
         recursive: true,
         ignoreInitial: true,
@@ -800,46 +800,10 @@ export async function runAppPreviewServer({
         });
     };
 
-    // Function to stop the current Next.js server
-    const stopNextJsServer = (): Promise<void> => {
-        return new Promise((resolve) => {
-            if (serverProcess == null || serverProcess.killed) {
-                resolve();
-                return;
-            }
-
-            context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
-            try {
-                serverProcess.kill();
-                // Give it a moment to clean up
-                setTimeout(() => {
-                    if (serverProcess != null && !serverProcess.killed) {
-                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
-                        try {
-                            serverProcess.kill("SIGKILL");
-                        } catch (err) {
-                            context.logger.error(`Failed to force kill server process: ${err}`);
-                        }
-                    }
-                    resolve();
-                }, 1000);
-            } catch (err) {
-                context.logger.error(`Failed to kill server process: ${err}`);
-                resolve();
-            }
-        });
-    };
-
-    // Function to restart the Next.js server
-    const restartNextJsServer = async (): Promise<void> => {
-        await stopNextJsServer();
-        await startNextJsServer();
-    };
-
     // Start the initial server
     await startNextJsServer();
 
-    // Now that restartNextJsServer is defined, attach the watcher event handler
+    // Attach the watcher event handler
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
         // Ignore changes to .fern/logs/ directory (contains debug logs)
@@ -882,20 +846,12 @@ export async function runAppPreviewServer({
 
                 editedAbsoluteFilepaths.length = 0;
 
-                // Restart the docs server
-                context.logger.info("Restarting docs server...");
-                await restartNextJsServer();
-
-                // Wait 1 second for the server to be ready
-                await new Promise((resolve) => setTimeout(resolve, 1000));
-
-                context.logger.info("Refreshing page. Please refresh manually if you don't see changes.");
+                isReloading = false;
 
                 sendData({
                     version: 1,
                     type: "finishReload"
                 });
-                isReloading = false;
 
                 if (reloadedDocsDefinition != null) {
                     // Detect slug changes before updating the docs definition
