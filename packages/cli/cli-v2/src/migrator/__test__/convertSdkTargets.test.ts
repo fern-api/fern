@@ -345,4 +345,176 @@ describe("convertSdkTargetsFromRaw", () => {
         expect(output?.git?.repository).toBe("fern-api/fern-typescript");
         expect(output?.git?.mode).toBe("pr");
     });
+
+    // ── metadata migration ──────────────────────────────────────────────────
+
+    it("migrates metadata.license to output.git.license", () => {
+        const result = convertSdkTargetsFromRaw({
+            groups: {
+                "python-sdk": {
+                    generators: [
+                        {
+                            name: "fernapi/fern-python-sdk",
+                            version: "4.64.1",
+                            output: { location: "pypi", "package-name": "schematichq", token: "${PYPI_TOKEN}" },
+                            metadata: { license: "MIT" },
+                            github: { repository: "schematichq/schematic-python", mode: "pull-request" }
+                        }
+                    ]
+                }
+            },
+            defaultGroup: undefined,
+            autorelease: undefined,
+            readme: undefined
+        });
+
+        const target = result.sdks.targets["python"];
+        const output = target?.output as { git?: { license?: string } } | undefined;
+        expect(output?.git?.license).toBe("MIT");
+    });
+
+    it("migrates metadata.author and metadata.email to metadata.authors", () => {
+        const result = convertSdkTargetsFromRaw({
+            groups: {
+                "java-sdk": {
+                    generators: [
+                        {
+                            name: "fernapi/fern-java-sdk",
+                            version: "3.44.6",
+                            output: { location: "local-file-system", path: "./java" },
+                            metadata: {
+                                author: "Schematic",
+                                email: "support@schematichq.com",
+                                "package-description": "Official Java SDK"
+                            }
+                        }
+                    ]
+                }
+            },
+            defaultGroup: undefined,
+            autorelease: undefined,
+            readme: undefined
+        });
+
+        const target = result.sdks.targets["java"];
+        expect(target?.metadata?.description).toBe("Official Java SDK");
+        expect(target?.metadata?.authors).toEqual([{ name: "Schematic", email: "support@schematichq.com" }]);
+    });
+
+    it("warns on metadata.reference-url as unsupported", () => {
+        const result = convertSdkTargetsFromRaw({
+            groups: {
+                sdk: {
+                    generators: [
+                        {
+                            name: "fernapi/fern-java-sdk",
+                            version: "3.44.6",
+                            output: { location: "local-file-system", path: "./java" },
+                            metadata: { "reference-url": "https://schematichq.com" }
+                        }
+                    ]
+                }
+            },
+            defaultGroup: undefined,
+            autorelease: undefined,
+            readme: undefined
+        });
+
+        const warn = result.warnings.find((w) => w.message.includes("reference-url"));
+        expect(warn).toBeDefined();
+        expect(warn?.type).toBe("unsupported");
+    });
+
+    it("warns on smart-casing as unsupported and does not include it in the target", () => {
+        const result = convertSdkTargetsFromRaw({
+            groups: {
+                sdk: {
+                    generators: [
+                        {
+                            name: "fernapi/fern-typescript-sdk",
+                            version: "3.60.9",
+                            "smart-casing": true,
+                            output: { location: "local-file-system", path: "./ts" }
+                        } as never
+                    ]
+                }
+            },
+            defaultGroup: undefined,
+            autorelease: undefined,
+            readme: undefined
+        });
+
+        const warn = result.warnings.find((w) => w.message.includes("smart-casing"));
+        expect(warn).toBeDefined();
+        expect(warn?.type).toBe("unsupported");
+        expect(result.sdks.targets["typescript"]).not.toHaveProperty("smart-casing");
+    });
+
+    it("migrates a real-world schematic-like config with metadata and smart-casing", () => {
+        const result = convertSdkTargetsFromRaw({
+            groups: {
+                "python-sdk": {
+                    generators: [
+                        {
+                            name: "fernapi/fern-python-sdk",
+                            version: "4.64.1",
+                            output: { location: "pypi", "package-name": "schematichq", token: "${PYPI_TOKEN}" },
+                            metadata: { license: "MIT" },
+                            github: { repository: "schematichq/schematic-python", mode: "pull-request" },
+                            "smart-casing": false
+                        } as never
+                    ]
+                },
+                "java-sdk": {
+                    generators: [
+                        {
+                            name: "fernapi/fern-java-sdk",
+                            version: "3.44.6",
+                            output: {
+                                location: "maven",
+                                coordinate: "com.schematichq:schematic-java",
+                                username: "${MAVEN_USERNAME}",
+                                password: "${MAVEN_PASSWORD}"
+                            },
+                            metadata: {
+                                "reference-url": "https://schematichq.com",
+                                author: "Schematic",
+                                email: "support@schematichq.com",
+                                "package-description": "Official Java SDK for Schematic",
+                                license: "MIT"
+                            },
+                            github: { repository: "schematichq/schematic-java", mode: "pull-request" },
+                            "smart-casing": false
+                        } as never
+                    ]
+                }
+            },
+            defaultGroup: undefined,
+            autorelease: false,
+            readme: undefined
+        });
+
+        // Python: license migrated to git.license
+        const python = result.sdks.targets["python"];
+        const pythonOutput = python?.output as { git?: { license?: string } } | undefined;
+        expect(pythonOutput?.git?.license).toBe("MIT");
+
+        // Java: all metadata fields migrated
+        const java = result.sdks.targets["java"];
+        expect(java?.metadata?.description).toBe("Official Java SDK for Schematic");
+        expect(java?.metadata?.authors?.[0]).toEqual({ name: "Schematic", email: "support@schematichq.com" });
+        const javaOutput = java?.output as { git?: { license?: string } } | undefined;
+        expect(javaOutput?.git?.license).toBe("MIT");
+
+        // smart-casing warnings emitted (2 generators)
+        const smartCasingWarnings = result.warnings.filter((w) => w.message.includes("smart-casing"));
+        expect(smartCasingWarnings).toHaveLength(2);
+
+        // reference-url warning emitted
+        const refUrlWarning = result.warnings.find((w) => w.message.includes("reference-url"));
+        expect(refUrlWarning).toBeDefined();
+
+        // autorelease preserved
+        expect(result.sdks.autorelease).toBe(false);
+    });
 });
