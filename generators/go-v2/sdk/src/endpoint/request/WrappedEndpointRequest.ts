@@ -117,17 +117,29 @@ export class WrappedEndpointRequest extends EndpointRequest {
         fileProperty: FernIr.FileProperty;
     }): void {
         switch (fileProperty.type) {
-            case "file":
+            case "file": {
+                const fileRef = this.getRequestPropertyReference({
+                    fieldName: fileProperty.key.name,
+                    isFile: true
+                });
+                if (fileProperty.isOptional) {
+                    writer.writeNewLineIfLastLineNot();
+                    writer.writeLine(`if ${fileRef} != nil {`);
+                    writer.indent();
+                }
                 this.writeFileUploadField({
                     writer,
                     key: fileProperty.key.wireValue,
-                    value: go.codeblock(
-                        this.getRequestPropertyReference({ fieldName: fileProperty.key.name, isFile: true })
-                    ),
+                    value: go.codeblock(fileRef),
                     contentType: fileProperty.contentType,
                     format: "file"
                 });
+                if (fileProperty.isOptional) {
+                    writer.dedent();
+                    writer.writeLine("}");
+                }
                 break;
+            }
             case "fileArray":
                 writer.writeLine(
                     `for _, f := range ${this.getRequestPropertyReference({ fieldName: fileProperty.key.name, isFile: true })} {`
