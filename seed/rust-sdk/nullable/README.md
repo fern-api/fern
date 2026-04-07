@@ -99,7 +99,7 @@ match client.nullable.create_user(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_nullable::prelude::*;
+use seed_nullable::prelude::{*};
 
 let request = CreateUserRequest {
     ...

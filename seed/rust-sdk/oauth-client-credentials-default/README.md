@@ -88,7 +88,7 @@ match client.auth.get_token(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_oauth_client_credentials_default::prelude::*;
+use seed_oauth_client_credentials_default::prelude::{*};
 
 let request = GetTokenRequest {
     ...
