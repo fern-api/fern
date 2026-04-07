@@ -22,6 +22,7 @@ import { LANGUAGES, type Language } from "../../../sdk/config/Language.js";
 import type { Target } from "../../../sdk/config/Target.js";
 import { GeneratorPipeline } from "../../../sdk/generator/GeneratorPipeline.js";
 import { SdkStageOverrides, SdkTaskGroup } from "../../../sdk/task/SdkTaskGroup.js";
+import { promptSelect } from "../../../ui/promptSelect.js";
 import type { TaskStageLabels } from "../../../ui/TaskStageLabels.js";
 import type { Workspace } from "../../../workspace/Workspace.js";
 import { WorkspaceBuilder } from "../../../workspace/WorkspaceBuilder.js";
@@ -118,7 +119,8 @@ export class GenerateCommand {
             };
         }
 
-        const targets = this.getTargets({
+        const targets = await this.getTargets({
+            context,
             workspace: workspaceWithOverrides,
             args,
             groupName: args.target != null ? undefined : (args.group ?? workspaceWithOverrides.sdks?.defaultGroup)
@@ -482,20 +484,34 @@ export class GenerateCommand {
         return { path: args.output };
     }
 
-    private getTargets({
+    private async getTargets({
+        context,
         workspace,
         args,
         groupName
     }: {
+        context: Context;
         workspace: Workspace;
         args: GenerateCommand.Args;
         groupName: string | undefined;
-    }): Target[] {
+    }): Promise<Target[]> {
         let matched = workspace.sdks != null ? this.filterTargetsByGroup(workspace.sdks.targets, groupName) : [];
         if (args.target != null) {
             matched = matched.filter((t) => t.name === args.target);
             if (matched.length === 0) {
-                throw new Error(`Target '${args.target}' not found`);
+                const allTargets = workspace.sdks?.targets ?? [];
+                const available = allTargets.map((t) => t.name);
+                if (available.length > 0) {
+                    const selectedTarget = await promptSelect<string>({
+                        isTTY: context.isTTY,
+                        message: `Target '${args.target}' not found. Select a target:`,
+                        choices: available.map((name) => ({ name, value: name })),
+                        nonInteractiveError: `Target '${args.target}' not found. Available targets: ${available.join(", ")}`
+                    });
+                    matched = allTargets.filter((t) => t.name === selectedTarget);
+                } else {
+                    throw new Error(`Target '${args.target}' not found`);
+                }
             }
         }
         if (matched.length === 0) {
@@ -504,11 +520,43 @@ export class GenerateCommand {
             }
             throw new Error("No targets configured in fern.yml");
         }
+
+        // When multiple groups exist and no group was specified, prompt for selection
+        if (groupName == null && args.target == null && matched.length > 1) {
+            const allGroups = this.collectGroups(matched);
+            if (allGroups.length > 1) {
+                const selectedGroup = await promptSelect<string | undefined>({
+                    isTTY: context.isTTY,
+                    message: "Multiple SDK groups found. Select one:",
+                    choices: [
+                        { name: `all (${matched.length} targets)`, value: undefined },
+                        ...allGroups.map((g) => ({ name: g, value: g }))
+                    ],
+                    nonInteractiveError: `Multiple SDK groups found: ${allGroups.join(", ")}. Use --group to select one.`
+                });
+                if (selectedGroup != null) {
+                    matched = this.filterTargetsByGroup(matched, selectedGroup);
+                }
+            }
+        }
+
         return matched.map((target) => ({
             ...target,
             version: args["target-version"] ?? target.version,
             output: args.output != null ? this.parseTargetOutput(args) : target.output
         }));
+    }
+
+    private collectGroups(targets: Target[]): string[] {
+        const groups = new Set<string>();
+        for (const target of targets) {
+            if (target.groups != null) {
+                for (const group of target.groups) {
+                    groups.add(group);
+                }
+            }
+        }
+        return [...groups].sort();
     }
 
     private async checkOutputDirectory({

@@ -11,6 +11,7 @@ import type { ApiDefinition } from "../../../api/config/ApiDefinition.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { LANGUAGES } from "../../../sdk/config/Language.js";
+import { promptSelect } from "../../../ui/promptSelect.js";
 import type { Workspace } from "../../../workspace/Workspace.js";
 import { command } from "../../_internal/command.js";
 
@@ -29,7 +30,7 @@ export declare namespace CompileCommand {
 export class CompileCommand {
     public async handle(context: Context, args: CompileCommand.Args): Promise<void> {
         const workspace = await context.loadWorkspaceOrThrow();
-        const { apiName, definition } = this.resolveApi(args, workspace);
+        const { apiName, definition } = await this.resolveApi(context, args, workspace);
 
         await this.checkOrThrow({ context, workspace, apiName });
 
@@ -57,10 +58,11 @@ export class CompileCommand {
         await this.writeOutput(context, args, result.object);
     }
 
-    private resolveApi(
+    private async resolveApi(
+        context: Context,
         args: CompileCommand.Args,
         workspace: Workspace
-    ): { apiName: string; definition: ApiDefinition } {
+    ): Promise<{ apiName: string; definition: ApiDefinition }> {
         const apiNames = Object.keys(workspace.apis);
 
         if (args.api != null) {
@@ -94,10 +96,20 @@ export class CompileCommand {
         }
 
         const available = apiNames.join(", ");
-        throw new CliError({
-            message: `Multiple APIs found: ${available}. Use --api to select one.`,
-            code: CliError.Code.ConfigError
+        const selectedApi = await promptSelect<string>({
+            isTTY: context.isTTY,
+            message: "Multiple APIs found. Select one:",
+            choices: apiNames.map((name) => ({ name, value: name })),
+            nonInteractiveError: `Multiple APIs found: ${available}. Use --api to select one.`
         });
+
+        const definition = workspace.apis[selectedApi];
+        if (definition == null) {
+            throw new CliError({
+                message: `Internal error; API '${selectedApi}' not found in workspace`
+            });
+        }
+        return { apiName: selectedApi, definition };
     }
 
     private async checkOrThrow({
