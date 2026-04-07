@@ -57,12 +57,7 @@
       "name": "getException - default",
       "request": {
         "urlPathTemplate": "/file/notification/{notificationId}",
-        "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "GET"
       },
       "response": {
         "status": 200,
@@ -90,11 +85,6 @@
       "request": {
         "urlPathTemplate": "/file/{filename}",
         "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "pathParameters": {
           "filename": {
             "equalTo": "file.txt"
@@ -126,11 +116,6 @@
       "request": {
         "urlPathTemplate": "/check/{id}",
         "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "pathParameters": {
           "id": {
             "equalTo": "id-2sdx82h"
@@ -161,12 +146,7 @@
       "name": "ping - Example0",
       "request": {
         "urlPathTemplate": "/ping",
-        "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "GET"
       },
       "response": {
         "status": 200,

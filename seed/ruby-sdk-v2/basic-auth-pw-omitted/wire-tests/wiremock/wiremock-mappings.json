@@ -5,12 +5,7 @@
       "name": "getWithBasicAuth - default",
       "request": {
         "urlPathTemplate": "/basic-auth",
-        "method": "GET",
-        "headers": {
-          "Authorization": {
-            "equalTo": "Basic dGVzdC11c2VybmFtZTo="
-          }
-        }
+        "method": "GET"
       },
       "response": {
         "status": 200,
@@ -37,12 +32,7 @@
       "name": "postWithBasicAuth - default",
       "request": {
         "urlPathTemplate": "/basic-auth",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "equalTo": "Basic dGVzdC11c2VybmFtZTo="
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
