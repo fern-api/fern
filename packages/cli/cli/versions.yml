@@ -23,6 +23,17 @@
   createdAt: "2026-04-10"
   irVersion: 66
 
+- version: 4.66.1
+  changelogEntry:
+    - summary: |
+        Fall back to git tags for auto-versioning when the magic version is not
+        embedded in any generated source file. This fixes auto-versioning for
+        SDKs like Swift that use git tags for versioning (via SPM) rather than
+        a version field in source code.
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
+
 - version: 4.66.0
   changelogEntry:
     - summary: |
@@ -39,7 +50,6 @@
       type: fix
   createdAt: "2026-04-10"
   irVersion: 66
-
 - version: 4.65.2
   changelogEntry:
     - summary: |
@@ -164,7 +174,6 @@
       type: fix
   createdAt: "2026-04-07"
   irVersion: 66
-
 - version: 4.62.4
   changelogEntry:
     - summary: |

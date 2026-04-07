@@ -205,7 +205,32 @@ export class LocalTaskHandler {
                 throw new Error("Version is required for auto versioning");
             }
 
-            const previousVersion = autoVersioningService.extractPreviousVersion(diffContent, this.version);
+            let previousVersion: string | undefined;
+            try {
+                previousVersion = autoVersioningService.extractPreviousVersion(diffContent, this.version);
+            } catch (magicVersionNotFound) {
+                // Magic version not found in diff — fall back to git tags.
+                // This happens for generators that don't embed versions in files (e.g., Swift
+                // uses git tags for versioning via SPM, not a version field in Package.swift).
+                this.context.logger.info(
+                    `Magic version not found in diff, falling back to git tags: ${magicVersionNotFound}`
+                );
+                previousVersion = await autoVersioningService.getLatestVersionFromGitTags(
+                    this.absolutePathToLocalOutput
+                );
+                if (previousVersion == null) {
+                    this.context.logger.info("No git tags found — treating as new SDK repository");
+                    const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
+                    const commitMessage = this.isWhitelabel
+                        ? "Initial SDK generation"
+                        : "Initial SDK generation\n\n🌿 Generated with Fern";
+                    return {
+                        version: initialVersion,
+                        commitMessage
+                    };
+                }
+                this.context.logger.debug(`Previous version from git tags: ${previousVersion}`);
+            }
             const cleanedDiff = autoVersioningService.cleanDiffForAI(diffContent, this.version);
 
             const rawDiffSizeKB = formatSizeKB(diffContent.length);

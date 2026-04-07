@@ -750,6 +750,44 @@ export class AutoVersioningService {
     }
 
     /**
+     * Gets the latest semantic version from git tags in the given repository.
+     * Used as a fallback when the magic version is not embedded in any generated file
+     * (e.g., Swift SDKs which use git tags for versioning via SPM, not a version file).
+     *
+     * @param workingDirectory The git repository directory
+     * @return The latest semver version from git tags, or undefined if no valid tags found
+     */
+    public async getLatestVersionFromGitTags(workingDirectory: string): Promise<string | undefined> {
+        const SEMVER_TAG_PATTERN = /^v?\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?$/;
+        try {
+            const result = await loggingExeca(this.logger, "git", ["tag", "-l", "--sort=-v:refname"], {
+                cwd: workingDirectory,
+                doNotPipeOutput: true
+            });
+            const output = result.stdout;
+            if (!output || output.trim().length === 0) {
+                this.logger.info("No git tags found in repository");
+                return undefined;
+            }
+            for (const line of output.split("\n")) {
+                const tag = line.trim();
+                if (tag.length === 0) {
+                    continue;
+                }
+                if (SEMVER_TAG_PATTERN.test(tag)) {
+                    this.logger.info(`Found latest version from git tags: ${tag}`);
+                    return tag;
+                }
+            }
+            this.logger.info("No valid semver tags found in repository");
+            return undefined;
+        } catch (e) {
+            this.logger.warn(`Failed to read git tags: ${e}`);
+            return undefined;
+        }
+    }
+
+    /**
      * Replaces all occurrences of the magic version with the final version in generated files.
      *
      * @param workingDirectory The directory containing generated files
