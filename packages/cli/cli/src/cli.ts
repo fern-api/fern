@@ -61,6 +61,7 @@ import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/gener
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces.js";
 import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs.js";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
+import { addGhaCommand } from "./commands/gha/gha.js";
 import { installDependencies } from "./commands/install-dependencies/installDependencies.js";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
 import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
@@ -70,7 +71,6 @@ import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.j
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
 import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
 import { selfUpdate } from "./commands/self-update/selfUpdate.js";
-import { syncOpenapi } from "./commands/sync-openapi/syncOpenapi.js";
 import { testOutput } from "./commands/test/testOutput.js";
 import { generateToken } from "./commands/token/token.js";
 import { updateApiSpec } from "./commands/upgrade/updateApiSpec.js";
@@ -256,7 +256,7 @@ async function tryRunCli(cliContext: CliContext) {
 
     addProtocGenFernCommand(cli, cliContext);
     addInstallDependenciesCommand(cli, cliContext);
-    addSyncOpenapiCommand(cli, cliContext);
+    addGhaCommand(cli, cliContext);
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
@@ -2766,55 +2766,6 @@ function addReplayForgetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCont
             } catch (error) {
                 cliContext.failAndThrow(`Failed to forget patches: ${extractErrorMessage(error)}`);
             }
-        }
-    );
-}
-
-function addSyncOpenapiCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command(
-        "sync-openapi",
-        false, // hidden from --help
-        (yargs) =>
-            yargs
-                .option("repository", {
-                    type: "string",
-                    demandOption: true,
-                    description: 'Target repository in "owner/repo" format'
-                })
-                .option("sources", {
-                    type: "string",
-                    demandOption: true,
-                    description: "YAML or JSON array of {from, to, exclude?} file mappings"
-                })
-                .option("token", {
-                    type: "string",
-                    demandOption: true,
-                    description: "GitHub token with contents:write and pull-requests:write on the target repository"
-                })
-                .option("branch", {
-                    type: "string",
-                    default: "fern/sync-openapi",
-                    description: "Branch name to create or update in the target repository"
-                })
-                .option("auto-merge", {
-                    type: "boolean",
-                    default: false,
-                    description: "Push directly to branch without opening a PR"
-                }),
-        async (argv) => {
-            await cliContext.runTask(async () => {
-                await syncOpenapi({
-                    options: {
-                        repository: argv.repository,
-                        sources: argv.sources,
-                        token: argv.token,
-                        branch: argv.branch,
-                        autoMerge: argv["auto-merge"],
-                        cwd: process.cwd()
-                    },
-                    cliContext
-                });
-            });
         }
     );
 }

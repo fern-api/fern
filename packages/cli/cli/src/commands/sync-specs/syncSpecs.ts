@@ -12,7 +12,7 @@ interface SourceMapping {
     exclude?: string[];
 }
 
-export interface SyncOpenapiOptions {
+export interface SyncSpecsOptions {
     /** Target repository in "owner/repo" format */
     repository: string;
     /** YAML or JSON string of SourceMapping[] */
@@ -24,11 +24,11 @@ export interface SyncOpenapiOptions {
     cwd: string;
 }
 
-export async function syncOpenapi({
+export async function syncSpecs({
     options,
     cliContext
 }: {
-    options: SyncOpenapiOptions;
+    options: SyncSpecsOptions;
     cliContext: CliContext;
 }): Promise<void> {
     const mappings = parseMappings(options.sources);
@@ -48,7 +48,7 @@ export async function syncOpenapi({
     }
 
     const repoUrl = `https://x-access-token:${options.token}@github.com/${options.repository}.git`;
-    const repoDir = path.resolve(options.cwd, "temp-fern-sync-openapi");
+    const repoDir = path.resolve(options.cwd, "temp-fern-sync-specs");
 
     cliContext.logger.info(`Cloning ${options.repository}...`);
     fs.mkdirSync(repoDir, { recursive: true });
@@ -61,18 +61,16 @@ export async function syncOpenapi({
         cwd: repoDir
     });
 
-    // Set up branch
-    const doesExist = await branchExists(owner, repo, options.branch, octokit);
-    if (doesExist) {
+    // Set up branch — check configured branch first, then legacy fallback
+    const LEGACY_BRANCH = "fern/sync-openapi";
+    const activeBranch = await resolveActiveBranch(owner, repo, options.branch, LEGACY_BRANCH, octokit, cliContext);
+    const exists = await branchExists(owner, repo, activeBranch, octokit);
+    if (exists) {
         await loggingExeca(cliContext.logger, "git", ["fetch", "origin"], { cwd: repoDir });
-        await loggingExeca(cliContext.logger, "git", ["checkout", options.branch], { cwd: repoDir });
-        await loggingExeca(cliContext.logger, "git", ["pull", "origin", options.branch], {
-            cwd: repoDir
-        });
+        await loggingExeca(cliContext.logger, "git", ["checkout", activeBranch], { cwd: repoDir });
+        await loggingExeca(cliContext.logger, "git", ["pull", "origin", activeBranch], { cwd: repoDir });
     } else {
-        await loggingExeca(cliContext.logger, "git", ["checkout", "-b", options.branch], {
-            cwd: repoDir
-        });
+        await loggingExeca(cliContext.logger, "git", ["checkout", "-b", activeBranch], { cwd: repoDir });
     }
 
     // Copy files
@@ -107,20 +105,20 @@ export async function syncOpenapi({
 
     // Commit
     await loggingExeca(cliContext.logger, "git", ["add", "."], { cwd: repoDir });
-    await loggingExeca(cliContext.logger, "git", ["commit", "-m", "chore: sync OpenAPI specs"], {
+    await loggingExeca(cliContext.logger, "git", ["commit", "-m", "chore: sync specs"], {
         cwd: repoDir
     });
 
     // Skip push if content is identical to remote (avoids spurious PR updates)
-    if (!options.autoMerge && !(await hasDifferenceWithRemote(options.branch, repoDir, cliContext))) {
+    if (!options.autoMerge && !(await hasDifferenceWithRemote(activeBranch, repoDir, cliContext))) {
         cliContext.logger.info("No differences with remote branch. Skipping push.");
         fs.rmSync(repoDir, { recursive: true, force: true });
         return;
     }
 
     // Push
-    cliContext.logger.info(`Pushing to ${options.branch}...`);
-    await loggingExeca(cliContext.logger, "git", ["push", "--force", "origin", options.branch], {
+    cliContext.logger.info(`Pushing to ${activeBranch}...`);
+    await loggingExeca(cliContext.logger, "git", ["push", "--force", "origin", activeBranch], {
         cwd: repoDir
     });
 
@@ -131,24 +129,24 @@ export async function syncOpenapi({
     }
 
     // Create or update PR
-    const existingPr = await prExists(owner, repo, options.branch, octokit);
+    const existingPr = await prExists(owner, repo, activeBranch, octokit);
     if (existingPr != null) {
         cliContext.logger.info(`Updating existing PR #${existingPr}...`);
         await octokit.rest.pulls.update({
             owner,
             repo,
             pull_number: existingPr,
-            body: `Update OpenAPI specifications.\nUpdated: ${new Date().toISOString()}`
+            body: `Sync specs from source repository.\nUpdated: ${new Date().toISOString()}`
         });
     } else {
         cliContext.logger.info("Creating PR...");
         const pr = await octokit.rest.pulls.create({
             owner,
             repo,
-            title: "chore: sync OpenAPI specs",
+            title: "chore: sync specs",
             head: options.branch,
             base: "main",
-            body: "Update OpenAPI specifications based on changes in the source repository."
+            body: "Sync specs from the source repository."
         });
         cliContext.logger.info(`PR created: ${pr.data.html_url}`);
     }
@@ -221,6 +219,24 @@ async function branchExists(
     } catch {
         return false;
     }
+}
+
+async function resolveActiveBranch(
+    owner: string,
+    repo: string,
+    branch: string,
+    legacyBranch: string,
+    octokit: InstanceType<typeof import("@octokit/rest").Octokit>,
+    cliContext: CliContext
+): Promise<string> {
+    if (await branchExists(owner, repo, branch, octokit)) {
+        return branch;
+    }
+    if (branch !== legacyBranch && (await branchExists(owner, repo, legacyBranch, octokit))) {
+        cliContext.logger.info(`Branch '${branch}' not found — using legacy branch '${legacyBranch}'.`);
+        return legacyBranch;
+    }
+    return branch;
 }
 
 async function prExists(

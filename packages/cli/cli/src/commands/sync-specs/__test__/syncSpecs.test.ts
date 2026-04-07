@@ -1,6 +1,6 @@
 import { Logger } from "@fern-api/logger";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { SyncOpenapiOptions } from "../syncOpenapi.js";
+import type { SyncSpecsOptions } from "../syncSpecs.js";
 
 // --- hoisted mock state (available at vi.mock hoist time) ---
 
@@ -114,7 +114,7 @@ const mockCliContext = {
 
 // --- helpers ---
 
-function makeOptions(overrides: Partial<SyncOpenapiOptions> = {}): SyncOpenapiOptions {
+function makeOptions(overrides: Partial<SyncSpecsOptions> = {}): SyncSpecsOptions {
     return {
         repository: "target-owner/target-repo",
         sources: '[{"from": "openapi/openapi.json", "to": "openapi/openapi.json"}]',
@@ -126,9 +126,9 @@ function makeOptions(overrides: Partial<SyncOpenapiOptions> = {}): SyncOpenapiOp
     };
 }
 
-async function runSync(options: SyncOpenapiOptions = makeOptions()) {
-    const { syncOpenapi } = await import("../syncOpenapi.js");
-    return syncOpenapi({ options, cliContext: mockCliContext as never });
+async function runSync(options: SyncSpecsOptions = makeOptions()) {
+    const { syncSpecs } = await import("../syncSpecs.js");
+    return syncSpecs({ options, cliContext: mockCliContext as never });
 }
 
 // --- setup / teardown ---
