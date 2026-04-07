@@ -5,15 +5,20 @@ info:
 paths:
   /users:
     get:
-      operationId: users_listUsernamesCustom
+      operationId: users_listWithCustomPager
       tags:
         - Users
       parameters:
+        - name: limit
+          in: query
+          description: The maximum number of results to return.
+          required: false
+          schema:
+            type: integer
+            nullable: true
         - name: starting_after
           in: query
-          description: |-
-            The cursor used for pagination in order to fetch
-            the next page of results.
+          description: The cursor used for pagination.
           required: false
           schema:
             type: string
@@ -24,30 +29,47 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UsernameCursor'
+                $ref: '#/components/schemas/UsersListResponse'
 components:
   schemas:
-    UsernameCursor:
-      title: UsernameCursor
+    UsersListResponse:
+      title: UsersListResponse
       type: object
       properties:
-        cursor:
-          $ref: '#/components/schemas/UsernamePage'
-      required:
-        - cursor
-    UsernamePage:
-      title: UsernamePage
-      type: object
-      properties:
-        after:
-          type: string
+        limit:
+          type: integer
           nullable: true
+        count:
+          type: integer
+          nullable: true
+        has_more:
+          type: boolean
+          nullable: true
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
         data:
           type: array
           items:
             type: string
       required:
+        - links
         - data
+    Link:
+      title: Link
+      type: object
+      properties:
+        rel:
+          type: string
+        method:
+          type: string
+        href:
+          type: string
+      required:
+        - rel
+        - method
+        - href
   securitySchemes:
     Bearer:
       type: http
