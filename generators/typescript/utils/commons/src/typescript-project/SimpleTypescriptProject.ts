@@ -207,7 +207,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 scripts: {
                     ...this.getCommonScripts(),
                     [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
-                    prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`,
+                    prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. . && rm -rf ${SimpleTypescriptProject.DIST_DIRECTORY}`,
                     ...packageJson.scripts,
                     ...this.extraScripts
                 }

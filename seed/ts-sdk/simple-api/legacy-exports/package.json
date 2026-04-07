@@ -16,7 +16,7 @@
         "check": "biome check --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
         "check:fix": "biome check --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
         "build": "tsc",
-        "prepack": "cp -rv dist/. .",
+        "prepack": "cp -rv dist/. . && rm -rf dist",
         "test": "vitest",
         "test:unit": "vitest --project unit",
         "test:wire": "vitest --project wire"

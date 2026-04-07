@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.63.1
+  changelogEntry:
+    - summary: |
+        Fix legacy publishing including duplicate files in the published npm package.
+        The `prepack` script now removes the `dist/` directory after copying its
+        contents to the project root, preventing the tarball from containing both
+        `dist/` and root-level copies of the same files.
+      type: fix
+  createdAt: "2026-04-07"
+  irVersion: 66
+
 - version: 3.63.0
   changelogEntry:
     - summary: |
