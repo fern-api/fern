@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Re-publish to include Go SDK after upgrading fern-go-sdk from 0.22.0 to 1.33.2.
+      type: chore
+  createdAt: "2026-04-07"
+  version: 0.9.2
+
+- changelogEntry:
+    - summary: |
         Upgrade @fern-api/replay to 0.9.1.
       type: chore
   createdAt: "2026-04-06"
