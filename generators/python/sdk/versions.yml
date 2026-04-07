@@ -1,5 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.3.2
+  changelogEntry:
+    - summary: |
+        Fix enum values in reference.md and README snippets being rendered as string
+        literals instead of enum references when using `python_enums` or
+        `forward_compatible_python_enums` pydantic config.
+      type: fix
+    - summary: |
+        Fix client_id and client_secret parameters missing from OAuth client credentials
+        client instantiation examples in docstrings.
+      type: fix
+    - summary: |
+        Fix objects and discriminated unions in reference.md and README snippets being
+        rendered as dict literals instead of Pydantic model constructors. For example,
+        `order_type=OrderType_Market()` instead of `order_type={"type": "MARKET"}`.
+      type: fix
+  createdAt: "2026-04-06"
+  irVersion: 65
+
 - version: 5.3.1
   changelogEntry:
     - summary: |

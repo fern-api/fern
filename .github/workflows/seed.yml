@@ -866,8 +866,10 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Log in to Docker Hub
-        if: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY != '' }}
+        if: ${{ env.DOCKERHUB_USERNAME != '' }}
         uses: docker/login-action@v3
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
         with:
           username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
           password: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}

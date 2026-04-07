@@ -226,11 +226,19 @@ export class DynamicTypeLiteralMapper {
         if (unionProperties == null) {
             return python.TypeInstantiation.nop();
         }
-        const discriminantProperty = {
-            name: this.context.getPropertyName(discriminatedUnion.discriminant.name),
-            value: python.TypeInstantiation.str(unionVariant.discriminantValue.wireValue)
-        };
-        return python.TypeInstantiation.typedDict([discriminantProperty, ...unionProperties], { multiline: true });
+        const variantClassReference = this.context.getDiscriminatedUnionVariantClassReference({
+            unionDeclaration: discriminatedUnion.declaration,
+            discriminantValue: unionVariant.discriminantValue
+        });
+        return python.TypeInstantiation.reference(
+            python.instantiateClass({
+                classReference: variantClassReference,
+                arguments_: unionProperties.map((entry) =>
+                    python.methodArgument({ name: entry.name, value: entry.value })
+                ),
+                multiline: true
+            })
+        );
     }
 
     private convertDiscriminatedUnionProperties({
@@ -387,13 +395,6 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
     }): python.TypeInstantiation {
         const entries = this.convertObjectEntries({ object_, value });
-
-        // biome-ignore lint/correctness/useHookAtTopLevel: not a React hook
-        if (this.context.useTypedDictRequests()) {
-            return python.TypeInstantiation.typedDict(entries, { multiline: true });
-        }
-
-        // Pydantic model style: ClassName(key=value)
         const classReference = this.context.getTypeClassReference(object_.declaration);
         return python.TypeInstantiation.reference(
             python.instantiateClass({
@@ -415,10 +416,27 @@ export class DynamicTypeLiteralMapper {
         if (enumValue == null) {
             return python.TypeInstantiation.nop();
         }
-        return python.TypeInstantiation.str(enumValue);
+        const enumType = this.context.customConfig.pydantic_config?.enum_type;
+        if (enumType === "python_enums" || enumType === "forward_compatible_python_enums") {
+            const classReference = this.context.getTypeClassReference(enum_.declaration);
+            const memberName = enumValue.name.screamingSnakeCase.safeName;
+            return python.TypeInstantiation.reference(
+                python.accessAttribute({
+                    lhs: classReference,
+                    rhs: python.codeBlock(memberName)
+                })
+            );
+        }
+        return python.TypeInstantiation.str(enumValue.wireValue);
     }
 
-    private getEnumValue({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): string | undefined {
+    private getEnumValue({
+        enum_,
+        value
+    }: {
+        enum_: FernIr.dynamic.EnumType;
+        value: unknown;
+    }): FernIr.dynamic.NameAndWireValue | undefined {
         if (typeof value !== "string") {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -434,7 +452,7 @@ export class DynamicTypeLiteralMapper {
             });
             return undefined;
         }
-        return value;
+        return enumValue;
     }
 
     private convertUndiscriminatedUnion({
@@ -586,6 +604,17 @@ export class DynamicTypeLiteralMapper {
                 if (firstValue == null) {
                     return python.TypeInstantiation.nop();
                 }
+                const enumType = this.context.customConfig.pydantic_config?.enum_type;
+                if (enumType === "python_enums" || enumType === "forward_compatible_python_enums") {
+                    const classReference = this.context.getTypeClassReference(named.declaration);
+                    const memberName = firstValue.name.screamingSnakeCase.safeName;
+                    return python.TypeInstantiation.reference(
+                        python.accessAttribute({
+                            lhs: classReference,
+                            rhs: python.codeBlock(memberName)
+                        })
+                    );
+                }
                 return python.TypeInstantiation.str(firstValue.wireValue);
             }
             case "object": {
@@ -604,10 +633,6 @@ export class DynamicTypeLiteralMapper {
                             value: defaultValue
                         });
                     }
-                }
-                // biome-ignore lint/correctness/useHookAtTopLevel: not a React hook
-                if (this.context.useTypedDictRequests()) {
-                    return python.TypeInstantiation.typedDict(entries, { multiline: true });
                 }
                 const classReference = this.context.getTypeClassReference(named.declaration);
                 return python.TypeInstantiation.reference(

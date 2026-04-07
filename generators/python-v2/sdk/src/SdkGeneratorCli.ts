@@ -110,7 +110,10 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
             config: {
                 organization: context.config.organization,
                 workspaceName: context.config.workspaceName,
-                customConfig: context.customConfig
+                // Pass the raw customConfig (not the parsed SdkCustomConfigSchema) so that
+                // fields consumed by the dynamic snippets generator (e.g. pydantic_config)
+                // are preserved. SdkCustomConfigSchema.parse() strips unknown keys.
+                customConfig: context.config.customConfig
             } as FernGeneratorExec.GeneratorConfig
         });
 
