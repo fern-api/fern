@@ -366,12 +366,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         if (resolved == null) {
                             continue;
                         }
-                        const { condition, usernameExpr, passwordExpr } = resolved;
+                        const { condition, credentialExpr } = resolved;
                         if (needsControlFlow) {
                             writer.controlFlow(i === 0 ? "if" : "else if", php.codeblock(condition));
                         }
                         writer.writeLine(
-                            `$defaultHeaders['Authorization'] = "Basic " . base64_encode(${usernameExpr} . ":" . ${passwordExpr});`
+                            `$defaultHeaders['Authorization'] = "Basic " . base64_encode(${credentialExpr});`
                         );
                         if (needsControlFlow) {
                             writer.endControlFlow();
@@ -767,7 +767,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
      */
     private resolveBasicAuthScheme(
         scheme: FernIr.AuthScheme & { type: "basic" }
-    ): { condition: string; usernameExpr: string; passwordExpr: string } | undefined {
+    ): { condition: string; credentialExpr: string } | undefined {
         const usernameName = this.context.getParameterName(scheme.username);
         const passwordName = this.context.getParameterName(scheme.password);
         const usernameOmitted = !!scheme.usernameOmit;
@@ -785,10 +785,19 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             conditions.push(`$${passwordName} !== null`);
         }
 
+        // Build a clean credential expression without redundant empty-string concatenation.
+        let credentialExpr: string;
+        if (usernameOmitted) {
+            credentialExpr = `":" . $${passwordName}`;
+        } else if (passwordOmitted) {
+            credentialExpr = `$${usernameName} . ":"`;
+        } else {
+            credentialExpr = `$${usernameName} . ":" . $${passwordName}`;
+        }
+
         return {
             condition: conditions.join(" && "),
-            usernameExpr: usernameOmitted ? `""` : `$${usernameName}`,
-            passwordExpr: passwordOmitted ? `""` : `$${passwordName}`
+            credentialExpr
         };
     }
 

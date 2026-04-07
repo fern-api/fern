@@ -49,7 +49,7 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        $defaultHeaders['Authorization'] = "Basic " . base64_encode($username . ":" . "");
+        $defaultHeaders['Authorization'] = "Basic " . base64_encode($username . ":");
 
         $this->options = $options ?? [];
 
