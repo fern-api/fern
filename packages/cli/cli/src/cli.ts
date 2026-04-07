@@ -34,7 +34,7 @@ import {
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
-import { LoggableFernCliError, TaskAbortSignal } from "@fern-api/task-context";
+import { CliError, LoggableFernCliError, TaskAbortSignal } from "@fern-api/task-context";
 import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -143,19 +143,19 @@ async function runCli() {
             }
         });
         if (error instanceof TaskAbortSignal) {
-            // thrower is responsible for logging, so we generally don't need to log here.
             cliContext.failWithoutThrowing();
+        } else if (error instanceof CliError) {
+            cliContext.failWithoutThrowing(error.message, error);
+        } else if ((error as Error)?.message?.includes("globalThis")) {
+            cliContext.logger.error(USE_NODE_18_OR_ABOVE_MESSAGE);
+            cliContext.failWithoutThrowing(undefined, error, { code: "ENVIRONMENT_ERROR" });
         } else if ((error as Error)?.message.includes("globalThis")) {
             cliContext.logger.error(USE_NODE_18_OR_ABOVE_MESSAGE);
             cliContext.failWithoutThrowing();
         } else if (error instanceof LoggableFernCliError) {
             cliContext.logger.error(`Failed. ${error.log}`);
         } else {
-            // TODO: This is intentionally broad for initial rollout.
-            // We likely capture more than intended; narrow reporting with
-            // explicit error classification once we collect real-world signal.
-            await cliContext.captureException(error);
-            cliContext.failWithoutThrowing("Failed.", error);
+            cliContext.failWithoutThrowing("Failed.", error, { code: "INTERNAL_ERROR" });
         }
     }
 

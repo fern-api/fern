@@ -24,13 +24,14 @@ function createMockContext(): TaskContext {
             throw new Error(message ?? "Task failed");
         },
         failWithoutThrowing: noop,
+        captureException: noop,
         getResult: () => TaskResult.Success,
         addInteractiveTask: () => {
             throw new Error("Not implemented in mock");
         },
         runInteractiveTask: async () => false,
         instrumentPostHogEvent: () => {
-            return;
+            // no-op
         }
     };
 }

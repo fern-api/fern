@@ -1,3 +1,4 @@
+export { CliError, CliErrorCode, resolveErrorCode, shouldReportToSentry } from "./CliError.js";
 export { LoggableFernCliError } from "./LoggableFernCliError.js";
 export { createMockTaskContext } from "./MockTaskContext.js";
 export { TaskAbortSignal } from "./TaskAbortSignal.js";

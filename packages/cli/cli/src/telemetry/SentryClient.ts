@@ -24,12 +24,19 @@ export class SentryClient {
         }
     }
 
-    public async captureException(error: unknown): Promise<void> {
+    public captureException(error: unknown, code?: string): void {
         if (this.sentry == null) {
             return;
         }
         try {
-            this.sentry.captureException(error);
+            if (code != null) {
+                Sentry.withScope((scope) => {
+                    scope.setTag("error.code", code);
+                    this.sentry?.captureException(error);
+                });
+            } else {
+                this.sentry.captureException(error);
+            }
         } catch {
             // no-op
         }
