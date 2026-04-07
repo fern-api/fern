@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Upgrade @fern-api/replay to 0.9.1.
+      type: chore
+  createdAt: "2026-04-06"
+  version: 0.9.1
+
+- changelogEntry:
+    - summary: |
         Internal CLI improvements and dependency updates.
       type: feat
   createdAt: "2026-04-06"
