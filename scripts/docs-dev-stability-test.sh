@@ -44,6 +44,7 @@ FERN_DIR="$WORK_DIR/fern"
 trap 'cleanup' EXIT
 
 SERVER_PID=""
+EXIT_CODE=0
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -58,12 +59,20 @@ cleanup() {
         sleep 2
         kill -9 "$SERVER_PID" 2>/dev/null || true
     fi
+    # On failure, preserve server.log so the CI workflow can upload it as an artifact
+    if [[ "$EXIT_CODE" -ne 0 ]] && [[ -f "$WORK_DIR/server.log" ]]; then
+        local log_dest="/tmp/docs-dev-server-log"
+        mkdir -p "$log_dest"
+        cp "$WORK_DIR/server.log" "$log_dest/server.log"
+        echo "Server log preserved at $log_dest/server.log"
+    fi
     rm -rf "$WORK_DIR"
     echo "Cleanup complete."
 }
 
 fail() {
     echo "FAIL: $1" >&2
+    EXIT_CODE=1
     exit 1
 }
 
