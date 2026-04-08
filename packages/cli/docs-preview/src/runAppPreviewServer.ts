@@ -937,43 +937,34 @@ export async function runAppPreviewServer({
         // Close file watcher to prevent resource leaks
         watcher.close();
 
-        if (serverProcess != null && !serverProcess.killed) {
-            const pid = serverProcess.pid;
+        const pid = serverProcess?.pid;
+        if (pid != null) {
             context.logger.debug(`Killing server process tree with PID: ${pid}`);
+
+            // Send SIGTERM to the entire process group (detached: true makes
+            // the server a process group leader, so -pid targets it and all
+            // its child workers).
             try {
-                // Kill the entire process group to ensure all child processes
-                // (including Next.js workers) are terminated.
-                // The negative PID targets the process group.
-                if (pid != null) {
-                    try {
-                        process.kill(-pid, "SIGTERM");
-                    } catch (error) {
-                        context.logger.debug(`Failed to kill process group (may already be dead): ${error}`);
-                    }
-                }
-                serverProcess.kill();
-                setTimeout(() => {
-                    if (serverProcess != null && !serverProcess.killed) {
-                        context.logger.debug(`Force killing server process tree with PID: ${pid}`);
-                        try {
-                            if (pid != null) {
-                                try {
-                                    process.kill(-pid, "SIGKILL");
-                                } catch (error) {
-                                    context.logger.debug(
-                                        `Failed to kill process group (may already be dead): ${error}`
-                                    );
-                                }
-                            }
-                            serverProcess.kill("SIGKILL");
-                        } catch (err) {
-                            context.logger.error(`Failed to force kill server process: ${err}`);
-                        }
-                    }
-                }, 2000);
-            } catch (err) {
-                context.logger.error(`Failed to kill server process: ${err}`);
+                process.kill(-pid, "SIGTERM");
+            } catch (error) {
+                context.logger.debug(`Failed to SIGTERM process group: ${error}`);
             }
+
+            // Schedule SIGKILL as a fallback to guarantee cleanup.
+            // Note: we intentionally do NOT gate this on serverProcess.killed,
+            // because that flag is set immediately when .kill() is called and
+            // does not indicate the process has actually exited.
+            setTimeout(() => {
+                try {
+                    // Check if any process in the group is still alive (signal 0)
+                    process.kill(-pid, 0);
+                    // Still alive — force kill the entire group
+                    context.logger.debug(`Force killing server process group ${pid}`);
+                    process.kill(-pid, "SIGKILL");
+                } catch {
+                    // Process group is already dead — nothing to do
+                }
+            }, 2000);
         }
 
         // Clean Fern Docs cache on shutdown (sync since cleanup runs in signal handlers)
