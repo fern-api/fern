@@ -39,7 +39,10 @@ function loadPnpmCatalog() {
             }
         }
         return catalog;
-    } catch {
+    } catch (error) {
+        // Gracefully degrade if workspace file is missing (e.g. running outside the monorepo).
+        // Catalog references will still fail explicitly in getDependencyVersion().
+        console.warn(`Warning: could not load pnpm catalog from pnpm-workspace.yaml: ${error.message}`);
         return {};
     }
 }
