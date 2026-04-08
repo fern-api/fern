@@ -4211,7 +4211,7 @@
               },
               "name": "testChannel_sendMessage",
               "typeId": "testChannel_sendMessage",
-              "displayName": "testChannel_sendMessage",
+              "displayName": "sendMessage",
               "inline": false,
               "type": "named"
             },
@@ -4230,7 +4230,7 @@
               },
               "name": "testChannel_sendMessage2",
               "typeId": "testChannel_sendMessage2",
-              "displayName": "testChannel_sendMessage2",
+              "displayName": "sendMessage2",
               "inline": false,
               "type": "named"
             },
