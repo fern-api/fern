@@ -1860,7 +1860,12 @@ function getDiscriminant({
                     : variantSchema;
                 const discriminantPropertySchema = resolved.properties?.[discriminant];
                 if (discriminantPropertySchema != null && !isReferenceObject(discriminantPropertySchema)) {
-                    if (discriminantPropertySchema.default === discriminantValue) {
+                    const fernDefault = getExtension<string>(
+                        discriminantPropertySchema,
+                        FernOpenAPIExtension.FERN_DEFAULT
+                    );
+                    const defaultValue = fernDefault ?? discriminantPropertySchema.default;
+                    if (defaultValue === discriminantValue) {
                         defaultDiscriminantValue = discriminantValue;
                         break;
                     }
