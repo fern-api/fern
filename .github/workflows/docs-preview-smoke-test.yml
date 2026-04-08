@@ -253,15 +253,15 @@ jobs:
         if: steps.node-check.outputs.available == 'true'
         shell: bash
         run: |
+          set +e
           echo "=== Checking server health ==="
-          echo "--- GET http://localhost:3000/welcome ---"
-          curl -sS -w "\nHTTP_STATUS: %{http_code}\n" http://localhost:3000/welcome 2>&1 | head -100
+          echo "--- GET http://localhost:3000/welcome (status + first 200 chars) ---"
+          STATUS=$(curl -s -o /tmp/diag-response.html -w "%{http_code}" http://localhost:3000/welcome)
+          echo "HTTP status: $STATUS"
+          head -c 2000 /tmp/diag-response.html 2>/dev/null || true
           echo ""
-          echo "--- GET http://localhost:3001/api/fern-docs/v2/register (backend) ---"
-          curl -sS -w "\nHTTP_STATUS: %{http_code}\n" http://localhost:3001/ 2>&1 | head -50
-          echo ""
-          echo "--- Dev server logs (last 50 lines) ---"
-          tail -50 /tmp/fern-docs-dev.log || true
+          echo "--- Dev server logs (last 80 lines) ---"
+          tail -80 /tmp/fern-docs-dev.log 2>/dev/null || true
           echo "--- End diagnostic ---"
 
       - name: Run Playwright smoke tests
