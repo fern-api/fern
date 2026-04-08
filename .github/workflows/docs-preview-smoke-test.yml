@@ -249,6 +249,21 @@ jobs:
             sleep 1
           done
 
+      - name: Diagnose server responses
+        if: steps.node-check.outputs.available == 'true'
+        shell: bash
+        run: |
+          echo "=== Checking server health ==="
+          echo "--- GET http://localhost:3000/welcome ---"
+          curl -sS -w "\nHTTP_STATUS: %{http_code}\n" http://localhost:3000/welcome 2>&1 | head -100
+          echo ""
+          echo "--- GET http://localhost:3001/api/fern-docs/v2/register (backend) ---"
+          curl -sS -w "\nHTTP_STATUS: %{http_code}\n" http://localhost:3001/ 2>&1 | head -50
+          echo ""
+          echo "--- Dev server logs (last 50 lines) ---"
+          tail -50 /tmp/fern-docs-dev.log || true
+          echo "--- End diagnostic ---"
+
       - name: Run Playwright smoke tests
         if: steps.node-check.outputs.available == 'true'
         shell: bash
