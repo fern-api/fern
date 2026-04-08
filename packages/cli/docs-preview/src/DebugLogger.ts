@@ -1,13 +1,10 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { appendFile, mkdir, readdir, stat, unlink, writeFile } from "fs/promises";
+import { appendFile, mkdir, writeFile } from "fs/promises";
 import { homedir } from "os";
 import path from "path";
 
 const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 const LOGS_FOLDER_NAME = "logs";
-
-// 100 MB cap for the logs directory
-const MAX_LOGS_DIR_SIZE_BYTES = 100 * 1024 * 1024;
 
 /**
  * Log level for debug messages
@@ -126,7 +123,6 @@ export class DebugLogger {
     private logFilePath: AbsoluteFilePath | null = null;
     private initialized = false;
     private sessionStartTime: number;
-    private consoleLogger: { debug: (msg: string) => void; info: (msg: string) => void } | undefined;
 
     constructor() {
         this.sessionStartTime = Date.now();
@@ -135,11 +131,10 @@ export class DebugLogger {
     /**
      * Initialize the debug logger by creating the log file
      */
-    async initialize(consoleLogger?: { debug: (msg: string) => void; info: (msg: string) => void }): Promise<void> {
+    async initialize(): Promise<void> {
         if (this.initialized) {
             return;
         }
-        this.consoleLogger = consoleLogger;
 
         const localStorageFolder = join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
         const logsDir = join(localStorageFolder, RelativeFilePath.of(LOGS_FOLDER_NAME));
@@ -163,9 +158,6 @@ export class DebugLogger {
 
         await writeFile(this.logFilePath, header, "utf-8");
         this.initialized = true;
-
-        // Enforce the 100 MB cap on the logs directory (fire-and-forget)
-        void this.enforceLogSizeLimit(logsDir);
     }
 
     /**
@@ -302,57 +294,14 @@ export class DebugLogger {
     }
 
     /**
-     * Delete oldest log files until total directory size is within the cap.
+     * Get the path to the logs directory
      */
-    private async enforceLogSizeLimit(logsDir: AbsoluteFilePath): Promise<void> {
-        try {
-            const entries = await readdir(logsDir);
-            const logFiles = entries.filter((name) => name.endsWith(".log"));
-
-            // Gather size and mtime for each log file
-            const fileInfos: Array<{ name: string; fullPath: string; size: number; mtimeMs: number }> = [];
-            for (const name of logFiles) {
-                const fullPath = path.join(logsDir, name);
-                try {
-                    const stats = await stat(fullPath);
-                    fileInfos.push({ name, fullPath, size: stats.size, mtimeMs: stats.mtimeMs });
-                } catch {
-                    // File may have been removed between readdir and stat
-                }
-            }
-
-            let totalSize = fileInfos.reduce((sum, f) => sum + f.size, 0);
-            const totalSizeMB = Math.round((totalSize / 1024 / 1024) * 100) / 100;
-            const capMB = MAX_LOGS_DIR_SIZE_BYTES / 1024 / 1024;
-
-            if (totalSize <= MAX_LOGS_DIR_SIZE_BYTES) {
-                this.consoleLogger?.debug(`Log directory size ${totalSizeMB} MB does not exceed ${capMB} MB cap`);
-                return;
-            }
-
-            this.consoleLogger?.info(`Rotating logs: total size ${totalSizeMB} MB exceeds ${capMB} MB cap`);
-
-            // Sort oldest first so we delete the oldest logs first
-            fileInfos.sort((a, b) => a.mtimeMs - b.mtimeMs);
-
-            for (const file of fileInfos) {
-                if (totalSize <= MAX_LOGS_DIR_SIZE_BYTES) {
-                    break;
-                }
-                // Never delete the log file we just created in this session
-                if (this.logFilePath != null && file.fullPath === this.logFilePath) {
-                    continue;
-                }
-                try {
-                    await unlink(file.fullPath);
-                    totalSize -= file.size;
-                } catch {
-                    // Ignore errors from concurrent deletion
-                }
-            }
-        } catch {
-            // If the directory is unreadable, skip cleanup silently
-        }
+    getLogsDir(): AbsoluteFilePath {
+        return join(
+            AbsoluteFilePath.of(homedir()),
+            RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
+            RelativeFilePath.of(LOGS_FOLDER_NAME)
+        );
     }
 
     private getEventType(payload: MetricEvent | MetricSummary, isAggregate: boolean): string {

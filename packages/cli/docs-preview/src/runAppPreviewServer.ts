@@ -10,7 +10,7 @@ import { execSync } from "child_process";
 import cors from "cors";
 import express from "express";
 import fs from "fs";
-import { readFile, rm } from "fs/promises";
+import { readdir, readFile, rm, stat, unlink } from "fs/promises";
 import http, { type IncomingMessage } from "http";
 import path from "path";
 import { type Duplex } from "stream";
@@ -457,6 +457,62 @@ function killProcessesOnPort(targetPort: number, context: TaskContext): void {
     }
 }
 
+// 100 MB cap for the logs directory
+const MAX_LOGS_DIR_SIZE_BYTES = 100 * 1024 * 1024;
+
+async function enforceLogSizeLimit(
+    logsDir: string,
+    currentLogFile: string | null,
+    context: TaskContext
+): Promise<void> {
+    try {
+        const entries = await readdir(logsDir);
+        const logFiles = entries.filter((name) => name.endsWith(".log"));
+
+        const fileInfos: Array<{ fullPath: string; size: number; mtimeMs: number }> = [];
+        for (const name of logFiles) {
+            const fullPath = path.join(logsDir, name);
+            try {
+                const stats = await stat(fullPath);
+                fileInfos.push({ fullPath, size: stats.size, mtimeMs: stats.mtimeMs });
+            } catch {
+                // File may have been removed between readdir and stat
+            }
+        }
+
+        let totalSize = fileInfos.reduce((sum, f) => sum + f.size, 0);
+        const totalSizeMB = Math.round((totalSize / 1024 / 1024) * 100) / 100;
+        const capMB = MAX_LOGS_DIR_SIZE_BYTES / 1024 / 1024;
+
+        if (totalSize <= MAX_LOGS_DIR_SIZE_BYTES) {
+            context.logger.debug(`Log directory size ${totalSizeMB} MB does not exceed ${capMB} MB cap`);
+            return;
+        }
+
+        context.logger.info(`Rotating logs: total size ${totalSizeMB} MB exceeds ${capMB} MB cap`);
+
+        // Sort oldest first so we delete the oldest logs first
+        fileInfos.sort((a, b) => a.mtimeMs - b.mtimeMs);
+
+        for (const file of fileInfos) {
+            if (totalSize <= MAX_LOGS_DIR_SIZE_BYTES) {
+                break;
+            }
+            if (currentLogFile != null && file.fullPath === currentLogFile) {
+                continue;
+            }
+            try {
+                await unlink(file.fullPath);
+                totalSize -= file.size;
+            } catch {
+                // Ignore errors from concurrent deletion
+            }
+        }
+    } catch {
+        // If the directory is unreadable, skip cleanup silently
+    }
+}
+
 export async function runAppPreviewServer({
     initialProject,
     reloadProject,
@@ -540,14 +596,14 @@ export async function runAppPreviewServer({
 
     // Initialize the debug logger for metrics collection
     const debugLogger = new DebugLogger();
-    await debugLogger.initialize({
-        debug: (msg) => context.logger.debug(msg),
-        info: (msg) => context.logger.info(msg)
-    });
+    await debugLogger.initialize();
     const debugLogPath = debugLogger.getLogFilePath();
     if (debugLogPath) {
         context.logger.info(chalk.dim(`Debug log: ${debugLogPath}`));
     }
+
+    // Enforce 100 MB cap on the logs directory (fire-and-forget)
+    void enforceLogSizeLimit(debugLogger.getLogsDir(), debugLogPath, context);
 
     let bunServer: BunServer | undefined;
 
