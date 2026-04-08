@@ -126,6 +126,7 @@ export class DebugLogger {
     private logFilePath: AbsoluteFilePath | null = null;
     private initialized = false;
     private sessionStartTime: number;
+    private consoleLogger: { debug: (msg: string) => void; info: (msg: string) => void } | undefined;
 
     constructor() {
         this.sessionStartTime = Date.now();
@@ -134,10 +135,11 @@ export class DebugLogger {
     /**
      * Initialize the debug logger by creating the log file
      */
-    async initialize(): Promise<void> {
+    async initialize(consoleLogger?: { debug: (msg: string) => void; info: (msg: string) => void }): Promise<void> {
         if (this.initialized) {
             return;
         }
+        this.consoleLogger = consoleLogger;
 
         const localStorageFolder = join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
         const logsDir = join(localStorageFolder, RelativeFilePath.of(LOGS_FOLDER_NAME));
@@ -324,31 +326,11 @@ export class DebugLogger {
             const capMB = MAX_LOGS_DIR_SIZE_BYTES / 1024 / 1024;
 
             if (totalSize <= MAX_LOGS_DIR_SIZE_BYTES) {
-                await this.writeEntry({
-                    timestamp: new Date().toISOString(),
-                    source: getCliSource(),
-                    level: "debug",
-                    eventType: "log_rotation_check",
-                    data: {
-                        message: `Log directory size ${totalSizeMB} MB does not exceed ${capMB} MB cap`,
-                        totalSizeMB,
-                        fileCount: fileInfos.length
-                    }
-                });
+                this.consoleLogger?.debug(`Log directory size ${totalSizeMB} MB does not exceed ${capMB} MB cap`);
                 return;
             }
 
-            await this.writeEntry({
-                timestamp: new Date().toISOString(),
-                source: getCliSource(),
-                level: "info",
-                eventType: "log_rotation",
-                data: {
-                    message: `Rotating logs: total size ${totalSizeMB} MB exceeds ${capMB} MB cap`,
-                    totalSizeMB,
-                    fileCount: fileInfos.length
-                }
-            });
+            this.consoleLogger?.info(`Rotating logs: total size ${totalSizeMB} MB exceeds ${capMB} MB cap`);
 
             // Sort oldest first so we delete the oldest logs first
             fileInfos.sort((a, b) => a.mtimeMs - b.mtimeMs);
