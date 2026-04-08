@@ -4,7 +4,8 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import chalk from "chalk";
 import cliProgress from "cli-progress";
 import decompress from "decompress";
-import { mkdir, readFile, rename, rm, writeFile } from "fs/promises";
+import { copyFile, mkdir, readFile, rename, rm, stat, symlink, writeFile } from "fs/promises";
+import path from "path";
 import { homedir } from "os";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
@@ -110,6 +111,12 @@ const NPMRC_CONTENTS = "@fern-fern:registry=https://npm.buildwithfern.com\n";
 // the (slow) pnpm install on subsequent cached-bundle runs.
 const WINDOWS_POST_PROCESSED_MARKER = ".windows-post-processed";
 
+// Metadata file that stores symlink entries extracted from the tar archive.
+// On Windows, symlinks are filtered out during extraction because they require
+// admin privileges. This metadata is used later to recreate them as directory
+// junctions (for directories) or file copies (for files).
+const SYMLINKS_METADATA_FILE = ".symlinks-metadata.json";
+
 function getPathToWindowsPostProcessedMarker({ app = false }: { app?: boolean }): AbsoluteFilePath {
     return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(WINDOWS_POST_PROCESSED_MARKER));
 }
@@ -184,9 +191,86 @@ async function postProcessWindowsBundle({ app, logger }: { app: boolean; logger:
         throw contactFernSupportError(`Failed to install required package due to error: ${error}`);
     }
 
+    // Resolve symlinks that were filtered out during tar extraction.
+    // pnpm install recreates pnpm-managed symlinks, but Next.js file-traced
+    // symlinks in .next/node_modules/ are NOT recreated by pnpm and must be
+    // resolved from the saved metadata.
+    const bundleRoot = join(
+        absPathToStandalone,
+        RelativeFilePath.of("..")
+    );
+    await resolveWindowsSymlinks({ bundleRoot: bundleRoot as string, logger });
+
     // Write marker file so we skip this on future cached-bundle runs
     await writeFile(markerPath, new Date().toISOString());
     logger.debug("Windows post-processing completed");
+}
+
+/**
+ * Resolves symlinks that were filtered out during tar extraction on Windows.
+ * The tar bundle contains Unix symlinks that don't work on Windows, so during
+ * extraction they are skipped and their metadata is saved to a JSON file.
+ * After pnpm install recreates the pnpm-managed symlinks, this function
+ * recreates the remaining ones (especially Next.js file-traced symlinks in
+ * .next/node_modules/) as directory junctions or file copies.
+ */
+async function resolveWindowsSymlinks({
+    bundleRoot,
+    logger
+}: {
+    bundleRoot: string;
+    logger: Logger;
+}): Promise<void> {
+    const metadataPath = path.join(bundleRoot, SYMLINKS_METADATA_FILE);
+    if (!(await doesPathExist(AbsoluteFilePath.of(metadataPath)))) {
+        logger.debug("No symlink metadata found, skipping symlink resolution");
+        return;
+    }
+
+    const metadata: Array<{ path: string; linkname: string }> = JSON.parse(
+        (await readFile(metadataPath)).toString()
+    );
+    logger.debug(`Resolving ${metadata.length} symlinks from metadata`);
+
+    let resolved = 0;
+    let skipped = 0;
+    let failed = 0;
+
+    for (const entry of metadata) {
+        const entryAbsPath = path.join(bundleRoot, entry.path);
+        const targetAbsPath = path.resolve(path.dirname(entryAbsPath), entry.linkname);
+
+        try {
+            // Skip if destination already exists (e.g., recreated by pnpm install)
+            if (await doesPathExist(AbsoluteFilePath.of(entryAbsPath))) {
+                skipped++;
+                continue;
+            }
+
+            // Skip if the target doesn't exist
+            if (!(await doesPathExist(AbsoluteFilePath.of(targetAbsPath)))) {
+                skipped++;
+                continue;
+            }
+
+            // Ensure parent directory exists
+            await mkdir(path.dirname(entryAbsPath), { recursive: true });
+
+            const targetStat = await stat(targetAbsPath);
+            if (targetStat.isDirectory()) {
+                // Create a directory junction (doesn't require admin on Windows)
+                await symlink(targetAbsPath, entryAbsPath, "junction");
+            } else {
+                await copyFile(targetAbsPath, entryAbsPath);
+            }
+            resolved++;
+        } catch (error) {
+            failed++;
+            logger.debug(`Failed to resolve symlink ${entry.path}: ${error}`);
+        }
+    }
+
+    logger.debug(`Symlink resolution: ${resolved} resolved, ${skipped} skipped, ${failed} failed`);
 }
 
 export async function downloadBundle({
@@ -351,9 +435,22 @@ export async function downloadBundle({
             }, 50);
         }
 
+        // On Windows, collect symlink metadata during extraction so we can
+        // recreate them later as directory junctions or file copies.
+        const windowsSymlinkEntries: Array<{ path: string; linkname: string }> = [];
+
         try {
             await decompress(outputZipPath, absolutePathToBundleFolder, {
-                filter: (file) => !(PLATFORM_IS_WINDOWS && file.type === "symlink")
+                filter: (file) => {
+                    if (PLATFORM_IS_WINDOWS && file.type === "symlink") {
+                        const linkname = (file as unknown as { linkname?: string }).linkname;
+                        if (linkname) {
+                            windowsSymlinkEntries.push({ path: file.path, linkname });
+                        }
+                        return false;
+                    }
+                    return true;
+                }
             });
         } finally {
             if (unzipInterval) {
@@ -368,6 +465,14 @@ export async function downloadBundle({
         // write etag
         await writeFile(eTagFilepath, eTag);
         logger.debug(`Downloaded bundle to ${absolutePathToBundleFolder}`);
+
+        // Save symlink metadata on Windows so resolveWindowsSymlinks can
+        // recreate them as junctions/copies after pnpm install.
+        if (PLATFORM_IS_WINDOWS && windowsSymlinkEntries.length > 0) {
+            const metadataPath = path.join(absolutePathToBundleFolder as string, SYMLINKS_METADATA_FILE);
+            await writeFile(metadataPath, JSON.stringify(windowsSymlinkEntries));
+            logger.debug(`Saved ${windowsSymlinkEntries.length} symlink entries to metadata file`);
+        }
 
         if (app) {
             // check if pnpm exists
