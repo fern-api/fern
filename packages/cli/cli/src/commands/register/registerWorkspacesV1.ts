@@ -11,6 +11,7 @@ import { create as createTar } from "tar";
 import tmp from "tmp-promise";
 
 import { CliContext } from "../../cli-context/CliContext.js";
+import { CliError } from "@fern-api/task-context";
 
 export async function registerWorkspacesV1({
     project,
@@ -38,7 +39,9 @@ export async function registerWorkspacesV1({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 if (workspace instanceof OSSWorkspace) {
-                    context.failWithoutThrowing("Registering from OpenAPI not currently supported.");
+                    context.failWithoutThrowing("Registering from OpenAPI not currently supported.", undefined, {
+                        code: CliError.Code.ConfigError
+                    });
                     return;
                 }
                 const resolvedWorkspace = await workspace.toFernWorkspace({ context });
@@ -51,10 +54,12 @@ export async function registerWorkspacesV1({
                 if (!registerApiResponse.ok) {
                     registerApiResponse.error._visit({
                         versionAlreadyExists: () => {
-                            context.failAndThrow(`Version ${version ?? ""} is already registered`);
+                            context.failAndThrow(`Version ${version ?? ""} is already registered`, undefined, {
+                                code: CliError.Code.VersionError
+                            });
                         },
                         _other: (value) => {
-                            context.failAndThrow("Failed to register", value);
+                            context.failAndThrow("Failed to register", value, { code: CliError.Code.NetworkError });
                         }
                     });
                     return;

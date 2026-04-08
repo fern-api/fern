@@ -56,7 +56,7 @@ export async function diff({
 
     const nextVersion = semver.inc(fromVersion, bump);
     if (!nextVersion) {
-        context.failWithoutThrowing(`Invalid current version: ${fromVersion}`);
+        context.failWithoutThrowing(`Invalid current version: ${fromVersion}`, undefined, { code: CliError.Code.VersionError });
         throw new TaskAbortSignal();
     }
     return { bump, nextVersion, errors };
@@ -73,13 +73,25 @@ async function readIr({
 }): Promise<IntermediateRepresentation> {
     const absoluteFilepath = AbsoluteFilePath.of(resolve(cwd(), filepath));
     if (!(await doesPathExist(absoluteFilepath, "file"))) {
-        context.failWithoutThrowing(`File not found: ${absoluteFilepath}`);
+        context.failWithoutThrowing(`File not found: ${absoluteFilepath}`, undefined, { code: CliError.Code.ConfigError });
         throw new TaskAbortSignal();
     }
-    const ir = await streamObjectFromFile(absoluteFilepath);
+    let ir: unknown;
+    try {
+        ir = await streamObjectFromFile(absoluteFilepath);
+    } catch (error) {
+        context.failWithoutThrowing(
+            `Failed to parse IR file ${absoluteFilepath}: ${error instanceof Error ? error.message : String(error)}`,
+            error,
+            { code: CliError.Code.ParseError }
+        );
+        throw new TaskAbortSignal();
+    }
     const parsed = serialization.IntermediateRepresentation.parse(ir);
     if (!parsed.ok) {
-        context.failWithoutThrowing(`Invalid --${flagName}; expected a filepath containing a valid IR`);
+        context.failWithoutThrowing(`Invalid --${flagName}; expected a filepath containing a valid IR`, undefined, {
+            code: CliError.Code.ParseError
+        });
         throw new TaskAbortSignal();
     }
     return parsed.value;
@@ -161,7 +173,9 @@ export function diffGeneratorVersions(
             errors
         };
     } catch (error) {
-        context.failWithoutThrowing(`Error diffing generator versions ${from} and ${to}: ${error}`);
+        context.failWithoutThrowing(`Error diffing generator versions ${from} and ${to}: ${error}`, undefined, {
+            code: CliError.Code.InternalError
+        });
         throw new TaskAbortSignal();
     }
 }

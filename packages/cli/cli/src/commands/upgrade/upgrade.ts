@@ -14,6 +14,7 @@ import { produce } from "immer";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { RerunCliError, rerunFernCliAtVersion } from "../../rerunFernCliAtVersion.js";
+import { CliError } from "@fern-api/task-context";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 
@@ -229,7 +230,9 @@ function validateVersionAhead({
     const versionAhead = isVersionAhead(targetVersion, currentVersion);
     if (!versionAhead) {
         cliContext.failAndThrow(
-            `Cannot upgrade because target version (${targetVersion}) is not ahead of existing version ${currentVersion}`
+            `Cannot upgrade because target version (${targetVersion}) is not ahead of existing version ${currentVersion}`,
+            undefined,
+            { code: CliError.Code.VersionError }
         );
     }
 }
@@ -328,7 +331,9 @@ export async function upgrade({
 
             const fernDirectory = await getFernDirectory();
             if (fernDirectory == null) {
-                return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
+                return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`, undefined, {
+                    code: CliError.Code.ConfigError
+                });
             }
             const projectConfig = await cliContext.runTask((context) =>
                 loadProjectConfig({ directory: fernDirectory, context })
@@ -375,7 +380,9 @@ export async function upgrade({
         // We're at the target version - load config and run migrations
         const fernDirectory = await getFernDirectory();
         if (fernDirectory == null) {
-            return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
+            return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`, undefined, {
+                code: CliError.Code.ConfigError
+            });
         }
         const projectConfig = await cliContext.runTask((context) =>
             loadProjectConfig({ directory: fernDirectory, context })
@@ -425,7 +432,7 @@ export async function upgrade({
     // Load config to get source version
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
-        return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
+        return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`, undefined, { code: CliError.Code.ConfigError });
     }
     const projectConfig = await cliContext.runTask((context) =>
         loadProjectConfig({ directory: fernDirectory, context })
@@ -479,7 +486,9 @@ export async function upgrade({
 
             if (isVersionNotFound) {
                 return cliContext.failAndThrow(
-                    `Failed to upgrade to ${resolvedTargetVersion} because it does not exist. See https://www.npmjs.com/package/${cliContext.environment.packageName}?activeTab=versions.`
+                    `Failed to upgrade to ${resolvedTargetVersion} because it does not exist. See https://www.npmjs.com/package/${cliContext.environment.packageName}?activeTab=versions.`,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             }
         }

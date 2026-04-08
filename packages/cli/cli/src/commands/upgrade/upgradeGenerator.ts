@@ -116,7 +116,9 @@ export async function loadAndUpdateGenerators({
         };
     }
     if (!YAML.isMap(generatorGroups)) {
-        context.failAndThrow(`Expected 'groups' to be a map in ${path.relative(process.cwd(), filepath)}`);
+        context.failAndThrow(`Expected 'groups' to be a map in ${path.relative(process.cwd(), filepath)}`, undefined, {
+            code: CliError.Code.ParseError
+        });
         return {
             updatedConfiguration: undefined,
             skippedMajorUpgrades: [],
@@ -141,7 +143,9 @@ export async function loadAndUpdateGenerators({
         const group = groupBlock.value as YAML.YAMLMap<string, YAML.YAMLSeq<YAML.YAMLMap<unknown, unknown>>>;
         if (!YAML.isMap(group)) {
             context.failAndThrow(
-                `Expected group ${groupName} to be a map in ${path.relative(process.cwd(), filepath)}`
+                `Expected group ${groupName} to be a map in ${path.relative(process.cwd(), filepath)}`,
+                undefined,
+                { code: CliError.Code.ConfigError }
             );
             continue;
         }
@@ -155,7 +159,9 @@ export async function loadAndUpdateGenerators({
 
         if (!YAML.isSeq(generators)) {
             context.failAndThrow(
-                `Expected group ${groupName} to have a 'generators' key in ${path.relative(process.cwd(), filepath)}`
+                `Expected group ${groupName} to have a 'generators' key in ${path.relative(process.cwd(), filepath)}`,
+                undefined,
+                { code: CliError.Code.ConfigError }
             );
             continue;
         }
@@ -163,7 +169,9 @@ export async function loadAndUpdateGenerators({
         for (const generator of generators.items) {
             if (!YAML.isMap(generator)) {
                 context.failAndThrow(
-                    `Expected generator in group ${groupName} to be a map in ${path.relative(process.cwd(), filepath)}`
+                    `Expected generator in group ${groupName} to be a map in ${path.relative(process.cwd(), filepath)}`,
+                    undefined,
+                    { code: CliError.Code.VersionError }
                 );
             }
             // Custom image generators (using `image` instead of `name`) are user-managed

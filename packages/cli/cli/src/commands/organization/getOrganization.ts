@@ -2,6 +2,7 @@ import { Project } from "@fern-api/project-loader";
 import { writeFile } from "fs/promises";
 
 import { CliContext } from "../../cli-context/CliContext.js";
+import { CliError } from "@fern-api/task-context";
 
 export async function getOrganization({
     project,
@@ -21,6 +22,8 @@ export async function getOrganization({
     try {
         await writeFile(outputLocation, org);
     } catch (error) {
-        context.failAndThrow(`Could not write file to the specified location: ${outputLocation}`, error);
+        context.failAndThrow(`Could not write file to the specified location: ${outputLocation}`, error, {
+            code: CliError.Code.ConfigError
+        });
     }
 }

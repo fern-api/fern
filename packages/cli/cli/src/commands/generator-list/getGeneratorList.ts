@@ -9,6 +9,7 @@ import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
 import { CliContext } from "../../cli-context/CliContext.js";
+import { CliError } from "@fern-api/task-context";
 
 export const GenerationModeFilter = {
     GitHub: "github",
@@ -105,7 +106,9 @@ export async function getGeneratorList({
     try {
         await writeFile(outputLocation, generatorsListYaml);
     } catch (error) {
-        cliContext.failAndThrow(`Could not write file to the specified location: ${outputLocation}`, error);
+        cliContext.failAndThrow(`Could not write file to the specified location: ${outputLocation}`, error, {
+            code: CliError.Code.ConfigError
+        });
     }
 }
 

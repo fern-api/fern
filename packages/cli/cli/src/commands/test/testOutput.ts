@@ -8,6 +8,7 @@ import { Project } from "@fern-api/project-loader";
 import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { API_CLI_OPTION } from "../../constants.js";
+import { CliError } from "@fern-api/task-context";
 
 export async function testOutput({
     cliContext,
@@ -26,11 +27,15 @@ export async function testOutput({
     });
 
     if (testCommand == null) {
-        return cliContext.failAndThrow("No test command specified. Use the --command option.");
+        return cliContext.failAndThrow("No test command specified. Use the --command option.", undefined, {
+            code: CliError.Code.ConfigError
+        });
     }
 
     if (project.apiWorkspaces.length !== 1 || project.apiWorkspaces[0] == null) {
-        return cliContext.failAndThrow(`No API specified. Use the --${API_CLI_OPTION} option.`);
+        return cliContext.failAndThrow(`No API specified. Use the --${API_CLI_OPTION} option.`, undefined, {
+            code: CliError.Code.ConfigError
+        });
     }
 
     const workspace: AbstractAPIWorkspace<unknown> = project.apiWorkspaces[0];
@@ -87,7 +92,7 @@ export async function testOutput({
                 context.logger.error("Tests failed, Fern mock server stopping.");
                 context.logger.error("View test output above.");
 
-                cliContext.failAndThrow();
+                cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ValidationError });
             }
         }
 

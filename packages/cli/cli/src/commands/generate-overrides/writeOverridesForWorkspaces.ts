@@ -46,7 +46,9 @@ async function readExistingOverrides(overridesFilepath: string, context: TaskCon
             parsedOverrides = yaml.load(contents, { json: true });
         }
     } catch (err) {
-        return context.failAndThrow(`Failed to read OpenAPI overrides from file ${overridesFilepath}`);
+        return context.failAndThrow(`Failed to read OpenAPI overrides from file ${overridesFilepath}`, undefined, {
+            code: CliError.Code.ConfigError
+        });
     }
     return parsedOverrides;
 }

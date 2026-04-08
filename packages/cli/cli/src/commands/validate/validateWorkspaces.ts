@@ -8,6 +8,7 @@ import { CliContext } from "../../cli-context/CliContext.js";
 import { buildCheckJsonResult } from "./buildCheckJsonResult.js";
 import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
 import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
+import { CliError } from "@fern-api/task-context";
 
 export async function validateWorkspaces({
     project,
@@ -95,7 +96,7 @@ export async function validateWorkspaces({
                     // Log the missing file error without the [api]: prefix
                     await cliContext.runTask(async (context) => {
                         context.logger.error(`Missing file: ${ROOT_API_FILENAME}`);
-                        return context.failAndThrow();
+                        return context.failAndThrow(undefined, undefined, { code: CliError.Code.ValidationError });
                     });
                     return;
                 }
@@ -145,6 +146,6 @@ export async function validateWorkspaces({
     }
 
     if (hasErrors || hasAnyErrors) {
-        cliContext.failAndThrow();
+        cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ValidationError });
     }
 }

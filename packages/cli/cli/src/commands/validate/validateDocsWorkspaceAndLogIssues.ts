@@ -30,7 +30,7 @@ export async function collectDocsWorkspaceViolations({
     // Apply env var substitution if settings.substitute-env-vars is enabled
     if (workspace.config.settings?.substituteEnvVars) {
         workspace.config = replaceEnvVariables(workspace.config, {
-            onError: (e) => context.failAndThrow(e)
+            onError: (e) => context.failAndThrow(e, undefined, { code: CliError.Code.ValidationError })
         });
     }
 
@@ -81,7 +81,7 @@ export async function validateDocsWorkspaceWithoutExiting({
     // The entire config including instances (with custom domains) goes through substitution
     if (workspace.config.settings?.substituteEnvVars) {
         workspace.config = replaceEnvVariables(workspace.config, {
-            onError: (e) => context.failAndThrow(e)
+            onError: (e) => context.failAndThrow(e, undefined, { code: CliError.Code.ValidationError })
         });
     }
 
@@ -139,6 +139,6 @@ export async function validateDocsWorkspaceAndLogIssues({
     });
 
     if (hasErrors) {
-        context.failAndThrow();
+        context.failAndThrow(undefined, undefined, { code: CliError.Code.ValidationError });
     }
 }

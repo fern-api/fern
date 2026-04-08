@@ -9,7 +9,7 @@ import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import chalk from "chalk";
@@ -99,7 +99,7 @@ export async function generateWorkspace({
                     return ` › ${chalk.bold(name.padEnd(longestGroupName))}  ${chalk.dim(suggestedCommand)}`;
                 })
                 .join("\n");
-        return context.failAndThrow(message);
+        return context.failAndThrow(message, undefined, { code: CliError.Code.NetworkError });
     }
 
     // Resolve group aliases - if the groupName is an alias, expand it to multiple groups
@@ -114,7 +114,7 @@ export async function generateWorkspace({
 
     // Pre-check token for remote generation before starting any work
     if (!useLocalDocker && !token) {
-        return context.failAndThrow("Please run fern login");
+        return context.failAndThrow("Please run fern login", undefined, { code: CliError.Code.AuthError });
     }
 
     // Run generation for all resolved groups in parallel
@@ -124,7 +124,9 @@ export async function generateWorkspace({
                 (otherGroup) => otherGroup.groupName === resolvedGroupName
             );
             if (group == null) {
-                return context.failAndThrow(`Group '${resolvedGroupName}' does not exist.`);
+                return context.failAndThrow(`Group '${resolvedGroupName}' does not exist.`, undefined, {
+                    code: CliError.Code.ConfigError
+                });
             }
 
             // Filter to specific generator by index or name
@@ -135,7 +137,7 @@ export async function generateWorkspace({
                 groupName: resolvedGroupName
             });
             if (!filterResult.ok) {
-                return context.failAndThrow(filterResult.error);
+                return context.failAndThrow(filterResult.error, undefined, { code: CliError.Code.ConfigError });
             }
             group = { ...group, generators: filterResult.generators };
 
@@ -225,7 +227,9 @@ function resolveGroupAlias(
             if (!availableGroups.includes(groupName)) {
                 context.failAndThrow(
                     `Group alias '${groupNameOrAlias}' references non-existent group '${groupName}'. ` +
-                        `Available groups: ${availableGroups.join(", ")}`
+                        `Available groups: ${availableGroups.join(", ")}`,
+                    undefined,
+                    { code: CliError.Code.NetworkError }
                 );
             }
         }
@@ -243,7 +247,9 @@ function resolveGroupAlias(
     context.failAndThrow(
         `'${groupNameOrAlias}' is not a valid group or alias. ` +
             `Available groups: ${availableGroups.join(", ")}` +
-            (availableAliases.length > 0 ? `. Available aliases: ${availableAliases.join(", ")}` : "")
+            (availableAliases.length > 0 ? `. Available aliases: ${availableAliases.join(", ")}` : ""),
+        undefined,
+        { code: CliError.Code.NetworkError }
     );
     return []; // unreachable, but TypeScript needs this
 }

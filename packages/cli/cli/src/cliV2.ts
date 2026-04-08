@@ -15,6 +15,7 @@ import { GenerationModeFilter, getGeneratorList } from "./commands/generator-lis
 import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata.js";
 import { getOrganization } from "./commands/organization/getOrganization.js";
 import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator.js";
+import { CliError } from "@fern-api/task-context";
 
 /**
  * Corrects the incorrect "fern-api/" Docker org prefix to "fernapi/" and logs a warning.
@@ -312,7 +313,9 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                     if (generator == null) {
                         const maybeApiFilter = argv.api ? ` for API ${argv.api}` : "";
                         cliContext.failAndThrow(
-                            `Generator ${argv.generator}, in group ${argv.group}${maybeApiFilter} was not found.`
+                            `Generator ${argv.generator}, in group ${argv.group}${maybeApiFilter} was not found.`,
+                            undefined,
+                            { code: CliError.Code.ConfigError }
                         );
                     }
 
@@ -365,7 +368,8 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         } catch (error) {
                             cliContext.failAndThrow(
                                 `Could not write file to the specified location: ${argv.output}`,
-                                error
+                                error,
+                                { code: CliError.Code.ConfigError }
                             );
                         }
                     }

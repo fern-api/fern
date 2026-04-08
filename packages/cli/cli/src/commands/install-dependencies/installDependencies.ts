@@ -1,5 +1,6 @@
 import { resolveBuf, resolveProtocGenOpenAPI } from "@fern-api/lazy-fern-workspace";
 import { CliContext } from "../../cli-context/CliContext.js";
+import { CliError } from "@fern-api/task-context";
 
 export async function installDependencies({ cliContext }: { cliContext: CliContext }): Promise<void> {
     await cliContext.runTask(async (context) => {
@@ -33,7 +34,9 @@ export async function installDependencies({ cliContext }: { cliContext: CliConte
         const failed = results.filter((r) => !r.success);
         if (failed.length > 0) {
             context.failAndThrow(
-                `Failed to install: ${failed.map((r) => r.name).join(", ")}. Check network connectivity and try again.`
+                `Failed to install: ${failed.map((r) => r.name).join(", ")}. Check network connectivity and try again.`,
+                undefined,
+                { code: CliError.Code.EnvironmentError }
             );
         }
 
