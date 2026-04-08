@@ -661,6 +661,7 @@
       "shape": {
         "_visit": [Function],
         "baseProperties": [],
+        "default": undefined,
         "discriminant": "errorType",
         "discriminatorContext": undefined,
         "extends": [],
@@ -838,6 +839,7 @@
       "shape": {
         "_visit": [Function],
         "baseProperties": [],
+        "default": undefined,
         "discriminant": "type",
         "discriminatorContext": undefined,
         "extends": [],
