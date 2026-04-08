@@ -602,8 +602,8 @@ export async function runAppPreviewServer({
         context.logger.info(chalk.dim(`Debug log: ${debugLogPath}`));
     }
 
-    // Enforce 100 MB cap on the logs directory
-    await enforceLogSizeLimit(debugLogger.getLogsDir(), debugLogPath, context);
+    // Enforce 100 MB cap on the logs directory (fire-and-forget)
+    void enforceLogSizeLimit(debugLogger.getLogsDir(), debugLogPath, context);
 
     let bunServer: BunServer | undefined;
 
