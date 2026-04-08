@@ -1,6 +1,7 @@
 import type { schemas } from "@fern-api/config";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
+
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import { type Document, parseDocument } from "yaml";

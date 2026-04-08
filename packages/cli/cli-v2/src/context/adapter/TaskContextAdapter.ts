@@ -1,14 +1,16 @@
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
-import type {
-    CliErrorCode,
-    CreateInteractiveTaskParams,
-    Finishable,
-    InteractiveTaskContext,
-    PosthogEvent,
-    Startable,
-    TaskContext
+import {
+    type CliErrorCode,
+    type CreateInteractiveTaskParams,
+    type Finishable,
+    type InteractiveTaskContext,
+    type PosthogEvent,
+    type Startable,
+    TaskAbortSignal,
+    type TaskContext,
+    TaskResult
 } from "@fern-api/task-context";
-import { TaskAbortSignal, TaskResult } from "@fern-api/task-context";
+
 import type { Task } from "../../ui/Task.js";
 import type { Context } from "../Context.js";
 import { reportError } from "../withContext.js";

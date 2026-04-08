@@ -11,6 +11,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
 import { CliError, TaskAbortSignal } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import inquirer from "inquirer";
 import { CredentialStore, TokenService } from "../auth/index.js";

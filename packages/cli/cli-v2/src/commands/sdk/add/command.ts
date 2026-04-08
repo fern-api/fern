@@ -2,6 +2,7 @@ import { schemas } from "@fern-api/config";
 import { getLatestGeneratorVersion } from "@fern-api/configuration-loader";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError, TaskAbortSignal } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import inquirer from "inquirer";
 import type { Argv } from "yargs";
