@@ -16,6 +16,11 @@
         rendered as dict literals instead of Pydantic model constructors. For example,
         `order_type=OrderType_Market()` instead of `order_type={"type": "MARKET"}`.
       type: fix
+    - summary: |
+        Fix wire test generation for undiscriminated unions where a non-first variant is used.
+        Previously, enum mismatches in nested objects were not detected during union matching,
+        causing empty values (e.g. `strategy=,`) in generated code.
+      type: fix
   createdAt: "2026-04-06"
   irVersion: 65
 
