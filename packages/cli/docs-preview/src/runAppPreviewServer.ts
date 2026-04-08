@@ -540,7 +540,10 @@ export async function runAppPreviewServer({
 
     // Initialize the debug logger for metrics collection
     const debugLogger = new DebugLogger();
-    await debugLogger.initialize();
+    await debugLogger.initialize({
+        debug: (msg) => context.logger.debug(msg),
+        info: (msg) => context.logger.info(msg)
+    });
     const debugLogPath = debugLogger.getLogFilePath();
     if (debugLogPath) {
         context.logger.info(chalk.dim(`Debug log: ${debugLogPath}`));
