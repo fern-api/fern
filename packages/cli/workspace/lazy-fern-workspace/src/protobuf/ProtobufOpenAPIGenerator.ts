@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-import { access, cp, readFile, rename, unlink, writeFile } from "fs/promises";
+import { access, copyFile, cp, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 import { resolveProtocGenOpenAPI } from "./ProtocGenOpenAPIDownloader.js";
@@ -168,10 +168,13 @@ export class ProtobufOpenAPIGenerator {
             this.context.failAndThrow(bufGenerateResult.stderr);
         }
 
-        // Move output to a unique temp file so the next call doesn't overwrite it
+        // Move output to a unique temp file so the next call doesn't overwrite it.
+        // Use copyFile + unlink instead of rename because rename fails with EPERM
+        // on Windows when the target file already exists (tmp.file creates it).
         const outputPath = join(preparedDir.cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_OUTPUT_FILEPATH));
         const uniqueOutput = AbsoluteFilePath.of((await tmp.file({ postfix: ".yaml" })).path);
-        await rename(outputPath, uniqueOutput);
+        await copyFile(outputPath, uniqueOutput);
+        await unlink(outputPath);
 
         return { absoluteFilepath: uniqueOutput };
     }

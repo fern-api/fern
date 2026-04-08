@@ -7,6 +7,16 @@
   createdAt: "2026-04-01"
   irVersion: 66
 
+- version: 1.33.4
+  changelogEntry:
+    - summary: |
+        Fix wire test client construction to include auth options (e.g.
+        WithToken) when the endpoint requires authentication, so that
+        requests match WireMock stub header matchers.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 61
+
 - version: 1.33.3
   changelogEntry:
     - summary: |
