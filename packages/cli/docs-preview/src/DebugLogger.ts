@@ -320,18 +320,31 @@ export class DebugLogger {
             }
 
             let totalSize = fileInfos.reduce((sum, f) => sum + f.size, 0);
+            const totalSizeMB = Math.round((totalSize / 1024 / 1024) * 100) / 100;
+            const capMB = MAX_LOGS_DIR_SIZE_BYTES / 1024 / 1024;
+
             if (totalSize <= MAX_LOGS_DIR_SIZE_BYTES) {
+                await this.writeEntry({
+                    timestamp: new Date().toISOString(),
+                    source: getCliSource(),
+                    level: "debug",
+                    eventType: "log_rotation_check",
+                    data: {
+                        message: `Log directory size ${totalSizeMB} MB does not exceed ${capMB} MB cap`,
+                        totalSizeMB,
+                        fileCount: fileInfos.length
+                    }
+                });
                 return;
             }
 
-            const totalSizeMB = Math.round((totalSize / 1024 / 1024) * 100) / 100;
             await this.writeEntry({
                 timestamp: new Date().toISOString(),
                 source: getCliSource(),
                 level: "info",
                 eventType: "log_rotation",
                 data: {
-                    message: `Rotating logs: total size ${totalSizeMB} MB exceeds ${MAX_LOGS_DIR_SIZE_BYTES / 1024 / 1024} MB cap`,
+                    message: `Rotating logs: total size ${totalSizeMB} MB exceeds ${capMB} MB cap`,
                     totalSizeMB,
                     fileCount: fileInfos.length
                 }
