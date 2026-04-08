@@ -190,8 +190,9 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         } else if (displayNameOverrideSource === "discriminator_key") {
             displayName = resolvedReference.value.messageId ?? resolvedReference.value.name ?? displayNameOverride;
         } else {
-            // No override source - use message identifiers or fallback to typeId
-            displayName = resolvedReference.value.messageId ?? resolvedReference.value.name ?? typeId;
+            // No override source - use message identifiers or fallback to basename of reference
+            const rawName = reference.$ref.split("/").pop() ?? typeId;
+            displayName = resolvedReference.value.messageId ?? resolvedReference.value.name ?? rawName;
         }
 
         return {

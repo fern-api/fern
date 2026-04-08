@@ -234,7 +234,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 });
 
                 // Extract raw schema name for display (not namespaced)
-                const rawSchemaName = reference.match(/\/schemas\/([^/]+)/)?.[1] ?? typeId;
+                const rawSchemaName = reference.split("/").pop() ?? typeId;
 
                 // Extract schema title once for reuse
                 const schemaTitle = resolvedSchema.resolved ? resolvedSchema.value.title : undefined;
@@ -360,19 +360,21 @@ export class OneOfSchemaConverter extends AbstractConverter<
                             subSchema.summary ?? subSchema.title ?? subSchema.name ?? subSchema.messageId,
                         displayNameOverrideSource: "reference_identifier"
                     });
-                } else if (this.getDiscriminatorKeyForRef(subSchema) != null) {
-                    const mappingEntry = this.getDiscriminatorKeyForRef(subSchema);
-                    maybeTypeReference = this.context.convertReferenceToTypeReference({
-                        reference: subSchema,
-                        displayNameOverride: mappingEntry,
-                        displayNameOverrideSource: "discriminator_key"
-                    });
                 } else {
-                    // Standard schema reference - use internal extraction
-                    maybeTypeReference = this.context.convertReferenceToTypeReference({
-                        reference: subSchema,
-                        breadcrumbs: this.breadcrumbs
-                    });
+                    const mappingEntry = this.getDiscriminatorKeyForRef(subSchema);
+                    if (mappingEntry != null) {
+                        maybeTypeReference = this.context.convertReferenceToTypeReference({
+                            reference: subSchema,
+                            displayNameOverride: mappingEntry,
+                            displayNameOverrideSource: "discriminator_key"
+                        });
+                    } else {
+                        // Standard schema reference - use internal extraction
+                        maybeTypeReference = this.context.convertReferenceToTypeReference({
+                            reference: subSchema,
+                            breadcrumbs: this.breadcrumbs
+                        });
+                    }
                 }
 
                 if (maybeTypeReference.ok) {
