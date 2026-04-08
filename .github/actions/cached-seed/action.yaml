@@ -35,27 +35,35 @@ runs:
     - name: Install
       uses: ./.github/actions/install
 
-    - name: Log in to Docker Hub (with retry)
+    - name: Log in to Docker Hub
+      id: docker-login
+      if: ${{ inputs.dockerhub-username != '' }}
+      uses: docker/login-action@v3
+      continue-on-error: true
+      with:
+        username: ${{ inputs.dockerhub-username }}
+        password: ${{ inputs.dockerhub-token }}
+
+    - name: Retry Docker Hub login
+      id: docker-login-retry
+      if: ${{ inputs.dockerhub-username != '' && steps.docker-login.outcome == 'failure' }}
+      uses: docker/login-action@v3
+      continue-on-error: true
+      with:
+        username: ${{ inputs.dockerhub-username }}
+        password: ${{ inputs.dockerhub-token }}
+
+    - name: Docker Hub login status
       if: ${{ inputs.dockerhub-username != '' }}
       shell: bash
-      env:
-        DOCKERHUB_USERNAME: ${{ inputs.dockerhub-username }}
-        DOCKERHUB_TOKEN: ${{ inputs.dockerhub-token }}
       run: |
-        # Ensure the token is masked in logs even if it wasn't registered as a secret
-        echo "::add-mask::$DOCKERHUB_TOKEN"
-        for attempt in 1 2 3; do
-          if echo "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin docker.io 2>&1; then
-            echo "Docker Hub login succeeded (attempt $attempt)"
-            break
-          fi
-          if [ "$attempt" -eq 3 ]; then
-            echo "Docker Hub login failed after 3 attempts"
-            exit 1
-          fi
-          echo "Docker Hub login failed (attempt $attempt/3), retrying in 15s..."
-          sleep 15
-        done
+        if [[ "${{ steps.docker-login.outcome }}" == "success" ]]; then
+          echo "Docker Hub login succeeded on first attempt"
+        elif [[ "${{ steps.docker-login-retry.outcome }}" == "success" ]]; then
+          echo "Docker Hub login succeeded on retry"
+        else
+          echo "::warning::Docker Hub login failed after 2 attempts — continuing without authentication (may hit rate limits)"
+        fi
 
     - name: Clear stale Docker image cache
       shell: bash
