@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.3.5
+  changelogEntry:
+    - summary: |
+        Fix wire test generation producing invalid syntax (e.g. `strategy=,`) for object
+        properties with literal/const types. Literal properties that resolve to nop values
+        are now filtered out of generated constructor arguments.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 65
+
 - version: 5.3.4
   changelogEntry:
     - summary: |
