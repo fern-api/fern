@@ -467,17 +467,15 @@ export class GraphQLConverter {
 
     private convertObjectTypeDefinition(type: GraphQLObjectType): FdrAPI.api.v1.register.TypeShape {
         const fields = type.getFields();
-        const properties: FdrAPI.api.v1.register.ObjectProperty[] = [];
-
-        for (const [fieldName, field] of Object.entries(fields)) {
-            properties.push({
+        const properties = Object.entries(fields).map(
+            ([fieldName, field]): FdrAPI.api.v1.register.ObjectProperty => ({
                 key: FdrAPI.PropertyKey(fieldName),
                 valueType: this.convertOutputType(field.type),
                 description: field.description ?? undefined,
                 availability: undefined,
                 propertyAccess: undefined
-            });
-        }
+            })
+        );
 
         // Only extend interfaces that are converted to plain objects (no implementations).
         // Interfaces with implementations are converted to undiscriminatedUnion, and the
@@ -531,17 +529,15 @@ export class GraphQLConverter {
 
     private convertInterfaceAsObject(type: GraphQLInterfaceType): FdrAPI.api.v1.register.TypeShape {
         const fields = type.getFields();
-        const properties: FdrAPI.api.v1.register.ObjectProperty[] = [];
-
-        for (const [fieldName, field] of Object.entries(fields)) {
-            properties.push({
+        const properties = Object.entries(fields).map(
+            ([fieldName, field]): FdrAPI.api.v1.register.ObjectProperty => ({
                 key: FdrAPI.PropertyKey(fieldName),
                 valueType: this.convertOutputType(field.type),
                 description: field.description ?? undefined,
                 availability: undefined,
                 propertyAccess: undefined
-            });
-        }
+            })
+        );
 
         return {
             type: "object",
@@ -553,17 +549,15 @@ export class GraphQLConverter {
 
     private convertInputObjectTypeDefinition(type: GraphQLInputObjectType): FdrAPI.api.v1.register.TypeShape {
         const fields = type.getFields();
-        const properties: FdrAPI.api.v1.register.ObjectProperty[] = [];
-
-        for (const [fieldName, field] of Object.entries(fields)) {
-            properties.push({
+        const properties = Object.entries(fields).map(
+            ([fieldName, field]): FdrAPI.api.v1.register.ObjectProperty => ({
                 key: FdrAPI.PropertyKey(fieldName),
                 valueType: this.convertInputType(field.type),
                 description: field.description ?? undefined,
                 availability: undefined,
                 propertyAccess: undefined
-            });
-        }
+            })
+        );
 
         return {
             type: "object",
