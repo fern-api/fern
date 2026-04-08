@@ -1,6 +1,6 @@
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import {
-    type CliErrorCode,
+    type CliError,
     type CreateInteractiveTaskParams,
     type Finishable,
     type InteractiveTaskContext,
@@ -55,12 +55,12 @@ export class TaskContextAdapter implements TaskContext {
         await run();
     }
 
-    public failAndThrow(message?: string, error?: unknown, options?: { code?: CliErrorCode }): never {
+    public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
         this.failWithoutThrowing(message, error, options);
         throw new TaskAbortSignal();
     }
 
-    public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliErrorCode }): void {
+    public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
         this.result = TaskResult.Failure;
         if (error instanceof TaskAbortSignal) {
             return;
@@ -73,8 +73,8 @@ export class TaskContextAdapter implements TaskContext {
         reportError(this.context, error, { ...options, message });
     }
 
-    public captureException(error: unknown, code?: CliErrorCode): void {
-        const errorCode = resolveErrorCode(error, code) ?? "INTERNAL_ERROR";
+    public captureException(error: unknown, code?: CliError.Code): void {
+        const errorCode = resolveErrorCode(error, code);
         this.context.telemetry.captureException(error, { errorCode });
     }
 

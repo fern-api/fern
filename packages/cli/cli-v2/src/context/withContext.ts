@@ -1,11 +1,5 @@
 import { LogLevel } from "@fern-api/logger";
-import {
-    CliError,
-    type CliErrorCode,
-    resolveErrorCode,
-    shouldReportToSentry,
-    TaskAbortSignal
-} from "@fern-api/task-context";
+import { CliError, resolveErrorCode, shouldReportToSentry, TaskAbortSignal } from "@fern-api/task-context";
 
 import chalk from "chalk";
 import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError.js";
@@ -117,7 +111,7 @@ function handleError(context: Context, error: unknown): void {
 export function reportError(
     context: Context,
     error: unknown,
-    options?: { message?: string; code?: CliErrorCode }
+    options?: { message?: string; code?: CliError.Code }
 ): void {
     if (error instanceof TaskAbortSignal) {
         return;
