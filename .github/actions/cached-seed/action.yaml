@@ -42,6 +42,8 @@ runs:
         DOCKERHUB_USERNAME: ${{ inputs.dockerhub-username }}
         DOCKERHUB_TOKEN: ${{ inputs.dockerhub-token }}
       run: |
+        # Ensure the token is masked in logs even if it wasn't registered as a secret
+        echo "::add-mask::$DOCKERHUB_TOKEN"
         for attempt in 1 2 3; do
           if echo "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin docker.io 2>&1; then
             echo "Docker Hub login succeeded (attempt $attempt)"
