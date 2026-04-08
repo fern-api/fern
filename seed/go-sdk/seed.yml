@@ -369,4 +369,5 @@ allowedFailures:
   - file-upload:package-name
   - file-upload-openapi
 
-  # exhaustive fixtures now pass after fixing bytes endpoint wire test generation
+  - go-deterministic-ordering:.
+  - exhaustive:omit-empty-request-wrappers

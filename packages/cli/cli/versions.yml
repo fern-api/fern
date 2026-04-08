@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.63.3
+  changelogEntry:
+    - summary: |
+        Fix `coerce-enums-to-literals: false` not being respected for boolean
+        single-value enums (`type: boolean, enum: [true]`). Previously, boolean
+        enums were always coerced to literals regardless of the setting. Now
+        `getSingleBooleanEnumValue` checks `coerceEnumsToLiterals` consistently
+        with the string enum path.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 66
+
 - version: 4.63.2
   changelogEntry:
     - summary: |
@@ -9,7 +21,6 @@
       type: fix
   createdAt: "2026-04-08"
   irVersion: 66
-
 - version: 4.63.1
   changelogEntry:
     - summary: |
@@ -21,7 +32,6 @@
       type: fix
   createdAt: "2026-04-08"
   irVersion: 66
-
 - version: 4.63.0
   changelogEntry:
     - summary: |
