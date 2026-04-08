@@ -415,6 +415,7 @@ function cleanFernDocsCacheSync(bundleRoot: string, context: TaskContext): void 
  * processes that may survive after the main server process is killed.
  */
 function killProcessesOnPort(targetPort: number, context: TaskContext): void {
+    context.logger.debug(`Killing any leftover processes on port ${targetPort}`);
     const isWindows = process.platform === "win32";
     const command = isWindows
         ? `netstat -ano | findstr :${targetPort} | findstr LISTENING`
@@ -847,8 +848,9 @@ export async function runAppPreviewServer({
         NODE_OPTIONS: "--max-old-space-size=8096 --enable-source-maps"
     };
 
-    // Track the current server process
+    // Track the current server process and the port it actually bound to
     let serverProcess: ReturnType<typeof runExeca> | null = null;
+    let actualPort: number = port;
 
     // Function to start the Next.js server
     const startNextJsServer = (): Promise<void> => {
@@ -861,6 +863,12 @@ export async function runAppPreviewServer({
             const checkReady = (data: Buffer) => {
                 const output = data.toString();
                 context.logger.debug(`[Next.js] ${output}`);
+
+                const portMatch = output.match(/localhost:(\d+)/);
+                if (portMatch != null) {
+                    actualPort = Number(portMatch[1]);
+                }
+
                 if (output.includes("Ready in") || output.includes("✓ Ready")) {
                     resolve();
                 }
@@ -1000,7 +1008,7 @@ export async function runAppPreviewServer({
             }
         }
 
-        killProcessesOnPort(port, context);
+        killProcessesOnPort(actualPort, context);
 
         // Clean Fern Docs cache on shutdown (sync since cleanup runs in signal handlers)
         // Uses maxRetries to handle ENOTEMPTY if the server process is still writing
