@@ -1,6 +1,6 @@
 import { PrimitiveSchema, PrimitiveSchemaValue } from "@fern-api/openapi-ir";
+import { CliError } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
-
 import { getExtension } from "../../../getExtension.js";
 import { getDefaultAsString } from "../../../schema/defaults/getDefault.js";
 import { getGeneratedTypeName } from "../../../schema/utils/getSchemaName.js";
@@ -42,7 +42,10 @@ export function getVariableDefinitions(
                     }
                 ];
             } else {
-                throw new Error(`Variable ${variableName} has unsupported schema ${JSON.stringify(schema)}`);
+                throw new CliError({
+                    message: `Variable ${variableName} has unsupported schema ${JSON.stringify(schema)}`,
+                    code: CliError.Code.ValidationError
+                });
             }
         })
     );
