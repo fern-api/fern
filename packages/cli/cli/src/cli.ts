@@ -81,6 +81,7 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
 import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
+import { getIntendedVersionOfCli } from "./getIntendedVersionOfCli.js";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
@@ -265,26 +266,6 @@ async function tryRunCli(cliContext: CliContext) {
     });
 
     await cli.parse();
-}
-
-async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> {
-    if (process.env.FERN_NO_VERSION_REDIRECTION === "true") {
-        return cliContext.environment.packageVersion;
-    }
-    const fernDirectory = await getFernDirectory();
-    if (fernDirectory != null) {
-        const projectConfig = await cliContext.runTask((context) =>
-            loadProjectConfig({ directory: fernDirectory, context })
-        );
-        if (projectConfig.version === "*") {
-            return cliContext.environment.packageVersion;
-        }
-        if (projectConfig.version === "latest") {
-            return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
-        }
-        return projectConfig.version;
-    }
-    return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
 }
 
 async function getOrganization(cliContext: CliContext): Promise<string | undefined> {
