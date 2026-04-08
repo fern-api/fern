@@ -7,10 +7,5 @@
 export const PAGES = [
     // Markdown pages
     "/welcome",
-    "/getting-started",
-
-    // REST API reference (specific endpoints)
-    "/rest-api/rest-api/list-plants",
-    "/rest-api/rest-api/create-plant",
-    "/rest-api/rest-api/get-plant"
+    "/getting-started"
 ];
