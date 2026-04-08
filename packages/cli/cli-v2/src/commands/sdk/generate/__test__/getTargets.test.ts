@@ -29,7 +29,7 @@ function makeWorkspace(targets: Target[]): Workspace {
         org: "test-org",
         apis: {},
         cliVersion: "0.0.0",
-        sdks: { targets }
+        sdks: { org: "test-org", targets }
     };
 }
 
