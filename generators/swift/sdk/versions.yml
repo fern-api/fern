@@ -1,12 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 0.31.0-rc.0
+- version: 0.32.0-rc.0
   changelogEntry:
     - summary: |
         Upgrade to IR v66 which compresses the IR Name type, reducing IR size and increasing performance.
       type: feat
   createdAt: "2026-04-01"
   irVersion: 66
+
+- version: 0.31.0
+  changelogEntry:
+    - summary: |
+        Generate a `Version.swift` source file containing the SDK version
+        string. This embeds the version in the generated source code for
+        consistency with other generators and fixes auto-versioning for
+        Swift SDKs.
+      type: feat
+  createdAt: "2026-04-07"
+  irVersion: 61
 
 - version: 0.30.0
   changelogEntry:

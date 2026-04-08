@@ -24,7 +24,7 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.OPENAPI]: "0.4.0-rc.0",
         [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -36,11 +36,11 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         [GeneratorName.CSHARP_MODEL]: "0.9.0-rc.0",
         [GeneratorName.CSHARP_SDK]: "2.57.0-rc.0",
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.SWIFT_SDK]: "0.31.0-rc.0",
+        [GeneratorName.SWIFT_SDK]: "0.32.0-rc.0",
         [GeneratorName.PHP_MODEL]: "0.1.0-rc.0",
         [GeneratorName.PHP_SDK]: "2.3.2-rc.0",
-        [GeneratorName.RUST_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUST_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
+        [GeneratorName.RUST_MODEL]: "0.5.0-rc.0",
+        [GeneratorName.RUST_SDK]: "0.32.0-rc.0"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V65.IntermediateRepresentation.jsonOrThrow(ir, {

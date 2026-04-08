@@ -10,38 +10,51 @@ import (
 )
 
 var (
-	listUsernamesRequestCustomFieldStartingAfter = big.NewInt(1 << 0)
+	listWithCustomPagerRequestFieldLimit         = big.NewInt(1 << 0)
+	listWithCustomPagerRequestFieldStartingAfter = big.NewInt(1 << 1)
 )
 
-type ListUsernamesRequestCustom struct {
-	// The cursor used for pagination in order to fetch
-	// the next page of results.
+type ListWithCustomPagerRequest struct {
+	// The maximum number of results to return.
+	Limit *int `json:"-" url:"limit,omitempty"`
+	// The cursor used for pagination.
 	StartingAfter *string `json:"-" url:"starting_after,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (l *ListUsernamesRequestCustom) require(field *big.Int) {
+func (l *ListWithCustomPagerRequest) require(field *big.Int) {
 	if l.explicitFields == nil {
 		l.explicitFields = big.NewInt(0)
 	}
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListWithCustomPagerRequest) SetLimit(limit *int) {
+	l.Limit = limit
+	l.require(listWithCustomPagerRequestFieldLimit)
+}
+
 // SetStartingAfter sets the StartingAfter field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUsernamesRequestCustom) SetStartingAfter(startingAfter *string) {
+func (l *ListWithCustomPagerRequest) SetStartingAfter(startingAfter *string) {
 	l.StartingAfter = startingAfter
-	l.require(listUsernamesRequestCustomFieldStartingAfter)
+	l.require(listWithCustomPagerRequestFieldStartingAfter)
 }
 
 var (
-	usernameCursorFieldCursor = big.NewInt(1 << 0)
+	linkFieldRel    = big.NewInt(1 << 0)
+	linkFieldMethod = big.NewInt(1 << 1)
+	linkFieldHref   = big.NewInt(1 << 2)
 )
 
-type UsernameCursor struct {
-	Cursor *UsernamePage `json:"cursor" url:"cursor"`
+type Link struct {
+	Rel    string `json:"rel" url:"rel"`
+	Method string `json:"method" url:"method"`
+	Href   string `json:"href" url:"href"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -50,78 +63,118 @@ type UsernameCursor struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UsernameCursor) GetCursor() *UsernamePage {
-	if u == nil {
+func (l *Link) GetRel() string {
+	if l == nil {
+		return ""
+	}
+	return l.Rel
+}
+
+func (l *Link) GetMethod() string {
+	if l == nil {
+		return ""
+	}
+	return l.Method
+}
+
+func (l *Link) GetHref() string {
+	if l == nil {
+		return ""
+	}
+	return l.Href
+}
+
+func (l *Link) GetExtraProperties() map[string]interface{} {
+	if l == nil {
 		return nil
 	}
-	return u.Cursor
+	return l.extraProperties
 }
 
-func (u *UsernameCursor) GetExtraProperties() map[string]interface{} {
-	return u.extraProperties
-}
-
-func (u *UsernameCursor) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+func (l *Link) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
-// SetCursor sets the Cursor field and marks it as non-optional;
+// SetRel sets the Rel field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UsernameCursor) SetCursor(cursor *UsernamePage) {
-	u.Cursor = cursor
-	u.require(usernameCursorFieldCursor)
+func (l *Link) SetRel(rel string) {
+	l.Rel = rel
+	l.require(linkFieldRel)
 }
 
-func (u *UsernameCursor) UnmarshalJSON(data []byte) error {
-	type unmarshaler UsernameCursor
+// SetMethod sets the Method field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *Link) SetMethod(method string) {
+	l.Method = method
+	l.require(linkFieldMethod)
+}
+
+// SetHref sets the Href field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *Link) SetHref(href string) {
+	l.Href = href
+	l.require(linkFieldHref)
+}
+
+func (l *Link) UnmarshalJSON(data []byte) error {
+	type unmarshaler Link
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*u = UsernameCursor(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	*l = Link(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
 	}
-	u.extraProperties = extraProperties
-	u.rawJSON = json.RawMessage(data)
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
 	return nil
 }
 
-func (u *UsernameCursor) MarshalJSON() ([]byte, error) {
-	type embed UsernameCursor
+func (l *Link) MarshalJSON() ([]byte, error) {
+	type embed Link
 	var marshaler = struct {
 		embed
 	}{
-		embed: embed(*u),
+		embed: embed(*l),
 	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 
-func (u *UsernameCursor) String() string {
-	if len(u.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+func (l *Link) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := internal.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(l); err == nil {
 		return value
 	}
-	return fmt.Sprintf("%#v", u)
+	return fmt.Sprintf("%#v", l)
 }
 
 var (
-	usernamePageFieldAfter = big.NewInt(1 << 0)
-	usernamePageFieldData  = big.NewInt(1 << 1)
+	usersListResponseFieldLimit   = big.NewInt(1 << 0)
+	usersListResponseFieldCount   = big.NewInt(1 << 1)
+	usersListResponseFieldHasMore = big.NewInt(1 << 2)
+	usersListResponseFieldLinks   = big.NewInt(1 << 3)
+	usersListResponseFieldData    = big.NewInt(1 << 4)
 )
 
-type UsernamePage struct {
-	After *string  `json:"after,omitempty" url:"after,omitempty"`
-	Data  []string `json:"data" url:"data"`
+type UsersListResponse struct {
+	Limit   *int     `json:"limit,omitempty" url:"limit,omitempty"`
+	Count   *int     `json:"count,omitempty" url:"count,omitempty"`
+	HasMore *bool    `json:"has_more,omitempty" url:"has_more,omitempty"`
+	Links   []*Link  `json:"links" url:"links"`
+	Data    []string `json:"data" url:"data"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -130,52 +183,97 @@ type UsernamePage struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UsernamePage) GetAfter() *string {
+func (u *UsersListResponse) GetLimit() *int {
 	if u == nil {
 		return nil
 	}
-	return u.After
+	return u.Limit
 }
 
-func (u *UsernamePage) GetData() []string {
+func (u *UsersListResponse) GetCount() *int {
+	if u == nil {
+		return nil
+	}
+	return u.Count
+}
+
+func (u *UsersListResponse) GetHasMore() *bool {
+	if u == nil {
+		return nil
+	}
+	return u.HasMore
+}
+
+func (u *UsersListResponse) GetLinks() []*Link {
+	if u == nil {
+		return nil
+	}
+	return u.Links
+}
+
+func (u *UsersListResponse) GetData() []string {
 	if u == nil {
 		return nil
 	}
 	return u.Data
 }
 
-func (u *UsernamePage) GetExtraProperties() map[string]interface{} {
+func (u *UsersListResponse) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
-func (u *UsernamePage) require(field *big.Int) {
+func (u *UsersListResponse) require(field *big.Int) {
 	if u.explicitFields == nil {
 		u.explicitFields = big.NewInt(0)
 	}
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetAfter sets the After field and marks it as non-optional;
+// SetLimit sets the Limit field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UsernamePage) SetAfter(after *string) {
-	u.After = after
-	u.require(usernamePageFieldAfter)
+func (u *UsersListResponse) SetLimit(limit *int) {
+	u.Limit = limit
+	u.require(usersListResponseFieldLimit)
+}
+
+// SetCount sets the Count field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsersListResponse) SetCount(count *int) {
+	u.Count = count
+	u.require(usersListResponseFieldCount)
+}
+
+// SetHasMore sets the HasMore field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsersListResponse) SetHasMore(hasMore *bool) {
+	u.HasMore = hasMore
+	u.require(usersListResponseFieldHasMore)
+}
+
+// SetLinks sets the Links field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsersListResponse) SetLinks(links []*Link) {
+	u.Links = links
+	u.require(usersListResponseFieldLinks)
 }
 
 // SetData sets the Data field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UsernamePage) SetData(data []string) {
+func (u *UsersListResponse) SetData(data []string) {
 	u.Data = data
-	u.require(usernamePageFieldData)
+	u.require(usersListResponseFieldData)
 }
 
-func (u *UsernamePage) UnmarshalJSON(data []byte) error {
-	type unmarshaler UsernamePage
+func (u *UsersListResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler UsersListResponse
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*u = UsernamePage(value)
+	*u = UsersListResponse(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
@@ -185,8 +283,8 @@ func (u *UsernamePage) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (u *UsernamePage) MarshalJSON() ([]byte, error) {
-	type embed UsernamePage
+func (u *UsersListResponse) MarshalJSON() ([]byte, error) {
+	type embed UsersListResponse
 	var marshaler = struct {
 		embed
 	}{
@@ -196,7 +294,10 @@ func (u *UsernamePage) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (u *UsernamePage) String() string {
+func (u *UsersListResponse) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

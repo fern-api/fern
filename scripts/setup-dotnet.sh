@@ -75,10 +75,25 @@ main() {
         fi
     done
 
+    # Ensure tools path is available for installing global tools
+    export PATH="$HOME/.dotnet:$HOME/.dotnet/tools:$PATH"
+
+    # Install CSharpier if not already installed
+    if ! command -v csharpier &> /dev/null; then
+        echo -e "${YELLOW}Installing CSharpier...${NC}"
+        if dotnet tool install -g csharpier; then
+            echo -e "${GREEN}✓${NC} CSharpier installed successfully"
+        else
+            echo -e "${RED}✗${NC} Failed to install CSharpier"
+        fi
+    else
+        echo -e "${GREEN}✓${NC} CSharpier is already installed"
+    fi
+
     echo ""
-    echo -e "${YELLOW}Make sure \$HOME/.dotnet is in your PATH.${NC}"
+    echo -e "${YELLOW}Make sure \$HOME/.dotnet and \$HOME/.dotnet/tools are in your PATH.${NC}"
     echo "Add to your shell profile (~/.zshrc, ~/.bashrc, etc):"
-    echo "  export PATH=\"\$HOME/.dotnet:\$PATH\""
+    echo "  export PATH=\"\$HOME/.dotnet:\$HOME/.dotnet/tools:\$PATH\""
     echo ""
     echo "Alternatively, follow the official Microsoft installation guide:"
     echo "  https://learn.microsoft.com/en-us/dotnet/core/install/"

@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
@@ -44,7 +45,7 @@ export class QueryParameterRequestGenerator {
                 name: uniqueRequestTypeName,
                 properties,
                 extendedProperties: [],
-                docsContent: `Query parameters for ${endpoint.name.originalName}`,
+                docsContent: `Query parameters for ${getOriginalName(endpoint.name)}`,
                 context: this.context
             });
 
@@ -57,7 +58,7 @@ export class QueryParameterRequestGenerator {
             });
         } catch (error) {
             this.context.logger?.warn(
-                `Failed to generate query request file for endpoint ${endpoint.name.originalName}: ${error}`
+                `Failed to generate query request file for endpoint ${getOriginalName(endpoint.name)}: ${error}`
             );
             return null;
         }

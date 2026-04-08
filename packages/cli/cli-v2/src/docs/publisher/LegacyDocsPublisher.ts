@@ -56,10 +56,12 @@ export class LegacyDocsPublisher {
     public async publish({
         instanceUrl,
         preview,
+        previewId,
         skipUpload
     }: {
         instanceUrl: string;
         preview: boolean;
+        previewId?: string;
         skipUpload?: boolean;
     }): Promise<LegacyDocsPublisher.PublishResult> {
         const taskContext = new TaskContextAdapter({ context: this.context, task: this.task });
@@ -73,7 +75,7 @@ export class LegacyDocsPublisher {
                 token: this.token,
                 instanceUrl,
                 preview,
-                previewId: undefined,
+                previewId,
                 disableTemplates: undefined,
                 skipUpload,
                 cliVersion: process.env.CLI_VERSION

@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedBasicAuthPwOmitted;
 
-var client = new SeedBasicAuthPwOmittedClient("USERNAME", "PASSWORD");
+var client = new SeedBasicAuthPwOmittedClient("USERNAME");
 await client.BasicAuth.PostWithBasicAuthAsync(
     new Dictionary<object, object?>() { { "key", "value" } }
 );
