@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.1.2
+  changelogEntry:
+    - summary: |
+        Fix wire test snippets dropping additional properties not declared in the
+        schema. Types with `@JsonAnySetter` now emit `.additionalProperty()` builder
+        calls for extra fields present in example data, so the serialized output
+        matches the expected JSON.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 65
+
 - version: 4.1.1
   changelogEntry:
     - summary: |
