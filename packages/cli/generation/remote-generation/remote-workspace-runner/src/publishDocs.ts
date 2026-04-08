@@ -5,6 +5,7 @@ import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
 import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
+import { dynamic } from "@fern-api/ir-sdk";
 
 type DynamicIr = APIV1Write.DynamicIr;
 type DynamicIrUpload = APIV1Write.DynamicIrUpload;
@@ -1173,6 +1174,16 @@ async function generateLanguageSpecificDynamicIRs({
         rust: snippetsConfig.rustSdk?.package
     };
 
+    // Build a map of generator invocations per language for fallback matching
+    const generatorsByLanguage: Record<
+        string,
+        Array<{
+            invocation: generatorsYml.GeneratorInvocation;
+            config: dynamic.GeneratorConfig | undefined;
+            packageName: string;
+        }>
+    > = {};
+
     if (workspace.generatorsConfiguration?.groups) {
         for (const group of workspace.generatorsConfiguration.groups) {
             for (const generatorInvocation of group.generators) {
@@ -1226,6 +1237,16 @@ async function generateLanguageSpecificDynamicIRs({
                     continue;
                 }
 
+                // Track generators by language for fallback matching
+                if (!generatorsByLanguage[generatorInvocation.language]) {
+                    generatorsByLanguage[generatorInvocation.language] = [];
+                }
+                generatorsByLanguage[generatorInvocation.language].push({
+                    invocation: generatorInvocation,
+                    config: dynamicGeneratorConfig,
+                    packageName
+                });
+
                 // Skip languages that already have SDK dynamic IRs
                 if (skipLanguages.has(generatorInvocation.language)) {
                     context.logger.debug(
@@ -1277,6 +1298,59 @@ async function generateLanguageSpecificDynamicIRs({
                         context.logger.debug(`Failed to create dynamic IR for ${generatorInvocation.language}`);
                     }
                 }
+            }
+        }
+    }
+
+    // Fallback: for languages that have a snippet config but no exact package name match,
+    // use the sole generator for that language if there is exactly one. This handles cases
+    // where docs.yml snippet config doesn't exactly match the generators.yml value (e.g.
+    // a mismatched Go GitHub repo URL).
+    for (const [language, configuredPackageName] of Object.entries(snippetConfiguration)) {
+        if (!configuredPackageName || languageSpecificIRs[language] || skipLanguages.has(language)) {
+            continue;
+        }
+        const generators = generatorsByLanguage[language];
+        if (generators && generators.length === 1) {
+            const { invocation, config, packageName } = generators[0];
+            context.logger.warn(
+                `Snippet config for ${language} specifies \`${configuredPackageName}\` but generator publishes \`${packageName}\`. Using generator config as fallback.`
+            );
+            const irForDynamicSnippets = generateIntermediateRepresentation({
+                workspace,
+                generationLanguage: invocation.language,
+                keywords: undefined,
+                smartCasing: invocation.smartCasing,
+                exampleGeneration: {
+                    disabled: true,
+                    skipAutogenerationIfManualExamplesExist: true,
+                    skipErrorAutogenerationIfManualErrorExamplesExist: true
+                },
+                audiences: {
+                    type: "all"
+                },
+                readme: undefined,
+                packageName: packageName,
+                version: undefined,
+                context,
+                sourceResolver: new SourceResolverImpl(context, workspace),
+                dynamicGeneratorConfig: config
+            });
+
+            const dynamicIR = convertIrToDynamicSnippetsIr({
+                ir: irForDynamicSnippets,
+                disableExamples: true,
+                smartCasing: invocation.smartCasing,
+                generationLanguage: invocation.language,
+                generatorConfig: config
+            });
+
+            if (dynamicIR) {
+                languageSpecificIRs[language] = {
+                    dynamicIR
+                };
+            } else {
+                context.logger.debug(`Failed to create dynamic IR for ${language} (fallback)`);
             }
         }
     }
