@@ -12,6 +12,7 @@ import {
     TaskContext,
     TaskResult
 } from "@fern-api/task-context";
+
 import chalk from "chalk";
 
 import { reportError } from "../telemetry/reportError.js";
