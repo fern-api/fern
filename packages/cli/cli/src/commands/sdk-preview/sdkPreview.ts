@@ -247,8 +247,7 @@ export async function sdkPreview({
                 // NOTE: this duplicates the subfolder logic in resolveAbsolutePathToLocalPreview
                 // inside runLocalGenerationForWorkspace. Both call getGeneratorOutputSubfolder so
                 // they stay in sync, but if the runner ever changes its path convention this will
-                // need to be updated too. Ideally the runner would return the resolved path, but
-                // that requires a larger refactor of its Promise.all generator loop.
+                // need to be updated too.
                 const actualOutputPath =
                     absolutePathToOutput != null
                         ? join(absolutePathToOutput, RelativeFilePath.of(getGeneratorOutputSubfolder(generator.name)))
