@@ -324,6 +324,19 @@ export class DebugLogger {
                 return;
             }
 
+            const totalSizeMB = Math.round((totalSize / 1024 / 1024) * 100) / 100;
+            await this.writeEntry({
+                timestamp: new Date().toISOString(),
+                source: getCliSource(),
+                level: "info",
+                eventType: "log_rotation",
+                data: {
+                    message: `Rotating logs: total size ${totalSizeMB} MB exceeds ${MAX_LOGS_DIR_SIZE_BYTES / 1024 / 1024} MB cap`,
+                    totalSizeMB,
+                    fileCount: fileInfos.length
+                }
+            });
+
             // Sort oldest first so we delete the oldest logs first
             fileInfos.sort((a, b) => a.mtimeMs - b.mtimeMs);
 
