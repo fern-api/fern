@@ -32,6 +32,10 @@ public final class CasingConfiguration {
 
     private static final Pattern STARTS_WITH_NUMBER = Pattern.compile("^[0-9]");
 
+    // Match lodash words() regex: [A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+|[A-Z]+|[0-9]+
+    private static final Pattern SPLIT_WORDS_PATTERN =
+            Pattern.compile("[A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+|[A-Z]+|[0-9]+");
+
     // Java reserved keywords for keyword sanitization
     private static final Set<String> JAVA_RESERVED_KEYWORDS = Set.of(
             "abstract",
@@ -209,10 +213,6 @@ public final class CasingConfiguration {
     // ===== Casing conversion methods =====
 
     /**
-     * Splits a string into words, similar to lodash's words() function. Handles camelCase, PascalCase, separators, and
-     * digit boundaries.
-     */
-    /**
      * Splits a string into words, matching lodash's words() behavior. Uses the same regex pattern:
      * [A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+|[A-Z]+|[0-9]+
      *
@@ -224,9 +224,7 @@ public final class CasingConfiguration {
             return Collections.emptyList();
         }
 
-        // Match lodash words() regex: [A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+|[A-Z]+|[0-9]+
-        Pattern pattern = Pattern.compile("[A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+|[A-Z]+|[0-9]+");
-        Matcher matcher = pattern.matcher(s);
+        Matcher matcher = SPLIT_WORDS_PATTERN.matcher(s);
         List<String> words = new ArrayList<>();
         while (matcher.find()) {
             words.add(matcher.group());
