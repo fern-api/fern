@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.63.1
+  changelogEntry:
+    - summary: |
+        Add FERN_RESOLVE_VERSION env var to control CLI version redirection.
+        Supports 'auto', 'latest', 'inherit', or a specific version string.
+      type: chore
+  createdAt: "2026-04-08"
+  irVersion: 66
+
 - version: 4.63.0
   changelogEntry:
     - summary: |
