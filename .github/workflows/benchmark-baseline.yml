@@ -78,7 +78,7 @@ jobs:
         with:
           name: benchmark-baseline-${{ matrix.generator }}
           path: benchmark-results/
-          retention-days: 7
+          retention-days: 30
 
   # Run full E2E benchmarks (with build/test scripts) for informational purposes.
   # These capture the complete customer-observable generation time including
@@ -116,100 +116,7 @@ jobs:
         with:
           name: benchmark-e2e-${{ matrix.generator }}
           path: benchmark-results/
-          retention-days: 7
-
-  # Aggregate results into rolling 7-day history cache
-  save-baseline-cache:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: [baseline, baseline-e2e]
-    if: ${{ always() && !cancelled() && needs.baseline.result != 'skipped' }}
-    steps:
-      - name: Download generator-only baseline artifacts
-        uses: actions/download-artifact@v4
-        with:
-          pattern: benchmark-baseline-*
-          path: todays-results
-          merge-multiple: true
-
-      - name: Download E2E baseline artifacts
-        uses: actions/download-artifact@v4
-        with:
-          pattern: benchmark-e2e-*
-          path: todays-e2e-results
-          merge-multiple: true
-
-      - name: Restore existing history cache
-        id: history-cache
-        uses: actions/cache/restore@v4
-        with:
-          path: benchmark-baseline-results
-          # Prefix fallback finds the most recent history cache entry
-          key: benchmark-baseline-never-matches
-          restore-keys: benchmark-baseline-
-
-      - name: Append today's results and prune old entries
-        shell: bash
-        run: |
-          mkdir -p benchmark-baseline-results/history
-          TODAY=$(date -u +%Y-%m-%d)
-          RUN_DIR="benchmark-baseline-results/history/${TODAY}_${{ github.run_id }}"
-          mkdir -p "$RUN_DIR"
-
-          # Copy generator-only results (used for PR comparisons)
-          if [ -d todays-results ] && ls todays-results/*.jsonl 1>/dev/null 2>&1; then
-            for f in todays-results/*.jsonl; do
-              [ -f "$f" ] && cp "$f" "$RUN_DIR/"
-            done
-          else
-            echo "::warning::No generator-only baseline results found. Removing empty history entry."
-            rm -rf "$RUN_DIR"
-            echo "SKIP_CACHE_SAVE=true" >> "$GITHUB_ENV"
-          fi
-
-          # Only proceed with E2E + metadata if generator-only results were found
-          if [ -d "$RUN_DIR" ]; then
-            # Copy full E2E results into a separate subdirectory (informational only)
-            if [ -d todays-e2e-results ] && ls todays-e2e-results/*.jsonl 1>/dev/null 2>&1; then
-              mkdir -p "$RUN_DIR/e2e"
-              for f in todays-e2e-results/*.jsonl; do
-                [ -f "$f" ] && cp "$f" "$RUN_DIR/e2e/"
-              done
-            fi
-
-            # Store metadata for this run
-            echo "{\"timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"sha\":\"${{ github.sha }}\"}" \
-              > "$RUN_DIR/_metadata.json"
-          fi
-
-          # Prune history older than 7 days
-          # Note: 'date -d' is GNU coreutils syntax (CI runs on Ubuntu; not portable to macOS)
-          CUTOFF=$(date -u -d '7 days ago' +%Y-%m-%d)
-          for dir in benchmark-baseline-results/history/*/; do
-            [ -d "$dir" ] || continue
-            DIR_DATE=$(basename "$dir" | cut -d_ -f1)
-            if [[ "$DIR_DATE" < "$CUTOFF" ]]; then
-              echo "Pruning old baseline: $dir (date: $DIR_DATE, cutoff: $CUTOFF)"
-              rm -rf "$dir"
-            fi
-          done
-
-          # Write top-level metadata summarizing the history
-          RUNS=$(ls -d benchmark-baseline-results/history/*/ 2>/dev/null | wc -l)
-          echo "{\"latest_timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"sha\":\"${{ github.sha }}\",\"total_runs\":${RUNS}}" \
-            > benchmark-baseline-results/_metadata.json
-
-          echo "Baseline history summary:"
-          cat benchmark-baseline-results/_metadata.json
-          echo "History entries:"
-          ls -la benchmark-baseline-results/history/
-
-      - name: Save baseline to cache
-        if: ${{ env.SKIP_CACHE_SAVE != 'true' }}
-        uses: actions/cache/save@v4
-        with:
-          path: benchmark-baseline-results
-          key: benchmark-baseline-${{ github.run_id }}
+          retention-days: 30
 
   # Send benchmark results to PostHog for long-term trend analysis and dashboards.
   # Uses the same PostHog project + API key as seed test metrics (seed.yml).

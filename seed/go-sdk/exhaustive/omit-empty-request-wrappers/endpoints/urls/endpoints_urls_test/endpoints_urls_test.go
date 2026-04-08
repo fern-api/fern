@@ -71,6 +71,7 @@ func TestEndpointsUrlsWithMixedCaseWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Endpoints.Urls.WithMixedCase(
 		context.TODO(),
@@ -92,6 +93,7 @@ func TestEndpointsUrlsNoEndingSlashWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Endpoints.Urls.NoEndingSlash(
 		context.TODO(),
@@ -113,6 +115,7 @@ func TestEndpointsUrlsWithEndingSlashWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Endpoints.Urls.WithEndingSlash(
 		context.TODO(),
@@ -134,6 +137,7 @@ func TestEndpointsUrlsWithUnderscoresWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Endpoints.Urls.WithUnderscores(
 		context.TODO(),

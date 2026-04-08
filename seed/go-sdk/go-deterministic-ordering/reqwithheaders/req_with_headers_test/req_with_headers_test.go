@@ -72,6 +72,7 @@ func TestReqWithHeadersGetWithCustomHeaderWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &fern.ReqWithHeaders{
 		XTestServiceHeader:  "X-TEST-SERVICE-HEADER",

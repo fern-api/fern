@@ -25,6 +25,14 @@ inputs:
     description: The matrix strategy index of the job (to differentiate when parallelizing jobs)
     required: false
     default: "0"
+  dockerhub-username:
+    description: Docker Hub username for authenticated pulls (avoids rate limits)
+    required: false
+    default: ""
+  dockerhub-token:
+    description: Docker Hub token for authenticated pulls (avoids rate limits)
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -40,6 +48,8 @@ runs:
         allow-unexpected-failures: ${{ inputs.allow-unexpected-failures }}
         skip-scripts: ${{ inputs.skip-scripts }}
         skip-git-diff-check: true
+        dockerhub-username: ${{ inputs.dockerhub-username }}
+        dockerhub-token: ${{ inputs.dockerhub-token }}
 
     # Add changes first to simplify git diff checks, no changes will NOT error here
     - name: Check for changes
