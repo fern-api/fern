@@ -1,6 +1,6 @@
 import { DeclaredErrorName } from "@fern-api/ir-sdk";
 import { IdGenerator } from "@fern-api/ir-utils";
-
+import { CliError } from "@fern-api/task-context";
 import { FernFileContext } from "../FernFileContext.js";
 import { convertToFernFilepath } from "./convertToFernFilepath.js";
 import { parseReferenceToTypeName } from "./parseReferenceToTypeName.js";
@@ -12,7 +12,7 @@ export function parseErrorName({ errorName, file }: { errorName: string; file: F
         imports: file.imports
     });
     if (reference == null) {
-        throw new Error("Failed to locate error " + errorName);
+        throw new CliError({ message: "Failed to locate error " + errorName, code: CliError.Code.ResolutionError });
     }
 
     const nameWithoutId = {
