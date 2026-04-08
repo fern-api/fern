@@ -57,7 +57,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         node-version: [20, 22, 24, 26]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
@@ -65,6 +65,11 @@ jobs:
       contents: read
 
     steps:
+      - name: Disable Windows Defender real-time monitoring
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: Set-MpPreference -DisableRealtimeMonitoring $true
+
       - name: Check Node.js version availability
         id: node-check
         shell: bash
@@ -101,15 +106,15 @@ jobs:
         uses: actions/download-artifact@v7
         with:
           name: cli-prod-bundle
-          path: /tmp/cli-artifact
+          path: ${{ runner.temp }}/cli-artifact
 
       - name: Install CLI native dependencies
         if: steps.node-check.outputs.available == 'true'
         shell: bash
         run: |
-          cd /tmp/cli-artifact
+          cd "$RUNNER_TEMP/cli-artifact"
           # The build resolves pnpm catalog: references to real versions.
-          # Run npm install in the isolated /tmp directory so npm doesn't
+          # Run npm install in the isolated temp directory so npm doesn't
           # walk up into the repo's pnpm workspace.
           npm install --ignore-scripts
 
@@ -155,6 +160,44 @@ jobs:
           wait $PW_PID
           wait $PROTO_PID
 
+      - name: Install tools (Windows)
+        if: steps.node-check.outputs.available == 'true' && runner.os == 'Windows'
+        shell: bash
+        run: |
+          (
+            cd smoke-test/playwright && npm install && npx playwright install chromium
+            echo "Playwright installed"
+          ) &
+          PW_PID=$!
+
+          (
+            # Install protoc via direct download
+            PROTOC_VERSION=28.3
+            curl -sSL -o "$RUNNER_TEMP/protoc.zip" "https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-win64.zip"
+            PROTOC_DIR="$RUNNER_TEMP/protoc"
+            mkdir -p "$PROTOC_DIR"
+            unzip -qo "$RUNNER_TEMP/protoc.zip" -d "$PROTOC_DIR"
+            echo "$PROTOC_DIR/bin" >> $GITHUB_PATH
+            # Install buf
+            BUF_VERSION=1.35.1
+            TOOLS_DIR="$RUNNER_TEMP/tools"
+            mkdir -p "$TOOLS_DIR"
+            curl -sSL -o "$TOOLS_DIR/buf.exe" "https://github.com/bufbuild/buf/releases/download/v${BUF_VERSION}/buf-Windows-x86_64.exe"
+            echo "$TOOLS_DIR" >> $GITHUB_PATH
+            go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@v0.1.12
+            echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+            echo "Proto toolchain installed"
+          ) &
+          PROTO_PID=$!
+
+          wait $PW_PID
+          wait $PROTO_PID
+
+      - name: Re-enable Windows Defender real-time monitoring
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: Set-MpPreference -DisableRealtimeMonitoring $false
+
       - name: Start fern docs dev server
         if: steps.node-check.outputs.available == 'true'
         shell: bash
@@ -165,7 +208,7 @@ jobs:
 
           # Use the locally-built CLI instead of the published npm version.
           # The CLI will download the production docs bundle from S3 automatically.
-          FERN_NO_VERSION_REDIRECTION=true node "/tmp/cli-artifact/cli.cjs" docs dev > /tmp/fern-docs-dev.log 2>&1 &
+          FERN_NO_VERSION_REDIRECTION=true node "$RUNNER_TEMP/cli-artifact/cli.cjs" docs dev > /tmp/fern-docs-dev.log 2>&1 &
           FERN_PID=$!
           echo "FERN_PID=$FERN_PID" >> $GITHUB_ENV
 
