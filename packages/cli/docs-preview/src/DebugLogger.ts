@@ -162,8 +162,8 @@ export class DebugLogger {
         await writeFile(this.logFilePath, header, "utf-8");
         this.initialized = true;
 
-        // Enforce the 100 MB cap on the logs directory
-        await this.enforceLogSizeLimit(logsDir);
+        // Enforce the 100 MB cap on the logs directory (fire-and-forget)
+        void this.enforceLogSizeLimit(logsDir);
     }
 
     /**
