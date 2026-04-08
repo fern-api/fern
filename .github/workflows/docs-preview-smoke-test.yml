@@ -212,8 +212,10 @@ jobs:
           FERN_PID=$!
           echo "FERN_PID=$FERN_PID" >> $GITHUB_ENV
 
-          echo "Waiting for fern docs dev server to start (PID: $FERN_PID)..."
-          for i in $(seq 1 120); do
+          # Windows bundle installation (download + pnpm install) can take 3-5 minutes
+          TIMEOUT=300
+          echo "Waiting for fern docs dev server to start (PID: $FERN_PID, timeout: ${TIMEOUT}s)..."
+          for i in $(seq 1 $TIMEOUT); do
             if grep -q "Docs preview server ready" /tmp/fern-docs-dev.log 2>/dev/null; then
               echo "Server is ready after ${i}s!"
               echo "--- Dev server logs ---"
@@ -230,8 +232,8 @@ jobs:
               exit 1
             fi
 
-            if [ $i -eq 120 ]; then
-              echo "Timeout waiting for server to start after 120s"
+            if [ $i -eq $TIMEOUT ]; then
+              echo "Timeout waiting for server to start after ${TIMEOUT}s"
               echo "--- Dev server logs ---"
               cat /tmp/fern-docs-dev.log
               echo "--- End dev server logs ---"
