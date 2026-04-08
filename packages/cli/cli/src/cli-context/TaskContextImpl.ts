@@ -3,7 +3,6 @@ import { addPrefixToString } from "@fern-api/core-utils";
 import { createLogger, LogLevel } from "@fern-api/logger";
 import {
     CliError,
-    type CliErrorCode,
     CreateInteractiveTaskParams,
     Finishable,
     InteractiveTaskContext,
@@ -29,7 +28,7 @@ export declare namespace TaskContextImpl {
         onResult?: (result: TaskResult) => void;
         shouldBufferLogs: boolean;
         instrumentPostHogEvent: (event: PosthogEvent) => void;
-        captureException?: (error: unknown, code?: CliErrorCode) => void;
+        captureException?: (error: unknown, code?: CliError.Code) => void;
     }
 }
 
@@ -43,7 +42,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     protected status: "notStarted" | "running" | "finished" = "notStarted";
     private onResult: ((result: TaskResult) => void) | undefined;
     private instrumentPostHogEventImpl: (event: PosthogEvent) => void;
-    private captureExceptionImpl?: (error: unknown, code?: CliErrorCode) => void;
+    private captureExceptionImpl?: (error: unknown, code?: CliError.Code) => void;
     public constructor({
         logImmediately,
         logPrefix,
@@ -83,13 +82,13 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
 
     public takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
 
-    public failAndThrow(message?: string, error?: unknown, options?: { code?: CliErrorCode }): never {
+    public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
         this.failWithoutThrowing(message, error, options);
         this.finish();
         throw new TaskAbortSignal();
     }
 
-    public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliErrorCode }): void {
+    public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
         this.result = TaskResult.Failure;
 
         if (error instanceof TaskAbortSignal) {
@@ -116,7 +115,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         }
     }
 
-    public captureException(error: unknown, code?: CliErrorCode): void {
+    public captureException(error: unknown, code?: CliError.Code): void {
         this.captureExceptionImpl?.(error, code);
     }
 

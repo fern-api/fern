@@ -34,7 +34,6 @@ import {
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
-import { CliError, LoggableFernCliError, TaskAbortSignal } from "@fern-api/task-context";
 import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -89,8 +88,6 @@ import { RUNTIME } from "./runtime.js";
 
 void runCli();
 
-const USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
-
 async function runCli() {
     getOrCreateFernRunId();
 
@@ -135,28 +132,7 @@ async function runCli() {
             });
         }
     } catch (error) {
-        cliContext.instrumentPostHogEvent({
-            command: process.argv.join(" "),
-            properties: {
-                failed: true,
-                error
-            }
-        });
-        if (error instanceof TaskAbortSignal) {
-            cliContext.failWithoutThrowing();
-        } else if (error instanceof CliError) {
-            cliContext.failWithoutThrowing(error.message, error);
-        } else if ((error as Error)?.message?.includes("globalThis")) {
-            cliContext.logger.error(USE_NODE_18_OR_ABOVE_MESSAGE);
-            cliContext.failWithoutThrowing(undefined, error, { code: "ENVIRONMENT_ERROR" });
-        } else if ((error as Error)?.message.includes("globalThis")) {
-            cliContext.logger.error(USE_NODE_18_OR_ABOVE_MESSAGE);
-            cliContext.failWithoutThrowing();
-        } else if (error instanceof LoggableFernCliError) {
-            cliContext.logger.error(`Failed. ${error.log}`);
-        } else {
-            cliContext.failWithoutThrowing("Failed.", error, { code: "INTERNAL_ERROR" });
-        }
+        cliContext.failWithoutThrowing(undefined, error);
     }
 
     await exit();

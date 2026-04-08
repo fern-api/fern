@@ -1,21 +1,67 @@
-export const CliErrorCode = {
-    InternalError: "INTERNAL_ERROR",
-    ResolutionError: "RESOLUTION_ERROR",
-    IrConversionError: "IR_CONVERSION_ERROR",
-    ContainerError: "CONTAINER_ERROR",
-    VersionError: "VERSION_ERROR",
-    ParseError: "PARSE_ERROR",
-    EnvironmentError: "ENVIRONMENT_ERROR",
-    ReferenceError: "REFERENCE_ERROR",
-    ValidationError: "VALIDATION_ERROR",
-    NetworkError: "NETWORK_ERROR",
-    AuthError: "AUTH_ERROR",
-    ConfigError: "CONFIG_ERROR"
-} as const;
+export class CliError extends Error {
+    public readonly code: CliError.Code;
+    public readonly docsLink?: string;
 
-export type CliErrorCode = (typeof CliErrorCode)[keyof typeof CliErrorCode];
+    constructor({ message, code, docsLink }: { message: string; code: CliError.Code; docsLink?: string }) {
+        super(message);
+        Object.setPrototypeOf(this, CliError.prototype);
+        this.code = code;
+        this.docsLink = docsLink;
+    }
 
-const SENTRY_REPORTABLE: Record<CliErrorCode, boolean> = {
+    public static authRequired(message?: string): CliError {
+        return new CliError({
+            message:
+                message ??
+                "Authentication required. Please run 'fern login' or set the FERN_TOKEN environment variable.",
+            code: CliError.Code.AuthError
+        });
+    }
+
+    public static unauthorized(message?: string): CliError {
+        return new CliError({
+            message:
+                message ?? "Unauthorized. Please run 'fern auth login' or set the FERN_TOKEN environment variable.",
+            code: CliError.Code.AuthError
+        });
+    }
+
+    public static notFound(message: string): CliError {
+        return new CliError({ message, code: CliError.Code.ConfigError });
+    }
+
+    public static badRequest(message: string): CliError {
+        return new CliError({ message, code: CliError.Code.NetworkError });
+    }
+
+    public static validationError(message: string): CliError {
+        return new CliError({ message, code: CliError.Code.ValidationError });
+    }
+
+    public static internalError(message: string): CliError {
+        return new CliError({ message, code: CliError.Code.InternalError });
+    }
+}
+
+export namespace CliError {
+    export type Code = (typeof Code)[keyof typeof Code];
+    export const Code = {
+        InternalError: "INTERNAL_ERROR",
+        ResolutionError: "RESOLUTION_ERROR",
+        IrConversionError: "IR_CONVERSION_ERROR",
+        ContainerError: "CONTAINER_ERROR",
+        VersionError: "VERSION_ERROR",
+        ParseError: "PARSE_ERROR",
+        EnvironmentError: "ENVIRONMENT_ERROR",
+        ReferenceError: "REFERENCE_ERROR",
+        ValidationError: "VALIDATION_ERROR",
+        NetworkError: "NETWORK_ERROR",
+        AuthError: "AUTH_ERROR",
+        ConfigError: "CONFIG_ERROR"
+    } as const;
+}
+
+const SENTRY_REPORTABLE: Record<CliError.Code, boolean> = {
     INTERNAL_ERROR: true,
     RESOLUTION_ERROR: true,
     IR_CONVERSION_ERROR: true,
@@ -30,7 +76,7 @@ const SENTRY_REPORTABLE: Record<CliErrorCode, boolean> = {
     CONFIG_ERROR: false
 };
 
-export function shouldReportToSentry(code: CliErrorCode): boolean {
+export function shouldReportToSentry(code: CliError.Code): boolean {
     return SENTRY_REPORTABLE[code];
 }
 
@@ -49,7 +95,7 @@ function isNodeVersionError(error: unknown): boolean {
  * then auto-detects from known error types,
  * and falls back to INTERNAL_ERROR for truly unknown errors.
  */
-export function resolveErrorCode(error: unknown, explicitCode?: CliErrorCode): CliErrorCode {
+export function resolveErrorCode(error: unknown, explicitCode?: CliError.Code): CliError.Code {
     if (explicitCode != null) {
         return explicitCode;
     }
@@ -57,55 +103,10 @@ export function resolveErrorCode(error: unknown, explicitCode?: CliErrorCode): C
         return error.code;
     }
     if (isSchemaValidationError(error)) {
-        return "PARSE_ERROR";
+        return CliError.Code.ParseError;
     }
     if (isNodeVersionError(error)) {
-        return "ENVIRONMENT_ERROR";
+        return CliError.Code.EnvironmentError;
     }
-    return "INTERNAL_ERROR";
-}
-
-export class CliError extends Error {
-    public readonly code: CliErrorCode;
-    public readonly docsLink?: string;
-
-    constructor({ message, code, docsLink }: { message: string; code: CliErrorCode; docsLink?: string }) {
-        super(message);
-        Object.setPrototypeOf(this, CliError.prototype);
-        this.code = code;
-        this.docsLink = docsLink;
-    }
-
-    public static authRequired(message?: string): CliError {
-        return new CliError({
-            message:
-                message ??
-                "Authentication required. Please run 'fern login' or set the FERN_TOKEN environment variable.",
-            code: "AUTH_ERROR"
-        });
-    }
-
-    public static unauthorized(message?: string): CliError {
-        return new CliError({
-            message:
-                message ?? "Unauthorized. Please run 'fern auth login' or set the FERN_TOKEN environment variable.",
-            code: "AUTH_ERROR"
-        });
-    }
-
-    public static notFound(message: string): CliError {
-        return new CliError({ message, code: "CONFIG_ERROR" });
-    }
-
-    public static badRequest(message: string): CliError {
-        return new CliError({ message, code: "NETWORK_ERROR" });
-    }
-
-    public static validationError(message: string): CliError {
-        return new CliError({ message, code: "VALIDATION_ERROR" });
-    }
-
-    public static internalError(message: string): CliError {
-        return new CliError({ message, code: "INTERNAL_ERROR" });
-    }
+    return CliError.Code.InternalError;
 }

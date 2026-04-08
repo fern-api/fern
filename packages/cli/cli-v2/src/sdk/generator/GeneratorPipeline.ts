@@ -123,7 +123,8 @@ export class GeneratorPipeline {
                 throw new CliError({
                     message:
                         `Custom image configurations are only supported with local generation (--local). ` +
-                        `Target "${args.target.name}" uses a custom image registry.`
+                        `Target "${args.target.name}" uses a custom image registry.`,
+                    code: CliError.Code.ConfigError
                 });
             }
             return await this.runRemoteGeneration(args);

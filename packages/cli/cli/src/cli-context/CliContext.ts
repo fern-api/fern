@@ -5,7 +5,6 @@ import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import {
     CliError,
-    type CliErrorCode,
     Finishable,
     PosthogEvent,
     resolveErrorCode,
@@ -120,12 +119,12 @@ export class CliContext {
         );
     }
 
-    public failAndThrow(message?: string, error?: unknown, options?: { code?: CliErrorCode }): never {
+    public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
         this.failWithoutThrowing(message, error, options);
         throw new TaskAbortSignal();
     }
 
-    public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliErrorCode }): void {
+    public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
         this.didSucceed = false;
         if (error instanceof TaskAbortSignal) {
             // We already tracked the true error, so we can just return.
@@ -290,7 +289,7 @@ export class CliContext {
         }
     }
 
-    public async captureException(error: unknown, code?: CliErrorCode): Promise<void> {
+    public async captureException(error: unknown, code?: CliError.Code): Promise<void> {
         await this.sentryClient.captureException(error, code);
     }
 
