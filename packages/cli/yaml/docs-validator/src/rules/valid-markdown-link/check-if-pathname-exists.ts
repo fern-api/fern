@@ -22,7 +22,8 @@ export async function checkIfPathnameExists({
     pageSlugs,
     absoluteFilePathsToSlugs,
     redirects = [],
-    baseUrl
+    baseUrl,
+    versionSlugs = []
 }: {
     pathname: string;
     markdown: boolean;
@@ -39,6 +40,7 @@ export async function checkIfPathnameExists({
         domain: string;
         basePath?: string;
     };
+    versionSlugs?: string[];
 }): Promise<true | string[]> {
     pathname = removeTrailingSlash(pathname);
     const slugs = absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : [];
@@ -71,6 +73,24 @@ export async function checkIfPathnameExists({
 
         if (markdown && pageSlugs.has(removeLeadingSlash(redirectedPath))) {
             return true;
+        }
+
+        // For versioned pages, absolute links like `/about` resolve within the current version context.
+        // Check if the pathname exists under any version prefix that the current file belongs to.
+        if (markdown && versionSlugs.length > 0) {
+            const currentFileSlugs =
+                absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : [];
+            for (const slug of currentFileSlugs) {
+                for (const versionSlug of versionSlugs) {
+                    if (slug.startsWith(versionSlug + "/") || slug === versionSlug) {
+                        const versionedPath = `${versionSlug}/${removeLeadingSlash(redirectedPath)}`;
+                        if (pageSlugs.has(versionedPath)) {
+                            return true;
+                        }
+                        break;
+                    }
+                }
+            }
         }
 
         const absolutePath = join(workspaceAbsoluteFilePath, RelativeFilePath.of(removeLeadingSlash(pathname)));

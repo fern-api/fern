@@ -53,6 +53,17 @@ describe("fern docs broken-links", () => {
         expect(stripAnsi(stdout)).toContain("All checks passed");
     }, 20_000);
 
+    it("absolute links in versioned docs should resolve within version context", async ({ signal }) => {
+        const { stdout } = await runFernCli(["docs", "broken-links"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("versioned-docs")),
+            reject: false,
+            signal
+        });
+        // Absolute links like /plants/aesthetic in versioned pages should resolve
+        // within the version context (e.g., v2/plants/aesthetic) and not be flagged as broken
+        expect(stripAnsi(stdout)).toContain("All checks passed");
+    }, 20_000);
+
     it("broken links in sections with path property should be detected", async ({ signal }) => {
         const { stdout } = await runFernCli(["docs", "broken-links"], {
             cwd: join(fixturesDir, RelativeFilePath.of("section-with-path")),
