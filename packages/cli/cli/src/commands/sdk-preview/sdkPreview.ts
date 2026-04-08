@@ -37,6 +37,11 @@ interface SdkPreviewError {
 
 type SdkPreviewResult = SdkPreviewSuccess | SdkPreviewError;
 
+/** Returns true if the value looks like a registry URL rather than a filesystem path. */
+function isRegistryUrl(value: string): boolean {
+    return value.startsWith("https://") || value.startsWith("http://");
+}
+
 export async function sdkPreview({
     cliContext,
     groupName,
@@ -50,10 +55,11 @@ export async function sdkPreview({
     generatorFilter: string | undefined;
     apiName: string | undefined;
     json: boolean;
-    output: string | undefined;
+    output: string[] | undefined;
 }): Promise<void> {
     const previews: SdkPreviewSuccess["previews"] = [];
     let organization: string | undefined;
+    let registryUrl: string | undefined;
     let publishToRegistry = true;
 
     try {
@@ -86,16 +92,32 @@ export async function sdkPreview({
         const previewId = await getPreviewId();
         cliContext.logger.info(`Preview ID: ${previewId}`);
 
-        // 4. Resolve output path for generated SDK files.
+        // 4. Resolve output targets from --output values.
         //
-        // When --output is provided: write to the specified directory, skip
-        // registry publish (disk-only mode for power users).
-        // When --output is omitted: publish to the preview registry AND write
-        // to a temporary directory so CI actions can compute SDK diffs.
-        publishToRegistry = output == null;
+        // Each --output value is classified as a filesystem path or a registry URL.
+        //   - No --output at all: temp dir + default preview registry
+        //   - Only paths:         write to first path, no registry publish
+        //   - Only URLs:          temp dir + publish to first URL
+        //   - Paths + URLs:       write to first path + publish to first URL
+        const pathOutputs = output?.filter((v) => !isRegistryUrl(v)) ?? [];
+        const urlOutputs = output?.filter(isRegistryUrl) ?? [];
+
+        if (output == null) {
+            // Default: publish to preview registry + temp dir for diffs
+            registryUrl = PREVIEW_REGISTRY_URL;
+            publishToRegistry = true;
+        } else if (urlOutputs.length > 0) {
+            registryUrl = urlOutputs[0];
+            publishToRegistry = true;
+        } else {
+            // Only paths, no URLs → disk-only mode
+            registryUrl = undefined;
+            publishToRegistry = false;
+        }
+
         const absolutePathToOutput =
-            output != null
-                ? AbsoluteFilePath.of(resolve(cwd(), output))
+            pathOutputs.length > 0
+                ? AbsoluteFilePath.of(resolve(cwd(), pathOutputs[0]))
                 : AbsoluteFilePath.of(await fs.mkdtemp(path.join(os.tmpdir(), "fern-sdk-preview-")));
         await fs.mkdir(absolutePathToOutput, { recursive: true });
 
@@ -162,14 +184,18 @@ export async function sdkPreview({
                 const previewVersion = computePreviewVersion({ previewId });
                 cliContext.logger.info(`Preview version: ${previewVersion}`);
 
-                // Override group output to publish to preview registry.
-                // token.value is the Fern org token (FERN_TOKEN) — the preview registry
+                // Override group output to publish to the target registry.
+                // token.value is the Fern org token (FERN_TOKEN) — the registry
                 // must accept this token for publish authentication.
-                const modifiedGroup = overrideGroupOutputForPreview({
-                    group: { ...group, generators: [generator] },
-                    packageName: previewPackageName,
-                    token: token.value
-                });
+                const modifiedGroup =
+                    publishToRegistry && registryUrl != null
+                        ? overrideGroupOutputForPreview({
+                              group: { ...group, generators: [generator] },
+                              packageName: previewPackageName,
+                              token: token.value,
+                              registryUrl
+                          })
+                        : { ...group, generators: [generator] };
 
                 // Run generation locally via Docker. We use local generation (not remote/Fiddle)
                 // because we programmatically override the output config, which requires direct
@@ -204,14 +230,14 @@ export async function sdkPreview({
                     RelativeFilePath.of(getGeneratorOutputSubfolder(generator.name))
                 );
 
-                if (publishToRegistry) {
-                    const installCommand = `npm install ${originalPackageName}@npm:${previewPackageName}@${previewVersion} --registry ${PREVIEW_REGISTRY_URL}`;
+                if (publishToRegistry && registryUrl != null) {
+                    const installCommand = `npm install ${originalPackageName}@npm:${previewPackageName}@${previewVersion} --registry ${registryUrl}`;
                     previews.push({
                         preview_id: previewId,
                         install: installCommand,
                         version: previewVersion,
                         package_name: previewPackageName,
-                        registry_url: PREVIEW_REGISTRY_URL,
+                        registry_url: registryUrl,
                         output_path: actualOutputPath
                     });
                 } else {
