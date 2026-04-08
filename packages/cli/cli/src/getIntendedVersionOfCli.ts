@@ -14,6 +14,7 @@ export async function getIntendedVersionOfCli(cliContext: CliContext): Promise<s
         if (resolveVersion === "latest") {
             return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
         }
+        cliContext.logger.info(`Resolving Fern CLI to version '${resolveVersion}' via FERN_RESOLVE_VERSION.`);
         return resolveVersion;
     }
     const fernDirectory = await getFernDirectory();

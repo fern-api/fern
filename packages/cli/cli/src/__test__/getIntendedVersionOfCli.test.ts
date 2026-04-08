@@ -19,8 +19,11 @@ vi.mock("../cli-context/upgrade-utils/getLatestVersionOfCli.js", () => ({
 
 const CURRENT_VERSION = "0.40.0";
 
+const mockInfo = vi.fn();
+
 const mockCliContext = {
     environment: { packageVersion: CURRENT_VERSION },
+    logger: { info: mockInfo },
     runTask: (fn: (context: unknown) => Promise<unknown>) => mockRunTask(fn)
 };
 
@@ -35,6 +38,7 @@ beforeEach(() => {
     mockGetFernDirectory.mockResolvedValue(undefined);
     mockGetLatestVersionOfCli.mockResolvedValue("0.99.0");
     mockLoadProjectConfig.mockResolvedValue({ version: "0.50.0" });
+    mockInfo.mockClear();
 });
 
 afterEach(() => {
@@ -90,6 +94,12 @@ describe("FERN_RESOLVE_VERSION", () => {
         process.env.FERN_RESOLVE_VERSION = "";
         mockGetFernDirectory.mockResolvedValue("/workspace/fern");
         expect(await getIntended()).toBe("0.50.0");
+    });
+
+    it("passes npm tags through as-is", async () => {
+        process.env.FERN_RESOLVE_VERSION = "beta";
+        expect(await getIntended()).toBe("beta");
+        expect(mockGetFernDirectory).not.toHaveBeenCalled();
     });
 });
 

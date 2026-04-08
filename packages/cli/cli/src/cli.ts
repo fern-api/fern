@@ -126,10 +126,33 @@ async function runCli() {
         if (cliContext.environment.packageVersion === versionOfCliToRun) {
             await tryRunCli(cliContext);
         } else {
-            await rerunFernCliAtVersion({
-                version: versionOfCliToRun,
-                cliContext
-            });
+            try {
+                await rerunFernCliAtVersion({
+                    version: versionOfCliToRun,
+                    cliContext,
+                    throwOnError: true
+                });
+            } catch (error) {
+                if (process.env.FERN_RESOLVE_VERSION && process.env.FERN_RESOLVE_VERSION !== "auto") {
+                    cliContext.logger.warn(
+                        `Failed to resolve FERN_RESOLVE_VERSION='${process.env.FERN_RESOLVE_VERSION}'. Falling back to default version resolution.`
+                    );
+                    const originalValue = process.env.FERN_RESOLVE_VERSION;
+                    delete process.env.FERN_RESOLVE_VERSION;
+                    const fallbackVersion = await getIntendedVersionOfCli(cliContext);
+                    process.env.FERN_RESOLVE_VERSION = originalValue;
+                    if (cliContext.environment.packageVersion === fallbackVersion) {
+                        await tryRunCli(cliContext);
+                    } else {
+                        await rerunFernCliAtVersion({
+                            version: fallbackVersion,
+                            cliContext
+                        });
+                    }
+                } else {
+                    throw error;
+                }
+            }
         }
     } catch (error) {
         await cliContext.instrumentPostHogEvent({

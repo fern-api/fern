@@ -4,7 +4,9 @@
   changelogEntry:
     - summary: |
         Add FERN_RESOLVE_VERSION env var to control CLI version redirection.
-        Supports 'auto', 'latest', 'inherit', or a specific version string.
+        Supports 'auto', 'latest', 'inherit', a specific version, or any npm
+        tag (e.g. 'beta'). Gracefully falls back to default resolution if
+        the requested version cannot be resolved.
       type: chore
   createdAt: "2026-04-08"
   irVersion: 66
