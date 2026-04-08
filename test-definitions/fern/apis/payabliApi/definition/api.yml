@@ -1,0 +1,30 @@
+auth: ApiKeyAuth
+auth-schemes:
+  ApiKeyAuth:
+    header: requestToken
+    name: apiKey
+    type: string
+default-environment: Sandbox
+display-name: Payabli API
+environments:
+  Sandbox: https://api-sandbox.payabli.com/api
+  Production: https://api.payabli.com/api
+error-discrimination:
+  strategy: status-code
+name: api
+docs: |
+
+  ## Payabli API
+
+  The Payabli API is a RESTful API that enables you to build robust payment solutions on the Payabli platform. Process card and ACH transactions, manage entities like vendors and customers, handle subscriptions and recurring billing, tokenize payment methods securely, and send payouts. 
+  
+  The API provides comprehensive endpoints for accepting payments, making payouts to vendors, and managing merchant operations. Use our sandbox environment to build and test your integration, then seamlessly move to production. 
+  
+  The API includes built-in security features like idempotency keys to prevent duplicate transactions, rate limits for optimal performance, and multiple authentication token types for different use cases. Available in both sandbox and production environments with complete support for webhooks, fraud controls, and real-time transaction processing.
+
+  See the [API overview](https://docs.payabli.com/developers/api-reference/api-overview) for information on authentication, error handling, idempotency, rate limits, and more. 
+
+  See our full collection of [developer tools](https://docs.payabli.com/developers/developer-guides/tools-overview) for SDKs, our MCP server, Postman collection information, and example apps to help you get started quickly.
+
+imports:
+  root: __package__.yml

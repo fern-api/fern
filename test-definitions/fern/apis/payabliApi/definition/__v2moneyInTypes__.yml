@@ -1,0 +1,2861 @@
+imports:
+  root: __package__.yml
+  moneyIn: moneyIn.yml
+
+errors:
+## BadRequest Errors for V2 Money In Endpoints
+
+  BadRequestAuthResponseErrorV2: # Bad Request specific to Authorizations and transactions
+    docs: >-
+      Bad request error for v2 Money In auth endpoint (HTTP 400). Returned when request validation fails.
+      Follows RFC 7807 Problem Details format with Payabli-specific unified response codes. See the [Pay In unified response codes reference](/developers/references/pay-in-unified-response-codes-reference) for the complete list of codes.
+    status-code: 400
+    type: V2BadRequestError
+    examples:
+      - name: InvalidCVV
+        value:
+          type: "https://docs.payabli.com/developers/references/pay-in-unified-response-codes"
+          title: "Bad Request"
+          status: 400
+          detail: "Invalid CVV number"
+          instance: "/api/v2/MoneyIn/auth"
+          code: "E7016"
+          errors:
+            "paymentMethod.cvv":
+              - message: "Invalid CVV number provided"
+                suggestion: "Provide a valid CVV number in payment method object"
+          token: null
+      - name: InvalidCardNumber
+        value:
+          type: "https://docs.payabli.com/developers/references/pay-in-unified-response-codes"
+          title: "Bad Request"
+          status: 400
+          detail: "Invalid card number"
+          instance: "/api/v2/MoneyIn/getpaid"
+          code: "E7015"
+          errors:
+            "paymentMethod.cardnumber":
+              - message: "Invalid card number provided"
+                suggestion: "Provide a valid card number in payment method object"
+          token: null
+  
+  BadRequestCaptureResponseErrorV2: ## Bad Request specific to Captures
+    docs: >-
+      Bad request error for v2 Money In capture endpoint (HTTP 400). Returned when request validation fails.
+      Follows RFC 7807 Problem Details format with Payabli-specific unified response codes. See the [Pay In unified response codes reference](/guides/pay-in-unified-response-codes-reference) for the complete list of codes.
+    status-code: 400
+    type: V2BadRequestError
+    examples:
+      - name: CaptureAmountExceedsAuthorized
+        value:
+          type: "https://docs.payabli.com/developers/references/pay-in-unified-response-codes"
+          title: "Bad Request"
+          status: 400
+          detail: "Invalid Amount"
+          instance: "/api/v2/MoneyIn/capture/10-3ffa27df-b171-44e0-b251-e95fbfc7a723/999999"
+          code: "E8012"
+          errors:
+            "amount":
+              - message: "Amount value is greater than authorized amount for action"
+                suggestion: "Provide a valid amount"
+          token: null
+      - name: TransactionNotAuthorized
+        value:
+          type: "https://docs.payabli.com/developers/references/pay-in-unified-response-codes"
+          title: "Bad Request"
+          status: 400
+          detail: "Capture not allowed"
+          instance: "/api/v2/MoneyIn/capture/10-3ffa27df-b171-44e0-b251-e95fbfc7a723/100"
+          code: "D0330"
+          errors:
+            "transId":
+              - message: "The transaction is not authorized for capture This error may occur because the transaction was captured, declined, or already reversed"
+                suggestion: "Conntact support for assistance"
+          token: null
+    
+  BadRequestRefundResponseErrorV2: # Bad Request specific to Refunds
+    docs: >-
+      Bad request error for v2 Money In refund endpoint (HTTP 400). Returned when request validation fails.
+      Follows RFC 7807 Problem Details format with Payabli-specific unified response codes. See the [Pay In unified response codes reference](/guides/pay-in-unified-response-codes-reference) for the complete list of codes.
+    status-code: 400
+    type: V2BadRequestError
+    examples:
+      - name: RefundAmountExceedsAvailable
+        value:
+          type: "https://docs.payabli.com/developers/references/pay-in-unified-response-codes"
+          title: "Bad Request"
+          status: 400
+          detail: "Invalid Amount"
+          instance: "/api/v2/MoneyIn/refund/10-3ffa27df-b171-44e0-b251-e95fbfc7a723/999999"
+          code: "E3012"
+          errors:
+            "amount":
+              - message: "Amount value is greater than available amount for action"
+                suggestion: "Provide a valid amount"
+          token: null
+      - name: TransactionCannotBeRefunded
+        value:
+          type: "https://docs.payabli.com/developers/references/pay-in-unified-response-codes"
+          title: "Bad Request"
+          status: 400
+          detail: "The transaction cannot be refunded"
+          instance: "/api/v2/MoneyIn/refund/10-3ffa27df-b171-44e0-b251-e95fbfc7a723/100"
+          code: "E3007"
+          errors:
+            "transId":
+              - message: "We can't refund this transaction because it already has an associated chargeback or return"
+                suggestion: "Contact support with questions"
+          token: null
+      - name: InvalidTransactionStatus
+        value:
+          type: "https://docs.payabli.com/developers/references/pay-in-unified-response-codes"
+          title: "Bad Request"
+          status: 400
+          detail: "Invalid transaction status"
+          instance: "/api/v2/MoneyIn/capture/10-3ffa27df-b171-44e0-b251-e95fbfc7a723"
+          code: "E7002"
+          errors:
+            "transId":
+              - message: "The status of the transaction does not allow the action requested"
+                suggestion: "Verify the status of the transaction. For refunds, the transaction must be settled. When voiding or canceling a sale, auth, or a refund transaction, the status must be Approved (1) or Authorized (11)."
+          token: null
+
+  BadRequestVoidResponseErrorV2: # Bad Request specific to Voids
+    docs: >-
+      Bad request error for v2 Money In void endpoint (HTTP 400). Returned when request validation fails.
+      Follows RFC 7807 Problem Details format with Payabli-specific unified response codes. See the [Pay In unified response codes reference](/guides/pay-in-unified-response-codes-reference) for the complete list of codes.
+    status-code: 400
+    type: V2BadRequestError
+    examples:
+      - name: VoidDecline
+        value:
+          type: "https://docs.payabli.com/developers/references/pay-in-unified-response-codes"
+          title: "Bad Request"
+          status: 400
+          detail: "Void is declined"
+          instance: "/api/v2/MoneyIn/void/10-3ffa27df-b171-44e0-b251-e95fbfc7a723"
+          code: "E7043"
+          errors:
+            "transId":
+              - message: "Void is not allowed after the batch is closed"
+                suggestion: "Perform a refund instead. A transaction can't be voided after batch close."
+          token: null
+      - name: InvalidTransactionStatus
+        value:
+          type: "https://docs.payabli.com/developers/references/pay-in-unified-response-codes"
+          title: "Bad Request"
+          status: 400
+          detail: "Invalid transaction status"
+          instance: "/api/v2/MoneyIn/capture/10-3ffa27df-b171-44e0-b251-e95fbfc7a723"
+          code: "E7002"
+          errors:
+            "transId":
+              - message: "The status of the transaction does not allow the action requested"
+                suggestion: "Verify the status of the transaction. For refunds, the transaction must be settled. When voiding or canceling a sale, auth, or a refund transaction, the status must be Approved (1) or Authorized (11)."
+          token: null
+
+## Declined Errors for V2 Money In Endpoints
+
+  DeclinedCaptureResponseErrorV2:
+    docs: >-
+      Capture decline error for v2 Money In endpoints (HTTP 402). Returned when a capture operation is declined for a transaction. Uses unified response codes starting with 'D'. See the [Pay In unified response codes reference](/guides/pay-in-unified-response-codes-reference) for the complete list of codes.
+    status-code: 402
+    type: V2DeclinedTransactionResponseWrapper
+    examples:
+      - name: CaptureNotAllowed
+        value:
+          code: "D0330"
+          reason: "Capture not allowed"
+          explanation: "The transaction is not authorized for capture. This error may occur because the transaction was captured, declined, or already reversed"
+          action: "Contact support for assistance"
+          data:
+            parentOrgName: "Mrinal's Pet Supplies"
+            paypointDbaname: "Mrinal's Pet Shop North"
+            paypointLegalname: "Mrinal's Pet Shop North"
+            paypointEntryname: "495147f647"
+            paymentTransId: "3040-96dfa9a7c4ed4f82a3dd4a4a12ad28ae"
+            connectorName: "gp"
+            externalProcessorInformation: ""
+            gatewayTransId: "TRN_Ih68D6UZdip7OEQ2QFXat1yQSLF2nB"
+            orderId: null
+            method: "card"
+            batchNumber: "3040_combined_20251201"
+            batchAmount: 420
+            payorId: 4440
+            paymentData:
+              maskedAccount: "4XXXXXXXXXXX5439"
+              accountType: "visa"
+              accountExp: "12/25"
+              holderName: "John Cassian"
+              storedId: null
+              initiator: null
+              storedMethodUsageType: null
+              sequence: null
+              orderDescription: ""
+              accountId: null
+              signatureData: null
+              binData:
+                binMatchedLength: "6"
+                binCardBrand: "VISA"
+                binCardType: "CREDIT"
+                binCardCategory: "CLASSIC"
+                binCardIssuer: ""
+                binCardIssuerCountry: "RUSSIAN FEDERATION"
+                binCardIssuerCountryCodeA2: "RU"
+                binCardIssuerCountryNumber: "643"
+                binCardIsRegulated: ""
+                binCardUseCategory: ""
+                binCardIssuerCountryCodeA3: ""
+              paymentDetails:
+                totalAmount: 105
+                serviceFee: 5
+                checkNumber: null
+                checkImage: null
+                checkUniqueId: ""
+                currency: "USD"
+                orderDescription: null
+                orderId: null
+                orderIdAlternative: null
+                paymentDescription: null
+                groupNumber: null
+                source: null
+                payabliTransId: null
+                unbundled: null
+                categories: []
+                splitFunding: []
+            transStatus: 3
+            paypointId: 3040
+            totalAmount: 105
+            netAmount: 100
+            feeAmount: 5
+            settlementStatus: 0
+            operation: "Sale"
+            responseData:
+              resultCode: "D0100"
+              resultCodeText: "Declined"
+              response: null
+              responsetext: "DECLINE"
+              authcode: null
+              transactionid: "TRN_Ih68D6UZdip7OEQ2QFXat1yQSLF2nB"
+              avsresponse: null
+              avsresponse_text: null
+              cvvresponse: null
+              cvvresponse_text: null
+              orderid: null
+              type: null
+              response_code: "200"
+              response_code_text: "Do not honor"
+              customer_vault_id: null
+              emv_auth_response_data: null
+            source: "api"
+            scheduleReference: 0
+            orgId: 17448
+            refundId: 0
+            returnedId: 0
+            chargebackId: 0
+            retrievalId: 0
+            transAdditionalData: null
+            invoiceData:
+              invoiceNumber: null
+              invoiceDate: null
+              invoiceDueDate: null
+              invoiceEndDate: null
+              invoiceStatus: null
+              invoiceType: null
+              frequency: null
+              paymentTerms: null
+              termsConditions: null
+              notes: null
+              tax: null
+              discount: null
+              invoiceAmount: null
+              freightAmount: null
+              dutyAmount: null
+              purchaseOrder: null
+              firstName: null
+              lastName: null
+              company: null
+              shippingAddress1: null
+              shippingAddress2: null
+              shippingCity: null
+              shippingState: null
+              shippingZip: null
+              shippingCountry: null
+              shippingEmail: null
+              shippingPhone: null
+              shippingFromZip: null
+              summaryCommodityCode: null
+              items: null
+              attachments: null
+              additionalData: null
+            entrypageId: 0
+            externalPaypointID: ""
+            isValidatedACH: false
+            transactionTime: "2025-12-01T09:50:03.559"
+            customer:
+              identifiers: null
+              firstName: "David"
+              lastName: "Beckham"
+              companyName: "Driving School LLC"
+              billingAddress1: "Home Address"
+              billingAddress2: ""
+              billingCity: ""
+              billingState: ""
+              billingZip: "45157"
+              billingCountry: "US"
+              billingPhone: "+15555555555"
+              billingEmail: "david.beckham@example.com"
+              customerNumber: "C-90010"
+              shippingAddress1: "Home Address"
+              shippingAddress2: ""
+              shippingCity: ""
+              shippingState: ""
+              shippingZip: "45157"
+              shippingCountry: "US"
+              customerId: 4440
+              customerStatus: 0
+              additionalData: null
+            splitFundingInstructions: null
+            cfeeTransactions: []
+            transactionEvents:
+              - transEvent: "Created"
+                eventData: "0HNHD68HATSUC:00000001"
+                eventTime: "2025-12-01T09:50:02.558651"
+              - transEvent: "Declined"
+                eventData: "0HNHD68HATSUC:00000001"
+                eventTime: "2025-12-01T09:50:03.609111"
+            pendingFeeAmount: 0
+            riskFlagged: false
+            riskFlaggedOn: "2025-12-01T09:50:02.5474568"
+            riskStatus: "PASSED"
+            riskReason: ""
+            riskAction: ""
+            riskActionCode: 0
+            deviceId: ""
+            achSecCode: ""
+            achHolderType: "personal"
+            ipAddress: "255.255.255.255"
+            isSameDayACH: false
+            walletType: null
+          token: null
+
+  DeclinedAuthResponseErrorV2:
+      docs: >-
+        Auth or sale decline error for v2 Money In endpoints (HTTP 402). Returned when an authorization or sale operation is declined for a transaction. Uses unified response codes starting with 'D'. See the [Pay In unified response codes reference](/guides/pay-in-unified-response-codes-reference) for the complete list of codes.
+      status-code: 402
+      type: V2DeclinedTransactionResponseWrapper
+      examples:
+        - name: MissingPaymentInformation
+          value:
+            code: "D0254"
+            reason: "Incorrect or missing payment information"
+            explanation: "Card issuer could not identify payment information"
+            action: "Use a different card or payment method"
+            data:
+              parentOrgName: "Mrinal's Pet Supplies"
+              paypointDbaname: "Mrinal's Pet Shop North"
+              paypointLegalname: "Mrinal's Pet Shop North"
+              paypointEntryname: "495147f647"
+              paymentTransId: "3040-96dfa9a7c4ed4f82a3dd4a4a12ad28ae"
+              connectorName: "gp"
+              externalProcessorInformation: ""
+              gatewayTransId: "TRN_Ih68D6UZdip7OEQ2QFXat1yQSLF2nB"
+              orderId: null
+              method: "card"
+              batchNumber: "3040_combined_20251201"
+              batchAmount: 420
+              payorId: 4440
+              paymentData:
+                maskedAccount: "4XXXXXXXXXXX5439"
+                accountType: "visa"
+                accountExp: "12/25"
+                holderName: "John Cassian"
+                storedId: null
+                initiator: null
+                storedMethodUsageType: null
+                sequence: null
+                orderDescription: ""
+                accountId: null
+                signatureData: null
+                binData:
+                  binMatchedLength: "6"
+                  binCardBrand: "VISA"
+                  binCardType: "CREDIT"
+                  binCardCategory: "CLASSIC"
+                  binCardIssuer: ""
+                  binCardIssuerCountry: "RUSSIAN FEDERATION"
+                  binCardIssuerCountryCodeA2: "RU"
+                  binCardIssuerCountryNumber: "643"
+                  binCardIsRegulated: ""
+                  binCardUseCategory: ""
+                  binCardIssuerCountryCodeA3: ""
+                paymentDetails:
+                  totalAmount: 105
+                  serviceFee: 5
+                  checkNumber: null
+                  checkImage: null
+                  checkUniqueId: ""
+                  currency: "USD"
+                  orderDescription: null
+                  orderId: null
+                  orderIdAlternative: null
+                  paymentDescription: null
+                  groupNumber: null
+                  source: null
+                  payabliTransId: null
+                  unbundled: null
+                  categories: []
+                  splitFunding: []
+              transStatus: 3
+              paypointId: 3040
+              totalAmount: 105
+              netAmount: 100
+              feeAmount: 5
+              settlementStatus: 0
+              operation: "Sale"
+              responseData:
+                resultCode: "D0100"
+                resultCodeText: "Declined"
+                response: null
+                responsetext: "DECLINE"
+                authcode: null
+                transactionid: "TRN_Ih68D6UZdip7OEQ2QFXat1yQSLF2nB"
+                avsresponse: null
+                avsresponse_text: null
+                cvvresponse: null
+                cvvresponse_text: null
+                orderid: null
+                type: null
+                response_code: "200"
+                response_code_text: "Do not honor"
+                customer_vault_id: null
+                emv_auth_response_data: null
+              source: "api"
+              scheduleReference: 0
+              orgId: 17448
+              refundId: 0
+              returnedId: 0
+              chargebackId: 0
+              retrievalId: 0
+              transAdditionalData: null
+              invoiceData:
+                invoiceNumber: null
+                invoiceDate: null
+                invoiceDueDate: null
+                invoiceEndDate: null
+                invoiceStatus: null
+                invoiceType: null
+                frequency: null
+                paymentTerms: null
+                termsConditions: null
+                notes: null
+                tax: null
+                discount: null
+                invoiceAmount: null
+                freightAmount: null
+                dutyAmount: null
+                purchaseOrder: null
+                firstName: null
+                lastName: null
+                company: null
+                shippingAddress1: null
+                shippingAddress2: null
+                shippingCity: null
+                shippingState: null
+                shippingZip: null
+                shippingCountry: null
+                shippingEmail: null
+                shippingPhone: null
+                shippingFromZip: null
+                summaryCommodityCode: null
+                items: null
+                attachments: null
+                additionalData: null
+              entrypageId: 0
+              externalPaypointID: ""
+              isValidatedACH: false
+              transactionTime: "2025-12-01T09:50:03.559"
+              customer:
+                identifiers: null
+                firstName: "David"
+                lastName: "Beckham"
+                companyName: "Driving School LLC"
+                billingAddress1: "Home Address"
+                billingAddress2: ""
+                billingCity: ""
+                billingState: ""
+                billingZip: "45157"
+                billingCountry: "US"
+                billingPhone: "+15555555555"
+                billingEmail: "david.beckham@example.com"
+                customerNumber: "C-90010"
+                shippingAddress1: "Home Address"
+                shippingAddress2: ""
+                shippingCity: ""
+                shippingState: ""
+                shippingZip: "45157"
+                shippingCountry: "US"
+                customerId: 4440
+                customerStatus: 0
+                additionalData: null
+              splitFundingInstructions: null
+              cfeeTransactions: []
+              transactionEvents:
+                - transEvent: "Created"
+                  eventData: "0HNHD68HATSUC:00000001"
+                  eventTime: "2025-12-01T09:50:02.558651"
+                - transEvent: "Declined"
+                  eventData: "0HNHD68HATSUC:00000001"
+                  eventTime: "2025-12-01T09:50:03.609111"
+              pendingFeeAmount: 0
+              riskFlagged: false
+              riskFlaggedOn: "2025-12-01T09:50:02.5474568"
+              riskStatus: "PASSED"
+              riskReason: ""
+              riskAction: ""
+              riskActionCode: 0
+              deviceId: ""
+              achSecCode: ""
+              achHolderType: "personal"
+              ipAddress: "255.255.255.255"
+              isSameDayACH: false
+              walletType: null
+            token: null
+        - name: DoNotHonor
+          value:
+            code: "D0100"
+            reason: "Do not honor"
+            explanation: "Generic decline from card network or card issuer"
+            action: "Use a different card or payment method"
+            data:
+              parentOrgName: "Mrinal's Pet Supplies"
+              paypointDbaname: "Mrinal's Pet Shop North"
+              paypointLegalname: "Mrinal's Pet Shop North"
+              paypointEntryname: "495147f647"
+              paymentTransId: "3040-96dfa9a7c4ed4f82a3dd4a4a12ad28ae"
+              connectorName: "gp"
+              externalProcessorInformation: ""
+              gatewayTransId: "TRN_Ih68D6UZdip7OEQ2QFXat1yQSLF2nB"
+              orderId: null
+              method: "card"
+              batchNumber: "3040_combined_20251201"
+              batchAmount: 420
+              payorId: 4440
+              paymentData:
+                maskedAccount: "4XXXXXXXXXXX5439"
+                accountType: "visa"
+                accountExp: "12/25"
+                holderName: "John Cassian"
+                storedId: null
+                initiator: null
+                storedMethodUsageType: null
+                sequence: null
+                orderDescription: ""
+                accountId: null
+                signatureData: null
+                binData:
+                  binMatchedLength: "6"
+                  binCardBrand: "VISA"
+                  binCardType: "CREDIT"
+                  binCardCategory: "CLASSIC"
+                  binCardIssuer: ""
+                  binCardIssuerCountry: "RUSSIAN FEDERATION"
+                  binCardIssuerCountryCodeA2: "RU"
+                  binCardIssuerCountryNumber: "643"
+                  binCardIsRegulated: ""
+                  binCardUseCategory: ""
+                  binCardIssuerCountryCodeA3: ""
+                paymentDetails:
+                  totalAmount: 105
+                  serviceFee: 5
+                  checkNumber: null
+                  checkImage: null
+                  checkUniqueId: ""
+                  currency: "USD"
+                  orderDescription: null
+                  orderId: null
+                  orderIdAlternative: null
+                  paymentDescription: null
+                  groupNumber: null
+                  source: null
+                  payabliTransId: null
+                  unbundled: null
+                  categories: []
+                  splitFunding: []
+              transStatus: 3
+              paypointId: 3040
+              totalAmount: 105
+              netAmount: 100
+              feeAmount: 5
+              settlementStatus: 0
+              operation: "Sale"
+              responseData:
+                resultCode: "D0100"
+                resultCodeText: "Declined"
+                response: null
+                responsetext: "DECLINE"
+                authcode: null
+                transactionid: "TRN_Ih68D6UZdip7OEQ2QFXat1yQSLF2nB"
+                avsresponse: null
+                avsresponse_text: null
+                cvvresponse: null
+                cvvresponse_text: null
+                orderid: null
+                type: null
+                response_code: "200"
+                response_code_text: "Do not honor"
+                customer_vault_id: null
+                emv_auth_response_data: null
+              source: "api"
+              scheduleReference: 0
+              orgId: 17448
+              refundId: 0
+              returnedId: 0
+              chargebackId: 0
+              retrievalId: 0
+              transAdditionalData: null
+              invoiceData:
+                invoiceNumber: null
+                invoiceDate: null
+                invoiceDueDate: null
+                invoiceEndDate: null
+                invoiceStatus: null
+                invoiceType: null
+                frequency: null
+                paymentTerms: null
+                termsConditions: null
+                notes: null
+                tax: null
+                discount: null
+                invoiceAmount: null
+                freightAmount: null
+                dutyAmount: null
+                purchaseOrder: null
+                firstName: null
+                lastName: null
+                company: null
+                shippingAddress1: null
+                shippingAddress2: null
+                shippingCity: null
+                shippingState: null
+                shippingZip: null
+                shippingCountry: null
+                shippingEmail: null
+                shippingPhone: null
+                shippingFromZip: null
+                summaryCommodityCode: null
+                items: null
+                attachments: null
+                additionalData: null
+              entrypageId: 0
+              externalPaypointID: ""
+              isValidatedACH: false
+              transactionTime: "2025-12-01T09:50:03.559"
+              customer:
+                identifiers: null
+                firstName: "David"
+                lastName: "Beckham"
+                companyName: "Driving School LLC"
+                billingAddress1: "Home Address"
+                billingAddress2: ""
+                billingCity: ""
+                billingState: ""
+                billingZip: "45157"
+                billingCountry: "US"
+                billingPhone: "+15555555555"
+                billingEmail: "david.beckham@example.com"
+                customerNumber: "C-90010"
+                shippingAddress1: "Home Address"
+                shippingAddress2: ""
+                shippingCity: ""
+                shippingState: ""
+                shippingZip: "45157"
+                shippingCountry: "US"
+                customerId: 4440
+                customerStatus: 0
+                additionalData: null
+              splitFundingInstructions: null
+              cfeeTransactions: []
+              transactionEvents:
+                - transEvent: "Created"
+                  eventData: "0HNHD68HATSUC:00000001"
+                  eventTime: "2025-12-01T09:50:02.558651"
+                - transEvent: "Declined"
+                  eventData: "0HNHD68HATSUC:00000001"
+                  eventTime: "2025-12-01T09:50:03.609111"
+              pendingFeeAmount: 0
+              riskFlagged: false
+              riskFlaggedOn: "2025-12-01T09:50:02.5474568"
+              riskStatus: "PASSED"
+              riskReason: ""
+              riskAction: ""
+              riskActionCode: 0
+              deviceId: ""
+              achSecCode: ""
+              achHolderType: "personal"
+              ipAddress: "255.255.255.255"
+              isSameDayACH: false
+              walletType: null
+            token: null
+
+  DeclinedRefundResponseErrorV2:
+      docs: >-
+        Refund decline error for v2 Money In endpoints (HTTP 402). Returned when a refund operation is declined for a transaction. Uses unified response codes starting with 'D'. See the [Pay In unified response codes reference](/guides/pay-in-unified-response-codes-reference) for the complete list of codes.
+      status-code: 402
+      type: V2DeclinedTransactionResponseWrapper
+      examples:
+        - name: RefundError
+          value:
+            code: "D0366"
+            reason: "Refund error"
+            explanation: "Refund failed due to invalid details, amount mismatch, or transaction processing error"
+            action: "Verify the transaction details and retry, or contact support for assistance"
+            data:
+              parentOrgName: "Mrinal's Pet Supplies"
+              paypointDbaname: "Mrinal's Pet Shop North"
+              paypointLegalname: "Mrinal's Pet Shop North"
+              paypointEntryname: "495147f647"
+              paymentTransId: "3040-96dfa9a7c4ed4f82a3dd4a4a12ad28ae"
+              connectorName: "gp"
+              externalProcessorInformation: ""
+              gatewayTransId: "TRN_Ih68D6UZdip7OEQ2QFXat1yQSLF2nB"
+              orderId: null
+              method: "card"
+              batchNumber: "3040_combined_20251201"
+              batchAmount: 420
+              payorId: 4440
+              paymentData:
+                maskedAccount: "4XXXXXXXXXXX5439"
+                accountType: "visa"
+                accountExp: "12/25"
+                holderName: "John Cassian"
+                storedId: null
+                initiator: null
+                storedMethodUsageType: null
+                sequence: null
+                orderDescription: ""
+                accountId: null
+                signatureData: null
+                binData:
+                  binMatchedLength: "6"
+                  binCardBrand: "VISA"
+                  binCardType: "CREDIT"
+                  binCardCategory: "CLASSIC"
+                  binCardIssuer: ""
+                  binCardIssuerCountry: "RUSSIAN FEDERATION"
+                  binCardIssuerCountryCodeA2: "RU"
+                  binCardIssuerCountryNumber: "643"
+                  binCardIsRegulated: ""
+                  binCardUseCategory: ""
+                  binCardIssuerCountryCodeA3: ""
+                paymentDetails:
+                  totalAmount: 105
+                  serviceFee: 5
+                  checkNumber: null
+                  checkImage: null
+                  checkUniqueId: ""
+                  currency: "USD"
+                  orderDescription: null
+                  orderId: null
+                  orderIdAlternative: null
+                  paymentDescription: null
+                  groupNumber: null
+                  source: null
+                  payabliTransId: null
+                  unbundled: null
+                  categories: []
+                  splitFunding: []
+              transStatus: 3
+              paypointId: 3040
+              totalAmount: 105
+              netAmount: 100
+              feeAmount: 5
+              settlementStatus: 0
+              operation: "Sale"
+              responseData:
+                resultCode: "D0100"
+                resultCodeText: "Declined"
+                response: null
+                responsetext: "DECLINE"
+                authcode: null
+                transactionid: "TRN_Ih68D6UZdip7OEQ2QFXat1yQSLF2nB"
+                avsresponse: null
+                avsresponse_text: null
+                cvvresponse: null
+                cvvresponse_text: null
+                orderid: null
+                type: null
+                response_code: "200"
+                response_code_text: "Do not honor"
+                customer_vault_id: null
+                emv_auth_response_data: null
+              source: "api"
+              scheduleReference: 0
+              orgId: 17448
+              refundId: 0
+              returnedId: 0
+              chargebackId: 0
+              retrievalId: 0
+              transAdditionalData: null
+              invoiceData:
+                invoiceNumber: null
+                invoiceDate: null
+                invoiceDueDate: null
+                invoiceEndDate: null
+                invoiceStatus: null
+                invoiceType: null
+                frequency: null
+                paymentTerms: null
+                termsConditions: null
+                notes: null
+                tax: null
+                discount: null
+                invoiceAmount: null
+                freightAmount: null
+                dutyAmount: null
+                purchaseOrder: null
+                firstName: null
+                lastName: null
+                company: null
+                shippingAddress1: null
+                shippingAddress2: null
+                shippingCity: null
+                shippingState: null
+                shippingZip: null
+                shippingCountry: null
+                shippingEmail: null
+                shippingPhone: null
+                shippingFromZip: null
+                summaryCommodityCode: null
+                items: null
+                attachments: null
+                additionalData: null
+              entrypageId: 0
+              externalPaypointID: ""
+              isValidatedACH: false
+              transactionTime: "2025-12-01T09:50:03.559"
+              customer:
+                identifiers: null
+                firstName: "David"
+                lastName: "Beckham"
+                companyName: "Driving School LLC"
+                billingAddress1: "Home Address"
+                billingAddress2: ""
+                billingCity: ""
+                billingState: ""
+                billingZip: "45157"
+                billingCountry: "US"
+                billingPhone: "+15555555555"
+                billingEmail: "david.beckham@example.com"
+                customerNumber: "C-90010"
+                shippingAddress1: "Home Address"
+                shippingAddress2: ""
+                shippingCity: ""
+                shippingState: ""
+                shippingZip: "45157"
+                shippingCountry: "US"
+                customerId: 4440
+                customerStatus: 0
+                additionalData: null
+              splitFundingInstructions: null
+              cfeeTransactions: []
+              transactionEvents:
+                - transEvent: "Created"
+                  eventData: "0HNHD68HATSUC:00000001"
+                  eventTime: "2025-12-01T09:50:02.558651"
+                - transEvent: "Declined"
+                  eventData: "0HNHD68HATSUC:00000001"
+                  eventTime: "2025-12-01T09:50:03.609111"
+              pendingFeeAmount: 0
+              riskFlagged: false
+              riskFlaggedOn: "2025-12-01T09:50:02.5474568"
+              riskStatus: "PASSED"
+              riskReason: ""
+              riskAction: ""
+              riskActionCode: 0
+              deviceId: ""
+              achSecCode: ""
+              achHolderType: "personal"
+              ipAddress: "255.255.255.255"
+              isSameDayACH: false
+              walletType: null
+            token: null
+  DeclinedVoidResponseErrorV2:
+      docs: >-
+        Void decline error for v2 Money In endpoints (HTTP 402). Returned when a void operation is declined for a transaction. Uses unified response codes starting with 'D'. See the [Pay In unified response codes reference](/guides/pay-in-unified-response-codes-reference) for the complete list of codes.
+      status-code: 402
+      type: V2DeclinedTransactionResponseWrapper
+      examples:
+        - name: VoidError
+          value:
+            code: "D0332"
+            reason: "Modify transaction not allowed"
+            explanation: "The transaction is not authorized for modification. This error may occur because the transaction was already captured, settled, or was declined"
+            action: "Contact support for assistance"
+            data:
+              parentOrgName: "Mrinal's Pet Supplies"
+              paypointDbaname: "Mrinal's Pet Shop North"
+              paypointLegalname: "Mrinal's Pet Shop North"
+              paypointEntryname: "495147f647"
+              paymentTransId: "3040-96dfa9a7c4ed4f82a3dd4a4a12ad28ae"
+              connectorName: "gp"
+              externalProcessorInformation: ""
+              gatewayTransId: "TRN_Ih68D6UZdip7OEQ2QFXat1yQSLF2nB"
+              orderId: null
+              method: "card"
+              batchNumber: "3040_combined_20251201"
+              batchAmount: 420
+              payorId: 4440
+              paymentData:
+                maskedAccount: "4XXXXXXXXXXX5439"
+                accountType: "visa"
+                accountExp: "12/25"
+                holderName: "John Cassian"
+                storedId: null
+                initiator: null
+                storedMethodUsageType: null
+                sequence: null
+                orderDescription: ""
+                accountId: null
+                signatureData: null
+                binData:
+                  binMatchedLength: "6"
+                  binCardBrand: "VISA"
+                  binCardType: "CREDIT"
+                  binCardCategory: "CLASSIC"
+                  binCardIssuer: ""
+                  binCardIssuerCountry: "RUSSIAN FEDERATION"
+                  binCardIssuerCountryCodeA2: "RU"
+                  binCardIssuerCountryNumber: "643"
+                  binCardIsRegulated: ""
+                  binCardUseCategory: ""
+                  binCardIssuerCountryCodeA3: ""
+                paymentDetails:
+                  totalAmount: 105
+                  serviceFee: 5
+                  checkNumber: null
+                  checkImage: null
+                  checkUniqueId: ""
+                  currency: "USD"
+                  orderDescription: null
+                  orderId: null
+                  orderIdAlternative: null
+                  paymentDescription: null
+                  groupNumber: null
+                  source: null
+                  payabliTransId: null
+                  unbundled: null
+                  categories: []
+                  splitFunding: []
+              transStatus: 3
+              paypointId: 3040
+              totalAmount: 105
+              netAmount: 100
+              feeAmount: 5
+              settlementStatus: 0
+              operation: "Sale"
+              responseData:
+                resultCode: "D0100"
+                resultCodeText: "Declined"
+                response: null
+                responsetext: "DECLINE"
+                authcode: null
+                transactionid: "TRN_Ih68D6UZdip7OEQ2QFXat1yQSLF2nB"
+                avsresponse: null
+                avsresponse_text: null
+                cvvresponse: null
+                cvvresponse_text: null
+                orderid: null
+                type: null
+                response_code: "200"
+                response_code_text: "Do not honor"
+                customer_vault_id: null
+                emv_auth_response_data: null
+              source: "api"
+              scheduleReference: 0
+              orgId: 17448
+              refundId: 0
+              returnedId: 0
+              chargebackId: 0
+              retrievalId: 0
+              transAdditionalData: null
+              invoiceData:
+                invoiceNumber: null
+                invoiceDate: null
+                invoiceDueDate: null
+                invoiceEndDate: null
+                invoiceStatus: null
+                invoiceType: null
+                frequency: null
+                paymentTerms: null
+                termsConditions: null
+                notes: null
+                tax: null
+                discount: null
+                invoiceAmount: null
+                freightAmount: null
+                dutyAmount: null
+                purchaseOrder: null
+                firstName: null
+                lastName: null
+                company: null
+                shippingAddress1: null
+                shippingAddress2: null
+                shippingCity: null
+                shippingState: null
+                shippingZip: null
+                shippingCountry: null
+                shippingEmail: null
+                shippingPhone: null
+                shippingFromZip: null
+                summaryCommodityCode: null
+                items: null
+                attachments: null
+                additionalData: null
+              entrypageId: 0
+              externalPaypointID: ""
+              isValidatedACH: false
+              transactionTime: "2025-12-01T09:50:03.559"
+              customer:
+                identifiers: null
+                firstName: "David"
+                lastName: "Beckham"
+                companyName: "Driving School LLC"
+                billingAddress1: "Home Address"
+                billingAddress2: ""
+                billingCity: ""
+                billingState: ""
+                billingZip: "45157"
+                billingCountry: "US"
+                billingPhone: "+15555555555"
+                billingEmail: "david.beckham@example.com"
+                customerNumber: "C-90010"
+                shippingAddress1: "Home Address"
+                shippingAddress2: ""
+                shippingCity: ""
+                shippingState: ""
+                shippingZip: "45157"
+                shippingCountry: "US"
+                customerId: 4440
+                customerStatus: 0
+                additionalData: null
+              splitFundingInstructions: null
+              cfeeTransactions: []
+              transactionEvents:
+                - transEvent: "Created"
+                  eventData: "0HNHD68HATSUC:00000001"
+                  eventTime: "2025-12-01T09:50:02.558651"
+                - transEvent: "Declined"
+                  eventData: "0HNHD68HATSUC:00000001"
+                  eventTime: "2025-12-01T09:50:03.609111"
+              pendingFeeAmount: 0
+              riskFlagged: false
+              riskFlaggedOn: "2025-12-01T09:50:02.5474568"
+              riskStatus: "PASSED"
+              riskReason: ""
+              riskAction: ""
+              riskActionCode: 0
+              deviceId: ""
+              achSecCode: ""
+              achHolderType: "personal"
+              ipAddress: "255.255.255.255"
+              isSameDayACH: false
+              walletType: null
+            token: null
+
+
+  InternalServerResponseErrorV2:
+    docs: >-
+      Internal server error for v2 Money In endpoints (HTTP 500). Returned when an unexpected
+      error occurs. Follows RFC 7807 Problem Details format.
+    status-code: 500
+    type: V2InternalServerError
+
+types:
+
+  # V2 Money In Transaction Response Types
+  # These types reuse existing definitions from root and moneyIn where possible
+
+
+# V2 Response Wrapper Types (Success/Decline)
+
+  V2ResponseCode:
+    docs: >-
+      Payabli's unified response code. Starts with `A` (Approved) or `D` (Declined) followed
+      by a four-digit code that provides specific details about the transaction result.
+      See [Pay In unified response codes reference](/guides/pay-in-unified-response-codes-reference) for more information.
+    type: string
+
+  V2ResponseReason:
+    docs: Human-readable reason corresponding to the response code.
+    type: string
+
+  V2ResponseExplanation:
+    docs: Detailed description of the response code.
+    type: string
+
+  V2ResponseAction:
+    docs: Recommended resolution approach or next steps based on the response.
+    type: string
+
+  V2TransactionResponseWrapper:
+    docs: >-
+      Standard response wrapper for v2 Money In transaction endpoints. All v2 transaction
+      endpoints return responses in this format with consistent `code`, `reason`, `explanation`,
+      and `action` fields. The `data` field contains transaction details.
+    properties:
+      code: V2ResponseCode
+      reason: V2ResponseReason
+      explanation: V2ResponseExplanation
+      action: V2ResponseAction
+      data: V2TransactionDetails
+      token:
+        docs: >-
+          Pagination token (equivalent to `pageIdentifier` in v1 APIs). Returns `null` when
+          pagination is not applicable.
+        type: nullable<string>
+
+  V2DeclinedTransactionResponseWrapper:
+    docs: >-
+      Response wrapper for declined v2 Money In transaction endpoints (HTTP 402). Returned when
+      a transaction is declined by the card network or issuer. All decline responses use this format
+      with unified response codes starting with 'D'. The `data` field contains transaction details.
+    properties:
+      code: V2ResponseCode
+      reason: V2ResponseReason
+      explanation: V2ResponseExplanation
+      action: V2ResponseAction
+      data: V2TransactionDetails
+      token:
+        docs: >-
+          Pagination token (equivalent to `pageIdentifier` in v1 APIs). Returns `null` when
+          pagination is not applicable.
+        type: nullable<string>
+    examples:
+      - name: DoNotHonor
+        value:
+          code: "D0100"
+          reason: "Declined"
+          explanation: "Generic decline from card network or card issuer"
+          action: "Use different card or payment method"
+          data:
+            parentOrgName: "Mrinal's Pet Supplies"
+            paypointDbaname: "Mrinal's Pet Shop North"
+            paypointLegalname: "Mrinal's Pet Shop North"
+            paypointEntryname: "495147f647"
+            paymentTransId: "3040-96dfa9a7c4ed4f82a3dd4a4a12ad28ae"
+            connectorName: "gp"
+            externalProcessorInformation: ""
+            gatewayTransId: "TRN_Ih68D6UZdip7OEQ2QFXat1yQSLF2nB"
+            orderId: null
+            method: "card"
+            batchNumber: "3040_combined_20251201"
+            batchAmount: 420
+            payorId: 4440
+            paymentData:
+              maskedAccount: "4XXXXXXXXXXX5439"
+              accountType: "visa"
+              accountExp: "12/25"
+              holderName: "John Cassian"
+              storedId: null
+              initiator: null
+              storedMethodUsageType: null
+              sequence: null
+              orderDescription: ""
+              accountId: null
+              signatureData: null
+              binData:
+                binMatchedLength: "6"
+                binCardBrand: "VISA"
+                binCardType: "CREDIT"
+                binCardCategory: "CLASSIC"
+                binCardIssuer: ""
+                binCardIssuerCountry: "RUSSIAN FEDERATION"
+                binCardIssuerCountryCodeA2: "RU"
+                binCardIssuerCountryNumber: "643"
+                binCardIsRegulated: ""
+                binCardUseCategory: ""
+                binCardIssuerCountryCodeA3: ""
+              paymentDetails:
+                totalAmount: 105
+                serviceFee: 5
+                checkNumber: null
+                checkImage: null
+                checkUniqueId: ""
+                currency: "USD"
+                orderDescription: null
+                orderId: null
+                orderIdAlternative: null
+                paymentDescription: null
+                groupNumber: null
+                source: null
+                payabliTransId: null
+                unbundled: null
+                categories: []
+                splitFunding: []
+            transStatus: 3
+            paypointId: 3040
+            totalAmount: 105
+            netAmount: 100
+            feeAmount: 5
+            settlementStatus: 0
+            operation: "Sale"
+            responseData:
+              resultCode: "D0100"
+              resultCodeText: "Declined"
+              response: null
+              responsetext: "DECLINE"
+              authcode: null
+              transactionid: "TRN_Ih68D6UZdip7OEQ2QFXat1yQSLF2nB"
+              avsresponse: null
+              avsresponse_text: null
+              cvvresponse: null
+              cvvresponse_text: null
+              orderid: null
+              type: null
+              response_code: "200"
+              response_code_text: "Do not honor"
+              customer_vault_id: null
+              emv_auth_response_data: null
+            source: "api"
+            scheduleReference: 0
+            orgId: 17448
+            refundId: 0
+            returnedId: 0
+            chargebackId: 0
+            retrievalId: 0
+            transAdditionalData: null
+            invoiceData:
+              invoiceNumber: null
+              invoiceDate: null
+              invoiceDueDate: null
+              invoiceEndDate: null
+              invoiceStatus: null
+              invoiceType: null
+              frequency: null
+              paymentTerms: null
+              termsConditions: null
+              notes: null
+              tax: null
+              discount: null
+              invoiceAmount: null
+              freightAmount: null
+              dutyAmount: null
+              purchaseOrder: null
+              firstName: null
+              lastName: null
+              company: null
+              shippingAddress1: null
+              shippingAddress2: null
+              shippingCity: null
+              shippingState: null
+              shippingZip: null
+              shippingCountry: null
+              shippingEmail: null
+              shippingPhone: null
+              shippingFromZip: null
+              summaryCommodityCode: null
+              items: null
+              attachments: null
+              additionalData: null
+            entrypageId: 0
+            externalPaypointID: ""
+            isValidatedACH: false
+            transactionTime: "2025-12-01T09:50:03.559"
+            customer:
+              identifiers: null
+              firstName: "David"
+              lastName: "Beckham"
+              companyName: "Driving School LLC"
+              billingAddress1: "Home Address"
+              billingAddress2: ""
+              billingCity: ""
+              billingState: ""
+              billingZip: "45157"
+              billingCountry: "US"
+              billingPhone: "+15555555555"
+              billingEmail: "david.beckham@example.com"
+              customerNumber: "C-90010"
+              shippingAddress1: "Home Address"
+              shippingAddress2: ""
+              shippingCity: ""
+              shippingState: ""
+              shippingZip: "45157"
+              shippingCountry: "US"
+              customerId: 4440
+              customerStatus: 0
+              additionalData: null
+            splitFundingInstructions: null
+            cfeeTransactions: []
+            transactionEvents:
+              - transEvent: "Created"
+                eventData: "0HNHD68HATSUC:00000001"
+                eventTime: "2025-12-01T09:50:02.558651"
+              - transEvent: "Declined"
+                eventData: "0HNHD68HATSUC:00000001"
+                eventTime: "2025-12-01T09:50:03.609111"
+            pendingFeeAmount: 0
+            riskFlagged: false
+            riskFlaggedOn: "2025-12-01T09:50:02.5474568"
+            riskStatus: "PASSED"
+            riskReason: ""
+            riskAction: ""
+            riskActionCode: 0
+            deviceId: ""
+            achSecCode: ""
+            achHolderType: "personal"
+            ipAddress: "255.255.255.255"
+            isSameDayACH: false
+            walletType: null
+          token: null
+      - name: InsufficientFunds
+        value:
+          code: "D0225"
+          reason: "Declined"
+          explanation: "Insufficient funds in the account"
+          action: "Request a lower amount or use a different payment method"
+          data:
+            parentOrgName: "Mrinal's Pet Supplies"
+            paypointDbaname: "Mrinal's Pet Shop North"
+            paypointLegalname: "Mrinal's Pet Shop North"
+            paypointEntryname: "495147f647"
+            paymentTransId: "3040-a1b2c3d4e5f64a7b8c9d0e1f2a3b4c5d"
+            connectorName: "gp"
+            externalProcessorInformation: ""
+            gatewayTransId: "TRN_K92j8dE3ZwqxPFL4RGYbu3zRTMH4pD"
+            orderId: null
+            method: "card"
+            batchNumber: "3040_combined_20251202"
+            batchAmount: 315
+            payorId: 40145
+            paymentData:
+              maskedAccount: "4XXXXXXXXXXX1234"
+              accountType: "visa"
+              accountExp: "06/26"
+              holderName: "Jennifer Smith"
+              storedId: null
+              initiator: null
+              storedMethodUsageType: null
+              sequence: null
+              orderDescription: ""
+              accountId: null
+              signatureData: null
+              binData:
+                binMatchedLength: "6"
+                binCardBrand: "VISA"
+                binCardType: "DEBIT"
+                binCardCategory: "STANDARD"
+                binCardIssuer: "CHASE BANK"
+                binCardIssuerCountry: "UNITED STATES"
+                binCardIssuerCountryCodeA2: "US"
+                binCardIssuerCountryNumber: "840"
+                binCardIsRegulated: "Y"
+                binCardUseCategory: ""
+                binCardIssuerCountryCodeA3: "USA"
+              paymentDetails:
+                totalAmount: 315
+                serviceFee: 15
+                checkNumber: null
+                checkImage: null
+                checkUniqueId: ""
+                currency: "USD"
+                orderDescription: null
+                orderId: null
+                orderIdAlternative: null
+                paymentDescription: null
+                groupNumber: null
+                source: null
+                payabliTransId: null
+                unbundled: null
+                categories: []
+                splitFunding: []
+            transStatus: 3
+            paypointId: 3040
+            totalAmount: 315
+            netAmount: 300
+            feeAmount: 15
+            settlementStatus: 0
+            operation: "Sale"
+            responseData:
+              resultCode: "D0225"
+              resultCodeText: "Declined"
+              response: null
+              responsetext: "INSUFFICIENT FUNDS"
+              authcode: null
+              transactionid: "TRN_K92j8dE3ZwqxPFL4RGYbu3zRTMH4pD"
+              avsresponse: null
+              avsresponse_text: null
+              cvvresponse: null
+              cvvresponse_text: null
+              orderid: null
+              type: null
+              response_code: "051"
+              response_code_text: "Insufficient funds"
+              customer_vault_id: null
+              emv_auth_response_data: null
+            source: "api"
+            scheduleReference: 0
+            orgId: 17448
+            refundId: 0
+            returnedId: 0
+            chargebackId: 0
+            retrievalId: 0
+            transAdditionalData: null
+            invoiceData:
+              invoiceNumber: null
+              invoiceDate: null
+              invoiceDueDate: null
+              invoiceEndDate: null
+              invoiceStatus: null
+              invoiceType: null
+              frequency: null
+              paymentTerms: null
+              termsConditions: null
+              notes: null
+              tax: null
+              discount: null
+              invoiceAmount: null
+              freightAmount: null
+              dutyAmount: null
+              purchaseOrder: null
+              firstName: null
+              lastName: null
+              company: null
+              shippingAddress1: null
+              shippingAddress2: null
+              shippingCity: null
+              shippingState: null
+              shippingZip: null
+              shippingCountry: null
+              shippingEmail: null
+              shippingPhone: null
+              shippingFromZip: null
+              summaryCommodityCode: null
+              items: null
+              attachments: null
+              additionalData: null
+            entrypageId: 0
+            externalPaypointID: ""
+            isValidatedACH: false
+            transactionTime: "2025-12-02T14:23:15.442"
+            customer:
+              identifiers: null
+              firstName: "Jennifer"
+              lastName: "Smith"
+              companyName: "Smith Consulting"
+              billingAddress1: "123 Main Street"
+              billingAddress2: "Apt 4B"
+              billingCity: "Chicago"
+              billingState: "IL"
+              billingZip: "60601"
+              billingCountry: "US"
+              billingPhone: "+13125551234"
+              billingEmail: "jennifer.smith@example.com"
+              customerNumber: "C-90011"
+              shippingAddress1: "123 Main Street"
+              shippingAddress2: "Apt 4B"
+              shippingCity: "Chicago"
+              shippingState: "IL"
+              shippingZip: "60601"
+              shippingCountry: "US"
+              customerId: 40145
+              customerStatus: 0
+              additionalData: null
+            splitFundingInstructions: null
+            cfeeTransactions: []
+            transactionEvents:
+              - transEvent: "Created"
+                eventData: "0HNHD69JCXWZR:00000001"
+                eventTime: "2025-12-02T14:23:14.389423"
+              - transEvent: "Declined"
+                eventData: "0HNHD69JCXWZR:00000001"
+                eventTime: "2025-12-02T14:23:15.501289"
+            pendingFeeAmount: 0
+            riskFlagged: false
+            riskFlaggedOn: "2025-12-02T14:23:14.3782156"
+            riskStatus: "PASSED"
+            riskReason: ""
+            riskAction: ""
+            riskActionCode: 0
+            deviceId: ""
+            achSecCode: ""
+            achHolderType: "personal"
+            ipAddress: "255.255.255.255"
+            isSameDayACH: false
+            walletType: null
+          token: null
+      - name: ExpiredCard
+        value:
+          code: "D0130"
+          reason: "Declined"
+          explanation: "Card has expired"
+          action: "Update card expiration date or use a different payment method"
+          data:
+            parentOrgName: "Mrinal's Pet Supplies"
+            paypointDbaname: "Mrinal's Pet Shop North"
+            paypointLegalname: "Mrinal's Pet Shop North"
+            paypointEntryname: "495147f647"
+            paymentTransId: "3040-b2c3d4e5f6a74b8c9d0e1f2a3b4c5d6e"
+            connectorName: "gp"
+            externalProcessorInformation: ""
+            gatewayTransId: "TRN_M03k9eF4AxryQGM5SHZcv4aSUNI5qE"
+            orderId: null
+            method: "card"
+            batchNumber: "3040_combined_20251202"
+            batchAmount: 525
+            payorId: 40146
+            paymentData:
+              maskedAccount: "5XXXXXXXXXXX9876"
+              accountType: "mastercard"
+              accountExp: "11/24"
+              holderName: "Robert Johnson"
+              storedId: null
+              initiator: null
+              storedMethodUsageType: null
+              sequence: null
+              orderDescription: ""
+              accountId: null
+              signatureData: null
+              binData:
+                binMatchedLength: "6"
+                binCardBrand: "MASTERCARD"
+                binCardType: "CREDIT"
+                binCardCategory: "PLATINUM"
+                binCardIssuer: "CITIBANK"
+                binCardIssuerCountry: "UNITED STATES"
+                binCardIssuerCountryCodeA2: "US"
+                binCardIssuerCountryNumber: "840"
+                binCardIsRegulated: ""
+                binCardUseCategory: ""
+                binCardIssuerCountryCodeA3: "USA"
+              paymentDetails:
+                totalAmount: 210
+                serviceFee: 10
+                checkNumber: null
+                checkImage: null
+                checkUniqueId: ""
+                currency: "USD"
+                orderDescription: null
+                orderId: null
+                orderIdAlternative: null
+                paymentDescription: null
+                groupNumber: null
+                source: null
+                payabliTransId: null
+                unbundled: null
+                categories: []
+                splitFunding: []
+            transStatus: 3
+            paypointId: 3040
+            totalAmount: 210
+            netAmount: 200
+            feeAmount: 10
+            settlementStatus: 0
+            operation: "Sale"
+            responseData:
+              resultCode: "D0130"
+              resultCodeText: "Declined"
+              response: null
+              responsetext: "EXPIRED CARD"
+              authcode: null
+              transactionid: "TRN_M03k9eF4AxryQGM5SHZcv4aSUNI5qE"
+              avsresponse: null
+              avsresponse_text: null
+              cvvresponse: null
+              cvvresponse_text: null
+              orderid: null
+              type: null
+              response_code: "054"
+              response_code_text: "Expired card"
+              customer_vault_id: null
+              emv_auth_response_data: null
+            source: "api"
+            scheduleReference: 0
+            orgId: 17448
+            refundId: 0
+            returnedId: 0
+            chargebackId: 0
+            retrievalId: 0
+            transAdditionalData: null
+            invoiceData:
+              invoiceNumber: null
+              invoiceDate: null
+              invoiceDueDate: null
+              invoiceEndDate: null
+              invoiceStatus: null
+              invoiceType: null
+              frequency: null
+              paymentTerms: null
+              termsConditions: null
+              notes: null
+              tax: null
+              discount: null
+              invoiceAmount: null
+              freightAmount: null
+              dutyAmount: null
+              purchaseOrder: null
+              firstName: null
+              lastName: null
+              company: null
+              shippingAddress1: null
+              shippingAddress2: null
+              shippingCity: null
+              shippingState: null
+              shippingZip: null
+              shippingCountry: null
+              shippingEmail: null
+              shippingPhone: null
+              shippingFromZip: null
+              summaryCommodityCode: null
+              items: null
+              attachments: null
+              additionalData: null
+            entrypageId: 0
+            externalPaypointID: ""
+            isValidatedACH: false
+            transactionTime: "2025-12-02T15:45:22.783"
+            customer:
+              identifiers: null
+              firstName: "Robert"
+              lastName: "Johnson"
+              companyName: "Johnson & Associates"
+              billingAddress1: "789 Oak Avenue"
+              billingAddress2: ""
+              billingCity: "Seattle"
+              billingState: "WA"
+              billingZip: "98101"
+              billingCountry: "US"
+              billingPhone: "+12065559876"
+              billingEmail: "robert.johnson@example.com"
+              customerNumber: "C-90012"
+              shippingAddress1: "789 Oak Avenue"
+              shippingAddress2: ""
+              shippingCity: "Seattle"
+              shippingState: "WA"
+              shippingZip: "98101"
+              shippingCountry: "US"
+              customerId: 40146
+              customerStatus: 0
+              additionalData: null
+            splitFundingInstructions: null
+            cfeeTransactions: []
+            transactionEvents:
+              - transEvent: "Created"
+                eventData: "0HNHD69KDYZAS:00000001"
+                eventTime: "2025-12-02T15:45:21.729567"
+              - transEvent: "Declined"
+                eventData: "0HNHD69KDYZAS:00000001"
+                eventTime: "2025-12-02T15:45:22.839634"
+            pendingFeeAmount: 0
+            riskFlagged: false
+            riskFlaggedOn: "2025-12-02T15:45:21.7183942"
+            riskStatus: "PASSED"
+            riskReason: ""
+            riskAction: ""
+            riskActionCode: 0
+            deviceId: ""
+            achSecCode: ""
+            achHolderType: "personal"
+            ipAddress: "255.255.255.255"
+            isSameDayACH: false
+            walletType: null
+          token: null
+      - name: InvalidCVV
+        value:
+          code: "D0150"
+          reason: "Declined"
+          explanation: "CVV does not match"
+          action: "Verify CVV and retry, or use a different payment method"
+          data:
+            parentOrgName: "Mrinal's Pet Supplies"
+            paypointDbaname: "Mrinal's Pet Shop North"
+            paypointLegalname: "Mrinal's Pet Shop North"
+            paypointEntryname: "495147f647"
+            paymentTransId: "3040-c3d4e5f6a7b84c9d0e1f2a3b4c5d6e7f"
+            connectorName: "gp"
+            externalProcessorInformation: ""
+            gatewayTransId: "TRN_N14l0fG5ByszRHN6TIAdw5bTVOJ6rF"
+            orderId: null
+            method: "card"
+            batchNumber: "3040_combined_20251202"
+            batchAmount: 735
+            payorId: 40147
+            paymentData:
+              maskedAccount: "4XXXXXXXXXXX8765"
+              accountType: "visa"
+              accountExp: "09/27"
+              holderName: "Maria Garcia"
+              storedId: null
+              initiator: null
+              storedMethodUsageType: null
+              sequence: null
+              orderDescription: ""
+              accountId: null
+              signatureData: null
+              binData:
+                binMatchedLength: "6"
+                binCardBrand: "VISA"
+                binCardType: "CREDIT"
+                binCardCategory: "SIGNATURE"
+                binCardIssuer: "WELLS FARGO"
+                binCardIssuerCountry: "UNITED STATES"
+                binCardIssuerCountryCodeA2: "US"
+                binCardIssuerCountryNumber: "840"
+                binCardIsRegulated: ""
+                binCardUseCategory: ""
+                binCardIssuerCountryCodeA3: "USA"
+              paymentDetails:
+                totalAmount: 157.5
+                serviceFee: 7.5
+                checkNumber: null
+                checkImage: null
+                checkUniqueId: ""
+                currency: "USD"
+                orderDescription: null
+                orderId: null
+                orderIdAlternative: null
+                paymentDescription: null
+                groupNumber: null
+                source: null
+                payabliTransId: null
+                unbundled: null
+                categories: []
+                splitFunding: []
+            transStatus: 3
+            paypointId: 3040
+            totalAmount: 157.5
+            netAmount: 150
+            feeAmount: 7.5
+            settlementStatus: 0
+            operation: "Sale"
+            responseData:
+              resultCode: "D0150"
+              resultCodeText: "Declined"
+              response: null
+              responsetext: "CVV MISMATCH"
+              authcode: null
+              transactionid: "TRN_N14l0fG5ByszRHN6TIAdw5bTVOJ6rF"
+              avsresponse: "Y"
+              avsresponse_text: "Address and ZIP match"
+              cvvresponse: "N"
+              cvvresponse_text: "CVV2/CVC2 does not match"
+              orderid: null
+              type: null
+              response_code: "N"
+              response_code_text: "CVV does not match"
+              customer_vault_id: null
+              emv_auth_response_data: null
+            source: "api"
+            scheduleReference: 0
+            orgId: 17448
+            refundId: 0
+            returnedId: 0
+            chargebackId: 0
+            retrievalId: 0
+            transAdditionalData: null
+            invoiceData:
+              invoiceNumber: null
+              invoiceDate: null
+              invoiceDueDate: null
+              invoiceEndDate: null
+              invoiceStatus: null
+              invoiceType: null
+              frequency: null
+              paymentTerms: null
+              termsConditions: null
+              notes: null
+              tax: null
+              discount: null
+              invoiceAmount: null
+              freightAmount: null
+              dutyAmount: null
+              purchaseOrder: null
+              firstName: null
+              lastName: null
+              company: null
+              shippingAddress1: null
+              shippingAddress2: null
+              shippingCity: null
+              shippingState: null
+              shippingZip: null
+              shippingCountry: null
+              shippingEmail: null
+              shippingPhone: null
+              shippingFromZip: null
+              summaryCommodityCode: null
+              items: null
+              attachments: null
+              additionalData: null
+            entrypageId: 0
+            externalPaypointID: ""
+            isValidatedACH: false
+            transactionTime: "2025-12-02T16:12:47.924"
+            customer:
+              identifiers: null
+              firstName: "Maria"
+              lastName: "Garcia"
+              companyName: "Garcia Marketing"
+              billingAddress1: "456 Pine Street"
+              billingAddress2: "Suite 300"
+              billingCity: "Austin"
+              billingState: "TX"
+              billingZip: "78701"
+              billingCountry: "US"
+              billingPhone: "+15125554321"
+              billingEmail: "maria.garcia@example.com"
+              customerNumber: "C-90013"
+              shippingAddress1: "456 Pine Street"
+              shippingAddress2: "Suite 300"
+              shippingCity: "Austin"
+              shippingState: "TX"
+              shippingZip: "78701"
+              shippingCountry: "US"
+              customerId: 40147
+              customerStatus: 0
+              additionalData: null
+            splitFundingInstructions: null
+            cfeeTransactions: []
+            transactionEvents:
+              - transEvent: "Created"
+                eventData: "0HNHD69LFABCT:00000001"
+                eventTime: "2025-12-02T16:12:46.871245"
+              - transEvent: "Declined"
+                eventData: "0HNHD69LFABCT:00000001"
+                eventTime: "2025-12-02T16:12:47.982123"
+            pendingFeeAmount: 0
+            riskFlagged: false
+            riskFlaggedOn: "2025-12-02T16:12:46.8601567"
+            riskStatus: "PASSED"
+            riskReason: ""
+            riskAction: ""
+            riskActionCode: 0
+            deviceId: ""
+            achSecCode: ""
+            achHolderType: "personal"
+            ipAddress: "255.255.255.255"
+            isSameDayACH: false
+            walletType: null
+          token: null
+
+# V2 Error Response Types
+
+  V2BadRequestErrorDetail:
+    docs: Individual field error detail for bad request responses.
+    properties:
+      message:
+        docs: Description of the validation error.
+        type: string
+      suggestion:
+        docs: Suggested action to fix the error.
+        type: string
+
+  V2BadRequestError:
+    docs: >-
+      Bad request error response (HTTP 400) returned when request validation fails.
+      Follows RFC 7807 Problem Details format with additional Payabli-specific fields.
+    properties:
+      type:
+        docs: >-
+          A URI reference that identifies the problem type. Points to human-readable
+          documentation for this error type.
+        type: string
+      title:
+        docs: Always "Bad Request" for 400 errors.
+        type: string
+      status:
+        docs: HTTP status code, always 400 for bad requests.
+        type: integer
+      detail:
+        docs: Short description of the error.
+        type: string
+      instance:
+        docs: Request URL that caused the error.
+        type: string
+      code:
+        docs: >-
+          Payabli's unified response code for validation errors. Starts with 'E'.
+          See [Pay In unified response codes reference](/guides/pay-in-unified-response-codes-reference) for more information.
+        type: string
+      errors:
+        docs: >-
+          Dictionary of field-specific validation errors. Keys are field paths
+          (e.g., "paymentMethod.cardnumber") and values are arrays of error details.
+        type: map<string, list<V2BadRequestErrorDetail>>
+      token:
+        docs: >-
+          Pagination token (equivalent to pageIdentifier in v1 APIs). Usually null for errors.
+        type: nullable<string>
+
+  V2InternalServerError:
+    docs: >-
+      Internal server error response (HTTP 500) returned when an unexpected error occurs.
+      Follows RFC 7807 Problem Details format.
+    examples:
+      - name: Server error
+        value:
+          title: "Internal Server Error"
+          status: 500
+          detail: "An unexpected error occurred while processing your request"
+          instance: "/api/v2/MoneyIn/getpaid"
+    properties:
+      title:
+        docs: Always "Internal Server Error" for 500 errors.
+        type: string
+      status:
+        docs: HTTP status code, always 500 for internal errors.
+        type: integer
+      detail:
+        docs: Additional details about the internal error.
+        type: string
+      instance:
+        docs: Request URL that caused the error.
+        type: string
+
+# V2 Success/Decline Response Types
+
+  V2TransactionDetailResponseData:
+    docs: Response data from payment processor
+    examples:
+      - name: Approval
+        value:
+          response: null
+          resultCode: "A0000"
+          resultCodeText: "Approved"
+          responsetext: "CAPTURED"
+          authcode: "AXS425"
+          transactionid: "TRN_Xo4dpKfmx3OxSc9svd2ccI6OOnyB2I"
+          avsresponse: "N"
+          avsresponse_text: "No Match, No address or ZIP match"
+          cvvresponse: "M"
+          cvvresponse_text: "CVV2/CVC2 match"
+          orderid: null
+          type: null
+          response_code: "100"
+          response_code_text: "Operation successful"
+          customer_vault_id: null
+          emv_auth_response_data: null
+      - name: Decline
+        value:
+          response: null
+          resultCode: "D0000"
+          resultCodeText: "Declined"
+          responsetext: "DECLINED"
+          authcode: null
+          transactionid: "TRN_Yo5eqLgnz4PyTd0twe3ddJ7PPozC3J"
+          avsresponse: null
+          avsresponse_text: null
+          cvvresponse: null
+          cvvresponse_text: null
+          orderid: null
+          type: null
+          response_code: "100"
+          response_code_text: "Operation successful."
+          customer_vault_id: null
+          emv_auth_response_data: null
+    properties:
+      resultCode: root.ResultCodev2
+      resultCodeText: root.ResultCodeText
+      response: nullable<string>
+      responsetext: root.Resulttext
+      authcode: nullable<root.Authcode>
+      transactionid: 
+        docs: Unique identifier for the transaction assigned by the payment processor.
+        type: string
+      avsresponse: nullable<root.AvsResponse>
+      avsresponse_text: nullable<root.AvsResponseText>
+      cvvresponse: nullable<root.CvvResponse>
+      cvvresponse_text: nullable<root.CvvResponseText>
+      orderid: nullable<root.OrderId>
+      type: 
+        availability: in-development
+        type: nullable<string>
+      response_code: 
+        docs: Processor-specific response code.
+        type: string
+      response_code_text: 
+        docs: Description of the response code.
+        type: string
+      customer_vault_id: nullable<root.CustomerVaultId>
+      emv_auth_response_data: nullable<root.EmvAuthResponseData>
+
+  V2TransactionDetails:
+    docs: >-
+      Complete transaction details returned by v2 Money In endpoints. This matches the
+      structure of the transaction details previously returned by the v1 details endpoint.
+    examples:
+      - name: CardSale
+        value:
+          parentOrgName: "Mrinal's Pet Supplies"
+          paypointDbaname: "Mrinal's Pet Shop North"
+          paypointLegalname: "Mrinal's Pet Shop North"
+          paypointEntryname: "495147f647"
+          paymentTransId: "3040-96dfa9a7c4ed4f82a3dd4a4a12ad28ae"
+          connectorName: "gp"
+          externalProcessorInformation: ""
+          gatewayTransId: "TRN_Ih68D6UZdip7OEQ2QFXat1yQSLF2nB"
+          orderId: null
+          method: "card"
+          batchNumber: "3040_combined_20251201_3a50747d-6b5c-40ef-9f69-93a9cc7fcb49"
+          batchAmount: 420
+          payorId: 4440
+          paymentData:
+            maskedAccount: "4XXXXXXXXXXX5439"
+            accountType: "visa"
+            accountExp: "12/25"
+            holderName: "John Cassian"
+            storedId: null
+            initiator: null
+            storedMethodUsageType: null
+            sequence: null
+            orderDescription: ""
+            accountId: null
+            signatureData: null
+            binData:
+              binMatchedLength: "6"
+              binCardBrand: "VISA"
+              binCardType: "CREDIT"
+              binCardCategory: "CLASSIC"
+              binCardIssuer: ""
+              binCardIssuerCountry: "RUSSIAN FEDERATION"
+              binCardIssuerCountryCodeA2: "RU"
+              binCardIssuerCountryNumber: "643"
+              binCardIsRegulated: ""
+              binCardUseCategory: ""
+              binCardIssuerCountryCodeA3: ""
+            paymentDetails:
+              totalAmount: 105
+              serviceFee: 5
+              checkNumber: null
+              checkImage: null
+              checkUniqueId: ""
+              currency: "USD"
+              orderDescription: null
+              orderId: null
+              orderIdAlternative: null
+              paymentDescription: null
+              groupNumber: null
+              source: null
+              payabliTransId: null
+              unbundled: null
+              categories: []
+              splitFunding: []
+          transStatus: 1
+          paypointId: 3040
+          totalAmount: 105
+          netAmount: 100
+          feeAmount: 5
+          settlementStatus: 0
+          operation: "Sale"
+          responseData: $V2TransactionDetailResponseData.Approval
+          source: "api"
+          scheduleReference: 0
+          orgId: 17448
+          refundId: 0
+          returnedId: 0
+          chargebackId: 0
+          retrievalId: 0
+          transAdditionalData: null
+          invoiceData:
+            invoiceNumber: null
+            invoiceDate: null
+            invoiceDueDate: null
+            invoiceEndDate: null
+            invoiceStatus: null
+            invoiceType: null
+            frequency: null
+            paymentTerms: null
+            termsConditions: null
+            notes: null
+            tax: null
+            discount: null
+            invoiceAmount: null
+            freightAmount: null
+            dutyAmount: null
+            purchaseOrder: null
+            firstName: null
+            lastName: null
+            company: null
+            shippingAddress1: null
+            shippingAddress2: null
+            shippingCity: null
+            shippingState: null
+            shippingZip: null
+            shippingCountry: null
+            shippingEmail: null
+            shippingPhone: null
+            shippingFromZip: null
+            summaryCommodityCode: null
+            items: null
+            attachments: null
+            additionalData: null
+          entrypageId: 0
+          externalPaypointID: ""
+          isValidatedACH: false
+          transactionTime: "2025-12-01T09:50:03.559"
+          customer:
+            identifiers: null
+            firstName: "David"
+            lastName: "Beckham"
+            companyName: "Driving School LLC"
+            billingAddress1: "Home Address"
+            billingAddress2: ""
+            billingCity: ""
+            billingState: ""
+            billingZip: "45157"
+            billingCountry: "US"
+            billingPhone: "+15555555555"
+            billingEmail: "example@payabli.com"
+            customerNumber: "C-90010"
+            shippingAddress1: "Home Address"
+            shippingAddress2: ""
+            shippingCity: ""
+            shippingState: ""
+            shippingZip: "45157"
+            shippingCountry: "US"
+            customerId: 4440
+            customerStatus: 0
+            additionalData: null
+          splitFundingInstructions: null
+          cfeeTransactions:
+            - cFeeTransid: "3040-96dfa9a7c4ed4f82a3dd4a4a12ad28ae"
+              transStatus: 1
+              feeAmount: 5
+              settlementStatus: 0
+              operation: "Sale"
+              responseData: {}
+              refundId: 0
+              transactionTime: "2025-12-01T09:50:03.559"
+          transactionEvents:
+            - transEvent: "Created"
+              eventData: "0HNHD68HATSUC:00000001"
+              eventTime: "2025-12-01T09:50:02.558651"
+            - transEvent: "Approved"
+              eventData: "0HNHD68HATSUC:00000001"
+              eventTime: "2025-12-01T09:50:03.609111"
+          pendingFeeAmount: 0
+          riskFlagged: false
+          riskFlaggedOn: "2025-12-01T09:50:02.5474568"
+          riskStatus: "PASSED"
+          riskReason: ""
+          riskAction: ""
+          riskActionCode: 0
+          deviceId: ""
+          achSecCode: ""
+          achHolderType: "personal"
+          ipAddress: "255.255.255.255"
+          isSameDayACH: false
+          walletType: null
+      - name: ACHSale
+        value:
+          parentOrgName: "Mountain View Services"
+          paypointDbaname: "Mountain View Auto"
+          paypointLegalname: "Mountain View Automotive Services LLC"
+          paypointEntryname: "31ae451b89"
+          paymentTransId: "2145-7b8fa3c9d5e64f73b2ee5a6b14bd39cd"
+          connectorName: "checkcommerce"
+          externalProcessorInformation: ""
+          gatewayTransId: "ACH_TRN_8K92D7VZexp8PFR3RGYbu2zRTMG3oC"
+          orderId: null
+          method: "ach"
+          batchNumber: "checkcommerce_2145_ach_12-01-2025"
+          batchAmount: 525
+          payorId: 38267
+          paymentData:
+            maskedAccount: "XXXXX4532"
+            accountType: "Checking"
+            accountExp: null
+            holderName: "Sarah Martinez"
+            storedId: null
+            initiator: null
+            storedMethodUsageType: null
+            sequence: null
+            orderDescription: ""
+            accountId: null
+            signatureData: null
+            binData: null
+            paymentDetails:
+              totalAmount: 105
+              serviceFee: 5
+              checkNumber: null
+              checkImage: null
+              checkUniqueId: ""
+              currency: "USD"
+              orderDescription: null
+              orderId: null
+              orderIdAlternative: null
+              paymentDescription: null
+              groupNumber: null
+              source: null
+              payabliTransId: null
+              unbundled: null
+              categories: []
+              splitFunding: []
+          transStatus: 1
+          paypointId: 2145
+          totalAmount: 105
+          netAmount: 100
+          feeAmount: 5
+          settlementStatus: 0
+          operation: "Sale"
+          responseData: $V2TransactionDetailResponseData.Approval
+          source: "api"
+          scheduleReference: 0
+          orgId: 14267
+          refundId: 0
+          returnedId: 0
+          chargebackId: 0
+          retrievalId: 0
+          transAdditionalData: null
+          invoiceData:
+            invoiceNumber: null
+            invoiceDate: null
+            invoiceDueDate: null
+            invoiceEndDate: null
+            invoiceStatus: null
+            invoiceType: null
+            frequency: null
+            paymentTerms: null
+            termsConditions: null
+            notes: null
+            tax: null
+            discount: null
+            invoiceAmount: null
+            freightAmount: null
+            dutyAmount: null
+            purchaseOrder: null
+            firstName: null
+            lastName: null
+            company: null
+            shippingAddress1: null
+            shippingAddress2: null
+            shippingCity: null
+            shippingState: null
+            shippingZip: null
+            shippingCountry: null
+            shippingEmail: null
+            shippingPhone: null
+            shippingFromZip: null
+            summaryCommodityCode: null
+            items: null
+            attachments: null
+            additionalData: null
+          entrypageId: 0
+          externalPaypointID: ""
+          isValidatedACH: true
+          transactionTime: "2025-12-01T10:15:28.742"
+          customer:
+            identifiers: null
+            firstName: "Sarah"
+            lastName: "Martinez"
+            companyName: "Martinez Consulting"
+            billingAddress1: "456 Oak Avenue"
+            billingAddress2: "Suite 201"
+            billingCity: "Portland"
+            billingState: "OR"
+            billingZip: "97201"
+            billingCountry: "US"
+            billingPhone: "+15035551234"
+            billingEmail: "sarah.martinez@example.com"
+            customerNumber: "C-80245"
+            shippingAddress1: "456 Oak Avenue"
+            shippingAddress2: "Suite 201"
+            shippingCity: "Portland"
+            shippingState: "OR"
+            shippingZip: "97201"
+            shippingCountry: "US"
+            customerId: 38267
+            customerStatus: 0
+            additionalData: null
+          splitFundingInstructions: null
+          cfeeTransactions:
+            - cFeeTransid: "2145-7b8fa3c9d5e64f73b2ee5a6b14bd39cd"
+              transStatus: 1
+              feeAmount: 5
+              settlementStatus: 0
+              operation: "Sale"
+              responseData: {}
+              refundId: 0
+              transactionTime: "2025-12-01T10:15:28.742"
+          transactionEvents:
+            - transEvent: "Created"
+              eventData: "0HNHD69JBVWXP:00000001"
+              eventTime: "2025-12-01T10:15:27.682442"
+            - transEvent: "Approved"
+              eventData: "0HNHD69JBVWXP:00000001"
+              eventTime: "2025-12-01T10:15:28.751283"
+          pendingFeeAmount: 0
+          riskFlagged: false
+          riskFlaggedOn: "2025-12-01T10:15:27.6712346"
+          riskStatus: "PASSED"
+          riskReason: ""
+          riskAction: ""
+          riskActionCode: 0
+          deviceId: ""
+          achSecCode: "WEB"
+          achHolderType: "personal"
+          ipAddress: "255.255.255.255"
+          isSameDayACH: false
+          walletType: null
+      - name: CardSaleStoredMethod
+        value:
+          parentOrgName: "Mrinal's Pet Supplies"
+          paypointDbaname: "Mrinal's Pet Shop North"
+          paypointLegalname: "Mrinal's Pet Shop North"
+          paypointEntryname: "495147f647"
+          paymentTransId: "3040-9708542b00354726ad8a6b0c65bc7a54"
+          connectorName: "gp"
+          externalProcessorInformation: ""
+          gatewayTransId: "TRN_Xo4dpKfmx3OxSc9svd2ccI6OOnyB2I"
+          orderId: null
+          method: "card"
+          batchNumber: "3040_combined_20251201_3a50747d-6b5c-40ef-9f69-93a9cc7fcb49"
+          batchAmount: 630
+          payorId: 4440
+          paymentData:
+            maskedAccount: "3XXXXXXXXXX0227"
+            accountType: "amex"
+            accountExp: "12/25"
+            holderName: "Alexa Amazon"
+            storedId: "fb1f5ec2-1ba4-4ba6-9839-20c2cc4baf5a-4440"
+            initiator: "merchant"
+            storedMethodUsageType: "unscheduled"
+            sequence: "subsequent"
+            orderDescription: ""
+            accountId: null
+            signatureData: null
+            binData:
+              binMatchedLength: ""
+              binCardBrand: ""
+              binCardType: ""
+              binCardCategory: ""
+              binCardIssuer: ""
+              binCardIssuerCountry: ""
+              binCardIssuerCountryCodeA2: ""
+              binCardIssuerCountryNumber: ""
+              binCardIsRegulated: ""
+              binCardUseCategory: ""
+              binCardIssuerCountryCodeA3: ""
+            paymentDetails:
+              totalAmount: 105
+              serviceFee: 5
+              checkNumber: null
+              checkImage: null
+              checkUniqueId: ""
+              currency: "USD"
+              orderDescription: null
+              orderId: null
+              orderIdAlternative: null
+              paymentDescription: null
+              groupNumber: null
+              source: null
+              payabliTransId: null
+              unbundled: null
+              categories: []
+              splitFunding: []
+          transStatus: 1
+          paypointId: 3040
+          totalAmount: 105
+          netAmount: 100
+          feeAmount: 5
+          settlementStatus: 0
+          operation: "Sale"
+          responseData: $V2TransactionDetailResponseData.Approval
+          source: "api"
+          scheduleReference: 0
+          orgId: 17448
+          refundId: 0
+          returnedId: 0
+          chargebackId: 0
+          retrievalId: 0
+          transAdditionalData: null
+          invoiceData:
+            invoiceNumber: null
+            invoiceDate: null
+            invoiceDueDate: null
+            invoiceEndDate: null
+            invoiceStatus: null
+            invoiceType: null
+            frequency: null
+            paymentTerms: null
+            termsConditions: null
+            notes: null
+            tax: null
+            discount: null
+            invoiceAmount: null
+            freightAmount: null
+            dutyAmount: null
+            purchaseOrder: null
+            firstName: null
+            lastName: null
+            company: null
+            shippingAddress1: null
+            shippingAddress2: null
+            shippingCity: null
+            shippingState: null
+            shippingZip: null
+            shippingCountry: null
+            shippingEmail: null
+            shippingPhone: null
+            shippingFromZip: null
+            summaryCommodityCode: null
+            items: null
+            attachments: null
+            additionalData: null
+          entrypageId: 0
+          externalPaypointID: ""
+          isValidatedACH: false
+          transactionTime: "2025-12-01T09:56:33.967"
+          customer:
+            identifiers: null
+            firstName: "David"
+            lastName: "Beckham"
+            companyName: "Driving School LLC"
+            billingAddress1: "Home Address"
+            billingAddress2: ""
+            billingCity: ""
+            billingState: ""
+            billingZip: "45157"
+            billingCountry: "US"
+            billingPhone: "+15555555555"
+            billingEmail: "example@payabli.com"
+            customerNumber: "C-90010"
+            shippingAddress1: "Home Address"
+            shippingAddress2: ""
+            shippingCity: ""
+            shippingState: ""
+            shippingZip: "45157"
+            shippingCountry: "US"
+            customerId: 4440
+            customerStatus: 0
+            additionalData: null
+          splitFundingInstructions: null
+          cfeeTransactions:
+            - cFeeTransid: "3040-9708542b00354726ad8a6b0c65bc7a54"
+              transStatus: 1
+              feeAmount: 5
+              settlementStatus: 0
+              operation: "Sale"
+              responseData: {}
+              refundId: 0
+              transactionTime: "2025-12-01T09:56:33.967"
+          transactionEvents:
+            - transEvent: "Created"
+              eventData: "0HNHD68HATSUR:00000004"
+              eventTime: "2025-12-01T09:56:32.662988"
+            - transEvent: "Approved"
+              eventData: "0HNHD68HATSUR:00000004"
+              eventTime: "2025-12-01T09:56:34.027504"
+          pendingFeeAmount: 0
+          riskFlagged: false
+          riskFlaggedOn: "2025-12-01T09:56:32.6525967"
+          riskStatus: "PASSED"
+          riskReason: ""
+          riskAction: ""
+          riskActionCode: 0
+          deviceId: ""
+          achSecCode: ""
+          achHolderType: "personal"
+          ipAddress: "255.255.255.255"
+          isSameDayACH: false
+          walletType: null
+      - name: CardAuth
+        value:
+          parentOrgName: "Mrinal's Pet Supplies"
+          paypointDbaname: "Mrinal's Pet Shop North"
+          paypointLegalname: "Mrinal's Pet Shop North"
+          paypointEntryname: "495147f647"
+          paymentTransId: "3040-96dfa9a7c4ed4f82a3dd4a4a12ad28ae"
+          connectorName: "gp"
+          externalProcessorInformation: ""
+          gatewayTransId: "TRN_Ih68D6UZdip7OEQ2QFXat1yQSLF2nB"
+          orderId: null
+          method: "card"
+          batchNumber: "3040_combined_20251201_3a50747d-6b5c-40ef-9f69-93a9cc7fcb49"
+          batchAmount: 420
+          payorId: 4440
+          paymentData:
+            maskedAccount: "4XXXXXXXXXXX5439"
+            accountType: "visa"
+            accountExp: "12/25"
+            holderName: "John Cassian"
+            storedId: null
+            initiator: null
+            storedMethodUsageType: null
+            sequence: null
+            orderDescription: ""
+            accountId: null
+            signatureData: null
+            binData:
+              binMatchedLength: "6"
+              binCardBrand: "VISA"
+              binCardType: "CREDIT"
+              binCardCategory: "CLASSIC"
+              binCardIssuer: ""
+              binCardIssuerCountry: "RUSSIAN FEDERATION"
+              binCardIssuerCountryCodeA2: "RU"
+              binCardIssuerCountryNumber: "643"
+              binCardIsRegulated: ""
+              binCardUseCategory: ""
+              binCardIssuerCountryCodeA3: ""
+            paymentDetails:
+              totalAmount: 105
+              serviceFee: 5
+              checkNumber: null
+              checkImage: null
+              checkUniqueId: ""
+              currency: "USD"
+              orderDescription: null
+              orderId: null
+              orderIdAlternative: null
+              paymentDescription: null
+              groupNumber: null
+              source: null
+              payabliTransId: null
+              unbundled: null
+              categories: []
+              splitFunding: []
+          transStatus: 11
+          paypointId: 3040
+          totalAmount: 105
+          netAmount: 100
+          feeAmount: 5
+          settlementStatus: 0
+          operation: "Sale"
+          responseData: $V2TransactionDetailResponseData.Approval
+          source: "api"
+          scheduleReference: 0
+          orgId: 17448
+          refundId: 0
+          returnedId: 0
+          chargebackId: 0
+          retrievalId: 0
+          transAdditionalData: null
+          invoiceData:
+            invoiceNumber: null
+            invoiceDate: null
+            invoiceDueDate: null
+            invoiceEndDate: null
+            invoiceStatus: null
+            invoiceType: null
+            frequency: null
+            paymentTerms: null
+            termsConditions: null
+            notes: null
+            tax: null
+            discount: null
+            invoiceAmount: null
+            freightAmount: null
+            dutyAmount: null
+            purchaseOrder: null
+            firstName: null
+            lastName: null
+            company: null
+            shippingAddress1: null
+            shippingAddress2: null
+            shippingCity: null
+            shippingState: null
+            shippingZip: null
+            shippingCountry: null
+            shippingEmail: null
+            shippingPhone: null
+            shippingFromZip: null
+            summaryCommodityCode: null
+            items: null
+            attachments: null
+            additionalData: null
+          entrypageId: 0
+          externalPaypointID: ""
+          isValidatedACH: false
+          transactionTime: "2025-12-01T09:50:03.559"
+          customer:
+            identifiers: null
+            firstName: "David"
+            lastName: "Beckham"
+            companyName: "Driving School LLC"
+            billingAddress1: "Home Address"
+            billingAddress2: ""
+            billingCity: ""
+            billingState: ""
+            billingZip: "45157"
+            billingCountry: "US"
+            billingPhone: "+15555555555"
+            billingEmail: "example@payabli.com"
+            customerNumber: "C-90010"
+            shippingAddress1: "Home Address"
+            shippingAddress2: ""
+            shippingCity: ""
+            shippingState: ""
+            shippingZip: "45157"
+            shippingCountry: "US"
+            customerId: 4440
+            customerStatus: 0
+            additionalData: null
+          splitFundingInstructions: null
+          cfeeTransactions:
+            - cFeeTransid: "3040-96dfa9a7c4ed4f82a3dd4a4a12ad28ae"
+              transStatus: 1
+              feeAmount: 5
+              settlementStatus: 0
+              operation: "Sale"
+              responseData: {}
+              refundId: 0
+              transactionTime: "2025-12-01T09:50:03.559"
+          transactionEvents:
+            - transEvent: "Created"
+              eventData: "0HNHD68HATSUC:00000001"
+              eventTime: "2025-12-01T09:50:02.558651"
+            - transEvent: "Approved"
+              eventData: "0HNHD68HATSUC:00000001"
+              eventTime: "2025-12-01T09:50:03.609111"
+          pendingFeeAmount: 0
+          riskFlagged: false
+          riskFlaggedOn: "2025-12-01T09:50:02.5474568"
+          riskStatus: "PASSED"
+          riskReason: ""
+          riskAction: ""
+          riskActionCode: 0
+          deviceId: ""
+          achSecCode: ""
+          achHolderType: "personal"
+          ipAddress: "255.255.255.255"
+          isSameDayACH: false
+          walletType: null
+      - name: CardVoided
+        value:
+          parentOrgName: "Mrinal's Pet Supplies"
+          paypointDbaname: "Mrinal's Pet Shop North"
+          paypointLegalname: "Mrinal's Pet Shop North"
+          paypointEntryname: "495147f647"
+          paymentTransId: "3040-96dfa9a7c4ed4f82a3dd4a4a12ad28ae"
+          connectorName: "gp"
+          externalProcessorInformation: ""
+          gatewayTransId: "TRN_Ih68D6UZdip7OEQ2QFXat1yQSLF2nB"
+          orderId: null
+          method: "card"
+          batchNumber: "3040_combined_20251201_3a50747d-6b5c-40ef-9f69-93a9cc7fcb49"
+          batchAmount: 420
+          payorId: 4440
+          paymentData:
+            maskedAccount: "4XXXXXXXXXXX5439"
+            accountType: "visa"
+            accountExp: "12/25"
+            holderName: "John Cassian"
+            storedId: null
+            initiator: null
+            storedMethodUsageType: null
+            sequence: null
+            orderDescription: ""
+            accountId: null
+            signatureData: null
+            binData:
+              binMatchedLength: "6"
+              binCardBrand: "VISA"
+              binCardType: "CREDIT"
+              binCardCategory: "CLASSIC"
+              binCardIssuer: ""
+              binCardIssuerCountry: "RUSSIAN FEDERATION"
+              binCardIssuerCountryCodeA2: "RU"
+              binCardIssuerCountryNumber: "643"
+              binCardIsRegulated: ""
+              binCardUseCategory: ""
+              binCardIssuerCountryCodeA3: ""
+            paymentDetails:
+              totalAmount: 105
+              serviceFee: 5
+              checkNumber: null
+              checkImage: null
+              checkUniqueId: ""
+              currency: "USD"
+              orderDescription: null
+              orderId: null
+              orderIdAlternative: null
+              paymentDescription: null
+              groupNumber: null
+              source: null
+              payabliTransId: null
+              unbundled: null
+              categories: []
+              splitFunding: []
+          transStatus: 5
+          paypointId: 3040
+          totalAmount: 105
+          netAmount: 100
+          feeAmount: 5
+          settlementStatus: 0
+          operation: "Sale"
+          responseData: $V2TransactionDetailResponseData.Approval
+          source: "api"
+          scheduleReference: 0
+          orgId: 17448
+          refundId: 0
+          returnedId: 0
+          chargebackId: 0
+          retrievalId: 0
+          transAdditionalData: null
+          invoiceData:
+            invoiceNumber: null
+            invoiceDate: null
+            invoiceDueDate: null
+            invoiceEndDate: null
+            invoiceStatus: null
+            invoiceType: null
+            frequency: null
+            paymentTerms: null
+            termsConditions: null
+            notes: null
+            tax: null
+            discount: null
+            invoiceAmount: null
+            freightAmount: null
+            dutyAmount: null
+            purchaseOrder: null
+            firstName: null
+            lastName: null
+            company: null
+            shippingAddress1: null
+            shippingAddress2: null
+            shippingCity: null
+            shippingState: null
+            shippingZip: null
+            shippingCountry: null
+            shippingEmail: null
+            shippingPhone: null
+            shippingFromZip: null
+            summaryCommodityCode: null
+            items: null
+            attachments: null
+            additionalData: null
+          entrypageId: 0
+          externalPaypointID: ""
+          isValidatedACH: false
+          transactionTime: "2025-12-01T09:50:03.559"
+          customer:
+            identifiers: null
+            firstName: "David"
+            lastName: "Beckham"
+            companyName: "Driving School LLC"
+            billingAddress1: "Home Address"
+            billingAddress2: ""
+            billingCity: ""
+            billingState: ""
+            billingZip: "45157"
+            billingCountry: "US"
+            billingPhone: "+15555555555"
+            billingEmail: "example@payabli.com"
+            customerNumber: "C-90010"
+            shippingAddress1: "Home Address"
+            shippingAddress2: ""
+            shippingCity: ""
+            shippingState: ""
+            shippingZip: "45157"
+            shippingCountry: "US"
+            customerId: 4440
+            customerStatus: 0
+            additionalData: null
+          splitFundingInstructions: null
+          cfeeTransactions:
+            - cFeeTransid: "3040-96dfa9a7c4ed4f82a3dd4a4a12ad28ae"
+              transStatus: 1
+              feeAmount: 5
+              settlementStatus: 0
+              operation: "Sale"
+              responseData: {}
+              refundId: 0
+              transactionTime: "2025-12-01T09:50:03.559"
+          transactionEvents:
+            - transEvent: "Created"
+              eventData: "0HNHD68HATSUC:00000001"
+              eventTime: "2025-12-01T09:50:02.558651"
+            - transEvent: "Approved"
+              eventData: "0HNHD68HATSUC:00000001"
+              eventTime: "2025-12-01T09:50:03.609111"
+          pendingFeeAmount: 0
+          riskFlagged: false
+          riskFlaggedOn: "2025-12-01T09:50:02.5474568"
+          riskStatus: "PASSED"
+          riskReason: ""
+          riskAction: ""
+          riskActionCode: 0
+          deviceId: ""
+          achSecCode: ""
+          achHolderType: "personal"
+          ipAddress: "255.255.255.255"
+          isSameDayACH: false
+          walletType: null
+    properties:
+      parentOrgName: root.OrgParentName
+      paypointDbaname: root.Dbaname
+      paypointLegalname: root.Legalname
+      paypointEntryname: root.Entrypointfield
+      paymentTransId:
+        docs: Unique transaction identifier.
+        type: string
+      connectorName:
+        docs: Name of the payment connector used.
+        type: string
+      externalProcessorInformation: root.ExternalProcessorInformation
+      gatewayTransId:
+        docs: Gateway transaction identifier.
+        type: string
+      orderId: nullable<root.OrderId>
+      method:
+        docs: Payment method used for the transaction.
+        type: string
+      batchNumber: root.BatchNumber
+      batchAmount:
+        docs: Total amount in the batch.
+        type: double
+      payorId: root.PayorId
+      paymentData: moneyIn.TransactionDetailPaymentData
+      transStatus: root.TransStatus
+      paypointId: root.PaypointId
+      totalAmount:
+        docs: Total transaction amount including fees.
+        type: double
+      netAmount:
+        docs: Net transaction amount excluding fees.
+        type: double
+      feeAmount: root.FeeAmount
+      settlementStatus: root.SettlementStatus
+      operation: root.Operation
+      responseData: V2TransactionDetailResponseData
+      source: root.Source
+      scheduleReference:
+        docs: Reference to associated payment schedule if applicable.
+        type: long
+      orgId: root.Orgid
+      refundId: root.RefundId
+      returnedId: root.ReturnedId
+      chargebackId: root.ChargebackId
+      retrievalId: root.RetrievalId
+      transAdditionalData: nullable<unknown>
+      invoiceData: moneyIn.TransactionDetailInvoiceData
+      entrypageId: root.EntrypageId
+      externalPaypointID: root.ExternalPaypointId
+      isValidatedACH:
+        docs: Indicates if ACH account was validated in real-time.
+        type: boolean
+      transactionTime:
+        docs: Timestamp when transaction was created.
+        type: string
+      customer: moneyIn.TransactionDetailCustomer
+      splitFundingInstructions: nullable<root.SplitFunding>
+      cfeeTransactions: list<root.QueryCFeeTransaction>
+      transactionEvents: list<moneyIn.TransactionDetailEvent>
+      pendingFeeAmount: optional<root.PendingFeeAmount>
+      riskFlagged: optional<root.RiskFlagged>
+      riskFlaggedOn: optional<root.RiskFlaggedOn>
+      riskStatus: root.RiskStatus
+      riskReason: root.RiskReason
+      riskAction: root.RiskAction
+      riskActionCode: optional<root.RiskActionCode>
+      deviceId: root.Device
+      achSecCode: root.AchSecCode
+      achHolderType: root.AchHolderType
+      ipAddress: root.IpAddress
+      isSameDayACH:
+        docs: Indicates if ACH transaction uses same-day processing.
+        type: boolean
+      walletType:
+        docs: Digital wallet type if applicable.
+        type: nullable<string>

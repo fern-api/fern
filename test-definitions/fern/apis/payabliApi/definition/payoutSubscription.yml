@@ -1,0 +1,675 @@
+imports:
+  root: __package__.yml
+  moneyOutTypes: __moneyOutTypes__.yml
+
+types:
+
+  PayoutSetPause:
+    docs: >-
+      Flag indicating if the payout subscription is paused. When a payout
+      subscription is paused, no payouts are processed until it's unpaused,
+      and the next payment date isn't calculated automatically.
+    type: boolean
+
+  PayoutScheduleDetail:
+    properties:
+      startDate:
+        docs: >-
+          Subscription start date in any of the accepted formats: YYYY-MM-DD,
+          MM/DD/YYYY. This must be a future date.
+        type: optional<string>
+      endDate:
+        docs: >-
+          Subscription end date in any of the accepted formats: YYYY-MM-DD,
+          MM/DD/YYYY or the value `untilcancelled` to indicate a scheduled
+          payout with infinite cycle.
+        type: optional<string>
+      frequency:
+        docs: Frequency of the payout subscription.
+        type: optional<root.Frequency>
+
+  PayoutSubscriptionRequestBody:
+    properties:
+      entryPoint: root.Entrypointfield
+      subdomain: optional<root.Subdomain>
+      accountId: optional<root.AccountId>
+      source: optional<root.Source>
+      setPause: optional<PayoutSetPause>
+      paymentMethod:
+        docs: >-
+          Payment method for the payout subscription. Supports `ach`, `vcard`,
+          and `check`. The `managed` method isn't supported for payout
+          subscriptions.
+        type: moneyOutTypes.AuthorizePaymentMethod
+      paymentDetails:
+        docs: Object describing details of the payout.
+        type: optional<PayoutPaymentDetail>
+      vendorData:
+        docs: >-
+          Object identifying the vendor for this subscription. Only a `vendorId`
+          or `vendorNumber` is needed to link to an existing vendor.
+        type: moneyOutTypes.RequestOutAuthorizeVendorData
+      billData:
+        docs: >-
+          Array of bills associated with the payout subscription. If omitted and
+          `doNotCreateBills` isn't set to `true`, the system creates a bill
+          automatically.
+        type: optional<list<root.BillPayOutDataRequest>>
+      scheduleDetails:
+        docs: Object describing the schedule for the payout subscription.
+        type: optional<PayoutScheduleDetail>
+
+  PayoutPaymentDetail:
+    docs: Payment details for payout subscriptions.
+    properties:
+      totalAmount:
+        docs: >-
+          Total payout amount. If a service fee is included, this amount should
+          include the service fee.
+        type: double
+      serviceFee:
+        docs: >-
+          Service fee to be deducted from the total amount. This amount must be
+          a number, percentages aren't accepted.
+        type: optional<double>
+      currency:
+        docs: >-
+          Currency code ISO-4217. If no code is provided, the currency in the
+          paypoint setting is used. Default is `USD`.
+        type: optional<string>
+      checkNumber:
+        docs: >-
+          A check number for the payout. Required when the payment method is
+          `check`.
+        type: optional<string>
+      orderDescription:
+        docs: Description of the payout order.
+        type: optional<string>
+      orderId:
+        docs: Order identifier associated with the payout.
+        type: optional<string>
+      orderIdAlternative:
+        docs: Alternative order identifier.
+        type: optional<string>
+      paymentDescription:
+        docs: Description of the payment.
+        type: optional<string>
+      settlementDescriptor:
+        docs: Settlement descriptor for the payout.
+        type: optional<string>
+      groupNumber:
+        docs: Group number for the payout.
+        type: optional<string>
+      source:
+        docs: Source identifier for the payout.
+        type: optional<string>
+      payabliTransId:
+        docs: Payabli transaction identifier.
+        type: optional<string>
+      unbundled:
+        docs: >-
+          When `true`, each bill is processed as a separate payout. When `false`
+          or not provided, multiple bills are paid with a single payout.
+        type: optional<boolean>
+
+  UpdatePayoutSubscriptionBody:
+    properties:
+      setPause: optional<PayoutSetPause>
+      paymentDetails:
+        docs: Object describing details of the payout.
+        type: optional<PayoutPaymentDetail>
+      paymentMethod: optional<moneyOutTypes.AuthorizePaymentMethod>
+      scheduleDetails:
+        docs: Object describing the schedule for the payout subscription.
+        type: optional<PayoutScheduleDetail>
+
+  AddPayoutSubscriptionResponse:
+    docs: Success response
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      responseText: root.ResponseText
+      responseData:
+        docs: The identifier of the newly created payout subscription.
+        type: integer
+      customerId:
+        docs: >-
+          The identifier of the vendor associated with the payout subscription.
+        type: optional<root.CustomerId>
+    examples:
+      - name: AddPayoutSubscriptionResponse
+        value:
+          responseText: Success
+          isSuccess: true
+          responseData: 42
+          customerId: 1501
+
+  UpdatePayoutSubscriptionResponse:
+    docs: Success response
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      responseText: root.ResponseText
+      responseData:
+        docs: >
+
+          If `isSuccess` = true, this contains the payout subscription ID. When
+          the subscription is paused, it also includes a description (for
+          example, "42 paused").
+
+
+          If `isSuccess` = false, this contains the reason for the failure.
+        type: optional<string>
+      customerId: optional<root.CustomerId>
+
+  GetPayoutSubscriptionResponse:
+    docs: Success response
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      responseText: root.ResponseText
+      responseData:
+        docs: The payout subscription record.
+        type: optional<PayoutSubscriptionQueryRecord>
+    examples:
+      - name: GetPayoutSubscriptionResponseExample
+        value:
+          responseText: Success
+          isSuccess: true
+          responseData: $PayoutSubscriptionQueryRecord.PayoutSubscriptionQueryRecordExample
+
+  DeletePayoutSubscriptionResponse:
+    docs: Success response
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      responseData:
+        docs: >
+
+          If `isSuccess` = true, this contains the identifier of the
+          payout subscription.
+
+
+          If `isSuccess` = false, this contains the reason for the failure.
+        type: optional<string>
+      responseText: root.ResponseText
+
+  PayoutSubscriptionQueryRecord:
+    properties:
+      idOutSubscription:
+        docs: The payout subscription's ID.
+        type: optional<long>
+      status:
+        docs: |
+          The payout subscription's status.
+          - 0: Paused
+          - 1: Active
+        type: optional<integer>
+      events:
+        docs: Events associated with the payout subscription.
+        type: optional<list<root.GeneralEvents>>
+      vendor: optional<root.VendorQueryRecord>
+      billData:
+        docs: Bills associated with the payout subscription.
+        type: optional<list<root.BillPayOutData>>
+      externalPaypointID: optional<root.ExternalPaypointId>
+      method:
+        docs: The payout subscription's payment method.
+        type: optional<string>
+      paypointId: optional<root.PaypointId>
+      totalAmount:
+        docs: The payout subscription amount, including any fees.
+        type: optional<double>
+      netAmount:
+        docs: The payout subscription amount, minus any fees.
+        type: optional<root.Netamountnullable>
+      feeAmount:
+        docs: Fee applied to the payout subscription.
+        type: optional<double>
+      paymentData: optional<root.QueryPaymentData>
+      startDate:
+        docs: The payout subscription start date.
+        type: nullable<datetime>
+      endDate:
+        docs: The payout subscription's end date.
+        type: nullable<datetime>
+      nextDate:
+        docs: The next date the payout subscription will be processed.
+        type: nullable<datetime>
+      frequency:
+        docs: The payout subscription's frequency.
+        type: optional<string>
+      totalCycles:
+        docs: The total number of cycles the payout subscription is set to run.
+        type: optional<integer>
+      leftCycles:
+        docs: The number of cycles the payout subscription has left.
+        type: optional<integer>
+      lastRun:
+        docs: The last time the payout subscription was processed.
+        type: nullable<datetime>
+      entrypageId: optional<root.EntrypageId>
+      untilCancelled:
+        docs: >-
+          When `true`, the payout subscription has no explicit end date and
+          runs until canceled.
+        type: optional<boolean>
+      lastUpdated:
+        docs: The last date and time the payout subscription was updated.
+        type: optional<root.LastModified>
+      createdAt:
+        docs: Timestamp of when the payout subscription was created, in UTC.
+        type: optional<root.CreatedAt>
+      paypointLegalname:
+        docs: The paypoint's legal name.
+        type: optional<root.Legalname>
+      paypointDbaname:
+        docs: The paypoint's DBA name.
+        type: optional<root.Dbaname>
+      paypointEntryname:
+        docs: The paypoint's entryname.
+        type: optional<root.Entrypointfield>
+      parentOrgName: optional<root.OrgParentName>
+      parentOrgId: optional<root.OrgParentId>
+      source: optional<root.Source>
+    examples:
+      - name: PayoutSubscriptionQueryRecordExample
+        value:
+          idOutSubscription: 42
+          status: 1
+          events:
+            - description: TransferCreated
+              eventTime: "2025-09-01T06:00:00Z"
+              extraData:
+                key: value
+              refData: refData
+              source: api
+          vendor: $root.VendorQueryRecord.VendorQueryRecordExample
+          billData:
+            - billId: 3001
+              invoiceNumber: INV-5001
+              netAmount: "500"
+              invoiceDate: "2025-08-01"
+              dueDate: "2025-08-15"
+          externalPaypointID: d193cf9a46-10
+          method: ach
+          paypointId: 255
+          totalAmount: 500
+          netAmount: 500
+          feeAmount: 0
+          paymentData:
+            AccountType: checking
+            HolderName: Herman Coatings
+            Initiator: merchant
+            MaskedAccount: XXXXXX5666
+            paymentDetails:
+              currency: USD
+              serviceFee: 0
+              totalAmount: 500
+            Sequence: subsequent
+            StoredMethodUsageType: recurring
+          startDate: "2025-09-01T00:00:00Z"
+          endDate: "2026-09-01T00:00:00Z"
+          nextDate: "2025-10-01T00:00:00Z"
+          frequency: monthly
+          totalCycles: 12
+          leftCycles: 11
+          lastRun: "2025-09-01T06:00:00Z"
+          entrypageId: 0
+          untilCancelled: false
+          lastUpdated: "2025-08-01T12:00:00Z"
+          createdAt: "2025-08-01T12:00:00Z"
+          paypointLegalname: Sunshine Services, LLC
+          paypointDbaname: Sunshine Gutters
+          paypointEntryname: d193cf9a46
+          parentOrgName: PropertyManager Pro
+          parentOrgId: 236
+          source: api
+
+  PayoutSubscriptionQueryRecordPascal:
+    properties:
+      IdOutSubscription:
+        docs: The payout subscription's ID.
+        type: optional<long>
+      Status:
+        docs: |
+          The payout subscription's status.
+          - 0: Paused
+          - 1: Active
+        type: optional<integer>
+      Events:
+        docs: Events associated with the payout subscription.
+        type: optional<list<root.GeneralEvents>>
+      Vendor: optional<root.VendorQueryRecord>
+      BillData:
+        docs: Bills associated with the payout subscription.
+        type: optional<list<root.BillPayOutData>>
+      ExternalPaypointID: optional<root.ExternalPaypointId>
+      Method:
+        docs: The payout subscription's payment method.
+        type: optional<string>
+      PaypointId: optional<root.PaypointId>
+      TotalAmount:
+        docs: The payout subscription amount, including any fees.
+        type: optional<double>
+      NetAmount:
+        docs: The payout subscription amount, minus any fees.
+        type: optional<root.Netamountnullable>
+      FeeAmount:
+        docs: Fee applied to the payout subscription.
+        type: optional<double>
+      PaymentData: optional<root.QueryPaymentData>
+      StartDate:
+        docs: The payout subscription start date.
+        type: nullable<datetime>
+      EndDate:
+        docs: The payout subscription's end date.
+        type: nullable<datetime>
+      NextDate:
+        docs: The next date the payout subscription will be processed.
+        type: nullable<datetime>
+      Frequency:
+        docs: The payout subscription's frequency.
+        type: optional<string>
+      TotalCycles:
+        docs: The total number of cycles the payout subscription is set to run.
+        type: optional<integer>
+      LeftCycles:
+        docs: The number of cycles the payout subscription has left.
+        type: optional<integer>
+      LastRun:
+        docs: The last time the payout subscription was processed.
+        type: nullable<datetime>
+      EntrypageId: optional<root.EntrypageId>
+      UntilCancelled:
+        docs: >-
+          When `true`, the payout subscription has no explicit end date and
+          runs until canceled.
+        type: optional<boolean>
+      LastUpdated:
+        docs: The last date and time the payout subscription was updated.
+        type: optional<root.LastModified>
+      CreatedAt:
+        docs: Timestamp of when the payout subscription was created, in UTC.
+        type: optional<root.CreatedAt>
+      PaypointLegalname:
+        docs: The paypoint's legal name.
+        type: optional<root.Legalname>
+      PaypointDbaname:
+        docs: The paypoint's DBA name.
+        type: optional<root.Dbaname>
+      PaypointEntryname:
+        docs: The paypoint's entryname.
+        type: optional<root.Entrypointfield>
+      ParentOrgName: optional<root.OrgParentName>
+      ParentOrgId: optional<root.OrgParentId>
+      Source: optional<root.Source>
+    examples:
+      - name: PayoutSubscriptionQueryRecordPascalExample
+        value:
+          IdOutSubscription: 42
+          Status: 1
+          Events:
+            - description: TransferCreated
+              eventTime: "2025-09-01T06:00:00Z"
+              extraData:
+                key: value
+              refData: refData
+              source: api
+          Vendor: $root.VendorQueryRecord.VendorQueryRecordExample
+          BillData:
+            - billId: 3001
+              invoiceNumber: INV-5001
+              netAmount: "500"
+              invoiceDate: "2025-08-01"
+              dueDate: "2025-08-15"
+          ExternalPaypointID: d193cf9a46-10
+          Method: ach
+          PaypointId: 255
+          TotalAmount: 500
+          NetAmount: 500
+          FeeAmount: 0
+          PaymentData:
+            AccountType: checking
+            HolderName: Herman Coatings
+            Initiator: merchant
+            MaskedAccount: XXXXXX5666
+            paymentDetails:
+              currency: USD
+              serviceFee: 0
+              totalAmount: 500
+            Sequence: subsequent
+            StoredMethodUsageType: recurring
+          StartDate: "2025-09-01T00:00:00Z"
+          EndDate: "2026-09-01T00:00:00Z"
+          NextDate: "2025-10-01T00:00:00Z"
+          Frequency: monthly
+          TotalCycles: 12
+          LeftCycles: 11
+          LastRun: "2025-09-01T06:00:00Z"
+          EntrypageId: 0
+          UntilCancelled: false
+          LastUpdated: "2025-08-01T12:00:00Z"
+          CreatedAt: "2025-08-01T12:00:00Z"
+          PaypointLegalname: Sunshine Services, LLC
+          PaypointDbaname: Sunshine Gutters
+          PaypointEntryname: d193cf9a46
+          ParentOrgName: PropertyManager Pro
+          ParentOrgId: 236
+          Source: api
+
+  QueryPayoutSubscriptionResponse:
+    docs: Payout subscription query response body.
+    properties:
+      Summary: optional<root.QuerySummary>
+      Records: optional<list<PayoutSubscriptionQueryRecordPascal>>
+    examples:
+      - name: QueryPayoutSubscriptionResponseExample
+        value:
+          Summary:
+            totalRecords: 1
+            totalAmount: 500
+            totalNetAmount: 500
+            totalPages: 1
+            pageSize: 20
+            pageIdentifier: XXXXXXXXXXXXXXXXXXX
+          Records:
+            - $PayoutSubscriptionQueryRecordPascal.PayoutSubscriptionQueryRecordPascalExample
+
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    CreatePayoutSubscription:
+      auth: true
+      display-name: Create payout subscription
+      docs: >-
+        Creates a payout subscription to automatically send payouts to a vendor
+        on a recurring schedule. See [Manage payout subscriptions](/guides/pay-out-developer-payout-subscriptions-manage) for a step-by-step guide.
+      examples:
+        - name: ACHPayoutSubscription
+          request:
+            entryPoint: d193cf9a46
+            paymentMethod:
+              method: ach
+              achHolder: Herman Coatings
+              achRouting: "021000021"
+              achAccount: "3453445666"
+              achAccountType: checking
+            paymentDetails:
+              totalAmount: 500
+              serviceFee: 0
+              currency: USD
+            vendorData:
+              vendorId: 1501
+            billData:
+              - invoiceNumber: INV-5001
+                netAmount: "500"
+                invoiceDate: "2025-08-01"
+                dueDate: "2025-08-15"
+            scheduleDetails:
+              startDate: 09/01/2025
+              endDate: 09/01/2026
+              frequency: monthly
+          response:
+            body: $AddPayoutSubscriptionResponse.AddPayoutSubscriptionResponse
+        - name: VcardPayoutSubscription
+          request:
+            entryPoint: d193cf9a46
+            paymentMethod:
+              method: vcard
+            paymentDetails:
+              totalAmount: 250
+              serviceFee: 0
+            vendorData:
+              vendorId: 1501
+            billData:
+              - invoiceNumber: INV-7820
+                netAmount: "250"
+                invoiceDate: "2025-08-15"
+                dueDate: "2025-09-01"
+            scheduleDetails:
+              startDate: 09/01/2025
+              frequency: weekly
+              endDate: untilcancelled
+          response:
+            body: $AddPayoutSubscriptionResponse.AddPayoutSubscriptionResponse
+      method: POST
+      path: /PayoutSubscription
+      request:
+        body: PayoutSubscriptionRequestBody
+        content-type: application/json
+        headers:
+          idempotencyKey: optional<root.IdempotencyKey>
+        name: RequestPayoutSchedule
+      response:
+        docs: Success
+        status-code: 200
+        type: AddPayoutSubscriptionResponse
+
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+
+    GetPayoutSubscription:
+      auth: true
+      display-name: Get a payout subscription
+      docs: >-
+        Retrieves a single payout subscription's details. See [Manage payout subscriptions](/guides/pay-out-developer-payout-subscriptions-manage) for more information.
+      examples:
+        - path-parameters:
+            id: 42
+          name: GetPayoutSubscription
+          response:
+            body: $GetPayoutSubscriptionResponse.GetPayoutSubscriptionResponseExample
+      method: GET
+      path: /PayoutSubscription/{id}
+      path-parameters:
+        id:
+          docs: The payout subscription ID.
+          type: long
+      response:
+        docs: Success
+        status-code: 200
+        type: GetPayoutSubscriptionResponse
+
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+
+    UpdatePayoutSubscription:
+      auth: true
+      display-name: Update a payout subscription
+      docs: >-
+        Updates a payout subscription's details. See [Manage payout subscriptions](/guides/pay-out-developer-payout-subscriptions-manage) for more information.
+      examples:
+        - path-parameters:
+            id: 42
+          name: PausePayoutSubscription
+          request:
+            setPause: true
+          response:
+            body:
+              responseText: Success
+              isSuccess: true
+              responseData: "42 paused"
+              customerId: 1501
+        - path-parameters:
+            id: 42
+          name: UnpausePayoutSubscription
+          request:
+            setPause: false
+          response:
+            body:
+              responseText: Success
+              isSuccess: true
+              responseData: "42"
+              customerId: 1501
+        - path-parameters:
+            id: 42
+          name: UpdatePayoutSubscription
+          request:
+            paymentDetails:
+              serviceFee: 0
+              totalAmount: 750
+            scheduleDetails:
+              endDate: 12/31/2026
+              frequency: monthly
+              startDate: 01/01/2026
+          response:
+            body:
+              responseText: Success
+              isSuccess: true
+              responseData: "42"
+              customerId: 1501
+      method: PUT
+      path: /PayoutSubscription/{id}
+      path-parameters:
+        id:
+          docs: The payout subscription ID.
+          type: long
+      request:
+        body: UpdatePayoutSubscriptionBody
+        content-type: application/json
+        name: RequestUpdatePayoutSchedule
+      response:
+        docs: Success
+        status-code: 200
+        type: UpdatePayoutSubscriptionResponse
+
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+
+    DeletePayoutSubscription:
+      auth: true
+      display-name: Delete a payout subscription
+      docs: >-
+        Deletes a payout subscription and prevents future payouts. See [Manage payout subscriptions](/guides/pay-out-developer-payout-subscriptions-manage) for more information.
+      examples:
+        - path-parameters:
+            id: 42
+          name: DeletePayoutSubscription
+          response:
+            body:
+              isSuccess: true
+              responseData: "42"
+              responseText: Success
+      method: DELETE
+      path: /PayoutSubscription/{id}
+      path-parameters:
+        id:
+          docs: The payout subscription ID.
+          type: long
+      response:
+        docs: Success
+        status-code: 200
+        type: DeletePayoutSubscriptionResponse
+
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.InternalServerError
+        - root.ServiceUnavailableError

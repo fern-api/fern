@@ -1,0 +1,1483 @@
+imports:
+  root: __package__.yml
+
+types:
+  # General types
+
+  limitRecord:
+    docs: >-
+      Max number of records to return for the query. Use `0` or negative
+      value to return all records. Defaults to 20.
+    type: integer
+
+  ListOrganizationsResponse:
+    properties:
+      Records: list<root.OrganizationQueryRecord>
+      Summary: root.QuerySummary
+
+  # Transfer Query Responses
+  QueryTransferSummary:
+    properties:
+      achReturns:
+        docs: ACH returns deducted from the batch.
+        type: nullable<double>
+      adjustments:
+        docs: Corrections applied to Billing & Fees charges.
+        type: nullable<double>
+      billingFees:
+        docs: Charges applied for transactions and services.
+        type: nullable<double>
+      chargebacks:
+        docs: Chargebacks deducted from batch.
+        type: nullable<double>
+      grossTransferAmount:
+        docs: The gross batch amount before deductions.
+        type: nullable<double>
+      releaseAmount:
+        docs: Previously held funds that have been released after a risk review.
+        type: nullable<double>
+      thirdPartyPaid:
+        docs: >-
+          Payments captured in the batch cycle that are deposited separately. For example, 
+          checks or cash payments recorded in the batch but not deposited via Payabli, 
+          or card brands making a direct transfer in certain situations.
+        type: nullable<double>
+      totalNetAmountTransfer:
+        docs: The gross batch amount minus service fees.
+        type: nullable<double>
+      splitAmount:
+        docs: The sum of each splitFundingAmount of each record in the transfer.
+        type: nullable<double>
+      serviceFees:
+        docs: >-
+          Service fees are any pass-through fees charged to the customer at the time of payment. 
+          These aren't transferred to the merchant when the batch is transferred and funded.
+        type: nullable<double>
+      netBatchAmount:
+        docs: |
+          The net batch amount is the gross batch amount minus any returns, refunds, 
+          billing and fees items, chargebacks, adjustments, and third party payments.
+        type: nullable<double>
+      transferAmount:
+        docs: >-
+          The transfer amount is the net batch amount plus or minus any returns, refunds, 
+          billing and fees items, chargebacks, adjustments, and third party payments. 
+          This is the amount from the batch that is transferred to the merchant bank account.
+        type: nullable<double>
+      refunds:
+        docs: Refunds deducted from batch.
+        type: nullable<double>
+      heldAmount:
+        docs: Funds being held for fraud or risk concerns.
+        type: nullable<double>
+      totalRecords:
+        docs: Number of records in the response.
+        type: nullable<root.Totalrecords>
+      totalAmount:
+        docs: The total sum of the transfers in the response.
+        type: nullable<double>
+      totalNetAmount:
+        docs: The total sum of the transfers in the response.
+        type: nullable<double>
+      totalPages:
+        docs: Number of pages in the response.
+        type: nullable<root.Totalpages>
+      pageSize:
+        docs: Number of records per page.
+        type: nullable<root.Pagesize>
+      pageidentifier:
+        docs: Auxiliary validation used internally by payment pages and components.
+        type: nullable<root.PageIdentifier>
+
+  QueryTransferResponse:
+    properties:
+      Summary:
+        docs: Summary information about the transfers.
+        type: QueryTransferSummary
+      Records:
+        docs: List of transfer transaction records.
+        type: list<root.TransactionQueryRecords>
+
+  QueryTransferDetailResponse:
+    properties:
+      Records:
+        docs: List of transfer detail records
+        type: list<TransferDetailRecord>
+      Summary:
+        docs: Summary of the transfer details query
+        type: QueryTransferSummary
+
+  TransferDetailRecord:
+    inline: true
+    properties:
+      transferDetailId:
+        docs: Unique identifier for the transfer detail record
+        type: nullable<integer>
+      transferId:
+        docs: The ID of the transfer this detail belongs to
+        type: nullable<integer>
+      transactionId:
+        docs: The transaction ID in Payabli's system
+        type: nullable<string>
+      transactionNumber:
+        docs: External transaction reference number
+        type: nullable<string>
+      type:
+        docs: The transaction type (credit or debit)
+        type: nullable<string>
+      category:
+        docs: >
+          A field used to categorize the transaction details.
+          Values include: auth, decline, refund, adj, cb, split
+        type: nullable<string>
+      grossAmount:
+        docs: The gross amount of the transaction
+        type: nullable<double>
+      chargeBackAmount:
+        docs: Chargeback amount deducted from transaction
+        type: nullable<double>
+      returnedAmount:
+        docs: ACH return amount deducted from transaction
+        type: nullable<double>
+      refundAmount:
+        docs: Refund amount deducted from transaction
+        type: nullable<double>
+      holdAmount:
+        docs: Amount being held for fraud or risk concerns
+        type: nullable<double>
+      releasedAmount:
+        docs: Previously held funds that have been released after a risk review
+        type: nullable<double>
+      billingFeesAmount:
+        docs: Charges applied for transactions and services
+        type: nullable<double>
+      thirdPartyPaidAmount:
+        docs: >
+          Payments captured in the batch cycle that are deposited separately. For example, 
+          checks or cash payments recorded in the batch but not deposited via Payabli, 
+          or card brands making a direct transfer in certain situations.
+        type: nullable<double>
+      adjustmentsAmount:
+        docs: Corrections applied to Billing & Fees charges
+        type: nullable<double>
+      netTransferAmount:
+        docs: The net amount after all deductions
+        type: nullable<double>
+      splitFundingAmount:
+        docs: Total amount directed to split funding destinations
+        type: nullable<double>
+      billingFeesDetails: nullable<list<root.BillingFeeDetail>>
+      ParentOrgName: nullable<root.OrgParentName>
+      PaypointDbaname: nullable<root.Dbaname>
+      PaypointLegalname: nullable<root.Legalname>
+      PaypointEntryname:
+        docs: The paypoint's entryname
+        type: nullable<string>
+      PaymentTransId:
+        docs: The transaction ID for the payment
+        type: nullable<string>
+      ConnectorName:
+        docs: The payment connector used to process the transaction
+        type: nullable<string>
+      ExternalProcessorInformation: nullable<root.ExternalProcessorInformation>
+      GatewayTransId:
+        docs: Internal identifier used for processing
+        type: nullable<string>
+      OrderId: nullable<root.OrderId>
+      Method:
+        docs: "Payment method used: card, ach, or wallet"
+        type: nullable<string>
+      BatchNumber: nullable<root.BatchNumber>
+      BatchAmount:
+        docs: The amount of the batch
+        type: nullable<double>
+      PayorId:
+        docs: Unique ID for customer linked to the transaction
+        type: nullable<root.PayorId>
+      PaymentData: nullable<root.QueryPaymentData>
+      TransStatus:
+        docs: |
+          Status of transaction. See [the
+          docs](/developers/references/money-in-statuses#money-in-transaction-status) for a
+          full reference.
+        type: nullable<integer>
+      PaypointId: nullable<root.PaypointId>
+      TotalAmount:
+        docs: Transaction total amount (including service fee or sub-charge)
+        type: nullable<double>
+      NetAmount:
+        docs: Net amount paid
+        type: nullable<root.Netamountnullable>
+      FeeAmount: nullable<root.FeeAmount>
+      SettlementStatus:
+        docs: >-
+          Settlement status for transaction. See [the
+          docs](/developers/references/money-in-statuses#payment-funding-status) for a full
+          reference.
+        type: nullable<integer>
+      Operation: nullable<root.Operation>
+      ResponseData: nullable<root.QueryResponseData>
+      Source: nullable<root.Source>
+      ScheduleReference:
+        docs: Reference to the subscription or schedule that originated the transaction
+        type: nullable<integer>
+      OrgId: nullable<root.Orgid>
+      RefundId: nullable<root.RefundId>
+      ReturnedId: nullable<root.ReturnedId>
+      ChargebackId: nullable<root.ChargebackId>
+      RetrievalId: nullable<root.RetrievalId>
+      TransAdditionalData:
+        docs: Additional transaction data
+        type: nullable<unknown>
+      invoiceData:
+        docs: Associated invoice data
+        type: nullable<root.BillData>
+      EntrypageId: nullable<root.EntrypageId>
+      externalPaypointID: nullable<root.ExternalPaypointId>
+      IsValidatedACH:
+        docs: Indicates whether the ACH account has been validated
+        type: nullable<boolean>
+      TransactionTime:
+        docs: Transaction date and time, in UTC
+        type: nullable<datetime>
+      Customer: nullable<root.QueryTransactionPayorData>
+      splitFundingInstructions: nullable<root.SplitFunding>
+      CfeeTransactions: nullable<list<root.QueryCFeeTransaction>>
+      TransactionEvents: nullable<list<root.QueryTransactionEvents>>
+      PendingFeeAmount: nullable<root.PendingFeeAmount>
+      RiskFlagged: nullable<root.RiskFlagged>
+      RiskFlaggedOn: nullable<root.RiskFlaggedOn>
+      RiskStatus: nullable<root.RiskStatus>
+      RiskReason: nullable<root.RiskReason>
+      RiskAction: nullable<root.RiskAction>
+      RiskActionCode: nullable<root.RiskActionCode>
+      DeviceId: nullable<root.DeviceId>
+      AchSecCode: nullable<root.AchSecCode>
+      AchHolderType: nullable<root.AchHolderType>
+      IpAddress: nullable<root.IpAddress>
+      IsSameDayACH:
+        docs: Indicates if this was a same-day ACH transaction.
+        availability: in-development
+        type: nullable<boolean>
+      WalletType:
+        docs: Type of wallet used for the transaction (if applicable)
+        type: nullable<string>
+
+  # Batch Detail Query Response types
+  QueryBatchesDetailResponse:
+    docs: Response body for queries about batch details.
+    properties:
+      Records: list<BatchDetailResponseRecord>
+      Summary: BatchDetailResponseSummary
+
+  BatchDetailResponseRecord:
+    inline: true
+    properties:
+      Id: integer
+      Method: string
+      WalletType: nullable<string>
+      SettledAmount: double
+      Type: string
+      BatchNumber: root.BatchNumber
+      BatchAmount: double
+      PaymentTransId: string
+      PaymentTransStatus: integer
+      ScheduleReference: integer
+      GatewayTransId: string
+      OrderId: root.OrderId
+      TransMethod: string
+      PaymentData: nullable<root.QueryPaymentData>
+      NetAmount: optional<root.Netamountnullable>
+      Operation: root.Operation
+      Category: root.Category
+      Source: nullable<root.Source>
+      Status: integer
+      TransactionTime: root.TransactionTime
+      Customer: nullable<root.QueryTransactionPayorData>
+      SettlementDate: datetime
+      PaymentSettlementStatus: integer
+      BatchStatus: integer
+      DepositDate: root.DepositDate
+      ExpectedDepositDate: root.ExpectedDepositDate
+      MaskedAccount: root.Maskedaccount
+      CreatedAt: root.CreatedAt
+      PaypointLegalname: root.Legalname
+      ResponseData: nullable<root.QueryResponseData>
+      PaypointDbaname: root.Dbaname
+      ParentOrgName: root.OrgParentName
+      ParentOrgId: integer
+      PaypointEntryname: root.Entrypointfield
+      DeviceId: nullable<root.Device>
+      RetrievalId: root.RetrievalId
+      ChargebackId: root.ChargebackId
+      AchHolderType: root.AchHolderType
+      AchSecCode: root.AchSecCode
+      ConnectorName: string
+      EntrypageId: root.EntrypageId
+      FeeAmount: root.FeeAmount
+      OrgId: root.Orgid
+      PayorId: root.PayorId
+      PaypointId: root.PaypointId
+      PendingFeeAmount: optional<root.PendingFeeAmount>
+      RefundId: root.RefundId
+      ReturnedId: root.ReturnedId
+      splitFundingInstructions: optional<root.SplitFunding>
+      TotalAmount: double
+      CfeeTransactions: list<root.QueryCFeeTransaction>
+      invoiceData: nullable<root.BillData>
+      TransactionEvents: list<root.QueryTransactionEvents>
+      externalPaypointID: root.ExternalPaypointId
+      isHold: integer
+    examples:
+      - name: BatchDetailRecord
+        value:
+          Id: 25048
+          Method: ach
+          WalletType: null
+          SettledAmount: 0.5
+          Type: credit
+          BatchNumber: batch-100-20-2024
+          BatchAmount: 32
+          PaymentTransId: 245-9e4072eef77e45979ea0e49f680000X
+          PaymentTransStatus: 1
+          ScheduleReference: 0
+          GatewayTransId: TRN_XXXXX
+          OrderId: ""
+          TransMethod: ach
+          PaymentData:
+            AccountType: Checking
+            HolderName: Lydia Marshall
+            MaskedAccount: 1XXXXXX5678
+            paymentDetails:
+              categories:
+                - amount: 1000
+                  label: Deposit
+              currency: USD
+              serviceFee: 0
+              splitFunding:
+                - {}
+              totalAmount: 2
+          NetAmount: 2
+          Operation: Sale
+          Category: auth
+          Source: api
+          Status: 1
+          TransactionTime: "2024-11-19T15:58:01Z"
+          Customer:
+            AdditionalData: null
+            BillingAddress1: 100 Golden Ridge Drive
+            BillingAddress2: STE 100
+            BillingCity: Mendota
+            BillingCountry: US
+            BillingEmail: lydia@example.com
+            BillingPhone: "+12345678"
+            BillingState: VA
+            BillingZip: "20147"
+            customerId: 2707
+            CustomerNumber: "901102"
+            customerStatus: 1
+            FirstName: Lydia
+            LastName: Marshall
+          SettlementDate: "2024-11-20T00:00:00Z"
+          PaymentSettlementStatus: 1
+          BatchStatus: 1
+          DepositDate: "2024-11-22T00:00:00Z"
+          ExpectedDepositDate: "2024-11-22T00:00:00Z"
+          MaskedAccount: 1XXXXXX5678
+          CreatedAt: "2024-11-19T15:58:01Z"
+          PaypointLegalname: Gruzya Adventure Outfitters, LLC
+          ResponseData: $root.QueryResponseData.ACHTransactionApproved
+          PaypointDbaname: Gruzya Adventure Outfitters, LLC
+          ParentOrgName: Pilgrim Planner
+          ParentOrgId: 123
+          PaypointEntryname: 7f1a3816XX
+          DeviceId: ""
+          RetrievalId: 0
+          ChargebackId: 0
+          AchHolderType: personal
+          AchSecCode: PPD
+          ConnectorName: DefaultConnector
+          EntrypageId: 0
+          FeeAmount: 0
+          OrgId: 123
+          PayorId: 2707
+          PaypointId: 123
+          PendingFeeAmount: 0
+          RefundId: 0
+          ReturnedId: 0
+          splitFundingInstructions: []
+          TotalAmount: 2
+          CfeeTransactions: []
+          invoiceData: null
+          TransactionEvents:
+            - EventTime: "2024-11-19T15:57:40Z"
+              TransEvent: Created
+            - EventData:
+                account_id: TRA_XXXXX
+                account_name: "123456"
+                action:
+                  app_id: XXXXX
+                  app_name: PayAbli
+                  id: ACT_XXXXX
+                  result_code: SUCCESS
+                  time_created: "2024-11-19T20:58:01.583Z"
+                  type: AUTHORIZE
+                amount: "200"
+                batch_id: ""
+                capture_mode: AUTO
+                channel: CNP
+                country: US
+                currency: USD
+                fees:
+                  amount: "0"
+                  rate: "0.00"
+                  total_amount: "0"
+                id: TRN_XXXXX
+                merchant_amount: "200"
+                merchant_id: MER_XXXXX
+                merchant_name: Henriette97
+                order:
+                  reference: ""
+                payment_method:
+                  bank_transfer:
+                    account_type: CHECKING
+                    bank:
+                      name: ""
+                    masked_account_number_last4: XXXX5678
+                  entry_mode: ECOM
+                  message: Success
+                  narrative: Lydia Marshall
+                  result: "00"
+                reference: 245-XXXXX
+                status: CAPTURED
+                time_created: "2024-11-19T20:58:01.583Z"
+                type: SALE
+              EventTime: "2024-11-19T20:58:01Z"
+              TransEvent: Approved
+            - EventTime: "2024-11-20T03:05:10Z"
+              TransEvent: ClosedBatch
+          externalPaypointID: ext-paypoint-123
+          isHold: 0
+
+  BatchDetailResponseSummary:
+    inline: true
+    properties:
+      serviceFees: double
+      transferAmount: double
+      refunds: double
+      heldAmount: double
+      totalRecords: root.Totalrecords
+      totalAmount: double
+      totalNetAmount: double
+      totalPages: root.Totalpages
+      pageSize: root.Pagesize
+      pageidentifier: nullable<root.PageIdentifier>
+
+  # Batch Query Response types
+
+  QueryBatchesResponse:
+    docs: Response body for queries about batches.
+    properties:
+      Records: list<QueryBatchesResponseRecordsItem>
+      Summary: root.BatchSummary
+    examples:
+      - name: ExampleBatchQueryResponse
+        value:
+          Summary:
+            pageidentifier: null
+            pageSize: 20
+            totalAmount: 54049.71
+            totalNetAmount: 0
+            totalPages: 3
+            totalRecords: 3
+          Records:
+            - IdBatch: 1049
+              BatchNumber: batch_2857_combined_08-26-2025_001
+              TransferIdentifier: null
+              EventsData:
+                - description: Created
+                  eventTime: "2025-08-25T03:19:27.6190027-04:00"
+                  refData: null
+                  extraData: null
+                  source: api
+              ConnectorName: GP
+              BatchDate: "2025-08-25T20:00:00"
+              BatchAmount: 0
+              BatchFeesAmount: 0
+              BatchAuthAmount: 0
+              BatchReleasedAmount: 0
+              BatchHoldAmount: 0
+              BatchReturnedAmount: 0
+              BatchRefundAmount: 0
+              BatchSplitAmount: 0
+              BatchStatus: 2
+              BatchRecords: 2
+              PaypointId: 187
+              PaypointName: Gruzya Adventure Outfitters, LLC
+              PaypointDba: Gruzya Adventure Outfitters
+              ParentOrgName: Pilgrim Planner
+              ParentOrgId: 105
+              externalPaypointID: null
+              EntryName: 47f4f8c7e1
+              BankName: Riverdale Community Bank
+              BatchType: 0
+              Method: combined
+              ExpectedDepositDate: "2025-08-26T00:00:00Z"
+              DepositDate: null
+              TransferDate: "2025-08-26T00:00:00Z"
+              Transfer: null
+            - IdBatch: 1043
+              BatchNumber: BT-2023041817-187
+              TransferIdentifier: null
+              EventsData: null
+              ConnectorName: null
+              BatchDate: "2023-04-18T17:01:03Z"
+              BatchAmount: 219.02
+              BatchFeesAmount: 0
+              BatchAuthAmount: 0
+              BatchReleasedAmount: 0
+              BatchHoldAmount: 0
+              BatchReturnedAmount: 0
+              BatchRefundAmount: 0
+              BatchSplitAmount: 0
+              BatchStatus: 2
+              BatchRecords: 1
+              PaypointId: 187
+              PaypointName: Gruzya Adventure Outfitters, LLC
+              PaypointDba: Gruzya Adventure Outfitters
+              ParentOrgName: Pilgrim Planner
+              ParentOrgId: 105
+              externalPaypointID: null
+              EntryName: d193cf9a46
+              BankName: Riverdale Community Bank
+              BatchType: 0
+              Method: card
+              ExpectedDepositDate: "2023-04-19T00:00:00Z"
+              DepositDate: null
+              TransferDate: "2025-09-02T00:00:00Z"
+              Transfer: null
+            - IdBatch: 1012
+              BatchNumber: BT-2023041421-187
+              TransferIdentifier: "ec310c3d-d4bf-4670-9524-00fcc4ab6a2a"
+              EventsData:
+                - description: Created
+                  eventTime: "2023-04-14T21:01:03Z"
+                  refData: null
+                  extraData: null
+                  source: api
+                - description: Closed
+                  eventTime: "2023-04-15T03:05:10Z"
+                  refData: "batchId: 1012"
+                  extraData: null
+                  source: worker
+              ConnectorName: "GP"
+              BatchDate: "2023-04-14T21:01:03Z"
+              BatchAmount: 1080.44
+              BatchFeesAmount: 0
+              BatchAuthAmount: 1080.44
+              BatchReleasedAmount: 0
+              BatchHoldAmount: 0
+              BatchReturnedAmount: 0
+              BatchRefundAmount: 0
+              BatchSplitAmount: 0
+              BatchStatus: 2
+              BatchRecords: 4
+              PaypointId: 187
+              PaypointName: Gruzya Adventure Outfitters, LLC
+              PaypointDba: Gruzya Adventure Outfitters
+              ParentOrgName: Pilgrim Planner
+              ParentOrgId: 105
+              externalPaypointID: null
+              EntryName: d193cf9a46
+              BankName: Riverdale Community Bank
+              BatchType: 0
+              Method: card
+              ExpectedDepositDate: "2023-04-15T00:00:00Z"
+              DepositDate: null
+              TransferDate: "2025-09-02T00:00:00Z"
+              Transfer:
+                TransferId: 5998
+                TransferDate: "2025-09-02T00:00:00Z"
+                Processor: gp
+                TransferStatus: 1
+                GrossAmount: 1080.44
+                ChargeBackAmount: 0
+                ReturnedAmount: 0
+                RefundAmount: 0
+                HoldAmount: 0
+                ReleasedAmount: 0
+                BillingFeesAmount: 0
+                ThirdPartyPaidAmount: 0
+                AdjustmentsAmount: 0
+                NetFundedAmount: 1080.44
+
+  QueryBatchesResponseRecordsItem:
+    inline: true
+    properties:
+      IdBatch:
+        docs: The batch ID.
+        type: nullable<integer>
+      BatchNumber: nullable<root.BatchNumber>
+      TransferIdentifier: nullable<root.TransferIdentifier>
+      EventsData:
+        docs: Events associated with the batch.
+        type: nullable<list<root.GeneralEvents>>
+      ConnectorName:
+        docs: ""
+        type: nullable<string>
+      BatchDate:
+        docs: The batch date.
+        type: nullable<datetime>
+      BatchAmount:
+        docs: The amount of the batch.
+        type: nullable<double>
+      BatchFeesAmount:
+        docs: The total of fees in the batch.
+        type: nullable<double>
+      BatchAuthAmount:
+        docs: ""
+        type: nullable<double>
+      BatchReleasedAmount:
+        docs: Previously held funds that have been released after a risk review.
+        type: nullable<double>
+      BatchHoldAmount:
+        docs: >-
+          The total amount of the batch that's being held for fraud or risk
+          concerns.
+        type: nullable<double>
+      BatchReturnedAmount:
+        docs: Total amount of ACH returns deducted from batch.
+        type: nullable<double>
+      BatchRefundAmount:
+        docs: The total amount of refunds deducted from batch.
+        type: nullable<double>
+      BatchSplitAmount:
+        docs: >-
+          Total of split transactions that included split funding instructions
+          at the time of authorization.
+        type: nullable<double>
+      BatchStatus:
+        docs: >-
+          The batch status. See [Batch
+          Status](/developers/references/money-in-statuses#batch-status) for more.
+        type: integer
+      BatchRecords:
+        docs: The number of records in the batch.
+        type: integer
+      PaypointId: nullable<root.PaypointId>
+      PaypointName: nullable<root.PaypointName>
+      PaypointDba: nullable<root.Dbaname>
+      ParentOrgName:
+        docs: The entrypoint's parent org.
+        type: root.OrgParentName
+      ParentOrgId:
+        docs: The parent organization ID.
+        type: integer
+      externalPaypointID: nullable<root.ExternalPaypointId>
+      EntryName: root.Entrypointfield
+      BankName:
+        docs: The bank name.
+        type: nullable<string>
+      BatchType:
+        docs: The batch type.
+        type: nullable<integer>
+      Method:
+        docs: The payment method used.
+        type: nullable<string>
+      ExpectedDepositDate: nullable<root.ExpectedDepositDate>
+      DepositDate: nullable<root.DepositDate>
+      TransferDate:
+        docs: The batch transfer date.
+        type: nullable<datetime>
+      Transfer:
+        docs: Transfer details for the batch.
+        type: nullable<QueryBatchesTransfer>
+
+  QueryBatchesTransfer:
+    docs: Transfer details within a batch response.
+    properties:
+      TransferId:
+        docs: The transfer ID.
+        type: nullable<integer>
+      TransferDate:
+        docs: The transfer date.
+        type: nullable<datetime>
+      Processor:
+        docs: The processor used for the transfer.
+        type: nullable<string>
+      TransferStatus:
+        docs: The transfer status.
+        type: nullable<integer>
+      GrossAmount:
+        docs: The gross amount of the transfer.
+        type: nullable<double>
+      ChargeBackAmount:
+        docs: The chargeback amount.
+        type: nullable<double>
+      ReturnedAmount:
+        docs: The returned amount.
+        type: nullable<double>
+      RefundAmount:
+        docs: The refund amount.
+        type: nullable<double>
+      HoldAmount:
+        docs: The amount being held.
+        type: nullable<double>
+      ReleasedAmount:
+        docs: The amount that has been released.
+        type: nullable<double>
+      BillingFeesAmount:
+        docs: The billing fees amount.
+        type: nullable<double>
+      ThirdPartyPaidAmount:
+        docs: The third party paid amount.
+        type: nullable<double>
+      AdjustmentsAmount:
+        docs: The adjustments amount.
+        type: nullable<double>
+      NetFundedAmount:
+        docs: The net funded amount.
+        type: nullable<double>
+
+  # Transfer Out Query Response types
+
+  TransferOutQueryResponse:
+    docs: Response body for queries about outbound transfers.
+    properties:
+      Summary:
+        docs: Summary information about the transfers.
+        type: TransferOutSummary
+      Records:
+        docs: List of outbound transfer records.
+        type: list<TransferOutRecord>
+
+  TransferOutSummary:
+    docs: Summary information for outbound transfer queries.
+    properties:
+      totalPages:
+        docs: Number of pages in the response.
+        type: nullable<integer>
+      totalRecords:
+        docs: Number of records in the response.
+        type: nullable<integer>
+      pageSize:
+        docs: Number of records per page.
+        type: nullable<integer>
+
+  TransferOutBankAccount:
+    docs: Bank account information for an outbound transfer.
+    properties:
+      accountNumber:
+        docs: The masked bank account number.
+        type: nullable<string>
+      routingNumber:
+        docs: The bank routing number.
+        type: nullable<string>
+      bankName:
+        docs: The bank name.
+        type: nullable<string>
+
+  TransferOutEventData:
+    docs: Event data associated with an outbound transfer.
+    properties:
+      description:
+        docs: Description of the event.
+        type: nullable<string>
+      eventTime:
+        docs: The time the event occurred.
+        type: nullable<string>
+      refData:
+        docs: Reference data for the event.
+        type: nullable<string>
+      extraData:
+        docs: Additional event data, which may contain detailed transaction information.
+        type: nullable<unknown>
+      source:
+        docs: The source of the event.
+        type: nullable<string>
+
+  TransferOutMessageProperties:
+    docs: Properties associated with a transfer message.
+    properties:
+      originalTransferStatus:
+        docs: The original status of the transfer before the message.
+        type: nullable<string>
+      currentTransferStatus:
+        docs: The current status of the transfer after the message.
+        type: nullable<string>
+
+  TransferOutMessage:
+    docs: A message associated with an outbound transfer.
+    properties:
+      Id:
+        docs: Unique identifier for the message.
+        type: nullable<integer>
+      RoomId:
+        docs: The ID of the room where the message was sent.
+        type: nullable<integer>
+      UserId:
+        docs: The ID of the user who sent the message.
+        type: nullable<integer>
+      UserName:
+        docs: The name of the user who sent the message.
+        type: nullable<string>
+      Content:
+        docs: The content of the message.
+        type: nullable<string>
+      CreatedAt:
+        docs: The time the message was created.
+        type: nullable<string>
+      MessageType:
+        docs: The type of message.
+        type: nullable<integer>
+      MessageProperties:
+        docs: Additional properties for the message.
+        type: nullable<TransferOutMessageProperties>
+
+  TransferOutRecord:
+    docs: A record representing an outbound transfer.
+    properties:
+      transferId:
+        docs: Unique identifier for the transfer.
+        type: nullable<integer>
+      paypointId:
+        docs: The ID of the paypoint associated with the transfer.
+        type: nullable<integer>
+      batchNumber:
+        docs: The batch number for the transfer.
+        type: nullable<string>
+      batchCurrency:
+        docs: The currency of the batch.
+        type: nullable<string>
+      batchRecords:
+        docs: The number of records in the batch.
+        type: nullable<integer>
+      transferIdentifier:
+        docs: An identifier for the transfer.
+        type: nullable<string>
+      batchId:
+        docs: The ID of the batch.
+        type: nullable<integer>
+      batchNetAmount:
+        docs: The net amount of the batch.
+        type: nullable<double>
+      batchStatus:
+        docs: The status of the batch.
+        type: nullable<integer>
+      paypointEntryName:
+        docs: The entry name for the paypoint.
+        type: nullable<string>
+      paypointLegalName:
+        docs: The legal name of the paypoint.
+        type: nullable<string>
+      paypointDbaName:
+        docs: The DBA name of the paypoint.
+        type: nullable<string>
+      paypointLogo:
+        docs: URL to the paypoint's logo.
+        type: nullable<string>
+      parentOrgName:
+        docs: The name of the parent organization.
+        type: nullable<string>
+      parentOrgId:
+        docs: The ID of the parent organization.
+        type: nullable<integer>
+      parentOrgLogo:
+        docs: URL to the parent organization's logo.
+        type: nullable<string>
+      parentOrgEntryName:
+        docs: The entry name for the parent organization.
+        type: nullable<string>
+      externalPaypointID:
+        docs: External identifier for the paypoint.
+        type: nullable<string>
+      bankAccount:
+        docs: Bank account information for the transfer.
+        type: nullable<TransferOutBankAccount>
+      transferDate:
+        docs: The date of the transfer.
+        type: nullable<datetime>
+      processor:
+        docs: The processor used for the transfer.
+        type: nullable<string>
+      transferStatus:
+        docs: The status of the transfer.
+        type: nullable<integer>
+      grossAmount:
+        docs: The gross amount of the transfer.
+        type: nullable<double>
+      chargeBackAmount:
+        docs: The chargeback amount deducted from the transfer.
+        type: nullable<double>
+      returnedAmount:
+        docs: The returned amount deducted from the transfer.
+        type: nullable<double>
+      holdAmount:
+        docs: The amount being held.
+        type: nullable<double>
+      releasedAmount:
+        docs: The amount that has been released.
+        type: nullable<double>
+      billingFeesAmount:
+        docs: The billing fees amount.
+        type: nullable<double>
+      thirdPartyPaidAmount:
+        docs: The third party paid amount.
+        type: nullable<double>
+      adjustmentsAmount:
+        docs: The adjustments amount.
+        type: nullable<double>
+      netTransferAmount:
+        docs: The net transfer amount after all deductions.
+        type: nullable<double>
+      splitAmount:
+        docs: The split funding amount.
+        type: nullable<double>
+      eventsData:
+        docs: List of events associated with the transfer.
+        type: nullable<list<TransferOutEventData>>
+      messages:
+        docs: List of messages associated with the transfer.
+        type: nullable<list<TransferOutMessage>>
+
+  # Transfer Out Detail Query Response types
+
+  TransferOutDetailQueryResponse:
+    docs: Response body for queries about outbound transfer details.
+    properties:
+      Summary:
+        docs: Summary information about the transfer details.
+        type: QueryTransferSummary
+      Records:
+        docs: List of outbound transfer detail records.
+        type: list<TransferOutDetailRecord>
+
+  TransferOutDetailVendorBillingData:
+    docs: Billing data for a vendor.
+    properties:
+      id:
+        docs: Unique identifier for the billing data.
+        type: nullable<integer>
+      accountId:
+        docs: The account ID.
+        type: nullable<string>
+      nickname:
+        docs: A nickname for the account.
+        type: nullable<string>
+      bankName:
+        docs: The name of the bank.
+        type: nullable<string>
+      routingAccount:
+        docs: The routing number.
+        type: nullable<string>
+      accountNumber:
+        docs: The account number.
+        type: nullable<string>
+      typeAccount:
+        docs: The type of account.
+        type: nullable<string>
+      bankAccountHolderName:
+        docs: The name of the account holder.
+        type: nullable<string>
+      bankAccountHolderType:
+        docs: The type of account holder.
+        type: nullable<string>
+      bankAccountFunction:
+        docs: The function of the bank account.
+        type: nullable<integer>
+      verified:
+        docs: Whether the account is verified.
+        type: nullable<boolean>
+      status:
+        docs: The status of the billing data.
+        type: nullable<integer>
+      services:
+        docs: Services associated with the billing data.
+        type: nullable<list<unknown>>
+      default:
+        docs: Whether this is the default billing data.
+        type: nullable<boolean>
+      country:
+        docs: The country of the bank account.
+        type: nullable<string>
+
+  TransferOutDetailVendor:
+    docs: Vendor information for an outbound transfer detail.
+    properties:
+      VendorNumber:
+        docs: The vendor's unique number.
+        type: nullable<string>
+      Name1:
+        docs: Primary name of the vendor.
+        type: nullable<string>
+      Name2:
+        docs: Secondary name of the vendor.
+        type: nullable<string>
+      EIN:
+        docs: Employer Identification Number.
+        type: nullable<string>
+      Phone:
+        docs: Vendor's phone number.
+        type: nullable<string>
+      Email:
+        docs: Vendor's email address.
+        type: nullable<string>
+      RemitEmail:
+        docs: Email for remittance notifications.
+        type: nullable<string>
+      Address1:
+        docs: Primary address line.
+        type: nullable<string>
+      Address2:
+        docs: Secondary address line.
+        type: nullable<string>
+      City:
+        docs: City of the vendor.
+        type: nullable<string>
+      State:
+        docs: State of the vendor.
+        type: nullable<string>
+      Zip:
+        docs: ZIP code of the vendor.
+        type: nullable<string>
+      Country:
+        docs: Country of the vendor.
+        type: nullable<string>
+      Mcc:
+        docs: Merchant Category Code.
+        type: nullable<string>
+      LocationCode:
+        docs: Location code for the vendor.
+        type: nullable<string>
+      Contacts:
+        docs: List of contacts for the vendor.
+        type: nullable<list<root.ContactsResponse>>
+      BillingData:
+        docs: Billing data for the vendor.
+        type: nullable<TransferOutDetailVendorBillingData>
+      PaymentMethod:
+        docs: Preferred payment method.
+        type: nullable<string>
+      VendorStatus:
+        docs: Status of the vendor.
+        type: nullable<integer>
+      VendorId:
+        docs: Unique identifier for the vendor.
+        type: nullable<integer>
+      EnrollmentStatus:
+        docs: Enrollment status of the vendor.
+        type: nullable<integer>
+      Summary:
+        docs: Summary information about the vendor.
+        type: nullable<string>
+      PaypointLegalname:
+        docs: Legal name of the paypoint.
+        type: nullable<string>
+      PaypointId:
+        docs: ID of the paypoint.
+        type: nullable<integer>
+      PaypointDbaname:
+        docs: DBA name of the paypoint.
+        type: nullable<string>
+      PaypointEntryname:
+        docs: Entry name of the paypoint.
+        type: nullable<string>
+      ParentOrgName:
+        docs: Name of the parent organization.
+        type: nullable<string>
+      ParentOrgId:
+        docs: ID of the parent organization.
+        type: nullable<integer>
+      CreatedDate:
+        docs: Date the vendor was created.
+        type: nullable<string>
+      LastUpdated:
+        docs: Date the vendor was last updated.
+        type: nullable<string>
+      remitAddress1:
+        docs: Primary remittance address line.
+        type: nullable<string>
+      remitAddress2:
+        docs: Secondary remittance address line.
+        type: nullable<string>
+      remitCity:
+        docs: Remittance city.
+        type: nullable<string>
+      remitState:
+        docs: Remittance state.
+        type: nullable<string>
+      remitZip:
+        docs: Remittance ZIP code.
+        type: nullable<string>
+      remitCountry:
+        docs: Remittance country.
+        type: nullable<string>
+      payeeName1:
+        docs: Primary payee name.
+        type: nullable<string>
+      payeeName2:
+        docs: Secondary payee name.
+        type: nullable<string>
+      customField1:
+        docs: Custom field 1.
+        type: nullable<string>
+      customField2:
+        docs: Custom field 2.
+        type: nullable<string>
+      customerVendorAccount:
+        docs: Customer vendor account number.
+        type: nullable<string>
+      InternalReferenceId:
+        docs: Internal reference ID.
+        type: nullable<integer>
+      additionalData:
+        docs: Additional data for the vendor.
+        type: nullable<map<string, unknown>>
+      externalPaypointID:
+        docs: External paypoint ID.
+        type: nullable<string>
+      StoredMethods:
+        docs: Stored payment methods for the vendor.
+        type: nullable<list<unknown>>
+
+  TransferOutDetailPaymentData:
+    docs: Payment data for an outbound transfer detail.
+    properties:
+      MaskedAccount:
+        docs: Masked account number.
+        type: nullable<string>
+      AccountType:
+        docs: Type of account.
+        type: nullable<string>
+      AccountExp:
+        docs: Account expiration date.
+        type: nullable<string>
+      AccountZip:
+        docs: ZIP code associated with the account.
+        type: nullable<string>
+      HolderName:
+        docs: Name of the account holder.
+        type: nullable<string>
+      StoredId:
+        docs: ID of the stored payment method.
+        type: nullable<string>
+      Initiator:
+        docs: Initiator of the payment.
+        type: nullable<string>
+      StoredMethodUsageType:
+        docs: Usage type for stored method.
+        type: nullable<string>
+      Sequence:
+        docs: Sequence number.
+        type: nullable<string>
+      orderDescription:
+        docs: Description of the order.
+        type: nullable<string>
+      cloudSignatureData:
+        docs: Cloud signature data.
+        type: nullable<string>
+      cloudSignatureFormat:
+        docs: Format of cloud signature.
+        type: nullable<string>
+      paymentDetails:
+        docs: Additional payment details.
+        type: nullable<unknown>
+      payorData:
+        docs: Data about the payor.
+        type: nullable<string>
+      accountId:
+        docs: Account ID.
+        type: nullable<string>
+      bankAccount:
+        docs: Bank account information.
+        type: nullable<string>
+      gatewayConnector:
+        docs: Gateway connector used.
+        type: nullable<string>
+      binData:
+        docs: BIN data for the card.
+        type: nullable<unknown>
+
+  TransferOutDetailCheckData:
+    docs: Check data for an outbound transfer detail.
+    properties:
+      CheckNumber:
+        docs: The check number.
+        type: nullable<string>
+      CheckData:
+        docs: Additional check data.
+        type: nullable<string>
+
+  TransferOutDetailBillAttachment:
+    docs: Attachment for a bill.
+    properties:
+      ftype:
+        docs: File type.
+        type: nullable<string>
+      filename:
+        docs: File name.
+        type: nullable<string>
+      fileDescriptor:
+        docs: File descriptor.
+        type: nullable<string>
+      furl:
+        docs: File URL.
+        type: nullable<string>
+      fContent:
+        docs: File content.
+        type: nullable<string>
+
+  TransferOutDetailBill:
+    docs: Bill information for an outbound transfer detail.
+    properties:
+      billId:
+        docs: Unique identifier for the bill.
+        type: nullable<integer>
+      LotNumber:
+        docs: Lot number.
+        type: nullable<string>
+      AccountingField1:
+        docs: Accounting field 1.
+        type: nullable<string>
+      AccountingField2:
+        docs: Accounting field 2.
+        type: nullable<string>
+      Terms:
+        docs: Payment terms.
+        type: nullable<string>
+      AdditionalData:
+        docs: Additional data for the bill.
+        type: nullable<map<string, unknown>>
+      attachments:
+        docs: Attachments for the bill.
+        type: nullable<list<TransferOutDetailBillAttachment>>
+      invoiceNumber:
+        docs: Invoice number.
+        type: nullable<string>
+      netAmount:
+        docs: Net amount of the bill.
+        type: nullable<string>
+      invoiceDate:
+        docs: Date of the invoice.
+        type: nullable<string>
+      dueDate:
+        docs: Due date for the bill.
+        type: nullable<string>
+      comments:
+        docs: Comments on the bill.
+        type: nullable<string>
+      identifier:
+        docs: Identifier for the bill.
+        type: nullable<string>
+      discount:
+        docs: Discount applied.
+        type: nullable<double>
+      totalAmount:
+        docs: Total amount of the bill.
+        type: nullable<double>
+
+  TransferOutDetailEvent:
+    docs: Event data for an outbound transfer detail.
+    properties:
+      TransEvent:
+        docs: Description of the transaction event.
+        type: nullable<string>
+      EventData:
+        docs: Additional event data.
+        type: nullable<string>
+      EventTime:
+        docs: Time the event occurred.
+        type: nullable<string>
+
+  TransferOutDetailRecord:
+    docs: A record representing an outbound transfer detail.
+    properties:
+      transferDetailId:
+        docs: Unique identifier for the transfer detail.
+        type: nullable<integer>
+      transferId:
+        docs: The ID of the transfer this detail belongs to.
+        type: nullable<integer>
+      transactionId:
+        docs: The transaction ID in Payabli's system.
+        type: nullable<string>
+      IdOut:
+        docs: The outbound transaction ID.
+        type: nullable<integer>
+      method:
+        docs: Payment method used.
+        type: nullable<string>
+      type:
+        docs: The transaction type (credit or debit).
+        type: nullable<string>
+      category:
+        docs: Category of the transaction detail.
+        type: nullable<string>
+      grossAmount:
+        docs: The gross amount of the transaction.
+        type: nullable<double>
+      returnedAmount:
+        docs: Amount returned.
+        type: nullable<double>
+      refundAmount:
+        docs: Amount refunded.
+        type: nullable<double>
+      holdAmount:
+        docs: Amount being held.
+        type: nullable<double>
+      releasedAmount:
+        docs: Amount released.
+        type: nullable<double>
+      billingFeesAmount:
+        docs: Billing fees amount.
+        type: nullable<double>
+      adjustmentsAmount:
+        docs: Adjustments amount.
+        type: nullable<double>
+      netTransferAmount:
+        docs: Net transfer amount after deductions.
+        type: nullable<double>
+      billingFeesDetails:
+        docs: Detailed breakdown of billing fees.
+        type: nullable<list<root.BillingFeeDetail>>
+      CreatedAt:
+        docs: Date and time the record was created.
+        type: nullable<string>
+      Comments:
+        docs: Comments on the transfer detail.
+        type: nullable<string>
+      Vendor:
+        docs: Vendor information.
+        type: nullable<TransferOutDetailVendor>
+      PaypointDbaname:
+        docs: DBA name of the paypoint.
+        type: nullable<string>
+      PaypointLegalname:
+        docs: Legal name of the paypoint.
+        type: nullable<string>
+      PaypointId:
+        docs: ID of the paypoint.
+        type: nullable<integer>
+      Status:
+        docs: Status of the transfer detail.
+        type: nullable<integer>
+      PaymentId:
+        docs: Payment ID.
+        type: nullable<string>
+      TransId:
+        docs: Transaction ID.
+        type: nullable<string>
+      TransStatus:
+        docs: Transaction status.
+        type: nullable<integer>
+      TransStatusDetail:
+        docs: Detailed transaction status.
+        type: nullable<string>
+      TransStatusName:
+        docs: Name of the transaction status.
+        type: nullable<string>
+      TransStatusCategory:
+        docs: Category of the transaction status.
+        type: nullable<string>
+      LastUpdated:
+        docs: Date and time the record was last updated.
+        type: nullable<string>
+      TotalAmount:
+        docs: Total amount of the transaction.
+        type: nullable<double>
+      NetAmount:
+        docs: Net amount of the transaction.
+        type: nullable<double>
+      FeeAmount:
+        docs: Fee amount for the transaction.
+        type: nullable<double>
+      Source:
+        docs: Source of the transaction.
+        type: nullable<string>
+      ParentOrgName:
+        docs: Name of the parent organization.
+        type: nullable<string>
+      ParentOrgId:
+        docs: ID of the parent organization.
+        type: nullable<integer>
+      BatchNumber:
+        docs: Batch number for the transfer.
+        type: nullable<string>
+      PaymentStatus:
+        docs: Status of the payment.
+        type: nullable<string>
+      PaymentMethod:
+        docs: Payment method used.
+        type: nullable<string>
+      CardToken:
+        docs: Token for the card used.
+        type: nullable<string>
+      CheckNumber:
+        docs: Check number if paid by check.
+        type: nullable<string>
+      CheckData:
+        docs: Check data if paid by check.
+        type: nullable<TransferOutDetailCheckData>
+      PaymentData:
+        docs: Payment data for the transaction.
+        type: nullable<TransferOutDetailPaymentData>
+      Bills:
+        docs: Bills associated with the transfer.
+        type: nullable<list<TransferOutDetailBill>>
+      Events:
+        docs: Events associated with the transfer.
+        type: nullable<list<TransferOutDetailEvent>>
+      externalPaypointID:
+        docs: External paypoint ID.
+        type: nullable<string>
+      EntryName:
+        docs: Entry name for the paypoint.
+        type: nullable<string>
+      Gateway:
+        docs: Gateway used for the transaction.
+        type: nullable<string>
+      BatchId:
+        docs: ID of the batch.
+        type: nullable<integer>
+      HasVcardTransactions:
+        docs: Whether the transfer has virtual card transactions.
+        type: nullable<boolean>
+      IsSameDayACH:
+        docs: Whether this is a same-day ACH transaction.
+        type: nullable<boolean>
+      ScheduleId:
+        docs: ID of the schedule if applicable.
+        type: nullable<integer>
+      SettlementStatus:
+        docs: Settlement status.
+        type: nullable<string>
+      SettlementStatusName:
+        docs: Name of the settlement status.
+        type: nullable<string>
+      SettlementDate:
+        docs: Date of settlement.
+        type: nullable<string>
+      RiskFlagged:
+        docs: Whether the transaction was flagged for risk.
+        type: nullable<boolean>
+      RiskFlaggedOn:
+        docs: Date and time the transaction was flagged.
+        type: nullable<string>
+      RiskStatus:
+        docs: Risk status of the transaction.
+        type: nullable<string>
+      RiskReason:
+        docs: Reason for the risk flag.
+        type: nullable<string>
+      RiskAction:
+        docs: Action taken for risk.
+        type: nullable<string>
+      RiskActionCode:
+        docs: Code for the risk action.
+        type: nullable<integer>
+      PayoutProgram:
+        docs: Payout program used.
+        type: nullable<string>
+      AchTraceNumber:
+        docs: ACH trace number.
+        type: nullable<string>

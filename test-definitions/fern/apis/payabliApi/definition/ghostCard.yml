@@ -1,0 +1,206 @@
+imports:
+  root: __package__.yml
+
+types:
+  CreateGhostCardResponse:
+    docs: Response for creating a ghost card.
+    properties:
+      isSuccess: optional<root.IsSuccess>
+      responseText: root.ResponseText
+      responseData: optional<CreateGhostCardResponseData>
+
+  CreateGhostCardResponseData:
+    inline: true
+    properties:
+      ReferenceId:
+        docs: >-
+          Card token for the ghost card. Use this value to reference the card in
+          subsequent operations (update, cancel, etc.).
+        type: optional<string>
+      ResultCode: optional<root.ResultCode>
+      ResultText: optional<root.Resulttext>
+
+  CardStatus:
+    docs: >-
+      The status to set on the card. Not all transitions are valid:
+      `Active` can change to `Inactive`, `Cancelled`, or `Expired`.
+      `Inactive` can change to `Active`.
+      `Expired` can change to `Active` (renews the card).
+      `Cancelled` is terminal and can't be changed.
+    enum:
+      - Active
+      - Inactive
+      - Cancelled
+      - Expired
+
+service:
+  auth: true
+  base-path: ''
+  endpoints:
+    CreateGhostCard:
+      display-name: Create ghost card
+      docs: >-
+        Creates a ghost card, a multi-use virtual debit card issued to a vendor for
+        recurring or discretionary spend.
+
+
+        Unlike single-use virtual cards issued as part of a payout transaction, ghost cards aren't
+        tied to a specific payout. They're issued directly to a vendor and can be reused
+        up to a configurable number of times within the card's spending limits.
+
+
+        Only one ghost card can exist per vendor per paypoint. To issue a new card to the
+        same vendor, cancel the existing card first.
+      method: POST
+      path: /MoneyOutCard/GhostCard/{entry}
+      path-parameters:
+        entry: root.Entry
+      request:
+        body:
+          properties:
+            vendorId:
+              docs: >-
+                ID of the vendor who receives the card. The vendor must belong to the
+                paypoint and have an active status.
+              type: long
+            expenseLimit:
+              docs: >-
+                Spending limit for the card. Must be greater than `0` and can't exceed the
+                paypoint's configured payout credit limit.
+              type: double
+            expirationDate:
+              docs: >-
+                Requested expiration date for the card. If not provided, defaults to 30 days
+                from creation.
+              type: optional<string>
+            amount:
+              docs: Initial load amount for the card.
+              type: double
+            maxNumberOfUses:
+              docs: >-
+                Maximum number of times the card can be used. Ignored and set to `1`
+                when `exactAmount` is `true`.
+              type: integer
+            exactAmount:
+              docs: >-
+                When `true`, restricts the card to a single use. `maxNumberOfUses` is
+                automatically set to `1` regardless of any other value provided.
+              type: boolean
+            expenseLimitPeriod:
+              docs: >-
+                Time period over which `expenseLimit` applies (for example, `monthly` or
+                `weekly`).
+              type: string
+            billingCycle:
+              docs: Billing cycle identifier.
+              type: string
+            billingCycleDay:
+              docs: Day within the billing cycle.
+              type: string
+            dailyTransactionCount:
+              docs: Maximum number of transactions allowed per day.
+              type: integer
+            dailyAmountLimit:
+              docs: Maximum total spend allowed per day.
+              type: double
+            transactionAmountLimit:
+              docs: Maximum spend allowed per single transaction.
+              type: integer
+            mcc:
+              docs: >-
+                Merchant Category Code to restrict where the card can be used. Must be a
+                valid MCC if provided.
+              type: optional<string>
+            tcc:
+              docs: >-
+                Transaction Category Code to restrict where the card can be used. Must be a
+                valid TCC if provided.
+              type: optional<string>
+            misc1:
+              docs: Custom metadata field. Stored on the card record.
+              type: optional<string>
+            misc2:
+              docs: Custom metadata field. Stored on the card record.
+              type: optional<string>
+        content-type: application/json
+        name: CreateGhostCardRequestBody
+      response:
+        docs: Success response with ghost card details.
+        status-code: 200
+        type: CreateGhostCardResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - name: CreateGhostCard
+          path-parameters:
+            entry: "8cfec2e0fa"
+          request:
+            vendorId: 42
+            expenseLimit: 500.00
+            amount: 500.00
+            maxNumberOfUses: 3
+            exactAmount: false
+            expenseLimitPeriod: "monthly"
+            billingCycle: "monthly"
+            billingCycleDay: "1"
+            dailyTransactionCount: 5
+            dailyAmountLimit: 200.00
+            transactionAmountLimit: 100
+            mcc: "5411"
+            tcc: "R"
+            misc1: "PO-98765"
+            misc2: "Dept-Finance"
+          response:
+            body:
+              isSuccess: true
+              responseText: Success
+              responseData:
+                ReferenceId: "gc_abc123def456"
+                ResultCode: 1
+                ResultText: "Ghost Card created"
+
+    UpdateCard:
+      display-name: Update card status
+      docs: >-
+        Updates the status of a virtual card (including ghost cards) under a paypoint.
+      method: PATCH
+      path: /MoneyOutCard/card/{entry}
+      path-parameters:
+        entry: root.Entry
+      request:
+        body:
+          properties:
+            cardToken:
+              docs: >-
+                Token that uniquely identifies the card. This is the `ReferenceId`
+                returned when the card was created.
+              type: string
+            status:
+              docs: The new status to set on the card.
+              type: optional<CardStatus>
+        content-type: application/json
+        name: UpdateCardRequestBody
+      response:
+        docs: Success response.
+        status-code: 200
+        type: root.PayabliApiResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+      examples:
+        - name: CancelGhostCard
+          path-parameters:
+            entry: "8cfec2e0fa"
+          request:
+            cardToken: "gc_abc123def456"
+            status: Cancelled
+          response:
+            body:
+              isSuccess: true
+              responseText: Success
+              responseData: null
