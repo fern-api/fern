@@ -6,6 +6,7 @@ import {
     shouldReportToSentry as shouldReportCodeToSentry,
     TaskAbortSignal
 } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError.js";
 import { SourcedValidationError } from "../errors/SourcedValidationError.js";

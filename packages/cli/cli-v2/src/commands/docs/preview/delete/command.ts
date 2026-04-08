@@ -1,5 +1,6 @@
 import { createFdrService } from "@fern-api/core";
 import { CliError } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import type { Argv } from "yargs";
 import type { Context } from "../../../../context/Context.js";

@@ -1,5 +1,6 @@
 import { applyOpenAPIOverlay, mergeWithOverrides } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import { unlink, writeFile } from "fs/promises";
 import path from "path";

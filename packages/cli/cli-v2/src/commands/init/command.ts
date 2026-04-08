@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";

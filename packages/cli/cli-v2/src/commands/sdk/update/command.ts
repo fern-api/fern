@@ -1,5 +1,6 @@
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { CliError, TaskAbortSignal } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import inquirer from "inquirer";
 import type { Argv } from "yargs";

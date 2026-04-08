@@ -1,4 +1,5 @@
 import { CliError } from "@fern-api/task-context";
+
 import type { Argv } from "yargs";
 import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";

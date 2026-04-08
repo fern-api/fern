@@ -1,13 +1,12 @@
 import { verifyAndDecodeJwt } from "@fern-api/auth";
 import { LogLevel } from "@fern-api/logger";
 import { type Auth0TokenResponse, getTokenFromAuth0 } from "@fern-api/login";
+import { TaskAbortSignal } from "@fern-api/task-context";
 import chalk from "chalk";
 import type { Argv } from "yargs";
-
 import { TaskContextAdapter } from "../../../context/adapter/TaskContextAdapter.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { TaskAbortSignal } from "@fern-api/task-context";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 

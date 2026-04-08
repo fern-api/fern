@@ -2,6 +2,7 @@ import type { FernToken } from "@fern-api/auth";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { CliError, TaskAbortSignal } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import inquirer from "inquirer";
 import type { Argv } from "yargs";
