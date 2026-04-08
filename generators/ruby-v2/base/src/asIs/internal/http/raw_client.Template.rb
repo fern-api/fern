@@ -18,10 +18,10 @@ module <%= gem_namespace %>
         attr_reader :base_url
 
         # @param base_url [String] The base url for the request.
-        # @param max_retries [Integer] The number of times to retry a failed request, defaults to 2.
+        # @param max_retries [Integer] The number of times to retry a failed request, defaults to <%= defaultMaxRetries %>.
         # @param timeout [Float] The timeout for the request, defaults to 60.0 seconds.
         # @param headers [Hash] The headers for the request.
-        def initialize(base_url:, max_retries: 2, timeout: 60.0, headers: {})
+        def initialize(base_url:, max_retries: <%= defaultMaxRetries %>, timeout: 60.0, headers: {})
           @base_url = base_url
           @max_retries = max_retries
           @timeout = timeout
@@ -212,4 +212,4 @@ module <%= gem_namespace %>
       end
     end
   end
-end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                

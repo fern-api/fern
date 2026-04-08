@@ -3,13 +3,17 @@ import { type BootstrapResult, bootstrap } from "@fern-api/replay";
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import tmp from "tmp-promise";
-import { ensureReplayFernignoreEntriesSync, REPLAY_FERNIGNORE_ENTRIES } from "./fernignore";
+import {
+    ensureGitattributesEntriesSync,
+    ensureReplayFernignoreEntriesSync,
+    REPLAY_FERNIGNORE_ENTRIES
+} from "./fernignore";
 
 export interface ReplayInitParams {
     /** GitHub repo URI (e.g., "fern-demo/fern-replay-testbed-java-sdk") */
     githubRepo: string;
-    /** GitHub token for clone (read access) */
-    token: string;
+    /** GitHub token for clone (read access). Optional for public repos. */
+    token?: string;
     /** Report what would happen but don't create PR */
     dryRun?: boolean;
     /** Max commits to scan for generation history */
@@ -74,8 +78,9 @@ export async function replayInit(params: ReplayInitParams): Promise<ReplayInitRe
         return { bootstrap: bootstrapResult, fernignoreEntries: [] };
     }
 
-    // 3. Ensure .fernignore has replay entries
+    // 3. Ensure .fernignore has replay entries and .gitattributes marks lockfile as generated
     ensureReplayFernignoreEntriesSync(repoPath);
+    ensureGitattributesEntriesSync(repoPath);
 
     // 4. Read lockfile content from disk
     const lockfilePath = join(repoPath, ".fern", "replay.lock");

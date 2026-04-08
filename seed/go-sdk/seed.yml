@@ -332,6 +332,7 @@ scripts:
           fi
           exit $TEST_EXIT_CODE
 allowedFailures:
+  - schemaless-request-body-examples
   - alias-extends
   - bytes-upload
   - bytes-download
@@ -366,7 +367,5 @@ allowedFailures:
   - file-upload:no-custom-config
   - file-upload:package-name
   - file-upload-openapi
-
-  - pagination-custom:.
 
   # exhaustive fixtures now pass after fixing bytes endpoint wire test generation

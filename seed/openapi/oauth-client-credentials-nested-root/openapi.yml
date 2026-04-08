@@ -60,7 +60,7 @@ paths:
         '204':
           description: ''
       security:
-        - BearerAuth: []
+        - OAuthScheme: []
   /get-something:
     get:
       operationId: simple_getSomething
@@ -71,7 +71,7 @@ paths:
         '204':
           description: ''
       security:
-        - BearerAuth: []
+        - OAuthScheme: []
 components:
   schemas:
     authTokenResponse:
@@ -90,6 +90,6 @@ components:
         - access_token
         - expires_in
   securitySchemes:
-    BearerAuth:
+    OAuthScheme:
       type: http
       scheme: bearer

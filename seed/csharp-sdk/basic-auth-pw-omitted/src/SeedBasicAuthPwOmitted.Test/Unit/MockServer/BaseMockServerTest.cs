@@ -25,7 +25,6 @@ public class BaseMockServerTest
         // Initialize the Client
         Client = new SeedBasicAuthPwOmittedClient(
             "USERNAME",
-            "PASSWORD",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
     }

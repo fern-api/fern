@@ -1,5 +1,86 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.63.1
+  changelogEntry:
+    - summary: |
+        Fix Go dynamic snippets not being generated during docs publish.
+        The Go package name comparison between snippet configuration and
+        generator output was failing due to an `https://` prefix mismatch,
+        causing docs to fall back to raw `net/http` code instead of
+        SDK-idiomatic snippets.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 66
+
+- version: 4.63.0
+  changelogEntry:
+    - summary: |
+        Speed up `fern docs dev` bundle refresh by renaming the old bundle
+        and deleting it asynchronously instead of blocking on removal.
+      type: feat
+  createdAt: "2026-04-07"
+  irVersion: 66
+
+- version: 4.62.6
+  changelogEntry:
+    - summary: |
+        Clean up Fern Docs cache on `fern docs dev` startup and shutdown.
+      type: fix
+  createdAt: "2026-04-07"
+  irVersion: 66
+
+- version: 4.62.5
+  changelogEntry:
+    - summary: |
+        Fix replay init to create .gitattributes with linguist-generated markers and sync .fernignore entries with fern-replay.
+      type: fix
+  createdAt: "2026-04-07"
+  irVersion: 66
+
+- version: 4.62.4
+  changelogEntry:
+    - summary: |
+        Internal CLI improvements.
+      type: chore
+  createdAt: "2026-04-06"
+  irVersion: 66
+
+- version: 4.62.3
+  changelogEntry:
+    - summary: |
+        Make GitHub token optional for replay init. Public repos no longer require a token.
+      type: fix
+  createdAt: "2026-04-06"
+  irVersion: 66
+
+- version: 4.62.2
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer dropping request body examples when the request
+        body has no schema defined. Previously, endpoints with a JSON content
+        type but no schema were treated as having no request body at all,
+        causing valid example JSON to be lost. The importer now preserves the
+        request and its examples so they render in docs and code snippets.
+      type: fix
+  createdAt: "2026-04-03"
+  irVersion: 66
+
+- version: 4.62.1
+  changelogEntry:
+    - summary: |
+        Remove deprecated `private` field from `DocsInstance` configuration.
+      type: chore
+  createdAt: "2026-04-04"
+  irVersion: 66
+- version: 4.62.0
+  changelogEntry:
+    - summary: |
+        Make the `fern api enrich` command public. This command merges an
+        AI examples overrides file into an OpenAPI spec, integrating
+        `x-fern-examples` into native OpenAPI example fields.
+      type: feat
+  createdAt: "2026-04-03"
+  irVersion: 66
 - version: 4.61.0
   changelogEntry:
     - summary: |
@@ -73,7 +154,6 @@
       type: feat
   createdAt: "2026-04-01"
   irVersion: 65
-
 - version: 4.54.1
   changelogEntry:
     - summary: |

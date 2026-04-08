@@ -29,6 +29,13 @@ class BasicAuthWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_authorization_header(
+      test_id: test_id,
+      method: "GET",
+      url_path: "/basic-auth",
+      expected_value: "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk"
+    )
   end
 
   def test_basic_auth_post_with_basic_auth_with_wiremock
@@ -46,6 +53,13 @@ class BasicAuthWireTest < WireMockTestCase
       url_path: "/basic-auth",
       query_params: nil,
       expected: 1
+    )
+
+    verify_authorization_header(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/basic-auth",
+      expected_value: "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk"
     )
   end
 end

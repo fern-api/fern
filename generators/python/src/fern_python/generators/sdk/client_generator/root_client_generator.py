@@ -1704,6 +1704,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 - Use kwargs (many root client params are keyword-only).
                 - Include required parameters (those without defaults) with reasonable placeholders.
                 - Prefer inferred-auth credentials (e.g. api_key) when present.
+                - Include client_id/client_secret for OAuth client credentials flows.
                 """
 
                 required_params = [
@@ -1736,6 +1737,15 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         continue
 
                     kwargs.append((name, AST.Expression(f'"YOUR_{name.upper()}"')))
+
+                # For OAuth client credentials, explicitly include client_id and client_secret
+                # even though they have os.getenv() defaults.
+                if self._oauth_token_override:
+                    oauth_param_names_in_kwargs = {name for name, _ in kwargs}
+                    if "client_id" not in oauth_param_names_in_kwargs:
+                        kwargs.append(("client_id", AST.Expression('"YOUR_CLIENT_ID"')))
+                    if "client_secret" not in oauth_param_names_in_kwargs:
+                        kwargs.append(("client_secret", AST.Expression('"YOUR_CLIENT_SECRET"')))
 
                 return kwargs
 

@@ -29,8 +29,7 @@ Instantiate and use the client with the following:
 require "seed"
 
 client = Seed::Client.new(
-  username: "<username>",
-  password: "<password>"
+  username: "<username>"
 )
 
 client.basic_auth.post_with_basic_auth
