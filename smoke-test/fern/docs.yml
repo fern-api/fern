@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+instances:
+  - url: cli-smoke-test.docs.buildwithfern.com
+
+title: CLI Smoke Test
+
+layout:
+  searchbar-placement: header
+
+navigation:
+  - page: Welcome
+    path: ./docs/pages/welcome.mdx
+  - page: Getting Started
+    path: ./docs/pages/getting-started.mdx
+  - api: REST API
+    api-name: rest-api
+
+colors:
+  accentPrimary:
+    dark: "#81C784"
+    light: "#1B5E20"

@@ -1,0 +1,76 @@
+openapi: 3.1.0
+info:
+  title: Smoke Test API
+  version: 1.0.0
+  description: A minimal API for CLI smoke testing.
+servers:
+  - url: https://api.example.com/v1
+paths:
+  /plants:
+    get:
+      summary: List plants
+      operationId: listPlants
+      responses:
+        "200":
+          description: A list of plants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plant"
+    post:
+      summary: Create a plant
+      operationId: createPlant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Plant"
+      responses:
+        "201":
+          description: Plant created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+  /plants/{plantId}:
+    get:
+      summary: Get a plant by ID
+      operationId: getPlant
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A plant
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+        "404":
+          description: Plant not found
+components:
+  schemas:
+    Plant:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        species:
+          type: string
+        status:
+          type: string
+          enum:
+            - available
+            - sold
+            - pending
