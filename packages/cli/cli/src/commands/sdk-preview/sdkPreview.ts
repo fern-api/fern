@@ -5,6 +5,8 @@ import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-ap
 import { getGeneratorOutputSubfolder, runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
 import fs from "fs/promises";
+import os from "os";
+import path from "path";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
@@ -52,6 +54,7 @@ export async function sdkPreview({
 }): Promise<void> {
     const previews: SdkPreviewSuccess["previews"] = [];
     let organization: string | undefined;
+    let publishToRegistry = true;
 
     try {
         // 1. Auth
@@ -83,18 +86,18 @@ export async function sdkPreview({
         const previewId = await getPreviewId();
         cliContext.logger.info(`Preview ID: ${previewId}`);
 
-        // 4. Resolve output path (opt-in, used by CI actions for SDK diffs)
+        // 4. Resolve output path for generated SDK files.
         //
-        // When --output is set, absolutePathToPreview becomes non-null in
-        // runLocalGenerationForWorkspace, which sets isPreview = true. This
-        // intentionally enables two preview-mode behaviors:
-        //   - Missing env vars are substituted as empty strings (instead of failing)
-        //   - Version availability checks are skipped
-        // Both are correct for CI preview runs where prod secrets aren't available.
-        const absolutePathToOutput = output != null ? AbsoluteFilePath.of(resolve(cwd(), output)) : undefined;
-        if (absolutePathToOutput != null) {
-            await fs.mkdir(absolutePathToOutput, { recursive: true });
-        }
+        // When --output is provided: write to the specified directory, skip
+        // registry publish (disk-only mode for power users).
+        // When --output is omitted: publish to the preview registry AND write
+        // to a temporary directory so CI actions can compute SDK diffs.
+        publishToRegistry = output == null;
+        const absolutePathToOutput =
+            output != null
+                ? AbsoluteFilePath.of(resolve(cwd(), output))
+                : AbsoluteFilePath.of(await fs.mkdtemp(path.join(os.tmpdir(), "fern-sdk-preview-")));
+        await fs.mkdir(absolutePathToOutput, { recursive: true });
 
         // 5. Process each workspace
         for (const workspace of project.apiWorkspaces) {
@@ -172,9 +175,8 @@ export async function sdkPreview({
                 // because we programmatically override the output config, which requires direct
                 // control over the generator invocation. Docker must be installed.
                 //
-                // When --output is provided (CI mode), absolutePathToPreview is set so the
-                // generator also writes files to disk for SDK diff workflows.
-                // When not provided (interactive CLI), only registry publishing occurs.
+                // absolutePathToPreview is always set so generated files are written to disk.
+                // publishToRegistry controls whether the preview package is also published.
                 await cliContext.runTaskForWorkspace(workspace, async (context) => {
                     await runLocalGenerationForWorkspace({
                         token,
@@ -191,28 +193,37 @@ export async function sdkPreview({
                         replay: undefined,
                         noReplay: true,
                         validateWorkspace: true,
-                        publishToRegistry: true
+                        publishToRegistry,
+                        isPreview: true
                     });
                 });
 
-                const installCommand = `npm install ${originalPackageName}@npm:${previewPackageName}@${previewVersion} --registry ${PREVIEW_REGISTRY_URL}`;
-
                 // The generator writes to <output>/<subfolder>/ (e.g. fern-typescript-sdk/).
-                const actualOutputPath =
-                    absolutePathToOutput != null
-                        ? join(absolutePathToOutput, RelativeFilePath.of(getGeneratorOutputSubfolder(generator.name)))
-                        : undefined;
+                const actualOutputPath = join(
+                    absolutePathToOutput,
+                    RelativeFilePath.of(getGeneratorOutputSubfolder(generator.name))
+                );
 
-                previews.push({
-                    preview_id: previewId,
-                    install: installCommand,
-                    version: previewVersion,
-                    package_name: previewPackageName,
-                    registry_url: PREVIEW_REGISTRY_URL,
-                    ...(actualOutputPath != null && {
+                if (publishToRegistry) {
+                    const installCommand = `npm install ${originalPackageName}@npm:${previewPackageName}@${previewVersion} --registry ${PREVIEW_REGISTRY_URL}`;
+                    previews.push({
+                        preview_id: previewId,
+                        install: installCommand,
+                        version: previewVersion,
+                        package_name: previewPackageName,
+                        registry_url: PREVIEW_REGISTRY_URL,
                         output_path: actualOutputPath
-                    })
-                });
+                    });
+                } else {
+                    previews.push({
+                        preview_id: previewId,
+                        install: "",
+                        version: previewVersion,
+                        package_name: previewPackageName,
+                        registry_url: "",
+                        output_path: actualOutputPath
+                    });
+                }
             }
         }
     } catch (error) {
@@ -238,11 +249,23 @@ export async function sdkPreview({
         process.stdout.write(JSON.stringify(result, null, 2) + "\n");
     } else if (previews.length > 0) {
         cliContext.logger.info("");
-        cliContext.logger.info(`Published ${previews.length} preview package${previews.length > 1 ? "s" : ""}:`);
-        for (const preview of previews) {
-            cliContext.logger.info("");
-            cliContext.logger.info(`  ${preview.package_name}@${preview.version}`);
-            cliContext.logger.info(`  Install: ${preview.install}`);
+        if (publishToRegistry) {
+            cliContext.logger.info(`Published ${previews.length} preview package${previews.length > 1 ? "s" : ""}:`);
+            for (const preview of previews) {
+                cliContext.logger.info("");
+                cliContext.logger.info(`  ${preview.package_name}@${preview.version}`);
+                cliContext.logger.info(`  Install: ${preview.install}`);
+                if (preview.output_path) {
+                    cliContext.logger.info(`  Output: ${preview.output_path}`);
+                }
+            }
+        } else {
+            cliContext.logger.info(`Generated ${previews.length} preview SDK${previews.length > 1 ? "s" : ""}:`);
+            for (const preview of previews) {
+                cliContext.logger.info("");
+                cliContext.logger.info(`  ${preview.package_name}@${preview.version}`);
+                cliContext.logger.info(`  Output: ${preview.output_path}`);
+            }
         }
     }
 }

@@ -2188,7 +2188,7 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 })
                 .option("output", {
                     type: "string",
-                    description: "Directory to write generated SDK files in addition to publishing"
+                    description: "Write generated SDK to this directory without publishing to the preview registry"
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({

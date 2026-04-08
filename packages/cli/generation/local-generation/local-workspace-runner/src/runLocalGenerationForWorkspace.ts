@@ -50,7 +50,8 @@ export async function runLocalGenerationForWorkspace({
     validateWorkspace,
     requireEnvVars,
     skipFernignore,
-    publishToRegistry
+    publishToRegistry,
+    isPreview: isPreviewOverride
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -69,6 +70,7 @@ export async function runLocalGenerationForWorkspace({
     requireEnvVars?: boolean;
     skipFernignore?: boolean;
     publishToRegistry?: boolean;
+    isPreview?: boolean;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
     // This avoids wasted work when one generator would fail the version check.
@@ -96,7 +98,7 @@ export async function runLocalGenerationForWorkspace({
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
-                const isPreview = absolutePathToPreview != null;
+                const isPreview = isPreviewOverride ?? absolutePathToPreview != null;
                 const substituteEnvVars = <T>(stringOrObject: T) =>
                     replaceEnvVariables(
                         stringOrObject,
