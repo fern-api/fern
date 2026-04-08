@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.63.1
+  changelogEntry:
+    - summary: |
+        Fix Go dynamic snippets not being generated during docs publish.
+        The Go package name comparison between snippet configuration and
+        generator output was failing due to an `https://` prefix mismatch,
+        causing docs to fall back to raw `net/http` code instead of
+        SDK-idiomatic snippets.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 66
+
 - version: 4.63.0
   changelogEntry:
     - summary: |
