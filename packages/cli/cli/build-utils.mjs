@@ -1,4 +1,5 @@
 import { exec } from "child_process";
+import { readFileSync } from "fs";
 import { writeFile } from "fs/promises";
 import path from "path";
 import tsup from "tsup";
@@ -11,11 +12,56 @@ const execAsync = promisify(exec);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
+ * Parse the pnpm-workspace.yaml catalog section to resolve catalog: references.
+ * This is a lightweight parser that handles the simple `key: value` format used in the catalog.
+ */
+function loadPnpmCatalog() {
+    const workspaceRoot = path.resolve(__dirname, "../../..");
+    const workspacePath = path.join(workspaceRoot, "pnpm-workspace.yaml");
+    try {
+        const content = readFileSync(workspacePath, "utf-8");
+        const catalog = {};
+        let inCatalog = false;
+        for (const line of content.split("\n")) {
+            if (/^catalog:/.test(line)) {
+                inCatalog = true;
+                continue;
+            }
+            if (inCatalog) {
+                // Stop when we hit a non-indented line (new top-level key)
+                if (line.length > 0 && !line.startsWith(" ") && !line.startsWith("\t")) {
+                    break;
+                }
+                const match = line.match(/^\s+["']?([^"':]+)["']?:\s*["']?([^"'\s]+)["']?/);
+                if (match) {
+                    catalog[match[1]] = match[2];
+                }
+            }
+        }
+        return catalog;
+    } catch {
+        return {};
+    }
+}
+
+const pnpmCatalog = loadPnpmCatalog();
+
+/**
  * Get a dependency version from package.json, preferring dependencies over devDependencies.
- * This ensures we don't miss runtime dependencies regardless of where they're declared.
+ * Resolves pnpm catalog: references to actual version specifiers.
  */
 function getDependencyVersion(packageName) {
-    return packageJson.dependencies?.[packageName] ?? packageJson.devDependencies?.[packageName];
+    const version = packageJson.dependencies?.[packageName] ?? packageJson.devDependencies?.[packageName];
+    if (version === "catalog:" || version === "catalog:default") {
+        const catalogVersion = pnpmCatalog[packageName];
+        if (!catalogVersion) {
+            throw new Error(
+                `Dependency "${packageName}" uses catalog: but was not found in pnpm-workspace.yaml catalog`
+            );
+        }
+        return catalogVersion;
+    }
+    return version;
 }
 
 /**

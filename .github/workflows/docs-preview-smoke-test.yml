@@ -105,8 +105,13 @@ jobs:
 
       - name: Install CLI native dependencies
         if: steps.node-check.outputs.available == 'true'
-        working-directory: /tmp/cli-artifact
-        run: npm install --ignore-scripts
+        shell: bash
+        run: |
+          cd /tmp/cli-artifact
+          # The build resolves pnpm catalog: references to real versions.
+          # Run npm install in the isolated /tmp directory so npm doesn't
+          # walk up into the repo's pnpm workspace.
+          npm install --ignore-scripts
 
       - name: Install tools (Linux)
         if: steps.node-check.outputs.available == 'true' && runner.os == 'Linux'
