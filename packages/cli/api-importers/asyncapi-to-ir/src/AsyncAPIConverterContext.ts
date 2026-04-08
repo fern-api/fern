@@ -101,8 +101,8 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         } else if (displayNameOverrideSource === "discriminator_key") {
             displayName = resolvedReference.value.title ?? displayNameOverride;
         } else {
-            // No override source - use schema title or fallback to extracted schema name
-            const rawSchemaName = reference.$ref.match(/\/schemas\/([^/]+)/)?.[1] ?? typeId;
+            // No override source - use schema title or fallback to basename of reference
+            const rawSchemaName = reference.$ref.split("/").pop() ?? typeId;
             displayName = resolvedReference.value.title ?? rawSchemaName;
         }
 
