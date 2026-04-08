@@ -5,6 +5,7 @@ import {
     type Finishable,
     type InteractiveTaskContext,
     type PosthogEvent,
+    resolveErrorCode,
     type Startable,
     TaskAbortSignal,
     type TaskContext,
@@ -60,16 +61,21 @@ export class TaskContextAdapter implements TaskContext {
     }
 
     public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliErrorCode }): void {
+        this.result = TaskResult.Failure;
+        if (error instanceof TaskAbortSignal) {
+            return;
+        }
         const fullMessage = this.getFullErrorMessage(message, error);
         if (fullMessage != null) {
             this.logger.error(fullMessage);
         }
-        this.result = TaskResult.Failure;
-        reportError(this.context, error ?? new Error(message), options);
+
+        reportError(this.context, error, { ...options, message });
     }
 
-    public captureException(error: unknown, _code?: CliErrorCode): void {
-        this.context.telemetry.captureException(error);
+    public captureException(error: unknown, code?: CliErrorCode): void {
+        const errorCode = resolveErrorCode(error, code) ?? "INTERNAL_ERROR";
+        this.context.telemetry.captureException(error, { errorCode });
     }
 
     private getFullErrorMessage(message?: string, error?: unknown): string | undefined {
