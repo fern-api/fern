@@ -607,7 +607,7 @@ export function convertSchemaObject(
             const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL);
             const resolvedLiteral =
                 literalValue ??
-                getSingleBooleanEnumValue(schema, blockConstCoercionToLiteral, context.options.coerceEnumsToLiterals);
+                getSingleBooleanEnumValue(schema, blockConstCoercionToLiteral, context.options.coerceEnumsToLiterals, hasConst);
             if (resolvedLiteral != null) {
                 return wrapLiteral({
                     nameOverride,
@@ -1510,18 +1510,20 @@ export function convertSchemaObject(
 
 /**
  * Extracts a boolean literal from a single-value enum (e.g. `type: boolean, enum: [true]`).
- * Returns undefined if the schema doesn't match, if const-to-literal coercion is blocked,
- * or if coerceEnumsToLiterals is false.
+ * Returns undefined if the schema doesn't match or if const-to-literal coercion is blocked.
+ * For genuine enums (not const-derived), also returns undefined when coerceEnumsToLiterals is false.
+ * Explicit const values always become literals unless blocked by blockConstCoercionToLiteral.
  */
 function getSingleBooleanEnumValue(
     schema: OpenAPIV3.SchemaObject,
     blockConstCoercionToLiteral: boolean,
-    coerceEnumsToLiterals: boolean
+    coerceEnumsToLiterals: boolean,
+    isConstDerived: boolean
 ): boolean | undefined {
     if (blockConstCoercionToLiteral) {
         return undefined;
     }
-    if (!coerceEnumsToLiterals) {
+    if (!isConstDerived && !coerceEnumsToLiterals) {
         return undefined;
     }
     if (schema.enum != null && schema.enum.length === 1 && typeof schema.enum[0] === "boolean") {

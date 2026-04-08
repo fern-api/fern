@@ -13,7 +13,7 @@
               "id": "integer",
               "isIndoor": "boolean",
               "isPoisonous": "boolean",
-              "isSeedling": "boolean",
+              "isSeedling": "literal<true>",
               "name": "string",
               "status": "PlantStatus",
             },
@@ -46,7 +46,7 @@
       isIndoor: boolean
       isPoisonous: boolean
       status: PlantStatus
-      isSeedling: boolean
+      isSeedling: literal<true>
     source:
       openapi: ../openapi.yml
 ",

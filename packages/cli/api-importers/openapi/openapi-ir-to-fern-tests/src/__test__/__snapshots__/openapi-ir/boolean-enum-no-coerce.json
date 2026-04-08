@@ -130,7 +130,7 @@
                     "value": true,
                     "type": "boolean"
                   },
-                  "type": "primitive"
+                  "type": "literal"
                 }
               },
               "type": "object"
@@ -304,12 +304,13 @@
             "generatedName": "plantIsSeedling",
             "key": "isSeedling",
             "schema": {
-              "schema": {
+              "value": {
+                "value": true,
                 "type": "boolean"
               },
               "generatedName": "PlantIsSeedling",
               "groupName": [],
-              "type": "primitive"
+              "type": "literal"
             },
             "audiences": []
           }
