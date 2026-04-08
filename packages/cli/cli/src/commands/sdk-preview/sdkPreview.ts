@@ -37,7 +37,11 @@ interface SdkPreviewError {
 
 type SdkPreviewResult = SdkPreviewSuccess | SdkPreviewError;
 
-/** Returns true if the value looks like a registry URL rather than a filesystem path. */
+/**
+ * Returns true if the value looks like a registry URL rather than a filesystem path.
+ * Uses protocol prefix as the heuristic — a path like `https-backup/` would be
+ * misclassified, but that's not a realistic output target.
+ */
 function isRegistryUrl(value: string): boolean {
     return value.startsWith("https://") || value.startsWith("http://");
 }
@@ -101,6 +105,13 @@ export async function sdkPreview({
         //   - Paths + URLs:       write to first path + publish to first URL
         const pathOutputs = output?.filter((v) => !isRegistryUrl(v)) ?? [];
         const urlOutputs = output?.filter(isRegistryUrl) ?? [];
+
+        if (pathOutputs.length > 1) {
+            cliContext.logger.warn(`Multiple output paths provided; only the first will be used: ${pathOutputs[0]}`);
+        }
+        if (urlOutputs.length > 1) {
+            cliContext.logger.warn(`Multiple registry URLs provided; only the first will be used: ${urlOutputs[0]}`);
+        }
 
         if (output == null) {
             // Default: publish to preview registry + temp dir for diffs

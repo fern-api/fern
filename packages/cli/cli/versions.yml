@@ -3,9 +3,10 @@
 - version: 4.63.0
   changelogEntry:
     - summary: |
-        Add `--output` flag to `fern sdk preview` for CI SDK diff workflows.
-        When provided, the generator writes SDK files to the specified directory
-        in addition to publishing to the preview registry.
+        Add `--output` flag to `fern sdk preview` that accepts filesystem paths
+        and/or registry URLs. Omit to publish to the default preview registry and
+        write to a temp directory. Use `--output <path>` for disk-only output, or
+        `--output <path> --output <url>` to write to disk and publish to a custom registry.
       type: feat
   createdAt: "2026-04-07"
   irVersion: 66
