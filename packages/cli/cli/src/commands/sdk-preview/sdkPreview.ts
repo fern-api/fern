@@ -97,7 +97,7 @@ export async function sdkPreview({
         // Each --output value is classified as a filesystem path or a registry URL.
         //   - No --output at all: temp dir + default preview registry
         //   - Only paths:         write to first path, no registry publish
-        //   - Only URLs:          temp dir + publish to first URL
+        //   - Only URLs:          publish to first URL, no disk output
         //   - Paths + URLs:       write to first path + publish to first URL
         const pathOutputs = output?.filter((v) => !isRegistryUrl(v)) ?? [];
         const urlOutputs = output?.filter(isRegistryUrl) ?? [];
@@ -118,8 +118,12 @@ export async function sdkPreview({
         const absolutePathToOutput =
             pathOutputs.length > 0
                 ? AbsoluteFilePath.of(resolve(cwd(), pathOutputs[0]))
-                : AbsoluteFilePath.of(await fs.mkdtemp(path.join(os.tmpdir(), "fern-sdk-preview-")));
-        await fs.mkdir(absolutePathToOutput, { recursive: true });
+                : output == null
+                  ? AbsoluteFilePath.of(await fs.mkdtemp(path.join(os.tmpdir(), "fern-sdk-preview-")))
+                  : undefined;
+        if (absolutePathToOutput != null) {
+            await fs.mkdir(absolutePathToOutput, { recursive: true });
+        }
 
         // 5. Process each workspace
         for (const workspace of project.apiWorkspaces) {
@@ -201,8 +205,8 @@ export async function sdkPreview({
                 // because we programmatically override the output config, which requires direct
                 // control over the generator invocation. Docker must be installed.
                 //
-                // absolutePathToPreview is always set so generated files are written to disk.
-                // publishToRegistry controls whether the preview package is also published.
+                // When absolutePathToOutput is set, generated files are also written to disk.
+                // publishToRegistry controls whether the preview package is published.
                 await cliContext.runTaskForWorkspace(workspace, async (context) => {
                     await runLocalGenerationForWorkspace({
                         token,
@@ -225,10 +229,10 @@ export async function sdkPreview({
                 });
 
                 // The generator writes to <output>/<subfolder>/ (e.g. fern-typescript-sdk/).
-                const actualOutputPath = join(
-                    absolutePathToOutput,
-                    RelativeFilePath.of(getGeneratorOutputSubfolder(generator.name))
-                );
+                const actualOutputPath =
+                    absolutePathToOutput != null
+                        ? join(absolutePathToOutput, RelativeFilePath.of(getGeneratorOutputSubfolder(generator.name)))
+                        : undefined;
 
                 if (publishToRegistry && registryUrl != null) {
                     const installCommand = `npm install ${originalPackageName}@npm:${previewPackageName}@${previewVersion} --registry ${registryUrl}`;
