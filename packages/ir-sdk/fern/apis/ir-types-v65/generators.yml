@@ -1,0 +1,77 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 3.49.0
+        output:
+          location: local-file-system
+          path: ../../../src/sdk
+        config:
+          outputSourceFiles: true
+          outputSrcOnly: true
+          includeUtilsOnUnionMembers: true
+          noOptionalProperties: true
+          noSerdeLayer: false
+        smart-casing: false
+  dynamic-ir:
+    audiences:
+      - dynamic
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 3.49.0
+        output:
+          location: npm
+          package-name: "@fern-api/dynamic-ir-v65-sdk"
+          token: ${NPM_TOKEN}
+        config:
+          noOptionalProperties: false
+        smart-casing: false
+  node:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 3.49.0
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/ir-v65-sdk"
+        config:
+          includeUtilsOnUnionMembers: true
+          noOptionalProperties: true
+          noSerdeLayer: false
+        smart-casing: false
+  java:
+    generators:
+      - name: fernapi/fern-java-model
+        version: 1.8.5
+        output:
+          location: maven
+          url: maven.buildwithfern.com
+          coordinate: com.fern.fern:irV65
+        config:
+          wrapped-aliases: true
+          enable-forward-compatible-enums: true
+        smart-casing: false
+  python:
+    generators:
+      - name: fernapi/fern-pydantic-model
+        version: 1.4.2
+        output:
+          location: pypi
+          url: pypi.buildwithfern.com
+          package-name: fern_fern_ir_v65
+        config:
+          include_union_utils: true
+          frozen: true
+          version: v2
+          enum_type: python_enums
+        smart-casing: false
+  go:
+    generators:
+      - name: fernapi/fern-go-model
+        version: 0.9.3
+        config: {}
+        github:
+          repository: fern-api/ir-go
+        smart-casing: false

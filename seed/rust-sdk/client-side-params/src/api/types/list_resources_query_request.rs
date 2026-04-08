@@ -28,7 +28,7 @@ pub struct ListResourcesQueryRequest {
 
 impl ListResourcesQueryRequest {
     pub fn builder() -> ListResourcesQueryRequestBuilder {
-        ListResourcesQueryRequestBuilder::default()
+        <ListResourcesQueryRequestBuilder as Default>::default()
     }
 }
 

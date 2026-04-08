@@ -77,6 +77,7 @@ export class DefaultValueExtractor {
                         t.default != null ? { value: this.escapeString(t.default), rubyType: "String" } : undefined,
                     date: () => undefined,
                     dateTime: () => undefined,
+                    dateTimeRfc2822: () => undefined,
                     uuid: () => undefined,
                     base64: () => undefined,
                     _other: () => undefined

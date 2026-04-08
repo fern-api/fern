@@ -9,7 +9,7 @@ pub struct ExistingSubmissionExecuting {
 
 impl ExistingSubmissionExecuting {
     pub fn builder() -> ExistingSubmissionExecutingBuilder {
-        ExistingSubmissionExecutingBuilder::default()
+        <ExistingSubmissionExecutingBuilder as Default>::default()
     }
 }
 

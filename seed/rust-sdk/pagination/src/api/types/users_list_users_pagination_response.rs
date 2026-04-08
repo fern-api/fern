@@ -16,7 +16,7 @@ pub struct ListUsersPaginationResponse2 {
 
 impl ListUsersPaginationResponse2 {
     pub fn builder() -> ListUsersPaginationResponse2Builder {
-        ListUsersPaginationResponse2Builder::default()
+        <ListUsersPaginationResponse2Builder as Default>::default()
     }
 }
 

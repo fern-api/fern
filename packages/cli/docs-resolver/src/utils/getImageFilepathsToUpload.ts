@@ -153,6 +153,10 @@ export async function collectFilesFromDocsConfig({
         });
     }
 
+    if (parsedDocsConfig.context7File != null) {
+        filepaths.add(parsedDocsConfig.context7File);
+    }
+
     /* custom page action icons */
     if (parsedDocsConfig.pageActions?.options?.custom != null) {
         await Promise.all(

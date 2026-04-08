@@ -46,6 +46,7 @@ if typing.TYPE_CHECKING:
         TypeWithSingleCharPropertyEqualToTypeStartingLetter,
     )
     from . import commons, file, health, service, types
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedExhaustive, SeedExhaustive
     from .environment import SeedExhaustiveEnvironment
     from .version import __version__
@@ -58,6 +59,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CastMember": ".types",
     "ComplexType": ".types",
     "CronJob": ".types",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "Directory": ".types",
     "Entity": ".types",
     "Exception": ".types",
@@ -129,6 +132,8 @@ __all__ = [
     "CastMember",
     "ComplexType",
     "CronJob",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "Directory",
     "Entity",
     "Exception",

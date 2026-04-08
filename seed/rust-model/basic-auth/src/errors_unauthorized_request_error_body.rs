@@ -8,7 +8,7 @@ pub struct UnauthorizedRequestErrorBody {
 
 impl UnauthorizedRequestErrorBody {
     pub fn builder() -> UnauthorizedRequestErrorBodyBuilder {
-        UnauthorizedRequestErrorBodyBuilder::default()
+        <UnauthorizedRequestErrorBodyBuilder as Default>::default()
     }
 }
 

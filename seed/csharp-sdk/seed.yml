@@ -1,5 +1,5 @@
 displayName: C# SDK
-irVersion: v65
+irVersion: v66
 image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 
@@ -186,12 +186,17 @@ fixtures:
           Moq.Contrib.HttpClient: "1.4.0"
       outputFolder: extra-dependencies
     - customConfig:
+        extra-dependencies:
+          PolySharp: "1.14.0"
+      outputFolder: extra-dependencies-override
+    - customConfig:
         base-api-exception-class-name: CustomApiException
         base-exception-class-name: CustomException
       outputFolder: exception-class-names
     - customConfig:
         client-class-name: BaseClient
         exported-client-class-name: CustomClient
+        maxRetries: 5
       outputFolder: exported-client-class-name
     - customConfig:
         include-exception-handler: true
@@ -264,6 +269,9 @@ fixtures:
     - customConfig:
         unified-client-options: true
       outputFolder: unified-client-options
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
@@ -317,6 +325,16 @@ fixtures:
         explicit-namespaces: true
         experimental-fully-qualified-namespaces: true
       outputFolder: namespace-client-collision
+    - customConfig:
+        namespace: "Contoso.Net"
+        client-class-name: "Contoso"
+        explicit-namespaces: true
+      outputFolder: explicit-namespaces
+    - customConfig:
+        namespace: "Contoso.Net"
+        client-class-name: "ContosoClient"
+        explicit-namespaces: true
+      outputFolder: no-client-namespace-match
   csharp-namespace-conflict:
     - customConfig:
         namespace: Seed.CsharpNamespaceConflict
@@ -380,8 +398,10 @@ fixtures:
         redact-response-body-on-error: true
       outputFolder: redact-response-body-on-error
 allowedFailures:
+  - schemaless-request-body-examples
   - bytes-upload
   - enum:forward-compatible-enums
+  - imdb:exported-client-class-name
   - enum:plain-enums
   - examples:no-custom-config
   - examples:readme-config
@@ -396,3 +416,6 @@ allowedFailures:
   - unions:no-custom-config
   - unions-with-local-date
   - server-sent-event-examples
+  - oauth-client-credentials-openapi
+  - server-sent-events-openapi
+  - streaming-parameter

@@ -649,7 +649,8 @@ export class DynamicTypeLiteralMapper {
                 }
                 return ts.TypeLiteral.string(str);
             }
-            case "DATE_TIME": {
+            case "DATE_TIME":
+            case "DATE_TIME_RFC_2822": {
                 const str = this.context.getValueAsString({ value });
                 if (str == null) {
                     return ts.TypeLiteral.nop();

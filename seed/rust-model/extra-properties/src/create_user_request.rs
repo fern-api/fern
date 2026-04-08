@@ -12,7 +12,7 @@ pub struct CreateUserRequest {
 
 impl CreateUserRequest {
     pub fn builder() -> CreateUserRequestBuilder {
-        CreateUserRequestBuilder::default()
+        <CreateUserRequestBuilder as Default>::default()
     }
 }
 

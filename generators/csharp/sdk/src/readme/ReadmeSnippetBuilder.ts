@@ -1,4 +1,4 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, getWireValue } from "@fern-api/base-generator";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -26,6 +26,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static RAW_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "RAW_RESPONSE";
     private static ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
     private static ADDITIONAL_QUERY_PARAMETERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_QUERY_PARAMETERS";
+    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
@@ -54,6 +55,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
     protected get generation(): Generation {
         return this.context.generation;
+    }
+    protected get case(): Generation["case"] {
+        return this.generation.case;
     }
     protected get namespaces(): Generation["namespaces"] {
         return this.generation.namespaces;
@@ -123,6 +127,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
+        }
+        if (this.context.ir.environments != null) {
+            snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsSnippets();
         }
         if (this.context.settings.isForwardCompatibleEnumsEnabled) {
             snippets[ReadmeSnippetBuilder.FORWARD_COMPATIBLE_ENUMS_FEATURE_ID] =
@@ -282,12 +289,12 @@ var response = await ${this.getMethodCall(queryParameterEndpoint)}(
             shape: FernIr.Type.Enum;
         };
 
-        const enumName = firstEnum.name.name.pascalCase.safeName;
-        const enumCamelCaseName = firstEnum.name.name.camelCase.safeName;
+        const enumName = this.case.pascalSafe(firstEnum.name.name);
+        const enumCamelCaseName = this.case.camelSafe(firstEnum.name.name);
         const enumNamespace = this.context.getNamespaceFromFernFilepath(firstEnum.name.fernFilepath);
         const firstEnumValue = firstEnum.shape.values[0] as EnumValue;
-        const firstEnumValueName = firstEnumValue.name.name.pascalCase.safeName;
-        const firstEnumValueWire = firstEnumValue.name.wireValue;
+        const firstEnumValueName = this.case.pascalSafe(firstEnumValue.name);
+        const firstEnumValueWire = getWireValue(firstEnumValue.name);
 
         return [
             this.writeCode(`
@@ -406,6 +413,53 @@ ${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}
         return `${this.context.getAccessFromRootClient(endpoint.fernFilepath)}.${this.context.getEndpointMethodName(
             endpoint.endpoint
         )}`;
+    }
+
+    private buildEnvironmentsSnippets(): string[] {
+        const envConfig = this.context.ir.environments;
+        if (envConfig == null) {
+            return [];
+        }
+
+        const defaultEnvName = this.getDefaultEnvironmentName(envConfig);
+        if (defaultEnvName == null) {
+            return [];
+        }
+
+        const environmentsClassName = this.Types.Environments.name;
+        const isSingleBaseUrl = envConfig.environments.type === "singleBaseUrl";
+        const envField = isSingleBaseUrl ? "BaseUrl" : "Environment";
+
+        return [
+            this.writeCode(`
+using ${this.namespaces.root};
+
+var client = new ${this.Types.RootClient.name}(new ${this.Types.ClientOptions.name}
+{
+    ${envField} = ${environmentsClassName}.${defaultEnvName}
+});
+`)
+        ];
+    }
+
+    private getDefaultEnvironmentName(envConfig: FernIr.EnvironmentsConfig): string | undefined {
+        const defaultEnvId = envConfig.defaultEnvironment;
+        const envs = envConfig.environments.environments;
+
+        const getEnvName = (env: { name: FernIr.NameOrString }): string => {
+            return this.context.settings.pascalCaseEnvironments
+                ? this.case.pascalSafe(env.name)
+                : this.case.screamingSnakeSafe(env.name);
+        };
+
+        if (defaultEnvId != null) {
+            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+            if (defaultEnv != null) {
+                return getEnvName(defaultEnv);
+            }
+        }
+        const firstEnv = envs[0];
+        return firstEnv != null ? getEnvName(firstEnv) : undefined;
     }
 
     private writeCode(s: string): string {

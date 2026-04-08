@@ -8,7 +8,7 @@ pub struct Scope {
 
 impl Scope {
     pub fn builder() -> ScopeBuilder {
-        ScopeBuilder::default()
+        <ScopeBuilder as Default>::default()
     }
 }
 

@@ -80,6 +80,7 @@ export abstract class AbstractParameterConverter<
                         docs: this.parameter.description,
                         valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         allowMultiple: this.parameter.explode ?? false,
+                        clientDefault: undefined,
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
@@ -99,6 +100,7 @@ export abstract class AbstractParameterConverter<
                         docs: this.parameter.description,
                         valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         env: undefined,
+                        clientDefault: undefined,
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
@@ -115,6 +117,7 @@ export abstract class AbstractParameterConverter<
                         valueType: typeReference ?? AbstractConverter.STRING,
                         location: "ENDPOINT",
                         variable: undefined,
+                        clientDefault: undefined,
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),

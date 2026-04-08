@@ -115,7 +115,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
         // before we add the method, we're going to make the class aware of the root client namespace
         // which can help when finding out if we're going to have an ambiguous type of some kind.
-        class_.addNamespaceReference(this.Types.RootClient.namespace);
+        class_.addNamespaceReference(this.Types.RootClientForSnippets.namespace);
 
         class_.addMethod({
             name: "Do",
@@ -385,16 +385,24 @@ export class EndpointSnippetGenerator extends WithGeneration {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): NamedArgument[] {
-        return [
-            {
+        // usernameOmit/passwordOmit may exist in newer IR versions
+        const authRecord = auth as unknown as Record<string, unknown>;
+        const usernameOmitted = !!authRecord.usernameOmit;
+        const passwordOmitted = !!authRecord.passwordOmit;
+        const args: NamedArgument[] = [];
+        if (!usernameOmitted) {
+            args.push({
                 name: this.context.getParameterName(auth.username),
                 assignment: this.csharp.Literal.string(values.username)
-            },
-            {
+            });
+        }
+        if (!passwordOmitted) {
+            args.push({
                 name: this.context.getParameterName(auth.password),
                 assignment: this.csharp.Literal.string(values.password)
-            }
-        ];
+            });
+        }
+        return args;
     }
 
     private getConstructorBearerAuthArgs({
@@ -823,7 +831,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
     private getRootClientConstructorInvocation(arguments_: NamedArgument[]): ast.ClassInstantiation {
         return this.csharp.instantiateClass({
-            classReference: this.Types.RootClient,
+            classReference: this.Types.RootClientForSnippets,
             arguments_,
             forceUseConstructor: true,
             multiline: true

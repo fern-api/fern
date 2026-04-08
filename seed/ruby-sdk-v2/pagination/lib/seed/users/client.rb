@@ -701,6 +701,55 @@ module Seed
           end
         end
       end
+
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Integer, nil] :page
+      # @option params [Integer, nil] :per_page
+      # @option params [String, nil] :starting_after
+      #
+      # @return [Seed::Users::Types::ListUsersAliasedDataPaginationResponse]
+      def list_with_aliased_data(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        query_param_names = %i[page per_page starting_after]
+        query_params = {}
+        query_params["page"] = params[:page] if params.key?(:page)
+        query_params["per_page"] = params[:per_page] if params.key?(:per_page)
+        query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
+        params.except(*query_param_names)
+
+        Seed::Internal::CursorItemIterator.new(
+          cursor_field: :starting_after,
+          item_field: :data,
+          initial_cursor: query_params["starting_after"]
+        ) do |next_cursor|
+          query_params["starting_after"] = next_cursor
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "GET",
+            path: "/users/aliased-data",
+            query: query_params,
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Users::Types::ListUsersAliasedDataPaginationResponse.load(response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
+      end
     end
   end
 end

@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import admin, commons, homepage, lang_server, migration, playlist, problem, submission, sysprop, v_2
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .admin import Test, Test_And, Test_Or
     from .client import AsyncSeedTrace, SeedTrace
     from .commons import (
@@ -297,6 +298,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DebugVariableValue_SinglyLinkedListNodeValue": ".commons",
     "DebugVariableValue_StringValue": ".commons",
     "DebugVariableValue_UndefinedValue": ".commons",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "DoublyLinkedListNodeAndListValue": ".commons",
     "DoublyLinkedListNodeValue": ".commons",
     "DoublyLinkedListValue": ".commons",
@@ -573,6 +576,8 @@ __all__ = [
     "DebugVariableValue_SinglyLinkedListNodeValue",
     "DebugVariableValue_StringValue",
     "DebugVariableValue_UndefinedValue",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "DoublyLinkedListNodeAndListValue",
     "DoublyLinkedListNodeValue",
     "DoublyLinkedListValue",

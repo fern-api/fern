@@ -24,6 +24,16 @@ export declare namespace visitDocsConfigFileYamlAst {
     }
 }
 
+/**
+ * Traverses `docs.yml` and emits the AST node visits that `fern check` rules
+ * know how to validate, such as filepaths, markdown pages, version/product
+ * files, API sections, and permission-bearing nodes.
+ *
+ * Many top-level config fields intentionally use `noop` because they do not
+ * produce any rule-relevant AST nodes in the docs validator. Those fields are
+ * still parsed elsewhere, but there is nothing additional for validation rules
+ * to visit here.
+ */
 export async function visitDocsConfigFileYamlAst({
     contents,
     visitor,
@@ -150,7 +160,19 @@ export async function visitDocsConfigFileYamlAst({
                 willBeUploaded: false
             });
         },
-        integrations: noop,
+        integrations: async (integrations) => {
+            if (integrations?.context7 == null) {
+                return;
+            }
+
+            await visitFilepath({
+                absoluteFilepathToConfiguration,
+                rawUnresolvedFilepath: integrations.context7,
+                visitor,
+                nodePath: ["integrations", "context7"],
+                willBeUploaded: true
+            });
+        },
         js: async (js) => {
             if (js == null) {
                 return;
@@ -178,6 +200,7 @@ export async function visitDocsConfigFileYamlAst({
         },
         landingPage: noop,
         layout: noop,
+        agents: noop,
         settings: noop,
         logo: async () => {
             if (contents.logo?.dark != null) {
@@ -256,6 +279,7 @@ export async function visitDocsConfigFileYamlAst({
                 })
             );
         },
+        check: noop,
         redirects: noop,
         tabs: noop,
         title: noop,

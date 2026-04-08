@@ -9,7 +9,7 @@ pub struct ContainerObject {
 
 impl ContainerObject {
     pub fn builder() -> ContainerObjectBuilder {
-        ContainerObjectBuilder::default()
+        <ContainerObjectBuilder as Default>::default()
     }
 }
 

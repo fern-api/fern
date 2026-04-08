@@ -1,25 +1,7 @@
 {
   "apiDisplayName": "Balance Max Null Test API",
   "apiDocs": undefined,
-  "apiName": {
-    "camelCase": {
-      "safeName": "balanceMaxNullTestApi",
-      "unsafeName": "balanceMaxNullTestApi",
-    },
-    "originalName": "Balance Max Null Test API",
-    "pascalCase": {
-      "safeName": "BalanceMaxNullTestApi",
-      "unsafeName": "BalanceMaxNullTestApi",
-    },
-    "screamingSnakeCase": {
-      "safeName": "BALANCE_MAX_NULL_TEST_API",
-      "unsafeName": "BALANCE_MAX_NULL_TEST_API",
-    },
-    "snakeCase": {
-      "safeName": "balance_max_null_test_api",
-      "unsafeName": "balance_max_null_test_api",
-    },
-  },
+  "apiName": "Balance Max Null Test API",
   "apiPlayground": undefined,
   "apiVersion": undefined,
   "audiences": undefined,
@@ -29,29 +11,9 @@
     "schemes": [],
   },
   "basePath": undefined,
+  "casingsConfig": undefined,
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
-        },
-        "originalName": "errorInstanceId",
-        "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
-        },
-        "screamingSnakeCase": {
-          "safeName": "ERROR_INSTANCE_ID",
-          "unsafeName": "ERROR_INSTANCE_ID",
-        },
-        "snakeCase": {
-          "safeName": "error_instance_id",
-          "unsafeName": "error_instance_id",
-        },
-      },
-      "wireValue": "errorInstanceId",
-    },
+    "errorInstanceIdKey": "errorInstanceId",
   },
   "dynamic": undefined,
   "environments": {
@@ -64,25 +26,7 @@
           "defaultUrl": undefined,
           "docs": "Production server",
           "id": "Production server",
-          "name": {
-            "camelCase": {
-              "safeName": "productionServer",
-              "unsafeName": "productionServer",
-            },
-            "originalName": "Production server",
-            "pascalCase": {
-              "safeName": "ProductionServer",
-              "unsafeName": "ProductionServer",
-            },
-            "screamingSnakeCase": {
-              "safeName": "PRODUCTION_SERVER",
-              "unsafeName": "PRODUCTION_SERVER",
-            },
-            "snakeCase": {
-              "safeName": "production_server",
-              "unsafeName": "production_server",
-            },
-          },
+          "name": "Production server",
           "url": "https://api.example.com/v1",
           "urlTemplate": undefined,
           "urlVariables": undefined,
@@ -171,25 +115,7 @@
           "id": "endpoint_.getRates",
           "idempotent": false,
           "method": "GET",
-          "name": {
-            "camelCase": {
-              "safeName": "getRates",
-              "unsafeName": "getRates",
-            },
-            "originalName": "getRates",
-            "pascalCase": {
-              "safeName": "GetRates",
-              "unsafeName": "GetRates",
-            },
-            "screamingSnakeCase": {
-              "safeName": "GET_RATES",
-              "unsafeName": "GET_RATES",
-            },
-            "snakeCase": {
-              "safeName": "get_rates",
-              "unsafeName": "get_rates",
-            },
-          },
+          "name": "getRates",
           "pagination": undefined,
           "path": {
             "head": "/rates",
@@ -215,25 +141,7 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": {
-                    "camelCase": {
-                      "safeName": "rateResponse",
-                      "unsafeName": "rateResponse",
-                    },
-                    "originalName": "RateResponse",
-                    "pascalCase": {
-                      "safeName": "RateResponse",
-                      "unsafeName": "RateResponse",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "RATE_RESPONSE",
-                      "unsafeName": "RATE_RESPONSE",
-                    },
-                    "snakeCase": {
-                      "safeName": "rate_response",
-                      "unsafeName": "rate_response",
-                    },
-                  },
+                  "name": "RateResponse",
                   "type": "named",
                   "typeId": "RateResponse",
                 },
@@ -357,25 +265,7 @@
                         "packagePath": [],
                       },
                       "inline": false,
-                      "name": {
-                        "camelCase": {
-                          "safeName": "rateResponse",
-                          "unsafeName": "rateResponse",
-                        },
-                        "originalName": "RateResponse",
-                        "pascalCase": {
-                          "safeName": "RateResponse",
-                          "unsafeName": "RateResponse",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "RATE_RESPONSE",
-                          "unsafeName": "RATE_RESPONSE",
-                        },
-                        "snakeCase": {
-                          "safeName": "rate_response",
-                          "unsafeName": "rate_response",
-                        },
-                      },
+                      "name": "RateResponse",
                       "type": "named",
                       "typeId": "RateResponse",
                     },
@@ -445,25 +335,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "fixedRate",
-            "unsafeName": "fixedRate",
-          },
-          "originalName": "FixedRate",
-          "pascalCase": {
-            "safeName": "FixedRate",
-            "unsafeName": "FixedRate",
-          },
-          "screamingSnakeCase": {
-            "safeName": "FIXED_RATE",
-            "unsafeName": "FIXED_RATE",
-          },
-          "snakeCase": {
-            "safeName": "fixed_rate",
-            "unsafeName": "fixed_rate",
-          },
-        },
+        "name": "FixedRate",
         "typeId": "FixedRate",
       },
       "referencedTypes": Set {},
@@ -476,28 +348,7 @@
           {
             "availability": undefined,
             "docs": "List of rate tiers",
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "tiers",
-                  "unsafeName": "tiers",
-                },
-                "originalName": "tiers",
-                "pascalCase": {
-                  "safeName": "Tiers",
-                  "unsafeName": "Tiers",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "TIERS",
-                  "unsafeName": "TIERS",
-                },
-                "snakeCase": {
-                  "safeName": "tiers",
-                  "unsafeName": "tiers",
-                },
-              },
-              "wireValue": "tiers",
-            },
+            "name": "tiers",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -524,25 +375,7 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": {
-                    "camelCase": {
-                      "safeName": "rateTier",
-                      "unsafeName": "rateTier",
-                    },
-                    "originalName": "RateTier",
-                    "pascalCase": {
-                      "safeName": "RateTier",
-                      "unsafeName": "RateTier",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "RATE_TIER",
-                      "unsafeName": "RATE_TIER",
-                    },
-                    "snakeCase": {
-                      "safeName": "rate_tier",
-                      "unsafeName": "rate_tier",
-                    },
-                  },
+                  "name": "RateTier",
                   "type": "named",
                   "typeId": "RateTier",
                 },
@@ -583,25 +416,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "rateResponse",
-            "unsafeName": "rateResponse",
-          },
-          "originalName": "RateResponse",
-          "pascalCase": {
-            "safeName": "RateResponse",
-            "unsafeName": "RateResponse",
-          },
-          "screamingSnakeCase": {
-            "safeName": "RATE_RESPONSE",
-            "unsafeName": "RATE_RESPONSE",
-          },
-          "snakeCase": {
-            "safeName": "rate_response",
-            "unsafeName": "rate_response",
-          },
-        },
+        "name": "RateResponse",
         "typeId": "RateResponse",
       },
       "referencedTypes": Set {
@@ -616,28 +431,7 @@
           {
             "availability": undefined,
             "docs": "The type of rate structure",
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "rateType",
-                  "unsafeName": "rateType",
-                },
-                "originalName": "rate_type",
-                "pascalCase": {
-                  "safeName": "RateType",
-                  "unsafeName": "RateType",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "RATE_TYPE",
-                  "unsafeName": "RATE_TYPE",
-                },
-                "snakeCase": {
-                  "safeName": "rate_type",
-                  "unsafeName": "rate_type",
-                },
-              },
-              "wireValue": "rate_type",
-            },
+            "name": "rate_type",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -655,25 +449,7 @@
                 "packagePath": [],
               },
               "inline": false,
-              "name": {
-                "camelCase": {
-                  "safeName": "rateResponseRateType",
-                  "unsafeName": "rateResponseRateType",
-                },
-                "originalName": "RateResponseRateType",
-                "pascalCase": {
-                  "safeName": "RateResponseRateType",
-                  "unsafeName": "RateResponseRateType",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "RATE_RESPONSE_RATE_TYPE",
-                  "unsafeName": "RATE_RESPONSE_RATE_TYPE",
-                },
-                "snakeCase": {
-                  "safeName": "rate_response_rate_type",
-                  "unsafeName": "rate_response_rate_type",
-                },
-              },
+              "name": "RateResponseRateType",
               "type": "named",
               "typeId": "RateResponseRateType",
             },
@@ -681,28 +457,7 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "fixedRate",
-                  "unsafeName": "fixedRate",
-                },
-                "originalName": "fixed_rate",
-                "pascalCase": {
-                  "safeName": "FixedRate",
-                  "unsafeName": "FixedRate",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "FIXED_RATE",
-                  "unsafeName": "FIXED_RATE",
-                },
-                "snakeCase": {
-                  "safeName": "fixed_rate",
-                  "unsafeName": "fixed_rate",
-                },
-              },
-              "wireValue": "fixed_rate",
-            },
+            "name": "fixed_rate",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -728,25 +483,7 @@
                 "packagePath": [],
               },
               "inline": false,
-              "name": {
-                "camelCase": {
-                  "safeName": "fixedRate",
-                  "unsafeName": "fixedRate",
-                },
-                "originalName": "FixedRate",
-                "pascalCase": {
-                  "safeName": "FixedRate",
-                  "unsafeName": "FixedRate",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "FIXED_RATE",
-                  "unsafeName": "FIXED_RATE",
-                },
-                "snakeCase": {
-                  "safeName": "fixed_rate",
-                  "unsafeName": "fixed_rate",
-                },
-              },
+              "name": "FixedRate",
               "type": "named",
               "typeId": "FixedRate",
             },
@@ -786,25 +523,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "rateResponseRateType",
-            "unsafeName": "rateResponseRateType",
-          },
-          "originalName": "RateResponseRateType",
-          "pascalCase": {
-            "safeName": "RateResponseRateType",
-            "unsafeName": "RateResponseRateType",
-          },
-          "screamingSnakeCase": {
-            "safeName": "RATE_RESPONSE_RATE_TYPE",
-            "unsafeName": "RATE_RESPONSE_RATE_TYPE",
-          },
-          "snakeCase": {
-            "safeName": "rate_response_rate_type",
-            "unsafeName": "rate_response_rate_type",
-          },
-        },
+        "name": "RateResponseRateType",
         "typeId": "RateResponseRateType",
       },
       "referencedTypes": Set {},
@@ -818,55 +537,13 @@
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "fixed",
-                  "unsafeName": "fixed",
-                },
-                "originalName": "fixed",
-                "pascalCase": {
-                  "safeName": "Fixed",
-                  "unsafeName": "Fixed",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "FIXED",
-                  "unsafeName": "FIXED",
-                },
-                "snakeCase": {
-                  "safeName": "fixed",
-                  "unsafeName": "fixed",
-                },
-              },
-              "wireValue": "fixed",
-            },
+            "name": "fixed",
           },
           {
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "variable",
-                  "unsafeName": "variable",
-                },
-                "originalName": "variable",
-                "pascalCase": {
-                  "safeName": "Variable",
-                  "unsafeName": "Variable",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "VARIABLE",
-                  "unsafeName": "VARIABLE",
-                },
-                "snakeCase": {
-                  "safeName": "variable",
-                  "unsafeName": "variable",
-                },
-              },
-              "wireValue": "variable",
-            },
+            "name": "variable",
           },
         ],
       },
@@ -892,25 +569,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "rateTier",
-            "unsafeName": "rateTier",
-          },
-          "originalName": "RateTier",
-          "pascalCase": {
-            "safeName": "RateTier",
-            "unsafeName": "RateTier",
-          },
-          "screamingSnakeCase": {
-            "safeName": "RATE_TIER",
-            "unsafeName": "RATE_TIER",
-          },
-          "snakeCase": {
-            "safeName": "rate_tier",
-            "unsafeName": "rate_tier",
-          },
-        },
+        "name": "RateTier",
         "typeId": "RateTier",
       },
       "referencedTypes": Set {},
@@ -923,28 +582,7 @@
           {
             "availability": undefined,
             "docs": "Minimum balance for this tier",
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "balanceMin",
-                  "unsafeName": "balanceMin",
-                },
-                "originalName": "balance_min",
-                "pascalCase": {
-                  "safeName": "BalanceMin",
-                  "unsafeName": "BalanceMin",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "BALANCE_MIN",
-                  "unsafeName": "BALANCE_MIN",
-                },
-                "snakeCase": {
-                  "safeName": "balance_min",
-                  "unsafeName": "balance_min",
-                },
-              },
-              "wireValue": "balance_min",
-            },
+            "name": "balance_min",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -974,28 +612,7 @@
           {
             "availability": undefined,
             "docs": "Maximum balance for this tier (null means no upper limit)",
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "balanceMax",
-                  "unsafeName": "balanceMax",
-                },
-                "originalName": "balance_max",
-                "pascalCase": {
-                  "safeName": "BalanceMax",
-                  "unsafeName": "BalanceMax",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "BALANCE_MAX",
-                  "unsafeName": "BALANCE_MAX",
-                },
-                "snakeCase": {
-                  "safeName": "balance_max",
-                  "unsafeName": "balance_max",
-                },
-              },
-              "wireValue": "balance_max",
-            },
+            "name": "balance_max",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -1041,28 +658,7 @@
           {
             "availability": undefined,
             "docs": "Rate in basis points",
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "rateBps",
-                  "unsafeName": "rateBps",
-                },
-                "originalName": "rate_bps",
-                "pascalCase": {
-                  "safeName": "RateBps",
-                  "unsafeName": "RateBps",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "RATE_BPS",
-                  "unsafeName": "RATE_BPS",
-                },
-                "snakeCase": {
-                  "safeName": "rate_bps",
-                  "unsafeName": "rate_bps",
-                },
-              },
-              "wireValue": "rate_bps",
-            },
+            "name": "rate_bps",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},

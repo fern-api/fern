@@ -31,7 +31,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<RubyFile, SdkCus
                     if (url == null) {
                         return undefined;
                     }
-                    return `${baseUrl.name.snakeCase.safeName}: "${url}"`;
+                    return `${this.case.snakeSafe(baseUrl.name)}: "${url}"`;
                 })
                 .filter((entry): entry is string => entry != null);
 
@@ -39,7 +39,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<RubyFile, SdkCus
                 class_.addStatement(
                     ruby.codeblock((writer) => {
                         writer.write(
-                            `${environment.name.screamingSnakeCase.safeName} = { ${urlEntries.join(", ")} }.freeze`
+                            `${this.case.screamingSnakeSafe(environment.name)} = { ${urlEntries.join(", ")} }.freeze`
                         );
                     })
                 );

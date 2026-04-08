@@ -1,5 +1,6 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import {
+    caseConverter,
     createAuthScheme,
     createBasicAuthScheme,
     createBearerAuthScheme,
@@ -22,7 +23,7 @@ import { RoutingAuthProviderInstance } from "../auth-provider/RoutingAuthProvide
 // ─── Mock Context Helpers ────────────────────────────────────────────────────
 
 /**
- * Creates a minimal mock SdkContext for AuthProviderInstance tests.
+ * Creates a minimal mock FileContext for AuthProviderInstance tests.
  * Instance classes only need importsManager.addImportFromRoot and generateOAuthClients.
  */
 function createMockInstanceContext(opts?: { generateOAuthClients?: boolean }) {
@@ -32,13 +33,14 @@ function createMockInstanceContext(opts?: { generateOAuthClients?: boolean }) {
                 /* noop */
             }
         },
-        generateOAuthClients: opts?.generateOAuthClients ?? false
+        generateOAuthClients: opts?.generateOAuthClients ?? false,
+        case: caseConverter
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }
 
 /**
- * Creates a mock SdkContext for AuthProviderGenerator writeToFile() tests.
+ * Creates a mock FileContext for AuthProviderGenerator writeToFile() tests.
  * Uses a real ts-morph SourceFile and mocks the core utilities used by the generators.
  */
 function createMockGeneratorContext(project: Project, fileName: string) {
@@ -87,7 +89,8 @@ function createMockGeneratorContext(project: Project, fileName: string) {
             getReferenceToGenericAPISdkError: () => ({
                 getExpression: () => ts.factory.createIdentifier("errors.SeedApiError")
             })
-        }
+        },
+        case: caseConverter
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }

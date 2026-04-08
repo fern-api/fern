@@ -83,6 +83,9 @@ seed/python-sdk/**/output.prof
 # Claude
 **/settings.local.json
 
+# Superpowers
+docs/superpowers/
+
 # Preview
 **/.preview/
 
@@ -115,3 +118,6 @@ seed-remote-local/*
 
 # Test logs from test-remote-local.sh
 test-remote-local-logs-*/
+
+# Devbox gradle properties
+/gradle.properties

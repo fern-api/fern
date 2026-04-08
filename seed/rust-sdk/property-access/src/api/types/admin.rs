@@ -13,7 +13,7 @@ pub struct Admin {
 
 impl Admin {
     pub fn builder() -> AdminBuilder {
-        AdminBuilder::default()
+        <AdminBuilder as Default>::default()
     }
 }
 

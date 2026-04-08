@@ -30,6 +30,7 @@ async fn main() {
                             str_prop: "strProp".to_string(),
                         },
                     ],
+                    ..Default::default()
                 },
             },
             None,

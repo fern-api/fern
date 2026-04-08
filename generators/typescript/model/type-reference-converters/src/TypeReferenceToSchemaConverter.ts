@@ -98,9 +98,12 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         { keyType, valueType }: FernIr.MapType,
         params: ConvertTypeReferenceParams
     ): Zurg.Schema {
+        // Strip optional/nullable wrappers from the value type to match the type converter,
+        // which uses `typeNodeWithoutUndefined` for record value types.
+        const unwrappedValueType = unwrapOptionalAndNullable(valueType);
         return this.zurg.record({
             keySchema: this.convert({ ...params, typeReference: keyType }),
-            valueSchema: this.convert({ ...params, typeReference: valueType })
+            valueSchema: this.convert({ ...params, typeReference: unwrappedValueType })
         });
     }
 
@@ -122,4 +125,21 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
             return this.list(itemType, params);
         }
     }
+}
+
+/**
+ * Unwraps optional and nullable container wrappers from a type reference.
+ * This is used for map value types where the type converter strips optional/nullable
+ * (via `typeNodeWithoutUndefined`) but the schema converter needs to match.
+ */
+function unwrapOptionalAndNullable(typeReference: FernIr.TypeReference): FernIr.TypeReference {
+    if (typeReference.type === "container") {
+        if (typeReference.container.type === "optional") {
+            return unwrapOptionalAndNullable(typeReference.container.optional);
+        }
+        if (typeReference.container.type === "nullable") {
+            return unwrapOptionalAndNullable(typeReference.container.nullable);
+        }
+    }
+    return typeReference;
 }

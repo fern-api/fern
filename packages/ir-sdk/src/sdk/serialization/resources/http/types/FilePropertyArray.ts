@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 
 export const FilePropertyArray: core.serialization.ObjectSchema<
@@ -11,7 +11,7 @@ export const FilePropertyArray: core.serialization.ObjectSchema<
     FernIr.FilePropertyArray
 > = core.serialization
     .objectWithoutOptionalProperties({
-        key: NameAndWireValue,
+        key: NameAndWireValueOrString,
         isOptional: core.serialization.boolean(),
         contentType: core.serialization.string().optional(),
     })
@@ -19,7 +19,7 @@ export const FilePropertyArray: core.serialization.ObjectSchema<
 
 export declare namespace FilePropertyArray {
     export interface Raw extends WithDocs.Raw {
-        key: NameAndWireValue.Raw;
+        key: NameAndWireValueOrString.Raw;
         isOptional: boolean;
         contentType?: string | null;
     }

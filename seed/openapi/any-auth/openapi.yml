@@ -54,10 +54,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
       security:
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        - BearerAuth: []
-        - BasicAuth: []
+        - Bearer: []
+        - ApiKey: []
+        - OAuth: []
+        - Basic: []
+        - InferredAuth: []
   /admins:
     get:
       operationId: user_getAdmins
@@ -74,10 +75,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
       security:
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        - BearerAuth: []
-        - BasicAuth: []
+        - Bearer: []
+        - ApiKey: []
+        - OAuth: []
+        - Basic: []
+        - InferredAuth: []
 components:
   schemas:
     TokenResponse:
@@ -107,13 +109,19 @@ components:
         - id
         - name
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer
-    ApiKeyAuth:
+    ApiKey:
       type: apiKey
       in: header
       name: X-API-Key
-    BasicAuth:
+    OAuth:
+      type: http
+      scheme: bearer
+    Basic:
       type: http
       scheme: basic
+    InferredAuth:
+      type: http
+      scheme: bearer

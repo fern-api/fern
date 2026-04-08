@@ -20,7 +20,10 @@ import Testing
 
         do {
             _ = try await client.dummy.generateStream(
-                request: .init(numEvents: 1),
+                request: .init(
+                    stream: true,
+                    numEvents: 1
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -53,7 +56,10 @@ import Testing
 
         do {
             _ = try await client.dummy.generateStream(
-                request: .init(numEvents: 1),
+                request: .init(
+                    stream: true,
+                    numEvents: 1
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -86,7 +92,10 @@ import Testing
 
         do {
             _ = try await client.dummy.generateStream(
-                request: .init(numEvents: 1),
+                request: .init(
+                    stream: true,
+                    numEvents: 1
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -121,7 +130,10 @@ import Testing
 
         do {
             _ = try await client.dummy.generateStream(
-                request: .init(numEvents: 1),
+                request: .init(
+                    stream: true,
+                    numEvents: 1
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -154,7 +166,10 @@ import Testing
 
         do {
             _ = try await client.dummy.generateStream(
-                request: .init(numEvents: 1),
+                request: .init(
+                    stream: true,
+                    numEvents: 1
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -189,7 +204,10 @@ import Testing
 
         do {
             _ = try await client.dummy.generateStream(
-                request: .init(numEvents: 1),
+                request: .init(
+                    stream: true,
+                    numEvents: 1
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -222,7 +240,10 @@ import Testing
 
         do {
             _ = try await client.dummy.generateStream(
-                request: .init(numEvents: 1),
+                request: .init(
+                    stream: true,
+                    numEvents: 1
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 

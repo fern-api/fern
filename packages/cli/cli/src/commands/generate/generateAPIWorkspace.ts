@@ -75,6 +75,11 @@ export async function generateWorkspace({
     }
 
     const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
+    if (groupName == null && groupNameOrDefault != null) {
+        context.logger.info(
+            chalk.dim(`Using default group '${groupNameOrDefault}' from ${GENERATORS_CONFIGURATION_FILENAME}`)
+        );
+    }
     if (groupNameOrDefault == null) {
         const groupNames = workspace.generatorsConfiguration.groups.map((g) => g.groupName);
         const longestGroupName = Math.max(...groupNames.map((name) => name.length));
@@ -157,6 +162,15 @@ export async function generateWorkspace({
                     skipFernignore
                 });
             } else if (token != null) {
+                // Block custom images for remote generation — only trusted images can run on Fiddle
+                const customImageGenerators = group.generators.filter((g) => g.containerImage != null);
+                if (customImageGenerators.length > 0) {
+                    const names = customImageGenerators.map((g) => g.name).join(", ");
+                    return context.failAndThrow(
+                        `Custom image configurations are only supported with local generation (--local). ` +
+                            `The following generators use custom images: ${names}`
+                    );
+                }
                 await runRemoteGenerationForAPIWorkspace({
                     projectConfig,
                     organization,

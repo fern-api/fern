@@ -8,7 +8,7 @@ pub struct Files {
 
 impl Files {
     pub fn builder() -> FilesBuilder {
-        FilesBuilder::default()
+        <FilesBuilder as Default>::default()
     }
 }
 

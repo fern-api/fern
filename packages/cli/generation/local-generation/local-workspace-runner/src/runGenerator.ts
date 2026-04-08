@@ -75,6 +75,7 @@ export async function writeFilesToDiskAndRunGenerator({
     executionEnvironment,
     runner,
     whiteLabel,
+    publishToRegistry,
     ir,
     ai,
     autoVersioningCache,
@@ -103,6 +104,7 @@ export async function writeFilesToDiskAndRunGenerator({
     executionEnvironment?: ExecutionEnvironment;
     runner: ContainerRunner | undefined;
     whiteLabel?: boolean;
+    publishToRegistry?: boolean;
     ir: IntermediateRepresentation;
     ai: generatorsYml.AiServicesSchema | undefined;
     autoVersioningCache?: AutoVersioningCache;
@@ -125,7 +127,7 @@ export async function writeFilesToDiskAndRunGenerator({
         irVersionOverride,
         packageName: generatorsYml.getPackageName({ generatorInvocation }),
         version: version ?? outputVersionOverride,
-        sourceConfig: getSourceConfig(workspace),
+        sourceConfig: getSourceConfig(workspace, executionEnvironment?.usesContainerPaths ?? true),
         includeOptionalRequestPropertyExamples,
         ir
     });
@@ -167,7 +169,9 @@ export async function writeFilesToDiskAndRunGenerator({
     const environment =
         executionEnvironment ??
         new ContainerExecutionEnvironment({
-            containerImage: `${generatorInvocation.name}:${generatorInvocation.version}`,
+            containerImage: generatorInvocation.containerImage
+                ? `${generatorInvocation.containerImage}:${generatorInvocation.version}`
+                : `${generatorInvocation.name}:${generatorInvocation.version}`,
             keepContainer: keepDocker
         });
 
@@ -210,6 +214,7 @@ export async function writeFilesToDiskAndRunGenerator({
         generateOauthClients,
         generatePaginatedClients,
         whiteLabel,
+        publishToRegistry,
         paths
     });
 
@@ -294,13 +299,16 @@ async function writeIrToFile({
     return absolutePathToIr;
 }
 
-function getSourceConfig(workspace: FernWorkspace): SourceConfig {
+function getSourceConfig(workspace: FernWorkspace, usesContainerPaths: boolean): SourceConfig {
     return {
         sources: workspace.getSources().map((source) => {
             if (source.type === "protobuf") {
+                const protoRootUrl = usesContainerPaths
+                    ? `file:///${getDockerDestinationForSource(source)}`
+                    : `file:///${source.absoluteFilePath}`;
                 return ApiDefinitionSource.proto({
                     id: source.id,
-                    protoRootUrl: `file:///${getDockerDestinationForSource(source)}`
+                    protoRootUrl
                 });
             }
             return ApiDefinitionSource.openapi();

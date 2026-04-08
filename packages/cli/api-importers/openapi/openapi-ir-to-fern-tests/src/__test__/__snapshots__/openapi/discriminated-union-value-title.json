@@ -74,8 +74,10 @@
           "SampleUnion": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
-            "discriminant": "type",
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -133,7 +135,9 @@ types:
     source:
       openapi: ../openapi.yml
   SampleUnion:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties: {}
     union:
       request:
@@ -142,7 +146,6 @@ types:
         type: Response
     source:
       openapi: ../openapi.yml
-    context: data
 ",
     },
   },

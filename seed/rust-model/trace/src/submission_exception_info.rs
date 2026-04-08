@@ -15,7 +15,7 @@ pub struct ExceptionInfo {
 
 impl ExceptionInfo {
     pub fn builder() -> ExceptionInfoBuilder {
-        ExceptionInfoBuilder::default()
+        <ExceptionInfoBuilder as Default>::default()
     }
 }
 

@@ -12,51 +12,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "Pet",
-          "camelCase": {
-            "unsafeName": "pet",
-            "safeName": "pet"
-          },
-          "snakeCase": {
-            "unsafeName": "pet",
-            "safeName": "pet"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PET",
-            "safeName": "PET"
-          },
-          "pascalCase": {
-            "unsafeName": "Pet",
-            "safeName": "Pet"
-          }
-        }
+        "name": "Pet"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "Id",
-                  "safeName": "Id"
-                }
-              },
-              "wireValue": "id"
-            },
+            "name": "id",
             "valueType": {
               "primitive": {
                 "v1": "LONG",
@@ -75,28 +36,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
-              },
-              "wireValue": "name"
-            },
+            "name": "name",
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -115,28 +55,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "tag",
-                "camelCase": {
-                  "unsafeName": "tag",
-                  "safeName": "tag"
-                },
-                "snakeCase": {
-                  "unsafeName": "tag",
-                  "safeName": "tag"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TAG",
-                  "safeName": "TAG"
-                },
-                "pascalCase": {
-                  "unsafeName": "Tag",
-                  "safeName": "Tag"
-                }
-              },
-              "wireValue": "tag"
-            },
+            "name": "tag",
             "valueType": {
               "container": {
                 "optional": {
@@ -187,25 +106,7 @@
     "CreatePet": [
       {
         "id": ".CreatePet",
-        "name": {
-          "originalName": "CreatePet",
-          "camelCase": {
-            "unsafeName": "createPet",
-            "safeName": "createPet"
-          },
-          "snakeCase": {
-            "unsafeName": "create_pet",
-            "safeName": "create_pet"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "CREATE_PET",
-            "safeName": "CREATE_PET"
-          },
-          "pascalCase": {
-            "unsafeName": "CreatePet",
-            "safeName": "CreatePet"
-          }
-        },
+        "name": "CreatePet",
         "method": "POST",
         "headers": [],
         "payload": {
@@ -214,25 +115,7 @@
               "allParts": [],
               "packagePath": []
             },
-            "name": {
-              "originalName": "Pet",
-              "camelCase": {
-                "unsafeName": "pet",
-                "safeName": "pet"
-              },
-              "snakeCase": {
-                "unsafeName": "pet",
-                "safeName": "pet"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "PET",
-                "safeName": "PET"
-              },
-              "pascalCase": {
-                "unsafeName": "Pet",
-                "safeName": "Pet"
-              }
-            },
+            "name": "Pet",
             "typeId": "Pet",
             "inline": false,
             "type": "named"
@@ -264,25 +147,7 @@
     "newPet": [
       {
         "id": ".newPet",
-        "name": {
-          "originalName": "newPet",
-          "camelCase": {
-            "unsafeName": "newPet",
-            "safeName": "newPet"
-          },
-          "snakeCase": {
-            "unsafeName": "new_pet",
-            "safeName": "new_pet"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "NEW_PET",
-            "safeName": "NEW_PET"
-          },
-          "pascalCase": {
-            "unsafeName": "NewPet",
-            "safeName": "NewPet"
-          }
-        },
+        "name": "newPet",
         "method": "POST",
         "headers": [],
         "payload": {
@@ -291,25 +156,7 @@
               "allParts": [],
               "packagePath": []
             },
-            "name": {
-              "originalName": "Pet",
-              "camelCase": {
-                "unsafeName": "pet",
-                "safeName": "pet"
-              },
-              "snakeCase": {
-                "unsafeName": "pet",
-                "safeName": "pet"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "PET",
-                "safeName": "PET"
-              },
-              "pascalCase": {
-                "unsafeName": "Pet",
-                "safeName": "Pet"
-              }
-            },
+            "name": "Pet",
             "typeId": "Pet",
             "inline": false,
             "type": "named"
@@ -376,47 +223,8 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "Webhooks",
-    "camelCase": {
-      "unsafeName": "webhooks",
-      "safeName": "webhooks"
-    },
-    "snakeCase": {
-      "unsafeName": "webhooks",
-      "safeName": "webhooks"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "WEBHOOKS",
-      "safeName": "WEBHOOKS"
-    },
-    "pascalCase": {
-      "unsafeName": "Webhooks",
-      "safeName": "Webhooks"
-    }
-  },
+  "apiName": "Webhooks",
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   }
 }

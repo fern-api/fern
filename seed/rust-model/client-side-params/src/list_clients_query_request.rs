@@ -31,7 +31,7 @@ pub struct ListClientsQueryRequest {
 
 impl ListClientsQueryRequest {
     pub fn builder() -> ListClientsQueryRequestBuilder {
-        ListClientsQueryRequestBuilder::default()
+        <ListClientsQueryRequestBuilder as Default>::default()
     }
 }
 

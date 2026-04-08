@@ -10,7 +10,7 @@ pub struct NestedUser {
 
 impl NestedUser {
     pub fn builder() -> NestedUserBuilder {
-        NestedUserBuilder::default()
+        <NestedUserBuilder as Default>::default()
     }
 }
 

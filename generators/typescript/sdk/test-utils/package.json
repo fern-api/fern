@@ -29,17 +29,19 @@
     "depcheck": "knip --config ../../../../knip.json --no-config-hints"
   },
   "dependencies": {
+    "@fern-api/base-generator": "workspace:*",
     "@fern-api/casings-generator": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "ts-morph": "catalog:"
   },
   "peerDependencies": {
-    "@fern-fern/ir-sdk": "^65.3.0"
+    "@fern-fern/ir-sdk": "66.0.0-alpha.1"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@fern-fern/ir-sdk": "^65.3.0",
+    "@fern-fern/ir-sdk": "66.0.0-alpha.1",
     "@types/node": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

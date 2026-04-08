@@ -11,7 +11,7 @@ pub struct File {
 
 impl File {
     pub fn builder() -> FileBuilder {
-        FileBuilder::default()
+        <FileBuilder as Default>::default()
     }
 }
 

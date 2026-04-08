@@ -10,6 +10,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -45,6 +46,18 @@ import { SeedMultiUrlEnvironmentClient } from "@fern/multi-url-environment";
 const client = new SeedMultiUrlEnvironmentClient({ token: "YOUR_TOKEN" });
 await client.ec2.bootInstance({
     size: "size"
+});
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```typescript
+import { SeedMultiUrlEnvironmentClient, SeedMultiUrlEnvironmentEnvironment } from "@fern/multi-url-environment";
+
+const client = new SeedMultiUrlEnvironmentClient({
+    environment: SeedMultiUrlEnvironmentEnvironment.Production,
 });
 ```
 

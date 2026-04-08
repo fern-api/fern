@@ -15,7 +15,7 @@ function createMockContext() {
     };
     return {
         coreUtilities
-        // biome-ignore lint/suspicious/noExplicitAny: test mock for SdkContext
+        // biome-ignore lint/suspicious/noExplicitAny: test mock for FileContext
     } as any;
 }
 
