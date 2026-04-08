@@ -3,7 +3,7 @@ import {
     CliError,
     type CliErrorCode,
     resolveErrorCode,
-    shouldReportToSentry as shouldReportCodeToSentry,
+    shouldReportToSentry,
     TaskAbortSignal
 } from "@fern-api/task-context";
 
@@ -109,44 +109,18 @@ function handleError(context: Context, error: unknown): void {
     process.stderr.write(`${chalk.red(String(error))}\n`);
 }
 
-function shouldReportToSentry(error: unknown): boolean {
-    if (error instanceof TaskAbortSignal) {
-        return false;
-    }
-    if (error instanceof CliError) {
-        return shouldReportCodeToSentry(error.code);
-    }
-    if (
-        error instanceof ValidationError ||
-        error instanceof SourcedValidationError ||
-        error instanceof KeyringUnavailableError
-    ) {
-        return false;
-    }
-    return true;
-}
-
-function extractErrorCode(error: unknown): string {
-    if (error instanceof CliError) {
-        return error.code;
-    }
-    if (error instanceof ValidationError || error instanceof SourcedValidationError) {
-        return "VALIDATION_ERROR";
-    }
-    if (error instanceof KeyringUnavailableError) {
-        return "AUTH_ERROR";
-    }
-    return "INTERNAL_ERROR";
-}
-
 /**
  * Reports an error to Sentry (conditionally) and PostHog.
  * Called from the top-level catch in withContext and from
  * TaskContextAdapter.failWithoutThrowing.
  */
+<<<<<<< HEAD
 export function reportError(context: Context, error: unknown, options?: { code?: CliErrorCode }): void {
-    const code = resolveErrorCode(error, options?.code) ?? extractErrorCode(error);
-    if (shouldReportToSentry(error)) {
+    if (error instanceof TaskAbortSignal) {
+        return;
+    }
+    const code = resolveErrorCode(error, options?.code) ?? "INTERNAL_ERROR";
+    if (shouldReportToSentry(code)) {
         context.telemetry.captureException(error);
     }
     context.telemetry.sendLifecycleEvent({
