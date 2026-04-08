@@ -6,11 +6,10 @@
         with implementing types (e.g., `CatalogProductOption` with
         `CheckboxOption`, `MultipleChoiceOption`, etc.) are now converted to
         `undiscriminatedUnion` shapes so that all possible concrete types are
-        discoverable in generated docs. Implementing types now populate
-        `extends` with their interface type IDs, establishing the inheritance
-        relationship. Interfaces with no implementations fall back to plain
-        object types.
-  createdAt: "2026-04-07"
+        discoverable in generated docs. Interfaces with no implementations
+        fall back to plain object types.
+      type: fix
+  createdAt: "2026-04-08"
   irVersion: 66
 
 - version: 4.62.4
