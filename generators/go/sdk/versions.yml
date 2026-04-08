@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.33.5
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet import paths receiving a spurious `/v` suffix when
+        the SDK version is empty or invalid (e.g. `""`). The major-version
+        parser now returns `undefined` for empty and bare-`v` version strings
+        instead of producing an erroneous `v` suffix.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 61
+
 - version: 1.33.4
   changelogEntry:
     - summary: |
