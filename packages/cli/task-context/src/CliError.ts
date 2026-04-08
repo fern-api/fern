@@ -57,7 +57,8 @@ export namespace CliError {
         ValidationError: "VALIDATION_ERROR",
         NetworkError: "NETWORK_ERROR",
         AuthError: "AUTH_ERROR",
-        ConfigError: "CONFIG_ERROR"
+        ConfigError: "CONFIG_ERROR",
+        Unclassified: "UNCLASSIFIED"
     } as const;
 }
 
@@ -73,7 +74,8 @@ const SENTRY_REPORTABLE: Record<CliError.Code, boolean> = {
     VALIDATION_ERROR: false,
     NETWORK_ERROR: false,
     AUTH_ERROR: false,
-    CONFIG_ERROR: false
+    CONFIG_ERROR: false,
+    UNCLASSIFIED: false
 };
 
 export function shouldReportToSentry(code: CliError.Code): boolean {
@@ -93,7 +95,8 @@ function isNodeVersionError(error: unknown): boolean {
 /**
  * Resolves the effective error code: explicit override wins,
  * then auto-detects from known error types,
- * and falls back to INTERNAL_ERROR for truly unknown errors.
+ * and falls back to UNCLASSIFIED for unknown errors until all packages
+ * are migrated to the new error system.
  */
 export function resolveErrorCode(error: unknown, explicitCode?: CliError.Code): CliError.Code {
     if (explicitCode != null) {
@@ -108,5 +111,5 @@ export function resolveErrorCode(error: unknown, explicitCode?: CliError.Code): 
     if (isNodeVersionError(error)) {
         return CliError.Code.EnvironmentError;
     }
-    return CliError.Code.InternalError;
+    return CliError.Code.Unclassified;
 }
