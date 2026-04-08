@@ -175,7 +175,7 @@ export class WireTestGenerator {
         }
 
         return {
-            name: staticExample.name?.originalName,
+            name: staticExample.name != null ? getOriginalName(staticExample.name) : undefined,
             pathParameters,
             queryParameters,
             headers,
@@ -409,7 +409,7 @@ export class WireTestGenerator {
             const method = python.method({
                 name: testName,
                 return_: python.Type.none(),
-                docstring: `Test ${endpoint.name.originalName} endpoint with WireMock`
+                docstring: `Test ${getOriginalName(endpoint.name)} endpoint with WireMock`
             });
 
             statements.forEach((stmt) => method.addStatement(stmt));
@@ -568,7 +568,7 @@ export class WireTestGenerator {
         } catch (error) {
             // Fallback: log error and generate a placeholder
             this.context.logger.error(
-                `Failed to generate API call for endpoint ${endpoint.name.originalName}: ${error}`
+                `Failed to generate API call for endpoint ${getOriginalName(endpoint.name)}: ${error}`
             );
             throw error;
         }
