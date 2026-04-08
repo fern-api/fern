@@ -8,6 +8,7 @@ import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import cors from "cors";
 import express from "express";
+import fs from "fs";
 import { readFile, rm } from "fs/promises";
 import http, { type IncomingMessage } from "http";
 import path from "path";
@@ -359,6 +360,51 @@ class SnippetDependencyTracker {
             pageCount: this.pageToSnippets.size,
             totalDependencies
         };
+    }
+}
+
+/**
+ * Resolves the path to the Fern Docs cache directory within the standalone server bundle.
+ * The standalone server runs from `<bundleRoot>/standalone/packages/fern-docs/bundle/server.js`,
+ * so its runtime cache is written to `<bundleRoot>/standalone/packages/fern-docs/bundle/.next/cache/`.
+ */
+function getFernDocsCachePath(bundleRoot: string): string {
+    return path.join(bundleRoot, "standalone/packages/fern-docs/bundle/.next/cache");
+}
+
+/**
+ * Removes the Fern Docs cache directory.
+ */
+async function cleanFernDocsCache(bundleRoot: string, context: TaskContext): Promise<void> {
+    const cachePath = getFernDocsCachePath(bundleRoot);
+    try {
+        const cacheExists = await doesPathExist(AbsoluteFilePath.of(cachePath));
+        if (cacheExists) {
+            context.logger.debug(`Cleaning Fern Docs cache at ${cachePath}`);
+            await rm(cachePath, { recursive: true });
+            context.logger.debug("Fern Docs cache cleaned successfully");
+        } else {
+            context.logger.debug("No Fern Docs cache to clean");
+        }
+    } catch (err) {
+        context.logger.debug(`Failed to clean Fern Docs cache: ${err}`);
+    }
+}
+
+/**
+ * Synchronous version of cleanFernDocsCache for use in signal handlers
+ * where async operations cannot be awaited.
+ */
+function cleanFernDocsCacheSync(bundleRoot: string, context: TaskContext): void {
+    const cachePath = getFernDocsCachePath(bundleRoot);
+    try {
+        if (fs.existsSync(cachePath)) {
+            context.logger.debug(`Cleaning Fern Docs cache at ${cachePath}`);
+            fs.rmSync(cachePath, { recursive: true, maxRetries: 5, retryDelay: 500 });
+            context.logger.debug("Fern Docs cache cleaned successfully");
+        }
+    } catch (err) {
+        context.logger.debug(`Failed to clean Fern Docs cache: ${err}`);
     }
 }
 
@@ -735,6 +781,9 @@ export async function runAppPreviewServer({
         });
     }
 
+    // Clean Fern Docs cache from previous runs before starting the server
+    await cleanFernDocsCache(bundleRoot, context);
+
     // Now start Next.js after backend is ready
     const env = {
         ...process.env,
@@ -877,7 +926,13 @@ export async function runAppPreviewServer({
         }, RELOAD_DEBOUNCE_MS);
     });
 
+    let cleanedUp = false;
     const cleanup = () => {
+        if (cleanedUp) {
+            return;
+        }
+        cleanedUp = true;
+
         if (serverProcess != null && !serverProcess.killed) {
             context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
             try {
@@ -896,6 +951,10 @@ export async function runAppPreviewServer({
                 context.logger.error(`Failed to kill server process: ${err}`);
             }
         }
+
+        // Clean Fern Docs cache on shutdown (sync since cleanup runs in signal handlers)
+        // Uses maxRetries to handle ENOTEMPTY if the server process is still writing
+        cleanFernDocsCacheSync(bundleRoot, context);
 
         context.logger.debug("Cleaning up WebSocket connections...");
         for (const [ws, metadata] of connections) {
