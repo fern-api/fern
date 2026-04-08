@@ -50,7 +50,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
             return { ok: false };
         }
         // Use raw schema name for display purposes (not namespaced)
-        const rawSchemaName = this.getRawSchemaNameFromReference(reference) ?? typeId;
+        const rawSchemaName = reference.$ref.split("/").pop() ?? typeId;
         const resolvedReference = this.resolveReference<OpenAPIV3_1.SchemaObject>({ reference, breadcrumbs });
         if (!resolvedReference.resolved) {
             return { ok: false };

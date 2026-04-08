@@ -236,16 +236,17 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 // Extract raw schema name for display (not namespaced)
                 const rawSchemaName = reference.match(/\/schemas\/([^/]+)/)?.[1] ?? typeId;
 
+                // Extract schema title once for reuse
+                const schemaTitle = resolvedSchema.resolved ? resolvedSchema.value.title : undefined;
+
                 // Determine variant display name with fallback priority:
                 // 1. Schema's title field (explicit user intention)
                 // 2. Discriminant key (e.g., "EMBEDDING_GENERATION")
                 // 3. Schema name from $ref or typeId (e.g., "CircleShape")
-                const variantDisplayName =
-                    (resolvedSchema.resolved ? resolvedSchema.value.title : undefined) ?? discriminant ?? rawSchemaName;
+                const variantDisplayName = schemaTitle ?? discriminant ?? rawSchemaName;
 
                 // Set displayName on the type declaration only when the schema has an explicit title.
                 // The discriminant key is context-specific to the union and should not be applied globally.
-                const schemaTitle = resolvedSchema.resolved ? resolvedSchema.value.title : undefined;
                 if (convertedSchema.schema?.typeDeclaration != null && schemaTitle != null) {
                     convertedSchema.schema.typeDeclaration.name.displayName = schemaTitle;
                 }
