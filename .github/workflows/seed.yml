@@ -813,7 +813,7 @@ jobs:
 
   # SDK Generation Benchmarks — runs affected SDK generators against large public OAS specs.
   # Uses --skip-scripts to measure generator-only time (no npm install/build/test noise).
-  # Baseline timings come from the nightly benchmark-baseline.yml workflow (cached).
+  # Baseline timings come from the nightly benchmark-baseline.yml workflow (via artifacts API).
   #
   # Specs are fetched once in benchmark-setup and shared via artifact to avoid redundant downloads.
   benchmark-setup:
@@ -941,6 +941,7 @@ jobs:
       }}
     permissions:
       pull-requests: write
+      actions: read
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -954,30 +955,56 @@ jobs:
           path: benchmark-pr-results
           merge-multiple: true
 
-      - name: Restore baseline from nightly cache
-        id: baseline-cache
-        uses: actions/cache/restore@v4
-        with:
-          path: benchmark-baseline-results
-          # Intentionally non-matching key forces prefix fallback via restore-keys,
-          # which returns the most recently saved nightly baseline cache entry.
-          key: benchmark-baseline-never-matches
-          restore-keys: benchmark-baseline-
-
-      - name: Check baseline availability
+      - name: Download baseline from latest nightly artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          if [ "${{ steps.baseline-cache.outputs.cache-hit }}" != "true" ] && [ ! -d benchmark-baseline-results ]; then
-            echo "::warning::No cached baseline found. Report will show N/A for main timings."
-            echo "Run the benchmark-baseline workflow manually to generate initial baselines."
-            mkdir -p benchmark-baseline-results
+          mkdir -p benchmark-baseline-results
+
+          # Find the latest successful run of benchmark-baseline.yml on main
+          LATEST_RUN=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=success&per_page=1&branch=main" \
+            --jq '.workflow_runs[0]' 2>/dev/null || true)
+
+          if [ -z "$LATEST_RUN" ] || [ "$LATEST_RUN" = "null" ]; then
+            echo "::warning::No successful nightly baseline run found. Report will show N/A for main timings."
+            echo "Trigger the benchmark-baseline workflow manually to generate initial baselines."
+            exit 0
+          fi
+
+          RUN_ID=$(echo "$LATEST_RUN" | jq -r '.id')
+          RUN_DATE=$(echo "$LATEST_RUN" | jq -r '.created_at')
+          RUN_SHA=$(echo "$LATEST_RUN" | jq -r '.head_sha')
+          echo "Using baseline from nightly run ${RUN_ID} (${RUN_DATE}, sha: ${RUN_SHA})"
+
+          # Save metadata for the report footer
+          echo "{\"latest_timestamp\":\"${RUN_DATE}\",\"sha\":\"${RUN_SHA}\",\"run_id\":\"${RUN_ID}\"}" \
+            > benchmark-baseline-results/_metadata.json
+
+          # Download generator-only baseline artifacts
+          echo "Downloading generator-only baseline artifacts..."
+          gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-baseline-*" --dir /tmp/baseline-gen/ 2>/dev/null || true
+          for f in /tmp/baseline-gen/*/*.jsonl; do
+            [ -f "$f" ] && cp "$f" benchmark-baseline-results/
+          done
+
+          # Download E2E baseline artifacts
+          echo "Downloading E2E baseline artifacts..."
+          mkdir -p benchmark-baseline-results/e2e
+          gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-e2e-*" --dir /tmp/baseline-e2e/ 2>/dev/null || true
+          for f in /tmp/baseline-e2e/*/*.jsonl; do
+            [ -f "$f" ] && cp "$f" benchmark-baseline-results/e2e/
+          done
+
+          # Check if we got any results
+          if ! ls benchmark-baseline-results/*.jsonl 1>/dev/null 2>&1; then
+            echo "::warning::No baseline artifacts found in run ${RUN_ID}. Artifacts may have expired."
+            echo "Trigger the benchmark-baseline workflow to generate fresh baselines."
+            rm -f benchmark-baseline-results/_metadata.json
           else
-            echo "Baseline cache restored successfully"
-            if [ -f benchmark-baseline-results/_metadata.json ]; then
-              echo "Baseline metadata:"
-              cat benchmark-baseline-results/_metadata.json
-            fi
+            echo "Baseline artifacts downloaded successfully:"
             ls -la benchmark-baseline-results/
+            ls -la benchmark-baseline-results/e2e/ 2>/dev/null || echo "(no E2E results)"
           fi
 
       - name: Generate benchmark report

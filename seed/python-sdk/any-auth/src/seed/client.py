@@ -64,6 +64,8 @@ class SeedAnyAuth:
 
     client = SeedAnyAuth(
         base_url="YOUR_BASE_URL",
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET",
     )
 
     # or ...
@@ -249,6 +251,8 @@ class AsyncSeedAnyAuth:
 
     client = AsyncSeedAnyAuth(
         base_url="YOUR_BASE_URL",
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET",
     )
 
     # or ...
