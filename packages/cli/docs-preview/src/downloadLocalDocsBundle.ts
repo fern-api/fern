@@ -106,6 +106,89 @@ const PNPMFILE_CJS_CONTENTS = `module.exports = {
 
 const NPMRC_CONTENTS = "@fern-fern:registry=https://npm.buildwithfern.com\n";
 
+// Marker file written after Windows post-processing completes so we can skip
+// the (slow) pnpm install on subsequent cached-bundle runs.
+const WINDOWS_POST_PROCESSED_MARKER = ".windows-post-processed";
+
+function getPathToWindowsPostProcessedMarker({ app = false }: { app?: boolean }): AbsoluteFilePath {
+    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(WINDOWS_POST_PROCESSED_MARKER));
+}
+
+/**
+ * Runs Windows-specific post-processing on the extracted bundle.
+ * The tar bundle contains Unix symlinks that don't work on Windows, so we
+ * write helper config files and run `pnpm install` in the standalone directory
+ * to recreate the missing node_modules entries.
+ *
+ * This is idempotent — it checks for existing files before writing and uses a
+ * marker file to skip the expensive `pnpm install` on subsequent runs.
+ */
+async function postProcessWindowsBundle({ app, logger }: { app: boolean; logger: Logger }): Promise<void> {
+    const absPathToStandalone = getPathToStandaloneFolder({ app });
+    if (!(await doesPathExist(absPathToStandalone))) {
+        logger.debug("Standalone folder does not exist, skipping Windows post-processing");
+        return;
+    }
+
+    // If the marker file exists, post-processing was already completed.
+    const markerPath = getPathToWindowsPostProcessedMarker({ app });
+    if (await doesPathExist(markerPath)) {
+        logger.debug("Windows post-processing already completed (marker file exists), skipping");
+        return;
+    }
+
+    const absPathToInstrumentationJs = getPathToInstrumentationJs({ app });
+    const pnpmWorkspacePath = getPathToPnpmWorkspaceYaml({ app });
+    const pnpmfilePath = getPathToPnpmfileCjs({ app });
+    const npmrcPath = getPathToNpmrc({ app });
+
+    // Check all paths in parallel
+    const [pnpmWorkspaceExists, pnpmfileExists, npmrcExists, instrumentationJsExists] = await Promise.all([
+        doesPathExist(pnpmWorkspacePath),
+        doesPathExist(pnpmfilePath),
+        doesPathExist(npmrcPath),
+        doesPathExist(absPathToInstrumentationJs)
+    ]);
+
+    // Warn if pnpm-workspace.yaml does not exist
+    if (!pnpmWorkspaceExists) {
+        logger.warn(
+            `Expected pnpm-workspace.yaml at ${pnpmWorkspacePath} but it does not exist. If you are experiencing issues, please contact support@buildwithfern.com.`
+        );
+    }
+
+    // Write pnpmfile.cjs if it does not exist
+    if (!pnpmfileExists) {
+        logger.debug(`Writing pnpmfile.cjs at ${pnpmfilePath}`);
+        await writeFile(pnpmfilePath, PNPMFILE_CJS_CONTENTS);
+    }
+    // Write .npmrc if it does not exist
+    if (!npmrcExists) {
+        logger.debug(`Writing .npmrc at ${npmrcPath}`);
+        await writeFile(npmrcPath, NPMRC_CONTENTS);
+    }
+    // Remove instrumentation.js if it exists
+    if (instrumentationJsExists) {
+        logger.debug(`Removing instrumentation.js at ${absPathToInstrumentationJs}`);
+        await rm(absPathToInstrumentationJs);
+    }
+
+    try {
+        // pnpm install within standalone
+        logger.debug("Running pnpm install within standalone");
+        await loggingExeca(logger, "pnpm", ["install"], {
+            cwd: absPathToStandalone,
+            doNotPipeOutput: true
+        });
+    } catch (error) {
+        throw contactFernSupportError(`Failed to install required package due to error: ${error}`);
+    }
+
+    // Write marker file so we skip this on future cached-bundle runs
+    await writeFile(markerPath, new Date().toISOString());
+    logger.debug("Windows post-processing completed");
+}
+
 export async function downloadBundle({
     bucketUrl,
     logger,
@@ -142,7 +225,12 @@ export async function downloadBundle({
         }
         if (currentETag != null && currentETag === eTag) {
             logger.debug("ETag matches. Using already downloaded bundle");
-            // The bundle is already downloaded
+            // The bundle is already downloaded, but on Windows we may still
+            // need to run post-processing (e.g. when the bundle was
+            // pre-deployed by CI or extracted externally).
+            if (PLATFORM_IS_WINDOWS && app) {
+                await postProcessWindowsBundle({ app, logger });
+            }
             return {
                 type: "success"
             };
@@ -362,53 +450,7 @@ export async function downloadBundle({
             }
 
             if (PLATFORM_IS_WINDOWS) {
-                const absPathToStandalone = getPathToStandaloneFolder({ app });
-                const absPathToInstrumentationJs = getPathToInstrumentationJs({ app });
-                const pnpmWorkspacePath = getPathToPnpmWorkspaceYaml({ app });
-                const pnpmfilePath = getPathToPnpmfileCjs({ app });
-                const npmrcPath = getPathToNpmrc({ app });
-
-                // Check all paths in parallel
-                const [pnpmWorkspaceExists, pnpmfileExists, npmrcExists, instrumentationJsExists] = await Promise.all([
-                    doesPathExist(pnpmWorkspacePath),
-                    doesPathExist(pnpmfilePath),
-                    doesPathExist(npmrcPath),
-                    doesPathExist(absPathToInstrumentationJs)
-                ]);
-
-                // Warn if pnpm-workspace.yaml does not exist
-                if (!pnpmWorkspaceExists) {
-                    logger.warn(
-                        `Expected pnpm-workspace.yaml at ${pnpmWorkspacePath} but it does not exist. If you are experiencing issues, please contact support@buildwithfern.com.`
-                    );
-                }
-
-                // Write pnpmfile.cjs if it does not exist
-                if (!pnpmfileExists) {
-                    logger.debug(`Writing pnpmfile.cjs at ${pnpmfilePath}`);
-                    await writeFile(pnpmfilePath, PNPMFILE_CJS_CONTENTS);
-                }
-                // Write .npmrc if it does not exist
-                if (!npmrcExists) {
-                    logger.debug(`Writing .npmrc at ${npmrcPath}`);
-                    await writeFile(npmrcPath, NPMRC_CONTENTS);
-                }
-                // Remove instrumentation.js if it exists
-                if (instrumentationJsExists) {
-                    logger.debug(`Removing instrumentation.js at ${absPathToInstrumentationJs}`);
-                    await rm(absPathToInstrumentationJs);
-                }
-
-                try {
-                    // pnpm install within standalone
-                    logger.debug("Running pnpm install within standalone");
-                    await loggingExeca(logger, "pnpm", ["install"], {
-                        cwd: absPathToStandalone,
-                        doNotPipeOutput: true
-                    });
-                } catch (error) {
-                    throw contactFernSupportError(`Failed to install required package due to error: ${error}`);
-                }
+                await postProcessWindowsBundle({ app, logger });
             }
         }
 
