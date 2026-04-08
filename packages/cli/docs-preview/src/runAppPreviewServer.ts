@@ -807,7 +807,8 @@ export async function runAppPreviewServer({
         return new Promise((resolve) => {
             serverProcess = runExeca(context.logger, "node", [serverPath], {
                 env,
-                doNotPipeOutput: true
+                doNotPipeOutput: true,
+                detached: true
             });
 
             const checkReady = (data: Buffer) => {
@@ -933,14 +934,35 @@ export async function runAppPreviewServer({
         }
         cleanedUp = true;
 
+        // Close file watcher to prevent resource leaks
+        watcher.close();
+
         if (serverProcess != null && !serverProcess.killed) {
-            context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
+            const pid = serverProcess.pid;
+            context.logger.debug(`Killing server process tree with PID: ${pid}`);
             try {
+                // Kill the entire process group to ensure all child processes
+                // (including Next.js workers) are terminated.
+                // The negative PID targets the process group.
+                if (pid != null) {
+                    try {
+                        process.kill(-pid, "SIGTERM");
+                    } catch {
+                        // Process group may already be dead
+                    }
+                }
                 serverProcess.kill();
                 setTimeout(() => {
                     if (serverProcess != null && !serverProcess.killed) {
-                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
+                        context.logger.debug(`Force killing server process tree with PID: ${pid}`);
                         try {
+                            if (pid != null) {
+                                try {
+                                    process.kill(-pid, "SIGKILL");
+                                } catch {
+                                    // Process group may already be dead
+                                }
+                            }
                             serverProcess.kill("SIGKILL");
                         } catch (err) {
                             context.logger.error(`Failed to force kill server process: ${err}`);
