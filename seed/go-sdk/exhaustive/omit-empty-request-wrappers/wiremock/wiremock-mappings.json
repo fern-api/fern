@@ -5,12 +5,7 @@
       "name": "getAndReturnListOfPrimitives - default",
       "request": {
         "urlPathTemplate": "/container/list-of-primitives",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -36,12 +31,7 @@
       "name": "getAndReturnListOfObjects - default",
       "request": {
         "urlPathTemplate": "/container/list-of-objects",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -67,12 +57,7 @@
       "name": "getAndReturnSetOfPrimitives - default",
       "request": {
         "urlPathTemplate": "/container/set-of-primitives",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -98,12 +83,7 @@
       "name": "getAndReturnSetOfObjects - default",
       "request": {
         "urlPathTemplate": "/container/set-of-objects",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -129,12 +109,7 @@
       "name": "getAndReturnMapPrimToPrim - default",
       "request": {
         "urlPathTemplate": "/container/map-prim-to-prim",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -160,12 +135,7 @@
       "name": "getAndReturnMapOfPrimToObject - default",
       "request": {
         "urlPathTemplate": "/container/map-prim-to-object",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -191,12 +161,7 @@
       "name": "getAndReturnMapOfPrimToUndiscriminatedUnion - default",
       "request": {
         "urlPathTemplate": "/container/map-prim-to-union",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -222,12 +187,7 @@
       "name": "getAndReturnOptional - default",
       "request": {
         "urlPathTemplate": "/container/opt-objects",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -253,12 +213,7 @@
       "name": "postJsonPatchContentType - default",
       "request": {
         "urlPathTemplate": "/foo/bar",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -284,12 +239,7 @@
       "name": "postJsonPatchContentWithCharsetType - default",
       "request": {
         "urlPathTemplate": "/foo/baz",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -315,12 +265,7 @@
       "name": "getAndReturnEnum - default",
       "request": {
         "urlPathTemplate": "/enum",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -347,11 +292,6 @@
       "request": {
         "urlPathTemplate": "/http-methods/{id}",
         "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "pathParameters": {
           "id": {
             "equalTo": "id"
@@ -382,12 +322,7 @@
       "name": "testPost - default",
       "request": {
         "urlPathTemplate": "/http-methods",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -414,11 +349,6 @@
       "request": {
         "urlPathTemplate": "/http-methods/{id}",
         "method": "PUT",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "pathParameters": {
           "id": {
             "equalTo": "id"
@@ -450,11 +380,6 @@
       "request": {
         "urlPathTemplate": "/http-methods/{id}",
         "method": "PATCH",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "pathParameters": {
           "id": {
             "equalTo": "id"
@@ -486,11 +411,6 @@
       "request": {
         "urlPathTemplate": "/http-methods/{id}",
         "method": "DELETE",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "pathParameters": {
           "id": {
             "equalTo": "id"
@@ -521,12 +441,7 @@
       "name": "getAndReturnWithOptionalField - default",
       "request": {
         "urlPathTemplate": "/object/get-and-return-with-optional-field",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -552,12 +467,7 @@
       "name": "getAndReturnWithRequiredField - default",
       "request": {
         "urlPathTemplate": "/object/get-and-return-with-required-field",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -583,12 +493,7 @@
       "name": "getAndReturnWithMapOfMap - default",
       "request": {
         "urlPathTemplate": "/object/get-and-return-with-map-of-map",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -614,12 +519,7 @@
       "name": "getAndReturnNestedWithOptionalField - default",
       "request": {
         "urlPathTemplate": "/object/get-and-return-nested-with-optional-field",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -646,11 +546,6 @@
       "request": {
         "urlPathTemplate": "/object/get-and-return-nested-with-required-field/{string}",
         "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "pathParameters": {
           "string": {
             "equalTo": "string"
@@ -681,12 +576,7 @@
       "name": "getAndReturnNestedWithRequiredFieldAsList - default",
       "request": {
         "urlPathTemplate": "/object/get-and-return-nested-with-required-field-list",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -712,12 +602,7 @@
       "name": "getAndReturnWithUnknownField - default",
       "request": {
         "urlPathTemplate": "/object/get-and-return-with-unknown-field",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -743,12 +628,7 @@
       "name": "getAndReturnWithDocumentedUnknownType - default",
       "request": {
         "urlPathTemplate": "/object/get-and-return-with-documented-unknown-type",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -774,12 +654,7 @@
       "name": "getAndReturnMapOfDocumentedUnknownType - default",
       "request": {
         "urlPathTemplate": "/object/get-and-return-map-of-documented-unknown-type",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -805,12 +680,7 @@
       "name": "getAndReturnWithDatetimeLikeString - default",
       "request": {
         "urlPathTemplate": "/object/get-and-return-with-datetime-like-string",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -837,11 +707,6 @@
       "request": {
         "urlPathTemplate": "/pagination",
         "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "queryParameters": {
           "cursor": {
             "equalTo": "cursor"
@@ -877,11 +742,6 @@
       "request": {
         "urlPathTemplate": "/params/path/{param}",
         "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "pathParameters": {
           "param": {
             "equalTo": "param"
@@ -913,11 +773,6 @@
       "request": {
         "urlPathTemplate": "/params/path/{param}",
         "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "pathParameters": {
           "param": {
             "equalTo": "param"
@@ -949,11 +804,6 @@
       "request": {
         "urlPathTemplate": "/params",
         "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "queryParameters": {
           "query": {
             "equalTo": "query"
@@ -989,11 +839,6 @@
       "request": {
         "urlPathTemplate": "/params",
         "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "queryParameters": {
           "query": {
             "equalTo": "query"
@@ -1029,11 +874,6 @@
       "request": {
         "urlPathTemplate": "/params/path-query/{param}",
         "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "pathParameters": {
           "param": {
             "equalTo": "param"
@@ -1070,11 +910,6 @@
       "request": {
         "urlPathTemplate": "/params/path-query/{param}",
         "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "pathParameters": {
           "param": {
             "equalTo": "param"
@@ -1111,11 +946,6 @@
       "request": {
         "urlPathTemplate": "/params/path/{param}",
         "method": "PUT",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "pathParameters": {
           "param": {
             "equalTo": "param"
@@ -1147,11 +977,6 @@
       "request": {
         "urlPathTemplate": "/params/path/{param}",
         "method": "PUT",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "pathParameters": {
           "param": {
             "equalTo": "param"
@@ -1183,11 +1008,6 @@
       "request": {
         "urlPathTemplate": "/params/path/{param}",
         "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "pathParameters": {
           "param": {
             "equalTo": "param"
@@ -1218,12 +1038,7 @@
       "name": "getAndReturnString - default",
       "request": {
         "urlPathTemplate": "/primitive/string",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -1249,12 +1064,7 @@
       "name": "getAndReturnInt - default",
       "request": {
         "urlPathTemplate": "/primitive/integer",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -1280,12 +1090,7 @@
       "name": "getAndReturnLong - default",
       "request": {
         "urlPathTemplate": "/primitive/long",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -1311,12 +1116,7 @@
       "name": "getAndReturnDouble - default",
       "request": {
         "urlPathTemplate": "/primitive/double",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -1342,12 +1142,7 @@
       "name": "getAndReturnBool - default",
       "request": {
         "urlPathTemplate": "/primitive/boolean",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -1373,12 +1168,7 @@
       "name": "getAndReturnDatetime - default",
       "request": {
         "urlPathTemplate": "/primitive/datetime",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -1404,12 +1194,7 @@
       "name": "getAndReturnDate - default",
       "request": {
         "urlPathTemplate": "/primitive/date",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -1435,12 +1220,7 @@
       "name": "getAndReturnUUID - default",
       "request": {
         "urlPathTemplate": "/primitive/uuid",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -1466,12 +1246,7 @@
       "name": "getAndReturnBase64 - default",
       "request": {
         "urlPathTemplate": "/primitive/base64",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -1498,11 +1273,6 @@
       "request": {
         "urlPathTemplate": "/{id}",
         "method": "PUT",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
         "pathParameters": {
           "id": {
             "equalTo": "id"
@@ -1533,12 +1303,7 @@
       "name": "getAndReturnUnion - default",
       "request": {
         "urlPathTemplate": "/union",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -1564,12 +1329,7 @@
       "name": "withMixedCase - default",
       "request": {
         "urlPathTemplate": "/urls/MixedCase",
-        "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "GET"
       },
       "response": {
         "status": 200,
@@ -1596,12 +1356,7 @@
       "name": "noEndingSlash - default",
       "request": {
         "urlPathTemplate": "/urls/no-ending-slash",
-        "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "GET"
       },
       "response": {
         "status": 200,
@@ -1628,12 +1383,7 @@
       "name": "withEndingSlash - default",
       "request": {
         "urlPathTemplate": "/urls/with-ending-slash/",
-        "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "GET"
       },
       "response": {
         "status": 200,
@@ -1660,12 +1410,7 @@
       "name": "withUnderscores - default",
       "request": {
         "urlPathTemplate": "/urls/with_underscores",
-        "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "GET"
       },
       "response": {
         "status": 200,
@@ -1744,12 +1489,7 @@
       "name": "getWithNoRequestBody - default",
       "request": {
         "urlPathTemplate": "/no-req-body",
-        "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "GET"
       },
       "response": {
         "status": 200,
@@ -1776,12 +1516,7 @@
       "name": "postWithNoRequestBody - default",
       "request": {
         "urlPathTemplate": "/no-req-body",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
@@ -1807,12 +1542,7 @@
       "name": "getWithCustomHeader - default",
       "request": {
         "urlPathTemplate": "/test-headers/custom-header",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
+        "method": "POST"
       },
       "response": {
         "status": 200,
