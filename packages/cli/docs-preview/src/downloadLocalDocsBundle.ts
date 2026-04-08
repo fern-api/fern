@@ -240,7 +240,7 @@ async function resolveWindowsSymlinks({
     // not standalone/ which pnpm install will handle later).
     const topLevelEntries = metadata.filter((entry) => {
         const parts = entry.path.split("/");
-        return parts[0] === "node_modules" && parts.length === 2 && !parts[1].startsWith(".");
+        return parts[0] === "node_modules" && parts.length === 2 && parts[1] != null && !parts[1].startsWith(".");
     });
 
     logger.debug(
