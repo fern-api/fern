@@ -418,6 +418,12 @@ types:
           Context for where the discriminator exists. Defaults to "data" for backward compatibility.
           "data" means the discriminator is within the union data itself.
           "protocol" means the discriminator is at the SSE protocol level.
+      defaultDiscriminantValue:
+        type: optional<string>
+        docs: |
+          The discriminant value of the variant to use as the default when the discriminant
+          field is missing from input. Populated when a variant's discriminant property has a
+          default value matching its const value in the OpenAPI spec.
       commonProperties: list<CommonPropertyWithExample>
       schemas: map<string, SchemaWithExample>
 
