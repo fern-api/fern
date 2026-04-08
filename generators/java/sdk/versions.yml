@@ -8,7 +8,7 @@
         password encodes `username:`, omitting username encodes `:password`). When
         both are omitted, the Authorization header is skipped entirely.
       type: feat
-  createdAt: "2026-04-02"
+  createdAt: "2026-04-08"
   irVersion: 65
 
 - version: 4.1.2
