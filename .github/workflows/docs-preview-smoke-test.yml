@@ -42,14 +42,14 @@ jobs:
       - name: Compile packages
         run: pnpm compile
 
-      - name: Build CLI (dev)
-        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
+      - name: Build CLI (prod)
+        run: pnpm turbo run dist:cli:prod --filter=@fern-api/cli
 
       - name: Upload CLI artifact
         uses: actions/upload-artifact@v6
         with:
-          name: cli-dev-bundle
-          path: packages/cli/cli/dist/dev/cli.cjs
+          name: cli-prod-bundle
+          path: packages/cli/cli/dist/prod/
           retention-days: 1
 
   smoke-test:
@@ -83,13 +83,6 @@ jobs:
         if: steps.node-check.outputs.available == 'true'
         uses: actions/checkout@v6
 
-      - name: Setup pnpm
-        if: steps.node-check.outputs.available == 'true'
-        uses: pnpm/action-setup@v5
-        with:
-          standalone: true
-          run_install: false
-
       - name: Setup Node.js
         if: steps.node-check.outputs.available == 'true'
         uses: actions/setup-node@v6
@@ -107,8 +100,13 @@ jobs:
         if: steps.node-check.outputs.available == 'true'
         uses: actions/download-artifact@v7
         with:
-          name: cli-dev-bundle
+          name: cli-prod-bundle
           path: cli-artifact
+
+      - name: Install CLI native dependencies
+        if: steps.node-check.outputs.available == 'true'
+        working-directory: cli-artifact
+        run: npm install --ignore-scripts
 
       - name: Install tools (Linux)
         if: steps.node-check.outputs.available == 'true' && runner.os == 'Linux'
@@ -156,7 +154,7 @@ jobs:
         if: steps.node-check.outputs.available == 'true'
         shell: bash
         env:
-          FERN_TOKEN: ${{ secrets.FERN_SMOKE_TEST_API_KEY }}
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           cd smoke-test/fern
 

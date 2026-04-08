@@ -1,0 +1,7 @@
+{
+  "name": "smoke-test-playwright",
+  "private": true,
+  "dependencies": {
+    "@playwright/test": "^1.52.0"
+  }
+}
