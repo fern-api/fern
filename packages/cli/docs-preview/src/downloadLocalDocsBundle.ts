@@ -4,7 +4,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import chalk from "chalk";
 import cliProgress from "cli-progress";
 import decompress from "decompress";
-import { copyFile, mkdir, readFile, rename, rm, stat, symlink, writeFile } from "fs/promises";
+import { copyFile, cp, mkdir, readFile, rename, rm, stat, writeFile } from "fs/promises";
 import { homedir } from "os";
 import path from "path";
 import tmp from "tmp-promise";
@@ -191,12 +191,8 @@ async function postProcessWindowsBundle({ app, logger }: { app: boolean; logger:
         throw contactFernSupportError(`Failed to install required package due to error: ${error}`);
     }
 
-    // Resolve symlinks that were filtered out during tar extraction.
-    // pnpm install recreates pnpm-managed symlinks, but Next.js file-traced
-    // symlinks in .next/node_modules/ are NOT recreated by pnpm and must be
-    // resolved from the saved metadata.
-    const bundleRoot = join(absPathToStandalone, RelativeFilePath.of(".."));
-    await resolveWindowsSymlinks({ bundleRoot: bundleRoot as string, logger });
+    // NOTE: symlink resolution now happens immediately after extraction in
+    // downloadBundle() — before pnpm i esbuild wipes .pnpm/ targets.
 
     // Write marker file so we skip this on future cached-bundle runs
     await writeFile(markerPath, new Date().toISOString());
@@ -211,26 +207,56 @@ async function postProcessWindowsBundle({ app, logger }: { app: boolean; logger:
  * recreates the remaining ones (especially Next.js file-traced symlinks in
  * .next/node_modules/) as directory junctions or file copies.
  */
-async function resolveWindowsSymlinks({ bundleRoot, logger }: { bundleRoot: string; logger: Logger }): Promise<void> {
-    const metadataPath = path.join(bundleRoot, SYMLINKS_METADATA_FILE);
-    if (!(await doesPathExist(AbsoluteFilePath.of(metadataPath)))) {
-        logger.debug("No symlink metadata found, skipping symlink resolution");
+/**
+ * Resolves symlinks that were filtered out during tar extraction on Windows.
+ * Must be called immediately after extraction and BEFORE pnpm i esbuild,
+ * because pnpm prunes the .pnpm/ virtual store and removes the targets.
+ * Uses recursive copy (not junctions) so the resolved packages survive
+ * subsequent pnpm operations that may modify node_modules.
+ */
+async function resolveWindowsSymlinks({
+    bundleRoot,
+    metadata,
+    logger
+}: {
+    bundleRoot: string;
+    metadata?: Array<{ path: string; linkname: string }>;
+    logger: Logger;
+}): Promise<void> {
+    if (!metadata) {
+        const metadataPath = path.join(bundleRoot, SYMLINKS_METADATA_FILE);
+        if (!(await doesPathExist(AbsoluteFilePath.of(metadataPath)))) {
+            logger.debug("No symlink metadata found, skipping symlink resolution");
+            return;
+        }
+        metadata = JSON.parse((await readFile(metadataPath)).toString());
+    }
+
+    if (!metadata || metadata.length === 0) {
         return;
     }
 
-    const metadata: Array<{ path: string; linkname: string }> = JSON.parse((await readFile(metadataPath)).toString());
-    logger.debug(`Resolving ${metadata.length} symlinks from metadata`);
+    // Only resolve top-level node_modules/ entries (not .pnpm/ internals,
+    // not standalone/ which pnpm install will handle later).
+    const topLevelEntries = metadata.filter((entry) => {
+        const parts = entry.path.split("/");
+        return parts[0] === "node_modules" && parts.length === 2 && !parts[1].startsWith(".");
+    });
+
+    logger.debug(
+        `Resolving ${topLevelEntries.length} top-level node_modules symlinks (${metadata.length} total in metadata)`
+    );
 
     let resolved = 0;
     let skipped = 0;
     let failed = 0;
 
-    for (const entry of metadata) {
+    for (const entry of topLevelEntries) {
         const entryAbsPath = path.join(bundleRoot, entry.path);
         const targetAbsPath = path.resolve(path.dirname(entryAbsPath), entry.linkname);
 
         try {
-            // Skip if destination already exists (e.g., recreated by pnpm install)
+            // Skip if destination already exists
             if (await doesPathExist(AbsoluteFilePath.of(entryAbsPath))) {
                 skipped++;
                 continue;
@@ -238,6 +264,7 @@ async function resolveWindowsSymlinks({ bundleRoot, logger }: { bundleRoot: stri
 
             // Skip if the target doesn't exist
             if (!(await doesPathExist(AbsoluteFilePath.of(targetAbsPath)))) {
+                logger.debug(`Target missing for ${entry.path}: ${targetAbsPath}`);
                 skipped++;
                 continue;
             }
@@ -247,8 +274,8 @@ async function resolveWindowsSymlinks({ bundleRoot, logger }: { bundleRoot: stri
 
             const targetStat = await stat(targetAbsPath);
             if (targetStat.isDirectory()) {
-                // Create a directory junction (doesn't require admin on Windows)
-                await symlink(targetAbsPath, entryAbsPath, "junction");
+                // Recursive copy so the package survives pnpm pruning
+                await cp(targetAbsPath, entryAbsPath, { recursive: true });
             } else {
                 await copyFile(targetAbsPath, entryAbsPath);
             }
@@ -461,6 +488,14 @@ export async function downloadBundle({
             const metadataPath = path.join(absolutePathToBundleFolder as string, SYMLINKS_METADATA_FILE);
             await writeFile(metadataPath, JSON.stringify(windowsSymlinkEntries));
             logger.debug(`Saved ${windowsSymlinkEntries.length} symlink entries to metadata file`);
+
+            // Resolve symlinks IMMEDIATELY while .pnpm/ targets still exist.
+            // This must happen before pnpm i esbuild which prunes .pnpm/.
+            await resolveWindowsSymlinks({
+                bundleRoot: absolutePathToBundleFolder as string,
+                metadata: windowsSymlinkEntries,
+                logger
+            });
         }
 
         if (app) {
