@@ -6,6 +6,7 @@ export interface CISource {
     commitSha?: string;
     branch?: string;
     actor?: string;
+    deploySource?: string;
 }
 
 /**
@@ -13,6 +14,8 @@ export interface CISource {
  * Returns undefined when not running in a recognized CI environment.
  */
 export function detectCISource(): CISource | undefined {
+    const deploySource = nonEmpty(process.env.FERN_DEPLOY_SOURCE);
+
     if (process.env.GITHUB_ACTIONS === "true") {
         const repo = process.env.GITHUB_REPOSITORY;
         const serverUrl = process.env.GITHUB_SERVER_URL ?? "https://github.com";
@@ -24,7 +27,8 @@ export function detectCISource(): CISource | undefined {
             runUrl: repo && runId ? `${serverUrl}/${repo}/actions/runs/${runId}` : undefined,
             commitSha: process.env.GITHUB_SHA,
             branch: process.env.GITHUB_REF_NAME,
-            actor: process.env.GITHUB_ACTOR
+            actor: process.env.GITHUB_ACTOR,
+            ...(deploySource != null && { deploySource })
         };
     }
     if (process.env.GITLAB_CI === "true") {
@@ -35,7 +39,8 @@ export function detectCISource(): CISource | undefined {
             runUrl: process.env.CI_PIPELINE_URL,
             commitSha: process.env.CI_COMMIT_SHA,
             branch: process.env.CI_COMMIT_REF_NAME,
-            actor: process.env.GITLAB_USER_LOGIN
+            actor: process.env.GITLAB_USER_LOGIN,
+            ...(deploySource != null && { deploySource })
         };
     }
     if (process.env.BITBUCKET_BUILD_NUMBER != null) {
@@ -51,7 +56,8 @@ export function detectCISource(): CISource | undefined {
                     ? `https://bitbucket.org/${workspace}/${repoSlug}/pipelines/results/${buildNumber}`
                     : undefined,
             commitSha: process.env.BITBUCKET_COMMIT,
-            branch: process.env.BITBUCKET_BRANCH
+            branch: process.env.BITBUCKET_BRANCH,
+            ...(deploySource != null && { deploySource })
         };
     }
     return undefined;

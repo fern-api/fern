@@ -12,6 +12,17 @@
   createdAt: "2026-04-08"
   irVersion: 66
 
+- version: 4.67.0
+  changelogEntry:
+    - summary: |
+        Detect `[source:postman]` marker in the git commit message and include
+        `deploySource` in the `X-CI-Source` header sent to FDR during docs
+        publishing. This allows Postman-triggered deployments to be identified
+        in the dashboard activity log without requiring workflow template changes.
+      type: feat
+  createdAt: "2026-04-08"
+  irVersion: 66
+
 - version: 4.66.0
   changelogEntry:
     - summary: |

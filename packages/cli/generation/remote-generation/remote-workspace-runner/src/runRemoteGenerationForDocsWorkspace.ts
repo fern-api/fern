@@ -19,6 +19,7 @@ export interface CISource {
     commitSha?: string;
     branch?: string;
     actor?: string;
+    deploySource?: string;
 }
 
 export async function runRemoteGenerationForDocsWorkspace({
