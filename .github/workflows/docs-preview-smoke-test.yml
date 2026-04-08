@@ -87,7 +87,6 @@ jobs:
         if: steps.node-check.outputs.available == 'true'
         uses: pnpm/action-setup@v5
         with:
-          version: 10.27.0
           standalone: true
           run_install: false
 
