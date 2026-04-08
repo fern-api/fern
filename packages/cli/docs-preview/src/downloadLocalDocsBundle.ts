@@ -5,8 +5,8 @@ import chalk from "chalk";
 import cliProgress from "cli-progress";
 import decompress from "decompress";
 import { copyFile, mkdir, readFile, rename, rm, stat, symlink, writeFile } from "fs/promises";
-import path from "path";
 import { homedir } from "os";
+import path from "path";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
 
@@ -195,10 +195,7 @@ async function postProcessWindowsBundle({ app, logger }: { app: boolean; logger:
     // pnpm install recreates pnpm-managed symlinks, but Next.js file-traced
     // symlinks in .next/node_modules/ are NOT recreated by pnpm and must be
     // resolved from the saved metadata.
-    const bundleRoot = join(
-        absPathToStandalone,
-        RelativeFilePath.of("..")
-    );
+    const bundleRoot = join(absPathToStandalone, RelativeFilePath.of(".."));
     await resolveWindowsSymlinks({ bundleRoot: bundleRoot as string, logger });
 
     // Write marker file so we skip this on future cached-bundle runs
@@ -214,22 +211,14 @@ async function postProcessWindowsBundle({ app, logger }: { app: boolean; logger:
  * recreates the remaining ones (especially Next.js file-traced symlinks in
  * .next/node_modules/) as directory junctions or file copies.
  */
-async function resolveWindowsSymlinks({
-    bundleRoot,
-    logger
-}: {
-    bundleRoot: string;
-    logger: Logger;
-}): Promise<void> {
+async function resolveWindowsSymlinks({ bundleRoot, logger }: { bundleRoot: string; logger: Logger }): Promise<void> {
     const metadataPath = path.join(bundleRoot, SYMLINKS_METADATA_FILE);
     if (!(await doesPathExist(AbsoluteFilePath.of(metadataPath)))) {
         logger.debug("No symlink metadata found, skipping symlink resolution");
         return;
     }
 
-    const metadata: Array<{ path: string; linkname: string }> = JSON.parse(
-        (await readFile(metadataPath)).toString()
-    );
+    const metadata: Array<{ path: string; linkname: string }> = JSON.parse((await readFile(metadataPath)).toString());
     logger.debug(`Resolving ${metadata.length} symlinks from metadata`);
 
     let resolved = 0;
