@@ -126,6 +126,10 @@ export async function sdkPreview({
             publishToRegistry = false;
         }
 
+        // When no --output is given, a temp dir is created for the GHA diff workflow.
+        // It lives under os.tmpdir() and is cleaned up by the OS; we don't remove it
+        // ourselves because the JSON consumer (e.g. the GitHub Action) reads from it
+        // after this function returns.
         const absolutePathToOutput =
             pathOutputs.length > 0
                 ? AbsoluteFilePath.of(resolve(cwd(), pathOutputs[0]))
@@ -240,6 +244,11 @@ export async function sdkPreview({
                 });
 
                 // The generator writes to <output>/<subfolder>/ (e.g. fern-typescript-sdk/).
+                // NOTE: this duplicates the subfolder logic in resolveAbsolutePathToLocalPreview
+                // inside runLocalGenerationForWorkspace. Both call getGeneratorOutputSubfolder so
+                // they stay in sync, but if the runner ever changes its path convention this will
+                // need to be updated too. Ideally the runner would return the resolved path, but
+                // that requires a larger refactor of its Promise.all generator loop.
                 const actualOutputPath =
                     absolutePathToOutput != null
                         ? join(absolutePathToOutput, RelativeFilePath.of(getGeneratorOutputSubfolder(generator.name)))
