@@ -78,9 +78,7 @@ export async function checkIfPathnameExists({
         // For versioned pages, absolute links like `/about` resolve within the current version context.
         // Check if the pathname exists under any version prefix that the current file belongs to.
         if (markdown && versionSlugs.length > 0) {
-            const currentFileSlugs =
-                absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : [];
-            for (const slug of currentFileSlugs) {
+            for (const slug of slugs) {
                 for (const versionSlug of versionSlugs) {
                     if (slug.startsWith(versionSlug + "/") || slug === versionSlug) {
                         const versionedPath = `${versionSlug}/${removeLeadingSlash(redirectedPath)}`;
