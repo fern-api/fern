@@ -1,0 +1,108 @@
+{
+  "type": "object",
+  "properties": {
+    "buttonStyle": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/MethodElementSettingsApplePayButtonStyle"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "buttonType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/MethodElementSettingsApplePayButtonType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "language": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/MethodElementSettingsApplePayLanguage"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "MethodElementSettingsApplePayButtonStyle": {
+      "type": "string",
+      "enum": [
+        "black",
+        "white-outline",
+        "white"
+      ]
+    },
+    "MethodElementSettingsApplePayButtonType": {
+      "type": "string",
+      "enum": [
+        "plain",
+        "buy",
+        "donate",
+        "check-out",
+        "book",
+        "continue",
+        "top-up",
+        "order",
+        "rent",
+        "support",
+        "contribute",
+        "tip",
+        "pay"
+      ]
+    },
+    "MethodElementSettingsApplePayLanguage": {
+      "type": "string",
+      "enum": [
+        "en-US",
+        "ar-AB",
+        "ca-ES",
+        "zh-CN",
+        "zh-HK",
+        "zh-TW",
+        "hr-HR",
+        "cs-CZ",
+        "da-DK",
+        "de-DE",
+        "nl-NL",
+        "en-AU",
+        "en-GB",
+        "fi-FI",
+        "fr-CA",
+        "fr-FR",
+        "el-GR",
+        "he-IL",
+        "hi-IN",
+        "hu-HU",
+        "id-ID",
+        "it-IT",
+        "ja-JP",
+        "ko-KR",
+        "ms-MY",
+        "nb-NO",
+        "pl-PL",
+        "pt-BR",
+        "pt-PT",
+        "ro-RO",
+        "ru-RU",
+        "sk-SK",
+        "es-MX",
+        "es-ES",
+        "sv-SE",
+        "th-TH",
+        "tr-TR",
+        "uk-UA",
+        "vi-VN"
+      ]
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "mfa": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mfaMode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/MfaMode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "MfaMode": {
+      "type": "integer"
+    }
+  }
+}

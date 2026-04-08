@@ -1,0 +1,185 @@
+{
+  "type": "object",
+  "properties": {
+    "authcode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Authcode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "avsresponse": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AvsResponse"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "avsresponse_text": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AvsResponseText"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cvvresponse": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CvvResponse"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cvvresponse_text": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CvvResponseText"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "emv_auth_response_data": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/EmvAuthResponseData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orderid": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/OrderId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "response": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "response_code": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "response_code_text": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responsetext": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "resultCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ResultCodev2"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "resultCodeText": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ResultCodeText"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "transactionid": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "type": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Authcode": {
+      "type": "string"
+    },
+    "AvsResponse": {
+      "type": "string"
+    },
+    "AvsResponseText": {
+      "type": "string"
+    },
+    "CvvResponse": {
+      "type": "string"
+    },
+    "CvvResponseText": {
+      "type": "string"
+    },
+    "EmvAuthResponseData": {
+      "type": "string"
+    },
+    "OrderId": {
+      "type": "string"
+    },
+    "ResultCodev2": {
+      "type": "string"
+    },
+    "ResultCodeText": {
+      "type": "string"
+    }
+  }
+}

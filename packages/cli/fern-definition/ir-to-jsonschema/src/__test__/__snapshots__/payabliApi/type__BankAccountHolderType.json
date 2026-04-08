@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "Personal",
+    "Business"
+  ],
+  "definitions": {}
+}

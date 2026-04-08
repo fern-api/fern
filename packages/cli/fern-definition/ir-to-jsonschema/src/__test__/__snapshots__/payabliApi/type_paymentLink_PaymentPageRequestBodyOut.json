@@ -1,0 +1,627 @@
+{
+  "type": "object",
+  "properties": {
+    "contactUs": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ContactElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "logo": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Element"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "messageBeforePaying": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LabelElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "notes": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NoteElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "page": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PageElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paymentButton": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LabelElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paymentMethods": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/__moneyOutTypes__.MethodElementOut"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "review": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/HeaderElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bills": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Element"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "settings": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PagelinkSetting"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Enabled": {
+      "type": "boolean"
+    },
+    "Order": {
+      "type": "integer"
+    },
+    "ContactElement": {
+      "type": "object",
+      "properties": {
+        "emailLabel": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "enabled": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Enabled"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "header": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Order"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "paymentIcons": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "phoneLabel": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Element": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Enabled"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Order"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "LabelElement": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Enabled"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "label": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Order"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "NoteElement": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Enabled"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "header": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Order"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "placeholder": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "PageElement": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "enabled": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Enabled"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "header": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Order"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "__moneyOutTypes__.MethodsListOut": {
+      "type": "object",
+      "properties": {
+        "ach": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "check": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vcard": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "__moneyOutTypes__.MethodElementOut": {
+      "type": "object",
+      "properties": {
+        "allMethodsChecked": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "allowMultipleMethods": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "defaultMethod": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "enabled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "header": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "methods": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/__moneyOutTypes__.MethodsListOut"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "order": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "showPreviewVirtualCard": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "HeaderElement": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Enabled"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "header": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Order"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "FileContentFtype": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "doc",
+        "docx",
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+        "txt"
+      ]
+    },
+    "FileContent": {
+      "type": "object",
+      "properties": {
+        "fContent": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filename": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ftype": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FileContentFtype"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "furl": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "PagelinkSetting": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "customCssUrl": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "language": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pageLogo": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FileContent"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "redirectAfterApprove": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "redirectAfterApproveUrl": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

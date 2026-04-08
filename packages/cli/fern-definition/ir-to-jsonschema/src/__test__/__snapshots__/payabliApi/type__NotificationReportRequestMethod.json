@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "report-email",
+    "report-web"
+  ],
+  "definitions": {}
+}

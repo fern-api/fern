@@ -1,0 +1,207 @@
+{
+  "type": "object",
+  "properties": {
+    "content": {
+      "$ref": "#/definitions/NotificationReportRequestContent"
+    },
+    "frequency": {
+      "$ref": "#/definitions/NotificationReportRequestFrequency"
+    },
+    "method": {
+      "$ref": "#/definitions/NotificationReportRequestMethod"
+    },
+    "ownerId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Ownerid"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ownerType": {
+      "$ref": "#/definitions/Ownertype"
+    },
+    "status": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Statusnotification"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "target": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "content",
+    "frequency",
+    "method",
+    "ownerType",
+    "target"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "NotificationReportRequestContentFileFormat": {
+      "type": "string",
+      "enum": [
+        "json",
+        "csv",
+        "xlsx"
+      ]
+    },
+    "KeyValueDuo": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "NotificationReportRequestContentReportName": {
+      "type": "string",
+      "enum": [
+        "Transaction",
+        "Settlement",
+        "Boarding",
+        "Returned"
+      ]
+    },
+    "Timezone": {
+      "type": "integer"
+    },
+    "NotificationReportRequestContent": {
+      "type": "object",
+      "properties": {
+        "eventType": {
+          "oneOf": [
+            {
+              "const": "Report"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fileFormat": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NotificationReportRequestContentFileFormat"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "internalData": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/KeyValueDuo"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reportName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NotificationReportRequestContentReportName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "timeZone": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Timezone"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "transactionId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "webHeaderParameters": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/KeyValueDuo"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "NotificationReportRequestFrequency": {
+      "type": "string",
+      "enum": [
+        "one-time",
+        "daily",
+        "weekly",
+        "biweekly",
+        "monthly",
+        "quarterly",
+        "semiannually",
+        "annually"
+      ]
+    },
+    "NotificationReportRequestMethod": {
+      "type": "string",
+      "enum": [
+        "report-email",
+        "report-web"
+      ]
+    },
+    "Ownerid": {
+      "type": "integer"
+    },
+    "Ownertype": {
+      "type": "integer"
+    },
+    "Statusnotification": {
+      "type": "integer"
+    }
+  }
+}

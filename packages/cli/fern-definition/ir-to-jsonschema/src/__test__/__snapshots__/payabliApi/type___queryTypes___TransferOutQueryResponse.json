@@ -1,0 +1,688 @@
+{
+  "type": "object",
+  "properties": {
+    "Summary": {
+      "$ref": "#/definitions/__queryTypes__.TransferOutSummary"
+    },
+    "Records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/__queryTypes__.TransferOutRecord"
+      }
+    }
+  },
+  "required": [
+    "Summary",
+    "Records"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "__queryTypes__.TransferOutSummary": {
+      "type": "object",
+      "properties": {
+        "totalPages": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalRecords": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pageSize": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "totalPages",
+        "totalRecords",
+        "pageSize"
+      ],
+      "additionalProperties": false
+    },
+    "__queryTypes__.TransferOutBankAccount": {
+      "type": "object",
+      "properties": {
+        "accountNumber": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "routingNumber": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "accountNumber",
+        "routingNumber",
+        "bankName"
+      ],
+      "additionalProperties": false
+    },
+    "__queryTypes__.TransferOutEventData": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eventTime": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "refData": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "extraData": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "description",
+        "eventTime",
+        "refData",
+        "extraData",
+        "source"
+      ],
+      "additionalProperties": false
+    },
+    "__queryTypes__.TransferOutMessageProperties": {
+      "type": "object",
+      "properties": {
+        "originalTransferStatus": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "currentTransferStatus": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "originalTransferStatus",
+        "currentTransferStatus"
+      ],
+      "additionalProperties": false
+    },
+    "__queryTypes__.TransferOutMessage": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "RoomId": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "UserId": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "UserName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Content": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "CreatedAt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "MessageType": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "MessageProperties": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/__queryTypes__.TransferOutMessageProperties"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "Id",
+        "RoomId",
+        "UserId",
+        "UserName",
+        "Content",
+        "CreatedAt",
+        "MessageType",
+        "MessageProperties"
+      ],
+      "additionalProperties": false
+    },
+    "__queryTypes__.TransferOutRecord": {
+      "type": "object",
+      "properties": {
+        "transferId": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "paypointId": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "batchNumber": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "batchCurrency": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "batchRecords": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "transferIdentifier": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "batchId": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "batchNetAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "batchStatus": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "paypointEntryName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "paypointLegalName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "paypointDbaName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "paypointLogo": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parentOrgName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parentOrgId": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parentOrgLogo": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parentOrgEntryName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "externalPaypointID": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankAccount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/__queryTypes__.TransferOutBankAccount"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "transferDate": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "processor": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "transferStatus": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "grossAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "chargeBackAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "returnedAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "holdAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "releasedAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "billingFeesAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "thirdPartyPaidAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "adjustmentsAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "netTransferAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "splitAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eventsData": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/__queryTypes__.TransferOutEventData"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "messages": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/__queryTypes__.TransferOutMessage"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "transferId",
+        "paypointId",
+        "batchNumber",
+        "batchCurrency",
+        "batchRecords",
+        "transferIdentifier",
+        "batchId",
+        "batchNetAmount",
+        "batchStatus",
+        "paypointEntryName",
+        "paypointLegalName",
+        "paypointDbaName",
+        "paypointLogo",
+        "parentOrgName",
+        "parentOrgId",
+        "parentOrgLogo",
+        "parentOrgEntryName",
+        "externalPaypointID",
+        "bankAccount",
+        "transferDate",
+        "processor",
+        "transferStatus",
+        "grossAmount",
+        "chargeBackAmount",
+        "returnedAmount",
+        "holdAmount",
+        "releasedAmount",
+        "billingFeesAmount",
+        "thirdPartyPaidAmount",
+        "adjustmentsAmount",
+        "netTransferAmount",
+        "splitAmount",
+        "eventsData",
+        "messages"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

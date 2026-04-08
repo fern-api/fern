@@ -1,0 +1,216 @@
+{
+  "type": "object",
+  "properties": {
+    "createdAt": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "itemCategories": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "itemCommodityCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ItemCommodityCode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "itemCost": {
+      "type": "number"
+    },
+    "itemDescription": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ItemDescription"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "itemMode": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "itemProductCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ItemProductCode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "itemProductName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ItemProductName"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "itemQty": {
+      "type": "integer"
+    },
+    "itemUnitOfMeasure": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ItemUnitofMeasure"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "lastUpdated": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LastModified"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pageidentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PageIdentifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ParentOrgName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/OrgParentName"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "PaypointDbaname": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Dbaname"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "PaypointEntryname": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Entrypointfield"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "PaypointLegalname": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Legalname"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "itemCost",
+    "itemQty"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "CreatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ItemCommodityCode": {
+      "type": "string"
+    },
+    "ItemDescription": {
+      "type": "string"
+    },
+    "ItemProductCode": {
+      "type": "string"
+    },
+    "ItemProductName": {
+      "type": "string"
+    },
+    "ItemUnitofMeasure": {
+      "type": "string"
+    },
+    "LastModified": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "PageIdentifier": {
+      "type": "string"
+    },
+    "OrgParentName": {
+      "type": "string"
+    },
+    "Dbaname": {
+      "type": "string"
+    },
+    "Entrypointfield": {
+      "type": "string"
+    },
+    "Legalname": {
+      "type": "string"
+    }
+  }
+}

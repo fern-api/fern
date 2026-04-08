@@ -1,0 +1,103 @@
+{
+  "type": "object",
+  "properties": {
+    "contactEmail": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "contactName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "contactPhone": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "contactTitle": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "RequiredElement": {
+      "type": "boolean"
+    },
+    "ValueTemplates": {
+      "type": "string"
+    },
+    "LinkData": {
+      "type": "object",
+      "properties": {
+        "ro": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rq": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RequiredElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "validator": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

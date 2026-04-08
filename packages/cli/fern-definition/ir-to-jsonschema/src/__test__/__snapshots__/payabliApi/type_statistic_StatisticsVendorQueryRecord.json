@@ -1,0 +1,77 @@
+{
+  "type": "object",
+  "properties": {
+    "statX": {
+      "type": "string"
+    },
+    "active": {
+      "type": "integer"
+    },
+    "activeVolume": {
+      "type": "number"
+    },
+    "sentToApproval": {
+      "type": "integer"
+    },
+    "sentToApprovalVolume": {
+      "type": "number"
+    },
+    "toApproval": {
+      "type": "integer"
+    },
+    "toApprovalVolume": {
+      "type": "number"
+    },
+    "approved": {
+      "type": "integer"
+    },
+    "approvedVolume": {
+      "type": "number"
+    },
+    "disapproved": {
+      "type": "integer"
+    },
+    "disapprovedVolume": {
+      "type": "number"
+    },
+    "cancelled": {
+      "type": "integer"
+    },
+    "cancelledVolume": {
+      "type": "number"
+    },
+    "inTransit": {
+      "type": "integer"
+    },
+    "inTransitVolume": {
+      "type": "number"
+    },
+    "paid": {
+      "type": "integer"
+    },
+    "paidVolume": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "statX",
+    "active",
+    "activeVolume",
+    "sentToApproval",
+    "sentToApprovalVolume",
+    "toApproval",
+    "toApprovalVolume",
+    "approved",
+    "approvedVolume",
+    "disapproved",
+    "disapprovedVolume",
+    "cancelled",
+    "cancelledVolume",
+    "inTransit",
+    "inTransitVolume",
+    "paid",
+    "paidVolume"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -1,0 +1,285 @@
+{
+  "type": "object",
+  "properties": {
+    "ach": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AchSection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "card": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CardSection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "RequiredElement": {
+      "type": "boolean"
+    },
+    "ValueTemplates": {
+      "type": "string"
+    },
+    "LinkData": {
+      "type": "object",
+      "properties": {
+        "ro": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rq": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RequiredElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "validator": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "AchLinkTypes": {
+      "type": "object",
+      "properties": {
+        "ccd": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ppd": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "web": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "LinkRow": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LinkData"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "BasicTable": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LinkRow"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "header": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkRow"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "AchSection": {
+      "type": "object",
+      "properties": {
+        "acceptance": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AchLinkTypes"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fees": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BasicTable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "price": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BasicTable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "CardLinkTypes": {
+      "type": "object",
+      "properties": {
+        "amex": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "discover": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mastercard": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visa": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "CardSection": {
+      "type": "object",
+      "properties": {
+        "acceptance": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CardLinkTypes"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fees": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BasicTable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "price": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BasicTable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

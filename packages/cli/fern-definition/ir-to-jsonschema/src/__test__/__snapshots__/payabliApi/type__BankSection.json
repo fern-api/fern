@@ -1,0 +1,129 @@
+{
+  "type": "object",
+  "properties": {
+    "visible": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Visible"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "accountNumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "accountType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bankName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "routingNumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Visible": {
+      "type": "boolean"
+    },
+    "PosCol": {
+      "type": "integer"
+    },
+    "PosRow": {
+      "type": "integer"
+    },
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "ValueTemplates": {
+      "type": "string"
+    },
+    "TemplateElement": {
+      "type": "object",
+      "properties": {
+        "posCol": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosCol"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "posRow": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosRow"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readOnly": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

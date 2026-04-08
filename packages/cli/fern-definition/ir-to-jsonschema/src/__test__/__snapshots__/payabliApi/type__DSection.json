@@ -1,0 +1,129 @@
+{
+  "type": "object",
+  "properties": {
+    "depositAccount": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Bnk"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "withdrawalAccount": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Bnk"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "RequiredElement": {
+      "type": "boolean"
+    },
+    "ValueTemplates": {
+      "type": "string"
+    },
+    "LinkData": {
+      "type": "object",
+      "properties": {
+        "ro": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rq": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RequiredElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "validator": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Bnk": {
+      "type": "object",
+      "properties": {
+        "accountNumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "routingAccount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "typeAccount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

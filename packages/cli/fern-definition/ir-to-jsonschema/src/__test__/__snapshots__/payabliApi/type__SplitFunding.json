@@ -1,0 +1,54 @@
+{
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/SplitFundingContent"
+  },
+  "definitions": {
+    "SplitFundingContent": {
+      "type": "object",
+      "properties": {
+        "accountId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "amount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recipientEntryPoint": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

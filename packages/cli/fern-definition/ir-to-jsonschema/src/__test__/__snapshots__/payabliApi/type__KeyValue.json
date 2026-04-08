@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "properties": {
+    "key": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "readOnly": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ReadOnly"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "value": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ReadOnly": {
+      "type": "boolean"
+    }
+  }
+}

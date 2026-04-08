@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "accountNumber": {
+      "$ref": "#/definitions/AccountNumber"
+    },
+    "routingNumber": {
+      "$ref": "#/definitions/RoutingAccount"
+    },
+    "bankName": {
+      "$ref": "#/definitions/BankName"
+    }
+  },
+  "required": [
+    "accountNumber",
+    "routingNumber",
+    "bankName"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "AccountNumber": {
+      "type": "string"
+    },
+    "RoutingAccount": {
+      "type": "string"
+    },
+    "BankName": {
+      "type": "string"
+    }
+  }
+}

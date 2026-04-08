@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "ReferenceId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ResultCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ResultCode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ResultText": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Resulttext"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ResultCode": {
+      "type": "integer"
+    },
+    "Resulttext": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "type": "object",
+  "properties": {
+    "createdAt": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "jobErrorMessage": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "jobId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/JobId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "jobStatus": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/JobStatus"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "updatedAt": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LastModified"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "CreatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "JobId": {
+      "type": "string"
+    },
+    "JobStatus": {
+      "type": "string"
+    },
+    "LastModified": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

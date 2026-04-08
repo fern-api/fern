@@ -1,0 +1,209 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "orgId": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paypointId": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "notificationEvent": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "target": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseStatus": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "success": {
+      "type": "boolean"
+    },
+    "jobData": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "createdDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "successDate": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "lastFailedDate": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "isInProgress": {
+      "type": "boolean"
+    },
+    "webHeaders": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/notificationlogs.StringStringKeyValuePair"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseHeaders": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/notificationlogs.KeyValueArray"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseContent": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "orgId",
+    "paypointId",
+    "notificationEvent",
+    "target",
+    "responseStatus",
+    "success",
+    "jobData",
+    "createdDate",
+    "successDate",
+    "lastFailedDate",
+    "isInProgress"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "notificationlogs.StringStringKeyValuePair": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "notificationlogs.KeyValueArray": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

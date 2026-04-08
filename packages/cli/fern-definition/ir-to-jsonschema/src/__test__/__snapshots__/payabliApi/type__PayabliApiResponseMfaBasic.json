@@ -1,0 +1,76 @@
+{
+  "type": "object",
+  "properties": {
+    "isSuccess": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IsSuccess"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mfa": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Mfa"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mfaMode": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mfaValidationCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/MfaValidationCode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseData": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    }
+  },
+  "required": [
+    "responseText"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "IsSuccess": {
+      "type": "boolean"
+    },
+    "Mfa": {
+      "type": "boolean"
+    },
+    "MfaValidationCode": {
+      "type": "string"
+    },
+    "ResponseText": {
+      "type": "string"
+    }
+  }
+}

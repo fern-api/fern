@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "properties": {
+    "totalPages": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "totalRecords": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pageSize": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "totalPages",
+    "totalRecords",
+    "pageSize"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

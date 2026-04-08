@@ -1,0 +1,443 @@
+{
+  "type": "object",
+  "properties": {
+    "baddress": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "baddress1": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bcity": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bcountry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bstate": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "btype": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bzip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dbaname": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ein": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "faxnumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "legalname": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "license": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "licstate": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "maddress": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "maddress1": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mcity": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mcountry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mstate": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mzip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "phonenumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "startdate": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "taxfillname": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "visible": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Visible"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "website": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "additionalData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateAdditionalDataSection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "PosCol": {
+      "type": "integer"
+    },
+    "PosRow": {
+      "type": "integer"
+    },
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "ValueTemplates": {
+      "type": "string"
+    },
+    "Visible": {
+      "type": "boolean"
+    },
+    "TemplateElement": {
+      "type": "object",
+      "properties": {
+        "posCol": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosCol"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "posRow": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosRow"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readOnly": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "RequiredElement": {
+      "type": "boolean"
+    },
+    "TemplateAdditionalDataField": {
+      "type": "object",
+      "properties": {
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readOnly": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "required": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RequiredElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "posRow": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosRow"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "posCol": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosCol"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "label": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "TemplateAdditionalDataSection": {
+      "type": "object",
+      "properties": {
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/TemplateAdditionalDataField"
+          }
+        }
+      },
+      "required": [
+        "fields"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

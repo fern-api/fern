@@ -1,0 +1,79 @@
+{
+  "type": "object",
+  "properties": {
+    "isSuccess": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IsSuccess"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pageIdentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PageIdentifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Responsecode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Responsedata"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    }
+  },
+  "required": [
+    "responseText"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "IsSuccess": {
+      "type": "boolean"
+    },
+    "PageIdentifier": {
+      "type": "string"
+    },
+    "Responsecode": {
+      "type": "integer"
+    },
+    "Responsedata": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      }
+    },
+    "ResponseText": {
+      "type": "string"
+    }
+  }
+}

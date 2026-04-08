@@ -1,0 +1,232 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SignerName"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ssn": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SignerSsn"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dob": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SignerDob"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "phone": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SignerPhone"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "email": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Email"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "address": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Signeraddress"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "address1": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SignerAddress1"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "city": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SignerCity"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "country": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SignerCountry"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "state": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SignerState"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "zip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SignerZip"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "acceptance": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SignerAcceptance"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "signedDocumentReference": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SignedDocumentReference"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pciAttestation": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PciAttestation"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "attestationDate": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AttestationDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "additionalData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AdditionalDataMap"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "signDate": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SignDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "SignerName": {
+      "type": "string"
+    },
+    "SignerSsn": {
+      "type": "string"
+    },
+    "SignerDob": {
+      "type": "string"
+    },
+    "SignerPhone": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "string"
+    },
+    "Signeraddress": {
+      "type": "string"
+    },
+    "SignerAddress1": {
+      "type": "string"
+    },
+    "SignerCity": {
+      "type": "string"
+    },
+    "SignerCountry": {
+      "type": "string"
+    },
+    "SignerState": {
+      "type": "string"
+    },
+    "SignerZip": {
+      "type": "string"
+    },
+    "SignerAcceptance": {
+      "type": "boolean"
+    },
+    "SignedDocumentReference": {
+      "type": "string"
+    },
+    "PciAttestation": {
+      "type": "boolean"
+    },
+    "AttestationDate": {
+      "type": "string"
+    },
+    "AdditionalDataMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "SignDate": {
+      "type": "string"
+    }
+  }
+}

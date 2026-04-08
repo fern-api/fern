@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "achHolder": {
+      "$ref": "#/definitions/AchHolder"
+    },
+    "method": {
+      "const": "check"
+    }
+  },
+  "required": [
+    "achHolder",
+    "method"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "AchHolder": {
+      "type": "string"
+    }
+  }
+}

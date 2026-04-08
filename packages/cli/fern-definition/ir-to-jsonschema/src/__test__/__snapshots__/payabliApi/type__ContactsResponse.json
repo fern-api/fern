@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "ContactEmail": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Email"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ContactName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ContactPhone": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ContactTitle": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Email": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "type": "object",
+  "properties": {
+    "types": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AchTypes"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "posCol": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PosCol"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "posRow": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PosRow"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "readOnly": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ReadOnly"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "value": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ValueTemplates"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "visible": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Visible"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "RequiredElement": {
+      "type": "boolean"
+    },
+    "Visible": {
+      "type": "boolean"
+    },
+    "BasicTemplateElement": {
+      "type": "object",
+      "properties": {
+        "readOnly": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "required": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RequiredElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "AchTypes": {
+      "type": "object",
+      "properties": {
+        "ccd": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BasicTemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ppd": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BasicTemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "web": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BasicTemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "PosCol": {
+      "type": "integer"
+    },
+    "PosRow": {
+      "type": "integer"
+    },
+    "ValueTemplates": {
+      "type": "string"
+    }
+  }
+}

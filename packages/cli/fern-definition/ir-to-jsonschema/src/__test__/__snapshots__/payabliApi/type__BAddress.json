@@ -1,0 +1,183 @@
+{
+  "type": "object",
+  "properties": {
+    "baddress": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "baddress1": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bcity": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bcountry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bstate": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bzip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "maddress": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "maddress1": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mcity": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mcountry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mstate": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mzip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "RequiredElement": {
+      "type": "boolean"
+    },
+    "ValueTemplates": {
+      "type": "string"
+    },
+    "LinkData": {
+      "type": "object",
+      "properties": {
+        "ro": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rq": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RequiredElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "validator": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

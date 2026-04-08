@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "properties": {
+    "accountNumber": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "routingNumber": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bankName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "accountNumber",
+    "routingNumber",
+    "bankName"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

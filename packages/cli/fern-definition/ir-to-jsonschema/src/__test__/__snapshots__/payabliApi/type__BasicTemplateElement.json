@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "readOnly": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ReadOnly"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "required": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/RequiredElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "visible": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Visible"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "RequiredElement": {
+      "type": "boolean"
+    },
+    "Visible": {
+      "type": "boolean"
+    }
+  }
+}

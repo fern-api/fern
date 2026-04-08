@@ -1,0 +1,186 @@
+{
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Enabled"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "finish": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Finishtype"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "frequency": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/FrequencyList"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "frequencySelected": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "header": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "order": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Order"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "startDate": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Enabled": {
+      "type": "boolean"
+    },
+    "Finishtype": {
+      "type": "object",
+      "properties": {
+        "calendar": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "untilCancelled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "FrequencyList": {
+      "type": "object",
+      "properties": {
+        "annually": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "every2Weeks": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "every3Months": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "every6Months": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "monthly": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "onetime": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "weekly": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Order": {
+      "type": "integer"
+    }
+  }
+}

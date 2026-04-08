@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "isSuccess": {
+      "$ref": "#/definitions/IsSuccess"
+    },
+    "responseCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Responsecode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    }
+  },
+  "required": [
+    "isSuccess",
+    "responseText"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "IsSuccess": {
+      "type": "boolean"
+    },
+    "Responsecode": {
+      "type": "integer"
+    },
+    "ResponseText": {
+      "type": "string"
+    }
+  }
+}

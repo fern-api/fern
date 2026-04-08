@@ -1,0 +1,14 @@
+{
+  "type": "array",
+  "items": {
+    "oneOf": [
+      {
+        "type": "string"
+      },
+      {
+        "type": "null"
+      }
+    ]
+  },
+  "definitions": {}
+}

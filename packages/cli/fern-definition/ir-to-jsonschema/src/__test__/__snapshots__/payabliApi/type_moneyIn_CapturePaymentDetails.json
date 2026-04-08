@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "totalAmount": {
+      "type": "number"
+    },
+    "serviceFee": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "totalAmount"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

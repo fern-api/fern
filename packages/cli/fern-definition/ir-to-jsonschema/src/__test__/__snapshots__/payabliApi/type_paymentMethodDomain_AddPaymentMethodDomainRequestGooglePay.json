@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "isEnabled": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IsEnabled"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "IsEnabled": {
+      "type": "boolean"
+    }
+  }
+}

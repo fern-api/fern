@@ -1,0 +1,9 @@
+{
+  "type": "string",
+  "enum": [
+    "30 Days or Less",
+    "31 to 60 Days",
+    "60+ Days"
+  ],
+  "definitions": {}
+}

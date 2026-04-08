@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "properties": {
+    "description": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "enabled": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Enabled"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "header": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "order": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Order"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Enabled": {
+      "type": "boolean"
+    },
+    "Order": {
+      "type": "integer"
+    }
+  }
+}

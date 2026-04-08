@@ -1,0 +1,9 @@
+{
+  "type": "string",
+  "enum": [
+    "black",
+    "white-outline",
+    "white"
+  ],
+  "definitions": {}
+}

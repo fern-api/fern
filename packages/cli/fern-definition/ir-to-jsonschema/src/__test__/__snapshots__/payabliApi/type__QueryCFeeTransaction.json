@@ -1,0 +1,102 @@
+{
+  "type": "object",
+  "properties": {
+    "cFeeTransid": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "feeAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "operation": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "refundId": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseData": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "settlementStatus": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "transactionTime": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TransactionTime"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "transStatus": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "TransactionTime": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

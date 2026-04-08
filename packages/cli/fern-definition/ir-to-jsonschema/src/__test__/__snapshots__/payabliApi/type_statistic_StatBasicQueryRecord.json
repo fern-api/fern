@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "statX": {
+      "type": "string"
+    },
+    "inTransactions": {
+      "type": "integer"
+    },
+    "inTransactionsVolume": {
+      "type": "number"
+    },
+    "inWalletTransactions": {
+      "type": "integer"
+    },
+    "inWalletVolume": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "statX",
+    "inTransactions",
+    "inTransactionsVolume",
+    "inWalletTransactions",
+    "inWalletVolume"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

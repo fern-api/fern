@@ -1,0 +1,183 @@
+{
+  "type": "object",
+  "properties": {
+    "ach": {
+      "$ref": "#/definitions/ApplicationDataPayInServicesAch"
+    },
+    "card": {
+      "$ref": "#/definitions/ApplicationDataPayInServicesCard"
+    },
+    "odp": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/OdpSetup"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "ach",
+    "card"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ApplicationDataPayInServicesAch": {
+      "type": "object",
+      "properties": {
+        "acceptCCD": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptPPD": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptWeb": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ApplicationDataPayInServicesCard": {
+      "type": "object",
+      "properties": {
+        "acceptAmex": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptDiscover": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptMastercard": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptVisa": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "OdpSetupProcessingRegion": {
+      "type": "string",
+      "enum": [
+        "US",
+        "CA"
+      ]
+    },
+    "OdpSetup": {
+      "type": "object",
+      "properties": {
+        "allowAch": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "allowChecks": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "allowVCard": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "processing_region": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OdpSetupProcessingRegion"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "processor": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "issuerNetworkSettingsId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

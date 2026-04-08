@@ -1,0 +1,128 @@
+{
+  "type": "object",
+  "properties": {
+    "Id": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "RoomId": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "UserId": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "UserName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Content": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "CreatedAt": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "MessageType": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "MessageProperties": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TransferMessageProperties"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "Id",
+    "RoomId",
+    "UserId",
+    "UserName",
+    "Content",
+    "CreatedAt",
+    "MessageType",
+    "MessageProperties"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "TransferMessageProperties": {
+      "type": "object",
+      "properties": {
+        "originalTransferStatus": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "currentTransferStatus": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "originalTransferStatus",
+        "currentTransferStatus"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

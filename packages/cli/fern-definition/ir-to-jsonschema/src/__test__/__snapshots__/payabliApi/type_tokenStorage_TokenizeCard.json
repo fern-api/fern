@@ -1,0 +1,61 @@
+{
+  "type": "object",
+  "properties": {
+    "method": {
+      "type": "string"
+    },
+    "cardcvv": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Cardcvv"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cardexp": {
+      "$ref": "#/definitions/Cardexp"
+    },
+    "cardHolder": {
+      "$ref": "#/definitions/Cardholder"
+    },
+    "cardnumber": {
+      "$ref": "#/definitions/Cardnumber"
+    },
+    "cardzip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Cardzip"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "method",
+    "cardexp",
+    "cardHolder",
+    "cardnumber"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Cardcvv": {
+      "type": "string"
+    },
+    "Cardexp": {
+      "type": "string"
+    },
+    "Cardholder": {
+      "type": "string"
+    },
+    "Cardnumber": {
+      "type": "string"
+    },
+    "Cardzip": {
+      "type": "string"
+    }
+  }
+}

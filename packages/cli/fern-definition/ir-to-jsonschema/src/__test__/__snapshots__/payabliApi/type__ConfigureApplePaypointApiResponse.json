@@ -1,0 +1,258 @@
+{
+  "type": "object",
+  "properties": {
+    "isSuccess": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IsSuccess"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pageIdentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PageIdentifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Responsecode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ApplePayPaypointRegistrationData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    },
+    "roomId": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "responseText"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "IsSuccess": {
+      "type": "boolean"
+    },
+    "PageIdentifier": {
+      "type": "string"
+    },
+    "Responsecode": {
+      "type": "integer"
+    },
+    "Entry": {
+      "type": "string"
+    },
+    "IsEnabled": {
+      "type": "boolean"
+    },
+    "DomainName": {
+      "type": "string"
+    },
+    "PaypointName": {
+      "type": "string"
+    },
+    "CreatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "LastModified": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ApplePayId": {
+      "type": "string"
+    },
+    "ApplePayType": {
+      "type": "string"
+    },
+    "AppleWalletData": {
+      "type": "object",
+      "properties": {
+        "entry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Entry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "applePayMerchantId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "domainNames": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DomainName"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "paypointName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PaypointName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "paypointUrl": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "markedForDeletionAt": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "createdAt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CreatedAt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LastModified"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "id": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ApplePayId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ApplePayType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ApplePayPaypointRegistrationData": {
+      "type": "object",
+      "properties": {
+        "entry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Entry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "isEnabled": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/IsEnabled"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "walletType": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "walletData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AppleWalletData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ResponseText": {
+      "type": "string"
+    }
+  }
+}

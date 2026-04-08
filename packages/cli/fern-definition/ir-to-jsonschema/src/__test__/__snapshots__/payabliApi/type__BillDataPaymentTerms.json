@@ -1,0 +1,27 @@
+{
+  "type": "string",
+  "enum": [
+    "PIA",
+    "CIA",
+    "UR",
+    "NET10",
+    "NET20",
+    "NET30",
+    "NET45",
+    "NET60",
+    "NET90",
+    "EOM",
+    "MFI",
+    "5MFI",
+    "10MFI",
+    "15MFI",
+    "20MFI",
+    "2/10NET30",
+    "UF",
+    "10UF",
+    "20UF",
+    "25UF",
+    "50UF"
+  ],
+  "definitions": {}
+}

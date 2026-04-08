@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "transEvent": {
+      "type": "string"
+    },
+    "eventData": {
+      "type": "string"
+    },
+    "eventTime": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "transEvent",
+    "eventData",
+    "eventTime"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

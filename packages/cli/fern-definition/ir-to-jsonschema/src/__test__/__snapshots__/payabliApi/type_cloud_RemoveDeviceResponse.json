@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "isSuccess": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IsSuccess"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    },
+    "pageIdentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PageIdentifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseData": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "responseText"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "IsSuccess": {
+      "type": "boolean"
+    },
+    "ResponseText": {
+      "type": "string"
+    },
+    "PageIdentifier": {
+      "type": "string"
+    }
+  }
+}

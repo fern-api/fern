@@ -1,0 +1,211 @@
+{
+  "type": "object",
+  "properties": {
+    "achAccount": {
+      "$ref": "#/definitions/Achaccount"
+    },
+    "achAccountType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Achaccounttype"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AchSecCode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achHolder": {
+      "$ref": "#/definitions/AchHolder"
+    },
+    "achRouting": {
+      "$ref": "#/definitions/Achrouting"
+    },
+    "cardcvv": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Cardcvv"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cardexp": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Cardexp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cardHolder": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Cardholder"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cardnumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Cardnumber"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cardzip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Cardzip"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "device": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Device"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "initator": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Initiator"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "method": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Methodall"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "saveIfSuccess": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SaveIfSuccess"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "storedMethodId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Storedmethodid"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "storedMethodUsageType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/StoredMethodUsageType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "achAccount",
+    "achHolder",
+    "achRouting"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Achaccount": {
+      "type": "string"
+    },
+    "Achaccounttype": {
+      "type": "string",
+      "enum": [
+        "Checking",
+        "Savings"
+      ]
+    },
+    "AchSecCode": {
+      "type": "string"
+    },
+    "AchHolder": {
+      "type": "string"
+    },
+    "Achrouting": {
+      "type": "string"
+    },
+    "Cardcvv": {
+      "type": "string"
+    },
+    "Cardexp": {
+      "type": "string"
+    },
+    "Cardholder": {
+      "type": "string"
+    },
+    "Cardnumber": {
+      "type": "string"
+    },
+    "Cardzip": {
+      "type": "string"
+    },
+    "Device": {
+      "type": "string"
+    },
+    "Initiator": {
+      "type": "string"
+    },
+    "Methodall": {
+      "type": "string",
+      "enum": [
+        "card",
+        "ach",
+        "cloud",
+        "check",
+        "cash"
+      ]
+    },
+    "SaveIfSuccess": {
+      "type": "boolean"
+    },
+    "Storedmethodid": {
+      "type": "string"
+    },
+    "StoredMethodUsageType": {
+      "type": "string"
+    }
+  }
+}

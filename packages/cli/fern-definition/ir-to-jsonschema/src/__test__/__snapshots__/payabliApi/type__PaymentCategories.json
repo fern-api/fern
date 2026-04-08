@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "amount": {
+      "type": "number"
+    },
+    "description": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "label": {
+      "type": "string"
+    },
+    "qty": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "amount",
+    "label"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -1,0 +1,235 @@
+{
+  "type": "object",
+  "properties": {
+    "avgmonthly": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "binperson": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "binphone": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "binweb": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bsummary": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "highticketamt": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mcc": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "subFooter": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SubFooter"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "subHeader": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SubHeader"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ticketamt": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "visible": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Visible"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "whenCharged": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "whenDelivered": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "whenProvided": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "whenRefunded": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "PosCol": {
+      "type": "integer"
+    },
+    "PosRow": {
+      "type": "integer"
+    },
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "ValueTemplates": {
+      "type": "string"
+    },
+    "Visible": {
+      "type": "boolean"
+    },
+    "TemplateElement": {
+      "type": "object",
+      "properties": {
+        "posCol": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosCol"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "posRow": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosRow"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readOnly": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "SubFooter": {
+      "type": "string"
+    },
+    "SubHeader": {
+      "type": "string"
+    }
+  }
+}

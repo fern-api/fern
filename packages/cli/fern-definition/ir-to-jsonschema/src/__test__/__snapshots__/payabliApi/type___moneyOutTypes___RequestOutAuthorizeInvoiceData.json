@@ -1,0 +1,232 @@
+{
+  "type": "object",
+  "properties": {
+    "invoiceNumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/InvoiceNumber"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "netAmount": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NetAmountstring"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "invoiceDate": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dueDate": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "comments": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Comments"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "lotNumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/__moneyOutTypes__.LotNumber"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "discount": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Discount"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "terms": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Terms"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "accountingField1": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AccountingField"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "accountingField2": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AccountingField"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "additionalData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AdditionalDataString"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "attachments": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Attachments"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "InvoiceNumber": {
+      "type": "string"
+    },
+    "NetAmountstring": {
+      "type": "string"
+    },
+    "Comments": {
+      "type": "string"
+    },
+    "__moneyOutTypes__.LotNumber": {
+      "type": "string"
+    },
+    "BillId": {
+      "type": "integer"
+    },
+    "Discount": {
+      "type": "number"
+    },
+    "Terms": {
+      "type": "string"
+    },
+    "AccountingField": {
+      "type": "string"
+    },
+    "AdditionalDataString": {
+      "type": "string"
+    },
+    "FileContentFtype": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "doc",
+        "docx",
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+        "txt"
+      ]
+    },
+    "FileContent": {
+      "type": "object",
+      "properties": {
+        "fContent": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filename": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ftype": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FileContentFtype"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "furl": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Attachments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/FileContent"
+      }
+    }
+  }
+}

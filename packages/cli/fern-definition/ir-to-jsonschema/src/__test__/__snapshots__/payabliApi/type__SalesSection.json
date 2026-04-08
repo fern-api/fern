@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "salesCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SalesCode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "salesCRM": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "SalesCode": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "properties": {
+    "TransEvent": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "EventData": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "EventTime": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "TransEvent",
+    "EventData",
+    "EventTime"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

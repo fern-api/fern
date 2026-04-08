@@ -1,0 +1,89 @@
+{
+  "type": "object",
+  "properties": {
+    "achAccount": {
+      "$ref": "#/definitions/Achaccount"
+    },
+    "achRouting": {
+      "$ref": "#/definitions/Achrouting"
+    },
+    "billingAddress": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingAddressNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billingCity": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingCityNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billingCountry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingCountryNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billingState": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingStateNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billingZip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingZip"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "achAccount",
+    "achRouting"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Achaccount": {
+      "type": "string"
+    },
+    "Achrouting": {
+      "type": "string"
+    },
+    "BillingAddressNullable": {
+      "type": "string"
+    },
+    "BillingCityNullable": {
+      "type": "string"
+    },
+    "BillingCountryNullable": {
+      "type": "string"
+    },
+    "BillingStateNullable": {
+      "type": "string"
+    },
+    "BillingZip": {
+      "type": "string"
+    }
+  }
+}

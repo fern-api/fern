@@ -1,0 +1,126 @@
+{
+  "type": "object",
+  "properties": {
+    "tiers": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CardType"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "visible": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Visible"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "TierItem": {
+      "type": "object",
+      "properties": {
+        "amountxAuth": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "highPayRange": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lowPayRange": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "percentxAuth": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "CardType": {
+      "type": "object",
+      "properties": {
+        "amex": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TierItem"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "discover": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TierItem"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "masterCard": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TierItem"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visa": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TierItem"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Visible": {
+      "type": "boolean"
+    }
+  }
+}

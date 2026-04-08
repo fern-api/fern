@@ -1,0 +1,72 @@
+{
+  "type": "object",
+  "properties": {
+    "description": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "eventTime": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "extraData": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "refData": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "source": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Source"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Source": {
+      "type": "string"
+    }
+  }
+}

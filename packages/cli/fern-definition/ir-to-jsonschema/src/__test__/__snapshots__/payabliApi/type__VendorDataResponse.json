@@ -1,0 +1,823 @@
+{
+  "type": "object",
+  "properties": {
+    "VendorNumber": {
+      "$ref": "#/definitions/VendorNumber"
+    },
+    "Name1": {
+      "type": "string"
+    },
+    "Name2": {
+      "type": "string"
+    },
+    "EIN": {
+      "type": "string"
+    },
+    "Phone": {
+      "type": "string"
+    },
+    "Email": {
+      "$ref": "#/definitions/Email"
+    },
+    "RemitEmail": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Address1": {
+      "type": "string"
+    },
+    "Address2": {
+      "type": "string"
+    },
+    "City": {
+      "type": "string"
+    },
+    "State": {
+      "type": "string"
+    },
+    "Zip": {
+      "type": "string"
+    },
+    "Country": {
+      "type": "string"
+    },
+    "Mcc": {
+      "$ref": "#/definitions/Mcc"
+    },
+    "LocationCode": {
+      "$ref": "#/definitions/LocationCode"
+    },
+    "Contacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ContactsResponse"
+      }
+    },
+    "BillingData": {
+      "$ref": "#/definitions/VendorResponseBillingData"
+    },
+    "PaymentMethod": {
+      "$ref": "#/definitions/VendorDataResponsePaymentMethod"
+    },
+    "VendorStatus": {
+      "$ref": "#/definitions/Vendorstatus"
+    },
+    "VendorId": {
+      "$ref": "#/definitions/Vendorid"
+    },
+    "EnrollmentStatus": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Summary": {
+      "$ref": "#/definitions/VendorResponseSummary"
+    },
+    "PaypointLegalname": {
+      "type": "string"
+    },
+    "PaypointDbaname": {
+      "type": "string"
+    },
+    "PaypointEntryname": {
+      "type": "string"
+    },
+    "ParentOrgName": {
+      "type": "string"
+    },
+    "ParentOrgId": {
+      "type": "integer"
+    },
+    "CreatedDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "LastUpdated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "remitAddress1": {
+      "$ref": "#/definitions/Remitaddress1"
+    },
+    "remitAddress2": {
+      "$ref": "#/definitions/Remitaddress2"
+    },
+    "remitCity": {
+      "$ref": "#/definitions/Remitcity"
+    },
+    "remitState": {
+      "$ref": "#/definitions/Remitstate"
+    },
+    "remitZip": {
+      "$ref": "#/definitions/Remitzip"
+    },
+    "remitCountry": {
+      "$ref": "#/definitions/Remitcountry"
+    },
+    "payeeName1": {
+      "$ref": "#/definitions/PayeeName"
+    },
+    "payeeName2": {
+      "$ref": "#/definitions/PayeeName"
+    },
+    "customField1": {
+      "type": "string"
+    },
+    "customField2": {
+      "type": "string"
+    },
+    "customerVendorAccount": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "InternalReferenceId": {
+      "$ref": "#/definitions/InternalReferenceId"
+    },
+    "additionalData": {
+      "$ref": "#/definitions/AdditionalDataMap"
+    },
+    "externalPaypointID": {
+      "type": "string"
+    },
+    "StoredMethods": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/VendorResponseStoredMethod"
+      }
+    }
+  },
+  "required": [
+    "VendorNumber",
+    "Name1",
+    "Name2",
+    "EIN",
+    "Phone",
+    "Email",
+    "Address1",
+    "Address2",
+    "City",
+    "State",
+    "Zip",
+    "Country",
+    "Mcc",
+    "LocationCode",
+    "Contacts",
+    "BillingData",
+    "PaymentMethod",
+    "VendorStatus",
+    "VendorId",
+    "Summary",
+    "PaypointLegalname",
+    "PaypointDbaname",
+    "PaypointEntryname",
+    "ParentOrgName",
+    "ParentOrgId",
+    "CreatedDate",
+    "LastUpdated",
+    "remitAddress1",
+    "remitAddress2",
+    "remitCity",
+    "remitState",
+    "remitZip",
+    "remitCountry",
+    "payeeName1",
+    "payeeName2",
+    "customField1",
+    "customField2",
+    "InternalReferenceId",
+    "additionalData",
+    "externalPaypointID",
+    "StoredMethods"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "VendorNumber": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "string"
+    },
+    "Mcc": {
+      "type": "string"
+    },
+    "LocationCode": {
+      "type": "string"
+    },
+    "ContactsResponse": {
+      "type": "object",
+      "properties": {
+        "ContactEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ContactName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ContactPhone": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ContactTitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "VendorResponseBillingData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accountId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nickname": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "routingAccount": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accountNumber": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "typeAccount": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankAccountHolderName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankAccountHolderType": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankAccountFunction": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verified": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "services": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "array",
+                  "null"
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "VendorDataResponsePaymentMethod": {
+      "type": "string",
+      "enum": [
+        "vcard",
+        "ach",
+        "check",
+        "card"
+      ]
+    },
+    "Vendorstatus": {
+      "type": "integer"
+    },
+    "Vendorid": {
+      "type": "integer"
+    },
+    "VendorResponseSummary": {
+      "type": "object",
+      "properties": {
+        "ActiveBills": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PendingBills": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "InTransitBills": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PaidBills": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "OverdueBills": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ApprovedBills": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "DisapprovedBills": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "TotalBills": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ActiveBillsAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PendingBillsAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "InTransitBillsAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PaidBillsAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "OverdueBillsAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ApprovedBillsAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "DisapprovedBillsAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "TotalBillsAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Remitaddress1": {
+      "type": "string"
+    },
+    "Remitaddress2": {
+      "type": "string"
+    },
+    "Remitcity": {
+      "type": "string"
+    },
+    "Remitstate": {
+      "type": "string"
+    },
+    "Remitzip": {
+      "type": "string"
+    },
+    "Remitcountry": {
+      "type": "string"
+    },
+    "PayeeName": {
+      "type": "string"
+    },
+    "InternalReferenceId": {
+      "type": "integer"
+    },
+    "AdditionalDataMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "VendorResponseStoredMethod": {
+      "type": "object",
+      "properties": {
+        "IdPmethod": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Method": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Descriptor": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "MaskedAccount": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ExpDate": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "HolderName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "AchSecCode": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "AchHolderType": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "IsValidatedACH": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "BIN": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binData": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ABA": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PostalCode": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "MethodType": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "LastUpdated": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "CardUpdatedOn": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "IdPmethod",
+        "Method",
+        "Descriptor",
+        "MaskedAccount",
+        "ExpDate",
+        "HolderName",
+        "AchSecCode",
+        "AchHolderType",
+        "IsValidatedACH",
+        "BIN",
+        "binData",
+        "ABA",
+        "PostalCode",
+        "MethodType",
+        "LastUpdated",
+        "CardUpdatedOn"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

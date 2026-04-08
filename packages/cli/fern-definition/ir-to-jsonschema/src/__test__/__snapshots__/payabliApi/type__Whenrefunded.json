@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "enum": [
+    "Exchange Only",
+    "No Refund or Exchange",
+    "More than 30 days",
+    "30 Days or Less"
+  ],
+  "definitions": {}
+}

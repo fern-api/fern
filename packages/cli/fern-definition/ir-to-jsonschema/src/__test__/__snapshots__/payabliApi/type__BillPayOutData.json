@@ -1,0 +1,217 @@
+{
+  "type": "object",
+  "properties": {
+    "billId": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "comments": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Comments"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dueDate": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "invoiceDate": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "invoiceNumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/InvoiceNumber"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "netAmount": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NetAmountstring"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "discount": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Terms": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Terms"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "AccountingField1": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AccountingField"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "AccountingField2": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AccountingField"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "AdditionalData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AdditionalDataString"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "attachments": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Attachments"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "dueDate",
+    "invoiceDate"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Comments": {
+      "type": "string"
+    },
+    "InvoiceNumber": {
+      "type": "string"
+    },
+    "NetAmountstring": {
+      "type": "string"
+    },
+    "Terms": {
+      "type": "string"
+    },
+    "AccountingField": {
+      "type": "string"
+    },
+    "AdditionalDataString": {
+      "type": "string"
+    },
+    "FileContentFtype": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "doc",
+        "docx",
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+        "txt"
+      ]
+    },
+    "FileContent": {
+      "type": "object",
+      "properties": {
+        "fContent": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filename": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ftype": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FileContentFtype"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "furl": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Attachments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/FileContent"
+      }
+    }
+  }
+}

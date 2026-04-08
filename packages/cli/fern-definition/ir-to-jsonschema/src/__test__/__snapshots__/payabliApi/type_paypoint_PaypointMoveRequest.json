@@ -1,0 +1,72 @@
+{
+  "type": "object",
+  "properties": {
+    "entryPoint": {
+      "$ref": "#/definitions/Entrypointfield"
+    },
+    "newParentOrganizationId": {
+      "type": "integer"
+    },
+    "notificationRequest": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/paypoint.NotificationRequest"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "entryPoint",
+    "newParentOrganizationId"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Entrypointfield": {
+      "type": "string"
+    },
+    "paypoint.WebHeaderParameter": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "paypoint.NotificationRequest": {
+      "type": "object",
+      "properties": {
+        "notificationUrl": {
+          "type": "string"
+        },
+        "webHeaderParameters": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/paypoint.WebHeaderParameter"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "notificationUrl"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,285 @@
+{
+  "type": "object",
+  "properties": {
+    "Records": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QueryResponseItemsRecordsItem"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Summary": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/QuerySummary"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ItemCommodityCode": {
+      "type": "string"
+    },
+    "ItemDescription": {
+      "type": "string"
+    },
+    "ItemProductCode": {
+      "type": "string"
+    },
+    "ItemProductName": {
+      "type": "string"
+    },
+    "ItemUnitofMeasure": {
+      "type": "string"
+    },
+    "LineItem": {
+      "type": "object",
+      "properties": {
+        "itemCategories": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemCommodityCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ItemCommodityCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemCost": {
+          "type": "number"
+        },
+        "itemDescription": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ItemDescription"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemMode": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemProductCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ItemProductCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemProductName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ItemProductName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemQty": {
+          "type": "integer"
+        },
+        "itemUnitOfMeasure": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ItemUnitofMeasure"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "itemCost",
+        "itemQty"
+      ],
+      "additionalProperties": false
+    },
+    "OrgParentName": {
+      "type": "string"
+    },
+    "Dbaname": {
+      "type": "string"
+    },
+    "Entrypointfield": {
+      "type": "string"
+    },
+    "Legalname": {
+      "type": "string"
+    },
+    "QueryResponseItemsRecordsItem": {
+      "type": "object",
+      "properties": {
+        "LineItem": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LineItem"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ParentOrgName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OrgParentName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PaypointDbaname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Dbaname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PaypointEntryname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Entrypointfield"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PaypointLegalname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Legalname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "PageIdentifier": {
+      "type": "string"
+    },
+    "Pagesize": {
+      "type": "integer"
+    },
+    "Totalrecords": {
+      "type": "integer"
+    },
+    "QuerySummary": {
+      "type": "object",
+      "properties": {
+        "pageIdentifier": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PageIdentifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pageSize": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Pagesize"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalNetAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalPages": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Totalrecords"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalRecords": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Totalrecords"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "method": {
+      "type": "string"
+    },
+    "storedMethodId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "method"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

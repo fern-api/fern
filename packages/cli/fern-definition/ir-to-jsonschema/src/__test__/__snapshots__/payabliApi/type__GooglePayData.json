@@ -1,0 +1,93 @@
+{
+  "type": "object",
+  "properties": {
+    "data": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/GooglePayStatusData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "isEnabled": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IsEnabled"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "GooglePayMetadata": {
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "redirectUrl": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "redirectDomainName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "GooglePayStatusData": {
+      "type": "object",
+      "properties": {
+        "errorMessage": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "metadata": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/GooglePayMetadata"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "IsEnabled": {
+      "type": "boolean"
+    }
+  }
+}

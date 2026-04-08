@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "enum": [
+    "card",
+    "ach",
+    "cloud",
+    "check",
+    "cash"
+  ],
+  "definitions": {}
+}

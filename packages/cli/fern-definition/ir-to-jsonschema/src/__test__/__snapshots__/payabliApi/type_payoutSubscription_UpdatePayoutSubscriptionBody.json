@@ -1,0 +1,349 @@
+{
+  "type": "object",
+  "properties": {
+    "setPause": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/payoutSubscription.PayoutSetPause"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paymentDetails": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/payoutSubscription.PayoutPaymentDetail"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paymentMethod": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/__moneyOutTypes__.AuthorizePaymentMethod"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "scheduleDetails": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/payoutSubscription.PayoutScheduleDetail"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "payoutSubscription.PayoutSetPause": {
+      "type": "boolean"
+    },
+    "payoutSubscription.PayoutPaymentDetail": {
+      "type": "object",
+      "properties": {
+        "totalAmount": {
+          "type": "number"
+        },
+        "serviceFee": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "currency": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checkNumber": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orderDescription": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orderId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orderIdAlternative": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "paymentDescription": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "settlementDescriptor": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "groupNumber": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payabliTransId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unbundled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "totalAmount"
+      ],
+      "additionalProperties": false
+    },
+    "AchSecCode": {
+      "type": "string"
+    },
+    "AchHolderType": {
+      "type": "string",
+      "enum": [
+        "personal",
+        "business"
+      ]
+    },
+    "Initiator": {
+      "type": "string"
+    },
+    "StoredMethodUsageType": {
+      "type": "string"
+    },
+    "__moneyOutTypes__.AuthorizePaymentMethod": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "achHolder": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "achRouting": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "achAccount": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "achAccountType": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "achCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AchSecCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "achHolderType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AchHolderType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "storedMethodId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "initiator": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Initiator"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "storedMethodUsageType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/StoredMethodUsageType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "additionalProperties": false
+    },
+    "Frequency": {
+      "type": "string",
+      "enum": [
+        "onetime",
+        "weekly",
+        "every2weeks",
+        "every6months",
+        "monthly",
+        "every3months",
+        "annually"
+      ]
+    },
+    "payoutSubscription.PayoutScheduleDetail": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "endDate": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "frequency": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Frequency"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

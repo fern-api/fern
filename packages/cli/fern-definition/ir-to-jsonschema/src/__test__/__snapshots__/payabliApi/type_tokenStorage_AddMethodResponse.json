@@ -1,0 +1,108 @@
+{
+  "type": "object",
+  "properties": {
+    "isSuccess": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IsSuccess"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    },
+    "responseData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/tokenStorage.AddMethodResponseResponseData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "responseText"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "IsSuccess": {
+      "type": "boolean"
+    },
+    "ResponseText": {
+      "type": "string"
+    },
+    "MethodReferenceId": {
+      "type": "string"
+    },
+    "ResultCode": {
+      "type": "integer"
+    },
+    "Resulttext": {
+      "type": "string"
+    },
+    "CustomerId": {
+      "type": "integer"
+    },
+    "tokenStorage.AddMethodResponseResponseData": {
+      "type": "object",
+      "properties": {
+        "referenceId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MethodReferenceId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resultCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ResultCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resultText": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Resulttext"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "customerId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CustomerId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "methodReferenceId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MethodReferenceId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

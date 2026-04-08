@@ -1,0 +1,156 @@
+{
+  "type": "object",
+  "properties": {
+    "multiTier": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "tiers": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CardTypePass"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "visible": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Visible"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "TierItemPass": {
+      "type": "object",
+      "properties": {
+        "amountFeeone-time": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "amountFeeRecurring": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "highPayRange": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lowPayRange": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "percentFeeone-time": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "percentFeeRecurring": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "CardTypePass": {
+      "type": "object",
+      "properties": {
+        "amex": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TierItemPass"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "discover": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TierItemPass"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "masterCard": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TierItemPass"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visa": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TierItemPass"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Visible": {
+      "type": "boolean"
+    }
+  }
+}

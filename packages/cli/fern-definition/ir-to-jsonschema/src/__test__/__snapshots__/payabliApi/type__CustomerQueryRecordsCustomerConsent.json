@@ -1,0 +1,87 @@
+{
+  "type": "object",
+  "properties": {
+    "eCommunication": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CustomerQueryRecordsCustomerConsentECommunication"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sms": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CustomerQueryRecordsCustomerConsentSms"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "OptinStatus": {
+      "type": "integer"
+    },
+    "LastModified": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "CustomerQueryRecordsCustomerConsentECommunication": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OptinStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LastModified"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "CustomerQueryRecordsCustomerConsentSms": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OptinStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LastModified"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

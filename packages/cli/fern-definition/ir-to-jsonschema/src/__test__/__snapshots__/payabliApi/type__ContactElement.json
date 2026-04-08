@@ -1,0 +1,74 @@
+{
+  "type": "object",
+  "properties": {
+    "emailLabel": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "enabled": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Enabled"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "header": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "order": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Order"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paymentIcons": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "phoneLabel": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Enabled": {
+      "type": "boolean"
+    },
+    "Order": {
+      "type": "integer"
+    }
+  }
+}

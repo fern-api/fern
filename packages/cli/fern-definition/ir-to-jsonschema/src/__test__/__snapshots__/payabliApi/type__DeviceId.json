@@ -1,0 +1,8 @@
+{
+  "$ref": "#/definitions/Device",
+  "definitions": {
+    "Device": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "type": "object",
+  "properties": {
+    "isSuccess": {
+      "$ref": "#/definitions/IsSuccess"
+    },
+    "responseCode": {
+      "$ref": "#/definitions/Responsecode"
+    },
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    },
+    "responseData": {
+      "$ref": "#/definitions/__moneyOutTypes__.ReissuePayoutResponseData"
+    }
+  },
+  "required": [
+    "isSuccess",
+    "responseCode",
+    "responseText",
+    "responseData"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "IsSuccess": {
+      "type": "boolean"
+    },
+    "Responsecode": {
+      "type": "integer"
+    },
+    "ResponseText": {
+      "type": "string"
+    },
+    "__moneyOutTypes__.ReissuePayoutResponseData": {
+      "type": "object",
+      "properties": {
+        "transactionId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "originalTransactionId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "transactionId",
+        "status"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "string",
+  "enum": [
+    "onetime",
+    "weekly",
+    "every2weeks",
+    "every6months",
+    "monthly",
+    "every3months",
+    "annually"
+  ],
+  "definitions": {}
+}

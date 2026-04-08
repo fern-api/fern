@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    }
+  },
+  "required": [
+    "responseText"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ResponseText": {
+      "type": "string"
+    }
+  }
+}

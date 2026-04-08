@@ -1,0 +1,307 @@
+{
+  "type": "object",
+  "properties": {
+    "amount": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Element"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "contactUs": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Element"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "details": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Element"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "logo": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Element"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "messageBeforeButton": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LabelElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "page": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PageElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paymentButton": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LabelElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paymentInformation": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Element"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "settings": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SettingElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Enabled": {
+      "type": "boolean"
+    },
+    "Order": {
+      "type": "integer"
+    },
+    "Element": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Enabled"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Order"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "LabelElement": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Enabled"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "label": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Order"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "PageElement": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "enabled": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Enabled"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "header": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Order"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "DisplayProperty": {
+      "type": "object",
+      "properties": {
+        "display": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Fixed": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "SettingElement": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Enabled"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fields": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DisplayProperty"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Order"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sendAuto": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sendManual": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

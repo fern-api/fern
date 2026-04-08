@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "detail": {
+      "type": "string"
+    },
+    "instance": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "status",
+    "detail",
+    "instance"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

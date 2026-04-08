@@ -1,0 +1,1118 @@
+{
+  "type": "object",
+  "properties": {
+    "address1": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AddressNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "address2": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AddressAddtlNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bankData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BankData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "boardingId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BoardingId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "city": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CityNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "contacts": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ContactsField"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "country": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CountryNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "credentials": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PayabliCredentialsPascal"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dbaName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Dbaname"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "externalPaypointID": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ExternalPaypointId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "fax": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PhoneNumber"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "idPaypoint": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Idpaypoint"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "legalName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Legalname"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "parentOrg": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/OrgData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paypointStatus": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Paypointstatus"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "phone": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PhoneNumber"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "serviceData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Services"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "state": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/StateNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "summary": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PaypointSummary"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "timeZone": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Timezone"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "websiteAddress": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Website"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "zip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Zip"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "statementEmail": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/StatementEmailConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "AddressNullable": {
+      "type": "string"
+    },
+    "AddressAddtlNullable": {
+      "type": "string"
+    },
+    "AccountId": {
+      "type": "string"
+    },
+    "BankNickname": {
+      "type": "string"
+    },
+    "BankName": {
+      "type": "string"
+    },
+    "RoutingAccount": {
+      "type": "string"
+    },
+    "AccountNumber": {
+      "type": "string"
+    },
+    "TypeAccount": {
+      "type": "string",
+      "enum": [
+        "Checking",
+        "Savings"
+      ]
+    },
+    "BankAccountHolderName": {
+      "type": "string"
+    },
+    "BankAccountHolderType": {
+      "type": "string",
+      "enum": [
+        "Personal",
+        "Business"
+      ]
+    },
+    "BankAccountFunction": {
+      "type": "integer"
+    },
+    "Bank": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accountId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AccountId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nickname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BankNickname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BankName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "routingAccount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RoutingAccount"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accountNumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AccountNumber"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "typeAccount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TypeAccount"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankAccountHolderName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BankAccountHolderName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankAccountHolderType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BankAccountHolderType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankAccountFunction": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BankAccountFunction"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verified": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "services": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "BankData": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Bank"
+      }
+    },
+    "BoardingId": {
+      "type": "integer"
+    },
+    "CityNullable": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "string"
+    },
+    "AdditionalDataString": {
+      "type": "string"
+    },
+    "Contacts": {
+      "type": "object",
+      "properties": {
+        "contactEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactPhone": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactTitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalDataString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ContactsField": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Contacts"
+      }
+    },
+    "CountryNullable": {
+      "type": "string"
+    },
+    "MinTicket": {
+      "type": "number"
+    },
+    "MaxTicket": {
+      "type": "number"
+    },
+    "GreaterValueAllowed": {
+      "type": "boolean"
+    },
+    "AbsorbDifference": {
+      "type": "boolean"
+    },
+    "AllowOverride": {
+      "type": "boolean"
+    },
+    "PayabliCredentialsPascal": {
+      "type": "object",
+      "properties": {
+        "Service": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Mode": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "MinTicket": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MinTicket"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "MaxTicket": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MaxTicket"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "CfeeFix": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "CfeeFloat": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "CfeeMin": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "CfeeMax": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "AccountId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AccountId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ReferenceId": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptSameDayACH": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Currency": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "GreaterValueAllowed": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/GreaterValueAllowed"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "AbsorbDifference": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AbsorbDifference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "AllowOverride": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AllowOverride"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Dbaname": {
+      "type": "string"
+    },
+    "ExternalPaypointId": {
+      "type": "string"
+    },
+    "PhoneNumber": {
+      "type": "string"
+    },
+    "Idpaypoint": {
+      "type": "integer"
+    },
+    "Legalname": {
+      "type": "string"
+    },
+    "Orgid": {
+      "type": "integer"
+    },
+    "Orgaddress": {
+      "type": "string"
+    },
+    "FileContentFtype": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "doc",
+        "docx",
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+        "txt"
+      ]
+    },
+    "FileContent": {
+      "type": "object",
+      "properties": {
+        "fContent": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filename": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ftype": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FileContentFtype"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "furl": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Orgname": {
+      "type": "string"
+    },
+    "Orgtype": {
+      "type": "integer"
+    },
+    "OrgData": {
+      "type": "object",
+      "properties": {
+        "idOrg": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orgid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orgAddress": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orgaddress"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orgLogo": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FileContent"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orgName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orgname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orgStatus": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orgType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orgtype"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Paypointstatus": {
+      "type": "integer"
+    },
+    "AchSetup": {
+      "type": "object",
+      "properties": {
+        "acceptCCD": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptPPD": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptWeb": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "CardSetup": {
+      "type": "object",
+      "properties": {
+        "acceptAmex": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptDiscover": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptMastercard": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptVisa": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "OdpSetupProcessingRegion": {
+      "type": "string",
+      "enum": [
+        "US",
+        "CA"
+      ]
+    },
+    "OdpSetup": {
+      "type": "object",
+      "properties": {
+        "allowAch": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "allowChecks": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "allowVCard": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "processing_region": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OdpSetupProcessingRegion"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "processor": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "issuerNetworkSettingsId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Services": {
+      "type": "object",
+      "properties": {
+        "ach": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AchSetup"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "card": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CardSetup"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "odp": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OdpSetup"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "StateNullable": {
+      "type": "string"
+    },
+    "PaypointSummary": {
+      "type": "object",
+      "properties": {
+        "amountSubs": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "amountTx": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "countSubs": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "countTx": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "customers": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Timezone": {
+      "type": "integer"
+    },
+    "Website": {
+      "type": "string"
+    },
+    "Zip": {
+      "type": "string"
+    },
+    "StatementEmailConfig": {
+      "type": "object",
+      "properties": {
+        "sender": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recipients": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "transactionId": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "originalTransactionId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "transactionId",
+    "status"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

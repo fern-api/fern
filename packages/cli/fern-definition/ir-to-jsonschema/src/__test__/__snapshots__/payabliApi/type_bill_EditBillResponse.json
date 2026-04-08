@@ -1,0 +1,79 @@
+{
+  "type": "object",
+  "properties": {
+    "responseCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Responsecode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pageIdentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PageIdentifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "roomId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/RoomIdNotInUse"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "isSuccess": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IsSuccess"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    },
+    "responseData": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "responseText"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Responsecode": {
+      "type": "integer"
+    },
+    "PageIdentifier": {
+      "type": "string"
+    },
+    "RoomIdNotInUse": {
+      "type": "integer"
+    },
+    "IsSuccess": {
+      "type": "boolean"
+    },
+    "ResponseText": {
+      "type": "string"
+    }
+  }
+}

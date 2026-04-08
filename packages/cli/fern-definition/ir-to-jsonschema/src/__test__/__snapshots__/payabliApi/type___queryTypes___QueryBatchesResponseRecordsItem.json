@@ -1,0 +1,575 @@
+{
+  "type": "object",
+  "properties": {
+    "IdBatch": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BatchNumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BatchNumber"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "TransferIdentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TransferIdentifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "EventsData": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GeneralEvents"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ConnectorName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BatchDate": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BatchAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BatchFeesAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BatchAuthAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BatchReleasedAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BatchHoldAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BatchReturnedAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BatchRefundAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BatchSplitAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BatchStatus": {
+      "type": "integer"
+    },
+    "BatchRecords": {
+      "type": "integer"
+    },
+    "PaypointId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PaypointId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "PaypointName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PaypointName"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "PaypointDba": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Dbaname"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ParentOrgName": {
+      "$ref": "#/definitions/OrgParentName"
+    },
+    "ParentOrgId": {
+      "type": "integer"
+    },
+    "externalPaypointID": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ExternalPaypointId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "EntryName": {
+      "$ref": "#/definitions/Entrypointfield"
+    },
+    "BankName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BatchType": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Method": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ExpectedDepositDate": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ExpectedDepositDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "DepositDate": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/DepositDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "TransferDate": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Transfer": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/__queryTypes__.QueryBatchesTransfer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "IdBatch",
+    "BatchNumber",
+    "TransferIdentifier",
+    "EventsData",
+    "ConnectorName",
+    "BatchDate",
+    "BatchAmount",
+    "BatchFeesAmount",
+    "BatchAuthAmount",
+    "BatchReleasedAmount",
+    "BatchHoldAmount",
+    "BatchReturnedAmount",
+    "BatchRefundAmount",
+    "BatchSplitAmount",
+    "BatchStatus",
+    "BatchRecords",
+    "PaypointId",
+    "PaypointName",
+    "PaypointDba",
+    "ParentOrgName",
+    "ParentOrgId",
+    "externalPaypointID",
+    "EntryName",
+    "BankName",
+    "BatchType",
+    "Method",
+    "ExpectedDepositDate",
+    "DepositDate",
+    "TransferDate",
+    "Transfer"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "BatchNumber": {
+      "type": "string"
+    },
+    "TransferIdentifier": {
+      "type": "string"
+    },
+    "Source": {
+      "type": "string"
+    },
+    "GeneralEvents": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eventTime": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "extraData": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "array",
+                  "null"
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "refData": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Source"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "PaypointId": {
+      "type": "integer"
+    },
+    "PaypointName": {
+      "type": "string"
+    },
+    "Dbaname": {
+      "type": "string"
+    },
+    "OrgParentName": {
+      "type": "string"
+    },
+    "ExternalPaypointId": {
+      "type": "string"
+    },
+    "Entrypointfield": {
+      "type": "string"
+    },
+    "ExpectedDepositDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "DepositDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "__queryTypes__.QueryBatchesTransfer": {
+      "type": "object",
+      "properties": {
+        "TransferId": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "TransferDate": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Processor": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "TransferStatus": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "GrossAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ChargeBackAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ReturnedAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "RefundAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "HoldAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ReleasedAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "BillingFeesAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ThirdPartyPaidAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "AdjustmentsAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "NetFundedAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "TransferId",
+        "TransferDate",
+        "Processor",
+        "TransferStatus",
+        "GrossAmount",
+        "ChargeBackAmount",
+        "ReturnedAmount",
+        "RefundAmount",
+        "HoldAmount",
+        "ReleasedAmount",
+        "BillingFeesAmount",
+        "ThirdPartyPaidAmount",
+        "AdjustmentsAmount",
+        "NetFundedAmount"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "type": "object",
+  "properties": {
+    "ftype": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/FileContentFtype"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "filename": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "furl": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "fContent": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "FileContentFtype": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "doc",
+        "docx",
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+        "txt"
+      ]
+    }
+  }
+}

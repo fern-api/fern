@@ -1,0 +1,240 @@
+{
+  "type": "object",
+  "properties": {
+    "Records": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QueryBoardingLinksResponseRecordsItem"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Summary": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/QuerySummary"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "AcceptOauth": {
+      "type": "boolean"
+    },
+    "AcceptRegister": {
+      "type": "boolean"
+    },
+    "EntryAttributes": {
+      "type": "string"
+    },
+    "LastModified": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "OrgParentName": {
+      "type": "string"
+    },
+    "ReferenceName": {
+      "type": "string"
+    },
+    "ReferenceTemplateId": {
+      "type": "integer"
+    },
+    "TemplateCode": {
+      "type": "string"
+    },
+    "TemplateName": {
+      "type": "string"
+    },
+    "QueryBoardingLinksResponseRecordsItem": {
+      "type": "object",
+      "properties": {
+        "AcceptOauth": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AcceptOauth"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "AcceptRegister": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AcceptRegister"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "EntryAttributes": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/EntryAttributes"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Id": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "LastUpdated": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LastModified"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "OrgParentName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OrgParentName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ReferenceName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReferenceName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ReferenceTemplateId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReferenceTemplateId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "TemplateCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "TemplateName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "PageIdentifier": {
+      "type": "string"
+    },
+    "Pagesize": {
+      "type": "integer"
+    },
+    "Totalrecords": {
+      "type": "integer"
+    },
+    "QuerySummary": {
+      "type": "object",
+      "properties": {
+        "pageIdentifier": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PageIdentifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pageSize": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Pagesize"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalNetAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalPages": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Totalrecords"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalRecords": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Totalrecords"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

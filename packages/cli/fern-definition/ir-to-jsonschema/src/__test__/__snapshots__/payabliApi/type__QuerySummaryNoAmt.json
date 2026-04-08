@@ -1,0 +1,57 @@
+{
+  "type": "object",
+  "properties": {
+    "pageIdentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PageIdentifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pageSize": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Pagesize"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "totalPages": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Totalrecords"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "totalRecords": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Totalrecords"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "PageIdentifier": {
+      "type": "string"
+    },
+    "Pagesize": {
+      "type": "integer"
+    },
+    "Totalrecords": {
+      "type": "integer"
+    }
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "type": "object",
+  "properties": {
+    "achReturns": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "adjustments": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billingFees": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "chargebacks": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "grossTransferAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "releaseAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "thirdPartyPaid": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "totalNetAmountTransfer": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "splitAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "serviceFees": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "netBatchAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "transferAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "refunds": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "heldAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "totalRecords": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Totalrecords"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "totalAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "totalNetAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "totalPages": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Totalpages"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pageSize": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Pagesize"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pageidentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PageIdentifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "achReturns",
+    "adjustments",
+    "billingFees",
+    "chargebacks",
+    "grossTransferAmount",
+    "releaseAmount",
+    "thirdPartyPaid",
+    "totalNetAmountTransfer",
+    "splitAmount",
+    "serviceFees",
+    "netBatchAmount",
+    "transferAmount",
+    "refunds",
+    "heldAmount",
+    "totalRecords",
+    "totalAmount",
+    "totalNetAmount",
+    "totalPages",
+    "pageSize",
+    "pageidentifier"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Totalrecords": {
+      "type": "integer"
+    },
+    "Totalpages": {
+      "type": "integer"
+    },
+    "Pagesize": {
+      "type": "integer"
+    },
+    "PageIdentifier": {
+      "type": "string"
+    }
+  }
+}

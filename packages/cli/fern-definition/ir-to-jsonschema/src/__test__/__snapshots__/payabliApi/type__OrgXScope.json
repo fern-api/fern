@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "orgEntry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgentryname"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgid"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgtype"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Orgentryname": {
+      "type": "string"
+    },
+    "Orgid": {
+      "type": "integer"
+    },
+    "Orgtype": {
+      "type": "integer"
+    }
+  }
+}

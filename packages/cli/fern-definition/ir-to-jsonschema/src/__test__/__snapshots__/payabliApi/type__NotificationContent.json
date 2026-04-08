@@ -1,0 +1,214 @@
+{
+  "type": "object",
+  "properties": {
+    "eventType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NotificationContentEventType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "fileFormat": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NotificationContentFileFormat"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "internalData": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KeyValueDuo"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "reportName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NotificationContentReportName"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "timeZone": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Timezone"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "transactionId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "webHeaderParameters": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KeyValueDuo"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "NotificationContentEventType": {
+      "type": "string",
+      "enum": [
+        "ApprovedPayment",
+        "AuthorizedPayment",
+        "DeclinedPayment",
+        "OriginatedPayment",
+        "SettledPayment",
+        "SubscriptionCreated",
+        "SubscriptionUpdated",
+        "SubscriptionCanceled",
+        "SubscriptionCompleted",
+        "FundedPayment",
+        "VoidedPayment",
+        "RefundedPayment",
+        "HoldTransaction",
+        "ReleasedTransaction",
+        "HoldBatch",
+        "ReleasedBatch",
+        "TransferDisabledCreditFund",
+        "TransferDisabledDebitFund",
+        "TransferNotAvailableBalance",
+        "TransferReturn",
+        "TransferSuccess",
+        "TransferSuspended",
+        "TransferError",
+        "SendReceipt",
+        "RecoveredTransaction",
+        "CreatedApplication",
+        "ApprovedApplication",
+        "FailedBoardingApplication",
+        "SubmittedApplication",
+        "UnderWritingApplication",
+        "ActivatedMerchant",
+        "ReceivedChargeBack",
+        "ChargebackUpdated",
+        "ReceivedRetrieval",
+        "RetrievalUpdated",
+        "ReceivedAchReturn",
+        "HoldingApplication",
+        "DeclinedApplication",
+        "BoardingApplication",
+        "FraudAlert",
+        "InvoiceSent",
+        "InvoicePaid",
+        "InvoiceCreated",
+        "BillPaid",
+        "BillApproved",
+        "BillDisApproved",
+        "BillCanceled",
+        "BillProcessing",
+        "CardCreated",
+        "CardActivated",
+        "CardDeactivated",
+        "CardExpired",
+        "CardExpiring",
+        "CardLimitUpdated",
+        "BatchClosed",
+        "BatchNotClosed",
+        "PayOutFunded",
+        "PayOutProcessed",
+        "PayOutCanceled",
+        "PayOutPaid",
+        "PayOutReturned",
+        "PayoutSubscriptionCreated",
+        "PayoutSubscriptionUpdated",
+        "PayoutSubscriptionCanceled",
+        "PayoutSubscriptionCompleted",
+        "PayoutSubscriptionReminder",
+        "importFileReceived",
+        "importFileProcessed",
+        "importFileError",
+        "exportFileSent",
+        "exportFileError",
+        "FailedEmailNotification",
+        "FailedWebNotification",
+        "FailedSMSNotification",
+        "UserPasswordExpiring",
+        "UserPasswordExpired",
+        "TransactionNotFound",
+        "SystemAlert",
+        "Report"
+      ]
+    },
+    "NotificationContentFileFormat": {
+      "type": "string",
+      "enum": [
+        "json",
+        "csv",
+        "xlsx"
+      ]
+    },
+    "KeyValueDuo": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "NotificationContentReportName": {
+      "type": "string",
+      "enum": [
+        "Transaction",
+        "Settlement",
+        "Boarding",
+        "Returned"
+      ]
+    },
+    "Timezone": {
+      "type": "integer"
+    }
+  }
+}

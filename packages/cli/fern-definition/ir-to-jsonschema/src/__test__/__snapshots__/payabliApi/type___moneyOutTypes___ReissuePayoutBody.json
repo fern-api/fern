@@ -1,0 +1,83 @@
+{
+  "type": "object",
+  "properties": {
+    "paymentMethod": {
+      "$ref": "#/definitions/__moneyOutTypes__.ReissuePaymentMethod"
+    }
+  },
+  "required": [
+    "paymentMethod"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "AchHolderType": {
+      "type": "string",
+      "enum": [
+        "personal",
+        "business"
+      ]
+    },
+    "__moneyOutTypes__.ReissuePaymentMethod": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "achHolder": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "achRouting": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "achAccount": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "achAccountType": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "achHolderType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AchHolderType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "type": "object",
+  "properties": {
+    "idOrg": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgid"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgAddress": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgaddress"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgLogo": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/FileContent"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgname"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgStatus": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgtype"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Orgid": {
+      "type": "integer"
+    },
+    "Orgaddress": {
+      "type": "string"
+    },
+    "FileContentFtype": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "doc",
+        "docx",
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+        "txt"
+      ]
+    },
+    "FileContent": {
+      "type": "object",
+      "properties": {
+        "fContent": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filename": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ftype": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FileContentFtype"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "furl": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Orgname": {
+      "type": "string"
+    },
+    "Orgtype": {
+      "type": "integer"
+    }
+  }
+}

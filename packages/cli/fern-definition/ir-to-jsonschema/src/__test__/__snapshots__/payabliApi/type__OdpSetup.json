@@ -1,0 +1,75 @@
+{
+  "type": "object",
+  "properties": {
+    "allowAch": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "allowChecks": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "allowVCard": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "processing_region": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/OdpSetupProcessingRegion"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "processor": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "issuerNetworkSettingsId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "OdpSetupProcessingRegion": {
+      "type": "string",
+      "enum": [
+        "US",
+        "CA"
+      ]
+    }
+  }
+}

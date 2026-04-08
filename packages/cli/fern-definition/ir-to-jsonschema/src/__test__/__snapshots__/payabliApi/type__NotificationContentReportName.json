@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "enum": [
+    "Transaction",
+    "Settlement",
+    "Boarding",
+    "Returned"
+  ],
+  "definitions": {}
+}

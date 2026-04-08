@@ -1,0 +1,576 @@
+{
+  "type": "object",
+  "properties": {
+    "visble": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Visible"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "subFooter": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SubFooter"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "subHeader": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SubHeader"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "depositBank": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BankSection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "minimumDocuments": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "uploadDocuments": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bankData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BankSection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "termsAndConditions": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/DocumentSectionTermsAndConditions"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "signer": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SignerSection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "visible": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Visible"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "withdrawalBank": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BankSection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Visible": {
+      "type": "boolean"
+    },
+    "SubFooter": {
+      "type": "string"
+    },
+    "SubHeader": {
+      "type": "string"
+    },
+    "PosCol": {
+      "type": "integer"
+    },
+    "PosRow": {
+      "type": "integer"
+    },
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "ValueTemplates": {
+      "type": "string"
+    },
+    "TemplateElement": {
+      "type": "object",
+      "properties": {
+        "posCol": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosCol"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "posRow": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosRow"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readOnly": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "BankSection": {
+      "type": "object",
+      "properties": {
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accountNumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accountType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "routingNumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "DocumentSectionTermsAndConditionsTcLinksItem": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "DocumentSectionTermsAndConditions": {
+      "type": "object",
+      "properties": {
+        "tcLinks": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DocumentSectionTermsAndConditionsTcLinksItem"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "RequiredElement": {
+      "type": "boolean"
+    },
+    "TemplateAdditionalDataField": {
+      "type": "object",
+      "properties": {
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readOnly": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "required": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RequiredElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "posRow": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosRow"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "posCol": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosCol"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "label": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "TemplateAdditionalDataSection": {
+      "type": "object",
+      "properties": {
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/TemplateAdditionalDataField"
+          }
+        }
+      },
+      "required": [
+        "fields"
+      ],
+      "additionalProperties": false
+    },
+    "SignerSection": {
+      "type": "object",
+      "properties": {
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ssn": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dob": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "phone": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "email": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "address": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "address1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "city": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "country": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "zip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptance": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "signedDocumentReference": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateAdditionalDataSection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

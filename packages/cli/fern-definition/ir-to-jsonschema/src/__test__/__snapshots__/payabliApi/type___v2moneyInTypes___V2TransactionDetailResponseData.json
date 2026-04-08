@@ -1,0 +1,177 @@
+{
+  "type": "object",
+  "properties": {
+    "resultCode": {
+      "$ref": "#/definitions/ResultCodev2"
+    },
+    "resultCodeText": {
+      "$ref": "#/definitions/ResultCodeText"
+    },
+    "response": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responsetext": {
+      "$ref": "#/definitions/Resulttext"
+    },
+    "authcode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Authcode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "transactionid": {
+      "type": "string"
+    },
+    "avsresponse": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AvsResponse"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "avsresponse_text": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AvsResponseText"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cvvresponse": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CvvResponse"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cvvresponse_text": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CvvResponseText"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orderid": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/OrderId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "type": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "response_code": {
+      "type": "string"
+    },
+    "response_code_text": {
+      "type": "string"
+    },
+    "customer_vault_id": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CustomerVaultId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "emv_auth_response_data": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/EmvAuthResponseData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "resultCode",
+    "resultCodeText",
+    "response",
+    "responsetext",
+    "authcode",
+    "transactionid",
+    "avsresponse",
+    "avsresponse_text",
+    "cvvresponse",
+    "cvvresponse_text",
+    "orderid",
+    "type",
+    "response_code",
+    "response_code_text",
+    "customer_vault_id",
+    "emv_auth_response_data"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ResultCodev2": {
+      "type": "string"
+    },
+    "ResultCodeText": {
+      "type": "string"
+    },
+    "Resulttext": {
+      "type": "string"
+    },
+    "Authcode": {
+      "type": "string"
+    },
+    "AvsResponse": {
+      "type": "string"
+    },
+    "AvsResponseText": {
+      "type": "string"
+    },
+    "CvvResponse": {
+      "type": "string"
+    },
+    "CvvResponseText": {
+      "type": "string"
+    },
+    "OrderId": {
+      "type": "string"
+    },
+    "CustomerVaultId": {
+      "type": "string"
+    },
+    "EmvAuthResponseData": {
+      "type": "string"
+    }
+  }
+}

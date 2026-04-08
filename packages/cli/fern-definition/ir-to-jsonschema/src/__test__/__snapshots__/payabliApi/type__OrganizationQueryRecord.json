@@ -1,0 +1,974 @@
+{
+  "type": "object",
+  "properties": {
+    "services": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrganizationQueryRecordServicesItem"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billingInfo": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Instrument"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "contacts": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ContactsField"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "createdAt": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "hasBilling": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "hasResidual": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "idOrg": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgid"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "isRoot": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IsRoot"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgAddress": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgaddress"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgCity": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgcity"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgCountry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgcountry"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgEntryName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgentryname"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgidstring"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgLogo": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/FileContent"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgname"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgParentId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/OrgParentId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgParentName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/OrgParentName"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgState": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgstate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgTimezone": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgtimezone"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgtype"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgWebsite": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgwebsite"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgZip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orgzip"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "recipientEmailNotification": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/RecipientEmailNotification"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "replyToEmail": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ReplyToEmail"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "resumable": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Resumable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "summary": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SummaryOrg"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "users": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserQueryRecord"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "OrganizationQueryRecordServicesItem": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "enabled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "monthlyCost": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reseller": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "setupCost": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "txCost": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "txPercentCost": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Achaccount": {
+      "type": "string"
+    },
+    "Achrouting": {
+      "type": "string"
+    },
+    "BillingAddressNullable": {
+      "type": "string"
+    },
+    "BillingCityNullable": {
+      "type": "string"
+    },
+    "BillingCountryNullable": {
+      "type": "string"
+    },
+    "BillingStateNullable": {
+      "type": "string"
+    },
+    "BillingZip": {
+      "type": "string"
+    },
+    "Instrument": {
+      "type": "object",
+      "properties": {
+        "achAccount": {
+          "$ref": "#/definitions/Achaccount"
+        },
+        "achRouting": {
+          "$ref": "#/definitions/Achrouting"
+        },
+        "billingAddress": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BillingAddressNullable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "billingCity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BillingCityNullable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "billingCountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BillingCountryNullable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "billingState": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BillingStateNullable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "billingZip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BillingZip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "achAccount",
+        "achRouting"
+      ],
+      "additionalProperties": false
+    },
+    "Email": {
+      "type": "string"
+    },
+    "AdditionalDataString": {
+      "type": "string"
+    },
+    "Contacts": {
+      "type": "object",
+      "properties": {
+        "contactEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactPhone": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactTitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalDataString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ContactsField": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Contacts"
+      }
+    },
+    "CreatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "Orgid": {
+      "type": "integer"
+    },
+    "IsRoot": {
+      "type": "boolean"
+    },
+    "Orgaddress": {
+      "type": "string"
+    },
+    "Orgcity": {
+      "type": "string"
+    },
+    "Orgcountry": {
+      "type": "string"
+    },
+    "Orgentryname": {
+      "type": "string"
+    },
+    "Orgidstring": {
+      "type": "string"
+    },
+    "FileContentFtype": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "doc",
+        "docx",
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+        "txt"
+      ]
+    },
+    "FileContent": {
+      "type": "object",
+      "properties": {
+        "fContent": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filename": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ftype": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FileContentFtype"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "furl": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Orgname": {
+      "type": "string"
+    },
+    "OrgParentId": {
+      "type": "integer"
+    },
+    "OrgParentName": {
+      "type": "string"
+    },
+    "Orgstate": {
+      "type": "string"
+    },
+    "Orgtimezone": {
+      "type": "integer"
+    },
+    "Orgtype": {
+      "type": "integer"
+    },
+    "Orgwebsite": {
+      "type": "string"
+    },
+    "Orgzip": {
+      "type": "string"
+    },
+    "RecipientEmailNotification": {
+      "type": "boolean"
+    },
+    "ReplyToEmail": {
+      "type": "string"
+    },
+    "Resumable": {
+      "type": "boolean"
+    },
+    "SummaryOrg": {
+      "type": "object",
+      "properties": {
+        "amountSubs": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "amountTx": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "childOrgs": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "childPaypoints": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "countSubs": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "countTx": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "UsrAccess": {
+      "type": "object",
+      "properties": {
+        "roleLabel": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "roleValue": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Language": {
+      "type": "string"
+    },
+    "NameUser": {
+      "type": "string"
+    },
+    "PhoneNumber": {
+      "type": "string"
+    },
+    "OrgXScope": {
+      "type": "object",
+      "properties": {
+        "orgEntry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orgentryname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orgId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orgid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orgType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orgtype"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Timezone": {
+      "type": "integer"
+    },
+    "Mfa": {
+      "type": "boolean"
+    },
+    "MfaMode": {
+      "type": "integer"
+    },
+    "UsrStatus": {
+      "type": "integer"
+    },
+    "UserQueryRecord": {
+      "type": "object",
+      "properties": {
+        "Access": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UsrAccess"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "AdditionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalDataString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "createdAt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CreatedAt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Email": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "language": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Language"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lastAccess": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NameUser"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Phone": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PhoneNumber"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Scope": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OrgXScope"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snData": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snIdentifier": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snProvider": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "timeZone": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Timezone"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "userId": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "UsrMFA": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mfa"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "UsrMFAMode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MfaMode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "UsrStatus": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/UsrStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,1052 @@
+{
+  "type": "object",
+  "properties": {
+    "accountingField1": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AccountingField"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "accountingField2": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AccountingField"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "additionalData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AdditionalDataString"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "attachments": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Attachments"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billDate": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billItems": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Billitems"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billNumber": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "comments": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Comments"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "discount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dueDate": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "endDate": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "frequency": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Frequency"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "lotNumber": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mode": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "netAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "scheduledOptions": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/bill.BillOutDataScheduledOptions"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Billstatus"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "terms": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Terms"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "totalAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "vendor": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/VendorData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "AccountingField": {
+      "type": "string"
+    },
+    "AdditionalDataString": {
+      "type": "string"
+    },
+    "FileContentFtype": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "doc",
+        "docx",
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+        "txt"
+      ]
+    },
+    "FileContent": {
+      "type": "object",
+      "properties": {
+        "fContent": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filename": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ftype": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FileContentFtype"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "furl": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Attachments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/FileContent"
+      }
+    },
+    "ItemCommodityCode": {
+      "type": "string"
+    },
+    "ItemDescription": {
+      "type": "string"
+    },
+    "ItemProductCode": {
+      "type": "string"
+    },
+    "ItemProductName": {
+      "type": "string"
+    },
+    "ItemUnitofMeasure": {
+      "type": "string"
+    },
+    "BillItem": {
+      "type": "object",
+      "properties": {
+        "itemCategories": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemCommodityCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ItemCommodityCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemCost": {
+          "type": "number"
+        },
+        "itemDescription": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ItemDescription"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemMode": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemProductCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ItemProductCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemProductName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ItemProductName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemQty": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemTaxAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemTaxRate": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemTotalAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemUnitOfMeasure": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ItemUnitofMeasure"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "itemCost"
+      ],
+      "additionalProperties": false
+    },
+    "Billitems": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/BillItem"
+      }
+    },
+    "Comments": {
+      "type": "string"
+    },
+    "Frequency": {
+      "type": "string",
+      "enum": [
+        "onetime",
+        "weekly",
+        "every2weeks",
+        "every6months",
+        "monthly",
+        "every3months",
+        "annually"
+      ]
+    },
+    "bill.BillOutDataScheduledOptions": {
+      "type": "object",
+      "properties": {
+        "storedMethodId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Billstatus": {
+      "type": "integer"
+    },
+    "Terms": {
+      "type": "string"
+    },
+    "VendorNumber": {
+      "type": "string"
+    },
+    "AdditionalData": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "AddressNullable": {
+      "type": "string"
+    },
+    "AddressAddtlNullable": {
+      "type": "string"
+    },
+    "BankAccountHolderName": {
+      "type": "string"
+    },
+    "BankAccountHolderType": {
+      "type": "string",
+      "enum": [
+        "Personal",
+        "Business"
+      ]
+    },
+    "BankName": {
+      "type": "string"
+    },
+    "RoutingAccount": {
+      "type": "string"
+    },
+    "TypeAccount": {
+      "type": "string",
+      "enum": [
+        "Checking",
+        "Savings"
+      ]
+    },
+    "BillingData": {
+      "type": "object",
+      "properties": {
+        "accountNumber": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankAccountFunction": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankAccountHolderName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BankAccountHolderName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankAccountHolderType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BankAccountHolderType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BankName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "id": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "routingAccount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RoutingAccount"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "typeAccount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TypeAccount"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Email": {
+      "type": "string"
+    },
+    "Contacts": {
+      "type": "object",
+      "properties": {
+        "contactEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactPhone": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactTitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalDataString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ContactsField": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Contacts"
+      }
+    },
+    "VendorEin": {
+      "type": "string"
+    },
+    "LocationCode": {
+      "type": "string"
+    },
+    "Mcc": {
+      "type": "string"
+    },
+    "VendorName1": {
+      "type": "string"
+    },
+    "VendorName2": {
+      "type": "string"
+    },
+    "PayeeName": {
+      "type": "string"
+    },
+    "VendorPaymentMethodString": {
+      "type": "string"
+    },
+    "VendorPhone": {
+      "type": "string"
+    },
+    "Remitaddress1": {
+      "type": "string"
+    },
+    "Remitaddress2": {
+      "type": "string"
+    },
+    "Remitcity": {
+      "type": "string"
+    },
+    "Remitcountry": {
+      "type": "string"
+    },
+    "RemitEmail": {
+      "type": "string"
+    },
+    "Remitstate": {
+      "type": "string"
+    },
+    "Remitzip": {
+      "type": "string"
+    },
+    "Vendorstatus": {
+      "type": "integer"
+    },
+    "VendorData": {
+      "type": "object",
+      "properties": {
+        "vendorNumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/VendorNumber"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "AdditionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "address1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AddressNullable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "address2": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AddressAddtlNullable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "billingData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BillingData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "city": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contacts": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ContactsField"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "country": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "customField1": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "customField2": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "customerVendorAccount": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ein": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/VendorEin"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "email": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "internalReferenceId": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "locationCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LocationCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mcc": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mcc"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/VendorName1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name2": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/VendorName2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payeeName1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PayeeName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payeeName2": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PayeeName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "paymentMethod": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/VendorPaymentMethodString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "phone": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/VendorPhone"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remitAddress1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Remitaddress1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remitAddress2": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Remitaddress2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remitCity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Remitcity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remitCountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Remitcountry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remitEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RemitEmail"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remitState": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Remitstate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remitZip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Remitzip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vendorStatus": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Vendorstatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "zip": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

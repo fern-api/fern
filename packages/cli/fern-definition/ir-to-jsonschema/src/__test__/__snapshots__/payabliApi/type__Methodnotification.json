@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "enum": [
+    "email",
+    "sms",
+    "web",
+    "report-email",
+    "report-web"
+  ],
+  "definitions": {}
+}

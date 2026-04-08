@@ -1,0 +1,608 @@
+{
+  "type": "object",
+  "properties": {
+    "customerData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PayorDataRequest"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "entryPoint": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Entrypointfield"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "fallbackAuth": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "fallbackAuthAmount": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "methodDescription": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paymentMethod": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/tokenStorage.RequestTokenStoragePaymentMethod"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "vendorData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/tokenStorage.VendorDataRequest"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "source": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Source"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "subdomain": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Subdomain"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "AdditionalData": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "BillingAddressNullable": {
+      "type": "string"
+    },
+    "BillingAddressAddtlNullable": {
+      "type": "string"
+    },
+    "BillingCityNullable": {
+      "type": "string"
+    },
+    "BillingCountryNullable": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "string"
+    },
+    "PhoneNumber": {
+      "type": "string"
+    },
+    "BillingStateNullable": {
+      "type": "string"
+    },
+    "BillingZip": {
+      "type": "string"
+    },
+    "CustomerId": {
+      "type": "integer"
+    },
+    "CustomerNumberNullable": {
+      "type": "string"
+    },
+    "Identifierfields": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "Shippingaddress": {
+      "type": "string"
+    },
+    "Shippingaddressadditional": {
+      "type": "string"
+    },
+    "Shippingcity": {
+      "type": "string"
+    },
+    "Shippingcountry": {
+      "type": "string"
+    },
+    "Shippingstate": {
+      "type": "string"
+    },
+    "Shippingzip": {
+      "type": "string"
+    },
+    "PayorDataRequest": {
+      "type": "object",
+      "properties": {
+        "additionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "billingAddress1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BillingAddressNullable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "billingAddress2": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BillingAddressAddtlNullable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "billingCity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BillingCityNullable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "billingCountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BillingCountryNullable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "billingEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "billingPhone": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PhoneNumber"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "billingState": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BillingStateNullable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "billingZip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BillingZip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "company": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "customerId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CustomerId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "customerNumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CustomerNumberNullable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "firstName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "identifierFields": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Identifierfields"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lastName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shippingAddress1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingaddress"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shippingAddress2": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingaddressadditional"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shippingCity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingcity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shippingCountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingcountry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shippingState": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingstate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shippingZip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingzip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Entrypointfield": {
+      "type": "string"
+    },
+    "Cardcvv": {
+      "type": "string"
+    },
+    "Cardexp": {
+      "type": "string"
+    },
+    "Cardholder": {
+      "type": "string"
+    },
+    "Cardnumber": {
+      "type": "string"
+    },
+    "Cardzip": {
+      "type": "string"
+    },
+    "tokenStorage.TokenizeCard": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "cardcvv": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Cardcvv"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cardexp": {
+          "$ref": "#/definitions/Cardexp"
+        },
+        "cardHolder": {
+          "$ref": "#/definitions/Cardholder"
+        },
+        "cardnumber": {
+          "$ref": "#/definitions/Cardnumber"
+        },
+        "cardzip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Cardzip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "method",
+        "cardexp",
+        "cardHolder",
+        "cardnumber"
+      ],
+      "additionalProperties": false
+    },
+    "Achaccount": {
+      "type": "string"
+    },
+    "Achaccounttype": {
+      "type": "string",
+      "enum": [
+        "Checking",
+        "Savings"
+      ]
+    },
+    "AchSecCode": {
+      "type": "string"
+    },
+    "AchHolderType": {
+      "type": "string",
+      "enum": [
+        "personal",
+        "business"
+      ]
+    },
+    "Achrouting": {
+      "type": "string"
+    },
+    "Device": {
+      "type": "string"
+    },
+    "tokenStorage.TokenizeACH": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "achAccount": {
+          "$ref": "#/definitions/Achaccount"
+        },
+        "achAccountType": {
+          "$ref": "#/definitions/Achaccounttype"
+        },
+        "achCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AchSecCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "achHolder": {
+          "type": "string"
+        },
+        "achHolderType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AchHolderType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "achRouting": {
+          "$ref": "#/definitions/Achrouting"
+        },
+        "device": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Device"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "method",
+        "achAccount",
+        "achAccountType",
+        "achHolder",
+        "achRouting"
+      ],
+      "additionalProperties": false
+    },
+    "tokenStorage.ConvertToken": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "tokenId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "method",
+        "tokenId"
+      ],
+      "additionalProperties": false
+    },
+    "tokenStorage.RequestTokenStoragePaymentMethod": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/tokenStorage.TokenizeCard",
+          "description": "Tokenize a card payment method."
+        },
+        {
+          "$ref": "#/definitions/tokenStorage.TokenizeACH",
+          "description": "Tokenize an ACH payment method."
+        },
+        {
+          "$ref": "#/definitions/tokenStorage.ConvertToken",
+          "description": "Converts a temporary token to a permanent token. "
+        }
+      ]
+    },
+    "tokenStorage.VendorDataRequest": {
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vendorNumber": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Source": {
+      "type": "string"
+    },
+    "Subdomain": {
+      "type": "string"
+    }
+  }
+}

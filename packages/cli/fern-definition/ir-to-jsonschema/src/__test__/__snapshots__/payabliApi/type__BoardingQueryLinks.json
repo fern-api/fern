@@ -1,0 +1,139 @@
+{
+  "type": "object",
+  "properties": {
+    "acceptOauth": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AcceptOauth"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "acceptRegister": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AcceptRegister"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "entryAttributes": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/EntryAttributes"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BoardingLinkId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "lastUpdated": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LastModified"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orgParentName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/OrgParentName"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "referenceName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ReferenceName"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "referenceTemplateId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ReferenceTemplateId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "templateCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateCode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "templateName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateName"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "AcceptOauth": {
+      "type": "boolean"
+    },
+    "AcceptRegister": {
+      "type": "boolean"
+    },
+    "EntryAttributes": {
+      "type": "string"
+    },
+    "BoardingLinkId": {
+      "type": "integer"
+    },
+    "LastModified": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "OrgParentName": {
+      "type": "string"
+    },
+    "ReferenceName": {
+      "type": "string"
+    },
+    "ReferenceTemplateId": {
+      "type": "integer"
+    },
+    "TemplateCode": {
+      "type": "string"
+    },
+    "TemplateName": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "anyOf": [
+    {
+      "type": "integer"
+    },
+    {
+      "type": "string"
+    }
+  ],
+  "definitions": {}
+}

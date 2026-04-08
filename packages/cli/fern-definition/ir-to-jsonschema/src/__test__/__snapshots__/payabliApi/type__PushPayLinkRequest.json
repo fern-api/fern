@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "properties": {
+    "channel": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "channel": {
+          "const": "email"
+        },
+        "additionalEmails": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attachFile": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "channel"
+      ]
+    },
+    {
+      "properties": {
+        "channel": {
+          "const": "sms"
+        }
+      },
+      "required": [
+        "channel"
+      ]
+    }
+  ],
+  "definitions": {}
+}

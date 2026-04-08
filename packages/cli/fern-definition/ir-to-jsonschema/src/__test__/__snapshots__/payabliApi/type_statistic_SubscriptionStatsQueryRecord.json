@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "interval": {
+      "type": "string"
+    },
+    "count": {
+      "type": "integer"
+    },
+    "volume": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "interval",
+    "count",
+    "volume"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

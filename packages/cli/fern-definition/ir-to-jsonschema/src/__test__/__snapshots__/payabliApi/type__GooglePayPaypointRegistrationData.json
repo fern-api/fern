@@ -1,0 +1,80 @@
+{
+  "type": "object",
+  "properties": {
+    "entry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Entry"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "isEnabled": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IsEnabled"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "walletType": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "walletData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/GoogleWalletData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Entry": {
+      "type": "string"
+    },
+    "IsEnabled": {
+      "type": "boolean"
+    },
+    "GoogleWalletData": {
+      "type": "object",
+      "properties": {
+        "gatewayMerchantId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "gatewayId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

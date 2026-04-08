@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "properties": {
+    "initiator": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Initiator"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "method": {
+      "$ref": "#/definitions/PayMethodStoredMethodMethod"
+    },
+    "storedMethodId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Storedmethodid"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "storedMethodUsageType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/StoredMethodUsageType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "method"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Initiator": {
+      "type": "string"
+    },
+    "PayMethodStoredMethodMethod": {
+      "type": "string",
+      "enum": [
+        "card",
+        "ach"
+      ]
+    },
+    "Storedmethodid": {
+      "type": "string"
+    },
+    "StoredMethodUsageType": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "type": "object",
+  "properties": {
+    "itemCategories": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "itemCommodityCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ItemCommodityCode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "itemCost": {
+      "type": "number"
+    },
+    "itemDescription": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ItemDescription"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "itemMode": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "itemProductCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ItemProductCode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "itemProductName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ItemProductName"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "itemQty": {
+      "type": "integer"
+    },
+    "itemUnitOfMeasure": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ItemUnitofMeasure"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "itemCost",
+    "itemQty"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ItemCommodityCode": {
+      "type": "string"
+    },
+    "ItemDescription": {
+      "type": "string"
+    },
+    "ItemProductCode": {
+      "type": "string"
+    },
+    "ItemProductName": {
+      "type": "string"
+    },
+    "ItemUnitofMeasure": {
+      "type": "string"
+    }
+  }
+}

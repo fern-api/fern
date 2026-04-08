@@ -1,0 +1,66 @@
+{
+  "type": "object",
+  "properties": {
+    "totalPages": {
+      "$ref": "#/definitions/Totalpages"
+    },
+    "totalRecords": {
+      "$ref": "#/definitions/Totalrecords"
+    },
+    "totalAmount": {
+      "type": "number"
+    },
+    "totalactive": {
+      "type": "integer"
+    },
+    "totalamounteactive": {
+      "type": "number"
+    },
+    "totalbalanceactive": {
+      "type": "number"
+    },
+    "pageIdentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PageIdentifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pageSize": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Pagesize"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "totalPages",
+    "totalRecords",
+    "totalAmount",
+    "totalactive",
+    "totalamounteactive",
+    "totalbalanceactive"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Totalpages": {
+      "type": "integer"
+    },
+    "Totalrecords": {
+      "type": "integer"
+    },
+    "PageIdentifier": {
+      "type": "string"
+    },
+    "Pagesize": {
+      "type": "integer"
+    }
+  }
+}

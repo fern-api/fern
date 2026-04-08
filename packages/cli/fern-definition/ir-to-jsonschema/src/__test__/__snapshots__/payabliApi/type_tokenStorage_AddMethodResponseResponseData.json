@@ -1,0 +1,70 @@
+{
+  "type": "object",
+  "properties": {
+    "referenceId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/MethodReferenceId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "resultCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ResultCode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "resultText": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Resulttext"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "customerId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CustomerId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "methodReferenceId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/MethodReferenceId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "MethodReferenceId": {
+      "type": "string"
+    },
+    "ResultCode": {
+      "type": "integer"
+    },
+    "Resulttext": {
+      "type": "string"
+    },
+    "CustomerId": {
+      "type": "integer"
+    }
+  }
+}

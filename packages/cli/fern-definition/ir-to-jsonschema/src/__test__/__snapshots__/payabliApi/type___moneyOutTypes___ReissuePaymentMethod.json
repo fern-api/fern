@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "properties": {
+    "method": {
+      "type": "string"
+    },
+    "achHolder": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achRouting": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achAccount": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achAccountType": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achHolderType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AchHolderType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "method"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "AchHolderType": {
+      "type": "string",
+      "enum": [
+        "personal",
+        "business"
+      ]
+    }
+  }
+}

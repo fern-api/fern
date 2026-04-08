@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "isSuccess": {
+      "$ref": "#/definitions/IsSuccess"
+    },
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    },
+    "responseData": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "isSuccess",
+    "responseText",
+    "responseData"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "IsSuccess": {
+      "type": "boolean"
+    },
+    "ResponseText": {
+      "type": "string"
+    }
+  }
+}

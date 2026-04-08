@@ -1,0 +1,111 @@
+{
+  "type": "object",
+  "properties": {
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    },
+    "isSuccess": {
+      "$ref": "#/definitions/IsSuccess"
+    },
+    "pageIdentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PageIdentifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseData": {
+      "$ref": "#/definitions/moneyIn.AuthResponseResponseData"
+    }
+  },
+  "required": [
+    "responseText",
+    "isSuccess",
+    "responseData"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ResponseText": {
+      "type": "string"
+    },
+    "IsSuccess": {
+      "type": "boolean"
+    },
+    "PageIdentifier": {
+      "type": "string"
+    },
+    "Authcode": {
+      "type": "string"
+    },
+    "Referenceidtrans": {
+      "type": "string"
+    },
+    "ResultCode": {
+      "type": "integer"
+    },
+    "Resulttext": {
+      "type": "string"
+    },
+    "AvsResponseText": {
+      "type": "string"
+    },
+    "CvvResponseText": {
+      "type": "string"
+    },
+    "Customeridtrans": {
+      "type": "integer"
+    },
+    "MethodReferenceId": {
+      "type": "string"
+    },
+    "moneyIn.AuthResponseResponseData": {
+      "type": "object",
+      "properties": {
+        "authCode": {
+          "$ref": "#/definitions/Authcode"
+        },
+        "referenceId": {
+          "$ref": "#/definitions/Referenceidtrans"
+        },
+        "resultCode": {
+          "$ref": "#/definitions/ResultCode"
+        },
+        "resultText": {
+          "$ref": "#/definitions/Resulttext"
+        },
+        "avsResponseText": {
+          "$ref": "#/definitions/AvsResponseText"
+        },
+        "cvvResponseText": {
+          "$ref": "#/definitions/CvvResponseText"
+        },
+        "customerId": {
+          "$ref": "#/definitions/Customeridtrans"
+        },
+        "methodReferenceId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MethodReferenceId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "authCode",
+        "referenceId",
+        "resultCode",
+        "resultText",
+        "avsResponseText",
+        "cvvResponseText",
+        "customerId"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

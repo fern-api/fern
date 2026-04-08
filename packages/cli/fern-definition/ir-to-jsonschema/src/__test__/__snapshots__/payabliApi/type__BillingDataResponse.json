@@ -1,0 +1,111 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "accountId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AccountId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nickname": {
+      "type": "string"
+    },
+    "bankName": {
+      "$ref": "#/definitions/BankName"
+    },
+    "routingAccount": {
+      "$ref": "#/definitions/RoutingAccount"
+    },
+    "accountNumber": {
+      "$ref": "#/definitions/AccountNumber"
+    },
+    "typeAccount": {
+      "$ref": "#/definitions/TypeAccount"
+    },
+    "bankAccountHolderName": {
+      "$ref": "#/definitions/BankAccountHolderName"
+    },
+    "bankAccountHolderType": {
+      "$ref": "#/definitions/BankAccountHolderType"
+    },
+    "bankAccountFunction": {
+      "type": "integer"
+    },
+    "verified": {
+      "type": "boolean"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "services": {
+      "type": "array",
+      "items": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      }
+    },
+    "default": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "id",
+    "nickname",
+    "bankName",
+    "routingAccount",
+    "accountNumber",
+    "typeAccount",
+    "bankAccountHolderName",
+    "bankAccountHolderType",
+    "bankAccountFunction",
+    "verified",
+    "status",
+    "services",
+    "default"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "AccountId": {
+      "type": "string"
+    },
+    "BankName": {
+      "type": "string"
+    },
+    "RoutingAccount": {
+      "type": "string"
+    },
+    "AccountNumber": {
+      "type": "string"
+    },
+    "TypeAccount": {
+      "type": "string",
+      "enum": [
+        "Checking",
+        "Savings"
+      ]
+    },
+    "BankAccountHolderName": {
+      "type": "string"
+    },
+    "BankAccountHolderType": {
+      "type": "string",
+      "enum": [
+        "Personal",
+        "Business"
+      ]
+    }
+  }
+}

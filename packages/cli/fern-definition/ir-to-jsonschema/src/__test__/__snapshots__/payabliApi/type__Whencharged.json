@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "When Service Provided",
+    "In Advance"
+  ],
+  "definitions": {}
+}

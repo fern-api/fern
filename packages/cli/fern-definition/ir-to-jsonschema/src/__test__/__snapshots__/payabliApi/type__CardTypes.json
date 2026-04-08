@@ -1,0 +1,93 @@
+{
+  "type": "object",
+  "properties": {
+    "amex": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BasicTemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "discover": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BasicTemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "masterCard": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BasicTemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "visa": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BasicTemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "RequiredElement": {
+      "type": "boolean"
+    },
+    "Visible": {
+      "type": "boolean"
+    },
+    "BasicTemplateElement": {
+      "type": "object",
+      "properties": {
+        "readOnly": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "required": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RequiredElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

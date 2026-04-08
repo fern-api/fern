@@ -1,0 +1,167 @@
+{
+  "type": "object",
+  "properties": {
+    "color": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "customCssUrl": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "language": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pageLogo": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/FileContent"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paymentButton": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ButtonElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "redirectAfterApprove": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "redirectAfterApproveUrl": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "FileContentFtype": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "doc",
+        "docx",
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+        "txt"
+      ]
+    },
+    "FileContent": {
+      "type": "object",
+      "properties": {
+        "fContent": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filename": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ftype": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FileContentFtype"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "furl": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ButtonElementSize": {
+      "type": "string",
+      "enum": [
+        "sm",
+        "md",
+        "lg"
+      ]
+    },
+    "ButtonElement": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "size": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ButtonElementSize"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "label"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

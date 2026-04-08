@@ -1,0 +1,616 @@
+{
+  "type": "object",
+  "properties": {
+    "AccountExp": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Accountexp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "accountId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AccountId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "AccountType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Accounttype"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "AccountZip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Accountzip"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bankAccount": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "binData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BinData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cloudSignatureData": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cloudSignatureFormat": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "gatewayConnector": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PayoutGatewayConnector"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "HolderName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Holdername"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Initiator": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Initiator"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "MaskedAccount": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Maskedaccount"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orderDescription": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orderdescription"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paymentDetails": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PaymentDetail"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "payorData": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Sequence": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Sequence"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "StoredId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Storedmethodid"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "StoredMethodUsageType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/StoredMethodUsageType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Accountexp": {
+      "type": "string"
+    },
+    "AccountId": {
+      "type": "string"
+    },
+    "Accounttype": {
+      "type": "string"
+    },
+    "Accountzip": {
+      "type": "string"
+    },
+    "BinData": {
+      "type": "object",
+      "properties": {
+        "binMatchedLength": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardBrand": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardType": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardCategory": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardIssuer": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardIssuerCountry": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardIssuerCountryCodeA2": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardIssuerCountryNumber": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardIsRegulated": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardUseCategory": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardIssuerCountryCodeA3": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "PayoutGatewayConnector": {
+      "type": "object",
+      "properties": {
+        "configuration": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Mode": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Bank": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Descriptor": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "gatewayID": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Enabled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "EnableACHValidation": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "TestMode": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Holdername": {
+      "type": "string"
+    },
+    "Initiator": {
+      "type": "string"
+    },
+    "Maskedaccount": {
+      "type": "string"
+    },
+    "Orderdescription": {
+      "type": "string"
+    },
+    "PaymentCategories": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "qty": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "amount",
+        "label"
+      ],
+      "additionalProperties": false
+    },
+    "SplitFundingContent": {
+      "type": "object",
+      "properties": {
+        "accountId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "amount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recipientEntryPoint": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "SplitFunding": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/SplitFundingContent"
+      }
+    },
+    "PaymentDetail": {
+      "type": "object",
+      "properties": {
+        "categories": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PaymentCategories"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checkImage": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "array",
+                  "null"
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checkNumber": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "currency": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "serviceFee": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "splitFunding": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SplitFunding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checkUniqueId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalAmount": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "totalAmount"
+      ],
+      "additionalProperties": false
+    },
+    "Sequence": {
+      "type": "string"
+    },
+    "Storedmethodid": {
+      "type": "string"
+    },
+    "StoredMethodUsageType": {
+      "type": "string"
+    }
+  }
+}

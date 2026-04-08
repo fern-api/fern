@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "device": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Device"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "method": {
+      "const": "cloud"
+    },
+    "saveIfSuccess": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SaveIfSuccess"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "method"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Device": {
+      "type": "string"
+    },
+    "SaveIfSuccess": {
+      "type": "boolean"
+    }
+  }
+}

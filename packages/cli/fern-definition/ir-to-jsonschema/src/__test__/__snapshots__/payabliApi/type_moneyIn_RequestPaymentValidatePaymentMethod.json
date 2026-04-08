@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "method": {
+      "$ref": "#/definitions/moneyIn.RequestPaymentValidatePaymentMethodMethod"
+    },
+    "cardnumber": {
+      "$ref": "#/definitions/Cardnumber"
+    },
+    "cardexp": {
+      "$ref": "#/definitions/Cardexp"
+    },
+    "cardzip": {
+      "$ref": "#/definitions/Cardzip"
+    },
+    "cardHolder": {
+      "$ref": "#/definitions/Cardholder"
+    }
+  },
+  "required": [
+    "method",
+    "cardnumber",
+    "cardexp",
+    "cardzip",
+    "cardHolder"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "moneyIn.RequestPaymentValidatePaymentMethodMethod": {
+      "type": "string",
+      "enum": [
+        "card",
+        "cloud"
+      ]
+    },
+    "Cardnumber": {
+      "type": "string"
+    },
+    "Cardexp": {
+      "type": "string"
+    },
+    "Cardzip": {
+      "type": "string"
+    },
+    "Cardholder": {
+      "type": "string"
+    }
+  }
+}

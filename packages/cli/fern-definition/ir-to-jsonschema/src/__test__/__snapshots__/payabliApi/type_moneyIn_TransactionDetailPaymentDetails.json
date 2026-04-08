@@ -1,0 +1,187 @@
+{
+  "type": "object",
+  "properties": {
+    "totalAmount": {
+      "type": "number"
+    },
+    "serviceFee": {
+      "type": "number"
+    },
+    "checkNumber": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "checkImage": {
+      "oneOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "object",
+            "array",
+            "null"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "checkUniqueId": {
+      "type": "string"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "orderDescription": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Orderdescription"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orderId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/OrderId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "orderIdAlternative": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paymentDescription": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "groupNumber": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "source": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Source"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "payabliTransId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "unbundled": {
+      "oneOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "object",
+            "array",
+            "null"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      }
+    },
+    "splitFunding": {
+      "type": "array",
+      "items": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      }
+    }
+  },
+  "required": [
+    "totalAmount",
+    "serviceFee",
+    "checkNumber",
+    "checkImage",
+    "checkUniqueId",
+    "currency",
+    "orderDescription",
+    "orderId",
+    "orderIdAlternative",
+    "paymentDescription",
+    "groupNumber",
+    "source",
+    "payabliTransId",
+    "unbundled",
+    "categories",
+    "splitFunding"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Orderdescription": {
+      "type": "string"
+    },
+    "OrderId": {
+      "type": "string"
+    },
+    "Source": {
+      "type": "string"
+    }
+  }
+}

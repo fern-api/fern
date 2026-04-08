@@ -1,0 +1,199 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/PayMethodCredit",
+      "description": "Object describing a credit card payment method"
+    },
+    {
+      "$ref": "#/definitions/PayMethodStoredMethod",
+      "description": "Object describing a stored method payment method"
+    },
+    {
+      "$ref": "#/definitions/PayMethodCloud",
+      "description": "Object describing a cloud payment method"
+    }
+  ],
+  "definitions": {
+    "Cardcvv": {
+      "type": "string"
+    },
+    "Cardexp": {
+      "type": "string"
+    },
+    "Cardholder": {
+      "type": "string"
+    },
+    "Cardnumber": {
+      "type": "string"
+    },
+    "Cardzip": {
+      "type": "string"
+    },
+    "Initiator": {
+      "type": "string"
+    },
+    "SaveIfSuccess": {
+      "type": "boolean"
+    },
+    "PayMethodCredit": {
+      "type": "object",
+      "properties": {
+        "cardcvv": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Cardcvv"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cardexp": {
+          "$ref": "#/definitions/Cardexp"
+        },
+        "cardHolder": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Cardholder"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cardnumber": {
+          "$ref": "#/definitions/Cardnumber"
+        },
+        "cardzip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Cardzip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "initiator": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Initiator"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "method": {
+          "const": "card"
+        },
+        "saveIfSuccess": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SaveIfSuccess"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "cardexp",
+        "cardnumber",
+        "method"
+      ],
+      "additionalProperties": false
+    },
+    "PayMethodStoredMethodMethod": {
+      "type": "string",
+      "enum": [
+        "card",
+        "ach"
+      ]
+    },
+    "Storedmethodid": {
+      "type": "string"
+    },
+    "StoredMethodUsageType": {
+      "type": "string"
+    },
+    "PayMethodStoredMethod": {
+      "type": "object",
+      "properties": {
+        "initiator": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Initiator"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "method": {
+          "$ref": "#/definitions/PayMethodStoredMethodMethod"
+        },
+        "storedMethodId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Storedmethodid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "storedMethodUsageType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/StoredMethodUsageType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "additionalProperties": false
+    },
+    "Device": {
+      "type": "string"
+    },
+    "PayMethodCloud": {
+      "type": "object",
+      "properties": {
+        "device": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Device"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "method": {
+          "const": "cloud"
+        },
+        "saveIfSuccess": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SaveIfSuccess"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

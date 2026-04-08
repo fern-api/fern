@@ -1,0 +1,73 @@
+{
+  "type": "object",
+  "properties": {
+    "posCol": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PosCol"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "posRow": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PosRow"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "readOnly": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ReadOnly"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "value": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ValueTemplates"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "visible": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Visible"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "PosCol": {
+      "type": "integer"
+    },
+    "PosRow": {
+      "type": "integer"
+    },
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "ValueTemplates": {
+      "type": "string"
+    },
+    "Visible": {
+      "type": "boolean"
+    }
+  }
+}

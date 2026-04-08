@@ -1,0 +1,322 @@
+{
+  "type": "object",
+  "properties": {
+    "AdditionalData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AdditionalDataMap"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BillingAddress1": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingAddressNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BillingAddress2": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingAddressAddtlNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BillingCity": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingCityNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BillingCountry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingCountryNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BillingEmail": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Email"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BillingPhone": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PhoneNumber"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BillingState": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingStateNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BillingZip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingZip"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "CompanyName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "customerId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CustomerId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "CustomerNumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CustomerNumberNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "customerStatus": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CustomerStatus"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "FirstName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Identifiers": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Identifierfields"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "LastName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ShippingAddress1": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingaddress"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ShippingAddress2": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingaddressadditional"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ShippingCity": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingcity"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ShippingCountry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingcountry"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ShippingState": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingstate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ShippingZip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingzip"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "AdditionalData",
+    "BillingAddress1",
+    "BillingAddress2",
+    "BillingCity",
+    "BillingCountry",
+    "BillingEmail",
+    "BillingPhone",
+    "BillingState",
+    "BillingZip",
+    "CompanyName",
+    "customerId",
+    "CustomerNumber",
+    "customerStatus",
+    "FirstName",
+    "Identifiers",
+    "LastName",
+    "ShippingAddress1",
+    "ShippingAddress2",
+    "ShippingCity",
+    "ShippingCountry",
+    "ShippingState",
+    "ShippingZip"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "AdditionalDataMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "BillingAddressNullable": {
+      "type": "string"
+    },
+    "BillingAddressAddtlNullable": {
+      "type": "string"
+    },
+    "BillingCityNullable": {
+      "type": "string"
+    },
+    "BillingCountryNullable": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "string"
+    },
+    "PhoneNumber": {
+      "type": "string"
+    },
+    "BillingStateNullable": {
+      "type": "string"
+    },
+    "BillingZip": {
+      "type": "string"
+    },
+    "CustomerId": {
+      "type": "integer"
+    },
+    "CustomerNumberNullable": {
+      "type": "string"
+    },
+    "CustomerStatus": {
+      "type": "integer"
+    },
+    "Identifierfields": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "Shippingaddress": {
+      "type": "string"
+    },
+    "Shippingaddressadditional": {
+      "type": "string"
+    },
+    "Shippingcity": {
+      "type": "string"
+    },
+    "Shippingcountry": {
+      "type": "string"
+    },
+    "Shippingstate": {
+      "type": "string"
+    },
+    "Shippingzip": {
+      "type": "string"
+    }
+  }
+}

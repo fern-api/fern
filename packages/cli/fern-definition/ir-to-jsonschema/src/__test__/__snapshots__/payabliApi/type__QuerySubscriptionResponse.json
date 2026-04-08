@@ -1,0 +1,1891 @@
+{
+  "type": "object",
+  "properties": {
+    "Records": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SubscriptionQueryRecords"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Summary": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/QuerySummary"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "CreatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "BillingZip": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "string"
+    },
+    "CustomerNumberNullable": {
+      "type": "string"
+    },
+    "Shippingaddress": {
+      "type": "string"
+    },
+    "Shippingaddressadditional": {
+      "type": "string"
+    },
+    "Shippingcity": {
+      "type": "string"
+    },
+    "Shippingstate": {
+      "type": "string"
+    },
+    "Shippingzip": {
+      "type": "string"
+    },
+    "Shippingcountry": {
+      "type": "string"
+    },
+    "CustomerId": {
+      "type": "integer"
+    },
+    "CustomerStatus": {
+      "type": "integer"
+    },
+    "AdditionalDataMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "QueryTransactionPayorData": {
+      "type": "object",
+      "properties": {
+        "Identifiers": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "array",
+                  "null"
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "FirstName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "LastName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "CompanyName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "BillingAddress1": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "BillingAddress2": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "BillingCity": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "BillingState": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "BillingZip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BillingZip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "BillingCountry": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "BillingPhone": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "BillingEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "CustomerNumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CustomerNumberNullable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ShippingAddress1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingaddress"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ShippingAddress2": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingaddressadditional"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ShippingCity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingcity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ShippingState": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingstate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ShippingZip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingzip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ShippingCountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingcountry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "customerId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CustomerId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "customerStatus": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CustomerStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "AdditionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalDataMap"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "EntrypageId": {
+      "type": "integer"
+    },
+    "ExternalPaypointId": {
+      "type": "string"
+    },
+    "FileContentFtype": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "doc",
+        "docx",
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+        "txt"
+      ]
+    },
+    "FileContent": {
+      "type": "object",
+      "properties": {
+        "fContent": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filename": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ftype": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FileContentFtype"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "furl": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Attachments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/FileContent"
+      }
+    },
+    "Discount": {
+      "type": "number"
+    },
+    "DutyAmount": {
+      "type": "number"
+    },
+    "FreightAmount": {
+      "type": "number"
+    },
+    "Frequency": {
+      "type": "string",
+      "enum": [
+        "onetime",
+        "weekly",
+        "every2weeks",
+        "every6months",
+        "monthly",
+        "every3months",
+        "annually"
+      ]
+    },
+    "InvoiceAmount": {
+      "type": "number"
+    },
+    "InvoiceNumber": {
+      "type": "string"
+    },
+    "Invoicestatus": {
+      "type": "integer"
+    },
+    "InvoiceType": {
+      "type": "integer"
+    },
+    "ItemCommodityCode": {
+      "type": "string"
+    },
+    "ItemDescription": {
+      "type": "string"
+    },
+    "ItemProductCode": {
+      "type": "string"
+    },
+    "ItemProductName": {
+      "type": "string"
+    },
+    "ItemUnitofMeasure": {
+      "type": "string"
+    },
+    "BillItem": {
+      "type": "object",
+      "properties": {
+        "itemCategories": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemCommodityCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ItemCommodityCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemCost": {
+          "type": "number"
+        },
+        "itemDescription": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ItemDescription"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemMode": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemProductCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ItemProductCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemProductName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ItemProductName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemQty": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemTaxAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemTaxRate": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemTotalAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemUnitOfMeasure": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ItemUnitofMeasure"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "itemCost"
+      ],
+      "additionalProperties": false
+    },
+    "BillDataPaymentTerms": {
+      "type": "string",
+      "enum": [
+        "PIA",
+        "CIA",
+        "UR",
+        "NET10",
+        "NET20",
+        "NET30",
+        "NET45",
+        "NET60",
+        "NET90",
+        "EOM",
+        "MFI",
+        "5MFI",
+        "10MFI",
+        "15MFI",
+        "20MFI",
+        "2/10NET30",
+        "UF",
+        "10UF",
+        "20UF",
+        "25UF",
+        "50UF"
+      ]
+    },
+    "PurchaseOrder": {
+      "type": "string"
+    },
+    "ShippingFromZip": {
+      "type": "string"
+    },
+    "SummaryCommodityCode": {
+      "type": "string"
+    },
+    "Tax": {
+      "type": "number"
+    },
+    "TermsConditions": {
+      "type": "string"
+    },
+    "BillData": {
+      "type": "object",
+      "properties": {
+        "AdditionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalDataMap"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attachments": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Attachments"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "company": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "discount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Discount"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dutyAmount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/DutyAmount"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "firstName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "freightAmount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FreightAmount"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "frequency": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Frequency"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "invoiceAmount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/InvoiceAmount"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "invoiceDate": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "invoiceDueDate": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "invoiceEndDate": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "invoiceNumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/InvoiceNumber"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "invoiceStatus": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Invoicestatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "invoiceType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/InvoiceType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "items": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BillItem"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lastName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "notes": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "paymentTerms": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BillDataPaymentTerms"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "purchaseOrder": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PurchaseOrder"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shippingAddress1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingaddress"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shippingAddress2": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingaddressadditional"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shippingCity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingcity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shippingCountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingcountry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shippingEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shippingFromZip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ShippingFromZip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shippingPhone": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shippingState": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingstate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "shippingZip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Shippingzip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "summaryCommodityCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SummaryCommodityCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tax": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Tax"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "termsConditions": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TermsConditions"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "LastModified": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "Netamountnullable": {
+      "type": "number"
+    },
+    "OrgParentName": {
+      "type": "string"
+    },
+    "Accountexp": {
+      "type": "string"
+    },
+    "AccountId": {
+      "type": "string"
+    },
+    "Accounttype": {
+      "type": "string"
+    },
+    "Accountzip": {
+      "type": "string"
+    },
+    "BinData": {
+      "type": "object",
+      "properties": {
+        "binMatchedLength": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardBrand": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardType": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardCategory": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardIssuer": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardIssuerCountry": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardIssuerCountryCodeA2": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardIssuerCountryNumber": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardIsRegulated": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardUseCategory": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binCardIssuerCountryCodeA3": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Holdername": {
+      "type": "string"
+    },
+    "Initiator": {
+      "type": "string"
+    },
+    "Maskedaccount": {
+      "type": "string"
+    },
+    "Orderdescription": {
+      "type": "string"
+    },
+    "PaymentCategories": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "qty": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "amount",
+        "label"
+      ],
+      "additionalProperties": false
+    },
+    "SplitFundingContent": {
+      "type": "object",
+      "properties": {
+        "accountId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "amount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recipientEntryPoint": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "SplitFunding": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/SplitFundingContent"
+      }
+    },
+    "PaymentDetail": {
+      "type": "object",
+      "properties": {
+        "categories": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PaymentCategories"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checkImage": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "array",
+                  "null"
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checkNumber": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "currency": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "serviceFee": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "splitFunding": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SplitFunding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checkUniqueId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalAmount": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "totalAmount"
+      ],
+      "additionalProperties": false
+    },
+    "Sequence": {
+      "type": "string"
+    },
+    "Signaturedata": {
+      "type": "string"
+    },
+    "Storedmethodid": {
+      "type": "string"
+    },
+    "StoredMethodUsageType": {
+      "type": "string"
+    },
+    "QueryPaymentData": {
+      "type": "object",
+      "properties": {
+        "AccountExp": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Accountexp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accountId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AccountId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "AccountType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Accounttype"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "AccountZip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Accountzip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BinData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "HolderName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Holdername"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Initiator": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Initiator"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "MaskedAccount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Maskedaccount"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orderDescription": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orderdescription"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "paymentDetails": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PaymentDetail"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Sequence": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Sequence"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "SignatureData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Signaturedata"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "StoredId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Storedmethodid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "StoredMethodUsageType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/StoredMethodUsageType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Dbaname": {
+      "type": "string"
+    },
+    "Entrypointfield": {
+      "type": "string"
+    },
+    "PaypointId": {
+      "type": "integer"
+    },
+    "Legalname": {
+      "type": "string"
+    },
+    "Source": {
+      "type": "string"
+    },
+    "GeneralEvents": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eventTime": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "extraData": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "array",
+                  "null"
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "refData": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Source"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "SubscriptionQueryRecords": {
+      "type": "object",
+      "properties": {
+        "CreatedAt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CreatedAt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Customer": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/QueryTransactionPayorData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "EndDate": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "EntrypageId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/EntrypageId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ExternalPaypointID": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ExternalPaypointId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "FeeAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Frequency": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "IdSub": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "InvoiceData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BillData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "LastRun": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "LastUpdated": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LastModified"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "LeftCycles": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Method": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "NetAmount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Netamountnullable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "NextDate": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ParentOrgName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OrgParentName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PaymentData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/QueryPaymentData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PaypointDbaname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Dbaname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PaypointEntryname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Entrypointfield"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PaypointId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PaypointId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PaypointLegalname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Legalname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PlanId": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "Source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Source"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "StartDate": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "SubEvents": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GeneralEvents"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "SubStatus": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "TotalAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "TotalCycles": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "UntilCancelled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "EndDate",
+        "LastRun",
+        "NextDate",
+        "StartDate"
+      ],
+      "additionalProperties": false
+    },
+    "PageIdentifier": {
+      "type": "string"
+    },
+    "Pagesize": {
+      "type": "integer"
+    },
+    "Totalrecords": {
+      "type": "integer"
+    },
+    "QuerySummary": {
+      "type": "object",
+      "properties": {
+        "pageIdentifier": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PageIdentifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pageSize": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Pagesize"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalNetAmount": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalPages": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Totalrecords"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalRecords": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Totalrecords"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

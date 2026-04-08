@@ -1,0 +1,66 @@
+{
+  "type": "object",
+  "properties": {
+    "isSuccess": {
+      "$ref": "#/definitions/IsSuccess"
+    },
+    "responseCode": {
+      "$ref": "#/definitions/Responsecode"
+    },
+    "responseData": {
+      "$ref": "#/definitions/Responsedatanonobject"
+    },
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    },
+    "pageidentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PageIdentifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "roomId": {
+      "$ref": "#/definitions/RoomIdNotInUse"
+    }
+  },
+  "required": [
+    "isSuccess",
+    "responseCode",
+    "responseData",
+    "responseText",
+    "pageidentifier",
+    "roomId"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "IsSuccess": {
+      "type": "boolean"
+    },
+    "Responsecode": {
+      "type": "integer"
+    },
+    "Responsedatanonobject": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        }
+      ]
+    },
+    "ResponseText": {
+      "type": "string"
+    },
+    "PageIdentifier": {
+      "type": "string"
+    },
+    "RoomIdNotInUse": {
+      "type": "integer"
+    }
+  }
+}

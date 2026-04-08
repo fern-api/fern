@@ -1,0 +1,125 @@
+{
+  "type": "object",
+  "properties": {
+    "customFields": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KeyValue"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "forInvoices": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KeyValue"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "forPayOuts": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KeyValue"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "forWallets": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KeyValue"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "general": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KeyValue"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "identifiers": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KeyValue"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "KeyValue": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readOnly": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

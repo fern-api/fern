@@ -1,0 +1,144 @@
+{
+  "type": "object",
+  "properties": {
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    },
+    "isSuccess": {
+      "$ref": "#/definitions/IsSuccess"
+    },
+    "responseData": {
+      "$ref": "#/definitions/moneyIn.ResponseDataRefunds"
+    },
+    "pageidentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PageIdentifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "responseText",
+    "isSuccess",
+    "responseData"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ResponseText": {
+      "type": "string"
+    },
+    "IsSuccess": {
+      "type": "boolean"
+    },
+    "Authcode": {
+      "type": "string"
+    },
+    "ExpectedProcessingDateTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "AvsResponseText": {
+      "type": "string"
+    },
+    "CustomerId": {
+      "type": "integer"
+    },
+    "CvvResponseText": {
+      "type": "string"
+    },
+    "MethodReferenceId": {
+      "type": "string"
+    },
+    "Referenceidtrans": {
+      "type": "string"
+    },
+    "ResultCode": {
+      "type": "integer"
+    },
+    "moneyIn.ResponseDataRefunds": {
+      "type": "object",
+      "properties": {
+        "authCode": {
+          "$ref": "#/definitions/Authcode"
+        },
+        "expectedProcessingDateTime": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ExpectedProcessingDateTime"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "avsResponseText": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AvsResponseText"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "customerId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CustomerId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cvvResponseText": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CvvResponseText"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "methodReferenceId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MethodReferenceId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "referenceId": {
+          "$ref": "#/definitions/Referenceidtrans"
+        },
+        "resultCode": {
+          "$ref": "#/definitions/ResultCode"
+        },
+        "resultText": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "authCode",
+        "expectedProcessingDateTime",
+        "customerId",
+        "cvvResponseText",
+        "methodReferenceId",
+        "referenceId",
+        "resultCode",
+        "resultText"
+      ],
+      "additionalProperties": false
+    },
+    "PageIdentifier": {
+      "type": "string"
+    }
+  }
+}

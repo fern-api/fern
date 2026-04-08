@@ -1,0 +1,183 @@
+{
+  "type": "object",
+  "properties": {
+    "avgmonthly": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "binperson": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "binphone": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "binweb": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bsummary": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "highticketamt": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mcc": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ticketamt": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "whenCharged": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "whenDelivered": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "whenProvided": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "whenRefunded": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "RequiredElement": {
+      "type": "boolean"
+    },
+    "ValueTemplates": {
+      "type": "string"
+    },
+    "LinkData": {
+      "type": "object",
+      "properties": {
+        "ro": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rq": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RequiredElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "validator": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

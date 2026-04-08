@@ -1,0 +1,808 @@
+{
+  "type": "object",
+  "properties": {
+    "achAbsorb": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AchAbsorbSection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achAbsorb_highPayRange": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achAbsorb_lowPayRange": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achAcceptance": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AchAcceptanceElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achFees": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AchFeeSection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achPass_highPayRange": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achPass_lowPayRange": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achPassThrough": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AchPassThroughSection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "batchCutoffTime": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "discountFrequency": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "fundingRollup": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "gateway": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pdfTemplateId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pricingPlan": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pricingType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "processor": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "provider": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "tierName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "visible": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Visible"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "TierItem": {
+      "type": "object",
+      "properties": {
+        "amountxAuth": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "highPayRange": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lowPayRange": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "percentxAuth": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "AchTypesTiers": {
+      "type": "object",
+      "properties": {
+        "ccd": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TierItem"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ppd": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TierItem"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "web": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TierItem"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Visible": {
+      "type": "boolean"
+    },
+    "AchAbsorbSection": {
+      "type": "object",
+      "properties": {
+        "multiTier": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tiers": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AchTypesTiers"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "PosCol": {
+      "type": "integer"
+    },
+    "PosRow": {
+      "type": "integer"
+    },
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "ValueTemplates": {
+      "type": "string"
+    },
+    "TemplateElement": {
+      "type": "object",
+      "properties": {
+        "posCol": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosCol"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "posRow": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosRow"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readOnly": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "RequiredElement": {
+      "type": "boolean"
+    },
+    "BasicTemplateElement": {
+      "type": "object",
+      "properties": {
+        "readOnly": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "required": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RequiredElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "AchTypes": {
+      "type": "object",
+      "properties": {
+        "ccd": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BasicTemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ppd": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BasicTemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "web": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BasicTemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "AchAcceptanceElement": {
+      "type": "object",
+      "properties": {
+        "types": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AchTypes"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "posCol": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosCol"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "posRow": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosRow"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readOnly": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "AchFeeSection": {
+      "type": "object",
+      "properties": {
+        "advancedSettlementAchFee": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "annualAchFee": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "chargebackAchFee": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "earlyTerminationAchFee": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "monthlyAchFee": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "quarterlyPCIAchFee": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "returnedAchFee": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sameDayAchFee": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sundayOriginationAchFee": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verifyBankAchFee": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verifyFundAchFee": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verifyNegativeAchFee": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "TierItemPass": {
+      "type": "object",
+      "properties": {
+        "amountFeeone-time": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "amountFeeRecurring": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "highPayRange": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lowPayRange": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "percentFeeone-time": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "percentFeeRecurring": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "AchTypesPass": {
+      "type": "object",
+      "properties": {
+        "ccd": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TierItemPass"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ppd": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TierItemPass"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "web": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TierItemPass"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "AchPassThroughSection": {
+      "type": "object",
+      "properties": {
+        "multiTier": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tiers": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AchTypesPass"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

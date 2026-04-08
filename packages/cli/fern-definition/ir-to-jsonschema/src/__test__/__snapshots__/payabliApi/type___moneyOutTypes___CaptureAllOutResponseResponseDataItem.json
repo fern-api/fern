@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "properties": {
+    "CustomerId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Customeridtrans"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ReferenceId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Referenceidtrans"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ResultCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ResultCode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ResultText": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Resulttext"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Customeridtrans": {
+      "type": "integer"
+    },
+    "Referenceidtrans": {
+      "type": "string"
+    },
+    "ResultCode": {
+      "type": "integer"
+    },
+    "Resulttext": {
+      "type": "string"
+    }
+  }
+}

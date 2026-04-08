@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "method": {
+      "$ref": "#/definitions/UnderWritingMethod"
+    },
+    "policyId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PolicyId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "method"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "UnderWritingMethod": {
+      "type": "string",
+      "enum": [
+        "automatic",
+        "manual",
+        "bypass"
+      ]
+    },
+    "PolicyId": {
+      "type": "string"
+    }
+  }
+}

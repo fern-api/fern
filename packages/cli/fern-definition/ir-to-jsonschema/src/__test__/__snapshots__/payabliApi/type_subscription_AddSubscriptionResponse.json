@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "customerId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CustomerId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    },
+    "isSuccess": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IsSuccess"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseData": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "responseText",
+    "responseData"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "CustomerId": {
+      "type": "integer"
+    },
+    "ResponseText": {
+      "type": "string"
+    },
+    "IsSuccess": {
+      "type": "boolean"
+    }
+  }
+}

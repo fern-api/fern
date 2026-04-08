@@ -1,0 +1,209 @@
+{
+  "type": "object",
+  "properties": {
+    "advancedSettlementAchFee": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "annualAchFee": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "chargebackAchFee": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "earlyTerminationAchFee": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "monthlyAchFee": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "quarterlyPCIAchFee": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "returnedAchFee": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sameDayAchFee": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sundayOriginationAchFee": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "verifyBankAchFee": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "verifyFundAchFee": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "verifyNegativeAchFee": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TemplateElement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "visible": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Visible"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "PosCol": {
+      "type": "integer"
+    },
+    "PosRow": {
+      "type": "integer"
+    },
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "ValueTemplates": {
+      "type": "string"
+    },
+    "Visible": {
+      "type": "boolean"
+    },
+    "TemplateElement": {
+      "type": "object",
+      "properties": {
+        "posCol": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosCol"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "posRow": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PosRow"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readOnly": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visible": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Visible"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

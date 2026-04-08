@@ -1,0 +1,106 @@
+{
+  "type": "object",
+  "properties": {
+    "billId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "lotNumber": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "invoiceNumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/InvoiceNumber"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "netAmount": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NetAmountstring"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "discount": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dueDate": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "invoiceDate": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "comments": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Comments"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "dueDate",
+    "invoiceDate"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "BillId": {
+      "type": "integer"
+    },
+    "InvoiceNumber": {
+      "type": "string"
+    },
+    "NetAmountstring": {
+      "type": "string"
+    },
+    "Comments": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "type": "object",
+  "properties": {
+    "statX": {
+      "type": "string"
+    },
+    "outCustomers": {
+      "type": "integer"
+    },
+    "outNewCustomers": {
+      "type": "integer"
+    },
+    "outTransactions": {
+      "type": "integer"
+    },
+    "outSubscriptionsPaid": {
+      "type": "integer"
+    },
+    "outCardTransactions": {
+      "type": "integer"
+    },
+    "outVCardTransactions": {
+      "type": "integer"
+    },
+    "outACHTransactions": {
+      "type": "integer"
+    },
+    "outCheckTransactions": {
+      "type": "integer"
+    },
+    "outPendingMethodTransactions": {
+      "type": "integer"
+    },
+    "outTransactionsVolume": {
+      "type": "number"
+    },
+    "outSubscriptionsPaidVolume": {
+      "type": "number"
+    },
+    "outCardVolume": {
+      "type": "number"
+    },
+    "outVCardVolume": {
+      "type": "number"
+    },
+    "outACHVolume": {
+      "type": "number"
+    },
+    "outCheckVolume": {
+      "type": "number"
+    },
+    "outPendingMethodVolume": {
+      "type": "number"
+    },
+    "inTransactions": {
+      "type": "integer"
+    },
+    "inSubscriptionsPaid": {
+      "type": "integer"
+    },
+    "inCustomers": {
+      "type": "integer"
+    },
+    "inNewCustomers": {
+      "type": "integer"
+    },
+    "inCardTransactions": {
+      "type": "integer"
+    },
+    "inACHTransactions": {
+      "type": "integer"
+    },
+    "inCheckTransactions": {
+      "type": "integer"
+    },
+    "inCashTransactions": {
+      "type": "integer"
+    },
+    "inWalletTransactions": {
+      "type": "integer"
+    },
+    "inCardChargeBacks": {
+      "type": "integer"
+    },
+    "inACHReturns": {
+      "type": "integer"
+    },
+    "inTransactionsVolume": {
+      "type": "number"
+    },
+    "inSubscriptionsPaidVolume": {
+      "type": "number"
+    },
+    "inCardVolume": {
+      "type": "number"
+    },
+    "inACHVolume": {
+      "type": "number"
+    },
+    "inCheckVolume": {
+      "type": "number"
+    },
+    "inCashVolume": {
+      "type": "number"
+    },
+    "inWalletVolume": {
+      "type": "number"
+    },
+    "inCardChargeBackVolume": {
+      "type": "number"
+    },
+    "inACHReturnsVolume": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "statX",
+    "outCustomers",
+    "outNewCustomers",
+    "outTransactions",
+    "outSubscriptionsPaid",
+    "outCardTransactions",
+    "outVCardTransactions",
+    "outACHTransactions",
+    "outCheckTransactions",
+    "outPendingMethodTransactions",
+    "outTransactionsVolume",
+    "outSubscriptionsPaidVolume",
+    "outCardVolume",
+    "outVCardVolume",
+    "outACHVolume",
+    "outCheckVolume",
+    "outPendingMethodVolume",
+    "inTransactions",
+    "inSubscriptionsPaid",
+    "inCustomers",
+    "inNewCustomers",
+    "inCardTransactions",
+    "inACHTransactions",
+    "inCheckTransactions",
+    "inCashTransactions",
+    "inWalletTransactions",
+    "inCardChargeBacks",
+    "inACHReturns",
+    "inTransactionsVolume",
+    "inSubscriptionsPaidVolume",
+    "inCardVolume",
+    "inACHVolume",
+    "inCheckVolume",
+    "inCashVolume",
+    "inWalletVolume",
+    "inCardChargeBackVolume",
+    "inACHReturnsVolume"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

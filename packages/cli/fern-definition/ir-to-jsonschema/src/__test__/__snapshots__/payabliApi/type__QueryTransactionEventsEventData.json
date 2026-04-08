@@ -1,0 +1,21 @@
+{
+  "anyOf": [
+    {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      }
+    },
+    {
+      "type": "string"
+    }
+  ],
+  "definitions": {}
+}

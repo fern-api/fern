@@ -1,0 +1,302 @@
+{
+  "type": "object",
+  "properties": {
+    "additionalData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AdditionalData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billingAddress1": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingAddressNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billingAddress2": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingAddressAddtlNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billingCity": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingCityNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billingCountry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingCountryNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billingEmail": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Email"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billingPhone": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PhoneNumber"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billingState": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingStateNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "billingZip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingZip"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "company": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "customerId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CustomerId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "customerNumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CustomerNumberNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "firstName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "identifierFields": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Identifierfields"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "lastName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "shippingAddress1": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingaddress"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "shippingAddress2": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingaddressadditional"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "shippingCity": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingcity"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "shippingCountry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingcountry"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "shippingState": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingstate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "shippingZip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingzip"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "AdditionalData": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "BillingAddressNullable": {
+      "type": "string"
+    },
+    "BillingAddressAddtlNullable": {
+      "type": "string"
+    },
+    "BillingCityNullable": {
+      "type": "string"
+    },
+    "BillingCountryNullable": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "string"
+    },
+    "PhoneNumber": {
+      "type": "string"
+    },
+    "BillingStateNullable": {
+      "type": "string"
+    },
+    "BillingZip": {
+      "type": "string"
+    },
+    "CustomerId": {
+      "type": "integer"
+    },
+    "CustomerNumberNullable": {
+      "type": "string"
+    },
+    "Identifierfields": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "Shippingaddress": {
+      "type": "string"
+    },
+    "Shippingaddressadditional": {
+      "type": "string"
+    },
+    "Shippingcity": {
+      "type": "string"
+    },
+    "Shippingcountry": {
+      "type": "string"
+    },
+    "Shippingstate": {
+      "type": "string"
+    },
+    "Shippingzip": {
+      "type": "string"
+    }
+  }
+}

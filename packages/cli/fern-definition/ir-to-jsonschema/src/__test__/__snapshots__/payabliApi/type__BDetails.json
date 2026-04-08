@@ -1,0 +1,173 @@
+{
+  "type": "object",
+  "properties": {
+    "btype": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dbaname": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ein": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "faxnumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "legalname": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "license": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "licstate": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "phonenumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "startdate": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "taxfillname": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "website": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "RequiredElement": {
+      "type": "boolean"
+    },
+    "ValueTemplates": {
+      "type": "string"
+    },
+    "LinkData": {
+      "type": "object",
+      "properties": {
+        "ro": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rq": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RequiredElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "validator": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

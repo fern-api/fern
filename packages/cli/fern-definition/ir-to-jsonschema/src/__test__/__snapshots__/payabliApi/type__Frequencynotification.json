@@ -1,0 +1,15 @@
+{
+  "type": "string",
+  "enum": [
+    "one-time",
+    "daily",
+    "weekly",
+    "biweekly",
+    "monthly",
+    "quarterly",
+    "semiannually",
+    "annually",
+    "untilcancelled"
+  ],
+  "definitions": {}
+}

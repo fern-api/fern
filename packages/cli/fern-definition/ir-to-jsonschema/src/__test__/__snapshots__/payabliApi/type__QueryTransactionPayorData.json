@@ -1,0 +1,277 @@
+{
+  "type": "object",
+  "properties": {
+    "Identifiers": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "FirstName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "LastName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "CompanyName": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BillingAddress1": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BillingAddress2": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BillingCity": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BillingState": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BillingZip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BillingZip"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BillingCountry": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BillingPhone": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "BillingEmail": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Email"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "CustomerNumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CustomerNumberNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ShippingAddress1": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingaddress"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ShippingAddress2": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingaddressadditional"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ShippingCity": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingcity"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ShippingState": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingstate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ShippingZip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingzip"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ShippingCountry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingcountry"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "customerId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CustomerId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "customerStatus": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CustomerStatus"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "AdditionalData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AdditionalDataMap"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "BillingZip": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "string"
+    },
+    "CustomerNumberNullable": {
+      "type": "string"
+    },
+    "Shippingaddress": {
+      "type": "string"
+    },
+    "Shippingaddressadditional": {
+      "type": "string"
+    },
+    "Shippingcity": {
+      "type": "string"
+    },
+    "Shippingstate": {
+      "type": "string"
+    },
+    "Shippingzip": {
+      "type": "string"
+    },
+    "Shippingcountry": {
+      "type": "string"
+    },
+    "CustomerId": {
+      "type": "integer"
+    },
+    "CustomerStatus": {
+      "type": "integer"
+    },
+    "AdditionalDataMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  }
+}

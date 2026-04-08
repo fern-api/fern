@@ -1,0 +1,9 @@
+{
+  "type": "string",
+  "enum": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "definitions": {}
+}

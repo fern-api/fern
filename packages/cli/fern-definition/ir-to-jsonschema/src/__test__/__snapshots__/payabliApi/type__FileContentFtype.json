@@ -1,0 +1,14 @@
+{
+  "type": "string",
+  "enum": [
+    "pdf",
+    "doc",
+    "docx",
+    "jpg",
+    "jpeg",
+    "png",
+    "gif",
+    "txt"
+  ],
+  "definitions": {}
+}

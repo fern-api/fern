@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "properties": {
+    "paymentDetails": {
+      "$ref": "#/definitions/moneyIn.CapturePaymentDetails"
+    }
+  },
+  "required": [
+    "paymentDetails"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "moneyIn.CapturePaymentDetails": {
+      "type": "object",
+      "properties": {
+        "totalAmount": {
+          "type": "number"
+        },
+        "serviceFee": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "totalAmount"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

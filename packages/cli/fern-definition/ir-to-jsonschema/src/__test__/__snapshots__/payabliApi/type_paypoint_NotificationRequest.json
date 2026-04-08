@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "notificationUrl": {
+      "type": "string"
+    },
+    "webHeaderParameters": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/paypoint.WebHeaderParameter"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "notificationUrl"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "paypoint.WebHeaderParameter": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

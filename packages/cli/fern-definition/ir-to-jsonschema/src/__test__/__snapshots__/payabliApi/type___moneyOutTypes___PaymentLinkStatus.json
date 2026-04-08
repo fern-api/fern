@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "enum": [
+    "Active",
+    "Expired",
+    "Canceled",
+    "Deleted"
+  ],
+  "definitions": {}
+}

@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "message": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "success": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "success"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

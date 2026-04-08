@@ -1,0 +1,104 @@
+{
+  "type": "object",
+  "properties": {
+    "ccd": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TierItemPass"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ppd": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TierItemPass"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "web": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TierItemPass"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "TierItemPass": {
+      "type": "object",
+      "properties": {
+        "amountFeeone-time": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "amountFeeRecurring": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "highPayRange": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lowPayRange": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "percentFeeone-time": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "percentFeeRecurring": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

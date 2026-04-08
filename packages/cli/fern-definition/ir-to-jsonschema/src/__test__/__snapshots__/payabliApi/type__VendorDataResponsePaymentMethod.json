@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "enum": [
+    "vcard",
+    "ach",
+    "check",
+    "card"
+  ],
+  "definitions": {}
+}

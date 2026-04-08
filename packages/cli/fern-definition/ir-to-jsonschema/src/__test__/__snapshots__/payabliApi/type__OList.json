@@ -1,0 +1,213 @@
+{
+  "type": "object",
+  "properties": {
+    "oaddress": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ocity": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ocountry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "odriverstate": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ostate": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ownerdob": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ownerdriver": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "owneremail": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ownername": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ownerpercent": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ownerphone1": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ownerphone2": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ownerssn": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ownertitle": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ozip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LinkData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "RequiredElement": {
+      "type": "boolean"
+    },
+    "ValueTemplates": {
+      "type": "string"
+    },
+    "LinkData": {
+      "type": "object",
+      "properties": {
+        "ro": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rq": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RequiredElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "validator": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

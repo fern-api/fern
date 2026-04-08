@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "initiator": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Initiator"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "storedMethodId": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Storedmethodid"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "storedMethodUsageType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/StoredMethodUsageType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Initiator": {
+      "type": "string"
+    },
+    "Storedmethodid": {
+      "type": "string"
+    },
+    "StoredMethodUsageType": {
+      "type": "string"
+    }
+  }
+}

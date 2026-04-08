@@ -1,0 +1,61 @@
+{
+  "type": "object",
+  "properties": {
+    "checkNumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/VendorCheckNumber"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "currency": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "serviceFee": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "totalAmount": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "unbundled": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "VendorCheckNumber": {
+      "type": "string"
+    }
+  }
+}

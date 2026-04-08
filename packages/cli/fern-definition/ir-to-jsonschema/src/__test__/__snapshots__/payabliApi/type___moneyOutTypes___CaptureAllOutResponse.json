@@ -1,0 +1,127 @@
+{
+  "type": "object",
+  "properties": {
+    "isSuccess": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IsSuccess"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pageIdentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PageIdentifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Responsecode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseData": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/__moneyOutTypes__.CaptureAllOutResponseResponseDataItem"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    }
+  },
+  "required": [
+    "responseText"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "IsSuccess": {
+      "type": "boolean"
+    },
+    "PageIdentifier": {
+      "type": "string"
+    },
+    "Responsecode": {
+      "type": "integer"
+    },
+    "Customeridtrans": {
+      "type": "integer"
+    },
+    "Referenceidtrans": {
+      "type": "string"
+    },
+    "ResultCode": {
+      "type": "integer"
+    },
+    "Resulttext": {
+      "type": "string"
+    },
+    "__moneyOutTypes__.CaptureAllOutResponseResponseDataItem": {
+      "type": "object",
+      "properties": {
+        "CustomerId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Customeridtrans"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ReferenceId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Referenceidtrans"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ResultCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ResultCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ResultText": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Resulttext"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ResponseText": {
+      "type": "string"
+    }
+  }
+}

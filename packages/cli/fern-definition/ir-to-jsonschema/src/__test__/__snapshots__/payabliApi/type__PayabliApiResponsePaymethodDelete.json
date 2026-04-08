@@ -1,0 +1,85 @@
+{
+  "type": "object",
+  "properties": {
+    "isSuccess": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IsSuccess"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PayabliApiResponsePaymethodDeleteResponseData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    }
+  },
+  "required": [
+    "responseText"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "IsSuccess": {
+      "type": "boolean"
+    },
+    "MethodReferenceId": {
+      "type": "string"
+    },
+    "ResultCode": {
+      "type": "integer"
+    },
+    "Resulttext": {
+      "type": "string"
+    },
+    "PayabliApiResponsePaymethodDeleteResponseData": {
+      "type": "object",
+      "properties": {
+        "referenceId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MethodReferenceId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resultCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ResultCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resultText": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Resulttext"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ResponseText": {
+      "type": "string"
+    }
+  }
+}

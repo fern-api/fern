@@ -1,0 +1,86 @@
+{
+  "type": "object",
+  "properties": {
+    "method": {
+      "type": "string"
+    },
+    "achAccount": {
+      "$ref": "#/definitions/Achaccount"
+    },
+    "achAccountType": {
+      "$ref": "#/definitions/Achaccounttype"
+    },
+    "achCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AchSecCode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achHolder": {
+      "type": "string"
+    },
+    "achHolderType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AchHolderType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achRouting": {
+      "$ref": "#/definitions/Achrouting"
+    },
+    "device": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Device"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "method",
+    "achAccount",
+    "achAccountType",
+    "achHolder",
+    "achRouting"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Achaccount": {
+      "type": "string"
+    },
+    "Achaccounttype": {
+      "type": "string",
+      "enum": [
+        "Checking",
+        "Savings"
+      ]
+    },
+    "AchSecCode": {
+      "type": "string"
+    },
+    "AchHolderType": {
+      "type": "string",
+      "enum": [
+        "personal",
+        "business"
+      ]
+    },
+    "Achrouting": {
+      "type": "string"
+    },
+    "Device": {
+      "type": "string"
+    }
+  }
+}

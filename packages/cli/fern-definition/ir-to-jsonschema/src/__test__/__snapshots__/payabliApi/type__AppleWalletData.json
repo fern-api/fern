@@ -1,0 +1,135 @@
+{
+  "type": "object",
+  "properties": {
+    "entry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Entry"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "applePayMerchantId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "domainNames": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DomainName"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paypointName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PaypointName"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paypointUrl": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "markedForDeletionAt": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "createdAt": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "updatedAt": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LastModified"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ApplePayId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "type": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ApplePayType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Entry": {
+      "type": "string"
+    },
+    "DomainName": {
+      "type": "string"
+    },
+    "PaypointName": {
+      "type": "string"
+    },
+    "CreatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "LastModified": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ApplePayId": {
+      "type": "string"
+    },
+    "ApplePayType": {
+      "type": "string"
+    }
+  }
+}

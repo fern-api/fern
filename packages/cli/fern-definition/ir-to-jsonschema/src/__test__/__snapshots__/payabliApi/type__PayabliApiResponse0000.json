@@ -1,0 +1,176 @@
+{
+  "type": "object",
+  "properties": {
+    "isSuccess": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IsSuccess"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    },
+    "pageIdentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PageIdentifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Responsecode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PayabliApiResponse0ResponseData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "responseText"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "IsSuccess": {
+      "type": "boolean"
+    },
+    "ResponseText": {
+      "type": "string"
+    },
+    "PageIdentifier": {
+      "type": "string"
+    },
+    "Responsecode": {
+      "type": "integer"
+    },
+    "Authcode": {
+      "type": "string"
+    },
+    "AvsResponseText": {
+      "type": "string"
+    },
+    "Customeridtrans": {
+      "type": "integer"
+    },
+    "CvvResponseText": {
+      "type": "string"
+    },
+    "MethodReferenceId": {
+      "type": "string"
+    },
+    "Referenceidtrans": {
+      "type": "string"
+    },
+    "ResultCode": {
+      "type": "integer"
+    },
+    "Resulttext": {
+      "type": "string"
+    },
+    "PayabliApiResponse0ResponseData": {
+      "type": "object",
+      "properties": {
+        "AuthCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Authcode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "avsResponseText": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AvsResponseText"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "CustomerId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Customeridtrans"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cvvResponseText": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CvvResponseText"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "methodReferenceId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MethodReferenceId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ReferenceId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Referenceidtrans"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ResultCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ResultCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ResultText": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Resulttext"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

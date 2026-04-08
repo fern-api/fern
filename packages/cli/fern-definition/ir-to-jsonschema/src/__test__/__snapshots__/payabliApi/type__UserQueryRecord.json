@@ -1,0 +1,287 @@
+{
+  "type": "object",
+  "properties": {
+    "Access": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UsrAccess"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "AdditionalData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AdditionalDataString"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "createdAt": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Email": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Email"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "language": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Language"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "lastAccess": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Name": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NameUser"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Phone": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PhoneNumber"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Scope": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrgXScope"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "snData": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "snIdentifier": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "snProvider": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "timeZone": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Timezone"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "userId": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "UsrMFA": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Mfa"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "UsrMFAMode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/MfaMode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "UsrStatus": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/UsrStatus"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "UsrAccess": {
+      "type": "object",
+      "properties": {
+        "roleLabel": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "roleValue": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "AdditionalDataString": {
+      "type": "string"
+    },
+    "CreatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "Email": {
+      "type": "string"
+    },
+    "Language": {
+      "type": "string"
+    },
+    "NameUser": {
+      "type": "string"
+    },
+    "PhoneNumber": {
+      "type": "string"
+    },
+    "Orgentryname": {
+      "type": "string"
+    },
+    "Orgid": {
+      "type": "integer"
+    },
+    "Orgtype": {
+      "type": "integer"
+    },
+    "OrgXScope": {
+      "type": "object",
+      "properties": {
+        "orgEntry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orgentryname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orgId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orgid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orgType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orgtype"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Timezone": {
+      "type": "integer"
+    },
+    "Mfa": {
+      "type": "boolean"
+    },
+    "MfaMode": {
+      "type": "integer"
+    },
+    "UsrStatus": {
+      "type": "integer"
+    }
+  }
+}

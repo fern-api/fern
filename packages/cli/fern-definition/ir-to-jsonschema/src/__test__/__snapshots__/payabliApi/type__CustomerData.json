@@ -1,0 +1,325 @@
+{
+  "type": "object",
+  "properties": {
+    "customerNumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CustomerNumberNullable"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "customerUsername": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "customerPsw": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "customerStatus": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CustomerStatus"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "company": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "firstname": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "lastname": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "phone": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "email": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Email"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "address": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "address1": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "city": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "state": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "zip": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "country": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "shippingAddress": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingaddress"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "shippingAddress1": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingaddressadditional"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "shippingCity": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingcity"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "shippingState": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingstate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "shippingZip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingzip"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "shippingCountry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Shippingcountry"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "balance": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "timeZone": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Timezone"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "additionalFields": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "identifierFields": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Identifierfields"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "createdAt": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "CustomerNumberNullable": {
+      "type": "string"
+    },
+    "CustomerStatus": {
+      "type": "integer"
+    },
+    "Email": {
+      "type": "string"
+    },
+    "Shippingaddress": {
+      "type": "string"
+    },
+    "Shippingaddressadditional": {
+      "type": "string"
+    },
+    "Shippingcity": {
+      "type": "string"
+    },
+    "Shippingstate": {
+      "type": "string"
+    },
+    "Shippingzip": {
+      "type": "string"
+    },
+    "Shippingcountry": {
+      "type": "string"
+    },
+    "Timezone": {
+      "type": "integer"
+    },
+    "Identifierfields": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "CreatedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

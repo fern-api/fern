@@ -1,0 +1,207 @@
+{
+  "type": "object",
+  "properties": {
+    "isSuccess": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/IsSuccess"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pageIdentifier": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PageIdentifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Responsecode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ApplePayOrganizationUpdateData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseText": {
+      "$ref": "#/definitions/ResponseText"
+    }
+  },
+  "required": [
+    "responseText"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "IsSuccess": {
+      "type": "boolean"
+    },
+    "PageIdentifier": {
+      "type": "string"
+    },
+    "Responsecode": {
+      "type": "integer"
+    },
+    "CreatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ApplePayId": {
+      "type": "string"
+    },
+    "JobId": {
+      "type": "string"
+    },
+    "JobStatus": {
+      "type": "string"
+    },
+    "OrganizationId": {
+      "type": "integer"
+    },
+    "ApplePayType": {
+      "type": "string"
+    },
+    "LastModified": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "WalletCascade": {
+      "type": "boolean"
+    },
+    "WalletIsEnabled": {
+      "type": "boolean"
+    },
+    "OrganizationUpdates": {
+      "type": "object",
+      "properties": {
+        "cascade": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/WalletCascade"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "isEnabled": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/WalletIsEnabled"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ApplePayOrganizationUpdateData": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CreatedAt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "id": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ApplePayId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "jobId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/JobId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "jobStatus": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/JobStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "organizationId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OrganizationId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ApplePayType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LastModified"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updates": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OrganizationUpdates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ResponseText": {
+      "type": "string"
+    }
+  }
+}

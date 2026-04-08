@@ -1,0 +1,441 @@
+{
+  "type": "object",
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/PaymentMethodDomainApiResponse"
+      }
+    },
+    "summary": {
+      "$ref": "#/definitions/QuerySummaryNoAmt"
+    }
+  },
+  "required": [
+    "records",
+    "summary"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ApplePayMetadata": {
+      "type": "object",
+      "properties": {
+        "isFileAvailable": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "isFileContentValid": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "redirectDomainName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "redirectUrl": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "statusCode": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ApplePayStatusData": {
+      "type": "object",
+      "properties": {
+        "errorMessage": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "metadata": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ApplePayMetadata"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "IsEnabled": {
+      "type": "boolean"
+    },
+    "ApplePayData": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ApplePayStatusData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "isEnabled": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/IsEnabled"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "GooglePayMetadata": {
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "redirectUrl": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "redirectDomainName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "GooglePayStatusData": {
+      "type": "object",
+      "properties": {
+        "errorMessage": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "metadata": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/GooglePayMetadata"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "GooglePayData": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/GooglePayStatusData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "isEnabled": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/IsEnabled"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "CreatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "JobId": {
+      "type": "string"
+    },
+    "JobStatus": {
+      "type": "string"
+    },
+    "LastModified": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "CascadeJobDetails": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CreatedAt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "jobErrorMessage": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "jobId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/JobId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "jobStatus": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/JobStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "updatedAt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LastModified"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "DomainName": {
+      "type": "string"
+    },
+    "EntityId": {
+      "type": "integer"
+    },
+    "EntityType": {
+      "type": "string"
+    },
+    "PaymentMethodDomainId": {
+      "type": "string"
+    },
+    "OwnerEntityId": {
+      "type": "integer"
+    },
+    "OwnerEntityType": {
+      "type": "string"
+    },
+    "PaymentMethodDomainApiResponse": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "applePay": {
+          "$ref": "#/definitions/ApplePayData"
+        },
+        "googlePay": {
+          "$ref": "#/definitions/GooglePayData"
+        },
+        "cascades": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CascadeJobDetails"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "createdAt": {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        "domainName": {
+          "$ref": "#/definitions/DomainName"
+        },
+        "entityId": {
+          "$ref": "#/definitions/EntityId"
+        },
+        "entityType": {
+          "$ref": "#/definitions/EntityType"
+        },
+        "id": {
+          "$ref": "#/definitions/PaymentMethodDomainId"
+        },
+        "ownerEntityId": {
+          "$ref": "#/definitions/OwnerEntityId"
+        },
+        "ownerEntityType": {
+          "$ref": "#/definitions/OwnerEntityType"
+        },
+        "updatedAt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LastModified"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "applePay",
+        "googlePay",
+        "createdAt",
+        "domainName",
+        "entityId",
+        "entityType",
+        "id",
+        "ownerEntityId",
+        "ownerEntityType"
+      ],
+      "additionalProperties": false
+    },
+    "PageIdentifier": {
+      "type": "string"
+    },
+    "Pagesize": {
+      "type": "integer"
+    },
+    "Totalrecords": {
+      "type": "integer"
+    },
+    "QuerySummaryNoAmt": {
+      "type": "object",
+      "properties": {
+        "pageIdentifier": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PageIdentifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pageSize": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Pagesize"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalPages": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Totalrecords"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalRecords": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Totalrecords"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

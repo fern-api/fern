@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/OptinStatus"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "updatedAt": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LastModified"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "OptinStatus": {
+      "type": "integer"
+    },
+    "LastModified": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

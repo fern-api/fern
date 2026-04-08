@@ -1,0 +1,120 @@
+{
+  "type": "object",
+  "properties": {
+    "method": {
+      "type": "string"
+    },
+    "achHolder": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achRouting": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achAccount": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achAccountType": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AchSecCode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achHolderType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AchHolderType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "storedMethodId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "initiator": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Initiator"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "storedMethodUsageType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/StoredMethodUsageType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "method"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "AchSecCode": {
+      "type": "string"
+    },
+    "AchHolderType": {
+      "type": "string",
+      "enum": [
+        "personal",
+        "business"
+      ]
+    },
+    "Initiator": {
+      "type": "string"
+    },
+    "StoredMethodUsageType": {
+      "type": "string"
+    }
+  }
+}

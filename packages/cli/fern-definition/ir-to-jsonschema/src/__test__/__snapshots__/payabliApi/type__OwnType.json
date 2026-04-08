@@ -1,0 +1,14 @@
+{
+  "type": "string",
+  "enum": [
+    "Limited Liability Company",
+    "Non-Profit Org",
+    "Partnership",
+    "Private Corp",
+    "Public Corp",
+    "Tax Exempt",
+    "Government",
+    "Sole Proprietor"
+  ],
+  "definitions": {}
+}

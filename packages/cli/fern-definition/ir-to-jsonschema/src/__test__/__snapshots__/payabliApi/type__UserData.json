@@ -1,0 +1,252 @@
+{
+  "type": "object",
+  "properties": {
+    "access": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UsrAccess"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "additionalData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AdditionalData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "email": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Email"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "language": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Language"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mfaData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/MfaData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "name": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NameUser"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "phone": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PhoneNumber"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pwd": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "scope": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrgScope"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "timeZone": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Timezone"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "usrStatus": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/UsrStatus"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "UsrAccess": {
+      "type": "object",
+      "properties": {
+        "roleLabel": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "roleValue": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "AdditionalData": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "Email": {
+      "type": "string"
+    },
+    "Language": {
+      "type": "string"
+    },
+    "MfaMode": {
+      "type": "integer"
+    },
+    "MfaData": {
+      "type": "object",
+      "properties": {
+        "mfa": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mfaMode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MfaMode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "NameUser": {
+      "type": "string"
+    },
+    "PhoneNumber": {
+      "type": "string"
+    },
+    "Orgid": {
+      "type": "integer"
+    },
+    "Orgtype": {
+      "type": "integer"
+    },
+    "OrgScope": {
+      "type": "object",
+      "properties": {
+        "orgId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orgid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orgType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orgtype"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Timezone": {
+      "type": "integer"
+    },
+    "UsrStatus": {
+      "type": "integer"
+    }
+  }
+}

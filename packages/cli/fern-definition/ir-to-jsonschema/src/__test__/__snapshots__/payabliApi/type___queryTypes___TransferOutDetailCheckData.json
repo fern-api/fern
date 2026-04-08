@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "CheckNumber": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "CheckData": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "CheckNumber",
+    "CheckData"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

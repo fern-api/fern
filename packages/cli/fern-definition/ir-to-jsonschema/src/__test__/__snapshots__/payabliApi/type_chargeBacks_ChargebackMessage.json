@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "Id": {
+      "type": "integer"
+    },
+    "RoomId": {
+      "type": "integer"
+    },
+    "UserId": {
+      "type": "integer"
+    },
+    "UserName": {
+      "type": "string"
+    },
+    "Content": {
+      "type": "string"
+    },
+    "CreatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "MessageType": {
+      "type": "integer"
+    },
+    "MessageProperties": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "Id",
+    "RoomId",
+    "UserId",
+    "UserName",
+    "Content",
+    "CreatedAt",
+    "MessageType"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

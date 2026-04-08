@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "entryPoint": {
+      "$ref": "#/definitions/Entry"
+    },
+    "frontImage": {
+      "type": "string"
+    },
+    "rearImage": {
+      "type": "string"
+    },
+    "checkAmount": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "entryPoint",
+    "frontImage",
+    "rearImage",
+    "checkAmount"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Entry": {
+      "type": "string"
+    }
+  }
+}

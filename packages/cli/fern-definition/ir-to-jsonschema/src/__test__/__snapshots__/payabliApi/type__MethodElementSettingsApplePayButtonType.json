@@ -1,0 +1,19 @@
+{
+  "type": "string",
+  "enum": [
+    "plain",
+    "buy",
+    "donate",
+    "check-out",
+    "book",
+    "continue",
+    "top-up",
+    "order",
+    "rent",
+    "support",
+    "contribute",
+    "tip",
+    "pay"
+  ],
+  "definitions": {}
+}

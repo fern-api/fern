@@ -1,0 +1,9 @@
+{
+  "type": "string",
+  "enum": [
+    "json",
+    "csv",
+    "xlsx"
+  ],
+  "definitions": {}
+}

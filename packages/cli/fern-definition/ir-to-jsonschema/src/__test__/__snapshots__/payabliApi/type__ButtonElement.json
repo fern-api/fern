@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "label": {
+      "type": "string"
+    },
+    "size": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ButtonElementSize"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "label"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ButtonElementSize": {
+      "type": "string",
+      "enum": [
+        "sm",
+        "md",
+        "lg"
+      ]
+    }
+  }
+}

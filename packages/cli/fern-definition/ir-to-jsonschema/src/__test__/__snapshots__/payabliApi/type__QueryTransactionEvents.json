@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "EventData": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/QueryTransactionEventsEventData"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "EventTime": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "TransEvent": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "QueryTransactionEventsEventData": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "type": "string"
+        }
+      ]
+    }
+  }
+}

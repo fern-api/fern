@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "suggestion": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "message",
+    "suggestion"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

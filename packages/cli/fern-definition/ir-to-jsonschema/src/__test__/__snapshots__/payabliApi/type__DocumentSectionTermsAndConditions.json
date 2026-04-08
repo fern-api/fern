@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "properties": {
+    "tcLinks": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DocumentSectionTermsAndConditionsTcLinksItem"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "visible": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Visible"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "DocumentSectionTermsAndConditionsTcLinksItem": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Visible": {
+      "type": "boolean"
+    }
+  }
+}

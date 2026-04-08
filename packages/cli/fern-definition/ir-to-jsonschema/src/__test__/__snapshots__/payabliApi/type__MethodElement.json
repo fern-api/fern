@@ -1,0 +1,272 @@
+{
+  "type": "object",
+  "properties": {
+    "allMethodsChecked": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "enabled": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Enabled"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "header": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "methods": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/MethodsList"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "order": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Order"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "settings": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/MethodElementSettings"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Enabled": {
+      "type": "boolean"
+    },
+    "MethodsList": {
+      "type": "object",
+      "properties": {
+        "amex": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "applePay": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "googlePay": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "discover": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eCheck": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mastercard": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visa": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Order": {
+      "type": "integer"
+    },
+    "MethodElementSettingsApplePayButtonStyle": {
+      "type": "string",
+      "enum": [
+        "black",
+        "white-outline",
+        "white"
+      ]
+    },
+    "MethodElementSettingsApplePayButtonType": {
+      "type": "string",
+      "enum": [
+        "plain",
+        "buy",
+        "donate",
+        "check-out",
+        "book",
+        "continue",
+        "top-up",
+        "order",
+        "rent",
+        "support",
+        "contribute",
+        "tip",
+        "pay"
+      ]
+    },
+    "MethodElementSettingsApplePayLanguage": {
+      "type": "string",
+      "enum": [
+        "en-US",
+        "ar-AB",
+        "ca-ES",
+        "zh-CN",
+        "zh-HK",
+        "zh-TW",
+        "hr-HR",
+        "cs-CZ",
+        "da-DK",
+        "de-DE",
+        "nl-NL",
+        "en-AU",
+        "en-GB",
+        "fi-FI",
+        "fr-CA",
+        "fr-FR",
+        "el-GR",
+        "he-IL",
+        "hi-IN",
+        "hu-HU",
+        "id-ID",
+        "it-IT",
+        "ja-JP",
+        "ko-KR",
+        "ms-MY",
+        "nb-NO",
+        "pl-PL",
+        "pt-BR",
+        "pt-PT",
+        "ro-RO",
+        "ru-RU",
+        "sk-SK",
+        "es-MX",
+        "es-ES",
+        "sv-SE",
+        "th-TH",
+        "tr-TR",
+        "uk-UA",
+        "vi-VN"
+      ]
+    },
+    "MethodElementSettingsApplePay": {
+      "type": "object",
+      "properties": {
+        "buttonStyle": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MethodElementSettingsApplePayButtonStyle"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "buttonType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MethodElementSettingsApplePayButtonType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "language": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MethodElementSettingsApplePayLanguage"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "MethodElementSettings": {
+      "type": "object",
+      "properties": {
+        "applePay": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MethodElementSettingsApplePay"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

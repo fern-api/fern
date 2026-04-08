@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "Checking",
+    "Savings"
+  ],
+  "definitions": {}
+}

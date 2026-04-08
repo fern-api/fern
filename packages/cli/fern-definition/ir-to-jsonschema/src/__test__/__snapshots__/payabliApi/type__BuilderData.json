@@ -1,0 +1,1081 @@
+{
+  "type": "object",
+  "properties": {
+    "services": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SSection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "attributes": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ASection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "banking": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/DSection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "business": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BSection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "owners": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/OSection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "processing": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PSection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ReadOnly": {
+      "type": "boolean"
+    },
+    "RequiredElement": {
+      "type": "boolean"
+    },
+    "ValueTemplates": {
+      "type": "string"
+    },
+    "LinkData": {
+      "type": "object",
+      "properties": {
+        "ro": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ReadOnly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rq": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RequiredElement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "validator": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ValueTemplates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "AchLinkTypes": {
+      "type": "object",
+      "properties": {
+        "ccd": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ppd": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "web": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "LinkRow": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LinkData"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "BasicTable": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LinkRow"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "header": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkRow"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "AchSection": {
+      "type": "object",
+      "properties": {
+        "acceptance": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AchLinkTypes"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fees": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BasicTable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "price": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BasicTable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "CardLinkTypes": {
+      "type": "object",
+      "properties": {
+        "amex": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "discover": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mastercard": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visa": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "CardSection": {
+      "type": "object",
+      "properties": {
+        "acceptance": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CardLinkTypes"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fees": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BasicTable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "price": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BasicTable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "SSection": {
+      "type": "object",
+      "properties": {
+        "ach": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AchSection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "card": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CardSection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ASection": {
+      "type": "object",
+      "properties": {
+        "minimumDocuments": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "multipleContacts": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "multipleOwners": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Bnk": {
+      "type": "object",
+      "properties": {
+        "accountNumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "routingAccount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "typeAccount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "DSection": {
+      "type": "object",
+      "properties": {
+        "depositAccount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bnk"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "withdrawalAccount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bnk"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "BAddress": {
+      "type": "object",
+      "properties": {
+        "baddress": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "baddress1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bcity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bcountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bstate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bzip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maddress": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maddress1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mcity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mcountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mstate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mzip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "BDetails": {
+      "type": "object",
+      "properties": {
+        "btype": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dbaname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ein": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "faxnumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "legalname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "license": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "licstate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "phonenumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "startdate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "taxfillname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "website": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "BSection": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BAddress"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "details": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BDetails"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "CList": {
+      "type": "object",
+      "properties": {
+        "contactEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactPhone": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactTitle": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "OList": {
+      "type": "object",
+      "properties": {
+        "oaddress": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ocity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ocountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "odriverstate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ostate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerdob": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerdriver": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owneremail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownername": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerpercent": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerphone1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerphone2": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerssn": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownertitle": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ozip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "OSection": {
+      "type": "object",
+      "properties": {
+        "contact_list": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CList"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "own_list": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OList"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "PSection": {
+      "type": "object",
+      "properties": {
+        "avgmonthly": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binperson": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binphone": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binweb": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bsummary": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "highticketamt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mcc": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ticketamt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "whenCharged": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "whenDelivered": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "whenProvided": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "whenRefunded": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LinkData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

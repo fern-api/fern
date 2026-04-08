@@ -1,0 +1,83 @@
+{
+  "type": "object",
+  "properties": {
+    "achAccount": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Achaccount"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achAccountType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Achaccounttype"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achCode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AchSecCode"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achHolder": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AchHolder"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achRouting": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Achrouting"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "method": {
+      "const": "ach"
+    }
+  },
+  "required": [
+    "method"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Achaccount": {
+      "type": "string"
+    },
+    "Achaccounttype": {
+      "type": "string",
+      "enum": [
+        "Checking",
+        "Savings"
+      ]
+    },
+    "AchSecCode": {
+      "type": "string"
+    },
+    "AchHolder": {
+      "type": "string"
+    },
+    "Achrouting": {
+      "type": "string"
+    }
+  }
+}

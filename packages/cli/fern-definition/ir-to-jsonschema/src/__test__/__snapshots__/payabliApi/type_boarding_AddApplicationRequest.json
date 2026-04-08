@@ -1,0 +1,3857 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/ApplicationDataPayIn",
+      "description": "Fields for Pay In processing applications"
+    },
+    {
+      "$ref": "#/definitions/ApplicationDataManaged",
+      "description": "Fields for Managed Payout processing applications"
+    },
+    {
+      "$ref": "#/definitions/ApplicationDataOdp",
+      "description": "Fields for On-Demand Payout processing applications"
+    },
+    {
+      "$ref": "#/definitions/ApplicationData",
+      "description": "All fields for boarding applications"
+    }
+  ],
+  "definitions": {
+    "ApplicationDataPayInServicesAch": {
+      "type": "object",
+      "properties": {
+        "acceptCCD": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptPPD": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptWeb": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ApplicationDataPayInServicesCard": {
+      "type": "object",
+      "properties": {
+        "acceptAmex": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptDiscover": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptMastercard": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptVisa": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "OdpSetupProcessingRegion": {
+      "type": "string",
+      "enum": [
+        "US",
+        "CA"
+      ]
+    },
+    "OdpSetup": {
+      "type": "object",
+      "properties": {
+        "allowAch": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "allowChecks": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "allowVCard": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "processing_region": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OdpSetupProcessingRegion"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "processor": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "issuerNetworkSettingsId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ApplicationDataPayInServices": {
+      "type": "object",
+      "properties": {
+        "ach": {
+          "$ref": "#/definitions/ApplicationDataPayInServicesAch"
+        },
+        "card": {
+          "$ref": "#/definitions/ApplicationDataPayInServicesCard"
+        },
+        "odp": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OdpSetup"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "ach",
+        "card"
+      ],
+      "additionalProperties": false
+    },
+    "Annualrevenue": {
+      "type": "number"
+    },
+    "BoardingAverageBillSize": {
+      "type": "string"
+    },
+    "BoardingAvgMonthlyBill": {
+      "type": "string"
+    },
+    "Avgmonthly": {
+      "type": "number"
+    },
+    "Baddress1": {
+      "type": "string"
+    },
+    "Baddress2": {
+      "type": "string"
+    },
+    "AccountId": {
+      "type": "string"
+    },
+    "BankNickname": {
+      "type": "string"
+    },
+    "BankName": {
+      "type": "string"
+    },
+    "RoutingAccount": {
+      "type": "string"
+    },
+    "AccountNumber": {
+      "type": "string"
+    },
+    "TypeAccount": {
+      "type": "string",
+      "enum": [
+        "Checking",
+        "Savings"
+      ]
+    },
+    "BankAccountHolderName": {
+      "type": "string"
+    },
+    "BankAccountHolderType": {
+      "type": "string",
+      "enum": [
+        "Personal",
+        "Business"
+      ]
+    },
+    "BankAccountFunction": {
+      "type": "integer"
+    },
+    "Bank": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accountId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AccountId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nickname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BankNickname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BankName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "routingAccount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RoutingAccount"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accountNumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AccountNumber"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "typeAccount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TypeAccount"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankAccountHolderName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BankAccountHolderName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankAccountHolderType": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BankAccountHolderType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankAccountFunction": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BankAccountFunction"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verified": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "services": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "BankData": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Bank"
+      }
+    },
+    "Bcity": {
+      "type": "string"
+    },
+    "Bcountry": {
+      "type": "string"
+    },
+    "Binperson": {
+      "type": "integer"
+    },
+    "Binphone": {
+      "type": "integer"
+    },
+    "Binweb": {
+      "type": "integer"
+    },
+    "Bstate": {
+      "type": "string"
+    },
+    "Bsummary": {
+      "type": "string"
+    },
+    "OwnType": {
+      "type": "string",
+      "enum": [
+        "Limited Liability Company",
+        "Non-Profit Org",
+        "Partnership",
+        "Private Corp",
+        "Public Corp",
+        "Tax Exempt",
+        "Government",
+        "Sole Proprietor"
+      ]
+    },
+    "Bzip": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "string"
+    },
+    "AdditionalDataString": {
+      "type": "string"
+    },
+    "ApplicationDataPayInContactsItem": {
+      "type": "object",
+      "properties": {
+        "contactEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactPhone": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactTitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalDataString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Dbaname": {
+      "type": "string"
+    },
+    "Ein": {
+      "type": "string"
+    },
+    "ExternalPaypointId": {
+      "type": "string"
+    },
+    "FaxNumber": {
+      "type": "string"
+    },
+    "Highticketamt": {
+      "type": "number"
+    },
+    "Legalname": {
+      "type": "string"
+    },
+    "License": {
+      "type": "string"
+    },
+    "Licensestate": {
+      "type": "string"
+    },
+    "Maddress": {
+      "type": "string"
+    },
+    "Maddress1": {
+      "type": "string"
+    },
+    "Mcc": {
+      "type": "string"
+    },
+    "Mcity": {
+      "type": "string"
+    },
+    "Mcountry": {
+      "type": "string"
+    },
+    "Mstate": {
+      "type": "string"
+    },
+    "Mzip": {
+      "type": "string"
+    },
+    "Orgid": {
+      "type": "integer"
+    },
+    "ApplicationDataPayInOwnershipItem": {
+      "type": "object",
+      "properties": {
+        "ownername": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownertitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerpercent": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerssn": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerdob": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerphone1": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerphone2": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owneremail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerdriver": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "oaddress": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ocity": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ocountry": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "odriverstate": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ostate": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ozip": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalDataString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "PhoneNumber": {
+      "type": "string"
+    },
+    "RecipientEmailNotification": {
+      "type": "boolean"
+    },
+    "Resumable": {
+      "type": "boolean"
+    },
+    "SignerName": {
+      "type": "string"
+    },
+    "SignerSsn": {
+      "type": "string"
+    },
+    "SignerDob": {
+      "type": "string"
+    },
+    "SignerPhone": {
+      "type": "string"
+    },
+    "Signeraddress": {
+      "type": "string"
+    },
+    "SignerAddress1": {
+      "type": "string"
+    },
+    "SignerCity": {
+      "type": "string"
+    },
+    "SignerCountry": {
+      "type": "string"
+    },
+    "SignerState": {
+      "type": "string"
+    },
+    "SignerZip": {
+      "type": "string"
+    },
+    "SignerAcceptance": {
+      "type": "boolean"
+    },
+    "SignedDocumentReference": {
+      "type": "string"
+    },
+    "PciAttestation": {
+      "type": "boolean"
+    },
+    "AttestationDate": {
+      "type": "string"
+    },
+    "AdditionalDataMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "SignDate": {
+      "type": "string"
+    },
+    "SignerDataRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SignerName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ssn": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SignerSsn"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dob": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SignerDob"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "phone": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SignerPhone"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "email": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "address": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Signeraddress"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "address1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SignerAddress1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "city": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SignerCity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "country": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SignerCountry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SignerState"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "zip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SignerZip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptance": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SignerAcceptance"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "signedDocumentReference": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SignedDocumentReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pciAttestation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PciAttestation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attestationDate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AttestationDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalDataMap"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "signDate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SignDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Busstartdate": {
+      "type": "string"
+    },
+    "Taxfillname": {
+      "type": "string"
+    },
+    "TemplateId": {
+      "type": "integer"
+    },
+    "Ticketamt": {
+      "type": "number"
+    },
+    "Website": {
+      "type": "string"
+    },
+    "Whencharged": {
+      "type": "string",
+      "enum": [
+        "When Service Provided",
+        "In Advance"
+      ]
+    },
+    "Whendelivered": {
+      "type": "string",
+      "enum": [
+        "0-7 Days",
+        "8-14 Days",
+        "15-30 Days",
+        "Over 30 Days"
+      ]
+    },
+    "Whenprovided": {
+      "type": "string",
+      "enum": [
+        "30 Days or Less",
+        "31 to 60 Days",
+        "60+ Days"
+      ]
+    },
+    "Whenrefunded": {
+      "type": "string",
+      "enum": [
+        "Exchange Only",
+        "No Refund or Exchange",
+        "More than 30 days",
+        "30 Days or Less"
+      ]
+    },
+    "RepCode": {
+      "type": "string"
+    },
+    "RepName": {
+      "type": "string"
+    },
+    "RepOffice": {
+      "type": "string"
+    },
+    "OnCreate": {
+      "type": "string"
+    },
+    "ApplicationDataPayIn": {
+      "type": "object",
+      "properties": {
+        "services": {
+          "$ref": "#/definitions/ApplicationDataPayInServices"
+        },
+        "annualRevenue": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Annualrevenue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "averageBillSize": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BoardingAverageBillSize"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "averageMonthlyBill": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BoardingAvgMonthlyBill"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "avgmonthly": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Avgmonthly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "baddress": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Baddress1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "baddress1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Baddress2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankData": {
+          "$ref": "#/definitions/BankData"
+        },
+        "bcity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bcity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bcountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bcountry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binperson": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Binperson"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binphone": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Binphone"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binweb": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Binweb"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "boardingLinkId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bstate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bstate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bsummary": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bsummary"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "btype": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OwnType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bzip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bzip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contacts": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ApplicationDataPayInContactsItem"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "creditLimit": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dbaName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Dbaname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ein": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Ein"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "externalpaypointID": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ExternalPaypointId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "faxnumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FaxNumber"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "highticketamt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Highticketamt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "legalName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Legalname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "license": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/License"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "licstate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Licensestate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maddress": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Maddress"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maddress1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Maddress1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mcc": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mcc"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mcity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mcity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mcountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mcountry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mstate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mstate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mzip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mzip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orgId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orgid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownership": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ApplicationDataPayInOwnershipItem"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "phonenumber": {
+          "$ref": "#/definitions/PhoneNumber"
+        },
+        "processingRegion": {
+          "type": "string"
+        },
+        "recipientEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recipientEmailNotification": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RecipientEmailNotification"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resumable": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Resumable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "signer": {
+          "$ref": "#/definitions/SignerDataRequest"
+        },
+        "startdate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Busstartdate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "taxFillName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Taxfillname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "templateId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ticketamt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Ticketamt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "website": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Website"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "whenCharged": {
+          "$ref": "#/definitions/Whencharged"
+        },
+        "whenDelivered": {
+          "$ref": "#/definitions/Whendelivered"
+        },
+        "whenProvided": {
+          "$ref": "#/definitions/Whenprovided"
+        },
+        "whenRefunded": {
+          "$ref": "#/definitions/Whenrefunded"
+        },
+        "additionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalDataMap"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "RepCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RepCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "RepName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RepName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "RepOffice": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RepOffice"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "onCreate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OnCreate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "services",
+        "bankData",
+        "phonenumber",
+        "processingRegion",
+        "signer",
+        "whenCharged",
+        "whenDelivered",
+        "whenProvided",
+        "whenRefunded"
+      ],
+      "additionalProperties": false
+    },
+    "FileContentFtype": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "doc",
+        "docx",
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+        "txt"
+      ]
+    },
+    "FileContent": {
+      "type": "object",
+      "properties": {
+        "fContent": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filename": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ftype": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FileContentFtype"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "furl": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Attachments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/FileContent"
+      }
+    },
+    "ApplicationDataManagedContactsItem": {
+      "type": "object",
+      "properties": {
+        "contactEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactPhone": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactTitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalDataString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "BoardingBusinessFax": {
+      "type": "string"
+    },
+    "ApplicationDataManagedOwnershipItem": {
+      "type": "object",
+      "properties": {
+        "ownername": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownertitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerpercent": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerssn": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerdob": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerphone1": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerphone2": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owneremail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerdriver": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "oaddress": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ocity": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ocountry": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "odriverstate": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ostate": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ozip": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalDataString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "BoardingBusinessPhone": {
+      "type": "string"
+    },
+    "ApplicationDataManaged": {
+      "type": "object",
+      "properties": {
+        "annualRevenue": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Annualrevenue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attachments": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Attachments"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "baddress": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Baddress1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "baddress1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Baddress2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BankData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bcity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bcity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bcountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bcountry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "boardingLinkId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bstate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bstate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bsummary": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bsummary"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "btype": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OwnType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bzip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bzip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contacts": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ApplicationDataManagedContactsItem"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dbaname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Dbaname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ein": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Ein"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "faxnumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BoardingBusinessFax"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "legalname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Legalname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "license": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/License"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "licstate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Licensestate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maddress": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Maddress"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maddress1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Maddress1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mcc": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mcc"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mcity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mcity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mcountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mcountry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mstate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mstate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mzip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mzip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orgId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orgid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownership": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ApplicationDataManagedOwnershipItem"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "phonenumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BoardingBusinessPhone"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recipientEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recipientEmailNotification": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RecipientEmailNotification"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resumable": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Resumable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "signer": {
+          "$ref": "#/definitions/SignerDataRequest"
+        },
+        "startdate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Busstartdate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "taxfillname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Taxfillname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "templateId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "website": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Website"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "RepCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RepCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "RepName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RepName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "RepOffice": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RepOffice"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "onCreate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OnCreate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "signer"
+      ],
+      "additionalProperties": false
+    },
+    "AchSetup": {
+      "type": "object",
+      "properties": {
+        "acceptCCD": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptPPD": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptWeb": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "CardSetup": {
+      "type": "object",
+      "properties": {
+        "acceptAmex": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptDiscover": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptMastercard": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptVisa": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Services": {
+      "type": "object",
+      "properties": {
+        "ach": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AchSetup"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "card": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CardSetup"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "odp": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OdpSetup"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ApplicationDataOdpContactsItem": {
+      "type": "object",
+      "properties": {
+        "contactEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactPhone": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactTitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalDataString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ApplicationDataOdpOwnershipItem": {
+      "type": "object",
+      "properties": {
+        "ownername": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownertitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerpercent": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerssn": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerdob": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerphone1": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerphone2": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owneremail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerdriver": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "oaddress": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ocity": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ocountry": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "odriverstate": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ostate": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ozip": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalDataString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "PayoutAverageMonthlyVolume": {
+      "type": "number"
+    },
+    "PayoutAverageTicketLimit": {
+      "type": "number"
+    },
+    "PayoutCreditLimit": {
+      "type": "number"
+    },
+    "PayoutHighTicketAmount": {
+      "type": "number"
+    },
+    "ApplicationDataOdp": {
+      "type": "object",
+      "properties": {
+        "services": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Services"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "annualRevenue": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Annualrevenue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attachments": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Attachments"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "baddress": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Baddress1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "baddress1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Baddress2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BankData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bcity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bcity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bcountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bcountry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "boardingLinkId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bstate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bstate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bsummary": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bsummary"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "btype": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OwnType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bzip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bzip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contacts": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ApplicationDataOdpContactsItem"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dbaname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Dbaname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ein": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Ein"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "faxnumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BoardingBusinessFax"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "highticketamt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Highticketamt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "legalname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Legalname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "license": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/License"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "licstate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Licensestate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maddress": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Maddress"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maddress1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Maddress1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mcc": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mcc"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mcity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mcity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mcountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mcountry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mstate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mstate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mzip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mzip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orgId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orgid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownership": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ApplicationDataOdpOwnershipItem"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payoutAverageMonthlyVolume": {
+          "$ref": "#/definitions/PayoutAverageMonthlyVolume"
+        },
+        "payoutAverageTicketAmount": {
+          "$ref": "#/definitions/PayoutAverageTicketLimit"
+        },
+        "payoutCreditLimit": {
+          "$ref": "#/definitions/PayoutCreditLimit"
+        },
+        "payoutHighTicketAmount": {
+          "$ref": "#/definitions/PayoutHighTicketAmount"
+        },
+        "phonenumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BoardingBusinessPhone"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recipientEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recipientEmailNotification": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RecipientEmailNotification"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resumable": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Resumable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "signer": {
+          "$ref": "#/definitions/SignerDataRequest"
+        },
+        "startdate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Busstartdate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "taxfillname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Taxfillname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "templateId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "website": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Website"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "RepCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RepCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "RepName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RepName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "RepOffice": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RepOffice"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "onCreate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OnCreate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "payoutAverageMonthlyVolume",
+        "payoutAverageTicketAmount",
+        "payoutCreditLimit",
+        "payoutHighTicketAmount",
+        "signer"
+      ],
+      "additionalProperties": false
+    },
+    "Contacts": {
+      "type": "object",
+      "properties": {
+        "contactEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactPhone": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contactTitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalDataString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ContactsField": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Contacts"
+      }
+    },
+    "Owners": {
+      "type": "object",
+      "properties": {
+        "ownername": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownertitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerpercent": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerssn": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerdob": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerphone1": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerphone2": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owneremail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownerdriver": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "oaddress": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ocity": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ocountry": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "odriverstate": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ostate": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ozip": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additionalData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AdditionalDataString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Ownership": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Owners"
+      }
+    },
+    "ApplicationData": {
+      "type": "object",
+      "properties": {
+        "services": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Services"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "annualRevenue": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Annualrevenue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attachments": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Attachments"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "avgmonthly": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Avgmonthly"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "baddress": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Baddress1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "baddress1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Baddress2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bankData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BankData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bcity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bcity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bcountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bcountry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binperson": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Binperson"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binphone": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Binphone"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binweb": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Binweb"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bstate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bstate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bsummary": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bsummary"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "btype": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OwnType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bzip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Bzip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contacts": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ContactsField"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dbaname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Dbaname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ein": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Ein"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "externalPaypointId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ExternalPaypointId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "faxnumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BoardingBusinessFax"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "highticketamt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Highticketamt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "legalname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Legalname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "license": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/License"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "licstate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Licensestate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maddress": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Maddress"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maddress1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Maddress1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mcc": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mcc"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mcity": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mcity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mcountry": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mcountry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mstate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mstate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mzip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Mzip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orgId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Orgid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownership": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Ownership"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payoutAverageMonthlyVolume": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PayoutAverageMonthlyVolume"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payoutAverageTicketLimit": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PayoutAverageTicketLimit"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payoutCreditLimit": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PayoutCreditLimit"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payoutHighTicketAmount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PayoutHighTicketAmount"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "phonenumber": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BoardingBusinessPhone"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recipientEmail": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Email"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recipientEmailNotification": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RecipientEmailNotification"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resumable": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Resumable"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "signer": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SignerDataRequest"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "startdate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Busstartdate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "taxfillname": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Taxfillname"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "templateId": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TemplateId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ticketamt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Ticketamt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "website": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Website"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "whenCharged": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Whencharged"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "whenDelivered": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Whendelivered"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "whenProvided": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Whenprovided"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "whenRefunded": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Whenrefunded"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "RepCode": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RepCode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "RepName": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RepName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "RepOffice": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RepOffice"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "onCreate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OnCreate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "type": "object",
+  "properties": {
+    "cardcvv": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Cardcvv"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cardexp": {
+      "$ref": "#/definitions/Cardexp"
+    },
+    "cardHolder": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Cardholder"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cardnumber": {
+      "$ref": "#/definitions/Cardnumber"
+    },
+    "cardzip": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Cardzip"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "initiator": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Initiator"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "method": {
+      "const": "card"
+    },
+    "saveIfSuccess": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SaveIfSuccess"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "cardexp",
+    "cardnumber",
+    "method"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Cardcvv": {
+      "type": "string"
+    },
+    "Cardexp": {
+      "type": "string"
+    },
+    "Cardholder": {
+      "type": "string"
+    },
+    "Cardnumber": {
+      "type": "string"
+    },
+    "Cardzip": {
+      "type": "string"
+    },
+    "Initiator": {
+      "type": "string"
+    },
+    "SaveIfSuccess": {
+      "type": "boolean"
+    }
+  }
+}

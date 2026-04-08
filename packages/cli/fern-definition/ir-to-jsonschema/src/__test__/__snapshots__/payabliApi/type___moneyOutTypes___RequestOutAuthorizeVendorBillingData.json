@@ -1,0 +1,77 @@
+{
+  "type": "object",
+  "properties": {
+    "bankName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BankName"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "routingAccount": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/RoutingAccount"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "accountNumber": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AccountNumber"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "typeAccount": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/TypeAccount"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bankAccountHolderName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BankAccountHolderName"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "BankName": {
+      "type": "string"
+    },
+    "RoutingAccount": {
+      "type": "string"
+    },
+    "AccountNumber": {
+      "type": "string"
+    },
+    "TypeAccount": {
+      "type": "string",
+      "enum": [
+        "Checking",
+        "Savings"
+      ]
+    },
+    "BankAccountHolderName": {
+      "type": "string"
+    }
+  }
+}

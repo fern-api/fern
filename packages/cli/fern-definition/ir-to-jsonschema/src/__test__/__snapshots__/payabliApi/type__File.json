@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "additionalProperties": {
+    "type": [
+      "string",
+      "number",
+      "boolean",
+      "object",
+      "array",
+      "null"
+    ]
+  },
+  "definitions": {}
+}
