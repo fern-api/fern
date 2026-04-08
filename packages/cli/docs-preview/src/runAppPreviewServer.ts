@@ -6,6 +6,7 @@ import { runExeca } from "@fern-api/logging-execa";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
+import { execSync } from "child_process";
 import cors from "cors";
 import express from "express";
 import fs from "fs";
@@ -408,6 +409,53 @@ function cleanFernDocsCacheSync(bundleRoot: string, context: TaskContext): void 
     }
 }
 
+/**
+ * Finds and kills any processes still listening on the given port.
+ * This is a best-effort fallback to clean up zombie Next.js worker
+ * processes that may survive after the main server process is killed.
+ */
+function killProcessesOnPort(targetPort: number, context: TaskContext): void {
+    const isWindows = process.platform === "win32";
+    const command = isWindows
+        ? `netstat -ano | findstr :${targetPort} | findstr LISTENING`
+        : `lsof -ti tcp:${targetPort}`;
+
+    try {
+        const output = execSync(command, { encoding: "utf-8", timeout: 5000 });
+
+        let pids: string[];
+        if (isWindows) {
+            pids = output
+                .trim()
+                .split("\n")
+                .map((line) => line.trim().split(/\s+/).pop() ?? "")
+                .filter((pid) => pid.length > 0 && pid !== String(process.pid));
+            pids = [...new Set(pids)];
+        } else {
+            pids = output
+                .trim()
+                .split("\n")
+                .map((pid) => pid.trim())
+                .filter((pid) => pid.length > 0 && pid !== String(process.pid));
+        }
+
+        for (const pid of pids) {
+            try {
+                context.logger.debug(`Killing leftover process ${pid} on port ${targetPort}`);
+                if (isWindows) {
+                    execSync(`taskkill /F /PID ${pid}`, { timeout: 5000 });
+                } else {
+                    process.kill(Number(pid), "SIGKILL");
+                }
+            } catch {
+                // Process may have already exited
+            }
+        }
+    } catch {
+        // Command returns non-zero when no matches are found — nothing to kill
+    }
+}
+
 export async function runAppPreviewServer({
     initialProject,
     reloadProject,
@@ -807,8 +855,7 @@ export async function runAppPreviewServer({
         return new Promise((resolve) => {
             serverProcess = runExeca(context.logger, "node", [serverPath], {
                 env,
-                doNotPipeOutput: true,
-                detached: true
+                doNotPipeOutput: true
             });
 
             const checkReady = (data: Buffer) => {
@@ -934,38 +981,26 @@ export async function runAppPreviewServer({
         }
         cleanedUp = true;
 
-        // Close file watcher to prevent resource leaks
-        watcher.close();
-
-        const pid = serverProcess?.pid;
-        if (pid != null) {
-            context.logger.debug(`Killing server process tree with PID: ${pid}`);
-
-            // Send SIGTERM to the entire process group (detached: true makes
-            // the server a process group leader, so -pid targets it and all
-            // its child workers).
+        if (serverProcess != null && !serverProcess.killed) {
+            context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
             try {
-                process.kill(-pid, "SIGTERM");
-            } catch (error) {
-                context.logger.debug(`Failed to SIGTERM process group: ${error}`);
+                serverProcess.kill();
+                setTimeout(() => {
+                    if (serverProcess != null && !serverProcess.killed) {
+                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
+                        try {
+                            serverProcess.kill("SIGKILL");
+                        } catch (err) {
+                            context.logger.error(`Failed to force kill server process: ${err}`);
+                        }
+                    }
+                }, 2000);
+            } catch (err) {
+                context.logger.error(`Failed to kill server process: ${err}`);
             }
-
-            // Schedule SIGKILL as a fallback to guarantee cleanup.
-            // Note: we intentionally do NOT gate this on serverProcess.killed,
-            // because that flag is set immediately when .kill() is called and
-            // does not indicate the process has actually exited.
-            setTimeout(() => {
-                try {
-                    // Check if any process in the group is still alive (signal 0)
-                    process.kill(-pid, 0);
-                    // Still alive — force kill the entire group
-                    context.logger.debug(`Force killing server process group ${pid}`);
-                    process.kill(-pid, "SIGKILL");
-                } catch {
-                    // Process group is already dead — nothing to do
-                }
-            }, 2000);
         }
+
+        killProcessesOnPort(port, context);
 
         // Clean Fern Docs cache on shutdown (sync since cleanup runs in signal handlers)
         // Uses maxRetries to handle ENOTEMPTY if the server process is still writing
