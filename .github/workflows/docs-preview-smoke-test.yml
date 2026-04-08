@@ -101,11 +101,11 @@ jobs:
         uses: actions/download-artifact@v7
         with:
           name: cli-prod-bundle
-          path: ${{ runner.temp }}/cli-artifact
+          path: /tmp/cli-artifact
 
       - name: Install CLI native dependencies
         if: steps.node-check.outputs.available == 'true'
-        working-directory: ${{ runner.temp }}/cli-artifact
+        working-directory: /tmp/cli-artifact
         run: npm install --ignore-scripts
 
       - name: Install tools (Linux)
@@ -160,7 +160,7 @@ jobs:
 
           # Use the locally-built CLI instead of the published npm version.
           # The CLI will download the production docs bundle from S3 automatically.
-          FERN_NO_VERSION_REDIRECTION=true node "$RUNNER_TEMP/cli-artifact/cli.cjs" docs dev > /tmp/fern-docs-dev.log 2>&1 &
+          FERN_NO_VERSION_REDIRECTION=true node "/tmp/cli-artifact/cli.cjs" docs dev > /tmp/fern-docs-dev.log 2>&1 &
           FERN_PID=$!
           echo "FERN_PID=$FERN_PID" >> $GITHUB_ENV
 
