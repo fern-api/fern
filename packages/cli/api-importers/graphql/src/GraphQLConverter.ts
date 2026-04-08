@@ -479,8 +479,21 @@ export class GraphQLConverter {
             });
         }
 
+        // Only extend interfaces that are converted to plain objects (no implementations).
+        // Interfaces with implementations are converted to undiscriminatedUnion, and the
+        // frontend's unwrapObjectType only supports extending object types.
+        // GraphQL implementing types already include all interface fields, so extends is
+        // only needed for documentation purposes when the interface is a plain object.
         const interfaces = type.getInterfaces();
-        const extendsIds = interfaces.map((iface) => this.getNamespacedTypeId(iface.name));
+        const extendsIds = interfaces
+            .filter((iface) => {
+                if (!this.schema) {
+                    return true;
+                }
+                const implementations = this.schema.getPossibleTypes(iface);
+                return implementations.length === 0;
+            })
+            .map((iface) => this.getNamespacedTypeId(iface.name));
 
         return {
             type: "object",

@@ -138,9 +138,7 @@
       "name": "CheckboxOption",
       "shape": {
         "type": "object",
-        "extends": [
-          "ProductOption"
-        ],
+        "extends": [],
         "properties": [
           {
             "key": "checkedByDefault",
@@ -200,9 +198,7 @@
       "name": "MultipleChoiceOption",
       "shape": {
         "type": "object",
-        "extends": [
-          "ProductOption"
-        ],
+        "extends": [],
         "properties": [
           {
             "key": "displayStyle",
@@ -265,9 +261,7 @@
       "name": "TextFieldOption",
       "shape": {
         "type": "object",
-        "extends": [
-          "ProductOption"
-        ],
+        "extends": [],
         "properties": [
           {
             "key": "defaultValue",
@@ -360,9 +354,7 @@
       "name": "Product",
       "shape": {
         "type": "object",
-        "extends": [
-          "Node"
-        ],
+        "extends": [],
         "properties": [
           {
             "key": "id",
@@ -403,9 +395,7 @@
       "name": "Category",
       "shape": {
         "type": "object",
-        "extends": [
-          "Node"
-        ],
+        "extends": [],
         "properties": [
           {
             "key": "id",

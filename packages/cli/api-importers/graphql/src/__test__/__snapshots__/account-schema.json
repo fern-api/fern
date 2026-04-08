@@ -1063,9 +1063,7 @@
       "name": "Checkout",
       "shape": {
         "type": "object",
-        "extends": [
-          "Node"
-        ],
+        "extends": [],
         "properties": [
           {
             "key": "id",
@@ -3396,9 +3394,7 @@
       "name": "Subscription",
       "shape": {
         "type": "object",
-        "extends": [
-          "Node"
-        ],
+        "extends": [],
         "properties": [
           {
             "key": "id",
