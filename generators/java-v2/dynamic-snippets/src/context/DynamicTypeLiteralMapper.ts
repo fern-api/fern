@@ -419,9 +419,10 @@ export class DynamicTypeLiteralMapper {
         as?: DynamicTypeLiteralMapper.ConvertedAs;
         inUndiscriminatedUnion?: boolean;
     }): java.TypeLiteral {
+        const valueRecord = this.context.getRecord(value) ?? {};
         const properties = this.context.associateByWireValue({
             parameters: object_.properties,
-            values: this.context.getRecord(value) ?? {}
+            values: valueRecord
         });
         // Add missing required properties with default values to ensure valid staged builder code.
         // Java uses type-state staged builders where required fields must be set before build() can
@@ -449,8 +450,10 @@ export class DynamicTypeLiteralMapper {
         // Re-sort all properties (including newly added defaults) to match schema declaration order.
         // Java staged builders require method calls in the exact order defined by the schema.
         const paramOrderMap = new Map<string, number>();
+        const declaredWireValues = new Set<string>();
         object_.properties.forEach((param, index) => {
             paramOrderMap.set(param.name.wireValue, index);
+            declaredWireValues.add(param.name.wireValue);
         });
         properties.sort(
             (a, b) => (paramOrderMap.get(a.name.wireValue) ?? 0) - (paramOrderMap.get(b.name.wireValue) ?? 0)
@@ -486,12 +489,50 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.unscope();
             }
         }
+        // Handle extra properties not in the schema via .additionalProperty() builder
+        // calls so the serialized output matches the example data.
+        for (const [key, val] of Object.entries(valueRecord)) {
+            if (!declaredWireValues.has(key) && val !== undefined) {
+                const rawValue = this.convertToRawJavaLiteral(val);
+                if (rawValue != null) {
+                    builderParameters.push({
+                        name: "additionalProperty",
+                        value: java.TypeLiteral.raw(`"${this.escapeJavaString(key)}", ${rawValue}`)
+                    });
+                }
+            }
+        }
         return java.TypeLiteral.builder({
             classReference: this.context.getJavaClassReferenceFromDeclaration({
                 declaration: object_.declaration
             }),
             parameters: builderParameters
         });
+    }
+
+    private convertToRawJavaLiteral(value: unknown): string | null {
+        if (typeof value === "string") {
+            return `"${this.escapeJavaString(value)}"`;
+        }
+        if (typeof value === "number") {
+            return value.toString();
+        }
+        if (typeof value === "boolean") {
+            return value.toString();
+        }
+        if (value === null) {
+            return "null";
+        }
+        return null;
+    }
+
+    private escapeJavaString(s: string): string {
+        return s
+            .replace(/\\/g, "\\\\")
+            .replace(/"/g, '\\"')
+            .replace(/\n/g, "\\n")
+            .replace(/\t/g, "\\t")
+            .replace(/\r/g, "\\r");
     }
 
     private getDefaultValueForTypeReference(typeReference: FernIr.dynamic.TypeReference): unknown {
