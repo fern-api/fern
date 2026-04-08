@@ -216,9 +216,10 @@ export class LocalTaskHandler {
                 // This happens for generators that don't embed versions in files (e.g., Swift
                 // uses git tags for versioning via SPM, not a version field in Package.swift).
                 this.context.logger.info(`Magic version not found in diff, falling back to git tags: ${e}`);
-                previousVersion = await autoVersioningService.getLatestVersionFromGitTags(
+                const tagVersion = await autoVersioningService.getLatestVersionFromGitTags(
                     this.absolutePathToLocalOutput
                 );
+                previousVersion = this.normalizeVersionPrefix(tagVersion);
                 if (previousVersion == null) {
                     this.context.logger.info("No git tags found — treating as new SDK repository");
                     const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
@@ -247,12 +248,13 @@ export class LocalTaskHandler {
             // If no previous version from diff (e.g., Version.swift is a new file in an existing SDK),
             // try git tags before falling back to initial version
             if (previousVersion == null) {
-                const tagVersion = await autoVersioningService.getLatestVersionFromGitTags(
+                const rawTagVersion = await autoVersioningService.getLatestVersionFromGitTags(
                     this.absolutePathToLocalOutput
                 );
-                if (tagVersion != null) {
-                    this.context.logger.info(`No previous version from diff; using git tag: ${tagVersion}`);
-                    previousVersion = tagVersion;
+                const normalizedTag = this.normalizeVersionPrefix(rawTagVersion);
+                if (normalizedTag != null) {
+                    this.context.logger.info(`No previous version from diff; using git tag: ${normalizedTag}`);
+                    previousVersion = normalizedTag;
                 }
             }
 
@@ -609,6 +611,25 @@ export class LocalTaskHandler {
 
         // Preserve 'v' prefix if original version had it
         return version.startsWith("v") ? `v${newVersion}` : newVersion;
+    }
+
+    /**
+     * Normalizes a version string's `v` prefix to match the convention used by
+     * the magic version (`this.version`).  Git tags may use `v1.2.3` while the
+     * magic version is `0.0.0-fern-placeholder` (no prefix) or vice-versa.
+     * Without normalization the mismatch propagates into `replaceMagicVersion`
+     * and can produce invalid versions in package manifests (e.g. `v1.3.0` in
+     * a `package.json` that expects bare semver).
+     */
+    private normalizeVersionPrefix(version: string | undefined): string | undefined {
+        if (version == null) {
+            return undefined;
+        }
+        const stripped = version.startsWith("v") ? version.slice(1) : version;
+        if (this.version?.startsWith("v")) {
+            return `v${stripped}`;
+        }
+        return stripped;
     }
 
     /**
