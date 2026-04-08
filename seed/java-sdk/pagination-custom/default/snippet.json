@@ -1,16 +1,16 @@
 {
     "endpoints": [
         {
-            "example_identifier": "fdccf19a",
+            "example_identifier": "372663bc",
             "id": {
                 "method": "GET",
                 "path": "/users",
-                "identifier_override": "endpoint_users.listUsernamesCustom"
+                "identifier_override": "endpoint_users.listWithCustomPager"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listUsernamesCustom(\n            ListUsernamesRequestCustom\n                .builder()\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listUsernamesCustom(\n            ListUsernamesRequestCustom\n                .builder()\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListWithCustomPagerRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithCustomPager(\n            ListWithCustomPagerRequest\n                .builder()\n                .limit(1)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListWithCustomPagerRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithCustomPager(\n            ListWithCustomPagerRequest\n                .builder()\n                .limit(1)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],

@@ -90,7 +90,7 @@ match client.headers.send(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_literal::prelude::*;
+use seed_literal::prelude::{*};
 
 let request = SendLiteralsInHeadersRequest {
     ...

@@ -15,7 +15,7 @@ export interface WireMockMapping {
     request: {
         urlPathTemplate: string;
         method: string;
-        headers?: Record<string, { matches: string }>;
+        headers?: Record<string, { matches?: string; equalTo?: string }>;
         pathParameters?: Record<string, { equalTo: string }>;
         queryParameters?: Record<string, { equalTo: string }>;
         formParameters?: Record<string, unknown>;
@@ -267,16 +267,27 @@ export class WireMock {
         const shouldAddBodyPattern = needsBodyPattern && isSseResponse;
 
         // Build auth header matchers for endpoints that require authentication.
-        // Skip auth header matching when endpoint has per-endpoint security because
-        // the client configures all auth schemes globally and header overwriting
-        // (e.g., multiple schemes writing to "Authorization") makes the exact value unpredictable.
-        const authHeaders: Record<string, { matches: string }> = {};
-        if (endpoint.auth && !(endpoint.security != null && endpoint.security.length > 0)) {
+        const authHeaders: Record<string, { matches?: string; equalTo?: string }> = {};
+        if (endpoint.auth) {
             for (const scheme of ir.auth.schemes) {
                 switch (scheme.type) {
-                    case "basic":
-                        authHeaders["Authorization"] = { matches: "Basic .+" };
+                    case "basic": {
+                        // Compute exact Authorization header using test credentials.
+                        // Access usernameOmit/passwordOmit via runtime property check
+                        // (available in IR v63+ but @fern-fern/ir-sdk types may lag).
+                        const schemeRecord = scheme as unknown as Record<string, unknown>;
+                        const usernameOmit = schemeRecord.usernameOmit === true;
+                        const passwordOmit = schemeRecord.passwordOmit === true;
+                        if (usernameOmit && passwordOmit) {
+                            // Both omitted — SDK skips the Authorization header entirely.
+                            break;
+                        }
+                        const username = usernameOmit ? "" : "test-username";
+                        const password = passwordOmit ? "" : "test-password";
+                        const encoded = Buffer.from(`${username}:${password}`).toString("base64");
+                        authHeaders["Authorization"] = { equalTo: `Basic ${encoded}` };
                         break;
+                    }
                     case "bearer":
                         authHeaders["Authorization"] = { matches: "Bearer .+" };
                         break;

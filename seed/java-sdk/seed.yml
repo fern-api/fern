@@ -361,9 +361,14 @@ fixtures:
       outputFolder: source-root
       skipScripts: true
 scripts:
-  - image: fernapi/java-seed
-    commands:
-      - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava spotlessCheck
+  docker:
+    - image: fernapi/java-seed
+      commands:
+        - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava spotlessCheck
+  local:
+    - commands:
+      - ./gradlew compileJava spotlessCheck
+
 allowedFailures:
   - alias-extends
   - enum:forward-compatible-enums

@@ -102,6 +102,14 @@ func TestSettersOutboundCallConversationsResponse(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetDryRun", func(t *testing.T) {
+		obj := &OutboundCallConversationsResponse{}
+		var fernTestValueDryRun bool
+		obj.SetDryRun(fernTestValueDryRun)
+		assert.Equal(t, fernTestValueDryRun, obj.DryRun)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersOutboundCallConversationsResponse(t *testing.T) {
@@ -128,6 +136,29 @@ func TestGettersOutboundCallConversationsResponse(t *testing.T) {
 		_ = obj.GetConversationId() // Should return zero value
 	})
 
+	t.Run("GetDryRun", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &OutboundCallConversationsResponse{}
+		var expected bool
+		obj.DryRun = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetDryRun(), "getter should return the property value")
+	})
+
+	t.Run("GetDryRun_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *OutboundCallConversationsResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDryRun() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitOutboundCallConversationsResponse(t *testing.T) {
@@ -139,6 +170,37 @@ func TestSettersMarkExplicitOutboundCallConversationsResponse(t *testing.T) {
 
 		// Act
 		obj.SetConversationId(fernTestValueConversationId)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDryRun_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &OutboundCallConversationsResponse{}
+		var fernTestValueDryRun bool
+
+		// Act
+		obj.SetDryRun(fernTestValueDryRun)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -189,6 +251,12 @@ func TestJSONMarshalingOutboundCallConversationsResponse(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj OutboundCallConversationsResponse
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
 }
 
 func TestStringOutboundCallConversationsResponse(t *testing.T) {

@@ -32,7 +32,7 @@ class SeedClient
 
     /**
      * @param ?string $username The username to use for authentication.
-     * @param ?string $accessToken The username to use for authentication.
+     * @param ?string $accessToken The accessToken to use for authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
