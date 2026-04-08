@@ -78,8 +78,11 @@ public class UnionWireTest {
     @Test
     public void testUpdate() throws Exception {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("true"));
-        Boolean response =
-                client.union().update(Shape.circle(Circle.builder().radius(1.1).build()));
+        Boolean response = client.union()
+                .update(Shape.circle(Circle.builder()
+                        .radius(1.1)
+                        .additionalProperty("id", "id")
+                        .build()));
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("PATCH", request.getMethod());
