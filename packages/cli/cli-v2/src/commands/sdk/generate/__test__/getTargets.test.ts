@@ -86,7 +86,7 @@ describe("GenerateCommand.getTargets", () => {
             expect(targets[0]?.name).toBe("python");
         });
 
-        it("throws CliError in non-TTY when --target does not match", async () => {
+        it("throws CliError when --target does not match any configured target", async () => {
             const workspace = makeWorkspace([makeTarget("typescript"), makeTarget("python")]);
             await expect(getTargets(cmd, { workspace, args: { target: "ruby" } })).rejects.toSatisfy(
                 (e) => e instanceof CliError && e.message.includes("ruby") && e.message.includes("typescript")

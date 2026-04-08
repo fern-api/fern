@@ -502,16 +502,11 @@ export class GenerateCommand {
                 const allTargets = workspace.sdks?.targets ?? [];
                 const available = allTargets.map((t) => t.name);
                 if (available.length > 0) {
-                    const selectedTarget = await promptSelect<string>({
-                        isTTY: context.isTTY,
-                        message: `Target '${args.target}' not found. Select a target:`,
-                        choices: available.map((name) => ({ name, value: name })),
-                        nonInteractiveError: `Target '${args.target}' not found. Available targets: ${available.join(", ")}`,
-                        flagHint: (value) => `--target ${value}`
+                    throw new CliError({
+                        message: `Target '${args.target}' not found. Available targets: ${available.join(", ")}`
                     });
-                    matched = allTargets.filter((t) => t.name === selectedTarget);
                 } else {
-                    throw new Error(`Target '${args.target}' not found`);
+                    throw new CliError({ message: `Target '${args.target}' not found` });
                 }
             }
         }
@@ -524,38 +519,39 @@ export class GenerateCommand {
 
         // When multiple targets exist and no group/target was specified, prompt for selection.
         // Prefer group-based selection when groups are defined; fall back to target selection otherwise.
-        const ALL_SENTINEL = "__all__";
         if (groupName == null && args.target == null && matched.length > 1) {
             const allGroups = this.collectGroups(matched);
             if (allGroups.length > 1) {
-                // Multiple groups defined — prompt by group
-                const selectedGroup = await promptSelect<string>({
+                // Multiple groups defined — prompt by group.
+                // Use undefined as the "all" sentinel to avoid any collision with real group names.
+                const selectedGroup = await promptSelect<string | undefined>({
                     isTTY: context.isTTY,
                     message: "Multiple SDK groups found. Select one:",
                     choices: [
-                        { name: `all (${matched.length} targets)`, value: ALL_SENTINEL },
+                        { name: `all (${matched.length} targets)`, value: undefined },
                         ...allGroups.map((g) => ({ name: g, value: g }))
                     ],
                     nonInteractiveError: `Multiple SDK groups found: ${allGroups.join(", ")}. Use --group to select one.`,
-                    flagHint: (value) => (value !== ALL_SENTINEL ? `--group ${value}` : undefined)
+                    flagHint: (value) => (value != null ? `--group ${value}` : undefined)
                 });
-                if (selectedGroup !== ALL_SENTINEL) {
+                if (selectedGroup != null) {
                     matched = this.filterTargetsByGroup(matched, selectedGroup);
                 }
             } else {
-                // No groups defined — prompt by target name
+                // No groups defined — prompt by target name.
+                // Use undefined as the "all" sentinel to avoid any collision with real target names.
                 const targetNames = matched.map((t) => t.name);
-                const selectedTarget = await promptSelect<string>({
+                const selectedTarget = await promptSelect<string | undefined>({
                     isTTY: context.isTTY,
                     message: "Multiple SDK targets found. Select one:",
                     choices: [
-                        { name: `all (${matched.length} targets)`, value: ALL_SENTINEL },
+                        { name: `all (${matched.length} targets)`, value: undefined },
                         ...targetNames.map((name) => ({ name, value: name }))
                     ],
                     nonInteractiveError: `Multiple SDK targets found: ${targetNames.join(", ")}. Use --target to select one.`,
-                    flagHint: (value) => (value !== ALL_SENTINEL ? `--target ${value}` : undefined)
+                    flagHint: (value) => (value != null ? `--target ${value}` : undefined)
                 });
-                if (selectedTarget !== ALL_SENTINEL) {
+                if (selectedTarget != null) {
                     matched = matched.filter((t) => t.name === selectedTarget);
                 }
             }
