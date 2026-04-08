@@ -947,8 +947,8 @@ export async function runAppPreviewServer({
                 if (pid != null) {
                     try {
                         process.kill(-pid, "SIGTERM");
-                    } catch {
-                        // Process group may already be dead
+                    } catch (error) {
+                        context.logger.debug(`Failed to kill process group (may already be dead): ${error}`);
                     }
                 }
                 serverProcess.kill();
@@ -959,8 +959,10 @@ export async function runAppPreviewServer({
                             if (pid != null) {
                                 try {
                                     process.kill(-pid, "SIGKILL");
-                                } catch {
-                                    // Process group may already be dead
+                                } catch (error) {
+                                    context.logger.debug(
+                                        `Failed to kill process group (may already be dead): ${error}`
+                                    );
                                 }
                             }
                             serverProcess.kill("SIGKILL");
