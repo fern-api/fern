@@ -6,6 +6,7 @@ import { runExeca } from "@fern-api/logging-execa";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
+import { execSync } from "child_process";
 import cors from "cors";
 import express from "express";
 import fs from "fs";
@@ -408,6 +409,54 @@ function cleanFernDocsCacheSync(bundleRoot: string, context: TaskContext): void 
     }
 }
 
+/**
+ * Finds and kills any processes still listening on the given port.
+ * This is a best-effort fallback to clean up zombie Next.js worker
+ * processes that may survive after the main server process is killed.
+ */
+function killProcessesOnPort(targetPort: number, context: TaskContext): void {
+    context.logger.debug(`Killing any leftover processes on port ${targetPort}`);
+    const isWindows = process.platform === "win32";
+    const command = isWindows
+        ? `netstat -ano | findstr :${targetPort} | findstr LISTENING`
+        : `lsof -ti tcp:${targetPort}`;
+
+    try {
+        const output = execSync(command, { encoding: "utf-8", timeout: 5000 });
+
+        let pids: string[];
+        if (isWindows) {
+            pids = output
+                .trim()
+                .split("\n")
+                .map((line) => line.trim().split(/\s+/).pop() ?? "")
+                .filter((pid) => pid.length > 0 && pid !== String(process.pid));
+            pids = [...new Set(pids)];
+        } else {
+            pids = output
+                .trim()
+                .split("\n")
+                .map((pid) => pid.trim())
+                .filter((pid) => pid.length > 0 && pid !== String(process.pid));
+        }
+
+        for (const pid of pids) {
+            try {
+                context.logger.debug(`Killing leftover process ${pid} on port ${targetPort}`);
+                if (isWindows) {
+                    execSync(`taskkill /F /PID ${pid}`, { timeout: 5000 });
+                } else {
+                    process.kill(Number(pid), "SIGKILL");
+                }
+            } catch {
+                // Process may have already exited
+            }
+        }
+    } catch {
+        // Command returns non-zero when no matches are found — nothing to kill
+    }
+}
+
 export async function runAppPreviewServer({
     initialProject,
     reloadProject,
@@ -799,8 +848,9 @@ export async function runAppPreviewServer({
         NODE_OPTIONS: "--max-old-space-size=8096 --enable-source-maps"
     };
 
-    // Track the current server process
+    // Track the current server process and the port it actually bound to
     let serverProcess: ReturnType<typeof runExeca> | null = null;
+    let actualPort: number = port;
 
     // Function to start the Next.js server
     const startNextJsServer = (): Promise<void> => {
@@ -813,6 +863,12 @@ export async function runAppPreviewServer({
             const checkReady = (data: Buffer) => {
                 const output = data.toString();
                 context.logger.debug(`[Next.js] ${output}`);
+
+                const portMatch = output.match(/localhost:(\d+)/);
+                if (portMatch != null) {
+                    actualPort = Number(portMatch[1]);
+                }
+
                 if (output.includes("Ready in") || output.includes("✓ Ready")) {
                     resolve();
                 }
@@ -951,6 +1007,8 @@ export async function runAppPreviewServer({
                 context.logger.error(`Failed to kill server process: ${err}`);
             }
         }
+
+        killProcessesOnPort(actualPort, context);
 
         // Clean Fern Docs cache on shutdown (sync since cleanup runs in signal handlers)
         // Uses maxRetries to handle ENOTEMPTY if the server process is still writing
