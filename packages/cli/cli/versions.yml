@@ -1,11 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 4.62.7
+- version: 4.63.1
   changelogEntry:
     - summary: |
         Fix union variant display names showing "object" instead of proper
         schema names in documentation.
       type: fix
+  createdAt: "2026-04-07"
+  irVersion: 66
+
+- version: 4.63.0
+  changelogEntry:
+    - summary: |
+        Speed up `fern docs dev` bundle refresh by renaming the old bundle
+        and deleting it asynchronously instead of blocking on removal.
+      type: feat
   createdAt: "2026-04-07"
   irVersion: 66
 
