@@ -51,6 +51,18 @@ describe("SentryClient (cli-v1)", () => {
 
         expect(mockSentryInit).toHaveBeenCalledOnce();
         expect(mockSentryCaptureException).toHaveBeenCalledOnce();
+        expect(mockSentryCaptureException).toHaveBeenCalledWith(expect.any(Error), undefined);
+    });
+
+    it("passes error.code tag via captureContext when code is provided", () => {
+        const client = new SentryClient({ release: "cli@1.2.3" });
+        const error = new Error("something broke");
+
+        client.captureException(error, "INTERNAL_ERROR");
+
+        expect(mockSentryCaptureException).toHaveBeenCalledWith(error, {
+            captureContext: { tags: { "error.code": "INTERNAL_ERROR" } }
+        });
     });
 
     it("flushes the Sentry client", async () => {

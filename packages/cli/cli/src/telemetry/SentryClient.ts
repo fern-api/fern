@@ -29,14 +29,10 @@ export class SentryClient {
             return;
         }
         try {
-            if (code != null) {
-                Sentry.withScope((scope) => {
-                    scope.setTag("error.code", code);
-                    this.sentry?.captureException(error);
-                });
-            } else {
-                this.sentry.captureException(error);
-            }
+            this.sentry.captureException(
+                error,
+                code != null ? { captureContext: { tags: { "error.code": code } } } : undefined
+            );
         } catch {
             // no-op
         }

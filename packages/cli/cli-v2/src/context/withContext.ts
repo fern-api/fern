@@ -114,14 +114,20 @@ function handleError(context: Context, error: unknown): void {
  * Called from the top-level catch in withContext and from
  * TaskContextAdapter.failWithoutThrowing.
  */
-<<<<<<< HEAD
-export function reportError(context: Context, error: unknown, options?: { code?: CliErrorCode }): void {
+export function reportError(
+    context: Context,
+    error: unknown,
+    options?: { message?: string; code?: CliErrorCode }
+): void {
     if (error instanceof TaskAbortSignal) {
         return;
     }
-    const code = resolveErrorCode(error, options?.code) ?? "INTERNAL_ERROR";
+    const code = resolveErrorCode(error, options?.code);
+    const capturable = error ?? new CliError({ message: options?.message ?? "", code });
     if (shouldReportToSentry(code)) {
-        context.telemetry.captureException(error);
+        context.telemetry.captureException(capturable, {
+            errorCode: code
+        });
     }
     context.telemetry.sendLifecycleEvent({
         status: "error",
