@@ -1,4 +1,4 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
@@ -656,7 +656,9 @@ export class WireTestGenerator {
                             );
                             break;
                         case "header": {
-                            const fieldName = scheme.name?.name?.pascalCase?.unsafeName;
+                            const fieldName = scheme.name
+                                ? this.context.caseConverter.pascalUnsafe(getNameFromWireValue(scheme.name))
+                                : undefined;
                             if (fieldName) {
                                 arguments_.push(
                                     go.invokeFunc({

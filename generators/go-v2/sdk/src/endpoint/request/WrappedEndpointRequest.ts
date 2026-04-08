@@ -156,7 +156,6 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.dedent();
                 writer.writeLine("}");
                 break;
-            }
             default:
                 assertNever(fileProperty);
         }
