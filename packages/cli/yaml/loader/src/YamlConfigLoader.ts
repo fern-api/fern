@@ -21,6 +21,12 @@ export namespace YamlConfigLoader {
         absoluteFilePath: AbsoluteFilePath;
         /** The relative path to the loaded config file */
         relativeFilePath: RelativeFilePath;
+        /**
+         * Path mappings from `$ref` resolution — maps YAML path prefixes to the
+         * source document they came from. Useful for resolving file paths relative
+         * to the correct source file when a key was loaded via `$ref`.
+         */
+        pathMappings: ReferenceResolver.PathMapping[];
     }
 
     export interface Failure {
@@ -114,7 +120,8 @@ export class YamlConfigLoader {
             data: parseResult.data,
             sourced: sourceResolver.toSourced(parseResult.data),
             absoluteFilePath,
-            relativeFilePath: RelativeFilePath.of(relative(this.cwd, absoluteFilePath))
+            relativeFilePath: RelativeFilePath.of(relative(this.cwd, absoluteFilePath)),
+            pathMappings: resolved.pathMappings
         };
     }
 
