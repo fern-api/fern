@@ -1,10 +1,13 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { appendFile, mkdir, writeFile } from "fs/promises";
+import { appendFile, mkdir, readdir, stat, unlink, writeFile } from "fs/promises";
 import { homedir } from "os";
 import path from "path";
 
 const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 const LOGS_FOLDER_NAME = "logs";
+
+// 100 MB cap for the logs directory
+const MAX_LOGS_DIR_SIZE_BYTES = 100 * 1024 * 1024;
 
 /**
  * Log level for debug messages
@@ -158,6 +161,9 @@ export class DebugLogger {
 
         await writeFile(this.logFilePath, header, "utf-8");
         this.initialized = true;
+
+        // Enforce the 100 MB cap on the logs directory
+        await this.enforceLogSizeLimit(logsDir);
     }
 
     /**
@@ -291,6 +297,54 @@ export class DebugLogger {
         };
 
         await this.logCliMetric(event);
+    }
+
+    /**
+     * Delete oldest log files until total directory size is within the cap.
+     */
+    private async enforceLogSizeLimit(logsDir: AbsoluteFilePath): Promise<void> {
+        try {
+            const entries = await readdir(logsDir);
+            const logFiles = entries.filter((name) => name.endsWith(".log"));
+
+            // Gather size and mtime for each log file
+            const fileInfos: Array<{ name: string; fullPath: string; size: number; mtimeMs: number }> = [];
+            for (const name of logFiles) {
+                const fullPath = path.join(logsDir, name);
+                try {
+                    const stats = await stat(fullPath);
+                    fileInfos.push({ name, fullPath, size: stats.size, mtimeMs: stats.mtimeMs });
+                } catch {
+                    // File may have been removed between readdir and stat
+                }
+            }
+
+            let totalSize = fileInfos.reduce((sum, f) => sum + f.size, 0);
+            if (totalSize <= MAX_LOGS_DIR_SIZE_BYTES) {
+                return;
+            }
+
+            // Sort oldest first so we delete the oldest logs first
+            fileInfos.sort((a, b) => a.mtimeMs - b.mtimeMs);
+
+            for (const file of fileInfos) {
+                if (totalSize <= MAX_LOGS_DIR_SIZE_BYTES) {
+                    break;
+                }
+                // Never delete the log file we just created in this session
+                if (this.logFilePath != null && file.fullPath === this.logFilePath) {
+                    continue;
+                }
+                try {
+                    await unlink(file.fullPath);
+                    totalSize -= file.size;
+                } catch {
+                    // Ignore errors from concurrent deletion
+                }
+            }
+        } catch {
+            // If the directory is unreadable, skip cleanup silently
+        }
     }
 
     private getEventType(payload: MetricEvent | MetricSummary, isAggregate: boolean): string {

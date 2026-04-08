@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.63.2
+  changelogEntry:
+    - summary: |
+        Add log rotation for `fern docs dev` debug logs in `~/.fern/logs/`.
+        Old log files are automatically deleted when the directory exceeds
+        100 MB, keeping the most recent logs.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 66
+
 - version: 4.63.1
   changelogEntry:
     - summary: |
