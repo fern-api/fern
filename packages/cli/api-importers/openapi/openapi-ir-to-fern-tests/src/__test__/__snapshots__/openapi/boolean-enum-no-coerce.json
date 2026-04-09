@@ -1,0 +1,195 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "Plant": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "integer",
+              "isIndoor": "boolean",
+              "isPoisonous": "boolean",
+              "isSeedling": "boolean",
+              "name": "string",
+              "status": "PlantStatus",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "PlantStatus": {
+            "enum": [
+              "active",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  PlantStatus:
+    enum:
+      - active
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  Plant:
+    properties:
+      id: integer
+      name: string
+      isIndoor: boolean
+      isPoisonous: boolean
+      status: PlantStatus
+      isSeedling: boolean
+    source:
+      openapi: ../openapi.yml
+",
+    },
+    "plants.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "root": "__package__.yml",
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "create": {
+              "auth": undefined,
+              "display-name": "Create a new plant",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "isIndoor": true,
+                    "name": "Fern",
+                    "status": "active",
+                  },
+                  "response": {
+                    "body": {
+                      "id": 123,
+                      "isIndoor": true,
+                      "isPoisonous": true,
+                      "isSeedling": true,
+                      "name": "Fern",
+                      "status": "active",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/plants",
+              "request": {
+                "body": {
+                  "properties": {
+                    "isIndoor": "boolean",
+                    "name": "string",
+                    "status": "CreatePlantRequestStatus",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "CreatePlantRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Plant created successfully",
+                "status-code": 201,
+                "type": "root.Plant",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "CreatePlantRequestStatus": {
+            "enum": [
+              "active",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  CreatePlantRequestStatus:
+    enum:
+      - active
+    inline: true
+    source:
+      openapi: ../openapi.yml
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create:
+      path: /plants
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Create a new plant
+      request:
+        name: CreatePlantRequest
+        body:
+          properties:
+            name: string
+            isIndoor: boolean
+            status: CreatePlantRequestStatus
+        content-type: application/json
+      response:
+        docs: Plant created successfully
+        type: root.Plant
+        status-code: 201
+      examples:
+        - request:
+            name: Fern
+            isIndoor: true
+            status: active
+          response:
+            body:
+              id: 123
+              name: Fern
+              isIndoor: true
+              isPoisonous: true
+              status: active
+              isSeedling: true
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Boolean Enum No Coerce Test",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Boolean Enum No Coerce Test
+",
+  },
+}

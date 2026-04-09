@@ -11,14 +11,14 @@ import (
 )
 
 // An alias for a nullable user ID
-type NullableUserId = *string
+type NullableUserID = *string
 
 // An alias for an optional user ID
-type OptionalUserId = *string
+type OptionalUserID = *string
 
 // Test object with nullable and optional fields
 type UserProfile struct {
-	Id                     string            `json:"id" url:"id"`
+	ID                     string            `json:"id" url:"id"`
 	Username               string            `json:"username" url:"username"`
 	NullableString         *string           `json:"nullableString" url:"nullableString"`
 	NullableInteger        *int              `json:"nullableInteger" url:"nullableInteger"`
@@ -41,11 +41,11 @@ type UserProfile struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UserProfile) GetId() string {
+func (u *UserProfile) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *UserProfile) GetUsername() string {
@@ -233,8 +233,8 @@ type Address struct {
 	State      *string        `json:"state,omitempty" url:"state,omitempty"`
 	ZipCode    string         `json:"zipCode" url:"zipCode"`
 	Country    *string        `json:"country,omitempty" url:"country,omitempty"`
-	BuildingId NullableUserId `json:"buildingId" url:"buildingId"`
-	TenantId   OptionalUserId `json:"tenantId,omitempty" url:"tenantId,omitempty"`
+	BuildingID NullableUserID `json:"buildingId" url:"buildingId"`
+	TenantID   OptionalUserID `json:"tenantId,omitempty" url:"tenantId,omitempty"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
@@ -275,18 +275,18 @@ func (a *Address) GetCountry() *string {
 	return a.Country
 }
 
-func (a *Address) GetBuildingId() NullableUserId {
+func (a *Address) GetBuildingID() NullableUserID {
 	if a == nil {
 		return nil
 	}
-	return a.BuildingId
+	return a.BuildingID
 }
 
-func (a *Address) GetTenantId() OptionalUserId {
+func (a *Address) GetTenantID() OptionalUserID {
 	if a == nil {
 		return nil
 	}
-	return a.TenantId
+	return a.TenantID
 }
 
 func (a *Address) GetExtraProperties() map[string]any {
@@ -547,7 +547,7 @@ type NotificationMethod struct {
 type EmailNotification struct {
 	EmailAddress string  `json:"emailAddress" url:"emailAddress"`
 	Subject      string  `json:"subject" url:"subject"`
-	HtmlContent  *string `json:"htmlContent,omitempty" url:"htmlContent,omitempty"`
+	HTMLContent  *string `json:"htmlContent,omitempty" url:"htmlContent,omitempty"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
@@ -567,11 +567,11 @@ func (e *EmailNotification) GetSubject() string {
 	return e.Subject
 }
 
-func (e *EmailNotification) GetHtmlContent() *string {
+func (e *EmailNotification) GetHTMLContent() *string {
 	if e == nil {
 		return nil
 	}
-	return e.HtmlContent
+	return e.HTMLContent
 }
 
 func (e *EmailNotification) GetExtraProperties() map[string]any {
@@ -763,7 +763,7 @@ type SearchResult struct {
 }
 
 type Organization struct {
-	Id            string  `json:"id" url:"id"`
+	ID            string  `json:"id" url:"id"`
 	Name          string  `json:"name" url:"name"`
 	Domain        *string `json:"domain" url:"domain"`
 	EmployeeCount *int    `json:"employeeCount,omitempty" url:"employeeCount,omitempty"`
@@ -772,11 +772,11 @@ type Organization struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *Organization) GetId() string {
+func (o *Organization) GetID() string {
 	if o == nil {
 		return ""
 	}
-	return o.Id
+	return o.ID
 }
 
 func (o *Organization) GetName() string {
@@ -838,7 +838,7 @@ func (o *Organization) String() string {
 }
 
 type Document struct {
-	Id      string   `json:"id" url:"id"`
+	ID      string   `json:"id" url:"id"`
 	Title   string   `json:"title" url:"title"`
 	Content string   `json:"content" url:"content"`
 	Author  *string  `json:"author" url:"author"`
@@ -848,11 +848,11 @@ type Document struct {
 	rawJSON         json.RawMessage
 }
 
-func (d *Document) GetId() string {
+func (d *Document) GetID() string {
 	if d == nil {
 		return ""
 	}
-	return d.Id
+	return d.ID
 }
 
 func (d *Document) GetTitle() string {
@@ -922,7 +922,7 @@ func (d *Document) String() string {
 
 // Test object with nullable enums, unions, and arrays
 type ComplexProfile struct {
-	Id                           string                `json:"id" url:"id"`
+	ID                           string                `json:"id" url:"id"`
 	NullableRole                 *UserRole             `json:"nullableRole" url:"nullableRole"`
 	OptionalRole                 *UserRole             `json:"optionalRole,omitempty" url:"optionalRole,omitempty"`
 	OptionalNullableRole         *UserRole             `json:"optionalNullableRole,omitempty" url:"optionalNullableRole,omitempty"`
@@ -946,11 +946,11 @@ type ComplexProfile struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *ComplexProfile) GetId() string {
+func (c *ComplexProfile) GetID() string {
 	if c == nil {
 		return ""
 	}
-	return c.Id
+	return c.ID
 }
 
 func (c *ComplexProfile) GetNullableRole() *UserRole {
@@ -1351,7 +1351,7 @@ func (d *DeserializationTestResponse) String() string {
 }
 
 type UserResponse struct {
-	Id        string     `json:"id" url:"id"`
+	ID        string     `json:"id" url:"id"`
 	Username  string     `json:"username" url:"username"`
 	Email     *string    `json:"email" url:"email"`
 	Phone     *string    `json:"phone,omitempty" url:"phone,omitempty"`
@@ -1363,11 +1363,11 @@ type UserResponse struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UserResponse) GetId() string {
+func (u *UserResponse) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *UserResponse) GetUsername() string {

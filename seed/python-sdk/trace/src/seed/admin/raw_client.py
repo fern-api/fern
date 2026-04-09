@@ -16,11 +16,11 @@ from ..submission.types.test_case_result_with_stdout import TestCaseResultWithSt
 from ..submission.types.test_submission_status import TestSubmissionStatus
 from ..submission.types.test_submission_update_info import TestSubmissionUpdateInfo
 from ..submission.types.trace_response import TraceResponse
-from ..submission.types.trace_response_v_2 import TraceResponseV2
+from ..submission.types.trace_response_v2 import TraceResponseV2
 from ..submission.types.workspace_run_details import WorkspaceRunDetails
 from ..submission.types.workspace_submission_status import WorkspaceSubmissionStatus
 from ..submission.types.workspace_submission_update_info import WorkspaceSubmissionUpdateInfo
-from ..v_2.problem.types.test_case_id import TestCaseId
+from ..v2.problem.types.test_case_id import TestCaseId
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -264,7 +264,7 @@ class RawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def store_traced_test_case_v_2(
+    def store_traced_test_case_v2(
         self,
         submission_id: SubmissionId,
         test_case_id: TestCaseId,
@@ -359,7 +359,7 @@ class RawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def store_traced_workspace_v_2(
+    def store_traced_workspace_v2(
         self,
         submission_id: SubmissionId,
         *,
@@ -639,7 +639,7 @@ class AsyncRawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def store_traced_test_case_v_2(
+    async def store_traced_test_case_v2(
         self,
         submission_id: SubmissionId,
         test_case_id: TestCaseId,
@@ -734,7 +734,7 @@ class AsyncRawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def store_traced_workspace_v_2(
+    async def store_traced_workspace_v2(
         self,
         submission_id: SubmissionId,
         *,

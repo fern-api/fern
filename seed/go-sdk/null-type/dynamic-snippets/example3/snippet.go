@@ -15,7 +15,7 @@ func do() {
         ),
     )
     request := &fern.GetUsersRequest{
-        Id: "id",
+        ID: "id",
     }
     client.Users.Get(
         context.TODO(),

@@ -10,15 +10,15 @@ import (
 )
 
 var (
-	getTokenRequestFieldXApiKey      = big.NewInt(1 << 0)
-	getTokenRequestFieldClientId     = big.NewInt(1 << 1)
+	getTokenRequestFieldXAPIKey      = big.NewInt(1 << 0)
+	getTokenRequestFieldClientID     = big.NewInt(1 << 1)
 	getTokenRequestFieldClientSecret = big.NewInt(1 << 2)
 	getTokenRequestFieldScope        = big.NewInt(1 << 3)
 )
 
 type GetTokenRequest struct {
-	XApiKey      string  `json:"-" url:"-"`
-	ClientId     string  `json:"client_id" url:"-"`
+	XAPIKey      string  `json:"-" url:"-"`
+	ClientID     string  `json:"client_id" url:"-"`
 	ClientSecret string  `json:"client_secret" url:"-"`
 	Scope        *string `json:"scope,omitempty" url:"-"`
 	audience     string
@@ -43,18 +43,18 @@ func (g *GetTokenRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetXApiKey sets the XApiKey field and marks it as non-optional;
+// SetXAPIKey sets the XAPIKey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTokenRequest) SetXApiKey(xApiKey string) {
-	g.XApiKey = xApiKey
-	g.require(getTokenRequestFieldXApiKey)
+func (g *GetTokenRequest) SetXAPIKey(xAPIKey string) {
+	g.XAPIKey = xAPIKey
+	g.require(getTokenRequestFieldXAPIKey)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTokenRequest) SetClientId(clientId string) {
-	g.ClientId = clientId
-	g.require(getTokenRequestFieldClientId)
+func (g *GetTokenRequest) SetClientID(clientID string) {
+	g.ClientID = clientID
+	g.require(getTokenRequestFieldClientID)
 }
 
 // SetClientSecret sets the ClientSecret field and marks it as non-optional;
@@ -99,16 +99,16 @@ func (g *GetTokenRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	refreshTokenRequestFieldXApiKey      = big.NewInt(1 << 0)
-	refreshTokenRequestFieldClientId     = big.NewInt(1 << 1)
+	refreshTokenRequestFieldXAPIKey      = big.NewInt(1 << 0)
+	refreshTokenRequestFieldClientID     = big.NewInt(1 << 1)
 	refreshTokenRequestFieldClientSecret = big.NewInt(1 << 2)
 	refreshTokenRequestFieldRefreshToken = big.NewInt(1 << 3)
 	refreshTokenRequestFieldScope        = big.NewInt(1 << 4)
 )
 
 type RefreshTokenRequest struct {
-	XApiKey      string  `json:"-" url:"-"`
-	ClientId     string  `json:"client_id" url:"-"`
+	XAPIKey      string  `json:"-" url:"-"`
+	ClientID     string  `json:"client_id" url:"-"`
 	ClientSecret string  `json:"client_secret" url:"-"`
 	RefreshToken string  `json:"refresh_token" url:"-"`
 	Scope        *string `json:"scope,omitempty" url:"-"`
@@ -134,18 +134,18 @@ func (r *RefreshTokenRequest) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
-// SetXApiKey sets the XApiKey field and marks it as non-optional;
+// SetXAPIKey sets the XAPIKey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RefreshTokenRequest) SetXApiKey(xApiKey string) {
-	r.XApiKey = xApiKey
-	r.require(refreshTokenRequestFieldXApiKey)
+func (r *RefreshTokenRequest) SetXAPIKey(xAPIKey string) {
+	r.XAPIKey = xAPIKey
+	r.require(refreshTokenRequestFieldXAPIKey)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RefreshTokenRequest) SetClientId(clientId string) {
-	r.ClientId = clientId
-	r.require(refreshTokenRequestFieldClientId)
+func (r *RefreshTokenRequest) SetClientID(clientID string) {
+	r.ClientID = clientID
+	r.require(refreshTokenRequestFieldClientID)
 }
 
 // SetClientSecret sets the ClientSecret field and marks it as non-optional;

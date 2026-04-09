@@ -57,7 +57,7 @@ public final class ClientOptions {
         this.timeout = timeout;
         this.maxRetries = maxRetries;
         this.logging = logging;
-        this.version = version.orElse(ApiVersion.V_2);
+        this.version = version.orElse(ApiVersion.V2);
         this.headers.put("X-API-Version", this.version.toString());
     }
 
@@ -247,7 +247,7 @@ public final class ClientOptions {
             if (clientOptions.version != null) {
                 builder.version = Optional.ofNullable(clientOptions.version);
             } else {
-                builder.version = Optional.of(ApiVersion.V_2);
+                builder.version = Optional.of(ApiVersion.V2);
             }
             return builder;
         }

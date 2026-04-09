@@ -10,8 +10,8 @@ from .core.logging import LogConfig, Logger
 from .environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
 
 if typing.TYPE_CHECKING:
-    from .ec_2.client import AsyncEc2Client, Ec2Client
-    from .s_3.client import AsyncS3Client, S3Client
+    from .ec2.client import AsyncEc2Client, Ec2Client
+    from .s3.client import AsyncS3Client, S3Client
 
 
 class SeedMultiUrlEnvironmentNoDefault:
@@ -76,24 +76,24 @@ class SeedMultiUrlEnvironmentNoDefault:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._ec_2: typing.Optional[Ec2Client] = None
-        self._s_3: typing.Optional[S3Client] = None
+        self._ec2: typing.Optional[Ec2Client] = None
+        self._s3: typing.Optional[S3Client] = None
 
     @property
-    def ec_2(self):
-        if self._ec_2 is None:
-            from .ec_2.client import Ec2Client  # noqa: E402
+    def ec2(self):
+        if self._ec2 is None:
+            from .ec2.client import Ec2Client  # noqa: E402
 
-            self._ec_2 = Ec2Client(client_wrapper=self._client_wrapper)
-        return self._ec_2
+            self._ec2 = Ec2Client(client_wrapper=self._client_wrapper)
+        return self._ec2
 
     @property
-    def s_3(self):
-        if self._s_3 is None:
-            from .s_3.client import S3Client  # noqa: E402
+    def s3(self):
+        if self._s3 is None:
+            from .s3.client import S3Client  # noqa: E402
 
-            self._s_3 = S3Client(client_wrapper=self._client_wrapper)
-        return self._s_3
+            self._s3 = S3Client(client_wrapper=self._client_wrapper)
+        return self._s3
 
 
 def _make_default_async_client(
@@ -179,21 +179,21 @@ class AsyncSeedMultiUrlEnvironmentNoDefault:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._ec_2: typing.Optional[AsyncEc2Client] = None
-        self._s_3: typing.Optional[AsyncS3Client] = None
+        self._ec2: typing.Optional[AsyncEc2Client] = None
+        self._s3: typing.Optional[AsyncS3Client] = None
 
     @property
-    def ec_2(self):
-        if self._ec_2 is None:
-            from .ec_2.client import AsyncEc2Client  # noqa: E402
+    def ec2(self):
+        if self._ec2 is None:
+            from .ec2.client import AsyncEc2Client  # noqa: E402
 
-            self._ec_2 = AsyncEc2Client(client_wrapper=self._client_wrapper)
-        return self._ec_2
+            self._ec2 = AsyncEc2Client(client_wrapper=self._client_wrapper)
+        return self._ec2
 
     @property
-    def s_3(self):
-        if self._s_3 is None:
-            from .s_3.client import AsyncS3Client  # noqa: E402
+    def s3(self):
+        if self._s3 is None:
+            from .s3.client import AsyncS3Client  # noqa: E402
 
-            self._s_3 = AsyncS3Client(client_wrapper=self._client_wrapper)
-        return self._s_3
+            self._s3 = AsyncS3Client(client_wrapper=self._client_wrapper)
+        return self._s3

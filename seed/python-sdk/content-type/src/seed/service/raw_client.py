@@ -273,8 +273,8 @@ class RawServiceClient:
         self,
         id: str,
         *,
-        field_1: typing.Optional[str] = OMIT,
-        field_2: typing.Optional[int] = OMIT,
+        field1: typing.Optional[str] = OMIT,
+        field2: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
@@ -284,9 +284,9 @@ class RawServiceClient:
         ----------
         id : str
 
-        field_1 : typing.Optional[str]
+        field1 : typing.Optional[str]
 
-        field_2 : typing.Optional[int]
+        field2 : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -299,8 +299,8 @@ class RawServiceClient:
             f"regular/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "field1": field_1,
-                "field2": field_2,
+                "field1": field1,
+                "field2": field2,
             },
             request_options=request_options,
             omit=OMIT,
@@ -576,8 +576,8 @@ class AsyncRawServiceClient:
         self,
         id: str,
         *,
-        field_1: typing.Optional[str] = OMIT,
-        field_2: typing.Optional[int] = OMIT,
+        field1: typing.Optional[str] = OMIT,
+        field2: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
@@ -587,9 +587,9 @@ class AsyncRawServiceClient:
         ----------
         id : str
 
-        field_1 : typing.Optional[str]
+        field1 : typing.Optional[str]
 
-        field_2 : typing.Optional[int]
+        field2 : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -602,8 +602,8 @@ class AsyncRawServiceClient:
             f"regular/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "field1": field_1,
-                "field2": field_2,
+                "field1": field1,
+                "field2": field2,
             },
             request_options=request_options,
             omit=OMIT,

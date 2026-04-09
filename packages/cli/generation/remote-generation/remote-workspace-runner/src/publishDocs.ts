@@ -1216,6 +1216,12 @@ async function generateLanguageSpecificDynamicIRs({
                     packageName = (generatorInvocation.config as { packageName?: string }).packageName ?? "";
                 }
 
+                // Normalize Go package names to strip https:// prefix,
+                // matching how snippetConfiguration values are normalized
+                if (generatorInvocation.language === "go" && packageName) {
+                    packageName = normalizeGoPackageForLookup(packageName);
+                }
+
                 if (!generatorInvocation.language) {
                     continue;
                 }

@@ -11,7 +11,7 @@ import (
 )
 
 type Resource struct {
-	Id          string         `json:"id" url:"id"`
+	ID          string         `json:"id" url:"id"`
 	Name        string         `json:"name" url:"name"`
 	Description *string        `json:"description,omitempty" url:"description,omitempty"`
 	CreatedAt   time.Time      `json:"created_at" url:"created_at"`
@@ -22,11 +22,11 @@ type Resource struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *Resource) GetId() string {
+func (r *Resource) GetID() string {
 	if r == nil {
 		return ""
 	}
-	return r.Id
+	return r.ID
 }
 
 func (r *Resource) GetName() string {
@@ -192,7 +192,7 @@ func (s *SearchResponse) String() string {
 
 // User object similar to Auth0 users
 type User struct {
-	UserId        string         `json:"user_id" url:"user_id"`
+	UserID        string         `json:"user_id" url:"user_id"`
 	Email         string         `json:"email" url:"email"`
 	EmailVerified bool           `json:"email_verified" url:"email_verified"`
 	Username      *string        `json:"username,omitempty" url:"username,omitempty"`
@@ -207,7 +207,7 @@ type User struct {
 	Name          *string        `json:"name,omitempty" url:"name,omitempty"`
 	Nickname      *string        `json:"nickname,omitempty" url:"nickname,omitempty"`
 	Multifactor   []string       `json:"multifactor,omitempty" url:"multifactor,omitempty"`
-	LastIp        *string        `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastIP        *string        `json:"last_ip,omitempty" url:"last_ip,omitempty"`
 	LastLogin     *time.Time     `json:"last_login,omitempty" url:"last_login,omitempty"`
 	LoginsCount   *int           `json:"logins_count,omitempty" url:"logins_count,omitempty"`
 	Blocked       *bool          `json:"blocked,omitempty" url:"blocked,omitempty"`
@@ -218,11 +218,11 @@ type User struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *User) GetUserId() string {
+func (u *User) GetUserID() string {
 	if u == nil {
 		return ""
 	}
-	return u.UserId
+	return u.UserID
 }
 
 func (u *User) GetEmail() string {
@@ -323,11 +323,11 @@ func (u *User) GetMultifactor() []string {
 	return u.Multifactor
 }
 
-func (u *User) GetLastIp() *string {
+func (u *User) GetLastIP() *string {
 	if u == nil {
 		return nil
 	}
-	return u.LastIp
+	return u.LastIP
 }
 
 func (u *User) GetLastLogin() *time.Time {
@@ -430,7 +430,7 @@ func (u *User) String() string {
 
 type Identity struct {
 	Connection  string  `json:"connection" url:"connection"`
-	UserId      string  `json:"user_id" url:"user_id"`
+	UserID      string  `json:"user_id" url:"user_id"`
 	Provider    string  `json:"provider" url:"provider"`
 	IsSocial    bool    `json:"is_social" url:"is_social"`
 	AccessToken *string `json:"access_token,omitempty" url:"access_token,omitempty"`
@@ -447,11 +447,11 @@ func (i *Identity) GetConnection() string {
 	return i.Connection
 }
 
-func (i *Identity) GetUserId() string {
+func (i *Identity) GetUserID() string {
 	if i == nil {
 		return ""
 	}
-	return i.UserId
+	return i.UserID
 }
 
 func (i *Identity) GetProvider() string {
@@ -836,7 +836,7 @@ func (u *UpdateUserRequest) String() string {
 // Represents an identity provider connection
 type Connection struct {
 	// Connection identifier
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// Connection name
 	Name string `json:"name" url:"name"`
 	// Display name for the connection
@@ -858,11 +858,11 @@ type Connection struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *Connection) GetId() string {
+func (c *Connection) GetID() string {
 	if c == nil {
 		return ""
 	}
-	return c.Id
+	return c.ID
 }
 
 func (c *Connection) GetName() string {
@@ -961,7 +961,7 @@ func (c *Connection) String() string {
 // Represents a client application
 type Client struct {
 	// The unique client identifier
-	ClientId string `json:"client_id" url:"client_id"`
+	ClientID string `json:"client_id" url:"client_id"`
 	// The tenant name
 	Tenant *string `json:"tenant,omitempty" url:"tenant,omitempty"`
 	// Name of the client
@@ -975,7 +975,7 @@ type Client struct {
 	// The type of application (spa, native, regular_web, non_interactive)
 	AppType *string `json:"app_type,omitempty" url:"app_type,omitempty"`
 	// URL of the client logo
-	LogoUri *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
+	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
 	// Whether this client is a first party client
 	IsFirstParty *bool `json:"is_first_party,omitempty" url:"is_first_party,omitempty"`
 	// Whether this client conforms to OIDC specifications
@@ -995,9 +995,9 @@ type Client struct {
 	// Encryption key
 	EncryptionKey map[string]any `json:"encryption_key,omitempty" url:"encryption_key,omitempty"`
 	// Whether SSO is enabled
-	Sso *bool `json:"sso,omitempty" url:"sso,omitempty"`
+	SSO *bool `json:"sso,omitempty" url:"sso,omitempty"`
 	// Whether SSO is disabled
-	SsoDisabled *bool `json:"sso_disabled,omitempty" url:"sso_disabled,omitempty"`
+	SSODisabled *bool `json:"sso_disabled,omitempty" url:"sso_disabled,omitempty"`
 	// Whether to use cross-origin authentication
 	CrossOriginAuth *bool `json:"cross_origin_auth,omitempty" url:"cross_origin_auth,omitempty"`
 	// URL for cross-origin authentication
@@ -1025,11 +1025,11 @@ type Client struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *Client) GetClientId() string {
+func (c *Client) GetClientID() string {
 	if c == nil {
 		return ""
 	}
-	return c.ClientId
+	return c.ClientID
 }
 
 func (c *Client) GetTenant() *string {
@@ -1074,11 +1074,11 @@ func (c *Client) GetAppType() *string {
 	return c.AppType
 }
 
-func (c *Client) GetLogoUri() *string {
+func (c *Client) GetLogoURI() *string {
 	if c == nil {
 		return nil
 	}
-	return c.LogoUri
+	return c.LogoURI
 }
 
 func (c *Client) GetIsFirstParty() *bool {
@@ -1144,18 +1144,18 @@ func (c *Client) GetEncryptionKey() map[string]any {
 	return c.EncryptionKey
 }
 
-func (c *Client) GetSso() *bool {
+func (c *Client) GetSSO() *bool {
 	if c == nil {
 		return nil
 	}
-	return c.Sso
+	return c.SSO
 }
 
-func (c *Client) GetSsoDisabled() *bool {
+func (c *Client) GetSSODisabled() *bool {
 	if c == nil {
 		return nil
 	}
-	return c.SsoDisabled
+	return c.SSODisabled
 }
 
 func (c *Client) GetCrossOriginAuth() *bool {

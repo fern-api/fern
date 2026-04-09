@@ -11,18 +11,18 @@ import (
 )
 
 type Event struct {
-	Id   fern.Id `json:"id" url:"id"`
+	ID   fern.ID `json:"id" url:"id"`
 	Name string  `json:"name" url:"name"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (e *Event) GetId() fern.Id {
+func (e *Event) GetID() fern.ID {
 	if e == nil {
 		return ""
 	}
-	return e.Id
+	return e.ID
 }
 
 func (e *Event) GetName() string {

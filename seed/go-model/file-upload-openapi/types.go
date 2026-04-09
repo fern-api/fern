@@ -3,4 +3,4 @@
 package api
 
 // The unique identifier for a File in the database
-type FileId = string
+type FileID = string

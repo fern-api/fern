@@ -28,7 +28,7 @@ async fn main() {
                         uuid: Some(
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
-                        base_64: Some(
+                        base64: Some(
                             base64::engine::general_purpose::STANDARD
                                 .decode("SGVsbG8gd29ybGQh")
                                 .unwrap(),
@@ -56,7 +56,7 @@ async fn main() {
                         uuid: Some(
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
-                        base_64: Some(
+                        base64: Some(
                             base64::engine::general_purpose::STANDARD
                                 .decode("SGVsbG8gd29ybGQh")
                                 .unwrap(),

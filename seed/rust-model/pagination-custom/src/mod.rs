@@ -5,14 +5,14 @@
 //!
 //! ## Type Categories
 //!
-//! - **Request/Response Types**: 1 types for API operations
-//! - **Model Types**: 2 types for data representation
+//! - **Request/Response Types**: 2 types for API operations
+//! - **Model Types**: 1 types for data representation
 
-pub mod username_cursor;
-pub mod username_page;
-pub mod list_usernames_custom_query_request;
+pub mod users_list_response;
+pub mod link;
+pub mod list_with_custom_pager_query_request;
 
-pub use username_cursor::UsernameCursor;
-pub use username_page::UsernamePage;
-pub use list_usernames_custom_query_request::ListUsernamesCustomQueryRequest;
+pub use users_list_response::UsersListResponse;
+pub use link::Link;
+pub use list_with_custom_pager_query_request::ListWithCustomPagerQueryRequest;
 

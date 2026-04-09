@@ -1372,6 +1372,7 @@
         "name": "AnotherError",
         "typeId": "AnotherError",
         "inline": false,
+        "displayName": "AnotherError",
         "type": "named"
       },
       "statusCode": 400,
@@ -1405,6 +1406,7 @@
         "name": "Error",
         "typeId": "Error",
         "inline": false,
+        "displayName": "Error",
         "type": "named"
       },
       "statusCode": 404,
@@ -1438,6 +1440,7 @@
         "name": "Error",
         "typeId": "Error",
         "inline": false,
+        "displayName": "Error",
         "type": "named"
       },
       "statusCode": 500,

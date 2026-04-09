@@ -402,8 +402,8 @@ async fn main() {
                 maybe_context: None,
                 container_object: ContainerObject {
                     nested_objects: vec![NestedObjectWithLiterals {
-                        literal_1: "literal1".to_string(),
-                        literal_2: "literal2".to_string(),
+                        literal1: "literal1".to_string(),
+                        literal2: "literal2".to_string(),
                         str_prop: "strProp".to_string(),
                     }],
                     ..Default::default()

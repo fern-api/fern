@@ -13,7 +13,7 @@ var (
 	getTokenRequestFieldCid      = big.NewInt(1 << 0)
 	getTokenRequestFieldCsr      = big.NewInt(1 << 1)
 	getTokenRequestFieldScp      = big.NewInt(1 << 2)
-	getTokenRequestFieldEntityId = big.NewInt(1 << 3)
+	getTokenRequestFieldEntityID = big.NewInt(1 << 3)
 	getTokenRequestFieldScope    = big.NewInt(1 << 4)
 )
 
@@ -21,7 +21,7 @@ type GetTokenRequest struct {
 	Cid       string  `json:"cid" url:"-"`
 	Csr       string  `json:"csr" url:"-"`
 	Scp       string  `json:"scp" url:"-"`
-	EntityId  string  `json:"entity_id" url:"-"`
+	EntityID  string  `json:"entity_id" url:"-"`
 	Scope     *string `json:"scope,omitempty" url:"-"`
 	audience  string
 	grantType string
@@ -66,11 +66,11 @@ func (g *GetTokenRequest) SetScp(scp string) {
 	g.require(getTokenRequestFieldScp)
 }
 
-// SetEntityId sets the EntityId field and marks it as non-optional;
+// SetEntityID sets the EntityID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTokenRequest) SetEntityId(entityId string) {
-	g.EntityId = entityId
-	g.require(getTokenRequestFieldEntityId)
+func (g *GetTokenRequest) SetEntityID(entityID string) {
+	g.EntityID = entityID
+	g.require(getTokenRequestFieldEntityID)
 }
 
 // SetScope sets the Scope field and marks it as non-optional;
@@ -108,14 +108,14 @@ func (g *GetTokenRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	refreshTokenRequestFieldClientId     = big.NewInt(1 << 0)
+	refreshTokenRequestFieldClientID     = big.NewInt(1 << 0)
 	refreshTokenRequestFieldClientSecret = big.NewInt(1 << 1)
 	refreshTokenRequestFieldRefreshToken = big.NewInt(1 << 2)
 	refreshTokenRequestFieldScope        = big.NewInt(1 << 3)
 )
 
 type RefreshTokenRequest struct {
-	ClientId     string  `json:"client_id" url:"-"`
+	ClientID     string  `json:"client_id" url:"-"`
 	ClientSecret string  `json:"client_secret" url:"-"`
 	RefreshToken string  `json:"refresh_token" url:"-"`
 	Scope        *string `json:"scope,omitempty" url:"-"`
@@ -141,11 +141,11 @@ func (r *RefreshTokenRequest) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RefreshTokenRequest) SetClientId(clientId string) {
-	r.ClientId = clientId
-	r.require(refreshTokenRequestFieldClientId)
+func (r *RefreshTokenRequest) SetClientID(clientID string) {
+	r.ClientID = clientID
+	r.require(refreshTokenRequestFieldClientID)
 }
 
 // SetClientSecret sets the ClientSecret field and marks it as non-optional;

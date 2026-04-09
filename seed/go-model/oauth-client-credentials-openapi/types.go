@@ -77,7 +77,7 @@ func (t *TokenResponse) String() string {
 }
 
 type Plant struct {
-	Id      string  `json:"id" url:"id"`
+	ID      string  `json:"id" url:"id"`
 	Name    string  `json:"name" url:"name"`
 	Species *string `json:"species,omitempty" url:"species,omitempty"`
 
@@ -85,11 +85,11 @@ type Plant struct {
 	rawJSON         json.RawMessage
 }
 
-func (p *Plant) GetId() string {
+func (p *Plant) GetID() string {
 	if p == nil {
 		return ""
 	}
-	return p.Id
+	return p.ID
 }
 
 func (p *Plant) GetName() string {

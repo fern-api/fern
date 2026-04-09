@@ -14,12 +14,12 @@ type Object = *Type
 
 // A simple type with just a name.
 var (
-	typeFieldId   = big.NewInt(1 << 0)
+	typeFieldID   = big.NewInt(1 << 0)
 	typeFieldName = big.NewInt(1 << 1)
 )
 
 type Type struct {
-	Id   TypeId `json:"id" url:"id"`
+	ID   TypeID `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -29,11 +29,11 @@ type Type struct {
 	rawJSON         json.RawMessage
 }
 
-func (t *Type) GetId() TypeId {
+func (t *Type) GetID() TypeID {
 	if t == nil {
 		return ""
 	}
-	return t.Id
+	return t.ID
 }
 
 func (t *Type) GetName() string {
@@ -57,11 +57,11 @@ func (t *Type) require(field *big.Int) {
 	t.explicitFields.Or(t.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *Type) SetId(id TypeId) {
-	t.Id = id
-	t.require(typeFieldId)
+func (t *Type) SetID(id TypeID) {
+	t.ID = id
+	t.require(typeFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -114,4 +114,4 @@ func (t *Type) String() string {
 }
 
 // An alias for type IDs.
-type TypeId = string
+type TypeID = string

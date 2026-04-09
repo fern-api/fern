@@ -72,6 +72,7 @@ func TestEndpointsParamsGetWithPathWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Endpoints.Params.GetWithPath(
 		context.TODO(),
@@ -94,6 +95,7 @@ func TestEndpointsParamsGetWithPathWithWireMock2(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Endpoints.Params.GetWithPath(
 		context.TODO(),
@@ -116,6 +118,7 @@ func TestEndpointsParamsGetWithQueryWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &endpoints.GetWithQuery{
 		Query:  "query",
@@ -142,6 +145,7 @@ func TestEndpointsParamsGetWithQueryWithWireMock2(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &endpoints.GetWithQuery{
 		Query:  "query",
@@ -168,6 +172,7 @@ func TestEndpointsParamsGetWithPathAndQueryWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &endpoints.GetWithPathAndQuery{
 		Query: "query",
@@ -194,6 +199,7 @@ func TestEndpointsParamsGetWithPathAndQueryWithWireMock2(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &endpoints.GetWithPathAndQuery{
 		Query: "query",
@@ -220,6 +226,7 @@ func TestEndpointsParamsModifyWithPathWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := "string"
 	_, invocationErr := client.Endpoints.Params.ModifyWithPath(
@@ -244,6 +251,7 @@ func TestEndpointsParamsModifyWithPathWithWireMock2(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := "string"
 	_, invocationErr := client.Endpoints.Params.ModifyWithPath(
@@ -268,6 +276,7 @@ func TestEndpointsParamsGetWithPathWithWireMock3(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Endpoints.Params.GetWithPath(
 		context.TODO(),

@@ -20,7 +20,7 @@ type ObjectWithOptionalField struct {
 	Bool        *bool          `json:"bool,omitempty" url:"bool,omitempty"`
 	Datetime    *time.Time     `json:"datetime,omitempty" url:"datetime,omitempty"`
 	Date        *time.Time     `json:"date,omitempty" url:"date,omitempty"`
-	Uuid        *uuid.UUID     `json:"uuid,omitempty" url:"uuid,omitempty"`
+	UUID        *uuid.UUID     `json:"uuid,omitempty" url:"uuid,omitempty"`
 	Base64      []byte         `json:"base64,omitempty" url:"base64,omitempty"`
 	List        []string       `json:"list,omitempty" url:"list,omitempty"`
 	Set         []string       `json:"set,omitempty" url:"set,omitempty"`
@@ -80,11 +80,11 @@ func (o *ObjectWithOptionalField) GetDate() *time.Time {
 	return o.Date
 }
 
-func (o *ObjectWithOptionalField) GetUuid() *uuid.UUID {
+func (o *ObjectWithOptionalField) GetUUID() *uuid.UUID {
 	if o == nil {
 		return nil
 	}
-	return o.Uuid
+	return o.UUID
 }
 
 func (o *ObjectWithOptionalField) GetBase64() []byte {
