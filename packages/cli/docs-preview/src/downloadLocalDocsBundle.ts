@@ -4,9 +4,8 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import chalk from "chalk";
 import cliProgress from "cli-progress";
 import decompress from "decompress";
-import { copyFile, cp, mkdir, readdir, readFile, rename, rm, stat, writeFile } from "fs/promises";
+import { mkdir, readFile, rename, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
-import path from "path";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
 
@@ -111,13 +110,6 @@ const NPMRC_CONTENTS = "@fern-fern:registry=https://npm.buildwithfern.com\n";
 // the (slow) pnpm install on subsequent cached-bundle runs.
 const WINDOWS_POST_PROCESSED_MARKER = ".windows-post-processed";
 
-// Metadata file that stores symlink entries extracted from the tar archive.
-// On Windows, symlinks are filtered out during extraction because they require
-// admin privileges. This metadata is used later to recreate them as directory
-// junctions (for directories) or file copies (for files).
-const SYMLINKS_METADATA_FILE = ".symlinks-metadata.json";
-const TRACED_PACKAGES_BACKUP_DIR = ".traced-packages-backup";
-
 function getPathToWindowsPostProcessedMarker({ app = false }: { app?: boolean }): AbsoluteFilePath {
     return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(WINDOWS_POST_PROCESSED_MARKER));
 }
@@ -192,136 +184,9 @@ async function postProcessWindowsBundle({ app, logger }: { app: boolean; logger:
         throw contactFernSupportError(`Failed to install required package due to error: ${error}`);
     }
 
-    // After all pnpm operations, restore backed-up file-traced packages
-    // to node_modules/. These were saved before pnpm wiped them.
-    await restoreTracedPackages({ app, logger });
-
     // Write marker file so we skip this on future cached-bundle runs
     await writeFile(markerPath, new Date().toISOString());
     logger.debug("Windows post-processing completed");
-}
-
-/**
- * Backs up file-traced packages from .pnpm/ before pnpm operations wipe them.
- * On Windows, symlinks are filtered during tar extraction. The targets (real
- * directories in .pnpm/) still exist after extraction but get wiped by
- * `pnpm i esbuild`. This function copies the resolved targets to a backup
- * directory (.traced-packages-backup/) so they can be restored later.
- *
- * Must be called AFTER extraction and BEFORE any pnpm operations.
- */
-async function backupTracedPackages({
-    bundleRoot,
-    metadata,
-    logger
-}: {
-    bundleRoot: string;
-    metadata: Array<{ path: string; linkname: string }>;
-    logger: Logger;
-}): Promise<void> {
-    // Only back up top-level node_modules/ entries (the file-traced symlinks
-    // that Next.js creates for server-side rendering).
-    const topLevelEntries = metadata.filter((entry) => {
-        const parts = entry.path.split("/");
-        return parts[0] === "node_modules" && parts.length === 2 && parts[1] != null && !parts[1].startsWith(".");
-    });
-
-    if (topLevelEntries.length === 0) {
-        return;
-    }
-
-    const backupDir = path.join(bundleRoot, TRACED_PACKAGES_BACKUP_DIR);
-    await mkdir(backupDir, { recursive: true });
-
-    logger.debug(`Backing up ${topLevelEntries.length} file-traced packages before pnpm operations`);
-
-    let backed = 0;
-    let skipped = 0;
-
-    for (const entry of topLevelEntries) {
-        const entryAbsPath = path.join(bundleRoot, entry.path);
-        const targetAbsPath = path.resolve(path.dirname(entryAbsPath), entry.linkname);
-        const packageName = entry.path.split("/")[1];
-        if (packageName == null) {
-            continue;
-        }
-        const backupPath = path.join(backupDir, packageName);
-
-        try {
-            // Skip if the target doesn't exist (was never extracted)
-            if (!(await doesPathExist(AbsoluteFilePath.of(targetAbsPath)))) {
-                logger.debug(`Target missing for ${entry.path}: ${targetAbsPath}`);
-                skipped++;
-                continue;
-            }
-
-            const targetStat = await stat(targetAbsPath);
-            if (targetStat.isDirectory()) {
-                await cp(targetAbsPath, backupPath, { recursive: true });
-            } else {
-                await mkdir(path.dirname(backupPath), { recursive: true });
-                await copyFile(targetAbsPath, backupPath);
-            }
-            backed++;
-        } catch (error) {
-            logger.debug(`Failed to back up ${entry.path}: ${error}`);
-        }
-    }
-
-    logger.debug(`Backed up ${backed} packages, ${skipped} skipped`);
-}
-
-/**
- * Restores file-traced packages from the backup directory to node_modules/.
- * Called AFTER all pnpm operations are complete so the restored packages
- * won't be wiped by pnpm's node_modules reconciliation.
- */
-async function restoreTracedPackages({ app, logger }: { app: boolean; logger: Logger }): Promise<void> {
-    const bundleRoot = getPathToBundleFolder({ app }) as string;
-    const backupDir = path.join(bundleRoot, TRACED_PACKAGES_BACKUP_DIR);
-
-    if (!(await doesPathExist(AbsoluteFilePath.of(backupDir)))) {
-        logger.debug("No traced-packages-backup found, skipping restore");
-        return;
-    }
-
-    const entries = await readdir(backupDir, { withFileTypes: true });
-    const nodeModulesDir = path.join(bundleRoot, "node_modules");
-    await mkdir(nodeModulesDir, { recursive: true });
-
-    let restored = 0;
-    let skipped = 0;
-
-    for (const entry of entries) {
-        const destPath = path.join(nodeModulesDir, entry.name);
-        const srcPath = path.join(backupDir, entry.name);
-
-        try {
-            // Skip if already exists (e.g. pnpm already installed it)
-            if (await doesPathExist(AbsoluteFilePath.of(destPath))) {
-                skipped++;
-                continue;
-            }
-
-            if (entry.isDirectory()) {
-                await cp(srcPath, destPath, { recursive: true });
-            } else {
-                await copyFile(srcPath, destPath);
-            }
-            restored++;
-        } catch (error) {
-            logger.debug(`Failed to restore ${entry.name}: ${error}`);
-        }
-    }
-
-    logger.debug(`Restored ${restored} file-traced packages, ${skipped} already existed`);
-
-    // Clean up backup directory
-    try {
-        await rm(backupDir, { recursive: true });
-    } catch {
-        // Non-critical, ignore cleanup errors
-    }
 }
 
 export async function downloadBundle({
@@ -486,18 +351,14 @@ export async function downloadBundle({
             }, 50);
         }
 
-        // On Windows, collect symlink metadata during extraction so we can
-        // recreate them later as directory junctions or file copies.
-        const windowsSymlinkEntries: Array<{ path: string; linkname: string }> = [];
-
         try {
             await decompress(outputZipPath, absolutePathToBundleFolder, {
                 filter: (file) => {
+                    // On Windows, symlinks require admin privileges to create.
+                    // The fern-platform bundle build now dereferences important
+                    // symlinks at the source, so any remaining symlink entries
+                    // are safe to skip on Windows.
                     if (PLATFORM_IS_WINDOWS && file.type === "symlink") {
-                        const linkname = (file as unknown as { linkname?: string }).linkname;
-                        if (linkname) {
-                            windowsSymlinkEntries.push({ path: file.path, linkname });
-                        }
                         return false;
                     }
                     return true;
@@ -516,22 +377,6 @@ export async function downloadBundle({
         // write etag
         await writeFile(eTagFilepath, eTag);
         logger.debug(`Downloaded bundle to ${absolutePathToBundleFolder}`);
-
-        // Save symlink metadata on Windows and back up the file-traced packages
-        // BEFORE pnpm operations wipe the .pnpm/ virtual store.
-        if (PLATFORM_IS_WINDOWS && windowsSymlinkEntries.length > 0) {
-            const metadataPath = path.join(absolutePathToBundleFolder as string, SYMLINKS_METADATA_FILE);
-            await writeFile(metadataPath, JSON.stringify(windowsSymlinkEntries));
-            logger.debug(`Saved ${windowsSymlinkEntries.length} symlink entries to metadata file`);
-
-            // Back up file-traced packages while .pnpm/ targets still exist.
-            // They will be restored after all pnpm operations in postProcessWindowsBundle.
-            await backupTracedPackages({
-                bundleRoot: absolutePathToBundleFolder as string,
-                metadata: windowsSymlinkEntries,
-                logger
-            });
-        }
 
         if (app) {
             // check if pnpm exists
