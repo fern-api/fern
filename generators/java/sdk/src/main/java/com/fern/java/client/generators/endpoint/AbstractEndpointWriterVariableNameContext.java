@@ -8,6 +8,7 @@ import com.fern.ir.model.http.PathParameterLocation;
 import com.fern.ir.model.http.SdkRequest;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.object.EnrichedObjectProperty;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -18,7 +19,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import com.fern.java.utils.NameUtils;
 
 public abstract class AbstractEndpointWriterVariableNameContext {
 
@@ -180,7 +180,9 @@ public abstract class AbstractEndpointWriterVariableNameContext {
         }
         return ParameterSpec.builder(
                         typeName,
-                        NameUtils.resolveName(sdkRequest.getRequestParameterName()).getCamelCase().getSafeName())
+                        NameUtils.resolveName(sdkRequest.getRequestParameterName())
+                                .getCamelCase()
+                                .getSafeName())
                 .build();
     }
 
@@ -196,7 +198,8 @@ public abstract class AbstractEndpointWriterVariableNameContext {
         TypeName typeName =
                 clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParameter.getValueType());
         ParameterSpec.Builder paramBuilder = ParameterSpec.builder(
-                typeName, NameUtils.resolveName(pathParameter.getName()).getCamelCase().getSafeName());
+                typeName,
+                NameUtils.resolveName(pathParameter.getName()).getCamelCase().getSafeName());
 
         return HttpUrlBuilder.PathParamInfo.builder()
                 .irParam(pathParameter)

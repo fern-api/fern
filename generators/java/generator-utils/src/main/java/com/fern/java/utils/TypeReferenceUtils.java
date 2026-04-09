@@ -2,7 +2,6 @@ package com.fern.java.utils;
 
 import com.fern.ir.model.types.*;
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.utils.NameUtils;
 import java.util.Optional;
 
 public class TypeReferenceUtils {

@@ -34,6 +34,7 @@ import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -44,7 +45,6 @@ import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import com.fern.java.utils.NameUtils;
 
 public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
     private final ClientGeneratorContext clientGeneratorContext;
@@ -495,10 +495,13 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             Optional<String> requestBodyGetterName = getRequestBodyGetterName();
             String bodySource;
             if (requestBodyGetterName.isPresent()) {
-                bodySource = NameUtils.resolveName(sdkRequest.getRequestParameterName()).getCamelCase().getSafeName() + "."
-                        + requestBodyGetterName.get() + "()";
+                bodySource = NameUtils.resolveName(sdkRequest.getRequestParameterName())
+                                .getCamelCase()
+                                .getSafeName() + "." + requestBodyGetterName.get() + "()";
             } else {
-                bodySource = NameUtils.resolveName(sdkRequest.getRequestParameterName()).getCamelCase().getSafeName();
+                bodySource = NameUtils.resolveName(sdkRequest.getRequestParameterName())
+                        .getCamelCase()
+                        .getSafeName();
             }
             codeBlock.addStatement(
                     "$T $L = new $T($T.parse($S), $L)",

@@ -93,6 +93,7 @@ import com.fern.java.output.gradle.GradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
 import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.ParsedGradleDependency;
+import com.fern.java.utils.NameUtils;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -105,7 +106,6 @@ import java.util.Set;
 import javax.lang.model.element.Modifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.fern.java.utils.NameUtils;
 
 public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdkDownloadFilesCustomConfig> {
 
@@ -487,8 +487,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 });
 
                 authScheme.getHeader().ifPresent(headerScheme -> {
-                    String schemeName =
-                            NameUtils.resolveName(NameUtils.resolveNameAndWireValue(headerScheme.getName()).getName()).getPascalCase().getSafeName();
+                    String schemeName = NameUtils.resolveName(NameUtils.resolveNameAndWireValue(headerScheme.getName())
+                                    .getName())
+                            .getPascalCase()
+                            .getSafeName();
                     HeaderAuthProviderGenerator headerGenerator =
                             new HeaderAuthProviderGenerator(context, headerScheme, schemeName);
                     this.addGeneratedFile(headerGenerator.generateFile());
@@ -734,7 +736,9 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                     context.getPoetClassNameFactory().getWebSocketClientClassName(websocketChannel, subpackage);
             ClassName optionsClassName = ClassName.get(
                     wsClientClassName.packageName(),
-                    NameUtils.resolveName(websocketChannel.getName().get()).getPascalCase().getSafeName() + "ConnectOptions");
+                    NameUtils.resolveName(websocketChannel.getName().get())
+                                    .getPascalCase()
+                                    .getSafeName() + "ConnectOptions");
             com.fern.java.client.generators.websocket.WebSocketConnectOptionsGenerator optionsGenerator =
                     new com.fern.java.client.generators.websocket.WebSocketConnectOptionsGenerator(
                             websocketChannel, context, optionsClassName);

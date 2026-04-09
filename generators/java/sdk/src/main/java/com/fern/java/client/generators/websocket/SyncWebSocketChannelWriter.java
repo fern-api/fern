@@ -25,6 +25,7 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
@@ -36,7 +37,6 @@ import java.util.concurrent.TimeUnit;
 import javax.lang.model.element.Modifier;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
-import com.fern.java.utils.NameUtils;
 
 public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
 
@@ -93,21 +93,31 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
                 .addModifiers(Modifier.PUBLIC)
                 .addJavadoc(
                         "Creates a new WebSocket client for the $L channel.\n",
-                        NameUtils.resolveName(websocketChannel.getName().get()).getCamelCase().getSafeName())
+                        NameUtils.resolveName(websocketChannel.getName().get())
+                                .getCamelCase()
+                                .getSafeName())
                 .addParameter(clientOptionsField.type, clientOptionsField.name);
 
         // Add path parameters
         for (PathParameter pathParam : websocketChannel.getPathParameters()) {
             TypeName paramType =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParam.getValueType());
-            builder.addParameter(paramType, NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName())
+            builder.addParameter(
+                            paramType,
+                            NameUtils.resolveName(pathParam.getName())
+                                    .getCamelCase()
+                                    .getSafeName())
                     .addJavadoc(
                             "@param $L $L\n",
-                            NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName(),
+                            NameUtils.resolveName(pathParam.getName())
+                                    .getCamelCase()
+                                    .getSafeName(),
                             pathParam
                                     .getDocs()
                                     .orElse("the "
-                                            + NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName() + " path parameter"));
+                                            + NameUtils.resolveName(pathParam.getName())
+                                                    .getCamelCase()
+                                                    .getSafeName() + " path parameter"));
         }
 
         // Constructor body
@@ -117,7 +127,8 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
 
         // Assign path parameters
         for (PathParameter pathParam : websocketChannel.getPathParameters()) {
-            String paramName = NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName();
+            String paramName =
+                    NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName();
             builder.addStatement("this.$L = $L", paramName, paramName);
         }
 
@@ -169,8 +180,10 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
         if (connectOptionsClassName.isPresent()) {
             for (QueryParameter queryParam : websocketChannel.getQueryParameters()) {
                 String getterName = "get"
-                        + capitalize(
-                                NameUtils.resolveName(NameUtils.resolveNameAndWireValue(queryParam.getName()).getName()).getCamelCase().getSafeName());
+                        + capitalize(NameUtils.resolveName(NameUtils.resolveNameAndWireValue(queryParam.getName())
+                                        .getName())
+                                .getCamelCase()
+                                .getSafeName());
                 String wireValue = NameUtils.getWireValue(queryParam.getName());
 
                 boolean isOptional = queryParam.getValueType().getContainer().isPresent()

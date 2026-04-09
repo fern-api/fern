@@ -36,6 +36,7 @@ import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.KeyWordUtils;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
@@ -49,7 +50,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
-import com.fern.java.utils.NameUtils;
 
 public abstract class AbstractClientGeneratorUtils {
 
@@ -297,26 +297,37 @@ public abstract class AbstractClientGeneratorUtils {
                 // We need to handle path and query parameters, so we create a factory method
                 // rather than a simple getter
                 MethodSpec.Builder webSocketFactoryMethod = MethodSpec.methodBuilder(
-                                NameUtils.resolveName(websocketChannel.getName().get()).getCamelCase().getSafeName() + "WebSocket")
+                                NameUtils.resolveName(websocketChannel.getName().get())
+                                                .getCamelCase()
+                                                .getSafeName() + "WebSocket")
                         .addModifiers(Modifier.PUBLIC)
                         .returns(webSocketClientClassName)
                         .addJavadoc(
                                 "Creates a new WebSocket client for the $L channel.\n",
-                                NameUtils.resolveName(websocketChannel.getName().get()).getCamelCase().getSafeName());
+                                NameUtils.resolveName(websocketChannel.getName().get())
+                                        .getCamelCase()
+                                        .getSafeName());
 
                 // Add path parameters
                 for (com.fern.ir.model.http.PathParameter pathParam : websocketChannel.getPathParameters()) {
                     TypeName paramType =
                             generatorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParam.getValueType());
                     webSocketFactoryMethod.addParameter(
-                            paramType, NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName());
+                            paramType,
+                            NameUtils.resolveName(pathParam.getName())
+                                    .getCamelCase()
+                                    .getSafeName());
                     webSocketFactoryMethod.addJavadoc(
                             "@param $L $L\n",
-                            NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName(),
+                            NameUtils.resolveName(pathParam.getName())
+                                    .getCamelCase()
+                                    .getSafeName(),
                             pathParam
                                     .getDocs()
                                     .orElse("the "
-                                            + NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName() + " path parameter"));
+                                            + NameUtils.resolveName(pathParam.getName())
+                                                    .getCamelCase()
+                                                    .getSafeName() + " path parameter"));
                 }
 
                 // Build the return statement with all parameters
@@ -324,7 +335,9 @@ public abstract class AbstractClientGeneratorUtils {
                 for (com.fern.ir.model.http.PathParameter pathParam : websocketChannel.getPathParameters()) {
                     returnStatement
                             .append(", ")
-                            .append(NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName());
+                            .append(NameUtils.resolveName(pathParam.getName())
+                                    .getCamelCase()
+                                    .getSafeName());
                 }
                 returnStatement.append(")");
 
@@ -345,7 +358,9 @@ public abstract class AbstractClientGeneratorUtils {
             ClassName subpackageClientImpl = subpackageClientImplName(subpackage);
             FieldSpec clientSupplierField = FieldSpec.builder(
                             ParameterizedTypeName.get(ClassName.get(Supplier.class), subpackageClientImpl),
-                            NameUtils.resolveName(subpackage.getName()).getCamelCase().getUnsafeName() + "Client")
+                            NameUtils.resolveName(subpackage.getName())
+                                            .getCamelCase()
+                                            .getUnsafeName() + "Client")
                     .addModifiers(Modifier.PROTECTED, Modifier.FINAL)
                     .build();
             implBuilder.addField(clientSupplierField);
@@ -365,8 +380,10 @@ public abstract class AbstractClientGeneratorUtils {
     }
 
     private MethodSpec.Builder getBaseSubpackageMethod(Subpackage subpackage, ClassName subpackageClientInterface) {
-        return MethodSpec.methodBuilder(KeyWordUtils.getKeyWordCompatibleMethodName(
-                        NameUtils.resolveName(subpackage.getName()).getCamelCase().getSafeName()))
+        return MethodSpec.methodBuilder(
+                        KeyWordUtils.getKeyWordCompatibleMethodName(NameUtils.resolveName(subpackage.getName())
+                                .getCamelCase()
+                                .getSafeName()))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(subpackageClientInterface);
     }

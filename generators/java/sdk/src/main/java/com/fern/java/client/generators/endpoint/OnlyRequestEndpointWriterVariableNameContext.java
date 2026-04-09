@@ -9,13 +9,13 @@ import com.fern.ir.model.http.SdkRequestBodyType;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.generators.object.EnrichedObjectProperty;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import com.fern.java.utils.NameUtils;
 
 public class OnlyRequestEndpointWriterVariableNameContext extends AbstractEndpointWriterVariableNameContext {
     private final ClientGeneratorContext clientGeneratorContext;
@@ -71,7 +71,9 @@ public class OnlyRequestEndpointWriterVariableNameContext extends AbstractEndpoi
         if (generatedWrappedRequest != null) {
             return Optional.of(ParameterSpec.builder(
                             generatedWrappedRequest.getClassName(),
-                            NameUtils.resolveName(sdkRequest.getRequestParameterName()).getCamelCase().getSafeName())
+                            NameUtils.resolveName(sdkRequest.getRequestParameterName())
+                                    .getCamelCase()
+                                    .getSafeName())
                     .build());
         } else if (sdkRequestBodyType != null) {
             ParameterSpec parameterSpec = sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<>() {
@@ -81,8 +83,7 @@ public class OnlyRequestEndpointWriterVariableNameContext extends AbstractEndpoi
                                     clientGeneratorContext
                                             .getPoetTypeNameMapper()
                                             .convertToTypeName(true, typeReference.getRequestBodyType()),
-                                    NameUtils.resolveName(sdkRequest
-                                            .getRequestParameterName())
+                                    NameUtils.resolveName(sdkRequest.getRequestParameterName())
                                             .getCamelCase()
                                             .getSafeName())
                             .build();

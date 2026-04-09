@@ -149,8 +149,10 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         List<SingleUnionType> variants = unionTypeDeclaration.getTypes();
 
         for (SingleUnionType variant : variants) {
-            propertyNames.add(
-                    NameUtils.resolveName(NameUtils.resolveNameAndWireValue(variant.getDiscriminantValue()).getName()).getPascalCase().getSafeName());
+            propertyNames.add(NameUtils.resolveName(NameUtils.resolveNameAndWireValue(variant.getDiscriminantValue())
+                            .getName())
+                    .getPascalCase()
+                    .getSafeName());
         }
 
         List<NamedTypeId> allResolvedIds = new ArrayList<>();
@@ -221,7 +223,8 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                     unionSubType,
                     fernConstants,
                     true,
-                    NameUtils.resolveNameAndWireValue(unionTypeDeclaration.getDiscriminant()).getWireValue(),
+                    NameUtils.resolveNameAndWireValue(unionTypeDeclaration.getDiscriminant())
+                            .getWireValue(),
                     // We need to take into consideration all ancestor types as well as all sibling types so that
                     // to prevent naming the visitor "Visitor" if we already have a variant or property called that.
                     ImmutableSet.<String>builder()
@@ -304,8 +307,9 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         @Override
         public String getVisitMethodName() {
             return "visit"
-                    + NameUtils.resolveName(NameUtils.resolveNameAndWireValue(this.singleUnionType
-                            .getDiscriminantValue()).getName())
+                    + NameUtils.resolveName(
+                                    NameUtils.resolveNameAndWireValue(this.singleUnionType.getDiscriminantValue())
+                                            .getName())
                             .getPascalCase()
                             .getUnsafeName();
         }
@@ -313,8 +317,9 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         @Override
         public String getIsMethodName() {
             return "is"
-                    + NameUtils.resolveName(NameUtils.resolveNameAndWireValue(this.singleUnionType
-                            .getDiscriminantValue()).getName())
+                    + NameUtils.resolveName(
+                                    NameUtils.resolveNameAndWireValue(this.singleUnionType.getDiscriminantValue())
+                                            .getName())
                             .getPascalCase()
                             .getUnsafeName();
         }
@@ -322,16 +327,17 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         @Override
         public String getGetMethodName() {
             return "get"
-                    + NameUtils.resolveName(NameUtils.resolveNameAndWireValue(this.singleUnionType
-                            .getDiscriminantValue()).getName())
+                    + NameUtils.resolveName(
+                                    NameUtils.resolveNameAndWireValue(this.singleUnionType.getDiscriminantValue())
+                                            .getName())
                             .getPascalCase()
                             .getUnsafeName();
         }
 
         @Override
         public String getVisitorParameterName() {
-            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(this.singleUnionType
-                    .getDiscriminantValue()).getName())
+            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(this.singleUnionType.getDiscriminantValue())
+                            .getName())
                     .getCamelCase()
                     .getSafeName();
         }
@@ -345,8 +351,9 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         public ClassName getUnionSubTypeWrapperClass() {
             return getUnionClassName()
                     .nestedClass(valueClassName(
-                            NameUtils.resolveName(NameUtils.resolveNameAndWireValue(singleUnionType
-                                    .getDiscriminantValue()).getName())
+                            NameUtils.resolveName(
+                                            NameUtils.resolveNameAndWireValue(singleUnionType.getDiscriminantValue())
+                                                    .getName())
                                     .getPascalCase()
                                     .getSafeName(),
                             reservedTypeNames,
@@ -389,8 +396,9 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                 @Override
                 public Void visitSingleProperty(SingleUnionTypeProperty singleProperty) {
                     NameAndWireValue resolvedPropName = NameUtils.resolveNameAndWireValue(singleProperty.getName());
-                    String parameterName =
-                            NameUtils.resolveName(resolvedPropName.getName()).getCamelCase().getSafeName();
+                    String parameterName = NameUtils.resolveName(resolvedPropName.getName())
+                            .getCamelCase()
+                            .getSafeName();
                     constructors.add(MethodSpec.constructorBuilder()
                             .addModifiers(Modifier.PRIVATE)
                             .addAnnotation(FernJavaAnnotations.jacksonPropertiesCreator())
@@ -398,10 +406,7 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                                             poetTypeNameMapper.convertToTypeName(true, singleProperty.getType()),
                                             parameterName)
                                     .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
-                                            .addMember(
-                                                    "value",
-                                                    "$S",
-                                                    resolvedPropName.getWireValue())
+                                            .addMember("value", "$S", resolvedPropName.getWireValue())
                                             .build())
                                     .build())
                             .addStatement("this.$L = $L", parameterName, parameterName)
@@ -505,8 +510,8 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                                     .addMember(
                                             "value",
                                             "$S",
-                                                            NameUtils.resolveNameAndWireValue(unionTypeDeclaration
-                                                                    .getDiscriminant()).getWireValue())
+                                            NameUtils.resolveNameAndWireValue(unionTypeDeclaration.getDiscriminant())
+                                                    .getWireValue())
                                     .addMember("allowSetters", "$L", true)
                                     .build())
                             .build());
@@ -515,17 +520,15 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                 @Override
                 public Optional<FieldSpec> visitSingleProperty(SingleUnionTypeProperty singleProperty) {
                     NameAndWireValue resolvedPropName = NameUtils.resolveNameAndWireValue(singleProperty.getName());
-                    String fieldName =
-                            NameUtils.resolveName(resolvedPropName.getName()).getCamelCase().getSafeName();
+                    String fieldName = NameUtils.resolveName(resolvedPropName.getName())
+                            .getCamelCase()
+                            .getSafeName();
                     return Optional.of(FieldSpec.builder(
                                     poetTypeNameMapper.convertToTypeName(true, singleProperty.getType()),
                                     fieldName,
                                     Modifier.PRIVATE)
                             .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
-                                    .addMember(
-                                            "value",
-                                            "$S",
-                                            resolvedPropName.getWireValue())
+                                    .addMember("value", "$S", resolvedPropName.getWireValue())
                                     .build())
                             .build());
                 }
@@ -644,14 +647,16 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                         .get()
                         .getResolvedType()
                         .visit(new InlineTypeIdResolver(
-                                NameUtils.resolveName(NameUtils.resolveNameAndWireValue(variant.getDiscriminantValue()).getName())
+                                NameUtils.resolveName(NameUtils.resolveNameAndWireValue(variant.getDiscriminantValue())
+                                                .getName())
                                         .getPascalCase()
                                         .getSafeName(),
                                 generatorContext));
             }
 
             return List.of(NamedTypeId.builder()
-                    .name(NameUtils.resolveName(NameUtils.resolveNameAndWireValue(variant.getDiscriminantValue()).getName())
+                    .name(NameUtils.resolveName(NameUtils.resolveNameAndWireValue(variant.getDiscriminantValue())
+                                    .getName())
                             .getPascalCase()
                             .getSafeName())
                     .typeId(maybeExisting.get().getName().getTypeId())
@@ -663,7 +668,8 @@ public final class UnionGenerator extends AbstractTypeGenerator {
             return singleUnionTypeProperty
                     .getType()
                     .visit(new InlineTypeIdResolver(
-                            NameUtils.resolveName(NameUtils.resolveNameAndWireValue(variant.getDiscriminantValue()).getName())
+                            NameUtils.resolveName(NameUtils.resolveNameAndWireValue(variant.getDiscriminantValue())
+                                            .getName())
                                     .getPascalCase()
                                     .getSafeName(),
                             generatorContext));

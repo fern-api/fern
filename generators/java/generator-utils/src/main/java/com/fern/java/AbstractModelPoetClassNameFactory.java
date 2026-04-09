@@ -37,14 +37,21 @@ public abstract class AbstractModelPoetClassNameFactory extends AbstractPoetClas
     public final ClassName getTypeClassName(DeclaredTypeName declaredTypeName) {
         String packageName = getTypesPackageName(declaredTypeName.getFernFilepath());
         return ClassName.get(
-                packageName, NameUtils.resolveName(declaredTypeName.getName()).getPascalCase().getSafeName());
+                packageName,
+                NameUtils.resolveName(declaredTypeName.getName())
+                        .getPascalCase()
+                        .getSafeName());
     }
 
     @Override
     public final ClassName getInterfaceClassName(DeclaredTypeName declaredTypeName) {
         String packageName = getTypesPackageName(declaredTypeName.getFernFilepath());
         return ClassName.get(
-                packageName, "I" + NameUtils.resolveName(declaredTypeName.getName()).getPascalCase().getSafeName());
+                packageName,
+                "I"
+                        + NameUtils.resolveName(declaredTypeName.getName())
+                                .getPascalCase()
+                                .getSafeName());
     }
 
     protected final String getTypesPackageName(FernFilepath fernFilepath) {

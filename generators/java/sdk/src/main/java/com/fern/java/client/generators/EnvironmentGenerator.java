@@ -14,6 +14,7 @@ import com.fern.java.client.GeneratedEnvironmentsClass.EnvironmentClassInfo;
 import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
 import com.fern.java.generators.AbstractFileGenerator;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -23,7 +24,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
-import com.fern.java.utils.NameUtils;
 
 public final class EnvironmentGenerator extends AbstractFileGenerator {
 
@@ -95,7 +95,9 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
             environmentsBuilder.addField(urlField()).addMethod(urlConstructorMethod());
             for (SingleBaseUrlEnvironment environment : singleBaseUrl.getEnvironments()) {
                 optionsPresent = true;
-                String constant = NameUtils.resolveName(environment.getName()).getScreamingSnakeCase().getSafeName();
+                String constant = NameUtils.resolveName(environment.getName())
+                        .getScreamingSnakeCase()
+                        .getSafeName();
                 String envUrl =
                         environment.getDefaultUrl().orElse(environment.getUrl().get());
                 environmentsBuilder.addField(
@@ -124,10 +126,12 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
             MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder();
 
             multipleBaseUrls.getBaseUrls().forEach(environmentBaseUrlWithId -> {
-                String urlCamelCase =
-                        NameUtils.resolveName(environmentBaseUrlWithId.getName()).getCamelCase().getSafeName();
-                String urlPascalCase =
-                        NameUtils.resolveName(environmentBaseUrlWithId.getName()).getPascalCase().getSafeName();
+                String urlCamelCase = NameUtils.resolveName(environmentBaseUrlWithId.getName())
+                        .getCamelCase()
+                        .getSafeName();
+                String urlPascalCase = NameUtils.resolveName(environmentBaseUrlWithId.getName())
+                        .getPascalCase()
+                        .getSafeName();
                 environmentsBuilder.addField(FieldSpec.builder(String.class, urlCamelCase)
                         .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
                         .build());
@@ -161,7 +165,9 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
                         })
                         .map(url -> "\"" + url + "\"")
                         .collect(Collectors.joining(","));
-                String constant = NameUtils.resolveName(environment.getName()).getScreamingSnakeCase().getSafeName();
+                String constant = NameUtils.resolveName(environment.getName())
+                        .getScreamingSnakeCase()
+                        .getSafeName();
                 environmentsBuilder.addField(
                         FieldSpec.builder(className, constant, Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
                                 .initializer("new $T(" + args + ")", className)
@@ -182,8 +188,9 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
 
             StringBuilder buildArgs = new StringBuilder();
             multipleBaseUrls.getBaseUrls().forEach(environmentBaseUrlWithId -> {
-                String urlCamelCase =
-                        NameUtils.resolveName(environmentBaseUrlWithId.getName()).getCamelCase().getSafeName();
+                String urlCamelCase = NameUtils.resolveName(environmentBaseUrlWithId.getName())
+                        .getCamelCase()
+                        .getSafeName();
 
                 // Add field to Builder
                 builderClassBuilder.addField(FieldSpec.builder(String.class, urlCamelCase)

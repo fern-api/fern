@@ -20,6 +20,7 @@ import com.fern.ir.model.auth.HeaderAuthScheme;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -30,7 +31,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
-import com.fern.java.utils.NameUtils;
 
 /** Generates a HeaderAuthProvider class that implements AuthProvider for custom header auth (API keys). */
 public final class HeaderAuthProviderGenerator extends AbstractFileGenerator {
@@ -75,10 +75,16 @@ public final class HeaderAuthProviderGenerator extends AbstractFileGenerator {
 
         String errorMessage = envVar != null
                 ? "Please provide '"
-                        + NameUtils.resolveName(NameUtils.resolveNameAndWireValue(headerAuthScheme.getName()).getName()).getCamelCase().getSafeName()
+                        + NameUtils.resolveName(NameUtils.resolveNameAndWireValue(headerAuthScheme.getName())
+                                        .getName())
+                                .getCamelCase()
+                                .getSafeName()
                         + "' when initializing the client, or set the '" + envVar + "' environment variable"
                 : "Please provide '"
-                        + NameUtils.resolveName(NameUtils.resolveNameAndWireValue(headerAuthScheme.getName()).getName()).getCamelCase().getSafeName()
+                        + NameUtils.resolveName(NameUtils.resolveNameAndWireValue(headerAuthScheme.getName())
+                                        .getName())
+                                .getCamelCase()
+                                .getSafeName()
                         + "' when initializing the client";
 
         TypeSpec.Builder classBuilder = TypeSpec.classBuilder(className)

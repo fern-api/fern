@@ -45,6 +45,7 @@ import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
 import com.fern.java.client.generators.visitors.GetFilePropertyKey;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -53,7 +54,6 @@ import com.squareup.javapoet.TypeName;
 import java.nio.file.Files;
 import java.util.Optional;
 import okhttp3.*;
-import com.fern.java.utils.NameUtils;
 
 public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
 
@@ -95,8 +95,9 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedWrappedRequest = generatedWrappedRequest;
         this.sdkRequest = sdkRequest;
-        this.requestParameterName =
-                NameUtils.resolveName(sdkRequest.getRequestParameterName()).getCamelCase().getSafeName();
+        this.requestParameterName = NameUtils.resolveName(sdkRequest.getRequestParameterName())
+                .getCamelCase()
+                .getSafeName();
     }
 
     @SuppressWarnings("checkstyle:CyclomaticComplexity")
@@ -217,10 +218,14 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             String sdkName = header.camelCaseKey();
             String headerName = generatedWrappedRequest.headerWireValues().get(sdkName);
             if (headerName == null) {
-                String wireValue = NameUtils.getWireValue(header.objectProperty().getName());
+                String wireValue =
+                        NameUtils.getWireValue(header.objectProperty().getName());
                 headerName = (wireValue != null && !wireValue.isEmpty())
                         ? wireValue
-                        : NameUtils.resolveName(NameUtils.resolveNameAndWireValue(header.objectProperty().getName()).getName()).getOriginalName();
+                        : NameUtils.resolveName(NameUtils.resolveNameAndWireValue(
+                                                header.objectProperty().getName())
+                                        .getName())
+                                .getOriginalName();
             }
             if (typeNameIsOptional(header.poetTypeName())) {
                 requestBodyCodeBlock
@@ -437,8 +442,9 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 FileProperty fileProperty = ((FilePropertyContainer) fileUploadProperty).fileProperty();
                 NameAndWireValueOrString filePropertyKeyOrString = fileProperty.visit(new GetFilePropertyKey());
                 NameAndWireValue filePropertyKey = NameUtils.resolveNameAndWireValue(filePropertyKeyOrString);
-                String filePropertyName =
-                        NameUtils.resolveName(filePropertyKey.getName()).getCamelCase().getUnsafeName();
+                String filePropertyName = NameUtils.resolveName(filePropertyKey.getName())
+                        .getCamelCase()
+                        .getUnsafeName();
                 String mimeTypeVariableName = filePropertyName + "MimeType";
                 String mediaTypeVariableName = mimeTypeVariableName + "MediaType";
                 String filePropertyParameterName =

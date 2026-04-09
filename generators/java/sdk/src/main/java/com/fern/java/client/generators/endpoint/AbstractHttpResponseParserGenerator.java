@@ -23,6 +23,7 @@ import com.fern.java.client.ClientPoetClassNameFactory;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.NameUtils;
 import com.fern.java.utils.ObjectMapperUtils;
 import com.fern.java.utils.TypeReferenceUtils;
 import com.squareup.javapoet.ArrayTypeName;
@@ -46,7 +47,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import okhttp3.OkHttpClient;
-import com.fern.java.utils.NameUtils;
 
 public abstract class AbstractHttpResponseParserGenerator {
 
@@ -853,8 +853,10 @@ public abstract class AbstractHttpResponseParserGenerator {
                 httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
                         CodeBlock.of("$L", variables.getResponseBodyStringName()),
                         Optional.of(body.getResponseBodyType())));
-                String endpointName =
-                        NameUtils.resolveName(httpEndpoint.getName().get()).getCamelCase().getSafeName();
+                String endpointName = NameUtils.resolveName(
+                                httpEndpoint.getName().get())
+                        .getCamelCase()
+                        .getSafeName();
                 Optional<ParameterSpec> maybeRequestParameterSpec = variables.requestParameterSpec();
                 String methodParameters;
                 if (maybeRequestParameterSpec.isPresent()) {
@@ -1066,7 +1068,8 @@ public abstract class AbstractHttpResponseParserGenerator {
             ObjectProperty objectProperty,
             com.fern.ir.model.types.TypeReference typeReference) {
         ArrayList<Name> fullPropertyPath = propertyPath.map(ArrayList::new).orElse(new ArrayList<>());
-        fullPropertyPath.add(NameUtils.resolveName(NameUtils.resolveNameAndWireValue(objectProperty.getName()).getName()));
+        fullPropertyPath.add(NameUtils.resolveName(
+                NameUtils.resolveNameAndWireValue(objectProperty.getName()).getName()));
         GetSnippetOutput getSnippetOutput = typeReference.visit(new NestedPropertySnippetGenerator(
                 typeReference,
                 fullPropertyPath,
@@ -1238,7 +1241,9 @@ public abstract class AbstractHttpResponseParserGenerator {
                         return new GetSnippetOutput(typeReference, codeBlocks);
                     }
                     Optional<ObjectProperty> maybeMatchingProperty = object.getProperties().stream()
-                            .filter(property -> NameUtils.resolveName(NameUtils.resolveNameAndWireValue(property.getName()).getName())
+                            .filter(property -> NameUtils.resolveName(
+                                            NameUtils.resolveNameAndWireValue(property.getName())
+                                                    .getName())
                                     .getCamelCase()
                                     .getUnsafeName()
                                     .equals(getCurrentProperty().getCamelCase().getUnsafeName()))
@@ -1500,16 +1505,16 @@ public abstract class AbstractHttpResponseParserGenerator {
                     .visit(new RequestPropertyValue.Visitor<String>() {
                         @Override
                         public String visitQuery(QueryParameter queryParameter) {
-                            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(queryParameter
-                                    .getName()).getName())
+                            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(queryParameter.getName())
+                                            .getName())
                                     .getCamelCase()
                                     .getUnsafeName();
                         }
 
                         @Override
                         public String visitBody(ObjectProperty objectProperty) {
-                            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(objectProperty
-                                    .getName()).getName())
+                            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(objectProperty.getName())
+                                            .getName())
                                     .getCamelCase()
                                     .getUnsafeName();
                         }
@@ -1644,16 +1649,16 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                         @Override
                         public String visitQuery(QueryParameter queryParameter) {
-                            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(queryParameter
-                                    .getName()).getName())
+                            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(queryParameter.getName())
+                                            .getName())
                                     .getPascalCase()
                                     .getUnsafeName();
                         }
 
                         @Override
                         public String visitBody(ObjectProperty objectProperty) {
-                            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(objectProperty
-                                    .getName()).getName())
+                            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(objectProperty.getName())
+                                            .getName())
                                     .getPascalCase()
                                     .getUnsafeName();
                         }
@@ -1758,16 +1763,16 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                         @Override
                         public String visitQuery(QueryParameter queryParameter) {
-                            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(queryParameter
-                                    .getName()).getName())
+                            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(queryParameter.getName())
+                                            .getName())
                                     .getCamelCase()
                                     .getUnsafeName();
                         }
 
                         @Override
                         public String visitBody(ObjectProperty objectProperty) {
-                            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(objectProperty
-                                    .getName()).getName())
+                            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(objectProperty.getName())
+                                            .getName())
                                     .getCamelCase()
                                     .getUnsafeName();
                         }
@@ -1906,14 +1911,17 @@ public abstract class AbstractHttpResponseParserGenerator {
             if (nextProperty.getPropertyPath().isPresent()) {
                 for (PropertyPathItem pathItem : nextProperty.getPropertyPath().get()) {
                     nextGetterBuilder.add(
-                            ".get$L()", NameUtils.resolveName(pathItem.getName()).getPascalCase().getUnsafeName());
+                            ".get$L()",
+                            NameUtils.resolveName(pathItem.getName())
+                                    .getPascalCase()
+                                    .getUnsafeName());
                 }
             }
             nextGetterBuilder.add(
                     ".get$L()",
-                    NameUtils.resolveName(NameUtils.resolveNameAndWireValue(nextProperty
-                            .getProperty()
-                            .getName()).getName())
+                    NameUtils.resolveName(NameUtils.resolveNameAndWireValue(
+                                            nextProperty.getProperty().getName())
+                                    .getName())
                             .getPascalCase()
                             .getUnsafeName());
             CodeBlock nextGetterCode = nextGetterBuilder.build();

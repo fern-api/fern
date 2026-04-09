@@ -9,6 +9,7 @@ import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
 import com.fern.java.client.generators.visitors.GetFilePropertyKey;
 import com.fern.java.generators.object.EnrichedObjectProperty;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -17,7 +18,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import com.fern.java.utils.NameUtils;
 
 public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEndpointWriterVariableNameContext {
 
@@ -35,8 +35,9 @@ public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEnd
         super(clientGeneratorContext, httpService, httpEndpoint);
         this.generatedWrappedRequest = generatedWrappedRequest;
         this.sdkRequest = sdkRequest;
-        this.requestParameterName =
-                NameUtils.resolveName(sdkRequest.getRequestParameterName()).getCamelCase().getSafeName();
+        this.requestParameterName = NameUtils.resolveName(sdkRequest.getRequestParameterName())
+                .getCamelCase()
+                .getSafeName();
         initializeCollections();
     }
 
@@ -85,15 +86,15 @@ public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEnd
             ClientGeneratorContext clientGeneratorContext, FileProperty fileProperty) {
         if (clientGeneratorContext.getCustomConfig().inlineFileProperties()) {
             return "request.get"
-                    + NameUtils.resolveName(NameUtils.resolveNameAndWireValue(fileProperty
-                            .visit(new GetFilePropertyKey()))
-                            .getName())
+                    + NameUtils.resolveName(
+                                    NameUtils.resolveNameAndWireValue(fileProperty.visit(new GetFilePropertyKey()))
+                                            .getName())
                             .getPascalCase()
-                            .getSafeName() + "()";
+                            .getSafeName()
+                    + "()";
         } else {
-            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(fileProperty
-                    .visit(new GetFilePropertyKey()))
-                    .getName())
+            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(fileProperty.visit(new GetFilePropertyKey()))
+                            .getName())
                     .getCamelCase()
                     .getSafeName();
         }

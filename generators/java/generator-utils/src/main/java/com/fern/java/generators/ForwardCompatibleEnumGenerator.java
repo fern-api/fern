@@ -2,16 +2,15 @@ package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.ir.model.commons.Name;
-import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.types.EnumTypeDeclaration;
 import com.fern.ir.model.types.EnumValue;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
-import com.fern.java.utils.NameUtils;
 import com.fern.java.VisitorFactory;
 import com.fern.java.VisitorFactory.GeneratedVisitor;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -86,7 +85,9 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
         return enumTypeDeclaration.getValues().stream()
                 .collect(Collectors.toMap(Function.identity(), enumValue -> FieldSpec.builder(
                                 className,
-                                NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName())).getScreamingSnakeCase().getSafeName(),
+                                NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName()))
+                                        .getScreamingSnakeCase()
+                                        .getSafeName(),
                                 Modifier.PUBLIC,
                                 Modifier.STATIC,
                                 Modifier.FINAL)
@@ -94,7 +95,9 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
                                 "new $T($T.$L, $S)",
                                 className,
                                 valueFieldClassName,
-                                NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName())).getScreamingSnakeCase().getSafeName(),
+                                NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName()))
+                                        .getScreamingSnakeCase()
+                                        .getSafeName(),
                                 NameUtils.getWireValue(enumValue.getName()))
                         .build()));
     }
@@ -171,7 +174,9 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
             acceptMethodImplementation
                     .add(
                             "case $L:\n",
-                            NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName())).getScreamingSnakeCase().getSafeName())
+                            NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName()))
+                                    .getScreamingSnakeCase()
+                                    .getSafeName())
                     .indent()
                     .addStatement("return visitor.$L()", visitMethod.name)
                     .unindent();
@@ -227,7 +232,9 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
         enumTypeDeclaration
                 .getValues()
                 .forEach(enumValue -> nestedValueEnumBuilder.addEnumConstant(
-                        NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName())).getScreamingSnakeCase().getSafeName()));
+                        NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName()))
+                                .getScreamingSnakeCase()
+                                .getSafeName()));
         nestedValueEnumBuilder.addEnumConstant(resolveName(UNKNOWN_ENUM_CONSTANT));
         return nestedValueEnumBuilder.build();
     }
@@ -237,7 +244,9 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
                 .map(enumValue -> {
                     return VisitorFactory.VisitMethodArgs.<EnumValue>builder()
                             .key(enumValue)
-                            .pascalCaseName(NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName())).getPascalCase().getSafeName())
+                            .pascalCaseName(NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName()))
+                                    .getPascalCase()
+                                    .getSafeName())
                             .build();
                 })
                 .collect(Collectors.toList());

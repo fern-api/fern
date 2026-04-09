@@ -61,7 +61,9 @@ public final class EnumGenerator extends AbstractTypeGenerator {
             TypeSpec.Builder enumTypeSpecBuilder = TypeSpec.enumBuilder(className);
             enumTypeDeclaration.getValues().forEach(enumValue -> {
                 enumTypeSpecBuilder.addEnumConstant(
-                        NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName())).getScreamingSnakeCase().getSafeName(),
+                        NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName()))
+                                .getScreamingSnakeCase()
+                                .getSafeName(),
                         TypeSpec.anonymousClassBuilder("$S", NameUtils.getWireValue(enumValue.getName()))
                                 .build());
             });

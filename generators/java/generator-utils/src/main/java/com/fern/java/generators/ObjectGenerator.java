@@ -303,7 +303,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                                     typeName instanceof ParameterizedTypeName,
                                     "Found optional/nullable with non-parameterized type name "
                                             + NameUtils.resolveName(NameUtils.getNameFromWireValue(prop.objectProperty()
-                                                    .getName())).getOriginalName());
+                                                            .getName()))
+                                                    .getOriginalName());
                             TypeName parameterType =
                                     Objects.requireNonNull(((ParameterizedTypeName) typeName).typeArguments.get(0));
                             typeName = ParameterizedTypeName.get(
@@ -401,7 +402,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                                 Preconditions.checkState(
                                         poetTypeName instanceof ParameterizedTypeName,
                                         "Found optional/nullable with non-parameterized type name "
-                                                + NameUtils.resolveName(NameUtils.getNameFromWireValue(prop.getName())).getOriginalName());
+                                                + NameUtils.resolveName(NameUtils.getNameFromWireValue(prop.getName()))
+                                                        .getOriginalName());
                                 TypeName parameterType = Objects.requireNonNull(
                                         ((ParameterizedTypeName) poetTypeName).typeArguments.get(0));
                                 poetTypeName = ParameterizedTypeName.get(

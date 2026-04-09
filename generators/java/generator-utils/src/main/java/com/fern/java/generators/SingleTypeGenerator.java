@@ -107,10 +107,7 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Abstract
                 undiscriminatedUnion,
                 reservedTypeNamesInScope,
                 isTopLevelClass,
-                NameUtils.resolveName(originalTypeDeclaration
-                        .get()
-                        .getName()
-                        .getName())
+                NameUtils.resolveName(originalTypeDeclaration.get().getName().getName())
                         .getPascalCase()
                         .getSafeName());
         return Optional.of(unionGenerator);

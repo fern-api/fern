@@ -62,6 +62,7 @@ import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.CasingUtils;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -83,7 +84,6 @@ import java.util.Set;
 import javax.lang.model.element.Modifier;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import com.fern.java.utils.NameUtils;
 
 public abstract class AbstractRootClientGenerator extends AbstractFileGenerator {
 
@@ -151,32 +151,43 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         // Create a factory method for the WebSocket client
         MethodSpec.Builder webSocketFactoryMethod = MethodSpec.methodBuilder(
-                        NameUtils.resolveName(websocketChannel.getName().get()).getCamelCase().getSafeName() + "WebSocket")
+                        NameUtils.resolveName(websocketChannel.getName().get())
+                                        .getCamelCase()
+                                        .getSafeName() + "WebSocket")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(webSocketClientClassName)
                 .addJavadoc(
                         "Creates a new WebSocket client for the $L channel.\n",
-                        NameUtils.resolveName(websocketChannel.getName().get()).getCamelCase().getSafeName());
+                        NameUtils.resolveName(websocketChannel.getName().get())
+                                .getCamelCase()
+                                .getSafeName());
 
         // Add path parameters
         for (com.fern.ir.model.http.PathParameter pathParam : websocketChannel.getPathParameters()) {
             TypeName paramType =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParam.getValueType());
             webSocketFactoryMethod.addParameter(
-                    paramType, NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName());
+                    paramType,
+                    NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName());
             webSocketFactoryMethod.addJavadoc(
                     "@param $L $L\n",
                     NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName(),
                     pathParam
                             .getDocs()
-                            .orElse("the " + NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName() + " path parameter"));
+                            .orElse("the "
+                                    + NameUtils.resolveName(pathParam.getName())
+                                            .getCamelCase()
+                                            .getSafeName() + " path parameter"));
         }
 
         // Add query parameters
         for (com.fern.ir.model.http.QueryParameter queryParam : websocketChannel.getQueryParameters()) {
             TypeName paramType =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, queryParam.getValueType());
-            String paramName = NameUtils.resolveName(NameUtils.resolveNameAndWireValue(queryParam.getName()).getName()).getCamelCase().getSafeName();
+            String paramName = NameUtils.resolveName(NameUtils.resolveNameAndWireValue(queryParam.getName())
+                            .getName())
+                    .getCamelCase()
+                    .getSafeName();
 
             // Check if already optional
             if (!queryParam.getValueType().getContainer().isPresent()
@@ -196,12 +207,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         for (com.fern.ir.model.http.PathParameter pathParam : websocketChannel.getPathParameters()) {
             returnStatement
                     .append(", ")
-                    .append(NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName());
+                    .append(NameUtils.resolveName(pathParam.getName())
+                            .getCamelCase()
+                            .getSafeName());
         }
         for (com.fern.ir.model.http.QueryParameter queryParam : websocketChannel.getQueryParameters()) {
             returnStatement
                     .append(", ")
-                    .append(NameUtils.resolveName(NameUtils.resolveNameAndWireValue(queryParam.getName()).getName()).getCamelCase().getSafeName());
+                    .append(NameUtils.resolveName(NameUtils.resolveNameAndWireValue(queryParam.getName())
+                                    .getName())
+                            .getCamelCase()
+                            .getSafeName());
         }
         returnStatement.append(")");
 
@@ -656,7 +672,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .build());
 
         generatorContext.getIr().getVariables().forEach(variableDeclaration -> {
-            String variableName = NameUtils.resolveName(variableDeclaration.getName()).getCamelCase().getSafeName();
+            String variableName = NameUtils.resolveName(variableDeclaration.getName())
+                    .getCamelCase()
+                    .getSafeName();
             clientBuilder.addField(FieldSpec.builder(
                             generatorContext
                                     .getPoetTypeNameMapper()
@@ -668,8 +686,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         generatorContext.getIr().getVariables().stream()
                 .map(variableDeclaration -> {
-                    String variableName =
-                            NameUtils.resolveName(variableDeclaration.getName()).getCamelCase().getSafeName();
+                    String variableName = NameUtils.resolveName(variableDeclaration.getName())
+                            .getCamelCase()
+                            .getSafeName();
                     return MethodSpec.methodBuilder(variableName)
                             .addModifiers(Modifier.PUBLIC)
                             .returns(isExtensible ? TypeVariableName.get("T") : builderName)
@@ -685,7 +704,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .forEach(clientBuilder::addMethod);
 
         generatorContext.getIr().getPathParameters().forEach(pathParameter -> {
-            String pathParamName = NameUtils.resolveName(pathParameter.getName()).getCamelCase().getSafeName();
+            String pathParamName = NameUtils.resolveName(pathParameter.getName())
+                    .getCamelCase()
+                    .getSafeName();
             clientBuilder.addField(FieldSpec.builder(
                             generatorContext
                                     .getPoetTypeNameMapper()
@@ -697,8 +718,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         generatorContext.getIr().getPathParameters().stream()
                 .map(pathParameter -> {
-                    String pathParamName =
-                            NameUtils.resolveName(pathParameter.getName()).getCamelCase().getSafeName();
+                    String pathParamName = NameUtils.resolveName(pathParameter.getName())
+                            .getCamelCase()
+                            .getSafeName();
                     return MethodSpec.methodBuilder(pathParamName)
                             .addModifiers(Modifier.PUBLIC)
                             .returns(isExtensible ? TypeVariableName.get("T") : builderName)
@@ -844,8 +866,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                     generatedEnvironmentsClass.getClassName());
 
                             for (EnvironmentBaseUrlWithId baseUrl : multiBase.getBaseUrls()) {
-                                String urlName =
-                                        NameUtils.resolveName(baseUrl.getName()).getCamelCase().getSafeName();
+                                String urlName = NameUtils.resolveName(baseUrl.getName())
+                                        .getCamelCase()
+                                        .getSafeName();
                                 String template;
                                 if (firstEnv.getUrlTemplates().isPresent()
                                         && firstEnv.getUrlTemplates().get().containsKey(baseUrl.getId())) {
@@ -895,14 +918,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     .addJavadoc("Override this method to configure API variables defined in the specification.\n"
                             + "Available variables: "
                             + generatorContext.getIr().getVariables().stream()
-                                    .map(v -> NameUtils.resolveName(v.getName()).getCamelCase().getSafeName())
+                                    .map(v -> NameUtils.resolveName(v.getName())
+                                            .getCamelCase()
+                                            .getSafeName())
                                     .collect(java.util.stream.Collectors.joining(", "))
                             + "\n\n"
                             + "@param builder The ClientOptions.Builder to configure");
 
             generatorContext.getIr().getVariables().forEach(variableDeclaration -> {
-                String variableName =
-                        NameUtils.resolveName(variableDeclaration.getName()).getCamelCase().getSafeName();
+                String variableName = NameUtils.resolveName(variableDeclaration.getName())
+                        .getCamelCase()
+                        .getSafeName();
                 MethodSpec variableMethod =
                         generatedClientOptions.variableGetters().get(variableDeclaration.getId());
                 setVariablesMethodBuilder
@@ -922,14 +948,19 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             "Override this method to configure API-level path parameters defined in the specification.\n"
                                     + "Available path parameters: "
                                     + generatorContext.getIr().getPathParameters().stream()
-                                            .map(p -> NameUtils.resolveName(p.getName()).getCamelCase().getSafeName())
+                                            .map(p -> NameUtils.resolveName(p.getName())
+                                                    .getCamelCase()
+                                                    .getSafeName())
                                             .collect(java.util.stream.Collectors.joining(", "))
                                     + "\n\n"
                                     + "@param builder The ClientOptions.Builder to configure");
 
             generatorContext.getIr().getPathParameters().forEach(pathParameter -> {
-                String pathParamName = NameUtils.resolveName(pathParameter.getName()).getCamelCase().getSafeName();
-                String originalName = NameUtils.resolveName(pathParameter.getName()).getOriginalName();
+                String pathParamName = NameUtils.resolveName(pathParameter.getName())
+                        .getCamelCase()
+                        .getSafeName();
+                String originalName =
+                        NameUtils.resolveName(pathParameter.getName()).getOriginalName();
                 MethodSpec pathParamMethod =
                         generatedClientOptions.apiPathParamGetters().get(originalName);
                 setApiPathParametersMethodBuilder
@@ -1142,7 +1173,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
     private String getServerVariableParamName(ServerVariable var) {
         String name = NameUtils.resolveName(var.getName()).getCamelCase().getSafeName();
         if (RESERVED_BUILDER_PARAM_NAMES.contains(name)) {
-            return "serverUrl" + NameUtils.resolveName(var.getName()).getPascalCase().getSafeName();
+            return "serverUrl"
+                    + NameUtils.resolveName(var.getName()).getPascalCase().getSafeName();
         }
         return name;
     }
@@ -1218,7 +1250,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         @Override
         public Void visitBearer(BearerAuthScheme bearer) {
-            String fieldName = NameUtils.resolveName(bearer.getToken()).getCamelCase().getSafeName();
+            String fieldName =
+                    NameUtils.resolveName(bearer.getToken()).getCamelCase().getSafeName();
             createSetter(fieldName, bearer.getTokenEnvVar(), Optional.empty());
 
             if (isMandatory) {
@@ -1254,7 +1287,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         @Override
         public Void visitBasic(BasicAuthScheme basic) {
             // username
-            String usernameFieldName = NameUtils.resolveName(basic.getUsername()).getCamelCase().getSafeName();
+            String usernameFieldName =
+                    NameUtils.resolveName(basic.getUsername()).getCamelCase().getSafeName();
             FieldSpec.Builder usernameField =
                     FieldSpec.builder(String.class, usernameFieldName).addModifiers(Modifier.PRIVATE);
             if (basic.getUsernameEnvVar().isPresent()) {
@@ -1265,7 +1299,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             }
             this.clientBuilder.addField(usernameField.build());
 
-            String passwordFieldName = NameUtils.resolveName(basic.getPassword()).getCamelCase().getSafeName();
+            String passwordFieldName =
+                    NameUtils.resolveName(basic.getPassword()).getCamelCase().getSafeName();
             FieldSpec.Builder passwordField =
                     FieldSpec.builder(String.class, passwordFieldName).addModifiers(Modifier.PRIVATE);
             if (basic.getPasswordEnvVar().isPresent()) {
@@ -1367,7 +1402,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             List<String> requiredCredentialPropertyNames = new ArrayList<>();
 
             for (var header : httpEndpoint.getHeaders()) {
-                String headerName = NameUtils.resolveName(NameUtils.resolveNameAndWireValue(header.getName()).getName()).getCamelCase().getSafeName();
+                String headerName = NameUtils.resolveName(NameUtils.resolveNameAndWireValue(header.getName())
+                                .getName())
+                        .getCamelCase()
+                        .getSafeName();
                 if (!isLiteralType(header.getValueType())) {
                     credentialPropertyNames.add(headerName);
                     if (!isOptionalType(header.getValueType())) {
@@ -1383,8 +1421,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     @Override
                     public Void visitInlinedRequestBody(com.fern.ir.model.http.InlinedRequestBody inlinedRequestBody) {
                         for (var prop : inlinedRequestBody.getProperties()) {
-                            String propName =
-                                    NameUtils.resolveName(NameUtils.resolveNameAndWireValue(prop.getName()).getName()).getCamelCase().getSafeName();
+                            String propName = NameUtils.resolveName(NameUtils.resolveNameAndWireValue(prop.getName())
+                                            .getName())
+                                    .getCamelCase()
+                                    .getSafeName();
                             if (!isLiteralType(prop.getValueType())) {
                                 credentialPropertyNames.add(propName);
                                 if (!isOptionalType(prop.getValueType())) {
@@ -1458,8 +1498,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         ENVIRONMENT_FIELD_NAME);
 
                 generatorContext.getIr().getVariables().forEach(variableDeclaration -> {
-                    String variableName =
-                            NameUtils.resolveName(variableDeclaration.getName()).getCamelCase().getSafeName();
+                    String variableName = NameUtils.resolveName(variableDeclaration.getName())
+                            .getCamelCase()
+                            .getSafeName();
                     MethodSpec variableMethod =
                             generatedClientOptions.variableGetters().get(variableDeclaration.getId());
                     configureAuthMethod
@@ -1543,10 +1584,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         if (isLiteralProperty(customProp)) {
                             continue;
                         }
-                        String propName = NameUtils.resolveName(NameUtils.resolveNameAndWireValue(customProp
-                                .getProperty()
-                                .visit(new RequestPropertyToNameVisitor()))
-                                .getName())
+                        String propName = NameUtils.resolveName(NameUtils.resolveNameAndWireValue(
+                                                customProp.getProperty().visit(new RequestPropertyToNameVisitor()))
+                                        .getName())
                                 .getCamelCase()
                                 .getSafeName();
                         customPropertyNames.add(propName);
@@ -1561,8 +1601,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .findFirst()
                         .orElseThrow();
                 for (var header : httpEndpoint.getHeaders()) {
-                    String headerName =
-                            NameUtils.resolveName(NameUtils.resolveNameAndWireValue(header.getName()).getName()).getCamelCase().getSafeName();
+                    String headerName = NameUtils.resolveName(NameUtils.resolveNameAndWireValue(header.getName())
+                                    .getName())
+                            .getCamelCase()
+                            .getSafeName();
                     customPropertyNames.add(headerName);
                 }
 
@@ -1667,8 +1709,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                 ENVIRONMENT_FIELD_NAME);
 
                         generatorContext.getIr().getVariables().forEach(variableDeclaration -> {
-                            String variableName =
-                                    NameUtils.resolveName(variableDeclaration.getName()).getCamelCase().getSafeName();
+                            String variableName = NameUtils.resolveName(variableDeclaration.getName())
+                                    .getCamelCase()
+                                    .getSafeName();
                             MethodSpec variableMethod =
                                     generatedClientOptions.variableGetters().get(variableDeclaration.getId());
                             configureAuthMethod
@@ -2122,7 +2165,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         }
 
         public Void visitHeaderBase(HeaderAuthScheme header, Boolean respectMandatoryAuth) {
-            String fieldName = NameUtils.resolveName(NameUtils.resolveNameAndWireValue(header.getName()).getName()).getCamelCase().getSafeName();
+            String fieldName = NameUtils.resolveName(
+                            NameUtils.resolveNameAndWireValue(header.getName()).getName())
+                    .getCamelCase()
+                    .getSafeName();
             // Never not create a setter or a null check if it's a literal
             if ((respectMandatoryAuth && isMandatory)
                     || !(header.getValueType().isContainer()
@@ -2161,8 +2207,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                 + " environment variable")
                         .orElse("Please provide " + fieldName + " via ." + fieldName + "()");
                 // Compute class name the same way HeaderAuthProviderGenerator does - use header name, not scheme key
-                String headerSchemeName =
-                        NameUtils.resolveName(NameUtils.resolveNameAndWireValue(header.getName()).getName()).getPascalCase().getSafeName();
+                String headerSchemeName = NameUtils.resolveName(NameUtils.resolveNameAndWireValue(header.getName())
+                                .getName())
+                        .getPascalCase()
+                        .getSafeName();
                 String providerClassName = headerSchemeName + "AuthProvider";
                 authProviderInfos.add(
                         new AuthProviderInfo(schemeKey, providerClassName, fieldName, null, envVarHint, false));
@@ -2350,7 +2398,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                                                         .getSubpackages()
                                                                         .values()
                                                                         .stream()
-                                                                        .filter(sp -> NameUtils.resolveName(sp.getName())
+                                                                        .filter(sp -> NameUtils.resolveName(
+                                                                                        sp.getName())
                                                                                 .getCamelCase()
                                                                                 .getSafeName()
                                                                                 .equalsIgnoreCase("auth"))
@@ -2368,7 +2417,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                                                         .getSubpackages()
                                                                         .values()
                                                                         .stream()
-                                                                        .filter(sp -> NameUtils.resolveName(sp.getName())
+                                                                        .filter(sp -> NameUtils.resolveName(
+                                                                                        sp.getName())
                                                                                 .getCamelCase()
                                                                                 .getSafeName()
                                                                                 .equalsIgnoreCase("auth"))

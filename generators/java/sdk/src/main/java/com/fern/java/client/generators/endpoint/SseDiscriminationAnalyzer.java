@@ -6,12 +6,12 @@ import com.fern.ir.model.types.Type;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.ir.model.types.UnionTypeDeclaration;
+import com.fern.java.utils.NameUtils;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import com.fern.java.utils.NameUtils;
 
 /**
  * Analyzes SSE payload types to determine if event-level or data-level discrimination is needed.
@@ -89,7 +89,8 @@ public final class SseDiscriminationAnalyzer {
         }
 
         // Get the discriminant property name
-        String discriminatorProperty = NameUtils.getWireValue(unionDeclaration.get().getDiscriminant());
+        String discriminatorProperty =
+                NameUtils.getWireValue(unionDeclaration.get().getDiscriminant());
 
         // Check if the discriminator is an SSE envelope field
         if (isEventLevelDiscriminator(discriminatorProperty)) {

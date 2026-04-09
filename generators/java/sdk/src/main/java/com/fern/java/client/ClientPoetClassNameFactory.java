@@ -44,7 +44,9 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         String packageName = getErrorsPackageName(errorDeclaration.getName().getFernFilepath());
         return ClassName.get(
                 packageName,
-                NameUtils.resolveName(errorDeclaration.getName().getName()).getPascalCase().getSafeName());
+                NameUtils.resolveName(errorDeclaration.getName().getName())
+                        .getPascalCase()
+                        .getSafeName());
     }
 
     public ClassName getInputStreamRequestBodyClassName() {
@@ -133,13 +135,17 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
             String websocketPackage = resourcesPackage + ".websocket";
             return ClassName.get(
                     websocketPackage,
-                    NameUtils.resolveName(websocketChannel.getName().get()).getPascalCase().getSafeName() + "WebSocketClient");
+                    NameUtils.resolveName(websocketChannel.getName().get())
+                                    .getPascalCase()
+                                    .getSafeName() + "WebSocketClient");
         } else {
             // For root package, just use websocket subpackage
             String packageName = getResourcesPackage(Optional.empty(), Optional.of("websocket"));
             return ClassName.get(
                     packageName,
-                    NameUtils.resolveName(websocketChannel.getName().get()).getPascalCase().getSafeName() + "WebSocketClient");
+                    NameUtils.resolveName(websocketChannel.getName().get())
+                                    .getPascalCase()
+                                    .getSafeName() + "WebSocketClient");
         }
     }
 
@@ -155,7 +161,10 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
                         Optional.of(httpService.getName().getFernFilepath()), Optional.of("requests"));
         }
         return ClassName.get(
-                packageName, NameUtils.resolveName(sdkRequestWrapper.getWrapperName()).getPascalCase().getSafeName());
+                packageName,
+                NameUtils.resolveName(sdkRequestWrapper.getWrapperName())
+                        .getPascalCase()
+                        .getSafeName());
     }
 
     public ClassName getApiErrorClassName(String organization, String workspaceName, JavaSdkCustomConfig customConfig) {
@@ -191,9 +200,10 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
 
     private static String getClientName(FernFilepath fernFilepath) {
         return NameUtils.resolveName(fernFilepath
-                        .getAllParts()
-                        .get(fernFilepath.getAllParts().size() - 1))
+                                .getAllParts()
+                                .get(fernFilepath.getAllParts().size() - 1))
                         .getPascalCase()
-                        .getUnsafeName() + "Client";
+                        .getUnsafeName()
+                + "Client";
     }
 }
