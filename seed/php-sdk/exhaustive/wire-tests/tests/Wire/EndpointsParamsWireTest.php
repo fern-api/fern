@@ -220,6 +220,27 @@ class EndpointsParamsWireTest extends WireMockTestCase
 
     /**
      */
+    public function testGetWithBooleanPath(): void {
+        $testId = 'endpoints.params.get_with_boolean_path.0';
+        $this->client->endpoints->params->getWithBooleanPath(
+            true,
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.params.get_with_boolean_path.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "GET",
+            "/params/path-bool/true",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
     public function testGetWithPathAndErrors(): void {
         $testId = 'endpoints.params.get_with_path_and_errors.0';
         $this->client->endpoints->params->getWithPath(

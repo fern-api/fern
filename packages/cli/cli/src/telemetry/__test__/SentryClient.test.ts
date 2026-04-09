@@ -13,7 +13,8 @@ const { mockSentryCaptureException, mockSentryFlush, mockSentryInit } = vi.hoist
 
 vi.mock("@sentry/node", () => ({
     init: mockSentryInit,
-    rewriteFramesIntegration: vi.fn().mockReturnValue({})
+    rewriteFramesIntegration: vi.fn().mockReturnValue({}),
+    setTag: vi.fn()
 }));
 
 import { SentryClient } from "../SentryClient.js";

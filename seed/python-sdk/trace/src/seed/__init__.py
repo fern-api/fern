@@ -6,7 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import admin, commons, homepage, lang_server, migration, playlist, problem, submission, sysprop, v_2
+    from . import admin, commons, homepage, lang_server, migration, playlist, problem, submission, sysprop, v2
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .admin import Test, Test_And, Test_Or
     from .client import AsyncSeedTrace, SeedTrace
@@ -505,7 +505,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "problem": ".problem",
     "submission": ".submission",
     "sysprop": ".sysprop",
-    "v_2": ".v_2",
+    "v2": ".v2",
 }
 
 
@@ -783,5 +783,5 @@ __all__ = [
     "problem",
     "submission",
     "sysprop",
-    "v_2",
+    "v2",
 ]

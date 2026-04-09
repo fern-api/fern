@@ -245,7 +245,7 @@ from .resources import (
     playlist,
     problem,
     submission,
-    v_2,
+    v2,
 )
 
 __all__ = [
@@ -491,5 +491,5 @@ __all__ = [
     "playlist",
     "problem",
     "submission",
-    "v_2",
+    "v2",
 ]

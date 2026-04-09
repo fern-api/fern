@@ -161,6 +161,60 @@ impl ObjectClient {
             .await
     }
 
+    /// Tests that dynamic snippets include all required properties in the
+    /// object initializer, even when the example omits some required fields.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn get_and_return_with_mixed_required_and_optional_fields(
+        &self,
+        request: &ObjectWithMixedRequiredAndOptionalFields,
+        options: Option<RequestOptions>,
+    ) -> Result<ObjectWithMixedRequiredAndOptionalFields, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/object/get-and-return-with-mixed-required-and-optional-fields",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Tests that dynamic snippets recursively construct default objects for
+    /// required properties whose type is a named object. When the example
+    /// omits the nested object, the generator should construct a default
+    /// initializer with the nested object's required properties filled in.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn get_and_return_with_required_nested_object(
+        &self,
+        request: &ObjectWithRequiredNestedObject,
+        options: Option<RequestOptions>,
+    ) -> Result<ObjectWithRequiredNestedObject, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/object/get-and-return-with-required-nested-object",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
     /// Tests that string fields containing datetime-like values are NOT reformatted.
     /// The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
     /// without being converted to "2023-08-31T14:15:22.000Z".

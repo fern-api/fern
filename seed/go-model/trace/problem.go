@@ -11,7 +11,7 @@ import (
 
 
 type ProblemInfo struct {
-    ProblemId ProblemId `json:"problemId" url:"problemId"`
+    ProblemID ProblemID `json:"problemId" url:"problemId"`
     ProblemDescription *ProblemDescription `json:"problemDescription" url:"problemDescription"`
     ProblemName string `json:"problemName" url:"problemName"`
     ProblemVersion int `json:"problemVersion" url:"problemVersion"`
@@ -26,11 +26,11 @@ type ProblemInfo struct {
     rawJSON json.RawMessage
 }
 
-func (p *ProblemInfo) GetProblemId() ProblemId{
+func (p *ProblemInfo) GetProblemID() ProblemID{
     if p == nil {
         return ""
     }
-    return p.ProblemId
+    return p.ProblemID
 }
 
 func (p *ProblemInfo) GetProblemDescription() *ProblemDescription{
@@ -188,9 +188,9 @@ func (p *ProblemDescription) String() string{
 
 type ProblemDescriptionBoard struct {
     Type string
-    Html string
+    HTML string
     Variable *VariableValue
-    TestCaseId string
+    TestCaseID string
 }
 
 type ProblemFiles struct {
@@ -415,7 +415,7 @@ func (c *CreateProblemRequest) String() string{
 
 type CreateProblemResponse struct {
     Type string
-    Success ProblemId
+    Success ProblemID
     Error *CreateProblemError
 }
 

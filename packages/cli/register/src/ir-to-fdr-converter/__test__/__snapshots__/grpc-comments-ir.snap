@@ -142,7 +142,7 @@
             "requestBodyType": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "CreateCommentRequest",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -171,7 +171,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "CreateCommentResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -267,7 +267,7 @@
                 "requestBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "CreateCommentRequest",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -300,7 +300,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "CreateCommentResponse",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -796,7 +796,7 @@
                 "optional": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "Comment",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,

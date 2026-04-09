@@ -36,7 +36,6 @@
   },
   "dependencies": {
     "@boundaryml/baml": "catalog:",
-    "@types/minimatch": "catalog:",
     "minimatch": "catalog:"
   },
   "devDependencies": {
@@ -53,11 +52,9 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "catalog:",
     "@fern-fern/generators-sdk": "catalog:",
-    "@types/find-up": "catalog:",
     "@types/js-yaml": "catalog:",
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",
-    "@types/pretty-ms": "catalog:",
     "@types/semver": "catalog:",
     "@types/yargs": "^17.0.28",
     "ajv": "8.18.0",

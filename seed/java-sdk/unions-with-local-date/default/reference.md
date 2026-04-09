@@ -58,6 +58,9 @@ client.bigunion().update(
         NormalSweet
             .builder()
             .value("value")
+            .additionalProperty("id", "id")
+            .additionalProperty("created-at", "2024-01-15T09:30:00Z")
+            .additionalProperty("archived-at", "2024-01-15T09:30:00Z")
             .build()
     )
 );
@@ -106,12 +109,18 @@ client.bigunion().updateMany(
             NormalSweet
                 .builder()
                 .value("value")
+                .additionalProperty("id", "id")
+                .additionalProperty("created-at", "2024-01-15T09:30:00Z")
+                .additionalProperty("archived-at", "2024-01-15T09:30:00Z")
                 .build()
         ),
         BigUnion.normalSweet(
             NormalSweet
                 .builder()
                 .value("value")
+                .additionalProperty("id", "id")
+                .additionalProperty("created-at", "2024-01-15T09:30:00Z")
+                .additionalProperty("archived-at", "2024-01-15T09:30:00Z")
                 .build()
         )
     )
@@ -284,6 +293,7 @@ client.union().update(
         Circle
             .builder()
             .radius(1.1)
+            .additionalProperty("id", "id")
             .build()
     )
 );

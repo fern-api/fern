@@ -672,6 +672,273 @@ func TestSettersMarkExplicitObjectWithMapOfMap(t *testing.T) {
 
 }
 
+func TestSettersObjectWithMixedRequiredAndOptionalFields(t *testing.T) {
+	t.Run("SetRequiredString", func(t *testing.T) {
+		obj := &ObjectWithMixedRequiredAndOptionalFields{}
+		var fernTestValueRequiredString string
+		obj.SetRequiredString(fernTestValueRequiredString)
+		assert.Equal(t, fernTestValueRequiredString, obj.RequiredString)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetRequiredInteger", func(t *testing.T) {
+		obj := &ObjectWithMixedRequiredAndOptionalFields{}
+		var fernTestValueRequiredInteger int
+		obj.SetRequiredInteger(fernTestValueRequiredInteger)
+		assert.Equal(t, fernTestValueRequiredInteger, obj.RequiredInteger)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetOptionalString", func(t *testing.T) {
+		obj := &ObjectWithMixedRequiredAndOptionalFields{}
+		var fernTestValueOptionalString *string
+		obj.SetOptionalString(fernTestValueOptionalString)
+		assert.Equal(t, fernTestValueOptionalString, obj.OptionalString)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetRequiredLong", func(t *testing.T) {
+		obj := &ObjectWithMixedRequiredAndOptionalFields{}
+		var fernTestValueRequiredLong int64
+		obj.SetRequiredLong(fernTestValueRequiredLong)
+		assert.Equal(t, fernTestValueRequiredLong, obj.RequiredLong)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersObjectWithMixedRequiredAndOptionalFields(t *testing.T) {
+	t.Run("GetRequiredString", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithMixedRequiredAndOptionalFields{}
+		var expected string
+		obj.RequiredString = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetRequiredString(), "getter should return the property value")
+	})
+
+	t.Run("GetRequiredString_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ObjectWithMixedRequiredAndOptionalFields
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRequiredString() // Should return zero value
+	})
+
+	t.Run("GetRequiredInteger", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithMixedRequiredAndOptionalFields{}
+		var expected int
+		obj.RequiredInteger = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetRequiredInteger(), "getter should return the property value")
+	})
+
+	t.Run("GetRequiredInteger_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ObjectWithMixedRequiredAndOptionalFields
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRequiredInteger() // Should return zero value
+	})
+
+	t.Run("GetOptionalString", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithMixedRequiredAndOptionalFields{}
+		var expected *string
+		obj.OptionalString = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetOptionalString(), "getter should return the property value")
+	})
+
+	t.Run("GetOptionalString_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithMixedRequiredAndOptionalFields{}
+		obj.OptionalString = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetOptionalString(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetOptionalString_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ObjectWithMixedRequiredAndOptionalFields
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOptionalString() // Should return zero value
+	})
+
+	t.Run("GetRequiredLong", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithMixedRequiredAndOptionalFields{}
+		var expected int64
+		obj.RequiredLong = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetRequiredLong(), "getter should return the property value")
+	})
+
+	t.Run("GetRequiredLong_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ObjectWithMixedRequiredAndOptionalFields
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRequiredLong() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitObjectWithMixedRequiredAndOptionalFields(t *testing.T) {
+	t.Run("SetRequiredString_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithMixedRequiredAndOptionalFields{}
+		var fernTestValueRequiredString string
+
+		// Act
+		obj.SetRequiredString(fernTestValueRequiredString)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetRequiredInteger_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithMixedRequiredAndOptionalFields{}
+		var fernTestValueRequiredInteger int
+
+		// Act
+		obj.SetRequiredInteger(fernTestValueRequiredInteger)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOptionalString_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithMixedRequiredAndOptionalFields{}
+		var fernTestValueOptionalString *string
+
+		// Act
+		obj.SetOptionalString(fernTestValueOptionalString)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetRequiredLong_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithMixedRequiredAndOptionalFields{}
+		var fernTestValueRequiredLong int64
+
+		// Act
+		obj.SetRequiredLong(fernTestValueRequiredLong)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersObjectWithOptionalField(t *testing.T) {
 	t.Run("SetFieldString", func(t *testing.T) {
 		obj := &ObjectWithOptionalField{}
@@ -1616,6 +1883,149 @@ func TestSettersMarkExplicitObjectWithRequiredField(t *testing.T) {
 
 }
 
+func TestSettersObjectWithRequiredNestedObject(t *testing.T) {
+	t.Run("SetRequiredString", func(t *testing.T) {
+		obj := &ObjectWithRequiredNestedObject{}
+		var fernTestValueRequiredString string
+		obj.SetRequiredString(fernTestValueRequiredString)
+		assert.Equal(t, fernTestValueRequiredString, obj.RequiredString)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetRequiredObject", func(t *testing.T) {
+		obj := &ObjectWithRequiredNestedObject{}
+		var fernTestValueRequiredObject *NestedObjectWithRequiredField
+		obj.SetRequiredObject(fernTestValueRequiredObject)
+		assert.Equal(t, fernTestValueRequiredObject, obj.RequiredObject)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersObjectWithRequiredNestedObject(t *testing.T) {
+	t.Run("GetRequiredString", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithRequiredNestedObject{}
+		var expected string
+		obj.RequiredString = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetRequiredString(), "getter should return the property value")
+	})
+
+	t.Run("GetRequiredString_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ObjectWithRequiredNestedObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRequiredString() // Should return zero value
+	})
+
+	t.Run("GetRequiredObject", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithRequiredNestedObject{}
+		var expected *NestedObjectWithRequiredField
+		obj.RequiredObject = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetRequiredObject(), "getter should return the property value")
+	})
+
+	t.Run("GetRequiredObject_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithRequiredNestedObject{}
+		obj.RequiredObject = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetRequiredObject(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetRequiredObject_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ObjectWithRequiredNestedObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRequiredObject() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitObjectWithRequiredNestedObject(t *testing.T) {
+	t.Run("SetRequiredString_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithRequiredNestedObject{}
+		var fernTestValueRequiredString string
+
+		// Act
+		obj.SetRequiredString(fernTestValueRequiredString)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetRequiredObject_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithRequiredNestedObject{}
+		var fernTestValueRequiredObject *NestedObjectWithRequiredField
+
+		// Act
+		obj.SetRequiredObject(fernTestValueRequiredObject)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersObjectWithUnknownField(t *testing.T) {
 	t.Run("SetUnknown", func(t *testing.T) {
 		obj := &ObjectWithUnknownField{}
@@ -1885,6 +2295,39 @@ func TestJSONMarshalingObjectWithMapOfMap(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingObjectWithMixedRequiredAndOptionalFields(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithMixedRequiredAndOptionalFields{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ObjectWithMixedRequiredAndOptionalFields
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ObjectWithMixedRequiredAndOptionalFields
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ObjectWithMixedRequiredAndOptionalFields
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingObjectWithOptionalField(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -1946,6 +2389,39 @@ func TestJSONMarshalingObjectWithRequiredField(t *testing.T) {
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
 		var obj ObjectWithRequiredField
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingObjectWithRequiredNestedObject(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithRequiredNestedObject{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ObjectWithRequiredNestedObject
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ObjectWithRequiredNestedObject
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ObjectWithRequiredNestedObject
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
@@ -2080,6 +2556,22 @@ func TestStringObjectWithMapOfMap(t *testing.T) {
 	})
 }
 
+func TestStringObjectWithMixedRequiredAndOptionalFields(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ObjectWithMixedRequiredAndOptionalFields{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ObjectWithMixedRequiredAndOptionalFields
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringObjectWithOptionalField(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -2107,6 +2599,22 @@ func TestStringObjectWithRequiredField(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ObjectWithRequiredField
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringObjectWithRequiredNestedObject(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ObjectWithRequiredNestedObject{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ObjectWithRequiredNestedObject
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -2266,6 +2774,29 @@ func TestExtraPropertiesObjectWithMapOfMap(t *testing.T) {
 	})
 }
 
+func TestExtraPropertiesObjectWithMixedRequiredAndOptionalFields(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ObjectWithMixedRequiredAndOptionalFields{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ObjectWithMixedRequiredAndOptionalFields
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
 func TestExtraPropertiesObjectWithOptionalField(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
@@ -2307,6 +2838,29 @@ func TestExtraPropertiesObjectWithRequiredField(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ObjectWithRequiredField
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesObjectWithRequiredNestedObject(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ObjectWithRequiredNestedObject{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ObjectWithRequiredNestedObject
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

@@ -104,3 +104,15 @@ def jsonable_encoder(obj: Any, custom_encoder: Optional[Dict[Any, Callable[[Any]
         return jsonable_encoder(data, custom_encoder=custom_encoder)
 
     return to_jsonable_with_fallback(obj, fallback_serializer)
+
+
+def encode_path_param(obj: Any) -> str:
+    """Encode a value for use in a URL path segment.
+
+    Ensures proper string conversion for all types, including
+    booleans which need lowercase 'true'/'false' rather than
+    Python's 'True'/'False'.
+    """
+    if isinstance(obj, bool):
+        return "true" if obj else "false"
+    return str(jsonable_encoder(obj))

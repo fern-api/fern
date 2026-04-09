@@ -15,12 +15,6 @@ describe("UsersClient", () => {
         const response = await client.users.get({
             id: "id",
         });
-        expect(response).toEqual({
-            id: "id",
-            name: "name",
-            deleted_at: {
-                key: "value",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

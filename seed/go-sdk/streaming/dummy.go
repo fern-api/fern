@@ -118,12 +118,12 @@ func (g *GenerateStreamRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	streamResponseFieldId   = big.NewInt(1 << 0)
+	streamResponseFieldID   = big.NewInt(1 << 0)
 	streamResponseFieldName = big.NewInt(1 << 1)
 )
 
 type StreamResponse struct {
-	Id   string  `json:"id" url:"id"`
+	ID   string  `json:"id" url:"id"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -133,11 +133,11 @@ type StreamResponse struct {
 	rawJSON         json.RawMessage
 }
 
-func (s *StreamResponse) GetId() string {
+func (s *StreamResponse) GetID() string {
 	if s == nil {
 		return ""
 	}
-	return s.Id
+	return s.ID
 }
 
 func (s *StreamResponse) GetName() *string {
@@ -161,11 +161,11 @@ func (s *StreamResponse) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamResponse) SetId(id string) {
-	s.Id = id
-	s.require(streamResponseFieldId)
+func (s *StreamResponse) SetID(id string) {
+	s.ID = id
+	s.require(streamResponseFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;

@@ -41,17 +41,6 @@ describe("SeedPropertyAccessClient", () => {
                 ssn: "ssn",
             },
         });
-        expect(response).toEqual({
-            id: "id",
-            email: "email",
-            password: "password",
-            profile: {
-                name: "name",
-                verification: {
-                    verified: "verified",
-                },
-                ssn: "ssn",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

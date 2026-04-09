@@ -1,6 +1,6 @@
 # Reference
 ## V2
-<details><summary><code>client.v_2.<a href="src/seed/v_2/client.py">test</a>()</code></summary>
+<details><summary><code>client.v2.<a href="src/seed/v2/client.py">test</a>()</code></summary>
 <dl>
 <dd>
 
@@ -21,7 +21,7 @@ client = SeedTrace(
     environment=SeedTraceEnvironment.PROD,
 )
 
-client.v_2.test()
+client.v2.test()
 
 ```
 </dd>
@@ -511,7 +511,7 @@ client.admin.store_traced_test_case(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_test_case_v_2</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_test_case_v2</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -535,7 +535,7 @@ client = SeedTrace(
     environment=SeedTraceEnvironment.PROD,
 )
 
-client.admin.store_traced_test_case_v_2(
+client.admin.store_traced_test_case_v2(
     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     test_case_id="testCaseId",
     request=[
@@ -697,7 +697,7 @@ client = SeedTrace(
 client.admin.store_traced_workspace(
     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     workspace_run_details=WorkspaceRunDetails(
-        exception_v_2=ExceptionV2_Generic(
+        exception_v2=ExceptionV2_Generic(
             exception_type="exceptionType",
             exception_message="exceptionMessage",
             exception_stacktrace="exceptionStacktrace",
@@ -833,7 +833,7 @@ client.admin.store_traced_workspace(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_workspace_v_2</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_workspace_v2</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -857,7 +857,7 @@ client = SeedTrace(
     environment=SeedTraceEnvironment.PROD,
 )
 
-client.admin.store_traced_workspace_v_2(
+client.admin.store_traced_workspace_v2(
     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     request=[
         TraceResponseV2(
@@ -2526,7 +2526,7 @@ client.sysprop.get_num_warm_instances()
 </details>
 
 ## V2 Problem
-<details><summary><code>client.v_2.problem.<a href="src/seed/v_2/problem/client.py">get_lightweight_problems</a>() -> typing.List[LightweightProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.problem.<a href="src/seed/v2/problem/client.py">get_lightweight_problems</a>() -> typing.List[LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2561,7 +2561,7 @@ client = SeedTrace(
     environment=SeedTraceEnvironment.PROD,
 )
 
-client.v_2.problem.get_lightweight_problems()
+client.v2.problem.get_lightweight_problems()
 
 ```
 </dd>
@@ -2589,7 +2589,7 @@ client.v_2.problem.get_lightweight_problems()
 </dl>
 </details>
 
-<details><summary><code>client.v_2.problem.<a href="src/seed/v_2/problem/client.py">get_problems</a>() -> typing.List[ProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.problem.<a href="src/seed/v2/problem/client.py">get_problems</a>() -> typing.List[ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2624,7 +2624,7 @@ client = SeedTrace(
     environment=SeedTraceEnvironment.PROD,
 )
 
-client.v_2.problem.get_problems()
+client.v2.problem.get_problems()
 
 ```
 </dd>
@@ -2652,7 +2652,7 @@ client.v_2.problem.get_problems()
 </dl>
 </details>
 
-<details><summary><code>client.v_2.problem.<a href="src/seed/v_2/problem/client.py">get_latest_problem</a>(...) -> ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.problem.<a href="src/seed/v2/problem/client.py">get_latest_problem</a>(...) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2687,7 +2687,7 @@ client = SeedTrace(
     environment=SeedTraceEnvironment.PROD,
 )
 
-client.v_2.problem.get_latest_problem(
+client.v2.problem.get_latest_problem(
     problem_id="problemId",
 )
 
@@ -2725,7 +2725,7 @@ client.v_2.problem.get_latest_problem(
 </dl>
 </details>
 
-<details><summary><code>client.v_2.problem.<a href="src/seed/v_2/problem/client.py">get_problem_version</a>(...) -> ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.problem.<a href="src/seed/v2/problem/client.py">get_problem_version</a>(...) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2760,7 +2760,7 @@ client = SeedTrace(
     environment=SeedTraceEnvironment.PROD,
 )
 
-client.v_2.problem.get_problem_version(
+client.v2.problem.get_problem_version(
     problem_id="problemId",
     problem_version=1,
 )
@@ -2808,7 +2808,7 @@ client.v_2.problem.get_problem_version(
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>client.v_2.v_3.problem.<a href="src/seed/v_2/v_3/problem/client.py">get_lightweight_problems</a>() -> typing.List[LightweightProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="src/seed/v2/v3/problem/client.py">get_lightweight_problems</a>() -> typing.List[LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2843,7 +2843,7 @@ client = SeedTrace(
     environment=SeedTraceEnvironment.PROD,
 )
 
-client.v_2.problem.get_lightweight_problems()
+client.v2.problem.get_lightweight_problems()
 
 ```
 </dd>
@@ -2871,7 +2871,7 @@ client.v_2.problem.get_lightweight_problems()
 </dl>
 </details>
 
-<details><summary><code>client.v_2.v_3.problem.<a href="src/seed/v_2/v_3/problem/client.py">get_problems</a>() -> typing.List[ProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="src/seed/v2/v3/problem/client.py">get_problems</a>() -> typing.List[ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2906,7 +2906,7 @@ client = SeedTrace(
     environment=SeedTraceEnvironment.PROD,
 )
 
-client.v_2.problem.get_problems()
+client.v2.problem.get_problems()
 
 ```
 </dd>
@@ -2934,7 +2934,7 @@ client.v_2.problem.get_problems()
 </dl>
 </details>
 
-<details><summary><code>client.v_2.v_3.problem.<a href="src/seed/v_2/v_3/problem/client.py">get_latest_problem</a>(...) -> ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="src/seed/v2/v3/problem/client.py">get_latest_problem</a>(...) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2969,7 +2969,7 @@ client = SeedTrace(
     environment=SeedTraceEnvironment.PROD,
 )
 
-client.v_2.problem.get_latest_problem(
+client.v2.problem.get_latest_problem(
     problem_id="problemId",
 )
 
@@ -3007,7 +3007,7 @@ client.v_2.problem.get_latest_problem(
 </dl>
 </details>
 
-<details><summary><code>client.v_2.v_3.problem.<a href="src/seed/v_2/v_3/problem/client.py">get_problem_version</a>(...) -> ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="src/seed/v2/v3/problem/client.py">get_problem_version</a>(...) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -3042,7 +3042,7 @@ client = SeedTrace(
     environment=SeedTraceEnvironment.PROD,
 )
 
-client.v_2.problem.get_problem_version(
+client.v2.problem.get_problem_version(
     problem_id="problemId",
     problem_version=1,
 )

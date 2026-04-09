@@ -611,6 +611,66 @@ public class AsyncRawParamsClient {
     }
 
     /**
+     * GET with boolean path param
+     */
+    public CompletableFuture<BestHttpResponse<String>> getWithBooleanPath(boolean param) {
+        return getWithBooleanPath(param, null);
+    }
+
+    /**
+     * GET with boolean path param
+     */
+    public CompletableFuture<BestHttpResponse<String>> getWithBooleanPath(
+            boolean param, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("params")
+                .addPathSegments("path-bool")
+                .addPathSegment(Boolean.toString(param));
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<BestHttpResponse<String>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                        future.complete(new BestHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
+                        return;
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new BestApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(new BestException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new BestException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
      * GET with path param that can throw errors
      */
     public CompletableFuture<BestHttpResponse<String>> getWithPathAndErrors(String param) {

@@ -1,8 +1,7 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.endpoints.types.GetWithMultipleQuery;
-import java.util.Arrays;
+import com.seed.exhaustive.endpoints.types.ListItemsRequest;
 
 public class Example32 {
     public static void main(String[] args) {
@@ -12,10 +11,7 @@ public class Example32 {
                 .build();
 
         client.endpoints()
-                .params()
-                .getWithAllowMultipleQuery(GetWithMultipleQuery.builder()
-                        .query(Arrays.asList("query"))
-                        .number(Arrays.asList(1))
-                        .build());
+                .pagination()
+                .listItems(ListItemsRequest.builder().cursor("cursor").limit(1).build());
     }
 }

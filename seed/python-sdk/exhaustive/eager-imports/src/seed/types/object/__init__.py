@@ -11,8 +11,10 @@ from .types import (
     ObjectWithDatetimeLikeString,
     ObjectWithDocumentedUnknownType,
     ObjectWithMapOfMap,
+    ObjectWithMixedRequiredAndOptionalFields,
     ObjectWithOptionalField,
     ObjectWithRequiredField,
+    ObjectWithRequiredNestedObject,
     ObjectWithUnknownField,
     OptionalAlias,
 )
@@ -34,10 +36,12 @@ __all__ = [
     "ObjectWithDatetimeLikeString",
     "ObjectWithDocumentedUnknownType",
     "ObjectWithMapOfMap",
+    "ObjectWithMixedRequiredAndOptionalFields",
     "ObjectWithOptionalField",
     "ObjectWithOptionalFieldError",
     "ObjectWithRequiredField",
     "ObjectWithRequiredFieldError",
+    "ObjectWithRequiredNestedObject",
     "ObjectWithUnknownField",
     "OptionalAlias",
 ]

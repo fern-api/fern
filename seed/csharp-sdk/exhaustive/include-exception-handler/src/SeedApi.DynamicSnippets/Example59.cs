@@ -12,7 +12,7 @@ public class Example59
             }
         );
 
-        await client.NoReqBody.GetWithNoRequestBodyAsync();
+        await client.Endpoints.Urls.WithUnderscoresAsync();
     }
 
 }

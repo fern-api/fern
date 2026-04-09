@@ -10,25 +10,25 @@ import (
 )
 
 func TestSettersGetTokenRequest(t *testing.T) {
-	t.Run("SetApiKey", func(t *testing.T) {
+	t.Run("SetAPIKey", func(t *testing.T) {
 		obj := &GetTokenRequest{}
-		var fernTestValueApiKey string
-		obj.SetApiKey(fernTestValueApiKey)
-		assert.Equal(t, fernTestValueApiKey, obj.ApiKey)
+		var fernTestValueAPIKey string
+		obj.SetAPIKey(fernTestValueAPIKey)
+		assert.Equal(t, fernTestValueAPIKey, obj.APIKey)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 }
 
 func TestSettersMarkExplicitGetTokenRequest(t *testing.T) {
-	t.Run("SetApiKey_MarksExplicit", func(t *testing.T) {
+	t.Run("SetAPIKey_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetTokenRequest{}
-		var fernTestValueApiKey string
+		var fernTestValueAPIKey string
 
 		// Act
-		obj.SetApiKey(fernTestValueApiKey)
+		obj.SetAPIKey(fernTestValueAPIKey)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

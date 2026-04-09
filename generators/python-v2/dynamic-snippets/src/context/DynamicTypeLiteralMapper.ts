@@ -384,7 +384,9 @@ export class DynamicTypeLiteralMapper {
             }
         }
 
-        return result;
+        // Filter out nop entries (e.g. literal types that produce no output) to avoid
+        // generating invalid syntax like `strategy=,`.
+        return result.filter((entry) => !python.TypeInstantiation.isNop(entry.value));
     }
 
     private convertObject({
