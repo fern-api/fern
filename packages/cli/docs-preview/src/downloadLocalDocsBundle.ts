@@ -12,6 +12,7 @@ import xml2js from "xml2js";
 const PLATFORM_IS_WINDOWS = process.platform === "win32";
 const DOCS_PREFIX = chalk.cyan("[docs]:");
 const ETAG_FILENAME = "etag";
+const COREPACK_MISSING_KEYID_ERROR_MESSAGE = 'Cannot find matching keyid: {"signatures":';
 
 // Progress bar label alignment - pad labels to the longest one for consistent bar positioning
 const PROGRESS_LABEL_WIDTH = "Downloading docs bundle".length;
@@ -22,13 +23,6 @@ const BUNDLE_FOLDER_NAME = "bundle";
 const NEXT_BUNDLE_FOLDER_NAME = ".next";
 const STANDALONE_FOLDER_NAME = "standalone";
 const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
-
-// Const for windows post-processing
-const INSTRUMENTATION_PATH = "packages/fern-docs/bundle/.next/server/instrumentation.js";
-const NPMRC_NAME = ".npmrc";
-const PNPMFILE_CJS_NAME = ".pnpmfile.cjs";
-const PNPM_WORKSPACE_YAML_NAME = "pnpm-workspace.yaml";
-const COREPACK_MISSING_KEYID_ERROR_MESSAGE = 'Cannot find matching keyid: {"signatures":';
 
 export function getLocalStorageFolder(): AbsoluteFilePath {
     return join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
@@ -47,22 +41,6 @@ export function getPathToBundleFolder({ app = false }: { app?: boolean }): Absol
 
 export function getPathToStandaloneFolder({ app = false }: { app?: boolean }): AbsoluteFilePath {
     return join(getPathToBundleFolder({ app }), RelativeFilePath.of(STANDALONE_FOLDER_NAME));
-}
-
-export function getPathToInstrumentationJs({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(INSTRUMENTATION_PATH));
-}
-
-function getPathToPnpmWorkspaceYaml({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(PNPM_WORKSPACE_YAML_NAME));
-}
-
-function getPathToPnpmfileCjs({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(PNPMFILE_CJS_NAME));
-}
-
-function getPathToNpmrc({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(NPMRC_NAME));
 }
 
 function contactFernSupportError(errorMessage: string): Error {
@@ -84,27 +62,6 @@ export declare namespace DownloadLocalBundle {
         type: "failure";
     }
 }
-
-const PNPMFILE_CJS_CONTENTS = `module.exports = {
-    hooks: {
-        readPackage(pkg) {
-            // Remove all workspace:* dependencies
-            if (pkg.dependencies) {
-                Object.keys(pkg.dependencies).forEach(dep => {
-                    if (pkg.dependencies[dep] === 'workspace:*') {
-                        delete pkg.dependencies[dep]; } });
-                    }
-            if (pkg.devDependencies) {
-                Object.keys(pkg.devDependencies).forEach(dep => {
-                    if (pkg.devDependencies[dep] === 'workspace:*') {
-                        delete pkg.devDependencies[dep]; } });
-            } return pkg;
-        }
-    }
-};
-`;
-
-const NPMRC_CONTENTS = "@fern-fern:registry=https://npm.buildwithfern.com\n";
 
 export async function downloadBundle({
     bucketUrl,
@@ -359,56 +316,6 @@ export async function downloadBundle({
                 });
             } catch (error) {
                 throw contactFernSupportError(`Failed to resolve imports due to error: ${error}`);
-            }
-
-            if (PLATFORM_IS_WINDOWS) {
-                const absPathToStandalone = getPathToStandaloneFolder({ app });
-                const absPathToInstrumentationJs = getPathToInstrumentationJs({ app });
-                const pnpmWorkspacePath = getPathToPnpmWorkspaceYaml({ app });
-                const pnpmfilePath = getPathToPnpmfileCjs({ app });
-                const npmrcPath = getPathToNpmrc({ app });
-
-                // Check all paths in parallel
-                const [pnpmWorkspaceExists, pnpmfileExists, npmrcExists, instrumentationJsExists] = await Promise.all([
-                    doesPathExist(pnpmWorkspacePath),
-                    doesPathExist(pnpmfilePath),
-                    doesPathExist(npmrcPath),
-                    doesPathExist(absPathToInstrumentationJs)
-                ]);
-
-                // Warn if pnpm-workspace.yaml does not exist
-                if (!pnpmWorkspaceExists) {
-                    logger.warn(
-                        `Expected pnpm-workspace.yaml at ${pnpmWorkspacePath} but it does not exist. If you are experiencing issues, please contact support@buildwithfern.com.`
-                    );
-                }
-
-                // Write pnpmfile.cjs if it does not exist
-                if (!pnpmfileExists) {
-                    logger.debug(`Writing pnpmfile.cjs at ${pnpmfilePath}`);
-                    await writeFile(pnpmfilePath, PNPMFILE_CJS_CONTENTS);
-                }
-                // Write .npmrc if it does not exist
-                if (!npmrcExists) {
-                    logger.debug(`Writing .npmrc at ${npmrcPath}`);
-                    await writeFile(npmrcPath, NPMRC_CONTENTS);
-                }
-                // Remove instrumentation.js if it exists
-                if (instrumentationJsExists) {
-                    logger.debug(`Removing instrumentation.js at ${absPathToInstrumentationJs}`);
-                    await rm(absPathToInstrumentationJs);
-                }
-
-                try {
-                    // pnpm install within standalone
-                    logger.debug("Running pnpm install within standalone");
-                    await loggingExeca(logger, "pnpm", ["install"], {
-                        cwd: absPathToStandalone,
-                        doNotPipeOutput: true
-                    });
-                } catch (error) {
-                    throw contactFernSupportError(`Failed to install required package due to error: ${error}`);
-                }
             }
         }
 
