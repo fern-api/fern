@@ -576,9 +576,13 @@ await client.CreateUserAsync(
         Password = "password",
         Profile = new UserProfile {
             Name = "name",
-            Verification = new UserProfileVerification(),
+            Verification = new UserProfileVerification {
+                Verified = ""
+            },
             Ssn = "ssn"
-        }
+        },
+        ID = "",
+        Email = ""
     }
 );
 "
@@ -599,9 +603,12 @@ await client.CreateUserAsync(
         Password = "password",
         Profile = new UserProfile {
             Name = "name",
-            Verification = new UserProfileVerification(),
+            Verification = new UserProfileVerification {
+                Verified = ""
+            },
             Ssn = "ssn"
-        }
+        },
+        Email = ""
     }
 );
 "

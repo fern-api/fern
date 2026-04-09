@@ -57,12 +57,12 @@ func (p *PaymentRequest) MarshalJSON() ([]byte, error) {
 
 var (
 	convertTokenFieldMethod  = big.NewInt(1 << 0)
-	convertTokenFieldTokenId = big.NewInt(1 << 1)
+	convertTokenFieldTokenID = big.NewInt(1 << 1)
 )
 
 type ConvertToken struct {
 	Method  string `json:"method" url:"method"`
-	TokenId string `json:"tokenId" url:"tokenId"`
+	TokenID string `json:"tokenId" url:"tokenId"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -78,11 +78,11 @@ func (c *ConvertToken) GetMethod() string {
 	return c.Method
 }
 
-func (c *ConvertToken) GetTokenId() string {
+func (c *ConvertToken) GetTokenID() string {
 	if c == nil {
 		return ""
 	}
-	return c.TokenId
+	return c.TokenID
 }
 
 func (c *ConvertToken) GetExtraProperties() map[string]interface{} {
@@ -106,11 +106,11 @@ func (c *ConvertToken) SetMethod(method string) {
 	c.require(convertTokenFieldMethod)
 }
 
-// SetTokenId sets the TokenId field and marks it as non-optional;
+// SetTokenID sets the TokenID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConvertToken) SetTokenId(tokenId string) {
-	c.TokenId = tokenId
-	c.require(convertTokenFieldTokenId)
+func (c *ConvertToken) SetTokenID(tokenID string) {
+	c.TokenID = tokenID
+	c.require(convertTokenFieldTokenID)
 }
 
 func (c *ConvertToken) UnmarshalJSON(data []byte) error {
@@ -1609,7 +1609,7 @@ func (u *UnionWithReservedNames) Accept(visitor UnionWithReservedNamesVisitor) e
 // causing CS0557 compiler error.
 type UnionWithTypeAliases struct {
 	String string
-	UserId UserId
+	UserID UserID
 	Name   Name
 
 	typ string
@@ -1619,8 +1619,8 @@ func NewUnionWithTypeAliasesFromString(value string) *UnionWithTypeAliases {
 	return &UnionWithTypeAliases{typ: "String", String: value}
 }
 
-func NewUnionWithTypeAliasesFromUserId(value UserId) *UnionWithTypeAliases {
-	return &UnionWithTypeAliases{typ: "UserId", UserId: value}
+func NewUnionWithTypeAliasesFromUserID(value UserID) *UnionWithTypeAliases {
+	return &UnionWithTypeAliases{typ: "UserID", UserID: value}
 }
 
 func NewUnionWithTypeAliasesFromName(value Name) *UnionWithTypeAliases {
@@ -1634,11 +1634,11 @@ func (u *UnionWithTypeAliases) GetString() string {
 	return u.String
 }
 
-func (u *UnionWithTypeAliases) GetUserId() UserId {
+func (u *UnionWithTypeAliases) GetUserID() UserID {
 	if u == nil {
 		return ""
 	}
-	return u.UserId
+	return u.UserID
 }
 
 func (u *UnionWithTypeAliases) GetName() Name {
@@ -1655,10 +1655,10 @@ func (u *UnionWithTypeAliases) UnmarshalJSON(data []byte) error {
 		u.String = valueString
 		return nil
 	}
-	var valueUserId UserId
-	if err := json.Unmarshal(data, &valueUserId); err == nil {
-		u.typ = "UserId"
-		u.UserId = valueUserId
+	var valueUserID UserID
+	if err := json.Unmarshal(data, &valueUserID); err == nil {
+		u.typ = "UserID"
+		u.UserID = valueUserID
 		return nil
 	}
 	var valueName Name
@@ -1674,8 +1674,8 @@ func (u UnionWithTypeAliases) MarshalJSON() ([]byte, error) {
 	if u.typ == "String" || u.String != "" {
 		return json.Marshal(u.String)
 	}
-	if u.typ == "UserId" || u.UserId != "" {
-		return json.Marshal(u.UserId)
+	if u.typ == "UserID" || u.UserID != "" {
+		return json.Marshal(u.UserID)
 	}
 	if u.typ == "Name" || u.Name != "" {
 		return json.Marshal(u.Name)
@@ -1685,7 +1685,7 @@ func (u UnionWithTypeAliases) MarshalJSON() ([]byte, error) {
 
 type UnionWithTypeAliasesVisitor interface {
 	VisitString(string) error
-	VisitUserId(UserId) error
+	VisitUserID(UserID) error
 	VisitName(Name) error
 }
 
@@ -1693,8 +1693,8 @@ func (u *UnionWithTypeAliases) Accept(visitor UnionWithTypeAliasesVisitor) error
 	if u.typ == "String" || u.String != "" {
 		return visitor.VisitString(u.String)
 	}
-	if u.typ == "UserId" || u.UserId != "" {
-		return visitor.VisitUserId(u.UserId)
+	if u.typ == "UserID" || u.UserID != "" {
+		return visitor.VisitUserID(u.UserID)
 	}
 	if u.typ == "Name" || u.Name != "" {
 		return visitor.VisitName(u.Name)
@@ -1703,4 +1703,4 @@ func (u *UnionWithTypeAliases) Accept(visitor UnionWithTypeAliasesVisitor) error
 }
 
 // A user identifier (alias for string)
-type UserId = string
+type UserID = string

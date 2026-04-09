@@ -1,6 +1,6 @@
 import { DiscriminatedUnionTypeInstance, NamedArgument, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { ast, WithGeneration } from "@fern-api/csharp-codegen";
+import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
@@ -449,28 +449,185 @@ export class DynamicLiteralMapper extends WithGeneration {
         value: unknown;
         fallbackToDefault?: string;
     }): ast.Literal {
+        const record = this.context.getRecord(value) ?? {};
         const properties = this.context.associateByWireValue({
             parameters: object_.properties,
-            values: this.context.getRecord(value) ?? {}
+            values: record
         });
+
+        const fields = properties.map((property) => {
+            this.context.errors.scope(property.name.wireValue);
+            try {
+                return {
+                    name: this.context.getClassName(property.name.name),
+                    value: this.convert(property)
+                };
+            } finally {
+                this.context.errors.unscope();
+            }
+        });
+
+        // Fill defaults for required properties that are either missing from
+        // the example or whose provided value failed to convert (produced nop).
+        const providedWireValues = new Set(Object.keys(record));
+        for (const property of object_.properties) {
+            const fieldName = this.context.getClassName(property.name.name);
+            if (providedWireValues.has(property.name.wireValue)) {
+                // Value was provided but may have converted to nop().
+                if (this.isRequiredProperty(property.typeReference)) {
+                    const existing = fields.find((f) => f.name === fieldName);
+                    if (existing != null && is.Literal.nop(existing.value)) {
+                        const defaultValue = this.getDefaultLiteralForType(property.typeReference);
+                        if (defaultValue != null) {
+                            existing.value = defaultValue;
+                        }
+                    }
+                }
+                continue;
+            }
+            if (this.isRequiredProperty(property.typeReference)) {
+                const defaultValue = this.getDefaultLiteralForType(property.typeReference);
+                if (defaultValue != null) {
+                    fields.push({
+                        name: fieldName,
+                        value: defaultValue
+                    });
+                }
+            }
+        }
 
         return this.csharp.Literal.class_({
             reference: this.csharp.classReference({
                 origin: object_.declaration,
                 namespace: this.context.getNamespace(object_.declaration.fernFilepath)
             }),
-            fields: properties.map((property) => {
-                this.context.errors.scope(property.name.wireValue);
-                try {
-                    return {
-                        name: this.context.getClassName(property.name.name),
-                        value: this.convert(property)
-                    };
-                } finally {
-                    this.context.errors.unscope();
-                }
-            })
+            fields
         });
+    }
+
+    private isRequiredProperty(typeReference: FernIr.dynamic.TypeReference): boolean {
+        if (this.context.isOptional(typeReference) || this.context.isNullable(typeReference)) {
+            return false;
+        }
+        if (typeReference.type === "list" || typeReference.type === "set" || typeReference.type === "map") {
+            return false;
+        }
+        return true;
+    }
+
+    private getDefaultLiteralForType(
+        typeReference: FernIr.dynamic.TypeReference,
+        visitedTypeIds?: Set<string>
+    ): ast.Literal | undefined {
+        switch (typeReference.type) {
+            case "primitive":
+                return this.getDefaultLiteralForPrimitive(typeReference.value);
+            case "literal":
+                return this.convertLiteral({ literal: typeReference.value, value: typeReference.value.value });
+            case "named": {
+                const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                if (named == null) {
+                    return undefined;
+                }
+                if (named.type === "alias") {
+                    return this.getDefaultLiteralForType(named.typeReference, visitedTypeIds);
+                }
+                if (named.type === "enum" && named.values.length > 0) {
+                    const firstEnumValue = named.values[0];
+                    if (firstEnumValue != null) {
+                        return this.getEnumValue(named, firstEnumValue.wireValue);
+                    }
+                }
+                if (named.type === "undiscriminatedUnion") {
+                    return this.getDefaultLiteralForUndiscriminatedUnion(named, visitedTypeIds);
+                }
+                if (named.type === "object") {
+                    return this.getDefaultLiteralForObject(named, typeReference.value, visitedTypeIds);
+                }
+                return undefined;
+            }
+            default:
+                return undefined;
+        }
+    }
+
+    private getDefaultLiteralForObject(
+        object_: FernIr.dynamic.ObjectType,
+        typeId: string,
+        visitedTypeIds?: Set<string>
+    ): ast.Literal | undefined {
+        const visited = visitedTypeIds ?? new Set<string>();
+        if (visited.has(typeId)) {
+            return undefined;
+        }
+        visited.add(typeId);
+
+        const fields: { name: string; value: ast.Literal }[] = [];
+        for (const property of object_.properties) {
+            if (this.isRequiredProperty(property.typeReference)) {
+                const defaultValue = this.getDefaultLiteralForType(property.typeReference, visited);
+                if (defaultValue != null) {
+                    fields.push({
+                        name: this.context.getClassName(property.name.name),
+                        value: defaultValue
+                    });
+                }
+            }
+        }
+
+        visited.delete(typeId);
+
+        return this.csharp.Literal.class_({
+            reference: this.csharp.classReference({
+                origin: object_.declaration,
+                namespace: this.context.getNamespace(object_.declaration.fernFilepath)
+            }),
+            fields
+        });
+    }
+
+    private getDefaultLiteralForUndiscriminatedUnion(
+        union: FernIr.dynamic.UndiscriminatedUnionType,
+        visitedTypeIds?: Set<string>
+    ): ast.Literal | undefined {
+        for (const typeReference of union.types) {
+            const defaultValue = this.getDefaultLiteralForType(typeReference, visitedTypeIds);
+            if (defaultValue != null) {
+                return defaultValue;
+            }
+        }
+        return undefined;
+    }
+
+    private getDefaultLiteralForPrimitive(primitive: FernIr.dynamic.PrimitiveTypeV1): ast.Literal {
+        switch (primitive) {
+            case "INTEGER":
+                return this.csharp.Literal.integer(0);
+            case "LONG":
+                return this.csharp.Literal.long(0);
+            case "UINT":
+                return this.csharp.Literal.uint(0);
+            case "UINT_64":
+                return this.csharp.Literal.ulong(0);
+            case "FLOAT":
+                return this.csharp.Literal.float(0);
+            case "DOUBLE":
+                return this.csharp.Literal.double(0);
+            case "BOOLEAN":
+                return this.csharp.Literal.boolean(false);
+            case "STRING":
+            case "UUID":
+            case "BASE_64":
+            case "BIG_INTEGER":
+                return this.csharp.Literal.string("");
+            case "DATE":
+                return this.csharp.Literal.date("0001-01-01");
+            case "DATE_TIME":
+            case "DATE_TIME_RFC_2822":
+                return this.csharp.Literal.datetime("0001-01-01T00:00:00.000Z");
+            default:
+                assertNever(primitive);
+        }
     }
 
     private convertUndiscriminatedUnion({

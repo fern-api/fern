@@ -293,18 +293,18 @@ func (t *Type) String() string {
 }
 
 type Name struct {
-	Id    string `json:"id" url:"id"`
+	ID    string `json:"id" url:"id"`
 	Value string `json:"value" url:"value"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (n *Name) GetId() string {
+func (n *Name) GetID() string {
 	if n == nil {
 		return ""
 	}
-	return n.Id
+	return n.ID
 }
 
 func (n *Name) GetValue() string {

@@ -1,3 +1,4 @@
+import { NameInput } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { FileGenerator, GoFile } from "@fern-api/go-base";
@@ -235,7 +236,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             }
             this.writeEnvConditional({
                 writer,
-                propertyReference: this.getOptionsPropertyReference(header.name.name),
+                propertyReference: this.getOptionsPropertyReference(header.name),
                 env: header.env
             });
         }
@@ -315,7 +316,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         if (scheme.headerEnvVar != null) {
             this.writeEnvConditional({
                 writer,
-                propertyReference: this.getOptionsPropertyReference(scheme.name.name),
+                propertyReference: this.getOptionsPropertyReference(scheme.name),
                 env: scheme.headerEnvVar
             });
         }
@@ -719,7 +720,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 let accessTokenField = "AccessToken";
                 const firstAuthHeader = authHeaders[0];
                 if (firstAuthHeader != null && firstAuthHeader.responseProperty != null) {
-                    accessTokenField = this.context.getFieldName(firstAuthHeader.responseProperty.property.name.name);
+                    accessTokenField = this.context.getFieldName(firstAuthHeader.responseProperty.property.name);
                 }
 
                 // Check for empty access token
@@ -742,7 +743,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 // Handle ExpiresIn with fallback to default
                 const expiryProperty = inferredScheme.tokenEndpoint.expiryProperty;
                 if (expiryProperty != null) {
-                    const expiryField = this.context.getFieldName(expiryProperty.property.name.name);
+                    const expiryField = this.context.getFieldName(expiryProperty.property.name);
                     const expiryIsOptional = this.isResponsePropertyOptional(expiryProperty);
 
                     w.writeLine("expiresIn := core.DefaultExpirySeconds");
@@ -816,7 +817,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         const headerEnvVars = new Map<string, string>();
         for (const header of tokenEndpoint.headers) {
             if (header.env != null) {
-                headerEnvVars.set(this.context.getFieldName(header.name.name), header.env);
+                headerEnvVars.set(this.context.getFieldName(header.name), header.env);
             }
         }
 
@@ -867,7 +868,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
      */
     private resolveTokenEndpointBodyProperties(
         tokenEndpoint: FernIr.HttpEndpoint
-    ): Array<{ name: FernIr.NameAndWireValue; valueType: FernIr.TypeReference }> {
+    ): Array<{ name: FernIr.NameAndWireValueOrString; valueType: FernIr.TypeReference }> {
         return resolveTokenEndpointBodyProperties(tokenEndpoint, this.context.ir.types);
     }
 
@@ -892,8 +893,11 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         writer.writeLine("}");
     }
 
-    private getOptionsPropertyReference(name: FernIr.Name): go.Selector {
-        return go.selector({ on: go.codeblock("options"), selector: go.codeblock(this.context.getFieldName(name)) });
+    private getOptionsPropertyReference(name: NameInput): go.Selector {
+        return go.selector({
+            on: go.codeblock("options"),
+            selector: go.codeblock(this.context.getFieldName(name))
+        });
     }
 
     private instantiateSubClient({ subpackage }: { subpackage: FernIr.Subpackage }): go.TypeInstantiation {

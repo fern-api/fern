@@ -2011,6 +2011,62 @@ $client->endpoints->params->uploadWithPath(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;getWithBooleanPath($param) -> ?string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with boolean path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->params->getWithBooleanPath(
+    true,
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$param:** `bool` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;endpoints-&gt;params-&gt;getWithPathAndErrors($param) -> ?string</code></summary>
 <dl>
 <dd>

@@ -20,21 +20,6 @@ describe("PutClient", () => {
         const response = await client.endpoints.put.add({
             id: "id",
         });
-        expect(response).toEqual({
-            errors: [
-                {
-                    category: "API_ERROR",
-                    code: "INTERNAL_SERVER_ERROR",
-                    detail: "detail",
-                    field: "field",
-                },
-                {
-                    category: "API_ERROR",
-                    code: "INTERNAL_SERVER_ERROR",
-                    detail: "detail",
-                    field: "field",
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

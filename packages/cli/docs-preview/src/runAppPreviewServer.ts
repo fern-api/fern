@@ -6,8 +6,10 @@ import { runExeca } from "@fern-api/logging-execa";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
+import { execSync } from "child_process";
 import cors from "cors";
 import express from "express";
+import fs from "fs";
 import { readFile, rm } from "fs/promises";
 import http, { type IncomingMessage } from "http";
 import path from "path";
@@ -362,6 +364,99 @@ class SnippetDependencyTracker {
     }
 }
 
+/**
+ * Resolves the path to the Fern Docs cache directory within the standalone server bundle.
+ * The standalone server runs from `<bundleRoot>/standalone/packages/fern-docs/bundle/server.js`,
+ * so its runtime cache is written to `<bundleRoot>/standalone/packages/fern-docs/bundle/.next/cache/`.
+ */
+function getFernDocsCachePath(bundleRoot: string): string {
+    return path.join(bundleRoot, "standalone/packages/fern-docs/bundle/.next/cache");
+}
+
+/**
+ * Removes the Fern Docs cache directory.
+ */
+async function cleanFernDocsCache(bundleRoot: string, context: TaskContext): Promise<void> {
+    const cachePath = getFernDocsCachePath(bundleRoot);
+    try {
+        const cacheExists = await doesPathExist(AbsoluteFilePath.of(cachePath));
+        if (cacheExists) {
+            context.logger.debug(`Cleaning Fern Docs cache at ${cachePath}`);
+            await rm(cachePath, { recursive: true });
+            context.logger.debug("Fern Docs cache cleaned successfully");
+        } else {
+            context.logger.debug("No Fern Docs cache to clean");
+        }
+    } catch (err) {
+        context.logger.debug(`Failed to clean Fern Docs cache: ${err}`);
+    }
+}
+
+/**
+ * Synchronous version of cleanFernDocsCache for use in signal handlers
+ * where async operations cannot be awaited.
+ */
+function cleanFernDocsCacheSync(bundleRoot: string, context: TaskContext): void {
+    const cachePath = getFernDocsCachePath(bundleRoot);
+    try {
+        if (fs.existsSync(cachePath)) {
+            context.logger.debug(`Cleaning Fern Docs cache at ${cachePath}`);
+            fs.rmSync(cachePath, { recursive: true, maxRetries: 5, retryDelay: 500 });
+            context.logger.debug("Fern Docs cache cleaned successfully");
+        }
+    } catch (err) {
+        context.logger.debug(`Failed to clean Fern Docs cache: ${err}`);
+    }
+}
+
+/**
+ * Finds and kills any processes still listening on the given port.
+ * This is a best-effort fallback to clean up zombie Next.js worker
+ * processes that may survive after the main server process is killed.
+ */
+function killProcessesOnPort(targetPort: number, context: TaskContext): void {
+    context.logger.debug(`Killing any leftover processes on port ${targetPort}`);
+    const isWindows = process.platform === "win32";
+    const command = isWindows
+        ? `netstat -ano | findstr :${targetPort} | findstr LISTENING`
+        : `lsof -ti tcp:${targetPort}`;
+
+    try {
+        const output = execSync(command, { encoding: "utf-8", timeout: 5000 });
+
+        let pids: string[];
+        if (isWindows) {
+            pids = output
+                .trim()
+                .split("\n")
+                .map((line) => line.trim().split(/\s+/).pop() ?? "")
+                .filter((pid) => pid.length > 0 && pid !== String(process.pid));
+            pids = [...new Set(pids)];
+        } else {
+            pids = output
+                .trim()
+                .split("\n")
+                .map((pid) => pid.trim())
+                .filter((pid) => pid.length > 0 && pid !== String(process.pid));
+        }
+
+        for (const pid of pids) {
+            try {
+                context.logger.debug(`Killing leftover process ${pid} on port ${targetPort}`);
+                if (isWindows) {
+                    execSync(`taskkill /F /PID ${pid}`, { timeout: 5000 });
+                } else {
+                    process.kill(Number(pid), "SIGKILL");
+                }
+            } catch {
+                // Process may have already exited
+            }
+        }
+    } catch {
+        // Command returns non-zero when no matches are found — nothing to kill
+    }
+}
+
 export async function runAppPreviewServer({
     initialProject,
     reloadProject,
@@ -445,7 +540,10 @@ export async function runAppPreviewServer({
 
     // Initialize the debug logger for metrics collection
     const debugLogger = new DebugLogger();
-    await debugLogger.initialize();
+    await debugLogger.initialize({
+        debug: (msg) => context.logger.debug(msg),
+        info: (msg) => context.logger.info(msg)
+    });
     const debugLogPath = debugLogger.getLogFilePath();
     if (debugLogPath) {
         context.logger.info(chalk.dim(`Debug log: ${debugLogPath}`));
@@ -735,6 +833,9 @@ export async function runAppPreviewServer({
         });
     }
 
+    // Clean Fern Docs cache from previous runs before starting the server
+    await cleanFernDocsCache(bundleRoot, context);
+
     // Now start Next.js after backend is ready
     const env = {
         ...process.env,
@@ -750,8 +851,9 @@ export async function runAppPreviewServer({
         NODE_OPTIONS: "--max-old-space-size=8096 --enable-source-maps"
     };
 
-    // Track the current server process
+    // Track the current server process and the port it actually bound to
     let serverProcess: ReturnType<typeof runExeca> | null = null;
+    let actualPort: number = port;
 
     // Function to start the Next.js server
     const startNextJsServer = (): Promise<void> => {
@@ -764,6 +866,12 @@ export async function runAppPreviewServer({
             const checkReady = (data: Buffer) => {
                 const output = data.toString();
                 context.logger.debug(`[Next.js] ${output}`);
+
+                const portMatch = output.match(/localhost:(\d+)/);
+                if (portMatch != null) {
+                    actualPort = Number(portMatch[1]);
+                }
+
                 if (output.includes("Ready in") || output.includes("✓ Ready")) {
                     resolve();
                 }
@@ -877,7 +985,13 @@ export async function runAppPreviewServer({
         }, RELOAD_DEBOUNCE_MS);
     });
 
+    let cleanedUp = false;
     const cleanup = () => {
+        if (cleanedUp) {
+            return;
+        }
+        cleanedUp = true;
+
         if (serverProcess != null && !serverProcess.killed) {
             context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
             try {
@@ -896,6 +1010,12 @@ export async function runAppPreviewServer({
                 context.logger.error(`Failed to kill server process: ${err}`);
             }
         }
+
+        killProcessesOnPort(actualPort, context);
+
+        // Clean Fern Docs cache on shutdown (sync since cleanup runs in signal handlers)
+        // Uses maxRetries to handle ENOTEMPTY if the server process is still writing
+        cleanFernDocsCacheSync(bundleRoot, context);
 
         context.logger.debug("Cleaning up WebSocket connections...");
         for (const [ws, metadata] of connections) {

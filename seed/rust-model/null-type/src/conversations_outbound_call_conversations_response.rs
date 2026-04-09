@@ -1,11 +1,12 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct OutboundCallConversationsResponse {
     /// Always null when dry_run is true.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub conversation_id: Option<serde_json::Value>,
     /// Always true for this response.
+    #[serde(default)]
     pub dry_run: bool,
 }
 

@@ -15,7 +15,7 @@ export class TtyAwareLogger {
     private tasks: Task[] = [];
     private lastPaint = "";
     private spinner = ora({ spinner: "dots11" });
-    private interval: NodeJS.Timer | undefined;
+    private interval: ReturnType<typeof setInterval> | undefined;
 
     constructor(
         private readonly stdout: NodeJS.WriteStream,

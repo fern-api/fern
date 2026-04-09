@@ -162,6 +162,7 @@
                       "name": "Item",
                       "typeId": "Item",
                       "inline": false,
+                      "displayName": "Item",
                       "type": "named"
                     },
                     "type": "list"
@@ -189,7 +190,8 @@
               "allParts": [],
               "packagePath": []
             },
-            "name": "PaginatedList"
+            "name": "PaginatedList",
+            "displayName": "PaginatedList"
           }
         ],
         "extendedProperties": [],
@@ -232,6 +234,7 @@
                       "name": "Item",
                       "typeId": "Item",
                       "inline": false,
+                      "displayName": "Item",
                       "type": "named"
                     },
                     "type": "list"
@@ -259,7 +262,8 @@
               "allParts": [],
               "packagePath": []
             },
-            "name": "PaginatedList"
+            "name": "PaginatedList",
+            "displayName": "PaginatedList"
           }
         ],
         "extendedProperties": [],
@@ -329,7 +333,8 @@
               "allParts": [],
               "packagePath": []
             },
-            "name": "RuleExecutionContext"
+            "name": "RuleExecutionContext",
+            "displayName": "RuleExecutionContext"
           }
         ],
         "extendedProperties": [],

@@ -329,6 +329,7 @@
                 "name": "DeprecatedParam",
                 "typeId": "DeprecatedParam",
                 "inline": false,
+                "displayName": "DeprecatedParam",
                 "type": "named"
               },
               "location": "ENDPOINT",
@@ -431,6 +432,7 @@
                     "name": "DeprecatedParam",
                     "typeId": "DeprecatedParam",
                     "inline": false,
+                    "displayName": "DeprecatedParam",
                     "type": "named"
                   },
                   "type": "optional"
@@ -544,6 +546,7 @@
                     "name": "DeprecatedParam",
                     "typeId": "DeprecatedParam",
                     "inline": false,
+                    "displayName": "DeprecatedParam",
                     "type": "named"
                   },
                   "type": "optional"
@@ -824,6 +827,7 @@
                 "name": "DeprecatedParam",
                 "typeId": "DeprecatedParam",
                 "inline": false,
+                "displayName": "DeprecatedParam",
                 "type": "named"
               },
               "location": "ENDPOINT",
@@ -875,6 +879,7 @@
                   "name": "WholeDeprecatedSettings",
                   "typeId": "WholeDeprecatedSettings",
                   "inline": false,
+                  "displayName": "WholeDeprecatedSettings",
                   "type": "named"
                 },
                 "docs": "OK",
@@ -937,6 +942,7 @@
                       "name": "WholeDeprecatedSettings",
                       "typeId": "WholeDeprecatedSettings",
                       "inline": false,
+                      "displayName": "WholeDeprecatedSettings",
                       "type": "named"
                     },
                     "docs": "OK",
@@ -1148,6 +1154,7 @@
               "name": "Settings",
               "typeId": "Settings",
               "inline": false,
+              "displayName": "Settings",
               "type": "named"
             },
             "v2Examples": {
@@ -1170,6 +1177,7 @@
                   "name": "Settings",
                   "typeId": "Settings",
                   "inline": false,
+                  "displayName": "Settings",
                   "type": "named"
                 },
                 "v2Examples": {
@@ -1194,6 +1202,7 @@
                   "name": "NotDeprecatedSettings",
                   "typeId": "NotDeprecatedSettings",
                   "inline": false,
+                  "displayName": "NotDeprecatedSettings",
                   "type": "named"
                 },
                 "docs": "OK",
@@ -1252,6 +1261,7 @@
                       "name": "NotDeprecatedSettings",
                       "typeId": "NotDeprecatedSettings",
                       "inline": false,
+                      "displayName": "NotDeprecatedSettings",
                       "type": "named"
                     },
                     "docs": "OK",
@@ -1573,6 +1583,7 @@
                   "name": "NotDeprecatedSettings",
                   "typeId": "NotDeprecatedSettings",
                   "inline": false,
+                  "displayName": "NotDeprecatedSettings",
                   "type": "named"
                 },
                 "docs": "OK",
@@ -1631,6 +1642,7 @@
                       "name": "NotDeprecatedSettings",
                       "typeId": "NotDeprecatedSettings",
                       "inline": false,
+                      "displayName": "NotDeprecatedSettings",
                       "type": "named"
                     },
                     "docs": "OK",
@@ -1881,6 +1893,7 @@
                   "name": "NotDeprecatedSettings",
                   "typeId": "NotDeprecatedSettings",
                   "inline": false,
+                  "displayName": "NotDeprecatedSettings",
                   "type": "named"
                 },
                 "docs": "OK",
@@ -1939,6 +1952,7 @@
                       "name": "NotDeprecatedSettings",
                       "typeId": "NotDeprecatedSettings",
                       "inline": false,
+                      "displayName": "NotDeprecatedSettings",
                       "type": "named"
                     },
                     "docs": "OK",
@@ -2189,6 +2203,7 @@
                   "name": "NotDeprecatedSettings",
                   "typeId": "NotDeprecatedSettings",
                   "inline": false,
+                  "displayName": "NotDeprecatedSettings",
                   "type": "named"
                 },
                 "docs": "OK",
@@ -2247,6 +2262,7 @@
                       "name": "NotDeprecatedSettings",
                       "typeId": "NotDeprecatedSettings",
                       "inline": false,
+                      "displayName": "NotDeprecatedSettings",
                       "type": "named"
                     },
                     "docs": "OK",

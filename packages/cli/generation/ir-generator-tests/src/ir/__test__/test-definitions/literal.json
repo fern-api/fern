@@ -422,6 +422,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [],

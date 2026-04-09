@@ -34,10 +34,7 @@ describe("SeedApiClient", () => {
             },
             tags: ["carnivorous", "tropical"],
         });
-        expect(response).toEqual({
-            id: "plant_123",
-            name: "Venus Flytrap",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("updatePlant", async () => {
@@ -64,10 +61,7 @@ describe("SeedApiClient", () => {
                 },
             },
         });
-        expect(response).toEqual({
-            id: "plant_123",
-            name: "Updated Venus Flytrap",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("createPlantWithSchema", async () => {
@@ -89,9 +83,6 @@ describe("SeedApiClient", () => {
             name: "Sundew",
             species: "Drosera capensis",
         });
-        expect(response).toEqual({
-            id: "id",
-            name: "name",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

@@ -13,10 +13,7 @@ describe("TypesClient", () => {
         server.mockEndpoint().get("/time/date-example").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.types.get("date-example");
-        expect(response).toEqual({
-            type: "date",
-            value: "1994-01-01",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get (2)", async () => {
@@ -34,10 +31,7 @@ describe("TypesClient", () => {
             .build();
 
         const response = await client.types.get("datetime-example");
-        expect(response).toEqual({
-            type: "datetime",
-            value: "1994-01-01T01:01:01Z",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("update (1)", async () => {
@@ -59,7 +53,7 @@ describe("TypesClient", () => {
             type: "date",
             value: "1994-01-01",
         });
-        expect(response).toEqual(true);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("update (2)", async () => {
@@ -81,6 +75,6 @@ describe("TypesClient", () => {
             type: "datetime",
             value: "1994-01-01T01:01:01Z",
         });
-        expect(response).toEqual(true);
+        expect(response).toEqual(rawResponseBody);
     });
 });

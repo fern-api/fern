@@ -200,6 +200,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         if (this.customConfig.use_api_name_in_package) {
             return [cleanOrganizationName, this.getApiName()];
         }
+        if (this.customConfig.package_path != null) {
+            const pathSegments = this.customConfig.package_path.replace(/\//g, ".").split(".");
+            return [cleanOrganizationName, ...pathSegments];
+        }
         return [cleanOrganizationName];
     }
 

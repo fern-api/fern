@@ -177,12 +177,12 @@ func (c *Client) WithInlineType(
 	return response.Body, nil
 }
 
-func (c *Client) WithJsonProperty(
+func (c *Client) WithJSONProperty(
 	ctx context.Context,
-	request *fern.WithJsonPropertyRequest,
+	request *fern.WithJSONPropertyRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.WithJsonProperty(
+	response, err := c.WithRawResponse.WithJSONProperty(
 		ctx,
 		request,
 		opts...,

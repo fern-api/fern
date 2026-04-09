@@ -384,7 +384,9 @@ export class DynamicTypeLiteralMapper {
             }
         }
 
-        return result;
+        // Filter out nop entries (e.g. literal types that produce no output) to avoid
+        // generating invalid syntax like `strategy=,`.
+        return result.filter((entry) => !python.TypeInstantiation.isNop(entry.value));
     }
 
     private convertObject({
@@ -483,7 +485,7 @@ export class DynamicTypeLiteralMapper {
             const errorsBefore = this.context.errors.size();
             try {
                 const instantiation = this.convert({ typeReference, value });
-                if (python.TypeInstantiation.isNop(instantiation)) {
+                if (python.TypeInstantiation.isNop(instantiation) || this.context.errors.size() > errorsBefore) {
                     this.context.errors.truncate(errorsBefore);
                     continue;
                 }

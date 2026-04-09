@@ -11,13 +11,13 @@ import (
 )
 
 var (
-	nodeFieldId       = big.NewInt(1 << 0)
+	nodeFieldID       = big.NewInt(1 << 0)
 	nodeFieldLabel    = big.NewInt(1 << 1)
 	nodeFieldMetadata = big.NewInt(1 << 2)
 )
 
 type Node struct {
-	Id       string            `json:"id" url:"id"`
+	ID       string            `json:"id" url:"id"`
 	Label    *string           `json:"label,omitempty" url:"label,omitempty"`
 	Metadata *commons.Metadata `json:"metadata,omitempty" url:"metadata,omitempty"`
 
@@ -28,11 +28,11 @@ type Node struct {
 	rawJSON         json.RawMessage
 }
 
-func (n *Node) GetId() string {
+func (n *Node) GetID() string {
 	if n == nil {
 		return ""
 	}
-	return n.Id
+	return n.ID
 }
 
 func (n *Node) GetLabel() *string {
@@ -63,11 +63,11 @@ func (n *Node) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (n *Node) SetId(id string) {
-	n.Id = id
-	n.require(nodeFieldId)
+func (n *Node) SetID(id string) {
+	n.ID = id
+	n.require(nodeFieldID)
 }
 
 // SetLabel sets the Label field and marks it as non-optional;

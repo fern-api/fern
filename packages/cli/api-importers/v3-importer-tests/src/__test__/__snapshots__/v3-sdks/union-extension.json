@@ -25,6 +25,7 @@
               "name": "IbanField",
               "typeId": "IbanField",
               "inline": false,
+              "displayName": "IbanField",
               "type": "named"
             }
           },
@@ -37,6 +38,7 @@
               "name": "OtherField",
               "typeId": "OtherField",
               "inline": false,
+              "displayName": "OtherField",
               "type": "named"
             }
           }
@@ -139,6 +141,7 @@
                       "name": "Other",
                       "typeId": "Other",
                       "inline": false,
+                      "displayName": "Other",
                       "type": "named"
                     },
                     "type": "nullable"
@@ -298,7 +301,8 @@
               "allParts": [],
               "packagePath": []
             },
-            "name": "PartyAccount"
+            "name": "PartyAccount",
+            "displayName": "PartyAccount"
           }
         ],
         "extendedProperties": [],

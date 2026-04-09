@@ -21,13 +21,7 @@ describe("PlantsClient", () => {
         server.mockEndpoint().get("/plants").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.plants.list();
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-                species: "species",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get", async () => {
@@ -48,10 +42,6 @@ describe("PlantsClient", () => {
         const response = await client.plants.get({
             plantId: "plantId",
         });
-        expect(response).toEqual({
-            id: "id",
-            name: "name",
-            species: "species",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

@@ -7,11 +7,11 @@ import (
 )
 
 var (
-	getFileRequestFieldXFileApiVersion = big.NewInt(1 << 0)
+	getFileRequestFieldXFileAPIVersion = big.NewInt(1 << 0)
 )
 
 type GetFileRequest struct {
-	XFileApiVersion string `json:"-" url:"-"`
+	XFileAPIVersion string `json:"-" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -24,11 +24,11 @@ func (g *GetFileRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetXFileApiVersion sets the XFileApiVersion field and marks it as non-optional;
+// SetXFileAPIVersion sets the XFileAPIVersion field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetFileRequest) SetXFileApiVersion(xFileApiVersion string) {
-	g.XFileApiVersion = xFileApiVersion
-	g.require(getFileRequestFieldXFileApiVersion)
+func (g *GetFileRequest) SetXFileAPIVersion(xFileAPIVersion string) {
+	g.XFileAPIVersion = xFileAPIVersion
+	g.require(getFileRequestFieldXFileAPIVersion)
 }
 
 type Filename = string

@@ -1,0 +1,317 @@
+{
+  "title": "Discriminant Default Value",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "createSettings",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateSettingsRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateSettingsRequest",
+          "schema": "Settings",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CreateSettingsResponse",
+          "schema": "Settings",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/settings",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "provider": {
+                  "value": {
+                    "value": {
+                      "type": {
+                        "value": "deepgram",
+                        "type": "enum"
+                      },
+                      "model": {
+                        "value": {
+                          "value": "model",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "language": {
+                        "value": {
+                          "value": "language",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "version": {
+                        "value": {
+                          "value": "v1",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "discriminated"
+                  },
+                  "type": "oneOf"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Settings": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "settingsProvider",
+            "key": "provider",
+            "schema": {
+              "generatedName": "SettingsProvider",
+              "value": {
+                "generatedName": "SettingsProvider",
+                "schema": "ListenProvider",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Settings",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ListenProvider": {
+        "value": {
+          "commonProperties": [],
+          "discriminantProperty": "version",
+          "discriminatorContext": "data",
+          "defaultDiscriminantValue": "v1",
+          "generatedName": "ListenProvider",
+          "schemas": {
+            "v1": {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "listenProviderV1Type",
+                  "key": "type",
+                  "schema": {
+                    "description": "Provider type",
+                    "generatedName": "ListenProviderV1Type",
+                    "values": [
+                      {
+                        "generatedName": "deepgram",
+                        "value": "deepgram",
+                        "casing": {}
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "enum"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "listenProviderV1Model",
+                  "key": "model",
+                  "schema": {
+                    "generatedName": "ListenProviderV1Model",
+                    "description": "Model name",
+                    "value": {
+                      "description": "Model name",
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "ListenProviderV1Model",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "listenProviderV1Language",
+                  "key": "language",
+                  "schema": {
+                    "generatedName": "ListenProviderV1Language",
+                    "description": "Language code",
+                    "value": {
+                      "description": "Language code",
+                      "schema": {
+                        "default": "en-US",
+                        "type": "string"
+                      },
+                      "generatedName": "ListenProviderV1Language",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "ListenProviderV1",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            "v2": {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "listenProviderV2Type",
+                  "key": "type",
+                  "schema": {
+                    "description": "Provider type",
+                    "generatedName": "ListenProviderV2Type",
+                    "values": [
+                      {
+                        "generatedName": "deepgram",
+                        "value": "deepgram",
+                        "casing": {}
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "enum"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "listenProviderV2Model",
+                  "key": "model",
+                  "schema": {
+                    "description": "Model name",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "ListenProviderV2Model",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "ListenProviderV2",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            }
+          },
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "discriminated"
+        },
+        "type": "oneOf"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
