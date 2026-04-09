@@ -415,7 +415,7 @@ module Seed
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "",
+          path: "/form-encoded",
           body: body,
           request_options: request_options
         )

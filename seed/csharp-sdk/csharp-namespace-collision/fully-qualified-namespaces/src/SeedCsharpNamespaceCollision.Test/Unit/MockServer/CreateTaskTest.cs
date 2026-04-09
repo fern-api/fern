@@ -29,7 +29,7 @@ public class CreateTaskTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/users")
+                    .WithPath("/root-users/tasks")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

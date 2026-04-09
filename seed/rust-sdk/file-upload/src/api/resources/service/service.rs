@@ -129,7 +129,7 @@ impl ServiceClient {
         self.http_client
             .execute_multipart_request(
                 Method::POST,
-                "",
+                "/form-encoded",
                 request.clone().to_multipart(),
                 None,
                 options,

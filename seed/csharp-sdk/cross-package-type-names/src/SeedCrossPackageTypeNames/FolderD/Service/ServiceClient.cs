@@ -29,7 +29,7 @@ public partial class ServiceClient : IServiceClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "",
+                    Path = "/folder-d",
                     Headers = _headers,
                     Options = options,
                 },

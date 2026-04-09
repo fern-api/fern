@@ -60,7 +60,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/params/path/#{URI.encode_uri_component(params[:param].to_s)}",
+            path: "/params/inline-path/#{URI.encode_uri_component(params[:param].to_s)}",
             request_options: request_options
           )
           begin
@@ -139,7 +139,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/params",
+            path: "/params/allow-multiple",
             query: query_params,
             request_options: request_options
           )
@@ -217,7 +217,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/params/path-query/#{URI.encode_uri_component(params[:param].to_s)}",
+            path: "/params/inline-path-query/#{URI.encode_uri_component(params[:param].to_s)}",
             query: query_params,
             request_options: request_options
           )
@@ -286,7 +286,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "PUT",
-            path: "/params/path/#{URI.encode_uri_component(params[:param].to_s)}",
+            path: "/params/inline-path/#{URI.encode_uri_component(params[:param].to_s)}",
             body: body_params,
             request_options: request_options
           )
@@ -385,7 +385,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/params/path/#{URI.encode_uri_component(params[:param].to_s)}",
+            path: "/params/path-with-errors/#{URI.encode_uri_component(params[:param].to_s)}",
             request_options: request_options
           )
           begin

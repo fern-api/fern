@@ -50,7 +50,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/inline-users",
+                    Path = "/inline-users/cursor",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -135,7 +135,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/inline-users",
+                    Path = "/inline-users/mixed-type-cursor",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -216,7 +216,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/inline-users",
+                    Path = "/inline-users/body-cursor",
                     Body = request,
                     Headers = _headers,
                     Options = options,
@@ -304,7 +304,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/inline-users",
+                    Path = "/inline-users/offset",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -392,7 +392,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/inline-users",
+                    Path = "/inline-users/double-offset",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -473,7 +473,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/inline-users",
+                    Path = "/inline-users/body-offset",
                     Body = request,
                     Headers = _headers,
                     Options = options,
@@ -560,7 +560,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/inline-users",
+                    Path = "/inline-users/offset-step",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -651,7 +651,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/inline-users",
+                    Path = "/inline-users/offset-has-next-page",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -736,7 +736,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/inline-users",
+                    Path = "/inline-users/extended",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -823,7 +823,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/inline-users",
+                    Path = "/inline-users/extended-optional",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -906,7 +906,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/inline-users",
+                    Path = "/inline-users/usernames",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -987,7 +987,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/inline-users",
+                    Path = "/inline-users/global-config",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,

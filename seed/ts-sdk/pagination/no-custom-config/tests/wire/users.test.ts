@@ -20,7 +20,7 @@ describe("UsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/users")
+            .get("/users/cursor")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -54,7 +54,7 @@ describe("UsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .post("/users")
+            .post("/users/mixed-type-cursor")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -87,7 +87,7 @@ describe("UsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .post("/users")
+            .post("/users/body-cursor")
             .jsonBody(rawRequestBody, { ignoredFields: ["pagination.cursor"] })
             .respondWith()
             .statusCode(200)
@@ -156,7 +156,7 @@ describe("UsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/users")
+            .get("/users/offset")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -192,7 +192,7 @@ describe("UsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/users")
+            .get("/users/double-offset")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -228,7 +228,7 @@ describe("UsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .post("/users")
+            .post("/users/body-offset")
             .jsonBody(rawRequestBody, { ignoredFields: ["pagination.page"] })
             .respondWith()
             .statusCode(200)
@@ -264,7 +264,7 @@ describe("UsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/users")
+            .get("/users/offset-step")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -299,7 +299,7 @@ describe("UsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/users")
+            .get("/users/offset-has-next-page")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -332,7 +332,13 @@ describe("UsersClient", () => {
             ],
         };
 
-        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server
+            .mockEndpoint()
+            .get("/users/offset-has-next-page")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const expected = rawResponseBody;
         const page = await client.users.listWithOffsetPaginationHasNextPage({
@@ -361,7 +367,7 @@ describe("UsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/users")
+            .get("/users/extended")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -395,7 +401,7 @@ describe("UsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/users")
+            .get("/users/extended-optional")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -420,7 +426,7 @@ describe("UsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/users")
+            .get("/users/usernames")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -445,7 +451,7 @@ describe("UsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/users")
+            .get("/users/usernames-optional")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -470,7 +476,7 @@ describe("UsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/users")
+            .get("/users/global-config")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)

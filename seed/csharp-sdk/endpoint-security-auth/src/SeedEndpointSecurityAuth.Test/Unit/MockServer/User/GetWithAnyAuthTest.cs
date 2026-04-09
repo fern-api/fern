@@ -25,7 +25,7 @@ public class GetWithAnyAuthTest : BaseMockServerTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingGet())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users/any").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

@@ -97,7 +97,7 @@ public partial class AuthClient : IAuthClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/token",
+                    Path = "/token/refresh",
                     Body = request,
                     Headers = _headers,
                     Options = options,

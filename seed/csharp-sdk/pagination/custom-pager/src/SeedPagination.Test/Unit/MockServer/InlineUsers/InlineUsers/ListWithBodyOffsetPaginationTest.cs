@@ -50,7 +50,7 @@ public class ListWithBodyOffsetPaginationTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/inline-users")
+                    .WithPath("/inline-users/body-offset")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

@@ -67,7 +67,7 @@ describe("AuthClient", () => {
 
         server
             .mockEndpoint()
-            .post("/token")
+            .post("/token/refresh")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)

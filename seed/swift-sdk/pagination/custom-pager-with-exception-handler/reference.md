@@ -246,7 +246,9 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination()
+    _ = try await client.inlineUsers.inlineUsers.listWithBodyCursorPagination(request: .init(pagination: WithCursor(
+        cursor: "cursor"
+    )))
 }
 
 try await main()
@@ -303,7 +305,7 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(
+    _ = try await client.inlineUsers.inlineUsers.listWithOffsetPagination(
         page: 1,
         perPage: 1,
         order: .asc,
@@ -392,7 +394,7 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(
+    _ = try await client.inlineUsers.inlineUsers.listWithDoubleOffsetPagination(
         page: 1.1,
         perPage: 1.1,
         order: .asc,
@@ -481,7 +483,9 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination()
+    _ = try await client.inlineUsers.inlineUsers.listWithBodyOffsetPagination(request: .init(pagination: WithPage(
+        page: 1
+    )))
 }
 
 try await main()
@@ -538,8 +542,9 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(
+    _ = try await client.inlineUsers.inlineUsers.listWithOffsetStepPagination(
         page: 1,
+        limit: 1,
         order: .asc
     )
 }
@@ -618,8 +623,9 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(
+    _ = try await client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextPage(
         page: 1,
+        limit: 1,
         order: .asc
     )
 }
@@ -698,7 +704,7 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination()
+    _ = try await client.inlineUsers.inlineUsers.listWithExtendedResults(cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
 }
 
 try await main()
@@ -755,7 +761,7 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination()
+    _ = try await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData(cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
 }
 
 try await main()
@@ -812,7 +818,7 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(startingAfter: "starting_after")
+    _ = try await client.inlineUsers.inlineUsers.listUsernames(startingAfter: "starting_after")
 }
 
 try await main()
@@ -872,7 +878,7 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination()
+    _ = try await client.inlineUsers.inlineUsers.listWithGlobalConfig(offset: 1)
 }
 
 try await main()
@@ -1076,7 +1082,9 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.users.listWithMixedTypeCursorPagination()
+    _ = try await client.users.listWithBodyCursorPagination(request: .init(pagination: WithCursorType(
+        cursor: "cursor"
+    )))
 }
 
 try await main()
@@ -1209,7 +1217,7 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination(
+    _ = try await client.users.listWithOffsetPagination(
         page: 1,
         perPage: 1,
         order: .asc,
@@ -1298,7 +1306,7 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination(
+    _ = try await client.users.listWithDoubleOffsetPagination(
         page: 1.1,
         perPage: 1.1,
         order: .asc,
@@ -1387,7 +1395,9 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.users.listWithMixedTypeCursorPagination()
+    _ = try await client.users.listWithBodyOffsetPagination(request: .init(pagination: WithPageType(
+        page: 1
+    )))
 }
 
 try await main()
@@ -1444,8 +1454,9 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination(
+    _ = try await client.users.listWithOffsetStepPagination(
         page: 1,
+        limit: 1,
         order: .asc
     )
 }
@@ -1524,8 +1535,9 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination(
+    _ = try await client.users.listWithOffsetPaginationHasNextPage(
         page: 1,
+        limit: 3,
         order: .asc
     )
 }
@@ -1604,7 +1616,7 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination()
+    _ = try await client.users.listWithExtendedResults(cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
 }
 
 try await main()
@@ -1661,7 +1673,7 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination()
+    _ = try await client.users.listWithExtendedResultsAndOptionalData(cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
 }
 
 try await main()
@@ -1718,7 +1730,7 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination(startingAfter: "starting_after")
+    _ = try await client.users.listUsernames(startingAfter: "starting_after")
 }
 
 try await main()
@@ -1778,7 +1790,7 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination(startingAfter: "starting_after")
+    _ = try await client.users.listUsernamesWithOptionalResponse(startingAfter: "starting_after")
 }
 
 try await main()
@@ -1838,7 +1850,7 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination()
+    _ = try await client.users.listWithGlobalConfig(offset: 1)
 }
 
 try await main()

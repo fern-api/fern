@@ -17,7 +17,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/inline-users",
+                "path": "/inline-users/cursor",
                 "method": "GET",
                 "identifier_override": "endpoint_inline-users/inline-users.listWithCursorPagination"
             },
@@ -30,7 +30,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/inline-users",
+                "path": "/inline-users/mixed-type-cursor",
                 "method": "POST",
                 "identifier_override": "endpoint_inline-users/inline-users.listWithMixedTypeCursorPagination"
             },
@@ -43,7 +43,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/inline-users",
+                "path": "/inline-users/body-cursor",
                 "method": "POST",
                 "identifier_override": "endpoint_inline-users/inline-users.listWithBodyCursorPagination"
             },
@@ -56,7 +56,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/inline-users",
+                "path": "/inline-users/offset",
                 "method": "GET",
                 "identifier_override": "endpoint_inline-users/inline-users.listWithOffsetPagination"
             },
@@ -69,7 +69,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/inline-users",
+                "path": "/inline-users/double-offset",
                 "method": "GET",
                 "identifier_override": "endpoint_inline-users/inline-users.listWithDoubleOffsetPagination"
             },
@@ -82,7 +82,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/inline-users",
+                "path": "/inline-users/body-offset",
                 "method": "POST",
                 "identifier_override": "endpoint_inline-users/inline-users.listWithBodyOffsetPagination"
             },
@@ -95,7 +95,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/inline-users",
+                "path": "/inline-users/offset-step",
                 "method": "GET",
                 "identifier_override": "endpoint_inline-users/inline-users.listWithOffsetStepPagination"
             },
@@ -108,7 +108,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/inline-users",
+                "path": "/inline-users/offset-has-next-page",
                 "method": "GET",
                 "identifier_override": "endpoint_inline-users/inline-users.listWithOffsetPaginationHasNextPage"
             },
@@ -121,7 +121,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/inline-users",
+                "path": "/inline-users/extended",
                 "method": "GET",
                 "identifier_override": "endpoint_inline-users/inline-users.listWithExtendedResults"
             },
@@ -134,7 +134,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/inline-users",
+                "path": "/inline-users/extended-optional",
                 "method": "GET",
                 "identifier_override": "endpoint_inline-users/inline-users.listWithExtendedResultsAndOptionalData"
             },
@@ -147,7 +147,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/inline-users",
+                "path": "/inline-users/usernames",
                 "method": "GET",
                 "identifier_override": "endpoint_inline-users/inline-users.listUsernames"
             },
@@ -160,7 +160,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/inline-users",
+                "path": "/inline-users/global-config",
                 "method": "GET",
                 "identifier_override": "endpoint_inline-users/inline-users.listWithGlobalConfig"
             },
@@ -173,7 +173,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/cursor",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listWithCursorPagination"
             },
@@ -186,7 +186,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/mixed-type-cursor",
                 "method": "POST",
                 "identifier_override": "endpoint_users.listWithMixedTypeCursorPagination"
             },
@@ -199,7 +199,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/body-cursor",
                 "method": "POST",
                 "identifier_override": "endpoint_users.listWithBodyCursorPagination"
             },
@@ -225,7 +225,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/offset",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listWithOffsetPagination"
             },
@@ -238,7 +238,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/double-offset",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listWithDoubleOffsetPagination"
             },
@@ -251,7 +251,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/body-offset",
                 "method": "POST",
                 "identifier_override": "endpoint_users.listWithBodyOffsetPagination"
             },
@@ -264,7 +264,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/offset-step",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listWithOffsetStepPagination"
             },
@@ -277,7 +277,7 @@
         {
             "example_identifier": "HasNextPage",
             "id": {
-                "path": "/users",
+                "path": "/users/offset-has-next-page",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listWithOffsetPaginationHasNextPage"
             },
@@ -290,7 +290,7 @@
         {
             "example_identifier": "NoNextPage",
             "id": {
-                "path": "/users",
+                "path": "/users/offset-has-next-page",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listWithOffsetPaginationHasNextPage"
             },
@@ -303,7 +303,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/extended",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listWithExtendedResults"
             },
@@ -316,7 +316,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/extended-optional",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listWithExtendedResultsAndOptionalData"
             },
@@ -329,7 +329,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/usernames",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listUsernames"
             },
@@ -342,7 +342,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/usernames-optional",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listUsernamesWithOptionalResponse"
             },
@@ -355,7 +355,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/global-config",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listWithGlobalConfig"
             },

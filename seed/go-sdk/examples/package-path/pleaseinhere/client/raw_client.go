@@ -42,7 +42,7 @@ func (r *RawClient) Echo(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL
+	endpointURL := baseURL + "/echo"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -83,7 +83,7 @@ func (r *RawClient) CreateType(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL
+	endpointURL := baseURL + "/type"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),

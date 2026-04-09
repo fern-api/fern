@@ -43,7 +43,7 @@ func (r *RawClient) UploadJSONDocument(
 		r.baseURL,
 		"https://api.example.com/v1",
 	)
-	endpointURL := baseURL + "/documents/upload"
+	endpointURL := baseURL + "/documents/upload/json"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -85,7 +85,7 @@ func (r *RawClient) UploadPdfDocument(
 		r.baseURL,
 		"https://api.example.com/v1",
 	)
-	endpointURL := baseURL + "/documents/upload"
+	endpointURL := baseURL + "/documents/upload/pdf"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),

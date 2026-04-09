@@ -92,7 +92,7 @@ class SeedClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
-                    path: "documents/upload",
+                    path: "documents/upload/json",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -141,7 +141,7 @@ class SeedClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
-                    path: "documents/upload",
+                    path: "documents/upload/pdf",
                     method: HttpMethod::POST,
                 ),
                 $options,

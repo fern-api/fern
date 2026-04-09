@@ -237,13 +237,18 @@ client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(
 
 ```python
 from seed import SeedPagination
+from seed.inline_users.inline_users import WithCursor
 
 client = SeedPagination(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_mixed_type_cursor_pagination()
+client.inline_users.inline_users.list_with_body_cursor_pagination(
+    pagination=WithCursor(
+        cursor="cursor",
+    ),
+)
 
 ```
 </dd>
@@ -302,7 +307,7 @@ client = SeedPagination(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_cursor_pagination(
+client.inline_users.inline_users.list_with_offset_pagination(
     page=1,
     per_page=1,
     order="asc",
@@ -390,7 +395,7 @@ client = SeedPagination(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_cursor_pagination(
+client.inline_users.inline_users.list_with_double_offset_pagination(
     page=1.1,
     per_page=1.1,
     order="asc",
@@ -472,13 +477,18 @@ the next page of results.
 
 ```python
 from seed import SeedPagination
+from seed.inline_users.inline_users import WithPage
 
 client = SeedPagination(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_mixed_type_cursor_pagination()
+client.inline_users.inline_users.list_with_body_offset_pagination(
+    pagination=WithPage(
+        page=1,
+    ),
+)
 
 ```
 </dd>
@@ -617,7 +627,7 @@ client = SeedPagination(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_offset_step_pagination(
+client.inline_users.inline_users.list_with_offset_pagination_has_next_page(
     page=1,
     limit=1,
     order="asc",
@@ -757,7 +767,7 @@ client = SeedPagination(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_extended_results(
+client.inline_users.inline_users.list_with_extended_results_and_optional_data(
     cursor=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
 )
 
@@ -815,7 +825,7 @@ client = SeedPagination(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_cursor_pagination(
+client.inline_users.inline_users.list_usernames(
     starting_after="starting_after",
 )
 
@@ -1075,13 +1085,18 @@ client.users.list_with_mixed_type_cursor_pagination(
 
 ```python
 from seed import SeedPagination
+from seed.users import WithCursor
 
 client = SeedPagination(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_mixed_type_cursor_pagination()
+client.users.list_with_body_cursor_pagination(
+    pagination=WithCursor(
+        cursor="cursor",
+    ),
+)
 
 ```
 </dd>
@@ -1226,7 +1241,7 @@ client = SeedPagination(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_cursor_pagination(
+client.users.list_with_offset_pagination(
     page=1,
     per_page=1,
     order="asc",
@@ -1314,7 +1329,7 @@ client = SeedPagination(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_cursor_pagination(
+client.users.list_with_double_offset_pagination(
     page=1.1,
     per_page=1.1,
     order="asc",
@@ -1396,13 +1411,18 @@ the next page of results.
 
 ```python
 from seed import SeedPagination
+from seed.users import WithPage
 
 client = SeedPagination(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_mixed_type_cursor_pagination()
+client.users.list_with_body_offset_pagination(
+    pagination=WithPage(
+        page=1,
+    ),
+)
 
 ```
 </dd>
@@ -1541,7 +1561,7 @@ client = SeedPagination(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_offset_step_pagination(
+client.users.list_with_offset_pagination_has_next_page(
     page=1,
     limit=3,
     order="asc",
@@ -1681,7 +1701,7 @@ client = SeedPagination(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_extended_results(
+client.users.list_with_extended_results_and_optional_data(
     cursor=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
 )
 
@@ -1739,7 +1759,7 @@ client = SeedPagination(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_cursor_pagination(
+client.users.list_usernames(
     starting_after="starting_after",
 )
 
@@ -1800,7 +1820,7 @@ client = SeedPagination(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_cursor_pagination(
+client.users.list_usernames_with_optional_response(
     starting_after="starting_after",
 )
 

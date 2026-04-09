@@ -86,7 +86,7 @@ public final class ApiClient: Sendable {
     public func uploadJsonDocument(request: Requests.UploadDocumentRequest, requestOptions: RequestOptions? = nil) async throws -> UploadDocumentResponse {
         return try await httpClient.performRequest(
             method: .post,
-            path: "/documents/upload",
+            path: "/documents/upload/json",
             body: request,
             requestOptions: requestOptions,
             responseType: UploadDocumentResponse.self
@@ -96,7 +96,7 @@ public final class ApiClient: Sendable {
     public func uploadPdfDocument(request: Data, requestOptions: RequestOptions? = nil) async throws -> UploadDocumentResponse {
         return try await httpClient.performRequest(
             method: .post,
-            path: "/documents/upload",
+            path: "/documents/upload/pdf",
             contentType: .applicationOctetStream,
             body: request,
             requestOptions: requestOptions,

@@ -49,7 +49,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "users",
+                "users/bearer",
             ),
             method: "GET",
             headers: _headers,
@@ -73,7 +73,7 @@ export class UserClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/bearer");
     }
 
     /**
@@ -104,7 +104,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "users",
+                "users/api-key",
             ),
             method: "GET",
             headers: _headers,
@@ -128,7 +128,7 @@ export class UserClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/api-key");
     }
 
     /**
@@ -159,7 +159,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "users",
+                "users/oauth",
             ),
             method: "GET",
             headers: _headers,
@@ -183,7 +183,7 @@ export class UserClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/oauth");
     }
 
     /**
@@ -214,7 +214,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "users",
+                "users/basic",
             ),
             method: "GET",
             headers: _headers,
@@ -238,7 +238,7 @@ export class UserClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/basic");
     }
 
     /**
@@ -269,7 +269,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "users",
+                "users/inferred",
             ),
             method: "GET",
             headers: _headers,
@@ -293,7 +293,7 @@ export class UserClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/inferred");
     }
 
     /**
@@ -326,7 +326,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "users",
+                "users/any",
             ),
             method: "GET",
             headers: _headers,
@@ -350,7 +350,7 @@ export class UserClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/any");
     }
 
     /**
@@ -383,7 +383,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "users",
+                "users/all",
             ),
             method: "GET",
             headers: _headers,
@@ -407,6 +407,6 @@ export class UserClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/all");
     }
 }

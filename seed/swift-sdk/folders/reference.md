@@ -68,7 +68,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.foo()
+    _ = try await client.a.b.foo()
 }
 
 try await main()
@@ -118,7 +118,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.foo()
+    _ = try await client.a.c.foo()
 }
 
 try await main()
@@ -168,7 +168,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.foo()
+    _ = try await client.folder.foo()
 }
 
 try await main()

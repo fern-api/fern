@@ -1654,7 +1654,7 @@ GET with path param
 <dd>
 
 ```php
-$client->endpoints->params->getWithPath(
+$client->endpoints->params->getWithInlinePath(
     'param',
 );
 ```
@@ -1777,10 +1777,14 @@ GET with multiple of same query param
 <dd>
 
 ```php
-$client->endpoints->params->getWithQuery(
-    new GetWithQuery([
-        'query' => 'query',
-        'number' => 1,
+$client->endpoints->params->getWithAllowMultipleQuery(
+    new GetWithMultipleQuery([
+        'query' => [
+            'query',
+        ],
+        'number' => [
+            1,
+        ],
     ]),
 );
 ```
@@ -1911,9 +1915,9 @@ GET with path and query params
 <dd>
 
 ```php
-$client->endpoints->params->getWithPathAndQuery(
+$client->endpoints->params->getWithInlinePathAndQuery(
     'param',
-    new GetWithPathAndQuery([
+    new GetWithInlinePathAndQuery([
         'query' => 'query',
     ]),
 );
@@ -2043,9 +2047,11 @@ PUT to update with path param
 <dd>
 
 ```php
-$client->endpoints->params->modifyWithPath(
+$client->endpoints->params->modifyWithInlinePath(
     'param',
-    'string',
+    new ModifyResourceAtInlinedPath([
+        'body' => 'string',
+    ]),
 );
 ```
 </dd>
@@ -2221,7 +2227,7 @@ GET with path param that can throw errors
 <dd>
 
 ```php
-$client->endpoints->params->getWithPath(
+$client->endpoints->params->getWithPathAndErrors(
     'param',
 );
 ```

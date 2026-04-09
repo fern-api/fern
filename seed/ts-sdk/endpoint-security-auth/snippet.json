@@ -13,7 +13,7 @@
         },
         {
             "id": {
-                "path": "/users",
+                "path": "/users/bearer",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithBearer"
             },
@@ -24,7 +24,7 @@
         },
         {
             "id": {
-                "path": "/users",
+                "path": "/users/api-key",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithApiKey"
             },
@@ -35,7 +35,7 @@
         },
         {
             "id": {
-                "path": "/users",
+                "path": "/users/oauth",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithOAuth"
             },
@@ -46,7 +46,7 @@
         },
         {
             "id": {
-                "path": "/users",
+                "path": "/users/basic",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithBasic"
             },
@@ -57,7 +57,7 @@
         },
         {
             "id": {
-                "path": "/users",
+                "path": "/users/inferred",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithInferredAuth"
             },
@@ -68,7 +68,7 @@
         },
         {
             "id": {
-                "path": "/users",
+                "path": "/users/any",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithAnyAuth"
             },
@@ -79,7 +79,7 @@
         },
         {
             "id": {
-                "path": "/users",
+                "path": "/users/all",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithAllAuth"
             },

@@ -80,7 +80,7 @@ export class ParamsClient {
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/inline-path/${core.url.encodePathParam(param)}`),
                 method: "GET",
                 headers: _headers,
                 queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
@@ -100,7 +100,7 @@ export class ParamsClient {
                     rawResponse: _response.rawResponse,
                 });
             }
-            return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params/path/{param}");
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params/inline-path/{param}");
         });
     }
     /**
@@ -178,7 +178,7 @@ export class ParamsClient {
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/params"),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/params/allow-multiple"),
                 method: "GET",
                 headers: _headers,
                 queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
@@ -198,7 +198,7 @@ export class ParamsClient {
                     rawResponse: _response.rawResponse,
                 });
             }
-            return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params");
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params/allow-multiple");
         });
     }
     /**
@@ -274,7 +274,7 @@ export class ParamsClient {
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path-query/${core.url.encodePathParam(param)}`),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/inline-path-query/${core.url.encodePathParam(param)}`),
                 method: "GET",
                 headers: _headers,
                 queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
@@ -294,7 +294,7 @@ export class ParamsClient {
                     rawResponse: _response.rawResponse,
                 });
             }
-            return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params/path-query/{param}");
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params/inline-path-query/{param}");
         });
     }
     /**
@@ -364,7 +364,7 @@ export class ParamsClient {
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/inline-path/${core.url.encodePathParam(param)}`),
                 method: "PUT",
                 headers: _headers,
                 contentType: "application/json",
@@ -387,7 +387,7 @@ export class ParamsClient {
                     rawResponse: _response.rawResponse,
                 });
             }
-            return handleNonStatusCodeError(_response.error, _response.rawResponse, "PUT", "/params/path/{param}");
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "PUT", "/params/inline-path/{param}");
         });
     }
     /**
@@ -501,7 +501,7 @@ export class ParamsClient {
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path-with-errors/${core.url.encodePathParam(param)}`),
                 method: "GET",
                 headers: _headers,
                 queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
@@ -526,7 +526,7 @@ export class ParamsClient {
                         });
                 }
             }
-            return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params/path/{param}");
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params/path-with-errors/{param}");
         });
     }
 }

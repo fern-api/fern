@@ -40,7 +40,7 @@ public class GetLightweightProblemsTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/problems-v2/lightweight-problem-info")
+                    .WithPath("/problems-v2/v3/lightweight-problem-info")
                     .UsingGet()
             )
             .RespondWith(

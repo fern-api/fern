@@ -63,7 +63,7 @@ class RawInlineUsersClient:
         SyncPager[User, ListUsersPaginationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/cursor",
             method="GET",
             params={
                 "page": page,
@@ -122,7 +122,7 @@ class RawInlineUsersClient:
         SyncPager[User, ListUsersMixedTypePaginationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/mixed-type-cursor",
             method="POST",
             params={
                 "cursor": cursor,
@@ -174,7 +174,7 @@ class RawInlineUsersClient:
         SyncPager[User, ListUsersPaginationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/body-cursor",
             method="POST",
             json={
                 "pagination": convert_and_respect_annotation_metadata(
@@ -248,7 +248,7 @@ class RawInlineUsersClient:
         page = page if page is not None else 0
 
         _response = self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/offset",
             method="GET",
             params={
                 "page": page,
@@ -321,7 +321,7 @@ class RawInlineUsersClient:
         page = page if page is not None else 1
 
         _response = self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/double-offset",
             method="GET",
             params={
                 "page": page,
@@ -378,7 +378,7 @@ class RawInlineUsersClient:
         SyncPager[User, ListUsersPaginationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/body-offset",
             method="POST",
             json={
                 "pagination": convert_and_respect_annotation_metadata(
@@ -445,7 +445,7 @@ class RawInlineUsersClient:
         page = page if page is not None else 1
 
         _response = self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/offset-step",
             method="GET",
             params={
                 "page": page,
@@ -513,7 +513,7 @@ class RawInlineUsersClient:
         page = page if page is not None else 1
 
         _response = self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/offset-has-next-page",
             method="GET",
             params={
                 "page": page,
@@ -566,7 +566,7 @@ class RawInlineUsersClient:
         SyncPager[User, ListUsersExtendedResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/extended",
             method="GET",
             params={
                 "cursor": cursor,
@@ -616,7 +616,7 @@ class RawInlineUsersClient:
         SyncPager[User, ListUsersExtendedOptionalListResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/extended-optional",
             method="GET",
             params={
                 "cursor": cursor,
@@ -668,7 +668,7 @@ class RawInlineUsersClient:
         SyncPager[str, UsernameCursor]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/usernames",
             method="GET",
             params={
                 "starting_after": starting_after,
@@ -723,7 +723,7 @@ class RawInlineUsersClient:
         offset = offset if offset is not None else 1
 
         _response = self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/global-config",
             method="GET",
             params={
                 "offset": offset,
@@ -792,7 +792,7 @@ class AsyncRawInlineUsersClient:
         AsyncPager[User, ListUsersPaginationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/cursor",
             method="GET",
             params={
                 "page": page,
@@ -854,7 +854,7 @@ class AsyncRawInlineUsersClient:
         AsyncPager[User, ListUsersMixedTypePaginationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/mixed-type-cursor",
             method="POST",
             params={
                 "cursor": cursor,
@@ -909,7 +909,7 @@ class AsyncRawInlineUsersClient:
         AsyncPager[User, ListUsersPaginationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/body-cursor",
             method="POST",
             json={
                 "pagination": convert_and_respect_annotation_metadata(
@@ -986,7 +986,7 @@ class AsyncRawInlineUsersClient:
         page = page if page is not None else 0
 
         _response = await self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/offset",
             method="GET",
             params={
                 "page": page,
@@ -1062,7 +1062,7 @@ class AsyncRawInlineUsersClient:
         page = page if page is not None else 1
 
         _response = await self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/double-offset",
             method="GET",
             params={
                 "page": page,
@@ -1122,7 +1122,7 @@ class AsyncRawInlineUsersClient:
         AsyncPager[User, ListUsersPaginationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/body-offset",
             method="POST",
             json={
                 "pagination": convert_and_respect_annotation_metadata(
@@ -1192,7 +1192,7 @@ class AsyncRawInlineUsersClient:
         page = page if page is not None else 1
 
         _response = await self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/offset-step",
             method="GET",
             params={
                 "page": page,
@@ -1263,7 +1263,7 @@ class AsyncRawInlineUsersClient:
         page = page if page is not None else 1
 
         _response = await self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/offset-has-next-page",
             method="GET",
             params={
                 "page": page,
@@ -1319,7 +1319,7 @@ class AsyncRawInlineUsersClient:
         AsyncPager[User, ListUsersExtendedResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/extended",
             method="GET",
             params={
                 "cursor": cursor,
@@ -1372,7 +1372,7 @@ class AsyncRawInlineUsersClient:
         AsyncPager[User, ListUsersExtendedOptionalListResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/extended-optional",
             method="GET",
             params={
                 "cursor": cursor,
@@ -1427,7 +1427,7 @@ class AsyncRawInlineUsersClient:
         AsyncPager[str, UsernameCursor]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/usernames",
             method="GET",
             params={
                 "starting_after": starting_after,
@@ -1485,7 +1485,7 @@ class AsyncRawInlineUsersClient:
         offset = offset if offset is not None else 1
 
         _response = await self._client_wrapper.httpx_client.request(
-            "inline-users",
+            "inline-users/global-config",
             method="GET",
             params={
                 "offset": offset,

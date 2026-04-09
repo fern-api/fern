@@ -20,7 +20,7 @@ public final class AuthClient: Sendable {
     public func refreshToken(request: Requests.RefreshTokenRequest, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
         return try await httpClient.performRequest(
             method: .post,
-            path: "/token",
+            path: "/token/refresh",
             body: request,
             requestOptions: requestOptions,
             responseType: TokenResponse.self

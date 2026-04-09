@@ -100,7 +100,7 @@ public partial class ParamsClient : IParamsClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "/params/path/{0}",
+                        "/params/inline-path/{0}",
                         ValueConvert.ToPathParameterString(request.Param)
                     ),
                     Headers = _headers,
@@ -238,7 +238,7 @@ public partial class ParamsClient : IParamsClient
                 {
                     Method = HttpMethod.Put,
                     Path = string.Format(
-                        "/params/path/{0}",
+                        "/params/inline-path/{0}",
                         ValueConvert.ToPathParameterString(request.Param)
                     ),
                     Body = request.Body,
@@ -445,7 +445,7 @@ public partial class ParamsClient : IParamsClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "/params/path/{0}",
+                        "/params/path-with-errors/{0}",
                         ValueConvert.ToPathParameterString(param)
                     ),
                     Headers = _headers,
@@ -611,7 +611,7 @@ public partial class ParamsClient : IParamsClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/params",
+                    Path = "/params/allow-multiple",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -723,7 +723,7 @@ public partial class ParamsClient : IParamsClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "/params/path-query/{0}",
+                        "/params/inline-path-query/{0}",
                         ValueConvert.ToPathParameterString(request.Param)
                     ),
                     QueryString = _queryString,

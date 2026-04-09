@@ -36,7 +36,7 @@ class EndpointsParamsWireTest < WireMockTestCase
   def test_endpoints_params_get_with_inline_path_with_wiremock
     test_id = "endpoints.params.get_with_inline_path.0"
 
-    @client.endpoints.params.get_with_path(
+    @client.endpoints.params.get_with_inline_path(
       param: "param",
       request_options: {
         additional_headers: {
@@ -48,7 +48,7 @@ class EndpointsParamsWireTest < WireMockTestCase
     verify_request_count(
       test_id: test_id,
       method: "GET",
-      url_path: "/params/path/param",
+      url_path: "/params/inline-path/param",
       query_params: nil,
       expected: 1
     )
@@ -79,20 +79,16 @@ class EndpointsParamsWireTest < WireMockTestCase
   def test_endpoints_params_get_with_allow_multiple_query_with_wiremock
     test_id = "endpoints.params.get_with_allow_multiple_query.0"
 
-    @client.endpoints.params.get_with_query(
-      query: "query",
-      number: 1,
-      request_options: {
-        additional_headers: {
-          "X-Test-Id" => "endpoints.params.get_with_allow_multiple_query.0"
-        }
-      }
-    )
+    @client.endpoints.params.get_with_allow_multiple_query(request_options: {
+                                                             additional_headers: {
+                                                               "X-Test-Id" => "endpoints.params.get_with_allow_multiple_query.0"
+                                                             }
+                                                           })
 
     verify_request_count(
       test_id: test_id,
       method: "GET",
-      url_path: "/params",
+      url_path: "/params/allow-multiple",
       query_params: { "query" => "query", "number" => "1" },
       expected: 1
     )
@@ -123,7 +119,7 @@ class EndpointsParamsWireTest < WireMockTestCase
   def test_endpoints_params_get_with_inline_path_and_query_with_wiremock
     test_id = "endpoints.params.get_with_inline_path_and_query.0"
 
-    @client.endpoints.params.get_with_path_and_query(
+    @client.endpoints.params.get_with_inline_path_and_query(
       param: "param",
       query: "query",
       request_options: {
@@ -136,7 +132,7 @@ class EndpointsParamsWireTest < WireMockTestCase
     verify_request_count(
       test_id: test_id,
       method: "GET",
-      url_path: "/params/path-query/param",
+      url_path: "/params/inline-path-query/param",
       query_params: { "query" => "query" },
       expected: 1
     )
@@ -167,9 +163,9 @@ class EndpointsParamsWireTest < WireMockTestCase
   def test_endpoints_params_modify_with_inline_path_with_wiremock
     test_id = "endpoints.params.modify_with_inline_path.0"
 
-    @client.endpoints.params.modify_with_path(
+    @client.endpoints.params.modify_with_inline_path(
       param: "param",
-      request: "string",
+      body: "string",
       request_options: {
         additional_headers: {
           "X-Test-Id" => "endpoints.params.modify_with_inline_path.0"
@@ -180,7 +176,7 @@ class EndpointsParamsWireTest < WireMockTestCase
     verify_request_count(
       test_id: test_id,
       method: "PUT",
-      url_path: "/params/path/param",
+      url_path: "/params/inline-path/param",
       query_params: nil,
       expected: 1
     )
@@ -231,7 +227,7 @@ class EndpointsParamsWireTest < WireMockTestCase
   def test_endpoints_params_get_with_path_and_errors_with_wiremock
     test_id = "endpoints.params.get_with_path_and_errors.0"
 
-    @client.endpoints.params.get_with_path(
+    @client.endpoints.params.get_with_path_and_errors(
       param: "param",
       request_options: {
         additional_headers: {
@@ -243,7 +239,7 @@ class EndpointsParamsWireTest < WireMockTestCase
     verify_request_count(
       test_id: test_id,
       method: "GET",
-      url_path: "/params/path/param",
+      url_path: "/params/path-with-errors/param",
       query_params: nil,
       expected: 1
     )

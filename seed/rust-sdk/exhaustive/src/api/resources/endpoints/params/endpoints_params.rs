@@ -55,7 +55,7 @@ impl ParamsClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/params/path/{}", param),
+                &format!("/params/inline-path/{}", param),
                 None,
                 None,
                 options,
@@ -108,7 +108,7 @@ impl ParamsClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/params",
+                "/params/allow-multiple",
                 None,
                 QueryBuilder::new()
                     .string_array("query", request.query.clone())
@@ -165,7 +165,7 @@ impl ParamsClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/params/path-query/{}", param),
+                &format!("/params/inline-path-query/{}", param),
                 None,
                 QueryBuilder::new()
                     .structured_query("query", request.query.clone())
@@ -219,7 +219,7 @@ impl ParamsClient {
         self.http_client
             .execute_request(
                 Method::PUT,
-                &format!("/params/path/{}", param),
+                &format!("/params/inline-path/{}", param),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -295,7 +295,7 @@ impl ParamsClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/params/path/{}", param),
+                &format!("/params/path-with-errors/{}", param),
                 None,
                 None,
                 options,

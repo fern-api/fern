@@ -83,7 +83,7 @@ func (r *RawClient) GetMovieDocs(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/movie"
+	endpointURL := baseURL + "/movie/docs"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -124,7 +124,7 @@ func (r *RawClient) GetMovieName(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/movie"
+	endpointURL := baseURL + "/movie/name"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -165,7 +165,7 @@ func (r *RawClient) GetMovieMetadata(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/movie"
+	endpointURL := baseURL + "/movie/metadata"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -206,7 +206,7 @@ func (r *RawClient) GetOptionalMovie(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/movie"
+	endpointURL := baseURL + "/movie/optional"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -247,7 +247,7 @@ func (r *RawClient) GetOptionalMovieDocs(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/movie"
+	endpointURL := baseURL + "/movie/optional/docs"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -288,7 +288,7 @@ func (r *RawClient) GetOptionalMovieName(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/movie"
+	endpointURL := baseURL + "/movie/optional/name"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),

@@ -48,7 +48,7 @@ public class ListWithBodyCursorPaginationTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/users")
+                    .WithPath("/users/body-cursor")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

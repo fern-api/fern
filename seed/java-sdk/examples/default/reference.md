@@ -52,7 +52,9 @@ client.echo("Hello world!\\n\\nwith\\n\\tnewlines");
 <dd>
 
 ```java
-client.echo("primitive");
+client.createType(
+    Type.of(BasicType.PRIMITIVE)
+);
 ```
 </dd>
 </dl>

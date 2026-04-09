@@ -25,7 +25,7 @@ public final class ParamsClient: Sendable {
     public func getWithInlinePath(param: String, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/params/path/\(param)",
+            path: "/params/inline-path/\(param)",
             requestOptions: requestOptions,
             responseType: String.self
         )
@@ -52,7 +52,7 @@ public final class ParamsClient: Sendable {
     public func getWithAllowMultipleQuery(query: String, number: Int, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/params",
+            path: "/params/allow-multiple",
             queryParams: [
                 "query": .string(query), 
                 "number": .int(number)
@@ -81,7 +81,7 @@ public final class ParamsClient: Sendable {
     public func getWithInlinePathAndQuery(param: String, query: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/params/path-query/\(param)",
+            path: "/params/inline-path-query/\(param)",
             queryParams: [
                 "query": .string(query)
             ],
@@ -108,7 +108,7 @@ public final class ParamsClient: Sendable {
     public func modifyWithInlinePath(param: String, request: String, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .put,
-            path: "/params/path/\(param)",
+            path: "/params/inline-path/\(param)",
             body: request,
             requestOptions: requestOptions,
             responseType: String.self
@@ -147,7 +147,7 @@ public final class ParamsClient: Sendable {
     public func getWithPathAndErrors(param: String, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/params/path/\(param)",
+            path: "/params/path-with-errors/\(param)",
             requestOptions: requestOptions,
             responseType: String.self
         )

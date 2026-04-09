@@ -15,7 +15,7 @@ public class GetWithAllowMultipleQueryTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/params")
+                    .WithPath("/params/allow-multiple")
                     .WithParam("query", "query")
                     .WithParam("number", "1")
                     .UsingGet()

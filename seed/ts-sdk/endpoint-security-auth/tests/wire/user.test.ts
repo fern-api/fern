@@ -22,7 +22,7 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
         ];
 
-        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server.mockEndpoint().get("/users/bearer").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithBearer();
         expect(response).toEqual(rawResponseBody);
@@ -45,7 +45,7 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
         ];
 
-        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server.mockEndpoint().get("/users/api-key").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithApiKey();
         expect(response).toEqual(rawResponseBody);
@@ -70,7 +70,7 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
         ];
 
-        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server.mockEndpoint().get("/users/oauth").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithOAuth();
         expect(response).toEqual(rawResponseBody);
@@ -93,7 +93,7 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
         ];
 
-        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server.mockEndpoint().get("/users/basic").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithBasic();
         expect(response).toEqual(rawResponseBody);
@@ -118,7 +118,7 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
         ];
 
-        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server.mockEndpoint().get("/users/inferred").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithInferredAuth();
         expect(response).toEqual(rawResponseBody);
@@ -144,7 +144,7 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
         ];
 
-        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server.mockEndpoint().get("/users/any").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithAnyAuth();
         expect(response).toEqual(rawResponseBody);
@@ -170,7 +170,7 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
         ];
 
-        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server.mockEndpoint().get("/users/all").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithAllAuth();
         expect(response).toEqual(rawResponseBody);

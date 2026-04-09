@@ -27,10 +27,10 @@
       }
     },
     {
-      "id": "cf0497ea-635b-4a8d-a5c0-67064c3dccc1",
+      "id": "f9c99fe3-6745-4170-96e3-47d0f3df0476",
       "name": "refreshToken - default",
       "request": {
-        "urlPathTemplate": "/token",
+        "urlPathTemplate": "/token/refresh",
         "method": "POST"
       },
       "response": {
@@ -40,7 +40,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "cf0497ea-635b-4a8d-a5c0-67064c3dccc1",
+      "uuid": "f9c99fe3-6745-4170-96e3-47d0f3df0476",
       "persistent": true,
       "priority": 3,
       "metadata": {

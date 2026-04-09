@@ -119,5 +119,5 @@ func TestAuthRefreshTokenWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestAuthRefreshTokenWithWireMock", "POST", "/token", nil, 1)
+	VerifyRequestCount(t, "TestAuthRefreshTokenWithWireMock", "POST", "/token/refresh", nil, 1)
 }

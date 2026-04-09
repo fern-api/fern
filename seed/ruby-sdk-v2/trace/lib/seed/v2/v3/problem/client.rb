@@ -28,7 +28,7 @@ module Seed
             request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",
-              path: "/problems-v2/lightweight-problem-info",
+              path: "/problems-v2/v3/lightweight-problem-info",
               request_options: request_options
             )
             begin
@@ -59,7 +59,7 @@ module Seed
             request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",
-              path: "/problems-v2/problem-info",
+              path: "/problems-v2/v3/problem-info",
               request_options: request_options
             )
             begin
@@ -91,7 +91,7 @@ module Seed
             request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",
-              path: "/problems-v2/problem-info/#{URI.encode_uri_component(params[:problem_id].to_s)}",
+              path: "/problems-v2/v3/problem-info/#{URI.encode_uri_component(params[:problem_id].to_s)}",
               request_options: request_options
             )
             begin
@@ -126,7 +126,7 @@ module Seed
             request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",
-              path: "/problems-v2/problem-info/#{URI.encode_uri_component(params[:problem_id].to_s)}/version/#{URI.encode_uri_component(params[:problem_version].to_s)}",
+              path: "/problems-v2/v3/problem-info/#{URI.encode_uri_component(params[:problem_id].to_s)}/version/#{URI.encode_uri_component(params[:problem_version].to_s)}",
               request_options: request_options
             )
             begin

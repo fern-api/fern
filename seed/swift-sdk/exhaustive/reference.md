@@ -2082,7 +2082,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.params.getWithPath(param: "param")
+    _ = try await client.endpoints.params.getWithInlinePath(param: "param")
 }
 
 try await main()
@@ -2235,10 +2235,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.params.getWithQuery(
-        query: "query",
-        number: 1
-    )
+    _ = try await client.endpoints.params.getWithAllowMultipleQuery()
 }
 
 try await main()
@@ -2399,7 +2396,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.params.getWithPathAndQuery(
+    _ = try await client.endpoints.params.getWithInlinePathAndQuery(
         param: "param",
         query: "query"
     )
@@ -2563,9 +2560,9 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.params.modifyWithPath(
+    _ = try await client.endpoints.params.modifyWithInlinePath(
         param: "param",
-        request: "string"
+        request: .init(body: "string")
     )
 }
 
@@ -2798,7 +2795,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.params.getWithPath(param: "param")
+    _ = try await client.endpoints.params.getWithPathAndErrors(param: "param")
 }
 
 try await main()

@@ -90,7 +90,8 @@ public class AsyncRawUsersClient {
             ListUsersCursorPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("cursor");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -189,7 +190,8 @@ public class AsyncRawUsersClient {
             ListUsersMixedTypeCursorPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("mixed-type-cursor");
         if (request.getCursor().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "cursor", request.getCursor().get(), false);
@@ -276,7 +278,8 @@ public class AsyncRawUsersClient {
             ListUsersBodyCursorPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("body-cursor");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -486,7 +489,8 @@ public class AsyncRawUsersClient {
             ListUsersOffsetPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("offset");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -586,7 +590,8 @@ public class AsyncRawUsersClient {
             ListUsersDoubleOffsetPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("double-offset");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -687,7 +692,8 @@ public class AsyncRawUsersClient {
             ListUsersBodyOffsetPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("body-offset");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -786,7 +792,8 @@ public class AsyncRawUsersClient {
             ListUsersOffsetStepPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("offset-step");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -884,7 +891,8 @@ public class AsyncRawUsersClient {
             ListWithOffsetPaginationHasNextPageRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("offset-has-next-page");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -979,7 +987,8 @@ public class AsyncRawUsersClient {
             ListUsersExtendedRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("extended");
         if (request.getCursor().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "cursor", request.getCursor().get(), false);
@@ -1067,7 +1076,8 @@ public class AsyncRawUsersClient {
                     ListUsersExtendedRequestForOptionalData request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("extended-optional");
         if (request.getCursor().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "cursor", request.getCursor().get(), false);
@@ -1152,7 +1162,8 @@ public class AsyncRawUsersClient {
             ListUsernamesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("usernames");
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "starting_after", request.getStartingAfter().get(), false);
@@ -1241,7 +1252,8 @@ public class AsyncRawUsersClient {
             ListUsernamesWithOptionalResponseRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("usernames-optional");
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "starting_after", request.getStartingAfter().get(), false);
@@ -1331,7 +1343,8 @@ public class AsyncRawUsersClient {
             ListWithGlobalConfigRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("global-config");
         if (request.getOffset().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "offset", request.getOffset().get(), false);

@@ -69,7 +69,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users",
+                    path: "users/bearer",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -114,7 +114,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users",
+                    path: "users/api-key",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -159,7 +159,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users",
+                    path: "users/oauth",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -204,7 +204,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users",
+                    path: "users/basic",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -249,7 +249,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users",
+                    path: "users/inferred",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -294,7 +294,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users",
+                    path: "users/any",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -339,7 +339,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users",
+                    path: "users/all",
                     method: HttpMethod::GET,
                 ),
                 $options,

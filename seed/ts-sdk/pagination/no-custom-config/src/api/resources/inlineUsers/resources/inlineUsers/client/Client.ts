@@ -61,7 +61,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/cursor",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -85,7 +85,7 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users/cursor");
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -142,7 +142,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/mixed-type-cursor",
                     ),
                     method: "POST",
                     headers: _headers,
@@ -166,7 +166,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "POST",
+                    "/inline-users/mixed-type-cursor",
+                );
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -217,7 +222,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/body-cursor",
                     ),
                     method: "POST",
                     headers: _headers,
@@ -244,7 +249,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "POST",
+                    "/inline-users/body-cursor",
+                );
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -307,7 +317,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/offset",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -331,7 +341,7 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users/offset");
             },
         );
         let _offset = request?.page != null ? request?.page : 0;
@@ -391,7 +401,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/double-offset",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -415,7 +425,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/inline-users/double-offset",
+                );
             },
         );
         let _offset = request?.page != null ? request?.page : 1;
@@ -467,7 +482,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/body-offset",
                     ),
                     method: "POST",
                     headers: _headers,
@@ -494,7 +509,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "POST",
+                    "/inline-users/body-offset",
+                );
             },
         );
         let _offset = request?.pagination?.page != null ? request?.pagination?.page : 1;
@@ -552,7 +572,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/offset-step",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -576,7 +596,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/inline-users/offset-step",
+                );
             },
         );
         let _offset = request?.page != null ? request?.page : 1;
@@ -634,7 +659,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/offset-has-next-page",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -658,7 +683,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/inline-users/offset-has-next-page",
+                );
             },
         );
         let _offset = request?.page != null ? request?.page : 1;
@@ -713,7 +743,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/extended",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -737,7 +767,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/inline-users/extended",
+                );
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -790,7 +825,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/extended-optional",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -814,7 +849,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/inline-users/extended-optional",
+                );
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -862,7 +902,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/usernames",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -886,7 +926,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/inline-users/usernames",
+                );
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -932,7 +977,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/global-config",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -956,7 +1001,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/inline-users/global-config",
+                );
             },
         );
         let _offset = request?.offset != null ? request?.offset : 1;

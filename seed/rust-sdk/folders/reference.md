@@ -55,7 +55,7 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client.foo(None).await;
+    client.a.b.foo(None).await;
 }
 ```
 </dd>
@@ -90,7 +90,7 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client.foo(None).await;
+    client.a.c.foo(None).await;
 }
 ```
 </dd>
@@ -125,7 +125,7 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client.foo(None).await;
+    client.folder.foo(None).await;
 }
 ```
 </dd>

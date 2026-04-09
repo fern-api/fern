@@ -17,7 +17,7 @@
             "example_identifier": "a12635e3",
             "id": {
                 "method": "GET",
-                "path": "/users",
+                "path": "/users/bearer",
                 "identifier_override": "endpoint_user.getWithBearer"
             },
             "snippet": {
@@ -30,78 +30,78 @@
             "example_identifier": "a12635e3",
             "id": {
                 "method": "GET",
-                "path": "/users",
+                "path": "/users/api-key",
                 "identifier_override": "endpoint_user.getWithApiKey"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithBearer();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithBearer();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithApiKey();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithApiKey();\n    }\n}\n"
             }
         },
         {
             "example_identifier": "a12635e3",
             "id": {
                 "method": "GET",
-                "path": "/users",
+                "path": "/users/oauth",
                 "identifier_override": "endpoint_user.getWithOAuth"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithBearer();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithBearer();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithOAuth();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithOAuth();\n    }\n}\n"
             }
         },
         {
             "example_identifier": "a12635e3",
             "id": {
                 "method": "GET",
-                "path": "/users",
+                "path": "/users/basic",
                 "identifier_override": "endpoint_user.getWithBasic"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithBearer();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithBearer();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithBasic();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithBasic();\n    }\n}\n"
             }
         },
         {
             "example_identifier": "a12635e3",
             "id": {
                 "method": "GET",
-                "path": "/users",
+                "path": "/users/inferred",
                 "identifier_override": "endpoint_user.getWithInferredAuth"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithBearer();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithBearer();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithInferredAuth();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithInferredAuth();\n    }\n}\n"
             }
         },
         {
             "example_identifier": "a12635e3",
             "id": {
                 "method": "GET",
-                "path": "/users",
+                "path": "/users/any",
                 "identifier_override": "endpoint_user.getWithAnyAuth"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithBearer();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithBearer();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithAnyAuth();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithAnyAuth();\n    }\n}\n"
             }
         },
         {
             "example_identifier": "a12635e3",
             "id": {
                 "method": "GET",
-                "path": "/users",
+                "path": "/users/all",
                 "identifier_override": "endpoint_user.getWithAllAuth"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithBearer();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithBearer();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithAllAuth();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getWithAllAuth();\n    }\n}\n"
             }
         }
     ],

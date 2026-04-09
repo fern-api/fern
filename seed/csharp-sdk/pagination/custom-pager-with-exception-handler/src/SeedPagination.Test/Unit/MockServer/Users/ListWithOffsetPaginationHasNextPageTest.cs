@@ -40,7 +40,7 @@ public class ListWithOffsetPaginationHasNextPageTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/users")
+                    .WithPath("/users/offset-has-next-page")
                     .WithParam("page", "1")
                     .WithParam("limit", "1")
                     .WithParam("order", "asc")
@@ -101,7 +101,7 @@ public class ListWithOffsetPaginationHasNextPageTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/users")
+                    .WithPath("/users/offset-has-next-page")
                     .WithParam("page", "1")
                     .WithParam("limit", "3")
                     .WithParam("order", "asc")
@@ -162,7 +162,7 @@ public class ListWithOffsetPaginationHasNextPageTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/users")
+                    .WithPath("/users/offset-has-next-page")
                     .WithParam("page", "1")
                     .WithParam("limit", "10")
                     .WithParam("order", "asc")

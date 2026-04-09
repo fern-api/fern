@@ -54,7 +54,7 @@ public partial class Contoso : IContoso
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/users",
+                    Path = "/root-users",
                     Body = request,
                     Headers = _headers,
                     Options = options,
@@ -120,7 +120,7 @@ public partial class Contoso : IContoso
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/users",
+                    Path = "/root-users/tasks",
                     Body = request,
                     Headers = _headers,
                     Options = options,

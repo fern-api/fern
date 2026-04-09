@@ -76,7 +76,7 @@ client = SeedResponseProperty(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.get_movie(
+client.service.get_movie_docs(
     request="string",
 )
 
@@ -133,7 +133,7 @@ client = SeedResponseProperty(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.get_movie(
+client.service.get_movie_name(
     request="string",
 )
 
@@ -190,7 +190,7 @@ client = SeedResponseProperty(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.get_movie(
+client.service.get_movie_metadata(
     request="string",
 )
 
@@ -247,7 +247,7 @@ client = SeedResponseProperty(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.get_movie(
+client.service.get_optional_movie(
     request="string",
 )
 
@@ -304,7 +304,7 @@ client = SeedResponseProperty(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.get_movie(
+client.service.get_optional_movie_docs(
     request="string",
 )
 
@@ -361,7 +361,7 @@ client = SeedResponseProperty(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.get_movie(
+client.service.get_optional_movie_name(
     request="string",
 )
 

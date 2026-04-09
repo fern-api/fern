@@ -1,10 +1,10 @@
 {
   "mappings": [
     {
-      "id": "726fdf0f-2f43-496f-ba21-8f2c85cdb4bd",
+      "id": "853cf8e1-6d2f-4d7e-91e3-743e1f44d390",
       "name": "echo - default",
       "request": {
-        "urlPathTemplate": "/",
+        "urlPathTemplate": "/echo",
         "method": "POST"
       },
       "response": {
@@ -14,7 +14,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "726fdf0f-2f43-496f-ba21-8f2c85cdb4bd",
+      "uuid": "853cf8e1-6d2f-4d7e-91e3-743e1f44d390",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -27,10 +27,10 @@
       }
     },
     {
-      "id": "84443a97-a042-44d9-b597-c9c4943af730",
+      "id": "8eb4cbcf-9a1e-479c-ab83-8c01ae57130f",
       "name": "createType - default",
       "request": {
-        "urlPathTemplate": "/",
+        "urlPathTemplate": "/type",
         "method": "POST"
       },
       "response": {
@@ -40,7 +40,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "84443a97-a042-44d9-b597-c9c4943af730",
+      "uuid": "8eb4cbcf-9a1e-479c-ab83-8c01ae57130f",
       "persistent": true,
       "priority": 3,
       "metadata": {

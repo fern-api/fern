@@ -81,7 +81,7 @@ public final class ServiceClient: Sendable {
     public func withFormEncodedContainers(request: Requests.MyOtherRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
-            path: "/",
+            path: "/form-encoded",
             contentType: .multipartFormData,
             body: request.asMultipartFormData(),
             requestOptions: requestOptions

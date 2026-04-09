@@ -4,7 +4,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/users",
+                "path": "/root-users",
                 "method": "POST",
                 "identifier_override": "endpoint_.createUser"
             },
@@ -16,7 +16,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/users",
+                "path": "/root-users/tasks",
                 "method": "POST",
                 "identifier_override": "endpoint_.createTask"
             },
@@ -76,7 +76,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/users",
+                "path": "/users/tasks",
                 "method": "POST",
                 "identifier_override": "endpoint_System.createTask"
             },

@@ -30,7 +30,7 @@ describe("ProblemClient", () => {
 
         server
             .mockEndpoint()
-            .get("/problems-v2/lightweight-problem-info")
+            .get("/problems-v2/v3/lightweight-problem-info")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -372,7 +372,7 @@ describe("ProblemClient", () => {
 
         server
             .mockEndpoint()
-            .get("/problems-v2/problem-info")
+            .get("/problems-v2/v3/problem-info")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -553,7 +553,7 @@ describe("ProblemClient", () => {
 
         server
             .mockEndpoint()
-            .get("/problems-v2/problem-info/problemId")
+            .get("/problems-v2/v3/problem-info/problemId")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -734,7 +734,7 @@ describe("ProblemClient", () => {
 
         server
             .mockEndpoint()
-            .get("/problems-v2/problem-info/problemId/version/1")
+            .get("/problems-v2/v3/problem-info/problemId/version/1")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)

@@ -66,7 +66,7 @@ class RawUsersClient:
         SyncPager[User, ListUsersPaginationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/cursor",
             method="GET",
             params={
                 "page": page,
@@ -124,7 +124,7 @@ class RawUsersClient:
         SyncPager[User, ListUsersMixedTypePaginationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/mixed-type-cursor",
             method="POST",
             params={
                 "cursor": cursor,
@@ -175,7 +175,7 @@ class RawUsersClient:
         SyncPager[User, ListUsersPaginationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/body-cursor",
             method="POST",
             json={
                 "pagination": convert_and_respect_annotation_metadata(
@@ -313,7 +313,7 @@ class RawUsersClient:
         page = page if page is not None else 0
 
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/offset",
             method="GET",
             params={
                 "page": page,
@@ -385,7 +385,7 @@ class RawUsersClient:
         page = page if page is not None else 1
 
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/double-offset",
             method="GET",
             params={
                 "page": page,
@@ -441,7 +441,7 @@ class RawUsersClient:
         SyncPager[User, ListUsersPaginationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/body-offset",
             method="POST",
             json={
                 "pagination": convert_and_respect_annotation_metadata(
@@ -507,7 +507,7 @@ class RawUsersClient:
         page = page if page is not None else 1
 
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/offset-step",
             method="GET",
             params={
                 "page": page,
@@ -574,7 +574,7 @@ class RawUsersClient:
         page = page if page is not None else 1
 
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/offset-has-next-page",
             method="GET",
             params={
                 "page": page,
@@ -626,7 +626,7 @@ class RawUsersClient:
         SyncPager[User, ListUsersExtendedResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/extended",
             method="GET",
             params={
                 "cursor": cursor,
@@ -676,7 +676,7 @@ class RawUsersClient:
         SyncPager[User, ListUsersExtendedOptionalListResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/extended-optional",
             method="GET",
             params={
                 "cursor": cursor,
@@ -728,7 +728,7 @@ class RawUsersClient:
         SyncPager[str, UsernameCursor]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/usernames",
             method="GET",
             params={
                 "starting_after": starting_after,
@@ -783,7 +783,7 @@ class RawUsersClient:
         SyncPager[str, typing.Optional[UsernameCursor]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/usernames-optional",
             method="GET",
             params={
                 "starting_after": starting_after,
@@ -844,7 +844,7 @@ class RawUsersClient:
         offset = offset if offset is not None else 1
 
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/global-config",
             method="GET",
             params={
                 "offset": offset,
@@ -1033,7 +1033,7 @@ class AsyncRawUsersClient:
         AsyncPager[User, ListUsersPaginationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/cursor",
             method="GET",
             params={
                 "page": page,
@@ -1094,7 +1094,7 @@ class AsyncRawUsersClient:
         AsyncPager[User, ListUsersMixedTypePaginationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/mixed-type-cursor",
             method="POST",
             params={
                 "cursor": cursor,
@@ -1148,7 +1148,7 @@ class AsyncRawUsersClient:
         AsyncPager[User, ListUsersPaginationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/body-cursor",
             method="POST",
             json={
                 "pagination": convert_and_respect_annotation_metadata(
@@ -1292,7 +1292,7 @@ class AsyncRawUsersClient:
         page = page if page is not None else 0
 
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/offset",
             method="GET",
             params={
                 "page": page,
@@ -1367,7 +1367,7 @@ class AsyncRawUsersClient:
         page = page if page is not None else 1
 
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/double-offset",
             method="GET",
             params={
                 "page": page,
@@ -1426,7 +1426,7 @@ class AsyncRawUsersClient:
         AsyncPager[User, ListUsersPaginationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/body-offset",
             method="POST",
             json={
                 "pagination": convert_and_respect_annotation_metadata(
@@ -1495,7 +1495,7 @@ class AsyncRawUsersClient:
         page = page if page is not None else 1
 
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/offset-step",
             method="GET",
             params={
                 "page": page,
@@ -1565,7 +1565,7 @@ class AsyncRawUsersClient:
         page = page if page is not None else 1
 
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/offset-has-next-page",
             method="GET",
             params={
                 "page": page,
@@ -1620,7 +1620,7 @@ class AsyncRawUsersClient:
         AsyncPager[User, ListUsersExtendedResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/extended",
             method="GET",
             params={
                 "cursor": cursor,
@@ -1673,7 +1673,7 @@ class AsyncRawUsersClient:
         AsyncPager[User, ListUsersExtendedOptionalListResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/extended-optional",
             method="GET",
             params={
                 "cursor": cursor,
@@ -1728,7 +1728,7 @@ class AsyncRawUsersClient:
         AsyncPager[str, UsernameCursor]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/usernames",
             method="GET",
             params={
                 "starting_after": starting_after,
@@ -1786,7 +1786,7 @@ class AsyncRawUsersClient:
         AsyncPager[str, typing.Optional[UsernameCursor]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/usernames-optional",
             method="GET",
             params={
                 "starting_after": starting_after,
@@ -1850,7 +1850,7 @@ class AsyncRawUsersClient:
         offset = offset if offset is not None else 1
 
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/global-config",
             method="GET",
             params={
                 "offset": offset,

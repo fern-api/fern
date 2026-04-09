@@ -17,7 +17,10 @@ public class GetWithPathAndErrorsTest : BaseMockServerTest
 
         Server
             .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("/params/path/param").UsingGet()
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/params/path-with-errors/param")
+                    .UsingGet()
             )
             .RespondWith(
                 WireMock

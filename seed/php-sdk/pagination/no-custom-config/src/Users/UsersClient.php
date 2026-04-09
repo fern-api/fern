@@ -570,7 +570,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users",
+                    path: "/users/cursor",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -621,7 +621,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users",
+                    path: "/users/mixed-type-cursor",
                     method: HttpMethod::POST,
                     query: $query,
                 ),
@@ -668,7 +668,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users",
+                    path: "/users/body-cursor",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -779,7 +779,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users",
+                    path: "/users/offset",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -839,7 +839,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users",
+                    path: "/users/double-offset",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -886,7 +886,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users",
+                    path: "/users/body-offset",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -943,7 +943,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users",
+                    path: "/users/offset-step",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -1000,7 +1000,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users",
+                    path: "/users/offset-has-next-page",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -1051,7 +1051,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users",
+                    path: "/users/extended",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -1102,7 +1102,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users",
+                    path: "/users/extended-optional",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -1153,7 +1153,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users",
+                    path: "/users/usernames",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -1204,7 +1204,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users",
+                    path: "/users/usernames-optional",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -1255,7 +1255,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users",
+                    path: "/users/global-config",
                     method: HttpMethod::GET,
                     query: $query,
                 ),

@@ -575,7 +575,7 @@ public partial class ServiceClient : IServiceClient
         var multipartFormRequest_ = new MultipartFormRequest
         {
             Method = HttpMethod.Post,
-            Path = "",
+            Path = "/form-encoded",
             Headers = _headers,
             Options = options,
         };

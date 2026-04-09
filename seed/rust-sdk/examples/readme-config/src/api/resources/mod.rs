@@ -44,7 +44,7 @@ impl ExamplesClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "",
+                "/echo",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -60,7 +60,7 @@ impl ExamplesClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "",
+                "/type",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

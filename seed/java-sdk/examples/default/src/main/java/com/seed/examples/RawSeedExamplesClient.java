@@ -34,9 +34,9 @@ public class RawSeedExamplesClient {
     }
 
     public SeedExamplesHttpResponse<String> echo(String request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl =
-                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
-
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("echo");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -80,9 +80,9 @@ public class RawSeedExamplesClient {
     }
 
     public SeedExamplesHttpResponse<Identifier> createType(Type request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl =
-                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
-
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("type");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

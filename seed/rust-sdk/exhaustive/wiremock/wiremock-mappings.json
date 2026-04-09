@@ -962,10 +962,10 @@
       }
     },
     {
-      "id": "711fc64f-4af9-4084-8c29-1e7a9e58be70",
+      "id": "723efb9e-21d8-433f-955f-93445b707050",
       "name": "getWithInlinePath - default",
       "request": {
-        "urlPathTemplate": "/params/path/{param}",
+        "urlPathTemplate": "/params/inline-path/{param}",
         "method": "GET",
         "headers": {
           "Authorization": {
@@ -985,7 +985,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "711fc64f-4af9-4084-8c29-1e7a9e58be70",
+      "uuid": "723efb9e-21d8-433f-955f-93445b707050",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -1030,10 +1030,10 @@
       "postServeActions": []
     },
     {
-      "id": "4125d349-732b-4ff7-948d-1eeb977ed13b",
+      "id": "bda3a04e-1afc-41fd-9b1c-8de289883364",
       "name": "getWithAllowMultipleQuery - default",
       "request": {
-        "urlPathTemplate": "/params",
+        "urlPathTemplate": "/params/allow-multiple",
         "method": "GET",
         "headers": {
           "Authorization": {
@@ -1048,7 +1048,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "4125d349-732b-4ff7-948d-1eeb977ed13b",
+      "uuid": "bda3a04e-1afc-41fd-9b1c-8de289883364",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -1098,10 +1098,10 @@
       }
     },
     {
-      "id": "c4f5012a-fb3f-45ac-b695-beedc3353ad8",
+      "id": "0a90ba7f-9a0a-47fa-9a87-158c09b22373",
       "name": "getWithInlinePathAndQuery - default",
       "request": {
-        "urlPathTemplate": "/params/path-query/{param}",
+        "urlPathTemplate": "/params/inline-path-query/{param}",
         "method": "GET",
         "headers": {
           "Authorization": {
@@ -1121,7 +1121,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "c4f5012a-fb3f-45ac-b695-beedc3353ad8",
+      "uuid": "0a90ba7f-9a0a-47fa-9a87-158c09b22373",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -1170,10 +1170,10 @@
       }
     },
     {
-      "id": "6bfc7195-b99c-4449-bf47-7c4f74f6f33b",
+      "id": "9e966b08-cae3-4008-9080-9e07f461069e",
       "name": "modifyWithInlinePath - default",
       "request": {
-        "urlPathTemplate": "/params/path/{param}",
+        "urlPathTemplate": "/params/inline-path/{param}",
         "method": "PUT",
         "headers": {
           "Authorization": {
@@ -1193,7 +1193,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "6bfc7195-b99c-4449-bf47-7c4f74f6f33b",
+      "uuid": "9e966b08-cae3-4008-9080-9e07f461069e",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -1242,10 +1242,10 @@
       }
     },
     {
-      "id": "6898aaa2-3e4b-403e-a91f-473b4eb84b93",
+      "id": "a49910b8-3c43-439b-b595-e77164cb0262",
       "name": "getWithPathAndErrors - default",
       "request": {
-        "urlPathTemplate": "/params/path/{param}",
+        "urlPathTemplate": "/params/path-with-errors/{param}",
         "method": "GET",
         "headers": {
           "Authorization": {
@@ -1265,7 +1265,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "6898aaa2-3e4b-403e-a91f-473b4eb84b93",
+      "uuid": "a49910b8-3c43-439b-b595-e77164cb0262",
       "persistent": true,
       "priority": 3,
       "metadata": {

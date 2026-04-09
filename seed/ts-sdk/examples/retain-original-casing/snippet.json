@@ -2,7 +2,7 @@
     "endpoints": [
         {
             "id": {
-                "path": "/",
+                "path": "/echo",
                 "method": "POST",
                 "identifier_override": "endpoint_.echo"
             },
@@ -13,7 +13,7 @@
         },
         {
             "id": {
-                "path": "/",
+                "path": "/type",
                 "method": "POST",
                 "identifier_override": "endpoint_.createType"
             },

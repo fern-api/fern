@@ -606,9 +606,11 @@ export class ServiceClient {
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
-            url:
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)),
+                "/form-encoded",
+            ),
             method: "POST",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -633,7 +635,7 @@ export class ServiceClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/form-encoded");
     }
 
     /**

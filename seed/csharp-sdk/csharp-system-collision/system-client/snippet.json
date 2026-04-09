@@ -16,7 +16,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/users",
+                "path": "/users/tasks",
                 "method": "POST",
                 "identifier_override": "endpoint_.createTask"
             },

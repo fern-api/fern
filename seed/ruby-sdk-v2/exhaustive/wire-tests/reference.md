@@ -1763,7 +1763,7 @@ GET with path param
 <dd>
 
 ```ruby
-client.endpoints.params.get_with_path(param: "param")
+client.endpoints.params.get_with_inline_path(param: "param")
 ```
 </dd>
 </dl>
@@ -1898,10 +1898,7 @@ GET with multiple of same query param
 <dd>
 
 ```ruby
-client.endpoints.params.get_with_query(
-  query: "query",
-  number: 1
-)
+client.endpoints.params.get_with_allow_multiple_query
 ```
 </dd>
 </dl>
@@ -2044,7 +2041,7 @@ GET with path and query params
 <dd>
 
 ```ruby
-client.endpoints.params.get_with_path_and_query(
+client.endpoints.params.get_with_inline_path_and_query(
   param: "param",
   query: "query"
 )
@@ -2190,9 +2187,9 @@ PUT to update with path param
 <dd>
 
 ```ruby
-client.endpoints.params.modify_with_path(
+client.endpoints.params.modify_with_inline_path(
   param: "param",
-  request: "string"
+  body: "string"
 )
 ```
 </dd>
@@ -2387,7 +2384,7 @@ GET with path param that can throw errors
 <dd>
 
 ```ruby
-client.endpoints.params.get_with_path(param: "param")
+client.endpoints.params.get_with_path_and_errors(param: "param")
 ```
 </dd>
 </dl>

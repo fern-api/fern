@@ -143,7 +143,7 @@ async fn main() {
         ..Default::default()
     };
     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
-    client.user.get_with_bearer(None).await;
+    client.user.get_with_api_key(None).await;
 }
 ```
 </dd>
@@ -178,7 +178,7 @@ async fn main() {
         ..Default::default()
     };
     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
-    client.user.get_with_bearer(None).await;
+    client.user.get_with_o_auth(None).await;
 }
 ```
 </dd>
@@ -213,7 +213,7 @@ async fn main() {
         ..Default::default()
     };
     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
-    client.user.get_with_bearer(None).await;
+    client.user.get_with_basic(None).await;
 }
 ```
 </dd>
@@ -248,7 +248,7 @@ async fn main() {
         ..Default::default()
     };
     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
-    client.user.get_with_bearer(None).await;
+    client.user.get_with_inferred_auth(None).await;
 }
 ```
 </dd>
@@ -283,7 +283,7 @@ async fn main() {
         ..Default::default()
     };
     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
-    client.user.get_with_bearer(None).await;
+    client.user.get_with_any_auth(None).await;
 }
 ```
 </dd>
@@ -318,7 +318,7 @@ async fn main() {
         ..Default::default()
     };
     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
-    client.user.get_with_bearer(None).await;
+    client.user.get_with_all_auth(None).await;
 }
 ```
 </dd>

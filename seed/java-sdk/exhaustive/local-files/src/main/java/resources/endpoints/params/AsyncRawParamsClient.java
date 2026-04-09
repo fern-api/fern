@@ -138,7 +138,7 @@ public class AsyncRawParamsClient {
         GetWithInlinePath request, RequestOptions requestOptions) {
       HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
         .addPathSegments("params")
-        .addPathSegments("path")
+        .addPathSegments("inline-path")
         .addPathSegment(param);if (requestOptions != null) {
           requestOptions.getQueryParameters().forEach((_key, _value) -> {
             httpUrl.addQueryParameter(_key, _value);
@@ -254,7 +254,7 @@ public class AsyncRawParamsClient {
             GetWithMultipleQuery request, RequestOptions requestOptions) {
           HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
             .addPathSegments("params")
-            ;QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), true);
+            .addPathSegments("allow-multiple");QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), true);
             QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), true);
             if (requestOptions != null) {
               requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -370,7 +370,7 @@ public class AsyncRawParamsClient {
                 String param, GetWithInlinePathAndQuery request, RequestOptions requestOptions) {
               HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
                 .addPathSegments("params")
-                .addPathSegments("path-query")
+                .addPathSegments("inline-path-query")
                 .addPathSegment(param);QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
                 if (requestOptions != null) {
                   requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -495,7 +495,7 @@ public class AsyncRawParamsClient {
                     RequestOptions requestOptions) {
                   HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
                     .addPathSegments("params")
-                    .addPathSegments("path")
+                    .addPathSegments("inline-path")
                     .addPathSegment(param);if (requestOptions != null) {
                       requestOptions.getQueryParameters().forEach((_key, _value) -> {
                         httpUrl.addQueryParameter(_key, _value);
@@ -693,7 +693,7 @@ public class AsyncRawParamsClient {
                           String param, RequestOptions requestOptions) {
                         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
                           .addPathSegments("params")
-                          .addPathSegments("path")
+                          .addPathSegments("path-with-errors")
                           .addPathSegment(param);if (requestOptions != null) {
                             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                               httpUrl.addQueryParameter(_key, _value);

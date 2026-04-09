@@ -36,6 +36,7 @@ class RawBaseSeedExhaustive:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
+            "echo",
             method="POST",
             json=request,
             request_options=request_options,
@@ -76,6 +77,7 @@ class RawBaseSeedExhaustive:
         HttpResponse[Identifier]
         """
         _response = self._client_wrapper.httpx_client.request(
+            "type",
             method="POST",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=Type, direction="write"),
             request_options=request_options,
@@ -121,6 +123,7 @@ class AsyncRawBaseSeedExhaustive:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
+            "echo",
             method="POST",
             json=request,
             request_options=request_options,
@@ -161,6 +164,7 @@ class AsyncRawBaseSeedExhaustive:
         AsyncHttpResponse[Identifier]
         """
         _response = await self._client_wrapper.httpx_client.request(
+            "type",
             method="POST",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=Type, direction="write"),
             request_options=request_options,

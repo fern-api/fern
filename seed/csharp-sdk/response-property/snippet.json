@@ -16,7 +16,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/movie",
+                "path": "/movie/docs",
                 "method": "POST",
                 "identifier_override": "endpoint_service.getMovieDocs"
             },
@@ -28,7 +28,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/movie",
+                "path": "/movie/name",
                 "method": "POST",
                 "identifier_override": "endpoint_service.getMovieName"
             },
@@ -40,7 +40,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/movie",
+                "path": "/movie/metadata",
                 "method": "POST",
                 "identifier_override": "endpoint_service.getMovieMetadata"
             },
@@ -52,7 +52,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/movie",
+                "path": "/movie/optional",
                 "method": "POST",
                 "identifier_override": "endpoint_service.getOptionalMovie"
             },
@@ -64,7 +64,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/movie",
+                "path": "/movie/optional/docs",
                 "method": "POST",
                 "identifier_override": "endpoint_service.getOptionalMovieDocs"
             },
@@ -76,7 +76,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/movie",
+                "path": "/movie/optional/name",
                 "method": "POST",
                 "identifier_override": "endpoint_service.getOptionalMovieName"
             },

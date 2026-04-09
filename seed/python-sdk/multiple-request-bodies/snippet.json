@@ -4,7 +4,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/documents/upload",
+                "path": "/documents/upload/json",
                 "method": "POST",
                 "identifier_override": "endpoint_.uploadJsonDocument"
             },

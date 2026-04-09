@@ -234,7 +234,7 @@ $client->types->update(
 <dd>
 
 ```php
-$client->bigunion->get(
+$client->union->get(
     'id',
 );
 ```

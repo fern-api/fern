@@ -56,7 +56,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "movie",
+          path: "movie/docs",
           body: params,
           request_options: request_options
         )
@@ -88,7 +88,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "movie",
+          path: "movie/name",
           body: params,
           request_options: request_options
         )
@@ -120,7 +120,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "movie",
+          path: "movie/metadata",
           body: params,
           request_options: request_options
         )
@@ -152,7 +152,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "movie",
+          path: "movie/optional",
           body: params,
           request_options: request_options
         )
@@ -182,7 +182,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "movie",
+          path: "movie/optional/docs",
           body: params,
           request_options: request_options
         )
@@ -214,7 +214,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "movie",
+          path: "movie/optional/name",
           body: params,
           request_options: request_options
         )

@@ -59,9 +59,9 @@ public class AsyncRawDeepCursorPathClient {
 
     public CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> doThing(
             A request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl =
-                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
-
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("do-thing");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -152,9 +152,9 @@ public class AsyncRawDeepCursorPathClient {
 
     public CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> doThingRequired(
             MainRequired request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl =
-                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
-
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("do-thing-required");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -249,9 +249,9 @@ public class AsyncRawDeepCursorPathClient {
 
     public CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> doThingInline(
             InlineA request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl =
-                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
-
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("do-thing-inline");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

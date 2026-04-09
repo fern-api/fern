@@ -1092,9 +1092,9 @@ public class AsyncRawServiceClient {
 
     public CompletableFuture<SeedFileUploadHttpResponse<Void>> withFormEncodedContainers(
             MyOtherRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl =
-                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
-
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("form-encoded");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

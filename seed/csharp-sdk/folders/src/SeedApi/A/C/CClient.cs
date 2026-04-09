@@ -31,7 +31,7 @@ public partial class CClient : ICClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "",
+                    Path = "/a/c",
                     Headers = _headers,
                     Options = options,
                 },

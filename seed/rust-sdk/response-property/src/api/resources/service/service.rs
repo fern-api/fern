@@ -37,7 +37,7 @@ impl ServiceClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "movie",
+                "movie/docs",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -53,7 +53,7 @@ impl ServiceClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "movie",
+                "movie/name",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -69,7 +69,7 @@ impl ServiceClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "movie",
+                "movie/metadata",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -85,7 +85,7 @@ impl ServiceClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "movie",
+                "movie/optional",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -101,7 +101,7 @@ impl ServiceClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "movie",
+                "movie/optional/docs",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -117,7 +117,7 @@ impl ServiceClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "movie",
+                "movie/optional/name",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

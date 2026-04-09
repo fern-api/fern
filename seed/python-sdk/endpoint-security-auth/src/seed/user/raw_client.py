@@ -31,7 +31,7 @@ class RawUserClient:
         HttpResponse[typing.List[User]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/bearer",
             method="GET",
             request_options=request_options,
         )
@@ -68,7 +68,7 @@ class RawUserClient:
         HttpResponse[typing.List[User]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/api-key",
             method="GET",
             request_options=request_options,
         )
@@ -105,7 +105,7 @@ class RawUserClient:
         HttpResponse[typing.List[User]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/oauth",
             method="GET",
             request_options=request_options,
         )
@@ -142,7 +142,7 @@ class RawUserClient:
         HttpResponse[typing.List[User]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/basic",
             method="GET",
             request_options=request_options,
         )
@@ -179,7 +179,7 @@ class RawUserClient:
         HttpResponse[typing.List[User]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/inferred",
             method="GET",
             request_options=request_options,
         )
@@ -216,7 +216,7 @@ class RawUserClient:
         HttpResponse[typing.List[User]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/any",
             method="GET",
             request_options=request_options,
         )
@@ -253,7 +253,7 @@ class RawUserClient:
         HttpResponse[typing.List[User]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "users",
+            "users/all",
             method="GET",
             request_options=request_options,
         )
@@ -295,7 +295,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[typing.List[User]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/bearer",
             method="GET",
             request_options=request_options,
         )
@@ -332,7 +332,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[typing.List[User]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/api-key",
             method="GET",
             request_options=request_options,
         )
@@ -369,7 +369,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[typing.List[User]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/oauth",
             method="GET",
             request_options=request_options,
         )
@@ -406,7 +406,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[typing.List[User]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/basic",
             method="GET",
             request_options=request_options,
         )
@@ -443,7 +443,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[typing.List[User]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/inferred",
             method="GET",
             request_options=request_options,
         )
@@ -480,7 +480,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[typing.List[User]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/any",
             method="GET",
             request_options=request_options,
         )
@@ -517,7 +517,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[typing.List[User]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "users",
+            "users/all",
             method="GET",
             request_options=request_options,
         )

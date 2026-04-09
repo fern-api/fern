@@ -40,7 +40,7 @@ public class ListWithOffsetStepPaginationTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/users")
+                    .WithPath("/users/offset-step")
                     .WithParam("page", "1")
                     .WithParam("limit", "1")
                     .WithParam("order", "asc")

@@ -42,7 +42,7 @@ public class UploadJsonDocumentTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/documents/upload")
+                    .WithPath("/documents/upload/json")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -89,7 +89,7 @@ public class UploadJsonDocumentTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/documents/upload")
+                    .WithPath("/documents/upload/json")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)

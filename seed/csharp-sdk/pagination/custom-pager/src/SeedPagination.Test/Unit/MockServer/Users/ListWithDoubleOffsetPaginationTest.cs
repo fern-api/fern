@@ -40,7 +40,7 @@ public class ListWithDoubleOffsetPaginationTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/users")
+                    .WithPath("/users/double-offset")
                     .WithParam("page", "1.1")
                     .WithParam("per_page", "1.1")
                     .WithParam("order", "asc")

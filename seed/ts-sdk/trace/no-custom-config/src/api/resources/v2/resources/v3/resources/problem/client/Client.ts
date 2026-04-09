@@ -51,7 +51,7 @@ export class ProblemClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                "/problems-v2/lightweight-problem-info",
+                "/problems-v2/v3/lightweight-problem-info",
             ),
             method: "GET",
             headers: _headers,
@@ -81,7 +81,7 @@ export class ProblemClient {
             _response.error,
             _response.rawResponse,
             "GET",
-            "/problems-v2/lightweight-problem-info",
+            "/problems-v2/v3/lightweight-problem-info",
         );
     }
 
@@ -114,7 +114,7 @@ export class ProblemClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                "/problems-v2/problem-info",
+                "/problems-v2/v3/problem-info",
             ),
             method: "GET",
             headers: _headers,
@@ -137,7 +137,7 @@ export class ProblemClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/problems-v2/problem-info");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/problems-v2/v3/problem-info");
     }
 
     /**
@@ -172,7 +172,7 @@ export class ProblemClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${core.url.encodePathParam(problemId)}`,
+                `/problems-v2/v3/problem-info/${core.url.encodePathParam(problemId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -199,7 +199,7 @@ export class ProblemClient {
             _response.error,
             _response.rawResponse,
             "GET",
-            "/problems-v2/problem-info/{problemId}",
+            "/problems-v2/v3/problem-info/{problemId}",
         );
     }
 
@@ -240,7 +240,7 @@ export class ProblemClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${core.url.encodePathParam(problemId)}/version/${core.url.encodePathParam(problemVersion)}`,
+                `/problems-v2/v3/problem-info/${core.url.encodePathParam(problemId)}/version/${core.url.encodePathParam(problemVersion)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -267,7 +267,7 @@ export class ProblemClient {
             _response.error,
             _response.rawResponse,
             "GET",
-            "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+            "/problems-v2/v3/problem-info/{problemId}/version/{problemVersion}",
         );
     }
 }

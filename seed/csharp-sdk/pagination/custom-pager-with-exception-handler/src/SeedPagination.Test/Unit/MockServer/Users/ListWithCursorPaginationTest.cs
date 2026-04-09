@@ -40,7 +40,7 @@ public class ListWithCursorPaginationTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/users")
+                    .WithPath("/users/cursor")
                     .WithParam("page", "1")
                     .WithParam("per_page", "1")
                     .WithParam("order", "asc")

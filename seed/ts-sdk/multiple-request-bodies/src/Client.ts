@@ -51,7 +51,7 @@ export class SeedApiClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedApiEnvironment.Default,
-                "documents/upload",
+                "documents/upload/json",
             ),
             method: "POST",
             headers: _headers,
@@ -77,7 +77,7 @@ export class SeedApiClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/documents/upload");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/documents/upload/json");
     }
 
     /**
@@ -108,7 +108,7 @@ export class SeedApiClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedApiEnvironment.Default,
-                "documents/upload",
+                "documents/upload/pdf",
             ),
             method: "POST",
             headers: _headers,
@@ -135,7 +135,7 @@ export class SeedApiClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/documents/upload");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/documents/upload/pdf");
     }
 
     /**

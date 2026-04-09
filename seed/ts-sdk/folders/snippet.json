@@ -13,7 +13,7 @@
         },
         {
             "id": {
-                "path": "/",
+                "path": "/a/b",
                 "method": "POST",
                 "identifier_override": "endpoint_a/b.foo"
             },
@@ -24,7 +24,7 @@
         },
         {
             "id": {
-                "path": "/",
+                "path": "/a/c",
                 "method": "POST",
                 "identifier_override": "endpoint_a/c.foo"
             },
@@ -35,7 +35,7 @@
         },
         {
             "id": {
-                "path": "/",
+                "path": "/folder",
                 "method": "POST",
                 "identifier_override": "endpoint_folder.foo"
             },

@@ -62,7 +62,7 @@ export class ProblemClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                "/problems-v2/lightweight-problem-info",
+                "/problems-v2/v3/lightweight-problem-info",
             ),
             method: "GET",
             headers: _headers,
@@ -136,7 +136,7 @@ export class ProblemClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                "/problems-v2/problem-info",
+                "/problems-v2/v3/problem-info",
             ),
             method: "GET",
             headers: _headers,
@@ -213,7 +213,7 @@ export class ProblemClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}`,
+                `/problems-v2/v3/problem-info/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}`,
             ),
             method: "GET",
             headers: _headers,
@@ -295,7 +295,7 @@ export class ProblemClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}/version/${core.url.encodePathParam(problemVersion)}`,
+                `/problems-v2/v3/problem-info/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}/version/${core.url.encodePathParam(problemVersion)}`,
             ),
             method: "GET",
             headers: _headers,

@@ -54,7 +54,7 @@ client.folder_a.service.get_direct_thread
 <dd>
 
 ```ruby
-client.folder_a.service.get_direct_thread
+client.folder_d.service.get_direct_thread
 ```
 </dd>
 </dl>

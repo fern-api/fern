@@ -29,6 +29,7 @@ class RawServiceClient:
         HttpResponse[Response]
         """
         _response = self._client_wrapper.httpx_client.request(
+            "folder-a",
             method="GET",
             request_options=request_options,
         )
@@ -70,6 +71,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[Response]
         """
         _response = await self._client_wrapper.httpx_client.request(
+            "folder-a",
             method="GET",
             request_options=request_options,
         )

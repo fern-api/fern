@@ -21,7 +21,7 @@ impl UsersClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "/users/cursor",
                 None,
                 QueryBuilder::new()
                     .int("page", request.page.clone())
@@ -42,7 +42,7 @@ impl UsersClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/users",
+                "/users/mixed-type-cursor",
                 None,
                 QueryBuilder::new()
                     .string("cursor", request.cursor.clone())
@@ -60,7 +60,7 @@ impl UsersClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/users",
+                "/users/body-cursor",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -103,7 +103,7 @@ impl UsersClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "/users/offset",
                 None,
                 QueryBuilder::new()
                     .int("page", request.page.clone())
@@ -124,7 +124,7 @@ impl UsersClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "/users/double-offset",
                 None,
                 QueryBuilder::new()
                     .float("page", request.page.clone())
@@ -145,7 +145,7 @@ impl UsersClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/users",
+                "/users/body-offset",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -161,7 +161,7 @@ impl UsersClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "/users/offset-step",
                 None,
                 QueryBuilder::new()
                     .int("page", request.page.clone())
@@ -181,7 +181,7 @@ impl UsersClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "/users/offset-has-next-page",
                 None,
                 QueryBuilder::new()
                     .int("page", request.page.clone())
@@ -201,7 +201,7 @@ impl UsersClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "/users/extended",
                 None,
                 QueryBuilder::new()
                     .uuid("cursor", request.cursor.clone())
@@ -219,7 +219,7 @@ impl UsersClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "/users/extended-optional",
                 None,
                 QueryBuilder::new()
                     .uuid("cursor", request.cursor.clone())
@@ -237,7 +237,7 @@ impl UsersClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "/users/usernames",
                 None,
                 QueryBuilder::new()
                     .string("starting_after", request.starting_after.clone())
@@ -255,7 +255,7 @@ impl UsersClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "/users/usernames-optional",
                 None,
                 QueryBuilder::new()
                     .string("starting_after", request.starting_after.clone())
@@ -273,7 +273,7 @@ impl UsersClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "/users/global-config",
                 None,
                 QueryBuilder::new()
                     .int("offset", request.offset.clone())

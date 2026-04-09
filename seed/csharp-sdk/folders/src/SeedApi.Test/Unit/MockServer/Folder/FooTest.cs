@@ -11,7 +11,7 @@ public class FooTest : BaseMockServerTest
     public void MockServerTest()
     {
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/").UsingPost())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/folder").UsingPost())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(async () => await Client.Folder.FooAsync());

@@ -13,7 +13,7 @@
         },
         {
             "id": {
-                "path": "/movie",
+                "path": "/movie/docs",
                 "method": "POST",
                 "identifier_override": "endpoint_service.getMovieDocs"
             },
@@ -24,7 +24,7 @@
         },
         {
             "id": {
-                "path": "/movie",
+                "path": "/movie/name",
                 "method": "POST",
                 "identifier_override": "endpoint_service.getMovieName"
             },
@@ -35,7 +35,7 @@
         },
         {
             "id": {
-                "path": "/movie",
+                "path": "/movie/metadata",
                 "method": "POST",
                 "identifier_override": "endpoint_service.getMovieMetadata"
             },
@@ -46,7 +46,7 @@
         },
         {
             "id": {
-                "path": "/movie",
+                "path": "/movie/optional",
                 "method": "POST",
                 "identifier_override": "endpoint_service.getOptionalMovie"
             },
@@ -57,7 +57,7 @@
         },
         {
             "id": {
-                "path": "/movie",
+                "path": "/movie/optional/docs",
                 "method": "POST",
                 "identifier_override": "endpoint_service.getOptionalMovieDocs"
             },
@@ -68,7 +68,7 @@
         },
         {
             "id": {
-                "path": "/movie",
+                "path": "/movie/optional/name",
                 "method": "POST",
                 "identifier_override": "endpoint_service.getOptionalMovieName"
             },

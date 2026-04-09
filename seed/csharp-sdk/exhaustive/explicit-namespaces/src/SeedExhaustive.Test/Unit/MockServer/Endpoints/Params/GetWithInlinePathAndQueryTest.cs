@@ -15,7 +15,7 @@ public class GetWithInlinePathAndQueryTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/params/path-query/param")
+                    .WithPath("/params/inline-path-query/param")
                     .WithParam("query", "query")
                     .UsingGet()
             )

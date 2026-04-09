@@ -2378,9 +2378,12 @@ GET with path param
 <dd>
 
 ```go
-client.Endpoints.Params.GetWithPath(
+request := &fern.GetWithInlinePath{
+        Param: "param",
+    }
+client.Endpoints.Params.GetWithInlinePath(
         context.TODO(),
-        "param",
+        request,
     )
 }
 ```
@@ -2506,11 +2509,15 @@ GET with multiple of same query param
 <dd>
 
 ```go
-request := &fern.GetWithQuery{
-        Query: "query",
-        Number: 1,
+request := &fern.GetWithMultipleQuery{
+        Query: []string{
+            "query",
+        },
+        Number: []int{
+            1,
+        },
     }
-client.Endpoints.Params.GetWithQuery(
+client.Endpoints.Params.GetWithAllowMultipleQuery(
         context.TODO(),
         request,
     )
@@ -2646,12 +2653,12 @@ GET with path and query params
 <dd>
 
 ```go
-request := &fern.GetWithPathAndQuery{
+request := &fern.GetWithInlinePathAndQuery{
+        Param: "param",
         Query: "query",
     }
-client.Endpoints.Params.GetWithPathAndQuery(
+client.Endpoints.Params.GetWithInlinePathAndQuery(
         context.TODO(),
-        "param",
         request,
     )
 }
@@ -2783,9 +2790,12 @@ PUT to update with path param
 <dd>
 
 ```go
-client.Endpoints.Params.ModifyWithPath(
+request := &fern.ModifyResourceAtInlinedPath{
+        Param: "param",
+        Body: "string",
+    }
+client.Endpoints.Params.ModifyWithInlinePath(
         context.TODO(),
-        "param",
         request,
     )
 }

@@ -18,7 +18,7 @@ impl UserClient {
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users", None, None, options)
+            .execute_request(Method::GET, "users/bearer", None, None, options)
             .await
     }
 
@@ -27,7 +27,7 @@ impl UserClient {
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users", None, None, options)
+            .execute_request(Method::GET, "users/api-key", None, None, options)
             .await
     }
 
@@ -36,7 +36,7 @@ impl UserClient {
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users", None, None, options)
+            .execute_request(Method::GET, "users/oauth", None, None, options)
             .await
     }
 
@@ -45,7 +45,7 @@ impl UserClient {
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users", None, None, options)
+            .execute_request(Method::GET, "users/basic", None, None, options)
             .await
     }
 
@@ -54,7 +54,7 @@ impl UserClient {
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users", None, None, options)
+            .execute_request(Method::GET, "users/inferred", None, None, options)
             .await
     }
 
@@ -63,7 +63,7 @@ impl UserClient {
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users", None, None, options)
+            .execute_request(Method::GET, "users/any", None, None, options)
             .await
     }
 
@@ -72,7 +72,7 @@ impl UserClient {
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users", None, None, options)
+            .execute_request(Method::GET, "users/all", None, None, options)
             .await
     }
 }

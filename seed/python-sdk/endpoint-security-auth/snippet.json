@@ -17,7 +17,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/bearer",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithBearer"
             },
@@ -30,7 +30,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/api-key",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithApiKey"
             },
@@ -43,7 +43,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/oauth",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithOAuth"
             },
@@ -56,7 +56,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/basic",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithBasic"
             },
@@ -69,7 +69,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/inferred",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithInferredAuth"
             },
@@ -82,7 +82,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/any",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithAnyAuth"
             },
@@ -95,7 +95,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/users",
+                "path": "/users/all",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithAllAuth"
             },

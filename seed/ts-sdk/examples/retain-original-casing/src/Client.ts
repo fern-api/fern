@@ -56,9 +56,11 @@ export class SeedExamplesClient {
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url:
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)),
+                "/echo",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -83,7 +85,7 @@ export class SeedExamplesClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/echo");
     }
 
     /**
@@ -106,9 +108,11 @@ export class SeedExamplesClient {
     ): Promise<core.WithRawResponse<SeedExamples.Identifier>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url:
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)),
+                "/type",
+            ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -133,7 +137,7 @@ export class SeedExamplesClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/type");
     }
 
     /**

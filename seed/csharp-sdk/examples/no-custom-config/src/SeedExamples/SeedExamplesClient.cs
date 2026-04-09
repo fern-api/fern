@@ -66,7 +66,7 @@ public partial class SeedExamplesClient : ISeedExamplesClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "",
+                    Path = "/echo",
                     Body = request,
                     Headers = _headers,
                     Options = options,
@@ -132,7 +132,7 @@ public partial class SeedExamplesClient : ISeedExamplesClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "",
+                    Path = "/type",
                     Body = request,
                     Headers = _headers,
                     Options = options,

@@ -24,7 +24,7 @@ public class RefreshTokenTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/token")
+                    .WithPath("/token/refresh")
                     .WithHeader("Content-Type", "application/x-www-form-urlencoded")
                     .UsingPost()
                     .WithBody(
@@ -74,7 +74,7 @@ public class RefreshTokenTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/token")
+                    .WithPath("/token/refresh")
                     .WithHeader("Content-Type", "application/x-www-form-urlencoded")
                     .UsingPost()
                     .WithBody(

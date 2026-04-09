@@ -35,7 +35,7 @@ public class RefreshTokenTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/token")
+                    .WithPath("/token/refresh")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
@@ -86,7 +86,7 @@ public class RefreshTokenTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/token")
+                    .WithPath("/token/refresh")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

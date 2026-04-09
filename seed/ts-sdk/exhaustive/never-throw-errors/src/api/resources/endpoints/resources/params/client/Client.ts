@@ -117,7 +117,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
+                `/params/inline-path/${core.url.encodePathParam(param)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -263,7 +263,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/params",
+                "/params/allow-multiple",
             ),
             method: "GET",
             headers: _headers,
@@ -411,7 +411,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path-query/${core.url.encodePathParam(param)}`,
+                `/params/inline-path-query/${core.url.encodePathParam(param)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -549,7 +549,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
+                `/params/inline-path/${core.url.encodePathParam(param)}`,
             ),
             method: "PUT",
             headers: _headers,
@@ -766,7 +766,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
+                `/params/path-with-errors/${core.url.encodePathParam(param)}`,
             ),
             method: "GET",
             headers: _headers,

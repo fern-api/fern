@@ -30,7 +30,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/",
+                "path": "/echo",
                 "method": "POST",
                 "identifier_override": "endpoint_.echo"
             },
@@ -43,7 +43,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/",
+                "path": "/type",
                 "method": "POST",
                 "identifier_override": "endpoint_.createType"
             },

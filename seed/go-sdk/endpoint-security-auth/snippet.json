@@ -13,18 +13,7 @@
         },
         {
             "id": {
-                "path": "/users",
-                "method": "GET",
-                "identifier_override": "endpoint_user.getWithApiKey"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.GetWithAPIKey(\n\tcontext.TODO(),\n)\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/users",
+                "path": "/users/all",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithAllAuth"
             },
@@ -35,7 +24,7 @@
         },
         {
             "id": {
-                "path": "/users",
+                "path": "/users/any",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithAnyAuth"
             },
@@ -46,7 +35,18 @@
         },
         {
             "id": {
-                "path": "/users",
+                "path": "/users/api-key",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithApiKey"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.GetWithAPIKey(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/basic",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithBasic"
             },
@@ -57,7 +57,7 @@
         },
         {
             "id": {
-                "path": "/users",
+                "path": "/users/bearer",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithBearer"
             },
@@ -68,7 +68,7 @@
         },
         {
             "id": {
-                "path": "/users",
+                "path": "/users/inferred",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithInferredAuth"
             },
@@ -79,7 +79,7 @@
         },
         {
             "id": {
-                "path": "/users",
+                "path": "/users/oauth",
                 "method": "GET",
                 "identifier_override": "endpoint_user.getWithOAuth"
             },

@@ -31,7 +31,7 @@ describe("ServiceClient", () => {
 
         server
             .mockEndpoint()
-            .post("/movie")
+            .post("/movie/docs")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -50,7 +50,7 @@ describe("ServiceClient", () => {
 
         server
             .mockEndpoint()
-            .post("/movie")
+            .post("/movie/name")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -69,7 +69,7 @@ describe("ServiceClient", () => {
 
         server
             .mockEndpoint()
-            .post("/movie")
+            .post("/movie/metadata")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -88,7 +88,7 @@ describe("ServiceClient", () => {
 
         server
             .mockEndpoint()
-            .post("/movie")
+            .post("/movie/optional")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -107,7 +107,7 @@ describe("ServiceClient", () => {
 
         server
             .mockEndpoint()
-            .post("/movie")
+            .post("/movie/optional/docs")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -126,7 +126,7 @@ describe("ServiceClient", () => {
 
         server
             .mockEndpoint()
-            .post("/movie")
+            .post("/movie/optional/name")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)

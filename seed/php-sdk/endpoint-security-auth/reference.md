@@ -110,7 +110,7 @@ $client->user->getWithBearer();
 <dd>
 
 ```php
-$client->user->getWithBearer();
+$client->user->getWithApiKey();
 ```
 </dd>
 </dl>
@@ -135,7 +135,7 @@ $client->user->getWithBearer();
 <dd>
 
 ```php
-$client->user->getWithBearer();
+$client->user->getWithOAuth();
 ```
 </dd>
 </dl>
@@ -160,7 +160,7 @@ $client->user->getWithBearer();
 <dd>
 
 ```php
-$client->user->getWithBearer();
+$client->user->getWithBasic();
 ```
 </dd>
 </dl>
@@ -185,7 +185,7 @@ $client->user->getWithBearer();
 <dd>
 
 ```php
-$client->user->getWithBearer();
+$client->user->getWithInferredAuth();
 ```
 </dd>
 </dl>
@@ -210,7 +210,7 @@ $client->user->getWithBearer();
 <dd>
 
 ```php
-$client->user->getWithBearer();
+$client->user->getWithAnyAuth();
 ```
 </dd>
 </dl>
@@ -235,7 +235,7 @@ $client->user->getWithBearer();
 <dd>
 
 ```php
-$client->user->getWithBearer();
+$client->user->getWithAllAuth();
 ```
 </dd>
 </dl>

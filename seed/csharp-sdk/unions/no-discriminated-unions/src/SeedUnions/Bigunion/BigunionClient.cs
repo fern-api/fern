@@ -29,7 +29,7 @@ public partial class BigunionClient : IBigunionClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = string.Format("/{0}", ValueConvert.ToPathParameterString(id)),
+                    Path = string.Format("/bigunion/{0}", ValueConvert.ToPathParameterString(id)),
                     Headers = _headers,
                     Options = options,
                 },
@@ -94,7 +94,7 @@ public partial class BigunionClient : IBigunionClient
                 new JsonRequest
                 {
                     Method = HttpMethodExtensions.Patch,
-                    Path = "",
+                    Path = "/bigunion",
                     Body = request,
                     Headers = _headers,
                     Options = options,
@@ -160,7 +160,7 @@ public partial class BigunionClient : IBigunionClient
                 new JsonRequest
                 {
                     Method = HttpMethodExtensions.Patch,
-                    Path = "/many",
+                    Path = "/bigunion/many",
                     Body = request,
                     Headers = _headers,
                     Options = options,

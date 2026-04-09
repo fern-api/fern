@@ -152,7 +152,7 @@ client = SeedEndpointSecurityAuth(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_with_bearer()
+client.user.get_with_api_key()
 
 ```
 </dd>
@@ -200,7 +200,7 @@ client = SeedEndpointSecurityAuth(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_with_bearer()
+client.user.get_with_o_auth()
 
 ```
 </dd>
@@ -248,7 +248,7 @@ client = SeedEndpointSecurityAuth(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_with_bearer()
+client.user.get_with_basic()
 
 ```
 </dd>
@@ -296,7 +296,7 @@ client = SeedEndpointSecurityAuth(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_with_bearer()
+client.user.get_with_inferred_auth()
 
 ```
 </dd>
@@ -344,7 +344,7 @@ client = SeedEndpointSecurityAuth(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_with_bearer()
+client.user.get_with_any_auth()
 
 ```
 </dd>
@@ -392,7 +392,7 @@ client = SeedEndpointSecurityAuth(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_with_bearer()
+client.user.get_with_all_auth()
 
 ```
 </dd>

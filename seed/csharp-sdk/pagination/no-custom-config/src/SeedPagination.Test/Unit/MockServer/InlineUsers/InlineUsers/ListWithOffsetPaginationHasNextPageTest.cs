@@ -42,7 +42,7 @@ public class ListWithOffsetPaginationHasNextPageTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/inline-users")
+                    .WithPath("/inline-users/offset-has-next-page")
                     .WithParam("page", "1")
                     .WithParam("limit", "1")
                     .WithParam("order", "asc")

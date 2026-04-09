@@ -12,7 +12,7 @@ describe("SeedApiClient", () => {
 
         server
             .mockEndpoint()
-            .post("/documents/upload")
+            .post("/documents/upload/json")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)

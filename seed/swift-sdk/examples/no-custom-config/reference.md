@@ -75,7 +75,9 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    _ = try await client.echo(request: "primitive")
+    _ = try await client.createType(request: `Type`.basicType(
+        .primitive
+    ))
 }
 
 try await main()

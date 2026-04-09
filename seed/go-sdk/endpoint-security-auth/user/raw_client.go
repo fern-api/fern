@@ -41,7 +41,7 @@ func (r *RawClient) GetWithBearer(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/users"
+	endpointURL := baseURL + "/users/bearer"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -80,7 +80,7 @@ func (r *RawClient) GetWithAPIKey(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/users"
+	endpointURL := baseURL + "/users/api-key"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -119,7 +119,7 @@ func (r *RawClient) GetWithOAuth(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/users"
+	endpointURL := baseURL + "/users/oauth"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -158,7 +158,7 @@ func (r *RawClient) GetWithBasic(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/users"
+	endpointURL := baseURL + "/users/basic"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -197,7 +197,7 @@ func (r *RawClient) GetWithInferredAuth(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/users"
+	endpointURL := baseURL + "/users/inferred"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -236,7 +236,7 @@ func (r *RawClient) GetWithAnyAuth(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/users"
+	endpointURL := baseURL + "/users/any"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -275,7 +275,7 @@ func (r *RawClient) GetWithAllAuth(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/users"
+	endpointURL := baseURL + "/users/all"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),

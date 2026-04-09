@@ -49,7 +49,7 @@ public partial class UsersClient : IUsersClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/users",
+                    Path = "/users/cursor",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -134,7 +134,7 @@ public partial class UsersClient : IUsersClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/users",
+                    Path = "/users/mixed-type-cursor",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -215,7 +215,7 @@ public partial class UsersClient : IUsersClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/users",
+                    Path = "/users/body-cursor",
                     Body = request,
                     Headers = _headers,
                     Options = options,
@@ -393,7 +393,7 @@ public partial class UsersClient : IUsersClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/users",
+                    Path = "/users/offset",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -481,7 +481,7 @@ public partial class UsersClient : IUsersClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/users",
+                    Path = "/users/double-offset",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -562,7 +562,7 @@ public partial class UsersClient : IUsersClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/users",
+                    Path = "/users/body-offset",
                     Body = request,
                     Headers = _headers,
                     Options = options,
@@ -649,7 +649,7 @@ public partial class UsersClient : IUsersClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/users",
+                    Path = "/users/offset-step",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -740,7 +740,7 @@ public partial class UsersClient : IUsersClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/users",
+                    Path = "/users/offset-has-next-page",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -825,7 +825,7 @@ public partial class UsersClient : IUsersClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/users",
+                    Path = "/users/extended",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -912,7 +912,7 @@ public partial class UsersClient : IUsersClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/users",
+                    Path = "/users/extended-optional",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -995,7 +995,7 @@ public partial class UsersClient : IUsersClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/users",
+                    Path = "/users/usernames",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -1078,7 +1078,7 @@ public partial class UsersClient : IUsersClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/users",
+                    Path = "/users/usernames-optional",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -1159,7 +1159,7 @@ public partial class UsersClient : IUsersClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/users",
+                    Path = "/users/global-config",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,

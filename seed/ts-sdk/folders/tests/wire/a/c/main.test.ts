@@ -8,7 +8,7 @@ describe("CClient", () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
 
-        server.mockEndpoint().post("").respondWith().statusCode(200).build();
+        server.mockEndpoint().post("/a/c").respondWith().statusCode(200).build();
 
         const response = await client.a.c.foo();
         expect(response).toEqual(undefined);

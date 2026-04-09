@@ -465,6 +465,7 @@ class RawServiceClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
+            "form-encoded",
             method="POST",
             data={
                 "maybe_string": maybe_string,
@@ -1199,6 +1200,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
+            "form-encoded",
             method="POST",
             data={
                 "maybe_string": maybe_string,

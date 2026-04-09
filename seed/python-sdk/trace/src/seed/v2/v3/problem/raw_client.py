@@ -36,7 +36,7 @@ class RawProblemClient:
         HttpResponse[typing.List[LightweightProblemInfoV2]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "problems-v2/lightweight-problem-info",
+            "problems-v2/v3/lightweight-problem-info",
             method="GET",
             request_options=request_options,
         )
@@ -80,7 +80,7 @@ class RawProblemClient:
         HttpResponse[typing.List[ProblemInfoV2]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "problems-v2/problem-info",
+            "problems-v2/v3/problem-info",
             method="GET",
             request_options=request_options,
         )
@@ -126,7 +126,7 @@ class RawProblemClient:
         HttpResponse[ProblemInfoV2]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"problems-v2/problem-info/{encode_path_param(problem_id)}",
+            f"problems-v2/v3/problem-info/{encode_path_param(problem_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -174,7 +174,7 @@ class RawProblemClient:
         HttpResponse[ProblemInfoV2]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"problems-v2/problem-info/{encode_path_param(problem_id)}/version/{encode_path_param(problem_version)}",
+            f"problems-v2/v3/problem-info/{encode_path_param(problem_id)}/version/{encode_path_param(problem_version)}",
             method="GET",
             request_options=request_options,
         )
@@ -223,7 +223,7 @@ class AsyncRawProblemClient:
         AsyncHttpResponse[typing.List[LightweightProblemInfoV2]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "problems-v2/lightweight-problem-info",
+            "problems-v2/v3/lightweight-problem-info",
             method="GET",
             request_options=request_options,
         )
@@ -267,7 +267,7 @@ class AsyncRawProblemClient:
         AsyncHttpResponse[typing.List[ProblemInfoV2]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "problems-v2/problem-info",
+            "problems-v2/v3/problem-info",
             method="GET",
             request_options=request_options,
         )
@@ -313,7 +313,7 @@ class AsyncRawProblemClient:
         AsyncHttpResponse[ProblemInfoV2]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"problems-v2/problem-info/{encode_path_param(problem_id)}",
+            f"problems-v2/v3/problem-info/{encode_path_param(problem_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -361,7 +361,7 @@ class AsyncRawProblemClient:
         AsyncHttpResponse[ProblemInfoV2]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"problems-v2/problem-info/{encode_path_param(problem_id)}/version/{encode_path_param(problem_version)}",
+            f"problems-v2/v3/problem-info/{encode_path_param(problem_id)}/version/{encode_path_param(problem_version)}",
             method="GET",
             request_options=request_options,
         )

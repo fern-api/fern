@@ -55,7 +55,10 @@ async fn main() {
         ..Default::default()
     };
     let client = ResponsePropertyClient::new(config).expect("Failed to build client");
-    client.service.get_movie(&"string".to_string(), None).await;
+    client
+        .service
+        .get_movie_docs(&"string".to_string(), None)
+        .await;
 }
 ```
 </dd>
@@ -89,7 +92,10 @@ async fn main() {
         ..Default::default()
     };
     let client = ResponsePropertyClient::new(config).expect("Failed to build client");
-    client.service.get_movie(&"string".to_string(), None).await;
+    client
+        .service
+        .get_movie_name(&"string".to_string(), None)
+        .await;
 }
 ```
 </dd>
@@ -123,7 +129,10 @@ async fn main() {
         ..Default::default()
     };
     let client = ResponsePropertyClient::new(config).expect("Failed to build client");
-    client.service.get_movie(&"string".to_string(), None).await;
+    client
+        .service
+        .get_movie_metadata(&"string".to_string(), None)
+        .await;
 }
 ```
 </dd>
@@ -157,7 +166,10 @@ async fn main() {
         ..Default::default()
     };
     let client = ResponsePropertyClient::new(config).expect("Failed to build client");
-    client.service.get_movie(&"string".to_string(), None).await;
+    client
+        .service
+        .get_optional_movie(&"string".to_string(), None)
+        .await;
 }
 ```
 </dd>
@@ -191,7 +203,10 @@ async fn main() {
         ..Default::default()
     };
     let client = ResponsePropertyClient::new(config).expect("Failed to build client");
-    client.service.get_movie(&"string".to_string(), None).await;
+    client
+        .service
+        .get_optional_movie_docs(&"string".to_string(), None)
+        .await;
 }
 ```
 </dd>
@@ -225,7 +240,10 @@ async fn main() {
         ..Default::default()
     };
     let client = ResponsePropertyClient::new(config).expect("Failed to build client");
-    client.service.get_movie(&"string".to_string(), None).await;
+    client
+        .service
+        .get_optional_movie_name(&"string".to_string(), None)
+        .await;
 }
 ```
 </dd>

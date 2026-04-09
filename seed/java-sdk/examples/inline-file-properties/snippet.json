@@ -4,7 +4,7 @@
             "example_identifier": "d54376eb",
             "id": {
                 "method": "POST",
-                "path": "/",
+                "path": "/echo",
                 "identifier_override": "endpoint_.echo"
             },
             "snippet": {
@@ -17,7 +17,7 @@
             "example_identifier": "d8492cb1",
             "id": {
                 "method": "POST",
-                "path": "/",
+                "path": "/echo",
                 "identifier_override": "endpoint_.echo"
             },
             "snippet": {
@@ -30,13 +30,13 @@
             "example_identifier": "40d77421",
             "id": {
                 "method": "POST",
-                "path": "/",
+                "path": "/type",
                 "identifier_override": "endpoint_.createType"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.echo(\"primitive\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.echo(\"primitive\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.types.BasicType;\nimport com.seed.examples.types.Type;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.createType(\n            Type.of(BasicType.PRIMITIVE)\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.types.BasicType;\nimport com.seed.examples.types.Type;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.createType(\n            Type.of(BasicType.PRIMITIVE)\n        );\n    }\n}\n"
             }
         },
         {

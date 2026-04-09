@@ -34,7 +34,7 @@ public partial class FolderClient : IFolderClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "",
+                    Path = "/folder",
                     Headers = _headers,
                     Options = options,
                 },

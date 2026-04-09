@@ -446,13 +446,13 @@
             "example_identifier": "59976c27",
             "id": {
                 "method": "GET",
-                "path": "/params/path/{param}",
+                "path": "/params/inline-path/{param}",
                 "identifier_override": "endpoint_endpoints/params.getWithInlinePath"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithPath(\"param\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithPath(\"param\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePath;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithInlinePath(\n            \"param\",\n            GetWithInlinePath\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePath;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithInlinePath(\n            \"param\",\n            GetWithInlinePath\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
@@ -472,13 +472,13 @@
             "example_identifier": "a497824e",
             "id": {
                 "method": "GET",
-                "path": "/params",
+                "path": "/params/allow-multiple",
                 "identifier_override": "endpoint_endpoints/params.getWithAllowMultipleQuery"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.endpoints.params.requests.GetWithQuery;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithQuery(\n            GetWithQuery\n                .builder()\n                .query(\"query\")\n                .number(1)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.endpoints.params.requests.GetWithQuery;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithQuery(\n            GetWithQuery\n                .builder()\n                .query(\"query\")\n                .number(1)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.endpoints.params.requests.GetWithMultipleQuery;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithAllowMultipleQuery(\n            GetWithMultipleQuery\n                .builder()\n                .query(\n                    Arrays.asList(\"query\")\n                )\n                .number(\n                    Arrays.asList(1)\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.endpoints.params.requests.GetWithMultipleQuery;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithAllowMultipleQuery(\n            GetWithMultipleQuery\n                .builder()\n                .query(\n                    Arrays.asList(\"query\")\n                )\n                .number(\n                    Arrays.asList(1)\n                )\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
@@ -498,13 +498,13 @@
             "example_identifier": "7ac7b87",
             "id": {
                 "method": "GET",
-                "path": "/params/path-query/{param}",
+                "path": "/params/inline-path-query/{param}",
                 "identifier_override": "endpoint_endpoints/params.getWithInlinePathAndQuery"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQuery;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithPathAndQuery(\n            \"param\",\n            GetWithPathAndQuery\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQuery;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithPathAndQuery(\n            \"param\",\n            GetWithPathAndQuery\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePathAndQuery;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithInlinePathAndQuery(\n            \"param\",\n            GetWithInlinePathAndQuery\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePathAndQuery;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithInlinePathAndQuery(\n            \"param\",\n            GetWithInlinePathAndQuery\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
@@ -524,13 +524,13 @@
             "example_identifier": "eb5b1e57",
             "id": {
                 "method": "PUT",
-                "path": "/params/path/{param}",
+                "path": "/params/inline-path/{param}",
                 "identifier_override": "endpoint_endpoints/params.modifyWithInlinePath"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().modifyWithPath(\"param\", \"string\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().modifyWithPath(\"param\", \"string\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().modifyWithInlinePath(\n            \"param\",\n            ModifyResourceAtInlinedPath\n                .builder()\n                .body(\"string\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().modifyWithInlinePath(\n            \"param\",\n            ModifyResourceAtInlinedPath\n                .builder()\n                .body(\"string\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
@@ -563,26 +563,26 @@
             "example_identifier": "59976c27",
             "id": {
                 "method": "GET",
-                "path": "/params/path/{param}",
+                "path": "/params/path-with-errors/{param}",
                 "identifier_override": "endpoint_endpoints/params.getWithPathAndErrors"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithPath(\"param\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithPath(\"param\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithPathAndErrors(\"param\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithPathAndErrors(\"param\");\n    }\n}\n"
             }
         },
         {
             "example_identifier": "d1e82beb",
             "id": {
                 "method": "GET",
-                "path": "/params/path/{param}",
+                "path": "/params/path-with-errors/{param}",
                 "identifier_override": "endpoint_endpoints/params.getWithPathAndErrors"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithPath(\"param\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithPath(\"param\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithPathAndErrors(\"param\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithPathAndErrors(\"param\");\n    }\n}\n"
             }
         },
         {

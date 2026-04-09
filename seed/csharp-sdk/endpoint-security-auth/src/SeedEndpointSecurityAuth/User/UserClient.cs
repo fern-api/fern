@@ -28,7 +28,7 @@ public partial class UserClient : IUserClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "users",
+                    Path = "users/bearer",
                     Headers = _headers,
                     Options = options,
                 },
@@ -92,7 +92,7 @@ public partial class UserClient : IUserClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "users",
+                    Path = "users/api-key",
                     Headers = _headers,
                     Options = options,
                 },
@@ -156,7 +156,7 @@ public partial class UserClient : IUserClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "users",
+                    Path = "users/oauth",
                     Headers = _headers,
                     Options = options,
                 },
@@ -220,7 +220,7 @@ public partial class UserClient : IUserClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "users",
+                    Path = "users/basic",
                     Headers = _headers,
                     Options = options,
                 },
@@ -284,7 +284,7 @@ public partial class UserClient : IUserClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "users",
+                    Path = "users/inferred",
                     Headers = _headers,
                     Options = options,
                 },
@@ -348,7 +348,7 @@ public partial class UserClient : IUserClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "users",
+                    Path = "users/any",
                     Headers = _headers,
                     Options = options,
                 },
@@ -412,7 +412,7 @@ public partial class UserClient : IUserClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "users",
+                    Path = "users/all",
                     Headers = _headers,
                     Options = options,
                 },

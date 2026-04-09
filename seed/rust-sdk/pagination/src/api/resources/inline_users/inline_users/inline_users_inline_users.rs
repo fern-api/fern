@@ -21,7 +21,7 @@ impl InlineUsersClient2 {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/inline-users",
+                "/inline-users/cursor",
                 None,
                 QueryBuilder::new()
                     .int("page", request.page.clone())
@@ -42,7 +42,7 @@ impl InlineUsersClient2 {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/inline-users",
+                "/inline-users/mixed-type-cursor",
                 None,
                 QueryBuilder::new()
                     .string("cursor", request.cursor.clone())
@@ -60,7 +60,7 @@ impl InlineUsersClient2 {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/inline-users",
+                "/inline-users/body-cursor",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -76,7 +76,7 @@ impl InlineUsersClient2 {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/inline-users",
+                "/inline-users/offset",
                 None,
                 QueryBuilder::new()
                     .int("page", request.page.clone())
@@ -97,7 +97,7 @@ impl InlineUsersClient2 {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/inline-users",
+                "/inline-users/double-offset",
                 None,
                 QueryBuilder::new()
                     .float("page", request.page.clone())
@@ -118,7 +118,7 @@ impl InlineUsersClient2 {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/inline-users",
+                "/inline-users/body-offset",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -134,7 +134,7 @@ impl InlineUsersClient2 {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/inline-users",
+                "/inline-users/offset-step",
                 None,
                 QueryBuilder::new()
                     .int("page", request.page.clone())
@@ -154,7 +154,7 @@ impl InlineUsersClient2 {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/inline-users",
+                "/inline-users/offset-has-next-page",
                 None,
                 QueryBuilder::new()
                     .int("page", request.page.clone())
@@ -174,7 +174,7 @@ impl InlineUsersClient2 {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/inline-users",
+                "/inline-users/extended",
                 None,
                 QueryBuilder::new()
                     .uuid("cursor", request.cursor.clone())
@@ -192,7 +192,7 @@ impl InlineUsersClient2 {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/inline-users",
+                "/inline-users/extended-optional",
                 None,
                 QueryBuilder::new()
                     .uuid("cursor", request.cursor.clone())
@@ -210,7 +210,7 @@ impl InlineUsersClient2 {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/inline-users",
+                "/inline-users/usernames",
                 None,
                 QueryBuilder::new()
                     .string("starting_after", request.starting_after.clone())
@@ -228,7 +228,7 @@ impl InlineUsersClient2 {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/inline-users",
+                "/inline-users/global-config",
                 None,
                 QueryBuilder::new()
                     .int("offset", request.offset.clone())

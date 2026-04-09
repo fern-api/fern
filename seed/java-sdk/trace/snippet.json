@@ -446,52 +446,52 @@
             "example_identifier": "689169f8",
             "id": {
                 "method": "GET",
-                "path": "/problems-v2/lightweight-problem-info",
+                "path": "/problems-v2/v3/lightweight-problem-info",
                 "identifier_override": "endpoint_v2/v3/problem.getLightweightProblems"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.v2().problem().getLightweightProblems();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.v2().problem().getLightweightProblems();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.v2().v3().problem().getLightweightProblems();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.v2().v3().problem().getLightweightProblems();\n    }\n}\n"
             }
         },
         {
             "example_identifier": "3228b6e",
             "id": {
                 "method": "GET",
-                "path": "/problems-v2/problem-info",
+                "path": "/problems-v2/v3/problem-info",
                 "identifier_override": "endpoint_v2/v3/problem.getProblems"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.v2().problem().getProblems();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.v2().problem().getProblems();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.v2().v3().problem().getProblems();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.v2().v3().problem().getProblems();\n    }\n}\n"
             }
         },
         {
             "example_identifier": "7d3b6c93",
             "id": {
                 "method": "GET",
-                "path": "/problems-v2/problem-info/{problemId}",
+                "path": "/problems-v2/v3/problem-info/{problemId}",
                 "identifier_override": "endpoint_v2/v3/problem.getLatestProblem"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.v2().problem().getLatestProblem(\"problemId\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.v2().problem().getLatestProblem(\"problemId\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.v2().v3().problem().getLatestProblem(\"problemId\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.v2().v3().problem().getLatestProblem(\"problemId\");\n    }\n}\n"
             }
         },
         {
             "example_identifier": "e242c276",
             "id": {
                 "method": "GET",
-                "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                "path": "/problems-v2/v3/problem-info/{problemId}/version/{problemVersion}",
                 "identifier_override": "endpoint_v2/v3/problem.getProblemVersion"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.v2().problem().getProblemVersion(\"problemId\", 1);\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.v2().problem().getProblemVersion(\"problemId\", 1);\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.v2().v3().problem().getProblemVersion(\"problemId\", 1);\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.trace.SeedTraceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedTraceClient client = SeedTraceClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.v2().v3().problem().getProblemVersion(\"problemId\", 1);\n    }\n}\n"
             }
         }
     ],

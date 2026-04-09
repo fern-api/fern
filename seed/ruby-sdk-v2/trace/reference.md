@@ -2329,7 +2329,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```ruby
-client.v2.problem.get_lightweight_problems
+client.v2.v3.problem.get_lightweight_problems
 ```
 </dd>
 </dl>
@@ -2383,7 +2383,7 @@ Returns latest versions of all problems
 <dd>
 
 ```ruby
-client.v2.problem.get_problems
+client.v2.v3.problem.get_problems
 ```
 </dd>
 </dl>
@@ -2437,7 +2437,7 @@ Returns latest version of a problem
 <dd>
 
 ```ruby
-client.v2.problem.get_latest_problem(problem_id: "problemId")
+client.v2.v3.problem.get_latest_problem(problem_id: "problemId")
 ```
 </dd>
 </dl>
@@ -2499,7 +2499,7 @@ Returns requested version of a problem
 <dd>
 
 ```ruby
-client.v2.problem.get_problem_version(
+client.v2.v3.problem.get_problem_version(
   problem_id: "problemId",
   problem_version: 1
 )

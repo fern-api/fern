@@ -56,7 +56,7 @@ export class UsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/users",
+                        "/users/cursor",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -80,7 +80,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/cursor");
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -129,7 +129,7 @@ export class UsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/users",
+                        "/users/mixed-type-cursor",
                     ),
                     method: "POST",
                     headers: _headers,
@@ -153,7 +153,12 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "POST",
+                    "/users/mixed-type-cursor",
+                );
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -196,7 +201,7 @@ export class UsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/users",
+                        "/users/body-cursor",
                     ),
                     method: "POST",
                     headers: _headers,
@@ -223,7 +228,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/users");
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/users/body-cursor");
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -357,7 +362,7 @@ export class UsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/users",
+                        "/users/offset",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -381,7 +386,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/offset");
             },
         );
         let _offset = request?.page != null ? request?.page : 0;
@@ -433,7 +438,7 @@ export class UsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/users",
+                        "/users/double-offset",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -457,7 +462,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/double-offset");
             },
         );
         let _offset = request?.page != null ? request?.page : 1;
@@ -501,7 +506,7 @@ export class UsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/users",
+                        "/users/body-offset",
                     ),
                     method: "POST",
                     headers: _headers,
@@ -528,7 +533,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/users");
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/users/body-offset");
             },
         );
         let _offset = request?.pagination?.page != null ? request?.pagination?.page : 1;
@@ -578,7 +583,7 @@ export class UsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/users",
+                        "/users/offset-step",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -602,7 +607,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/offset-step");
             },
         );
         let _offset = request?.page != null ? request?.page : 1;
@@ -659,7 +664,7 @@ export class UsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/users",
+                        "/users/offset-has-next-page",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -683,7 +688,12 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/users/offset-has-next-page",
+                );
             },
         );
         let _offset = request?.page != null ? request?.page : 1;
@@ -730,7 +740,7 @@ export class UsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/users",
+                        "/users/extended",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -754,7 +764,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/extended");
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -799,7 +809,7 @@ export class UsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/users",
+                        "/users/extended-optional",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -823,7 +833,12 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/users/extended-optional",
+                );
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -868,7 +883,7 @@ export class UsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/users",
+                        "/users/usernames",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -892,7 +907,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/usernames");
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -938,7 +953,7 @@ export class UsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/users",
+                        "/users/usernames-optional",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -962,7 +977,12 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/users/usernames-optional",
+                );
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -1008,7 +1028,7 @@ export class UsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/users",
+                        "/users/global-config",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -1032,7 +1052,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/global-config");
             },
         );
         let _offset = request?.offset != null ? request?.offset : 1;

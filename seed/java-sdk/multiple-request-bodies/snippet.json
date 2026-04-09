@@ -4,7 +4,7 @@
             "example_identifier": "d9db31a8",
             "id": {
                 "method": "POST",
-                "path": "/documents/upload",
+                "path": "/documents/upload/json",
                 "identifier_override": "endpoint_.uploadJsonDocument"
             },
             "snippet": {
@@ -17,7 +17,7 @@
             "example_identifier": "a15fc98a",
             "id": {
                 "method": "POST",
-                "path": "/documents/upload",
+                "path": "/documents/upload/json",
                 "identifier_override": "endpoint_.uploadJsonDocument"
             },
             "snippet": {

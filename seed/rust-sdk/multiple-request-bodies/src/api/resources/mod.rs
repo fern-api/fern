@@ -27,7 +27,7 @@ impl ApiClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "documents/upload",
+                "documents/upload/json",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -43,7 +43,7 @@ impl ApiClient {
         self.http_client
             .execute_bytes_request(
                 Method::POST,
-                "documents/upload",
+                "documents/upload/pdf",
                 Some(request.to_vec()),
                 None,
                 options,
