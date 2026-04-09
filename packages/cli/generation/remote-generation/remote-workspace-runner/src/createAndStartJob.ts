@@ -149,14 +149,7 @@ async function createJob({
             shouldLogS3Url
         }),
         whitelabel,
-        // Never send preview=true to Fiddle for publishV2 output mode. Fiddle maps
-        // preview to dryRun, which would cause `npm publish --dry-run` instead of
-        // actually publishing. publishV2 means "publish to a registry" — dry-run
-        // contradicts that intent.
-        preview:
-            generatorInvocation.outputMode.type === "publishV2"
-                ? false
-                : (isPreviewOverride ?? absolutePathToPreview != null),
+        preview: isPreviewOverride ?? absolutePathToPreview != null,
         fernignoreContents
     });
 
