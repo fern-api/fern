@@ -29,6 +29,56 @@ export function convertDiscriminatedUnionTypeDeclaration({
     typeResolver: TypeResolver;
 }): Type {
     const discriminant = getUnionDiscriminant(union);
+    const defaultVariantKey = union["default-variant"];
+    const unionTypes = Object.entries(union.union).map(([unionKey, rawSingleUnionType]): SingleUnionType => {
+        const rawType: string | undefined =
+            typeof rawSingleUnionType === "string"
+                ? rawSingleUnionType
+                : typeof rawSingleUnionType.type === "string"
+                  ? rawSingleUnionType.type
+                  : undefined;
+
+        const discriminantValue = file.casingsGenerator.generateNameAndWireValue({
+            wireValue: unionKey,
+            name: getSingleUnionTypeName({ unionKey, rawSingleUnionType }).name
+        });
+
+        const docs = getDocs(rawSingleUnionType);
+
+        if (rawType == null) {
+            return {
+                discriminantValue,
+                docs,
+                shape: SingleUnionTypeProperties.noProperties(),
+                displayName: undefined,
+                availability: undefined
+            };
+        }
+
+        const parsedValueType = file.parseTypeReference(rawType);
+
+        return {
+            discriminantValue,
+            shape: getSingleUnionTypeProperties({
+                rawSingleUnionType,
+                rawValueType: rawType,
+                parsedValueType,
+                file,
+                typeResolver
+            }),
+            docs: getDocs(rawSingleUnionType),
+            displayName: getDisplayName(rawSingleUnionType),
+            availability: getAvailability(rawSingleUnionType)
+        };
+    });
+    const defaultUnionType =
+        defaultVariantKey != null
+            ? unionTypes.find((ut) => {
+                  const wireValue =
+                      typeof ut.discriminantValue === "string" ? ut.discriminantValue : ut.discriminantValue.wireValue;
+                  return wireValue === defaultVariantKey;
+              })
+            : undefined;
     return Type.union({
         discriminant: file.casingsGenerator.generateNameAndWireValue({
             wireValue: discriminant,
@@ -51,47 +101,8 @@ export function convertDiscriminatedUnionTypeDeclaration({
                       }
                   }))
                 : [],
-        types: Object.entries(union.union).map(([unionKey, rawSingleUnionType]): SingleUnionType => {
-            const rawType: string | undefined =
-                typeof rawSingleUnionType === "string"
-                    ? rawSingleUnionType
-                    : typeof rawSingleUnionType.type === "string"
-                      ? rawSingleUnionType.type
-                      : undefined;
-
-            const discriminantValue = file.casingsGenerator.generateNameAndWireValue({
-                wireValue: unionKey,
-                name: getSingleUnionTypeName({ unionKey, rawSingleUnionType }).name
-            });
-
-            const docs = getDocs(rawSingleUnionType);
-
-            if (rawType == null) {
-                return {
-                    discriminantValue,
-                    docs,
-                    shape: SingleUnionTypeProperties.noProperties(),
-                    displayName: undefined,
-                    availability: undefined
-                };
-            }
-
-            const parsedValueType = file.parseTypeReference(rawType);
-
-            return {
-                discriminantValue,
-                shape: getSingleUnionTypeProperties({
-                    rawSingleUnionType,
-                    rawValueType: rawType,
-                    parsedValueType,
-                    file,
-                    typeResolver
-                }),
-                docs: getDocs(rawSingleUnionType),
-                displayName: getDisplayName(rawSingleUnionType),
-                availability: getAvailability(rawSingleUnionType)
-            };
-        }),
+        types: unionTypes,
+        default: defaultUnionType,
         discriminatorContext: getDiscriminatorContext({ union })
     });
 }

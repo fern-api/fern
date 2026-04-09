@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.Endpoints.Params;
 
 namespace Usage;
 
@@ -12,8 +13,11 @@ public class Example40
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAndErrorsAsync(
-            "param"
+        await client.Endpoints.Params.ModifyWithInlinePathAsync(
+            new ModifyResourceAtInlinedPath {
+                Param = "param",
+                Body = "string"
+            }
         );
     }
 

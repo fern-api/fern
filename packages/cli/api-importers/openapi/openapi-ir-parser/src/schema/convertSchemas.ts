@@ -1117,6 +1117,7 @@ export function convertSchemaObject(
                         wrapAsNullable,
                         discriminant: maybeDiscriminant.discriminant,
                         variants: maybeDiscriminant.schemas,
+                        defaultDiscriminantValue: maybeDiscriminant.defaultDiscriminantValue,
                         context,
                         namespace,
                         groupName,
@@ -1213,6 +1214,7 @@ export function convertSchemaObject(
                     wrapAsNullable,
                     discriminant: maybeDiscriminant.discriminant,
                     variants: maybeDiscriminant.schemas,
+                    defaultDiscriminantValue: maybeDiscriminant.defaultDiscriminantValue,
                     context,
                     namespace,
                     groupName,
@@ -1803,6 +1805,7 @@ export function wrapPrimitive({
 interface DiscriminantProperty {
     discriminant: string;
     schemas: Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>;
+    defaultDiscriminantValue: string | undefined;
 }
 
 function getMaybeAllEnumValues({
@@ -1850,9 +1853,28 @@ function getDiscriminant({
     }
     for (const [discriminant, variants] of Object.entries(discriminantToVariants)) {
         if (Object.keys(variants).length === schemas.length) {
+            let defaultDiscriminantValue: string | undefined;
+            for (const [discriminantValue, variantSchema] of Object.entries(variants)) {
+                const resolved = isReferenceObject(variantSchema)
+                    ? context.resolveSchemaReference(variantSchema)
+                    : variantSchema;
+                const discriminantPropertySchema = resolved.properties?.[discriminant];
+                if (discriminantPropertySchema != null && !isReferenceObject(discriminantPropertySchema)) {
+                    const fernDefault = getExtension<string>(
+                        discriminantPropertySchema,
+                        FernOpenAPIExtension.FERN_DEFAULT
+                    );
+                    const defaultValue = fernDefault ?? discriminantPropertySchema.default;
+                    if (defaultValue === discriminantValue) {
+                        defaultDiscriminantValue = discriminantValue;
+                        break;
+                    }
+                }
+            }
             return {
                 discriminant,
-                schemas: variants
+                schemas: variants,
+                defaultDiscriminantValue
             };
         }
     }

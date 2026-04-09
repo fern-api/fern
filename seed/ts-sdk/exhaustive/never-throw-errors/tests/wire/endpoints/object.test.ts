@@ -485,6 +485,75 @@ describe("ObjectClient", () => {
         });
     });
 
+    test("getAndReturnWithMixedRequiredAndOptionalFields", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = {
+            requiredString: "hello",
+            requiredInteger: 0,
+            optionalString: "world",
+            requiredLong: 0,
+        };
+        const rawResponseBody = {
+            requiredString: "hello",
+            requiredInteger: 0,
+            optionalString: "world",
+            requiredLong: 0,
+        };
+
+        server
+            .mockEndpoint()
+            .post("/object/get-and-return-with-mixed-required-and-optional-fields")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields({
+            requiredString: "hello",
+            requiredInteger: 0,
+            optionalString: "world",
+            requiredLong: 0,
+        });
+        expect(response).toEqual({
+            body: rawResponseBody,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
+    });
+
+    test("getAndReturnWithRequiredNestedObject", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { requiredString: "hello", requiredObject: { string: "nested", NestedObject: {} } };
+        const rawResponseBody = { requiredString: "hello", requiredObject: { string: "nested", NestedObject: {} } };
+
+        server
+            .mockEndpoint()
+            .post("/object/get-and-return-with-required-nested-object")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.object.getAndReturnWithRequiredNestedObject({
+            requiredString: "hello",
+            requiredObject: {
+                string: "nested",
+                NestedObject: {},
+            },
+        });
+        expect(response).toEqual({
+            body: rawResponseBody,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
+    });
+
     test("getAndReturnWithDatetimeLikeString", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });

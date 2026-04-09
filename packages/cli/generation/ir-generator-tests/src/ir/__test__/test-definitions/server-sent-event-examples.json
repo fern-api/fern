@@ -386,6 +386,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "protocol"
             },
             "referencedTypes": [
@@ -463,6 +464,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [

@@ -646,3 +646,143 @@ type DocumentedUnknownType = any
 
 // Tests that map value types with unknown types don't get spurious | undefined.
 type MapOfDocumentedUnknownType = map[string]DocumentedUnknownType
+
+// Tests that dynamic snippets include all required properties even when
+// the example data only provides a subset. In C#, properties marked as
+// `required` must be set in the object initializer.
+type ObjectWithMixedRequiredAndOptionalFields struct {
+	RequiredString  string  `json:"requiredString" url:"requiredString"`
+	RequiredInteger int     `json:"requiredInteger" url:"requiredInteger"`
+	OptionalString  *string `json:"optionalString,omitempty" url:"optionalString,omitempty"`
+	RequiredLong    int64   `json:"requiredLong" url:"requiredLong"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithMixedRequiredAndOptionalFields) GetRequiredString() string {
+	if o == nil {
+		return ""
+	}
+	return o.RequiredString
+}
+
+func (o *ObjectWithMixedRequiredAndOptionalFields) GetRequiredInteger() int {
+	if o == nil {
+		return 0
+	}
+	return o.RequiredInteger
+}
+
+func (o *ObjectWithMixedRequiredAndOptionalFields) GetOptionalString() *string {
+	if o == nil {
+		return nil
+	}
+	return o.OptionalString
+}
+
+func (o *ObjectWithMixedRequiredAndOptionalFields) GetRequiredLong() int64 {
+	if o == nil {
+		return int64(0)
+	}
+	return o.RequiredLong
+}
+
+func (o *ObjectWithMixedRequiredAndOptionalFields) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithMixedRequiredAndOptionalFields) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ObjectWithMixedRequiredAndOptionalFields
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithMixedRequiredAndOptionalFields(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithMixedRequiredAndOptionalFields) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// Tests that dynamic snippets recursively construct default objects for
+// required properties whose type is a named object. The nested object's
+// own required properties should also be filled with defaults.
+type ObjectWithRequiredNestedObject struct {
+	RequiredString string                         `json:"requiredString" url:"requiredString"`
+	RequiredObject *NestedObjectWithRequiredField `json:"requiredObject" url:"requiredObject"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithRequiredNestedObject) GetRequiredString() string {
+	if o == nil {
+		return ""
+	}
+	return o.RequiredString
+}
+
+func (o *ObjectWithRequiredNestedObject) GetRequiredObject() *NestedObjectWithRequiredField {
+	if o == nil {
+		return nil
+	}
+	return o.RequiredObject
+}
+
+func (o *ObjectWithRequiredNestedObject) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithRequiredNestedObject) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ObjectWithRequiredNestedObject
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithRequiredNestedObject(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithRequiredNestedObject) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}

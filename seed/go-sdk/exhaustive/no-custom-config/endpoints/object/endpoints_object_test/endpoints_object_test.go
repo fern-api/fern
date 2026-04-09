@@ -554,6 +554,67 @@ func TestEndpointsObjectGetAndReturnMapOfDocumentedUnknownTypeWithWireMock(
 	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnMapOfDocumentedUnknownTypeWithWireMock", "POST", "/object/get-and-return-map-of-documented-unknown-type", nil, 1)
 }
 
+func TestEndpointsObjectGetAndReturnWithMixedRequiredAndOptionalFieldsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &types.ObjectWithMixedRequiredAndOptionalFields{
+		RequiredString:  "hello",
+		RequiredInteger: 0,
+		OptionalString: fern.String(
+			"world",
+		),
+		RequiredLong: int64(0),
+	}
+	_, invocationErr := client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFields(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEndpointsObjectGetAndReturnWithMixedRequiredAndOptionalFieldsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnWithMixedRequiredAndOptionalFieldsWithWireMock", "POST", "/object/get-and-return-with-mixed-required-and-optional-fields", nil, 1)
+}
+
+func TestEndpointsObjectGetAndReturnWithRequiredNestedObjectWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &types.ObjectWithRequiredNestedObject{
+		RequiredString: "hello",
+		RequiredObject: &types.NestedObjectWithRequiredField{
+			FieldString:  "nested",
+			NestedObject: &types.ObjectWithOptionalField{},
+		},
+	}
+	_, invocationErr := client.Endpoints.Object.GetAndReturnWithRequiredNestedObject(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEndpointsObjectGetAndReturnWithRequiredNestedObjectWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnWithRequiredNestedObjectWithWireMock", "POST", "/object/get-and-return-with-required-nested-object", nil, 1)
+}
+
 func TestEndpointsObjectGetAndReturnWithDatetimeLikeStringWithWireMock(
 	t *testing.T,
 ) {

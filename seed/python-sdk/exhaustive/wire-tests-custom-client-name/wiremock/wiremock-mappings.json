@@ -801,6 +801,68 @@
       }
     },
     {
+      "id": "dfdc28ab-32f9-45fe-962a-bc7d9766cb0e",
+      "name": "getAndReturnWithMixedRequiredAndOptionalFields - default",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-mixed-required-and-optional-fields",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"requiredString\": \"hello\",\n  \"requiredInteger\": 0,\n  \"optionalString\": \"world\",\n  \"requiredLong\": 0\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "dfdc28ab-32f9-45fe-962a-bc7d9766cb0e",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "7be0e9a9-5db3-4524-9509-5c3dfcbba301",
+      "name": "getAndReturnWithRequiredNestedObject - default",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-required-nested-object",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"requiredString\": \"hello\",\n  \"requiredObject\": {\n    \"string\": \"nested\",\n    \"NestedObject\": {}\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "7be0e9a9-5db3-4524-9509-5c3dfcbba301",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "e2cc3e92-6e37-4a50-9081-23952fdd73fe",
       "name": "getAndReturnWithDatetimeLikeString - default",
       "request": {
@@ -1871,6 +1933,6 @@
     }
   ],
   "meta": {
-    "total": 57
+    "total": 59
   }
 }

@@ -302,6 +302,30 @@
             }
         },
         {
+            "example_identifier": "PartialRequiredFields",
+            "id": {
+                "path": "/object/get-and-return-with-mixed-required-and-optional-fields",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithMixedRequiredAndOptionalFields"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFieldsAsync(\n    new ObjectWithMixedRequiredAndOptionalFields\n    {\n        RequiredString = \"hello\",\n        RequiredInteger = 0,\n        OptionalString = \"world\",\n        RequiredLong = 0,\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": "NestedObjectMissing",
+            "id": {
+                "path": "/object/get-and-return-with-required-nested-object",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithRequiredNestedObject"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithRequiredNestedObjectAsync(\n    new ObjectWithRequiredNestedObject\n    {\n        RequiredString = \"hello\",\n        RequiredObject = new NestedObjectWithRequiredField\n        {\n            String = \"nested\",\n            NestedObject = new ObjectWithOptionalField(),\n        },\n    }\n);\n"
+            }
+        },
+        {
             "example_identifier": "DatetimeLikeStringExample",
             "id": {
                 "path": "/object/get-and-return-with-datetime-like-string",

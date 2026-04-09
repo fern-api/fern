@@ -716,6 +716,161 @@ public partial class ObjectClient : IObjectClient
     }
 
     private async Task<
+        WithRawResponse<ObjectWithMixedRequiredAndOptionalFields>
+    > GetAndReturnWithMixedRequiredAndOptionalFieldsAsyncCore(
+        ObjectWithMixedRequiredAndOptionalFields request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            Method = HttpMethod.Post,
+                            Path = "/object/get-and-return-with-mixed-required-and-optional-fields",
+                            Body = request,
+                            Headers = _headers,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
+                    try
+                    {
+                        var responseData =
+                            JsonUtils.Deserialize<ObjectWithMixedRequiredAndOptionalFields>(
+                                responseBody
+                            )!;
+                        return new WithRawResponse<ObjectWithMixedRequiredAndOptionalFields>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
+                    }
+                }
+                {
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    private async Task<
+        WithRawResponse<ObjectWithRequiredNestedObject>
+    > GetAndReturnWithRequiredNestedObjectAsyncCore(
+        ObjectWithRequiredNestedObject request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            Method = HttpMethod.Post,
+                            Path = "/object/get-and-return-with-required-nested-object",
+                            Body = request,
+                            Headers = _headers,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
+                    try
+                    {
+                        var responseData = JsonUtils.Deserialize<ObjectWithRequiredNestedObject>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<ObjectWithRequiredNestedObject>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
+                    }
+                }
+                {
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    private async Task<
         WithRawResponse<ObjectWithDatetimeLikeString>
     > GetAndReturnWithDatetimeLikeStringAsyncCore(
         ObjectWithDatetimeLikeString request,
@@ -1058,6 +1213,66 @@ public partial class ObjectClient : IObjectClient
     {
         return new WithRawResponseTask<Dictionary<string, object?>>(
             GetAndReturnMapOfDocumentedUnknownTypeAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Tests that dynamic snippets include all required properties in the
+    /// object initializer, even when the example omits some required fields.
+    /// </summary>
+    /// <example><code>
+    /// await client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFieldsAsync(
+    ///     new ObjectWithMixedRequiredAndOptionalFields
+    ///     {
+    ///         RequiredString = "hello",
+    ///         RequiredInteger = 0,
+    ///         OptionalString = "world",
+    ///         RequiredLong = 0,
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<ObjectWithMixedRequiredAndOptionalFields> GetAndReturnWithMixedRequiredAndOptionalFieldsAsync(
+        ObjectWithMixedRequiredAndOptionalFields request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ObjectWithMixedRequiredAndOptionalFields>(
+            GetAndReturnWithMixedRequiredAndOptionalFieldsAsyncCore(
+                request,
+                options,
+                cancellationToken
+            )
+        );
+    }
+
+    /// <summary>
+    /// Tests that dynamic snippets recursively construct default objects for
+    /// required properties whose type is a named object. When the example
+    /// omits the nested object, the generator should construct a default
+    /// initializer with the nested object's required properties filled in.
+    /// </summary>
+    /// <example><code>
+    /// await client.Endpoints.Object.GetAndReturnWithRequiredNestedObjectAsync(
+    ///     new ObjectWithRequiredNestedObject
+    ///     {
+    ///         RequiredString = "hello",
+    ///         RequiredObject = new NestedObjectWithRequiredField
+    ///         {
+    ///             String = "nested",
+    ///             NestedObject = new ObjectWithOptionalField(),
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<ObjectWithRequiredNestedObject> GetAndReturnWithRequiredNestedObjectAsync(
+        ObjectWithRequiredNestedObject request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ObjectWithRequiredNestedObject>(
+            GetAndReturnWithRequiredNestedObjectAsyncCore(request, options, cancellationToken)
         );
     }
 

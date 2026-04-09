@@ -16,8 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    request := []byte("SGVsbG8gd29ybGQh")
-    client.Endpoints.Primitive.GetAndReturnBase64(
+    request := true
+    client.Endpoints.Primitive.GetAndReturnBool(
         context.TODO(),
         request,
     )

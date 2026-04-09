@@ -16,8 +16,10 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Params.GetWithPathAndErrors(
+    request := "string"
+    client.Endpoints.Params.ModifyWithPath(
         context.TODO(),
         "param",
+        request,
     )
 }

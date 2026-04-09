@@ -1598,6 +1598,141 @@ client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFields(request) -> *types.ObjectWithMixedRequiredAndOptionalFields</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that dynamic snippets include all required properties in the
+object initializer, even when the example omits some required fields.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &types.ObjectWithMixedRequiredAndOptionalFields{
+        RequiredString: "hello",
+        RequiredInteger: 0,
+        OptionalString: fern.String(
+            "world",
+        ),
+        RequiredLong: int64(0),
+    }
+client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFields(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*types.ObjectWithMixedRequiredAndOptionalFields` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithRequiredNestedObject(request) -> *types.ObjectWithRequiredNestedObject</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that dynamic snippets recursively construct default objects for
+required properties whose type is a named object. When the example
+omits the nested object, the generator should construct a default
+initializer with the nested object's required properties filled in.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &types.ObjectWithRequiredNestedObject{
+        RequiredString: "hello",
+        RequiredObject: &types.NestedObjectWithRequiredField{
+            FieldString: "nested",
+            NestedObject: &types.ObjectWithOptionalField{},
+        },
+    }
+client.Endpoints.Object.GetAndReturnWithRequiredNestedObject(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*types.ObjectWithRequiredNestedObject` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(request) -> *types.ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>

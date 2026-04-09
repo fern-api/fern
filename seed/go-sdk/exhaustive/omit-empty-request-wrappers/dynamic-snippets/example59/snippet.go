@@ -16,11 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    request := map[string]any{
-        "key": "value",
-    }
-    client.NoAuth.PostWithNoAuth(
+    client.Endpoints.URLs.WithUnderscores(
         context.TODO(),
-        request,
     )
 }

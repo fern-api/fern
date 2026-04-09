@@ -13,8 +13,12 @@ from ...types.object.types.nested_object_with_required_field import NestedObject
 from ...types.object.types.object_with_datetime_like_string import ObjectWithDatetimeLikeString
 from ...types.object.types.object_with_documented_unknown_type import ObjectWithDocumentedUnknownType
 from ...types.object.types.object_with_map_of_map import ObjectWithMapOfMap
+from ...types.object.types.object_with_mixed_required_and_optional_fields import (
+    ObjectWithMixedRequiredAndOptionalFields,
+)
 from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
+from ...types.object.types.object_with_required_nested_object import ObjectWithRequiredNestedObject
 from ...types.object.types.object_with_unknown_field import ObjectWithUnknownField
 from .raw_client import AsyncRawObjectClient, RawObjectClient
 
@@ -515,6 +519,111 @@ class ObjectClient:
         """
         _response = self._raw_client.get_and_return_map_of_documented_unknown_type(
             request=request, request_options=request_options
+        )
+        return _response.data
+
+    def get_and_return_with_mixed_required_and_optional_fields(
+        self,
+        *,
+        required_string: str,
+        required_integer: int,
+        required_long: int,
+        optional_string: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectWithMixedRequiredAndOptionalFields:
+        """
+        Tests that dynamic snippets include all required properties in the
+        object initializer, even when the example omits some required fields.
+
+        Parameters
+        ----------
+        required_string : str
+
+        required_integer : int
+
+        required_long : int
+
+        optional_string : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithMixedRequiredAndOptionalFields
+
+        Examples
+        --------
+        from seed import Exhaustive
+
+        client = Exhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
+            required_string="hello",
+            required_integer=0,
+            optional_string="world",
+            required_long=0,
+        )
+        """
+        _response = self._raw_client.get_and_return_with_mixed_required_and_optional_fields(
+            required_string=required_string,
+            required_integer=required_integer,
+            required_long=required_long,
+            optional_string=optional_string,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def get_and_return_with_required_nested_object(
+        self,
+        *,
+        required_string: str,
+        required_object: NestedObjectWithRequiredField,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectWithRequiredNestedObject:
+        """
+        Tests that dynamic snippets recursively construct default objects for
+        required properties whose type is a named object. When the example
+        omits the nested object, the generator should construct a default
+        initializer with the nested object's required properties filled in.
+
+        Parameters
+        ----------
+        required_string : str
+
+        required_object : NestedObjectWithRequiredField
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithRequiredNestedObject
+
+        Examples
+        --------
+        from seed import Exhaustive
+        from seed.types.object import (
+            NestedObjectWithRequiredField,
+            ObjectWithOptionalField,
+        )
+
+        client = Exhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_with_required_nested_object(
+            required_string="hello",
+            required_object=NestedObjectWithRequiredField(
+                string="nested",
+                nested_object=ObjectWithOptionalField(),
+            ),
+        )
+        """
+        _response = self._raw_client.get_and_return_with_required_nested_object(
+            required_string=required_string, required_object=required_object, request_options=request_options
         )
         return _response.data
 
@@ -1133,6 +1242,127 @@ class AsyncObjectClient:
         """
         _response = await self._raw_client.get_and_return_map_of_documented_unknown_type(
             request=request, request_options=request_options
+        )
+        return _response.data
+
+    async def get_and_return_with_mixed_required_and_optional_fields(
+        self,
+        *,
+        required_string: str,
+        required_integer: int,
+        required_long: int,
+        optional_string: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectWithMixedRequiredAndOptionalFields:
+        """
+        Tests that dynamic snippets include all required properties in the
+        object initializer, even when the example omits some required fields.
+
+        Parameters
+        ----------
+        required_string : str
+
+        required_integer : int
+
+        required_long : int
+
+        optional_string : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithMixedRequiredAndOptionalFields
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncExhaustive
+
+        client = AsyncExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
+                required_string="hello",
+                required_integer=0,
+                optional_string="world",
+                required_long=0,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_and_return_with_mixed_required_and_optional_fields(
+            required_string=required_string,
+            required_integer=required_integer,
+            required_long=required_long,
+            optional_string=optional_string,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def get_and_return_with_required_nested_object(
+        self,
+        *,
+        required_string: str,
+        required_object: NestedObjectWithRequiredField,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectWithRequiredNestedObject:
+        """
+        Tests that dynamic snippets recursively construct default objects for
+        required properties whose type is a named object. When the example
+        omits the nested object, the generator should construct a default
+        initializer with the nested object's required properties filled in.
+
+        Parameters
+        ----------
+        required_string : str
+
+        required_object : NestedObjectWithRequiredField
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithRequiredNestedObject
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncExhaustive
+        from seed.types.object import (
+            NestedObjectWithRequiredField,
+            ObjectWithOptionalField,
+        )
+
+        client = AsyncExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_with_required_nested_object(
+                required_string="hello",
+                required_object=NestedObjectWithRequiredField(
+                    string="nested",
+                    nested_object=ObjectWithOptionalField(),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_and_return_with_required_nested_object(
+            required_string=required_string, required_object=required_object, request_options=request_options
         )
         return _response.data
 

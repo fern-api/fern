@@ -11,11 +11,6 @@ async fn main() {
     client
         .endpoints
         .primitive
-        .get_and_return_base64(
-            &base64::engine::general_purpose::STANDARD
-                .decode("SGVsbG8gd29ybGQh")
-                .unwrap(),
-            None,
-        )
+        .get_and_return_bool(&true, None)
         .await;
 }

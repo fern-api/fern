@@ -324,6 +324,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 }),
                 extends: extends_,
                 types: unionTypes,
+                default: undefined,
                 discriminatorContext: undefined
             }),
             referencedTypes,
