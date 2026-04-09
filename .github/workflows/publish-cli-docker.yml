@@ -1,0 +1,60 @@
+name: Publish CLI Docker Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "The CLI version to install in the Docker image"
+        required: true
+        type: string
+      is_dev:
+        description: "Whether to publish the dev image (fernapi/fern-dev)"
+        required: false
+        type: boolean
+        default: false
+
+env:
+  DO_NOT_TRACK: "1"
+  DOCKER_BUILDKIT: 1
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Determine image name and package
+        id: config
+        run: |
+          if [ "${{ inputs.is_dev }}" = "true" ]; then
+            echo "image=fernapi/fern-dev" >> $GITHUB_OUTPUT
+            echo "package=@fern-api/fern-api-dev" >> $GITHUB_OUTPUT
+          else
+            echo "image=fernapi/fern" >> $GITHUB_OUTPUT
+            echo "package=fern-api" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: ./docker/cli/Dockerfile
+          build-args: |
+            FERN_PACKAGE=${{ steps.config.outputs.package }}
+            FERN_VERSION=${{ inputs.version }}
+          push: true
+          tags: |
+            ${{ steps.config.outputs.image }}:${{ inputs.version }}
+            ${{ steps.config.outputs.image }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
