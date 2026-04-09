@@ -495,6 +495,19 @@
             }
         },
         {
+            "example_identifier": "89cf23de",
+            "id": {
+                "method": "GET",
+                "path": "/params/path-bool/{param}",
+                "identifier_override": "endpoint_endpoints/params.getWithBooleanPath"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithBooleanPath(true);\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithBooleanPath(true);\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "59976c27",
             "id": {
                 "method": "GET",

@@ -16,12 +16,7 @@ describe("SeedUndiscriminatedUnionWithResponsePropertyClient", () => {
         server.mockEndpoint().get("/union").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.getUnion();
-        expect(response).toEqual({
-            data: {
-                type: "A",
-                valueA: "valueA",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("listUnions", async () => {
@@ -41,17 +36,6 @@ describe("SeedUndiscriminatedUnionWithResponsePropertyClient", () => {
         server.mockEndpoint().get("/unions").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.listUnions();
-        expect(response).toEqual({
-            data: [
-                {
-                    type: "A",
-                    valueA: "valueA",
-                },
-                {
-                    type: "A",
-                    valueA: "valueA",
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

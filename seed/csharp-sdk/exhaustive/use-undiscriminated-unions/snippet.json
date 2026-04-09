@@ -436,6 +436,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/params/path-bool/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithBooleanPath"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithBooleanPathAsync(true);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/params/path/{param}",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithPathAndErrors"

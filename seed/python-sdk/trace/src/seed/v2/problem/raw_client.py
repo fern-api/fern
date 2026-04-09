@@ -7,7 +7,7 @@ from ...commons.types.problem_id import ProblemId
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
@@ -126,7 +126,7 @@ class RawProblemClient:
         HttpResponse[ProblemInfoV2]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"problems-v2/problem-info/{jsonable_encoder(problem_id)}",
+            f"problems-v2/problem-info/{encode_path_param(problem_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -174,7 +174,7 @@ class RawProblemClient:
         HttpResponse[ProblemInfoV2]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"problems-v2/problem-info/{jsonable_encoder(problem_id)}/version/{jsonable_encoder(problem_version)}",
+            f"problems-v2/problem-info/{encode_path_param(problem_id)}/version/{encode_path_param(problem_version)}",
             method="GET",
             request_options=request_options,
         )
@@ -313,7 +313,7 @@ class AsyncRawProblemClient:
         AsyncHttpResponse[ProblemInfoV2]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"problems-v2/problem-info/{jsonable_encoder(problem_id)}",
+            f"problems-v2/problem-info/{encode_path_param(problem_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -361,7 +361,7 @@ class AsyncRawProblemClient:
         AsyncHttpResponse[ProblemInfoV2]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"problems-v2/problem-info/{jsonable_encoder(problem_id)}/version/{jsonable_encoder(problem_version)}",
+            f"problems-v2/problem-info/{encode_path_param(problem_id)}/version/{encode_path_param(problem_version)}",
             method="GET",
             request_options=request_options,
         )

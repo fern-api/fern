@@ -201,6 +201,21 @@ public class AsyncParamsClient {
   }
 
   /**
+   * GET with boolean path param
+   */
+  public CompletableFuture<String> getWithBooleanPath(boolean param) {
+    return this.rawClient.getWithBooleanPath(param).thenApply(response -> response.body());
+  }
+
+  /**
+   * GET with boolean path param
+   */
+  public CompletableFuture<String> getWithBooleanPath(boolean param,
+      RequestOptions requestOptions) {
+    return this.rawClient.getWithBooleanPath(param, requestOptions).thenApply(response -> response.body());
+  }
+
+  /**
    * GET with path param that can throw errors
    */
   public CompletableFuture<String> getWithPathAndErrors(String param) {

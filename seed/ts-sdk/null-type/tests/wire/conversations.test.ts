@@ -22,11 +22,6 @@ describe("ConversationsClient", () => {
         const response = await client.conversations.outboundCall({
             to_phone_number: "to_phone_number",
         });
-        expect(response).toEqual({
-            conversation_id: {
-                key: "value",
-            },
-            dry_run: true,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

@@ -20,7 +20,7 @@ describe("UnionClient", () => {
             .build();
 
         const response = await client.union.get("string");
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getMetadata", async () => {
@@ -32,11 +32,7 @@ describe("UnionClient", () => {
         server.mockEndpoint().get("/metadata").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.union.getMetadata();
-        expect(response).toEqual({
-            name: "exampleName",
-            value: "exampleValue",
-            default: "exampleDefault",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("updateMetadata", async () => {
@@ -59,7 +55,7 @@ describe("UnionClient", () => {
                 key: "value",
             },
         });
-        expect(response).toEqual(true);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("call", async () => {
@@ -84,7 +80,7 @@ describe("UnionClient", () => {
                 },
             },
         });
-        expect(response).toEqual(true);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("duplicateTypesUnion", async () => {
@@ -103,7 +99,7 @@ describe("UnionClient", () => {
             .build();
 
         const response = await client.union.duplicateTypesUnion("string");
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("nestedUnions", async () => {
@@ -122,7 +118,7 @@ describe("UnionClient", () => {
             .build();
 
         const response = await client.union.nestedUnions("string");
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("testCamelCaseProperties", async () => {
@@ -146,6 +142,6 @@ describe("UnionClient", () => {
                 cardNumber: "1234567890123456",
             },
         });
-        expect(response).toEqual("success");
+        expect(response).toEqual(rawResponseBody);
     });
 });
