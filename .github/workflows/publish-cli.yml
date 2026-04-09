@@ -189,7 +189,7 @@ jobs:
       - name: Get CLI version
         id: get_cli_version
         run: |
-          version=$(head -n 20 packages/cli/cli/versions.yml | grep -m 1 "version:" | awk '{print $3}')
+          version=$(yq '.[0].version' packages/cli/cli/versions.yml)
           echo "cli_version=${version}" >> $GITHUB_OUTPUT
 
   prod-docker:
