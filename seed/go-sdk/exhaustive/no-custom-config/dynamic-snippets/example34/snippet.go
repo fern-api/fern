@@ -17,11 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.GetWithInlinePathAndQuery{
+    request := &endpoints.GetWithInlinePath{
         Param: "param",
-        Query: "query",
     }
-    client.Endpoints.Params.GetWithInlinePathAndQuery(
+    client.Endpoints.Params.GetWithInlinePath(
         context.TODO(),
         request,
     )
