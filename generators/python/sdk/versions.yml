@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.3.6
+  changelogEntry:
+    - summary: |
+        Add mypy overrides with `ignore_missing_imports = true` for modules referenced
+        in `additional_init_exports`. Previously, mypy would fail with `import-not-found`
+        errors because these user-maintained modules don't exist in the generated code.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 65
+
 - version: 5.3.5
   changelogEntry:
     - summary: |

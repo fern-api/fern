@@ -7,6 +7,7 @@ from abc import ABC, abstractmethod
 from typing import Literal, Optional, Sequence, Tuple, cast
 
 from .publisher import Publisher
+from fern_python.codegen.module_manager import ModuleExport
 from fern_python.codegen.project import Project, ProjectConfig
 from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
@@ -119,6 +120,15 @@ class AbstractGenerator(ABC):
         if generator_config.custom_config is not None and "import_paths" in generator_config.custom_config:
             import_paths = generator_config.custom_config.get("import_paths")
 
+        additional_init_exports = None
+        if (
+            generator_config.custom_config is not None
+            and "additional_init_exports" in generator_config.custom_config
+        ):
+            raw_exports = generator_config.custom_config.get("additional_init_exports")
+            if raw_exports is not None:
+                additional_init_exports = [ModuleExport.parse_obj(e) for e in raw_exports]
+
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=os.path.join(
@@ -146,6 +156,7 @@ class AbstractGenerator(ABC):
             generator_exec_wrapper=generator_exec_wrapper,
             mypy_exclude=mypy_exclude,
             import_paths=import_paths,
+            additional_init_exports=additional_init_exports,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,

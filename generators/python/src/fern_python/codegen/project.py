@@ -57,6 +57,7 @@ class Project:
         generator_exec_wrapper: Optional[GeneratorExecWrapper] = None,
         mypy_exclude: Optional[List[str]] = None,
         import_paths: Optional[List[str]] = None,
+        additional_init_exports: Optional[List[ModuleExport]] = None,
     ) -> None:
         relative_path_to_project = relative_path_to_project.replace(".", "/")
 
@@ -110,6 +111,7 @@ class Project:
         self._enable_wire_tests = enable_wire_tests
         self._generator_exec_wrapper = generator_exec_wrapper
         self._mypy_exclude = mypy_exclude
+        self._additional_init_exports = additional_init_exports
 
     def get_module_path_for_imports(self) -> str:
         """
@@ -264,6 +266,7 @@ class Project:
                 enable_wire_tests=self._enable_wire_tests,
                 user_defined_toml=self._user_defined_toml,
                 mypy_exclude=self._mypy_exclude,
+                mypy_ignore_missing_imports_modules=self._get_mypy_ignore_missing_imports_modules(),
             )
             py_project_toml.write()
 
@@ -282,6 +285,22 @@ class Project:
 
             # copy LICENSE file if custom license is specified
             self._copy_license_file()
+
+    def _get_mypy_ignore_missing_imports_modules(self) -> Optional[List[str]]:
+        """
+        Returns a list of module names that should have ignore_missing_imports = true
+        in mypy overrides. This is needed for additional_init_exports, which reference
+        user-maintained modules that don't exist in the generated code.
+        """
+        if not self._additional_init_exports:
+            return None
+        modules = sorted({export.from_ for export in self._additional_init_exports})
+        if not modules:
+            return None
+        package_name = self._relative_path_to_project.replace("/", ".")
+        if self._package_path:
+            package_name = f"{package_name}.{self._package_path.replace('/', '.')}"
+        return [f"{package_name}.{module}" for module in modules]
 
     def _create_package_path_init_files(self) -> None:
         """
