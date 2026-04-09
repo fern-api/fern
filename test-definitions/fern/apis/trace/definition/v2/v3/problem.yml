@@ -185,7 +185,7 @@ types:
       template: TestCaseTemplate
 
 service:
-  base-path: /problems-v2
+  base-path: /problems-v2/v3
   auth: false
   endpoints:
     getLightweightProblems:

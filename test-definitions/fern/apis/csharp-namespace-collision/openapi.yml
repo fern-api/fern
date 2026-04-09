@@ -1,85 +1,132 @@
 openapi: 3.0.1
 info:
   title: csharp-namespace-collision
-  version: ""
+  version: ''
 paths:
-  /users:
+  /root-users:
     post:
       operationId: createUser
       tags:
-        - ""
+        - ''
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/User"
-  /users/create-task:
+              $ref: '#/components/schemas/User'
+  /root-users/tasks:
     post:
       operationId: createTask
       tags:
-        - ""
+        - ''
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Task"
+                $ref: '#/components/schemas/Task'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Task"
-  /system/users:
+              $ref: '#/components/schemas/Task'
+  /scim-configuration:
+    get:
+      operationId: scimConfiguration_getConfiguration
+      tags:
+        - SCIMConfiguration
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimConfigurationScimConfiguration'
+  /scim-configuration/tokens:
+    post:
+      operationId: scimConfiguration_createToken
+      tags:
+        - SCIMConfiguration
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimConfigurationScimToken'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScimConfigurationScimToken'
+  /scim-configuration/users:
+    get:
+      operationId: scimConfiguration_listUsers
+      tags:
+        - SCIMConfiguration
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /users:
     post:
       operationId: system_createUser
       tags:
         - System
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SystemUser"
+                $ref: '#/components/schemas/SystemUser'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SystemUser"
-  /system/users/create-task:
+              $ref: '#/components/schemas/SystemUser'
+  /users/tasks:
     post:
       operationId: system_createTask
       tags:
         - System
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SystemTask"
+                $ref: '#/components/schemas/SystemTask'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SystemTask"
-  /system/users/{userId}:
+              $ref: '#/components/schemas/SystemTask'
+  /users/{userId}:
     get:
       operationId: system_getUser
       tags:
@@ -91,12 +138,12 @@ paths:
           schema:
             type: string
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SystemUser"
+                $ref: '#/components/schemas/SystemUser'
 components:
   schemas:
     User:
@@ -133,6 +180,42 @@ components:
         - name
         - email
         - password
+    ScimConfigurationScimConfiguration:
+      title: ScimConfigurationScimConfiguration
+      type: object
+      properties:
+        connectionId:
+          type: string
+        connectionName:
+          type: string
+        strategy:
+          type: string
+        tenant:
+          type: string
+      required:
+        - connectionId
+        - connectionName
+        - strategy
+        - tenant
+    ScimConfigurationScimToken:
+      title: ScimConfigurationScimToken
+      type: object
+      properties:
+        tokenId:
+          type: string
+        token:
+          type: string
+          nullable: true
+        scopes:
+          type: array
+          items:
+            type: string
+          nullable: true
+        createdAt:
+          type: string
+      required:
+        - tokenId
+        - createdAt
     SystemTask:
       title: SystemTask
       type: object
@@ -140,9 +223,9 @@ components:
         name:
           type: string
         user:
-          $ref: "#/components/schemas/SystemUser"
+          $ref: '#/components/schemas/SystemUser'
         owner:
-          $ref: "#/components/schemas/SystemUser"
+          $ref: '#/components/schemas/SystemUser'
       required:
         - name
         - user

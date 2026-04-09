@@ -17,7 +17,7 @@ for dir in fern/apis/*/; do
     api_name=$(basename "$dir")
     # Skip APIs that use an OpenAPI spec (have "api: specs:" in generators.yml)
     if grep -q "specs:" "$dir/generators.yml" 2>/dev/null; then
-        ((skipped++))
+        skipped=$((skipped + 1))
         continue
     fi
     apis+=("$api_name")
@@ -54,9 +54,9 @@ failed_apis=()
 for api_name in "${apis[@]}"; do
     result=$(cat "$RESULTS_DIR/$api_name.result" 2>/dev/null || echo "fail")
     if [ "$result" = "pass" ]; then
-        ((passed++))
+        passed=$((passed + 1))
     else
-        ((failed++))
+        failed=$((failed + 1))
         failed_apis+=("$api_name")
     fi
 done

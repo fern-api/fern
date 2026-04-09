@@ -24,7 +24,7 @@ service:
       response: User
     createTask:
       method: POST
-      path: ""
+      path: /tasks
       request: Task
       response: Task
     emptyResponse:

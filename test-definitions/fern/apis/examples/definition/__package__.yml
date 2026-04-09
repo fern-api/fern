@@ -38,7 +38,7 @@ service:
   endpoints:
     echo:
       method: POST
-      path: ""
+      path: /echo
       request: string
       response: string
       examples:
@@ -48,6 +48,6 @@ service:
 
     createType:
       method: POST
-      path: ""
+      path: /type
       request: Type
       response: Identifier

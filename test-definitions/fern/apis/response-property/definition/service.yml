@@ -34,7 +34,7 @@ service:
 
     getMovieDocs:
       method: POST
-      path: /movie
+      path: /movie/docs
       request: string
       response:
         type: Response
@@ -42,7 +42,7 @@ service:
 
     getMovieName:
       method: POST
-      path: /movie
+      path: /movie/name
       request: string
       response:
         type: root.StringResponse
@@ -50,7 +50,7 @@ service:
 
     getMovieMetadata:
       method: POST
-      path: /movie
+      path: /movie/metadata
       request: string
       response:
         type: Response
@@ -58,7 +58,7 @@ service:
 
     getOptionalMovie:
       method: POST
-      path: /movie
+      path: /movie/optional
       request: string
       response:
         type: optional<Response>
@@ -66,7 +66,7 @@ service:
 
     getOptionalMovieDocs:
       method: POST
-      path: /movie
+      path: /movie/optional/docs
       request: string
       response:
         type: OptionalWithDocs
@@ -74,7 +74,7 @@ service:
 
     getOptionalMovieName:
       method: POST
-      path: /movie
+      path: /movie/optional/name
       request: string
       response:
         type: root.OptionalStringResponse
