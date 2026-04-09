@@ -1,0 +1,11 @@
+FROM node:22-slim
+
+ARG FERN_CLI_PACKAGE=fern-api
+ARG FERN_CLI_VERSION=latest
+
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+
+RUN npm install -g ${FERN_CLI_PACKAGE}@${FERN_CLI_VERSION} && \
+    npm cache clean --force
+
+ENTRYPOINT []

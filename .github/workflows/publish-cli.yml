@@ -55,6 +55,8 @@ jobs:
     needs: [detect-release-bump]
     if: ${{ inputs.version == null && github.repository == 'fern-api/fern' && needs.detect-release-bump.outputs.is_release_bump == 'false' }}
     runs-on: ubuntu-latest
+    outputs:
+      git_version: ${{ steps.get_git_version.outputs.git_version }}
     env:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
@@ -86,10 +88,25 @@ jobs:
       - name: Update npm for OIDC publishing
         run: npm install -g npm@10.9.8 && npm install -g npm@11
 
-      - name: Publish Dev CLI
+      - name: Get git version
+        id: get_git_version
         run: |
           git_version="$(./scripts/git-version.sh)"
+          echo "git_version=${git_version}" >> $GITHUB_OUTPUT
+
+      - name: Publish Dev CLI
+        run: |
+          git_version="${{ steps.get_git_version.outputs.git_version }}"
           pnpm seed publish cli --ver ${git_version} --dev --log-level debug
+
+  dev-docker:
+    needs: [dev]
+    if: ${{ needs.dev.result == 'success' }}
+    uses: ./.github/workflows/publish-cli-docker.yml
+    with:
+      version: ${{ needs.dev.outputs.git_version }}
+      is_dev: true
+    secrets: inherit
 
   live-test:
     if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
@@ -118,6 +135,8 @@ jobs:
     needs: [live-test, detect-release-bump]
     if: ${{ inputs.version == null && needs.detect-release-bump.outputs.is_release_bump == 'true' }}
     runs-on: ubuntu-latest
+    outputs:
+      cli_version: ${{ steps.get_cli_version.outputs.cli_version }}
     env:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
@@ -167,6 +186,30 @@ jobs:
           pnpm seed publish cli --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug
           pnpm seed register cli
 
+      - name: Get CLI version
+        id: get_cli_version
+        run: |
+          version=$(head -n 20 packages/cli/cli/versions.yml | grep -m 1 "version:" | awk '{print $3}')
+          echo "cli_version=${version}" >> $GITHUB_OUTPUT
+
+  prod-docker:
+    needs: [prod]
+    if: ${{ needs.prod.result == 'success' }}
+    uses: ./.github/workflows/publish-cli-docker.yml
+    with:
+      version: ${{ needs.prod.outputs.cli_version }}
+      is_dev: false
+    secrets: inherit
+
+  prod-docker-dev:
+    needs: [prod]
+    if: ${{ needs.prod.result == 'success' }}
+    uses: ./.github/workflows/publish-cli-docker.yml
+    with:
+      version: ${{ needs.prod.outputs.cli_version }}
+      is_dev: true
+    secrets: inherit
+
   manual:
     runs-on: ubuntu-latest
     if: ${{ inputs.version != null }}
@@ -205,6 +248,24 @@ jobs:
         run: |
           pnpm seed publish cli --ver ${{ inputs.version }} --log-level debug
           pnpm seed register cli
+
+  manual-docker:
+    needs: [manual]
+    if: ${{ needs.manual.result == 'success' }}
+    uses: ./.github/workflows/publish-cli-docker.yml
+    with:
+      version: ${{ inputs.version }}
+      is_dev: false
+    secrets: inherit
+
+  manual-docker-dev:
+    needs: [manual]
+    if: ${{ needs.manual.result == 'success' }}
+    uses: ./.github/workflows/publish-cli-docker.yml
+    with:
+      version: ${{ inputs.version }}
+      is_dev: true
+    secrets: inherit
 
   bulk-update-cli:
     runs-on: ubuntu-latest
