@@ -288,6 +288,17 @@
         },
         {
             "id": {
+                "path": "/object/get-and-return-with-mixed-required-and-optional-fields",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithMixedRequiredAndOptionalFields"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/exhaustive/fern\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFields(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithMixedRequiredAndOptionalFields{\n\t\tRequiredString:  \"hello\",\n\t\tRequiredInteger: 0,\n\t\tOptionalString: fern.String(\n\t\t\t\"world\",\n\t\t),\n\t\tRequiredLong: 0,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/object/get-and-return-with-optional-field",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/object.getAndReturnWithOptionalField"
@@ -306,6 +317,17 @@
             "snippet": {
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnWithRequiredField(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithRequiredField{\n\t\tFieldString: \"string\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-required-nested-object",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithRequiredNestedObject"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n\ttypes \"github.com/exhaustive/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnWithRequiredNestedObject(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithRequiredNestedObject{\n\t\tRequiredString: \"hello\",\n\t\tRequiredObject: \u0026types.NestedObjectWithRequiredField{\n\t\t\tFieldString:  \"nested\",\n\t\t\tNestedObject: \u0026types.ObjectWithOptionalField{},\n\t\t},\n\t},\n)\n"
             }
         },
         {

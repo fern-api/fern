@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.59.0
+  changelogEntry:
+    - summary: |
+        Expose HTTP response metadata on paginated endpoints. `Page<TItem>` now includes
+        `StatusCode`, `Headers`, and `Response` properties, giving users access to HTTP
+        status codes, response headers, and the full API response object for each page.
+      type: feat
+  createdAt: "2026-04-08"
+  irVersion: 66
+
 - version: 2.58.1
   changelogEntry:
     - summary: |

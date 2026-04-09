@@ -176,6 +176,33 @@ def test_endpoints_object_get_and_return_map_of_documented_unknown_type() -> Non
     verify_request_count(test_id, "POST", "/object/get-and-return-map-of-documented-unknown-type", None, 1)
 
 
+def test_endpoints_object_get_and_return_with_mixed_required_and_optional_fields() -> None:
+    """Test getAndReturnWithMixedRequiredAndOptionalFields endpoint with WireMock"""
+    test_id = "endpoints.object.get_and_return_with_mixed_required_and_optional_fields.0"
+    client = get_client(test_id)
+    client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
+        required_string="hello",
+        required_integer=0,
+        optional_string="world",
+        required_long=0,
+    )
+    verify_request_count(test_id, "POST", "/object/get-and-return-with-mixed-required-and-optional-fields", None, 1)
+
+
+def test_endpoints_object_get_and_return_with_required_nested_object() -> None:
+    """Test getAndReturnWithRequiredNestedObject endpoint with WireMock"""
+    test_id = "endpoints.object.get_and_return_with_required_nested_object.0"
+    client = get_client(test_id)
+    client.endpoints.object.get_and_return_with_required_nested_object(
+        required_string="hello",
+        required_object=NestedObjectWithRequiredField(
+            string="nested",
+            nested_object=ObjectWithOptionalField(),
+        ),
+    )
+    verify_request_count(test_id, "POST", "/object/get-and-return-with-required-nested-object", None, 1)
+
+
 def test_endpoints_object_get_and_return_with_datetime_like_string() -> None:
     """Test getAndReturnWithDatetimeLikeString endpoint with WireMock"""
     test_id = "endpoints.object.get_and_return_with_datetime_like_string.0"

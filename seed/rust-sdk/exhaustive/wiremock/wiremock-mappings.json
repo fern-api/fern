@@ -801,6 +801,68 @@
       }
     },
     {
+      "id": "d1d11f31-5ad4-4275-8b59-064ee4a550fb",
+      "name": "getAndReturnWithMixedRequiredAndOptionalFields - PartialRequiredFields",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-mixed-required-and-optional-fields",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"requiredString\": \"hello\",\n  \"requiredInteger\": 0,\n  \"optionalString\": \"world\",\n  \"requiredLong\": 0\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "d1d11f31-5ad4-4275-8b59-064ee4a550fb",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "7b973449-cd5b-4771-80f7-d39dbd6c1429",
+      "name": "getAndReturnWithRequiredNestedObject - NestedObjectMissing",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-required-nested-object",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"requiredString\": \"hello\",\n  \"requiredObject\": {\n    \"string\": \"nested\",\n    \"NestedObject\": {}\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "7b973449-cd5b-4771-80f7-d39dbd6c1429",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "15cf06f4-31a9-4147-a8d4-88d5ad543d35",
       "name": "getAndReturnWithDatetimeLikeString - DatetimeLikeStringExample",
       "request": {
@@ -1837,6 +1899,6 @@
     }
   ],
   "meta": {
-    "total": 57
+    "total": 59
   }
 }

@@ -7,12 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.union.getAndReturnUnion(request: Animal.dog(
-        Dog(
-            name: "name",
-            likesToWoof: true
-        )
-    ))
+    _ = try await client.endpoints.primitive.getAndReturnDate(request: CalendarDate("2023-01-15")!)
 }
 
 try await main()

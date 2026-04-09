@@ -7,10 +7,15 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.pagination.listItems(
-        cursor: "cursor",
-        limit: 1
-    )
+    _ = try await client.endpoints.object.getAndReturnWithRequiredNestedObject(request: ObjectWithRequiredNestedObject(
+        requiredString: "hello",
+        requiredObject: NestedObjectWithRequiredField(
+            string: "nested",
+            nestedObject: ObjectWithOptionalField(
+
+            )
+        )
+    ))
 }
 
 try await main()

@@ -1,6 +1,7 @@
 package example
 
 import (
+    bytes "bytes"
     context "context"
 
     client "github.com/exhaustive/fern/client"
@@ -16,9 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := "string"
-    client.Endpoints.Primitive.GetAndReturnString(
+    request := bytes.NewReader(
+        []byte(""),
+    )
+    client.Endpoints.Params.UploadWithPath(
         context.TODO(),
+        "upload-path",
         request,
     )
 }

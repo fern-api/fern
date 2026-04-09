@@ -7,7 +7,10 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.params.getWithBooleanPath(param: true)
+    _ = try await client.endpoints.params.getWithInlinePathAndQuery(
+        param: "param",
+        query: "query"
+    )
 }
 
 try await main()

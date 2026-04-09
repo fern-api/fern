@@ -10,7 +10,7 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .primitive
-        .get_and_return_long(&1000000, None)
+        .params
+        .get_with_path_and_errors(&"param".to_string(), None)
         .await;
 }

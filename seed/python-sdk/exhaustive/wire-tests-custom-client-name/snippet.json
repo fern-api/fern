@@ -327,6 +327,32 @@
             }
         },
         {
+            "example_identifier": "PartialRequiredFields",
+            "id": {
+                "path": "/object/get-and-return-with-mixed-required-and-optional-fields",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithMixedRequiredAndOptionalFields"
+            },
+            "snippet": {
+                "sync_client": "from seed import Exhaustive\n\nclient = Exhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(\n    required_string=\"hello\",\n    required_integer=0,\n    optional_string=\"world\",\n    required_long=0,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncExhaustive\n\nclient = AsyncExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(\n        required_string=\"hello\",\n        required_integer=0,\n        optional_string=\"world\",\n        required_long=0,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "NestedObjectMissing",
+            "id": {
+                "path": "/object/get-and-return-with-required-nested-object",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithRequiredNestedObject"
+            },
+            "snippet": {
+                "sync_client": "from seed import Exhaustive\nfrom seed.types.object import (\n    NestedObjectWithRequiredField,\n    ObjectWithOptionalField,\n)\n\nclient = Exhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.object.get_and_return_with_required_nested_object(\n    required_string=\"hello\",\n    required_object=NestedObjectWithRequiredField(\n        string=\"nested\",\n        nested_object=ObjectWithOptionalField(),\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncExhaustive\nfrom seed.types.object import (\n    NestedObjectWithRequiredField,\n    ObjectWithOptionalField,\n)\n\nclient = AsyncExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.endpoints.object.get_and_return_with_required_nested_object(\n        required_string=\"hello\",\n        required_object=NestedObjectWithRequiredField(\n            string=\"nested\",\n            nested_object=ObjectWithOptionalField(),\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
             "example_identifier": "DatetimeLikeStringExample",
             "id": {
                 "path": "/object/get-and-return-with-datetime-like-string",

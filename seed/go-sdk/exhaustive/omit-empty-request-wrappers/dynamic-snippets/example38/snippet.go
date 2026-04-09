@@ -4,6 +4,7 @@ import (
     context "context"
 
     client "github.com/exhaustive/fern/client"
+    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
 )
 
@@ -16,8 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Params.GetWithBooleanPath(
+    request := &endpoints.GetWithInlinePathAndQuery{
+        Param: "param",
+        Query: "query",
+    }
+    client.Endpoints.Params.GetWithInlinePathAndQuery(
         context.TODO(),
-        true,
+        request,
     )
 }
