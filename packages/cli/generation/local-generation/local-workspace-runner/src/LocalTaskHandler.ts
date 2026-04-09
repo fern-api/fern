@@ -234,7 +234,7 @@ export class LocalTaskHandler {
                         commitMessage
                     };
                 }
-                this.context.logger.debug(`Previous version from git tags: ${previousVersion}`);
+                this.context.logger.debug(`Previous version from fallback: ${previousVersion}`);
             }
             const cleanedDiff = autoVersioningService.cleanDiffForAI(diffContent, this.version);
 
