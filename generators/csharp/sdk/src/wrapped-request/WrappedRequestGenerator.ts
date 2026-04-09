@@ -355,7 +355,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 ...this.endpoint.requestBody.properties,
                 ...(this.endpoint.requestBody.extendedProperties ?? [])
             ]) {
-                if (this.context.getLiteralValue(prop.valueType) != null) {
+                if (this.context.isLiteralValue(prop.valueType)) {
                     literalBodyPropertyWireValues.add(getWireValue(prop.name));
                 }
             }

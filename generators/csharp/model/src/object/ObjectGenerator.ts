@@ -183,7 +183,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
                 ...(this.objectDeclaration.extendedProperties ?? [])
             ];
             for (const prop of allProps) {
-                if (this.context.getLiteralValue(prop.valueType) != null) {
+                if (this.context.isLiteralValue(prop.valueType)) {
                     literalPropertyWireValues.add(getWireValue(prop.name));
                 }
             }
