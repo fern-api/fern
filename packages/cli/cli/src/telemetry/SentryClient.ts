@@ -1,5 +1,5 @@
+import { setSentryRunIdTags } from "@fern-api/cli-v2";
 import * as Sentry from "@sentry/node";
-import { setSentryRunIdTags } from "./sentryRunId.js";
 
 export class SentryClient {
     private readonly sentry: Sentry.NodeClient | undefined;
