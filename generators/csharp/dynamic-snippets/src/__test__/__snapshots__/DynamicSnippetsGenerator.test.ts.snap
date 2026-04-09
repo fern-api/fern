@@ -276,32 +276,29 @@ await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
 `;
 
 exports[`snippets (default) > exhaustive > 'POST /container/map-prim-to-union (mi…' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "test2"
-    ],
-    "message": "Expected number, got boolean"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "test3"
-    ],
-    "message": "Expected number, got string"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "test4"
-    ],
-    "message": "Expected number, got object"
-  }
-]"
+"using Acme;
+using System.Collections.Generic;
+using OneOf;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+    new Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>(){
+        ["test"] = 0,
+        ["test2"] = true,
+        ["test3"] = "Test",
+        ["test4"] = new List<string>(){
+            "1",
+            "1",
+            "1",
+            "1",
+        }
+        ,
+    }
+);
+"
 `;
 
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
@@ -718,6 +715,15 @@ var client = new AcmeClient(
 await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
     new Dictionary<string, MixedType>(){
         ["test"] = 0,
+        ["test2"] = true,
+        ["test3"] = "Test",
+        ["test4"] = new List<string>(){
+            "1",
+            "1",
+            "1",
+            "1",
+        }
+        ,
     }
 );
 "
