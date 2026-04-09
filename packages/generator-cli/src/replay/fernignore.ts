@@ -2,7 +2,7 @@ import { existsSync, readFileSync, writeFileSync } from "fs";
 import { readFile, writeFile } from "fs/promises";
 import { join } from "path";
 
-export const REPLAY_FERNIGNORE_ENTRIES = [".fern/replay.lock", ".fern/replay.yml", ".gitattributes"];
+export const REPLAY_FERNIGNORE_ENTRIES = [".fern/replay.lock", ".gitattributes"];
 
 const GITATTRIBUTES_ENTRIES = [".fern/replay.lock linguist-generated=true"];
 
