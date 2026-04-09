@@ -7,6 +7,19 @@
   createdAt: "2026-04-01"
   irVersion: 66
 
+- version: 1.33.6
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet import path resolution to use Go publish info from
+        the dynamic IR's generatorConfig directly, rather than depending solely
+        on the externally-constructed FernGeneratorExec config. This ensures
+        the correct repoUrl and version are used for import paths even when the
+        external config conversion layer does not populate them correctly,
+        eliminating the spurious `/v` suffix in generated Go snippet imports.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 61
+
 - version: 1.33.5
   changelogEntry:
     - summary: |
