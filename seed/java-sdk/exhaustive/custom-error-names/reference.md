@@ -2074,6 +2074,60 @@ client.endpoints().params().uploadWithPath("upload-path", "".getBytes());
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.getWithBooleanPath(param) -> String</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with boolean path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().params().getWithBooleanPath(true);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `Boolean` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.params.getWithPathAndErrors(param) -> String</code></summary>
 <dl>
 <dd>
