@@ -4,9 +4,8 @@ import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY, GENERATORS_CONFIGURATION_FILENAME 
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { getGeneratorOutputSubfolder, runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
+import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import fs from "fs/promises";
-import os from "os";
-import path from "path";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
@@ -14,7 +13,12 @@ import { GROUP_CLI_OPTION } from "../../constants.js";
 import { computePreviewVersion } from "./computePreviewVersion.js";
 
 import { getPreviewId } from "./getPreviewId.js";
-import { isNpmGenerator, overrideGroupOutputForPreview, PREVIEW_REGISTRY_URL } from "./overrideOutputForPreview.js";
+import {
+    isNpmGenerator,
+    overrideGroupOutputForPreview,
+    overrideGroupOutputForRemotePreview,
+    PREVIEW_REGISTRY_URL
+} from "./overrideOutputForPreview.js";
 import { toPreviewPackageName } from "./toPreviewPackageName.js";
 
 interface SdkPreviewSuccess {
@@ -113,8 +117,13 @@ export async function sdkPreview({
             cliContext.logger.warn(`Multiple registry URLs provided; only the first will be used: ${urlOutputs[0]}`);
         }
 
+        // Determine whether to use remote (Fiddle) or local (Docker) generation.
+        // No --output flag → remote generation through Fiddle (matches `fern generate` pattern).
+        // Any --output flag → local Docker generation for direct disk/registry control.
+        const useRemoteGeneration = output == null;
+
         if (output == null) {
-            // Default: publish to preview registry + temp dir for diffs
+            // Default: publish to preview registry via Fiddle
             registryUrl = PREVIEW_REGISTRY_URL;
             publishToRegistry = true;
         } else if (urlOutputs.length > 0) {
@@ -126,17 +135,11 @@ export async function sdkPreview({
             publishToRegistry = false;
         }
 
-        // When no --output is given, a temp dir is created for the GHA diff workflow.
-        // It lives under os.tmpdir() and is cleaned up by the OS; we don't remove it
-        // ourselves because the JSON consumer (e.g. the GitHub Action) reads from it
-        // after this function returns.
+        // When --output is given, resolve the first path for local generation.
+        // When no --output is given, remote generation handles everything server-side
+        // so no temp dir is needed.
         const firstPath = pathOutputs[0];
-        const absolutePathToOutput =
-            firstPath != null
-                ? AbsoluteFilePath.of(resolve(cwd(), firstPath))
-                : output == null
-                  ? AbsoluteFilePath.of(await fs.mkdtemp(path.join(os.tmpdir(), "fern-sdk-preview-")))
-                  : undefined;
+        const absolutePathToOutput = firstPath != null ? AbsoluteFilePath.of(resolve(cwd(), firstPath)) : undefined;
         if (absolutePathToOutput != null) {
             await fs.mkdir(absolutePathToOutput, { recursive: true });
         }
@@ -207,42 +210,69 @@ export async function sdkPreview({
                 // Override group output to publish to the target registry.
                 // token.value is the Fern org token (FERN_TOKEN) — the registry
                 // must accept this token for publish authentication.
+                const singleGeneratorGroup = { ...group, generators: [generator] };
+                const overrideFn = useRemoteGeneration
+                    ? overrideGroupOutputForRemotePreview
+                    : overrideGroupOutputForPreview;
                 const modifiedGroup =
                     publishToRegistry && registryUrl != null
-                        ? overrideGroupOutputForPreview({
-                              group: { ...group, generators: [generator] },
+                        ? overrideFn({
+                              group: singleGeneratorGroup,
                               packageName: previewPackageName,
                               token: token.value,
                               registryUrl
                           })
-                        : { ...group, generators: [generator] };
+                        : singleGeneratorGroup;
 
-                // Run generation locally via Docker. We use local generation (not remote/Fiddle)
-                // because we programmatically override the output config, which requires direct
-                // control over the generator invocation. Docker must be installed.
-                //
-                // When absolutePathToOutput is set, generated files are also written to disk.
-                // publishToRegistry controls whether the preview package is published.
-                await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                    await runLocalGenerationForWorkspace({
-                        token,
-                        projectConfig: project.config,
-                        workspace,
-                        generatorGroup: modifiedGroup,
-                        version: previewVersion,
-                        keepDocker: false,
-                        context,
-                        absolutePathToPreview: absolutePathToOutput,
-                        runner: undefined,
-                        inspect: false,
-                        ai: workspace.generatorsConfiguration?.ai,
-                        replay: undefined,
-                        noReplay: true,
-                        validateWorkspace: true,
-                        publishToRegistry,
-                        isPreview: true
+                if (useRemoteGeneration) {
+                    // Remote generation through Fiddle — matches the `fern generate` pattern.
+                    // Fiddle handles publishing to the preview registry server-side.
+                    await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                        await runRemoteGenerationForAPIWorkspace({
+                            projectConfig: project.config,
+                            organization: project.config.organization,
+                            workspace,
+                            context,
+                            generatorGroup: modifiedGroup,
+                            version: previewVersion,
+                            shouldLogS3Url: false,
+                            token,
+                            whitelabel: workspace.generatorsConfiguration?.whitelabel,
+                            absolutePathToPreview: undefined,
+                            mode: undefined,
+                            fernignorePath: undefined,
+                            skipFernignore: false,
+                            dynamicIrOnly: false,
+                            validateWorkspace: true,
+                            retryRateLimited: false,
+                            requireEnvVars: false
+                        });
                     });
-                });
+                } else {
+                    // Local generation via Docker — used when --output flag is provided.
+                    // Docker must be installed. When absolutePathToOutput is set, generated
+                    // files are also written to disk.
+                    await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                        await runLocalGenerationForWorkspace({
+                            token,
+                            projectConfig: project.config,
+                            workspace,
+                            generatorGroup: modifiedGroup,
+                            version: previewVersion,
+                            keepDocker: false,
+                            context,
+                            absolutePathToPreview: absolutePathToOutput,
+                            runner: undefined,
+                            inspect: false,
+                            ai: workspace.generatorsConfiguration?.ai,
+                            replay: undefined,
+                            noReplay: true,
+                            validateWorkspace: true,
+                            publishToRegistry,
+                            isPreview: true
+                        });
+                    });
+                }
 
                 // The generator writes to <output>/<subfolder>/ (e.g. fern-typescript-sdk/).
                 // NOTE: this duplicates the subfolder logic in resolveAbsolutePathToLocalPreview
