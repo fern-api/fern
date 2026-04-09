@@ -25,12 +25,7 @@ describe("SeedValidationClient", () => {
             name: "fern",
             shape: "SQUARE",
         });
-        expect(response).toEqual({
-            decimal: 2.2,
-            even: 100,
-            name: "fern",
-            shape: "SQUARE",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get", async () => {
@@ -46,11 +41,6 @@ describe("SeedValidationClient", () => {
             even: 100,
             name: "fern",
         });
-        expect(response).toEqual({
-            decimal: 2.2,
-            even: 100,
-            name: "fern",
-            shape: "SQUARE",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

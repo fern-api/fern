@@ -18,15 +18,6 @@ describe("EventsClient", () => {
         const response = await client.user.events.listEvents({
             limit: 1,
         });
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-            },
-            {
-                id: "id",
-                name: "name",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 });

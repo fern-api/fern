@@ -123,6 +123,24 @@ describe("ParamsClient", () => {
         expect(response).toEqual(rawResponseBody);
     });
 
+    test("getWithBooleanPath", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = "string";
+
+        server
+            .mockEndpoint()
+            .get("/params/path-bool/true")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.params.getWithBooleanPath(true);
+        expect(response).toEqual(rawResponseBody);
+    });
+
     test("getWithPathAndErrors (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
