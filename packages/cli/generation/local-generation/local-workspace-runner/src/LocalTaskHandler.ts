@@ -212,14 +212,17 @@ export class LocalTaskHandler {
                 if (!(e instanceof AutoVersioningException) || !e.magicVersionAbsent) {
                     throw e;
                 }
-                // Magic version not found in diff — fall back to git tags.
+                // Magic version not found in diff — fall back to .fern/metadata.json then git tags.
                 // This happens for generators that don't embed versions in files (e.g., Swift
                 // uses git tags for versioning via SPM, not a version field in Package.swift).
-                this.context.logger.info(`Magic version not found in diff, falling back to git tags: ${e}`);
-                const tagVersion = await autoVersioningService.getLatestVersionFromGitTags(
-                    this.absolutePathToLocalOutput
-                );
-                previousVersion = this.normalizeVersionPrefix(tagVersion);
+                this.context.logger.info(`Magic version not found in diff, trying fallbacks: ${e}`);
+                previousVersion = await this.getVersionFromLocalMetadata();
+                if (previousVersion == null) {
+                    const tagVersion = await autoVersioningService.getLatestVersionFromGitTags(
+                        this.absolutePathToLocalOutput
+                    );
+                    previousVersion = this.normalizeVersionPrefix(tagVersion);
+                }
                 if (previousVersion == null) {
                     this.context.logger.info("No git tags found — treating as new SDK repository");
                     const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
@@ -246,15 +249,18 @@ export class LocalTaskHandler {
             );
 
             // If no previous version from diff (e.g., Version.swift is a new file in an existing SDK),
-            // try git tags before falling back to initial version
+            // try .fern/metadata.json first, then git tags before falling back to initial version
             if (previousVersion == null) {
-                const rawTagVersion = await autoVersioningService.getLatestVersionFromGitTags(
-                    this.absolutePathToLocalOutput
-                );
-                const normalizedTag = this.normalizeVersionPrefix(rawTagVersion);
-                if (normalizedTag != null) {
-                    this.context.logger.info(`No previous version from diff; using git tag: ${normalizedTag}`);
-                    previousVersion = normalizedTag;
+                previousVersion = await this.getVersionFromLocalMetadata();
+                if (previousVersion == null) {
+                    const rawTagVersion = await autoVersioningService.getLatestVersionFromGitTags(
+                        this.absolutePathToLocalOutput
+                    );
+                    const normalizedTag = this.normalizeVersionPrefix(rawTagVersion);
+                    if (normalizedTag != null) {
+                        this.context.logger.info(`No previous version from diff; using git tag: ${normalizedTag}`);
+                        previousVersion = normalizedTag;
+                    }
                 }
             }
 
@@ -611,6 +617,33 @@ export class LocalTaskHandler {
 
         // Preserve 'v' prefix if original version had it
         return version.startsWith("v") ? `v${newVersion}` : newVersion;
+    }
+
+    /**
+     * Reads the SDK version from `.fern/metadata.json` in the local output directory.
+     * This file is written by all Fern generators and contains the `sdkVersion` field.
+     * Returns undefined if the file doesn't exist (older SDKs) or can't be parsed.
+     */
+    private async getVersionFromLocalMetadata(): Promise<string | undefined> {
+        try {
+            const metadataPath = join(this.absolutePathToLocalOutput, RelativeFilePath.of(".fern/metadata.json"));
+            if (!(await doesPathExist(AbsoluteFilePath.of(metadataPath)))) {
+                this.context.logger.debug(".fern/metadata.json not found in local output");
+                return undefined;
+            }
+            const content = await readFile(metadataPath, "utf-8");
+            const metadata = JSON.parse(content) as { sdkVersion?: string };
+            if (metadata.sdkVersion != null) {
+                const normalized = this.normalizeVersionPrefix(metadata.sdkVersion);
+                this.context.logger.info(`Found version from .fern/metadata.json: ${normalized}`);
+                return normalized;
+            }
+            this.context.logger.debug(".fern/metadata.json found but no sdkVersion field");
+            return undefined;
+        } catch (error) {
+            this.context.logger.debug(`Failed to read .fern/metadata.json: ${error}`);
+            return undefined;
+        }
     }
 
     /**
