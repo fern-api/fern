@@ -10,8 +10,10 @@ from .nested_object_with_required_field import NestedObjectWithRequiredField
 from .object_with_datetime_like_string import ObjectWithDatetimeLikeString
 from .object_with_documented_unknown_type import ObjectWithDocumentedUnknownType
 from .object_with_map_of_map import ObjectWithMapOfMap
+from .object_with_mixed_required_and_optional_fields import ObjectWithMixedRequiredAndOptionalFields
 from .object_with_optional_field import ObjectWithOptionalField
 from .object_with_required_field import ObjectWithRequiredField
+from .object_with_required_nested_object import ObjectWithRequiredNestedObject
 from .object_with_unknown_field import ObjectWithUnknownField
 from .optional_alias import OptionalAlias
 
@@ -24,8 +26,10 @@ __all__ = [
     "ObjectWithDatetimeLikeString",
     "ObjectWithDocumentedUnknownType",
     "ObjectWithMapOfMap",
+    "ObjectWithMixedRequiredAndOptionalFields",
     "ObjectWithOptionalField",
     "ObjectWithRequiredField",
+    "ObjectWithRequiredNestedObject",
     "ObjectWithUnknownField",
     "OptionalAlias",
 ]

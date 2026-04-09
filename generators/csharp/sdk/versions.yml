@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.59.2
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation failing with "Endpoint does not have an
+        example that matches the snippet" when the endpoint has examples but the
+        request is a plain `EndpointSnippetRequest` without an `id`. The guard now
+        only validates the example match when the snippet includes an `id`.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
+
 - version: 2.59.1
   changelogEntry:
     - summary: |

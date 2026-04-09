@@ -52,7 +52,7 @@ export class TestMethodBuilder {
         testExample: WireTestExample
     ): (writer: Writer) => void {
         return (writer) => {
-            const testMethodName = `test${this.toJavaMethodName(endpoint.name.pascalCase.safeName)}`;
+            const testMethodName = `test${this.toJavaMethodName(this.context.caseConverter.pascalSafe(endpoint.name))}`;
             const methodCall = this.snippetExtractor.extractMethodCall(snippet);
 
             // If we can't extract a method call, this endpoint should have been filtered out upstream
