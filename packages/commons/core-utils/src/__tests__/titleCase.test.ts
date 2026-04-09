@@ -48,4 +48,28 @@ describe("titleCase", () => {
     it("handles 'Asegment' pattern", () => {
         expect(titleCase("shopperProfilesForASegment")).toBe("Shopper Profiles for a Segment");
     });
+
+    it("handles multiple single-letter words", () => {
+        expect(titleCase("getAOrBOption")).toBe("Get a or B Option");
+    });
+
+    it("handles consecutive acronyms", () => {
+        expect(titleCase("parseXMLToJSON")).toBe("Parse XML to JSON");
+    });
+
+    it("handles mixed snake_case and camelCase", () => {
+        expect(titleCase("get_userProfile")).toBe("Get User Profile");
+    });
+
+    it("handles empty string", () => {
+        expect(titleCase("")).toBe("");
+    });
+
+    it("handles single lowercase letter", () => {
+        expect(titleCase("a")).toBe("A");
+    });
+
+    it("handles real-world subpackage name: segmentsForAShopperProfile", () => {
+        expect(titleCase("segmentsForAShopperProfile")).toBe("Segments for a Shopper Profile");
+    });
 });
