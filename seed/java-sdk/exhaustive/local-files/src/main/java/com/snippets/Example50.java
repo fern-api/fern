@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.endpoints.put.requests.PutRequest;
+import java.time.OffsetDateTime;
 
 public class Example50 {
     public static void main(String[] args) {
@@ -11,11 +11,6 @@ public class Example50 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().put().add(
-            PutRequest
-                .builder()
-                .id("id")
-                .build()
-        );
+        client.endpoints().primitive().getAndReturnDatetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"));
     }
 }

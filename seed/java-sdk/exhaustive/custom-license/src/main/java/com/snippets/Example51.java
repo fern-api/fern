@@ -1,8 +1,6 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.resources.types.union.types.Animal;
-import com.seed.exhaustive.resources.types.union.types.Dog;
 
 public class Example51 {
     public static void main(String[] args) {
@@ -11,9 +9,6 @@ public class Example51 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints()
-                .union()
-                .getAndReturnUnion(
-                        Animal.dog(Dog.builder().name("name").likesToWoof(true).build()));
+        client.endpoints().primitive().getAndReturnDate("2023-01-15");
     }
 }

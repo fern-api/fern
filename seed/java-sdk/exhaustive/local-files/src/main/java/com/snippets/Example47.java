@@ -10,6 +10,6 @@ public class Example47 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().primitive().getAndReturnDate("2023-01-15");
+        client.endpoints().primitive().getAndReturnLong(1000000L);
     }
 }
