@@ -45,7 +45,7 @@ paths:
     get:
       operationId: nestedNoAuth_api_getSomething
       tags:
-        - NestedNoAuthApi
+        - NestedNoAuthAPI
       parameters: []
       responses:
         '204':
@@ -54,7 +54,7 @@ paths:
     get:
       operationId: nested_api_getSomething
       tags:
-        - NestedApi
+        - NestedAPI
       parameters: []
       responses:
         '204':

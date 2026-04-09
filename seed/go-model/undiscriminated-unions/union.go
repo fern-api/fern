@@ -331,7 +331,7 @@ func (t *TokenizeCard) String() string {
 
 type ConvertToken struct {
 	Method  string `json:"method" url:"method"`
-	TokenId string `json:"tokenId" url:"tokenId"`
+	TokenID string `json:"tokenId" url:"tokenId"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
@@ -344,11 +344,11 @@ func (c *ConvertToken) GetMethod() string {
 	return c.Method
 }
 
-func (c *ConvertToken) GetTokenId() string {
+func (c *ConvertToken) GetTokenID() string {
 	if c == nil {
 		return ""
 	}
-	return c.TokenId
+	return c.TokenID
 }
 
 func (c *ConvertToken) GetExtraProperties() map[string]any {
@@ -397,7 +397,7 @@ type UnionWithReservedNames struct {
 }
 
 // A user identifier (alias for string)
-type UserId = string
+type UserID = string
 
 // A name (alias for string)
 type Name = string
@@ -412,6 +412,6 @@ type Name = string
 // causing CS0557 compiler error.
 type UnionWithTypeAliases struct {
 	String string
-	UserId UserId
+	UserID UserID
 	Name   Name
 }

@@ -828,6 +828,7 @@
                   "name": "StreamUser",
                   "typeId": "StreamUser",
                   "inline": false,
+                  "displayName": "StreamUser",
                   "type": "named"
                 },
                 "type": "json"
@@ -870,6 +871,7 @@
                       "name": "StreamUser",
                       "typeId": "StreamUser",
                       "inline": false,
+                      "displayName": "StreamUser",
                       "type": "named"
                     },
                     "type": "json"
@@ -1005,6 +1007,7 @@
                   "name": "User",
                   "typeId": "User",
                   "inline": false,
+                  "displayName": "User",
                   "type": "named"
                 },
                 "docs": "",
@@ -1047,6 +1050,7 @@
                       "name": "User",
                       "typeId": "User",
                       "inline": false,
+                      "displayName": "User",
                       "type": "named"
                     },
                     "docs": "",
@@ -1266,6 +1270,7 @@
                   "name": "StreamUser-2",
                   "typeId": "StreamUser-2",
                   "inline": false,
+                  "displayName": "StreamUser-2",
                   "type": "named"
                 },
                 "type": "json"
@@ -1308,6 +1313,7 @@
                       "name": "StreamUser-2",
                       "typeId": "StreamUser-2",
                       "inline": false,
+                      "displayName": "StreamUser-2",
                       "type": "named"
                     },
                     "type": "json"
@@ -1526,6 +1532,7 @@
                   "name": "User-2",
                   "typeId": "User-2",
                   "inline": false,
+                  "displayName": "User-2",
                   "type": "named"
                 },
                 "docs": "",
@@ -1568,6 +1575,7 @@
                       "name": "User-2",
                       "typeId": "User-2",
                       "inline": false,
+                      "displayName": "User-2",
                       "type": "named"
                     },
                     "docs": "",

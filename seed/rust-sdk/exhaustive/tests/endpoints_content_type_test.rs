@@ -31,7 +31,7 @@ async fn test_endpoints_content_type_post_json_patch_content_type_with_wiremock(
                 datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some(
+                base64: Some(
                     base64::engine::general_purpose::STANDARD
                         .decode("SGVsbG8gd29ybGQh")
                         .unwrap(),
@@ -80,7 +80,7 @@ async fn test_endpoints_content_type_post_json_patch_content_with_charset_type_w
                 datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some(
+                base64: Some(
                     base64::engine::general_purpose::STANDARD
                         .decode("SGVsbG8gd29ybGQh")
                         .unwrap(),

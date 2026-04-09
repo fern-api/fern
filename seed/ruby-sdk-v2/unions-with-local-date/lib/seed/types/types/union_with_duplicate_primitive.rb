@@ -8,10 +8,10 @@ module Seed
 
         discriminant :type
 
-        member -> { Integer }, key: "INTEGER_1"
-        member -> { Integer }, key: "INTEGER_2"
-        member -> { String }, key: "STRING_1"
-        member -> { String }, key: "STRING_2"
+        member -> { Integer }, key: "INTEGER1"
+        member -> { Integer }, key: "INTEGER2"
+        member -> { String }, key: "STRING1"
+        member -> { String }, key: "STRING2"
       end
     end
   end

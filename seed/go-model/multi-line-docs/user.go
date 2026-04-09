@@ -13,7 +13,7 @@ import (
 //   - createUser
 //   - getUser
 type User struct {
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// The user's name. This name is unique to each user. A few examples are included below:
 	//  - Alice
 	//  - Bob
@@ -26,11 +26,11 @@ type User struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *User) GetId() string {
+func (u *User) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetName() string {

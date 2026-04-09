@@ -143,7 +143,7 @@ impl CodeExecutionUpdate {
         Self::Graded { submission_id, test_cases }
     }
 
-    pub fn graded_v_2(submission_id: SubmissionId, test_cases: HashMap<TestCaseId, TestCaseGrade>) -> Self {
+    pub fn graded_v2(submission_id: SubmissionId, test_cases: HashMap<TestCaseId, TestCaseGrade>) -> Self {
         Self::GradedV2 { submission_id, test_cases }
     }
 

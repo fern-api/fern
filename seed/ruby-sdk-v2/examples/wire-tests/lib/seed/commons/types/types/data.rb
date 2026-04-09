@@ -10,7 +10,7 @@ module Seed
           discriminant :type
 
           member -> { String }, key: "STRING"
-          member -> { String }, key: "BASE_64"
+          member -> { String }, key: "BASE64"
         end
       end
     end

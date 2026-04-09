@@ -423,7 +423,7 @@ client.endpoints.content_type.post_json_patch_content_type(
   datetime: "2024-01-15T09:30:00Z",
   date: "2023-01-15",
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-  base_64: "SGVsbG8gd29ybGQh",
+  base64: "SGVsbG8gd29ybGQh",
   list: %w[list list],
   set: Set.new(["set"]),
   map: {
@@ -487,7 +487,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
   datetime: "2024-01-15T09:30:00Z",
   date: "2023-01-15",
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-  base_64: "SGVsbG8gd29ybGQh",
+  base64: "SGVsbG8gd29ybGQh",
   list: %w[list list],
   set: Set.new(["set"]),
   map: {
@@ -578,7 +578,7 @@ client.endpoints.enum.get_and_return_enum(request: "SUNNY")
 </dl>
 </details>
 
-## Endpoints HttpMethods
+## Endpoints HTTPMethods
 <details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_get</a>(id) -> String</code></summary>
 <dl>
 <dd>
@@ -615,7 +615,7 @@ client.endpoints.http_methods.test_get(id: "id")
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
+**request_options:** `Seed::Endpoints::HTTPMethods::RequestOptions` 
     
 </dd>
 </dl>
@@ -663,7 +663,7 @@ client.endpoints.http_methods.test_post(string: "string")
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
+**request_options:** `Seed::Endpoints::HTTPMethods::RequestOptions` 
     
 </dd>
 </dl>
@@ -722,7 +722,7 @@ client.endpoints.http_methods.test_put(
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
+**request_options:** `Seed::Endpoints::HTTPMethods::RequestOptions` 
     
 </dd>
 </dl>
@@ -757,7 +757,7 @@ client.endpoints.http_methods.test_patch(
   datetime: "2024-01-15T09:30:00Z",
   date: "2023-01-15",
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-  base_64: "SGVsbG8gd29ybGQh",
+  base64: "SGVsbG8gd29ybGQh",
   list: %w[list list],
   set: Set.new(["set"]),
   map: {
@@ -795,7 +795,7 @@ client.endpoints.http_methods.test_patch(
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
+**request_options:** `Seed::Endpoints::HTTPMethods::RequestOptions` 
     
 </dd>
 </dl>
@@ -843,7 +843,7 @@ client.endpoints.http_methods.test_delete(id: "id")
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
+**request_options:** `Seed::Endpoints::HTTPMethods::RequestOptions` 
     
 </dd>
 </dl>
@@ -878,7 +878,7 @@ client.endpoints.object.get_and_return_with_optional_field(
   datetime: "2024-01-15T09:30:00Z",
   date: "2023-01-15",
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-  base_64: "SGVsbG8gd29ybGQh",
+  base64: "SGVsbG8gd29ybGQh",
   list: %w[list list],
   set: Set.new(["set"]),
   map: {
@@ -1044,7 +1044,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
     datetime: "2024-01-15T09:30:00Z",
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    base_64: "SGVsbG8gd29ybGQh",
+    base64: "SGVsbG8gd29ybGQh",
     list: %w[list list],
     set: Set.new(["set"]),
     map: {
@@ -1112,7 +1112,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
     datetime: "2024-01-15T09:30:00Z",
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    base_64: "SGVsbG8gd29ybGQh",
+    base64: "SGVsbG8gd29ybGQh",
     list: %w[list list],
     set: Set.new(["set"]),
     map: {
@@ -1187,7 +1187,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
     datetime: "2024-01-15T09:30:00Z",
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    base_64: "SGVsbG8gd29ybGQh",
+    base64: "SGVsbG8gd29ybGQh",
     list: %w[list list],
     set: Set.new(["set"]),
     map: {
@@ -1206,7 +1206,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
     datetime: "2024-01-15T09:30:00Z",
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    base_64: "SGVsbG8gd29ybGQh",
+    base64: "SGVsbG8gd29ybGQh",
     list: %w[list list],
     set: Set.new(["set"]),
     map: {
@@ -2606,7 +2606,7 @@ client.endpoints.primitive.get_and_return_uuid(request: "d5e9c84f-c2b2-4bf4-b4b0
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_base_64</a>(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_base64</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -2619,7 +2619,7 @@ client.endpoints.primitive.get_and_return_uuid(request: "d5e9c84f-c2b2-4bf4-b4b0
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_base_64(request: "SGVsbG8gd29ybGQh")
+client.endpoints.primitive.get_and_return_base64(request: "SGVsbG8gd29ybGQh")
 ```
 </dd>
 </dl>
@@ -2752,7 +2752,7 @@ client.endpoints.union.get_and_return_union
 </dl>
 </details>
 
-## Endpoints Urls
+## Endpoints URLs
 <details><summary><code>client.endpoints.urls.<a href="/lib/seed/endpoints/urls/client.rb">with_mixed_case</a>() -> String</code></summary>
 <dl>
 <dd>
@@ -2781,7 +2781,7 @@ client.endpoints.urls.with_mixed_case
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::Urls::RequestOptions` 
+**request_options:** `Seed::Endpoints::URLs::RequestOptions` 
     
 </dd>
 </dl>
@@ -2821,7 +2821,7 @@ client.endpoints.urls.no_ending_slash
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::Urls::RequestOptions` 
+**request_options:** `Seed::Endpoints::URLs::RequestOptions` 
     
 </dd>
 </dl>
@@ -2861,7 +2861,7 @@ client.endpoints.urls.with_ending_slash
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::Urls::RequestOptions` 
+**request_options:** `Seed::Endpoints::URLs::RequestOptions` 
     
 </dd>
 </dl>
@@ -2901,7 +2901,7 @@ client.endpoints.urls.with_underscores
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::Urls::RequestOptions` 
+**request_options:** `Seed::Endpoints::URLs::RequestOptions` 
     
 </dd>
 </dl>
@@ -2953,7 +2953,7 @@ client.inlined_requests.post_with_object_bodyand_response(
     datetime: "2024-01-15T09:30:00Z",
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    base_64: "SGVsbG8gd29ybGQh",
+    base64: "SGVsbG8gd29ybGQh",
     list: %w[list list],
     set: Set.new(["set"]),
     map: {

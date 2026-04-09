@@ -10,18 +10,18 @@ import (
 )
 
 type StreamResponse struct {
-	Id   string  `json:"id" url:"id"`
+	ID   string  `json:"id" url:"id"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (s *StreamResponse) GetId() string {
+func (s *StreamResponse) GetID() string {
 	if s == nil {
 		return ""
 	}
-	return s.Id
+	return s.ID
 }
 
 func (s *StreamResponse) GetName() *string {

@@ -2,7 +2,7 @@
 
 module Seed
   module NestedNoAuth
-    module Api
+    module API
       class Client
         # @param client [Seed::Internal::Http::RawClient]
         #

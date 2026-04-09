@@ -11,10 +11,10 @@ import (
 )
 
 var (
-	folderCFooFieldBarProperty = big.NewInt(1 << 0)
+	folderCfooFieldBarProperty = big.NewInt(1 << 0)
 )
 
-type FolderCFoo struct {
+type FolderCfoo struct {
 	BarProperty uuid.UUID `json:"bar_property" url:"bar_property"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -24,21 +24,21 @@ type FolderCFoo struct {
 	rawJSON         json.RawMessage
 }
 
-func (f *FolderCFoo) GetBarProperty() uuid.UUID {
+func (f *FolderCfoo) GetBarProperty() uuid.UUID {
 	if f == nil {
 		return uuid.Nil
 	}
 	return f.BarProperty
 }
 
-func (f *FolderCFoo) GetExtraProperties() map[string]interface{} {
+func (f *FolderCfoo) GetExtraProperties() map[string]interface{} {
 	if f == nil {
 		return nil
 	}
 	return f.extraProperties
 }
 
-func (f *FolderCFoo) require(field *big.Int) {
+func (f *FolderCfoo) require(field *big.Int) {
 	if f.explicitFields == nil {
 		f.explicitFields = big.NewInt(0)
 	}
@@ -47,18 +47,18 @@ func (f *FolderCFoo) require(field *big.Int) {
 
 // SetBarProperty sets the BarProperty field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FolderCFoo) SetBarProperty(barProperty uuid.UUID) {
+func (f *FolderCfoo) SetBarProperty(barProperty uuid.UUID) {
 	f.BarProperty = barProperty
-	f.require(folderCFooFieldBarProperty)
+	f.require(folderCfooFieldBarProperty)
 }
 
-func (f *FolderCFoo) UnmarshalJSON(data []byte) error {
-	type unmarshaler FolderCFoo
+func (f *FolderCfoo) UnmarshalJSON(data []byte) error {
+	type unmarshaler FolderCfoo
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*f = FolderCFoo(value)
+	*f = FolderCfoo(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
@@ -68,8 +68,8 @@ func (f *FolderCFoo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (f *FolderCFoo) MarshalJSON() ([]byte, error) {
-	type embed FolderCFoo
+func (f *FolderCfoo) MarshalJSON() ([]byte, error) {
+	type embed FolderCfoo
 	var marshaler = struct {
 		embed
 	}{
@@ -79,7 +79,7 @@ func (f *FolderCFoo) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (f *FolderCFoo) String() string {
+func (f *FolderCfoo) String() string {
 	if f == nil {
 		return "<nil>"
 	}

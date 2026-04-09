@@ -234,6 +234,7 @@
               "name": "Schema1",
               "typeId": "Schema1",
               "inline": false,
+              "displayName": "Schema1",
               "type": "named"
             }
           },
@@ -246,6 +247,7 @@
               "name": "Schema2",
               "typeId": "Schema2",
               "inline": false,
+              "displayName": "Schema2",
               "type": "named"
             }
           },

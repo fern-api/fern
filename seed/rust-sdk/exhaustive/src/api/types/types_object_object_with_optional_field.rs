@@ -23,11 +23,10 @@ pub struct ObjectWithOptionalField {
     pub date: Option<NaiveDate>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub uuid: Option<Uuid>,
-    #[serde(rename = "base64")]
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
     #[serde(with = "crate::core::base64_bytes::option")]
-    pub base_64: Option<Vec<u8>>,
+    pub base64: Option<Vec<u8>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub list: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -57,7 +56,7 @@ pub struct ObjectWithOptionalFieldBuilder {
     datetime: Option<DateTime<FixedOffset>>,
     date: Option<NaiveDate>,
     uuid: Option<Uuid>,
-    base_64: Option<Vec<u8>>,
+    base64: Option<Vec<u8>>,
     list: Option<Vec<String>>,
     set: Option<HashSet<String>>,
     map: Option<HashMap<i64, String>>,
@@ -105,8 +104,8 @@ impl ObjectWithOptionalFieldBuilder {
         self
     }
 
-    pub fn base_64(mut self, value: Vec<u8>) -> Self {
-        self.base_64 = Some(value);
+    pub fn base64(mut self, value: Vec<u8>) -> Self {
+        self.base64 = Some(value);
         self
     }
 
@@ -141,7 +140,7 @@ impl ObjectWithOptionalFieldBuilder {
             datetime: self.datetime,
             date: self.date,
             uuid: self.uuid,
-            base_64: self.base_64,
+            base64: self.base64,
             list: self.list,
             set: self.set,
             map: self.map,

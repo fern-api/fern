@@ -1199,7 +1199,8 @@ describe("${serviceName}", () => {
         const expected = getExpectedResponse({
             response: example.response,
             context,
-            neverThrowErrors: this.neverThrowErrors
+            neverThrowErrors: this.neverThrowErrors,
+            rawResponseBody
         });
 
         const sseExpectedEvents: Code | undefined = isSSEStreaming
@@ -2137,11 +2138,13 @@ function getUnusedPropertiesFromJsonExample(
 function getExpectedResponse({
     response,
     context,
-    neverThrowErrors
+    neverThrowErrors,
+    rawResponseBody
 }: {
     response: FernIr.ExampleResponse;
     context: FileContext;
     neverThrowErrors: boolean;
+    rawResponseBody?: Code;
 }): Code {
     return response._visit({
         ok: (response) => {
@@ -2149,6 +2152,10 @@ function getExpectedResponse({
                 body: (value) => {
                     if (!value) {
                         return code`undefined`;
+                    }
+                    // When noSerdeLayer is enabled, use the raw response body directly
+                    if (!context.includeSerdeLayer && rawResponseBody != null) {
+                        return code`rawResponseBody`;
                     }
                     const example = context.type.getGeneratedExample(value).build(context, {
                         isForSnippet: true,
