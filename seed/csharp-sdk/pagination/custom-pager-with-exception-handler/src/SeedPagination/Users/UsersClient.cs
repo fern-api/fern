@@ -1543,10 +1543,11 @@ public partial class UsersClient : IUsersClient
                         options,
                         async (request, options, cancellationToken) =>
                             await ListWithCursorPaginationInternalAsync(
-                                request,
-                                options,
-                                cancellationToken
-                            ),
+                                    request,
+                                    options,
+                                    cancellationToken
+                                )
+                                .WithRawResponse(),
                         (request, cursor) =>
                         {
                             request.StartingAfter = cursor;
@@ -1591,10 +1592,11 @@ public partial class UsersClient : IUsersClient
                         options,
                         async (request, options, cancellationToken) =>
                             await ListWithMixedTypeCursorPaginationInternalAsync(
-                                request,
-                                options,
-                                cancellationToken
-                            ),
+                                    request,
+                                    options,
+                                    cancellationToken
+                                )
+                                .WithRawResponse(),
                         (request, cursor) =>
                         {
                             request.Cursor = cursor;
@@ -1642,10 +1644,11 @@ public partial class UsersClient : IUsersClient
                         options,
                         async (request, options, cancellationToken) =>
                             await ListWithBodyCursorPaginationInternalAsync(
-                                request,
-                                options,
-                                cancellationToken
-                            ),
+                                    request,
+                                    options,
+                                    cancellationToken
+                                )
+                                .WithRawResponse(),
                         (request, cursor) =>
                         {
                             request.Pagination ??= new WithCursor();
@@ -1700,10 +1703,11 @@ public partial class UsersClient : IUsersClient
                         options,
                         async (request, options, cancellationToken) =>
                             await ListWithTopLevelBodyCursorPaginationInternalAsync(
-                                request,
-                                options,
-                                cancellationToken
-                            ),
+                                    request,
+                                    options,
+                                    cancellationToken
+                                )
+                                .WithRawResponse(),
                         (request, cursor) =>
                         {
                             request.Cursor = cursor;
@@ -1752,10 +1756,11 @@ public partial class UsersClient : IUsersClient
                         options,
                         async (request, options, cancellationToken) =>
                             await ListWithOffsetPaginationInternalAsync(
-                                request,
-                                options,
-                                cancellationToken
-                            ),
+                                    request,
+                                    options,
+                                    cancellationToken
+                                )
+                                .WithRawResponse(),
                         request => request.Page ?? 0,
                         (request, offset) =>
                         {
@@ -1806,10 +1811,11 @@ public partial class UsersClient : IUsersClient
                         options,
                         async (request, options, cancellationToken) =>
                             await ListWithDoubleOffsetPaginationInternalAsync(
-                                request,
-                                options,
-                                cancellationToken
-                            ),
+                                    request,
+                                    options,
+                                    cancellationToken
+                                )
+                                .WithRawResponse(),
                         request => request.Page ?? 0,
                         (request, offset) =>
                         {
@@ -1857,10 +1863,11 @@ public partial class UsersClient : IUsersClient
                         options,
                         async (request, options, cancellationToken) =>
                             await ListWithBodyOffsetPaginationInternalAsync(
-                                request,
-                                options,
-                                cancellationToken
-                            ),
+                                    request,
+                                    options,
+                                    cancellationToken
+                                )
+                                .WithRawResponse(),
                         request => request.Pagination?.Page ?? 0,
                         (request, offset) =>
                         {
@@ -1911,10 +1918,11 @@ public partial class UsersClient : IUsersClient
                         options,
                         async (request, options, cancellationToken) =>
                             await ListWithOffsetStepPaginationInternalAsync(
-                                request,
-                                options,
-                                cancellationToken
-                            ),
+                                    request,
+                                    options,
+                                    cancellationToken
+                                )
+                                .WithRawResponse(),
                         request => request.Page ?? 0,
                         (request, offset) =>
                         {
@@ -1964,10 +1972,11 @@ public partial class UsersClient : IUsersClient
                         options,
                         async (request, options, cancellationToken) =>
                             await ListWithOffsetPaginationHasNextPageInternalAsync(
-                                request,
-                                options,
-                                cancellationToken
-                            ),
+                                    request,
+                                    options,
+                                    cancellationToken
+                                )
+                                .WithRawResponse(),
                         request => request.Page ?? 0,
                         (request, offset) =>
                         {
@@ -2014,10 +2023,11 @@ public partial class UsersClient : IUsersClient
                         options,
                         async (request, options, cancellationToken) =>
                             await ListWithExtendedResultsInternalAsync(
-                                request,
-                                options,
-                                cancellationToken
-                            ),
+                                    request,
+                                    options,
+                                    cancellationToken
+                                )
+                                .WithRawResponse(),
                         (request, cursor) =>
                         {
                             request.Cursor = cursor;
@@ -2065,10 +2075,11 @@ public partial class UsersClient : IUsersClient
                         options,
                         async (request, options, cancellationToken) =>
                             await ListWithExtendedResultsAndOptionalDataInternalAsync(
-                                request,
-                                options,
-                                cancellationToken
-                            ),
+                                    request,
+                                    options,
+                                    cancellationToken
+                                )
+                                .WithRawResponse(),
                         (request, cursor) =>
                         {
                             request.Cursor = cursor;
@@ -2112,7 +2123,8 @@ public partial class UsersClient : IUsersClient
                         request,
                         options,
                         async (request, options, cancellationToken) =>
-                            await ListUsernamesInternalAsync(request, options, cancellationToken),
+                            await ListUsernamesInternalAsync(request, options, cancellationToken)
+                                .WithRawResponse(),
                         (request, cursor) =>
                         {
                             request.StartingAfter = cursor;
@@ -2157,10 +2169,11 @@ public partial class UsersClient : IUsersClient
                         options,
                         async (request, options, cancellationToken) =>
                             await ListUsernamesWithOptionalResponseInternalAsync(
-                                request,
-                                options,
-                                cancellationToken
-                            ),
+                                    request,
+                                    options,
+                                    cancellationToken
+                                )
+                                .WithRawResponse(),
                         (request, cursor) =>
                         {
                             request.StartingAfter = cursor;
@@ -2203,10 +2216,11 @@ public partial class UsersClient : IUsersClient
                         options,
                         async (request, options, cancellationToken) =>
                             await ListWithGlobalConfigInternalAsync(
-                                request,
-                                options,
-                                cancellationToken
-                            ),
+                                    request,
+                                    options,
+                                    cancellationToken
+                                )
+                                .WithRawResponse(),
                         request => request.Offset ?? 0,
                         (request, offset) =>
                         {
@@ -2249,10 +2263,11 @@ public partial class UsersClient : IUsersClient
                         options,
                         async (request, options, cancellationToken) =>
                             await ListWithOptionalDataInternalAsync(
-                                request,
-                                options,
-                                cancellationToken
-                            ),
+                                    request,
+                                    options,
+                                    cancellationToken
+                                )
+                                .WithRawResponse(),
                         request => request.Page ?? 0,
                         (request, offset) =>
                         {
@@ -2304,10 +2319,11 @@ public partial class UsersClient : IUsersClient
                         options,
                         async (request, options, cancellationToken) =>
                             await ListWithAliasedDataInternalAsync(
-                                request,
-                                options,
-                                cancellationToken
-                            ),
+                                    request,
+                                    options,
+                                    cancellationToken
+                                )
+                                .WithRawResponse(),
                         (request, cursor) =>
                         {
                             request.StartingAfter = cursor;

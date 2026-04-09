@@ -354,32 +354,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer.writeTextStatement("));");
     }
 
-    /**
-     * Gets the base response type (unwrapped from WithRawResponseTask) for an endpoint.
-     * This is the inner T in WithRawResponseTask<T> or WithRawResponse<T>.
-     */
-    private getBaseResponseType(endpoint: HttpEndpoint): ast.Type | undefined {
-        if (endpoint.response?.body == null) {
-            if (endpoint.method === FernIr.HttpMethod.Head) {
-                return this.System.Net.Http.HttpResponseHeaders;
-            }
-            return undefined;
-        }
-
-        return endpoint.response.body._visit<ast.Type | undefined>({
-            streaming: () => undefined, // Streaming endpoints don't use WithRawResponseTask
-            streamParameter: () => undefined,
-            fileDownload: () => this.System.IO.Stream.asFullyQualified(),
-            json: (reference) =>
-                this.context.csharpTypeMapper.convert({
-                    reference: reference.responseBodyType
-                }),
-            text: () => this.generation.Primitive.string,
-            bytes: () => undefined,
-            _other: () => undefined
-        });
-    }
-
     private writeWithRawResponseSuccessAndErrorHandling(endpoint: HttpEndpoint, writer: Writer) {
         // Generate success and error handling that returns WithRawResponse<T>
         // This is used inside the local async function for WithRawResponseTask methods
@@ -1335,20 +1309,19 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             endpoint,
             requestParameter
         });
-        // For pagination, the pager expects a function that returns Task<T> (the unwrapped response type).
-        // Our unpaged methods return WithRawResponseTask<T>, which has an implicit conversion to Task<T>,
-        // but older .NET frameworks don't handle this well with delegate type inference.
-        // So we wrap the call in a lambda that uses the implicit conversion operator explicitly.
+        // The pager expects a function that returns Task<WithRawResponse<T>> so it can access
+        // both the deserialized response and HTTP metadata (status code, headers).
+        // We call .WithRawResponse() on the WithRawResponseTask<T> to get the full wrapper.
         return this.csharp.codeblock((writer) => {
             writer.write("async (request, options, cancellationToken) => ");
             if (pathParameters.length === 0) {
                 writer.write(
-                    `await ${this.getUnpagedEndpointMethodName(endpoint)}(request, options, cancellationToken)`
+                    `await ${this.getUnpagedEndpointMethodName(endpoint)}(request, options, cancellationToken).WithRawResponse()`
                 );
             } else {
+                writer.write("await ");
                 writer.writeNode(
                     this.csharp.invokeMethod({
-                        async: true,
                         method: this.getUnpagedEndpointMethodName(endpoint),
                         arguments_: [
                             ...pathParameters.map((parameter) => this.csharp.codeblock(parameter.name)),
@@ -1358,6 +1331,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         ]
                     })
                 );
+                writer.write(".WithRawResponse()");
             }
         });
     }
