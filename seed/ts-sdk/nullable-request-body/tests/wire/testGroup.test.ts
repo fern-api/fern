@@ -24,9 +24,7 @@ describe("TestGroupClient", () => {
             path_param: "path_param",
             body: {},
         });
-        expect(response).toEqual({
-            key: "value",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("test_method_name (2)", async () => {
