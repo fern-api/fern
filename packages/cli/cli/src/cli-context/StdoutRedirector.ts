@@ -1,4 +1,4 @@
-import { CliError} from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 
 /**
  * Redirects process.stdout to process.stderr.

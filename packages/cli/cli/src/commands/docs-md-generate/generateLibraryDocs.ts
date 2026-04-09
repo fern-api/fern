@@ -419,7 +419,9 @@ async function downloadIr(
     const ir = irWrapper.ir;
 
     if (ir == null) {
-        return context.failAndThrow(`IR is empty for library '${libraryName}'`, undefined, { code: CliError.Code.InternalError });
+        return context.failAndThrow(`IR is empty for library '${libraryName}'`, undefined, {
+            code: CliError.Code.InternalError
+        });
     }
 
     if (language === "CPP") {

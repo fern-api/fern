@@ -1,9 +1,8 @@
 import { loggingExeca } from "@fern-api/logging-execa";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
-
 import { CliContext } from "./cli-context/CliContext.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
-import { CliError } from "@fern-api/task-context";
 
 export class RerunCliError extends Error {
     public readonly stdout: string;

@@ -8,13 +8,12 @@ import {
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { isVersionAhead } from "@fern-api/semver-utils";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import { produce } from "immer";
-
 import { CliContext } from "../../cli-context/CliContext.js";
 import { RerunCliError, rerunFernCliAtVersion } from "../../rerunFernCliAtVersion.js";
-import { CliError } from "@fern-api/task-context";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 
@@ -432,7 +431,9 @@ export async function upgrade({
     // Load config to get source version
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
-        return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`, undefined, { code: CliError.Code.ConfigError });
+        return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`, undefined, {
+            code: CliError.Code.ConfigError
+        });
     }
     const projectConfig = await cliContext.runTask((context) =>
         loadProjectConfig({ directory: fernDirectory, context })

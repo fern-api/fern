@@ -1,6 +1,6 @@
 import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-api/ir-sdk";
 import { getPascalCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
-import { CliError} from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 
 export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityRequirementObject[] {
@@ -57,7 +57,10 @@ export function constructSecuritySchemes(apiAuth: ApiAuth): Record<string, OpenA
             }),
             inferred: () => undefined,
             _other: () => {
-                throw new CliError({ message: "Unknown auth scheme: " + scheme.type, code: CliError.Code.InternalError });
+                throw new CliError({
+                    message: "Unknown auth scheme: " + scheme.type,
+                    code: CliError.Code.InternalError
+                });
             }
         });
         if (oasScheme) {
@@ -76,7 +79,10 @@ function getNameForAuthScheme(authScheme: AuthScheme): string {
         oauth: () => "BearerAuth",
         header: (header) => `${getPascalCaseUnsafe(header.name)}Auth`,
         _other: () => {
-            throw new CliError({ message: "Unknown auth scheme: " + authScheme.type, code: CliError.Code.InternalError });
+            throw new CliError({
+                message: "Unknown auth scheme: " + authScheme.type,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }

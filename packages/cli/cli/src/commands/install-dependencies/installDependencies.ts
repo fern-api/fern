@@ -1,6 +1,6 @@
 import { resolveBuf, resolveProtocGenOpenAPI } from "@fern-api/lazy-fern-workspace";
-import { CliContext } from "../../cli-context/CliContext.js";
 import { CliError } from "@fern-api/task-context";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 export async function installDependencies({ cliContext }: { cliContext: CliContext }): Promise<void> {
     await cliContext.runTask(async (context) => {

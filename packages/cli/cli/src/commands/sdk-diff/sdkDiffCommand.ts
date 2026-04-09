@@ -21,7 +21,7 @@ import {
     maxVersionBump
 } from "@fern-api/local-workspace-runner";
 import { Project } from "@fern-api/project-loader";
-import { TaskAbortSignal, TaskContext } from "@fern-api/task-context";
+import { CliError, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import { exec } from "child_process";
 import { promisify } from "util";
 import { CliContext } from "../../cli-context/CliContext.js";

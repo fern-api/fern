@@ -25,7 +25,7 @@ import {
     TypeReference
 } from "@fern-api/ir-sdk";
 import { getCamelCaseUnsafe, getOriginalName, getPascalCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
-import { CliError} from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 
 import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
@@ -237,7 +237,10 @@ function convertHttpMethod(httpMethod: HttpMethod): OpenAPIV3.HttpMethods {
             return OpenAPIV3.HttpMethods.HEAD;
         },
         _other: () => {
-            throw new CliError({ message: "Encountered unknown http method: " + httpMethod, code: CliError.Code.InternalError });
+            throw new CliError({
+                message: "Encountered unknown http method: " + httpMethod,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }

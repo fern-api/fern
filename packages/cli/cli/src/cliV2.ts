@@ -3,10 +3,10 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     INCORRECT_DOCKER_ORG
 } from "@fern-api/configuration-loader";
+import { CliError } from "@fern-api/task-context";
 import { FernRegistry } from "@fern-fern/generators-sdk";
 import { writeFile } from "fs/promises";
 import { Argv } from "yargs";
-
 import { CliContext } from "./cli-context/CliContext.js";
 import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage.js";
 import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions.js";
@@ -15,7 +15,6 @@ import { GenerationModeFilter, getGeneratorList } from "./commands/generator-lis
 import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata.js";
 import { getOrganization } from "./commands/organization/getOrganization.js";
 import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator.js";
-import { CliError } from "@fern-api/task-context";
 
 /**
  * Corrects the incorrect "fern-api/" Docker org prefix to "fernapi/" and logs a warning.

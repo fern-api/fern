@@ -2,7 +2,7 @@ import { docsYml } from "@fern-api/configuration";
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
-import { CliError} from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import cliProgress from "cli-progress";
 import { existsSync } from "fs";

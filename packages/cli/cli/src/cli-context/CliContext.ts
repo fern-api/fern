@@ -443,7 +443,15 @@ export class CliContext {
      * @returns Promise<string> representing the user's input
      */
     public async getInput(config: { message: string; default?: string }): Promise<string> {
-        return await input({ message: config.message, default: config.default });
+        try {
+            return await input({ message: config.message, default: config.default });
+        } catch (error) {
+            if ((error as Error)?.name === "ExitPromptError") {
+                this.logger.info("\nCancelled by user.");
+                throw new TaskAbortSignal();
+            }
+            throw error;
+        }
     }
 }
 

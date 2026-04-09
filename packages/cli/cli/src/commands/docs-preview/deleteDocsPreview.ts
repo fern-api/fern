@@ -1,10 +1,9 @@
 import { FernToken } from "@fern-api/auth";
 import { createFdrService } from "@fern-api/core";
 import { askToLogin } from "@fern-api/login";
-import chalk from "chalk";
-
-import { CliContext } from "../../cli-context/CliContext.js";
 import { CliError } from "@fern-api/task-context";
+import chalk from "chalk";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 /**
  * Preview URLs follow the pattern: {org}-preview-{hash}.docs.buildwithfern.com

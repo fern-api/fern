@@ -2,7 +2,7 @@ import type { generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { CliError} from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 import { readFileSync, unlinkSync } from "fs";
 import { mkdir, open, readFile, stat, unlink } from "fs/promises";
 import { homedir } from "os";

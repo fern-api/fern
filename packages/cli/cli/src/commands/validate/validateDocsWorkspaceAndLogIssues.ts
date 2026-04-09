@@ -3,7 +3,7 @@ import { replaceEnvVariables } from "@fern-api/core-utils";
 import { validateDocsWorkspace } from "@fern-api/docs-validator";
 import { ValidationViolation } from "@fern-api/fern-definition-validator";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 
 export interface CollectedDocsViolations {

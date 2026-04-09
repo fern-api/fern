@@ -8,7 +8,7 @@ const DEFAULT_TIMEOUT = 30000; // 30 seconds
 
 import { getToken } from "@fern-api/auth";
 import { extractErrorMessage } from "@fern-api/core-utils";
-import { CliError} from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 import { CliContext } from "../../cli-context/CliContext.js";
 
 // todo: replace with an SDK
@@ -128,7 +128,10 @@ export async function translateText({
         cliContext.logger.error(
             "Authentication required. Please run 'fern login' or set the FERN_TOKEN environment variable."
         );
-        throw new CliError({ message: "Authentication required for translation service", code: CliError.Code.AuthError });
+        throw new CliError({
+            message: "Authentication required for translation service",
+            code: CliError.Code.AuthError
+        });
     }
 
     // Set up retry configuration with defaults

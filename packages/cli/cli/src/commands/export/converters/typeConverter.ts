@@ -19,7 +19,7 @@ import {
     UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
 import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
-import { CliError} from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 
 import isEqual from "lodash-es/isEqual";
 import { OpenAPIV3 } from "openapi-types";
@@ -101,7 +101,10 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
             return convertUndiscriminatedUnion({ undiscriminatedUnionDeclaration, docs });
         },
         _other: () => {
-            throw new CliError({ message: "Encountered unknown type: " + shape.type, code: CliError.Code.InternalError });
+            throw new CliError({
+                message: "Encountered unknown type: " + shape.type,
+                code: CliError.Code.InternalError
+            });
         }
     });
     return {

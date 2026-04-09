@@ -34,6 +34,7 @@ import {
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
+import { CliError } from "@fern-api/task-context";
 import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -85,7 +86,6 @@ import { FERN_CWD_ENV_VAR } from "./cwd.js";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
-import { CliError } from "@fern-api/task-context";
 
 void runCli();
 
@@ -375,7 +375,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         const result = await loadOpenAPIFromUrl({ url: argv.openapi, logger: cliContext.logger });
 
                         if (result.status === LoadOpenAPIStatus.Failure) {
-                            cliContext.failAndThrow(result.errorMessage, undefined, { code: CliError.Code.NetworkError });
+                            cliContext.failAndThrow(result.errorMessage, undefined, {
+                                code: CliError.Code.NetworkError
+                            });
                         }
 
                         const tmpFilepath = result.filePath;
@@ -3113,7 +3115,10 @@ function parseOwnerRepo(githubRepo: string): { owner: string; repo: string } {
     const owner = parts[parts.length - 2];
     const repo = parts[parts.length - 1];
     if (owner == null || repo == null) {
-        throw new CliError({ message: `Could not parse owner/repo from: ${githubRepo}`, code: CliError.Code.ParseError });
+        throw new CliError({
+            message: `Could not parse owner/repo from: ${githubRepo}`,
+            code: CliError.Code.ParseError
+        });
     }
     return { owner, repo };
 }

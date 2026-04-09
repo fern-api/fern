@@ -2,7 +2,7 @@ import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configurat
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
-import { CliError} from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 import * as fs from "fs";
 import { readFile, writeFile } from "fs/promises";
 import { buildClientSchema, getIntrospectionQuery, IntrospectionQuery, printSchema } from "graphql";
@@ -88,7 +88,10 @@ function extractIntrospectionData(data: unknown): IntrospectionQuery {
         return data.data as IntrospectionQuery;
     }
 
-    throw new CliError({ message: "Data does not contain valid GraphQL introspection result", code: CliError.Code.InternalError });
+    throw new CliError({
+        message: "Data does not contain valid GraphQL introspection result",
+        code: CliError.Code.InternalError
+    });
 }
 
 // Try GraphQL POST introspection approach

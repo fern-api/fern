@@ -3,10 +3,10 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { MockServer } from "@fern-api/mock";
 import { Project } from "@fern-api/project-loader";
+import { CliError } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { API_CLI_OPTION } from "../../constants.js";
-import { CliError } from "@fern-api/task-context";
 
 export async function mockServer({
     cliContext,

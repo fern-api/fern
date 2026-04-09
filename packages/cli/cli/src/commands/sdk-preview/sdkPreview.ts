@@ -9,13 +9,12 @@ import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-ap
 import { getGeneratorOutputSubfolder, runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
+import { CliError } from "@fern-api/task-context";
 import fs from "fs/promises";
-
 import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
 import { GROUP_CLI_OPTION } from "../../constants.js";
 import { computePreviewVersion } from "./computePreviewVersion.js";
-
 import { getPreviewId } from "./getPreviewId.js";
 import {
     getGithubOwnerRepo,
@@ -25,7 +24,6 @@ import {
     PREVIEW_REGISTRY_URL
 } from "./overrideOutputForPreview.js";
 import { toPreviewPackageName } from "./toPreviewPackageName.js";
-import { CliError } from "@fern-api/task-context";
 
 interface SdkPreviewSuccess {
     status: "success";

@@ -2,7 +2,7 @@ import { FernToken } from "@fern-api/auth";
 import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
-import { CliError} from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { PNG } from "pngjs";
 import { Browser, launch } from "puppeteer";

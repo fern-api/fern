@@ -2,7 +2,7 @@ import { diffSemverOrThrow } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve, streamObjectFromFile } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
-import { TaskAbortSignal } from "@fern-api/task-context";
+import { CliError, TaskAbortSignal } from "@fern-api/task-context";
 import semver from "semver";
 
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -56,7 +56,9 @@ export async function diff({
 
     const nextVersion = semver.inc(fromVersion, bump);
     if (!nextVersion) {
-        context.failWithoutThrowing(`Invalid current version: ${fromVersion}`, undefined, { code: CliError.Code.VersionError });
+        context.failWithoutThrowing(`Invalid current version: ${fromVersion}`, undefined, {
+            code: CliError.Code.VersionError
+        });
         throw new TaskAbortSignal();
     }
     return { bump, nextVersion, errors };
@@ -73,7 +75,9 @@ async function readIr({
 }): Promise<IntermediateRepresentation> {
     const absoluteFilepath = AbsoluteFilePath.of(resolve(cwd(), filepath));
     if (!(await doesPathExist(absoluteFilepath, "file"))) {
-        context.failWithoutThrowing(`File not found: ${absoluteFilepath}`, undefined, { code: CliError.Code.ConfigError });
+        context.failWithoutThrowing(`File not found: ${absoluteFilepath}`, undefined, {
+            code: CliError.Code.ConfigError
+        });
         throw new TaskAbortSignal();
     }
     let ir: unknown;

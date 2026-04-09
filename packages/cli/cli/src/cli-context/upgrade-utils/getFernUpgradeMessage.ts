@@ -1,4 +1,4 @@
-import { CliError} from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 import { FernRegistryClient } from "@fern-fern/generators-sdk";
 import boxen from "boxen";
 import chalk from "chalk";

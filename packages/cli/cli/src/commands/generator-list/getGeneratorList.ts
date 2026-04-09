@@ -5,11 +5,10 @@ import {
 } from "@fern-api/configuration-loader";
 import { assertNever, Values } from "@fern-api/core-utils";
 import { Project } from "@fern-api/project-loader";
+import { CliError } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
-
 import { CliContext } from "../../cli-context/CliContext.js";
-import { CliError } from "@fern-api/task-context";
 
 export const GenerationModeFilter = {
     GitHub: "github",

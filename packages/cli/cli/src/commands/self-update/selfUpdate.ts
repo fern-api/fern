@@ -1,10 +1,10 @@
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { realpath } from "fs/promises";
 import { dirname, normalize, sep } from "path";
 import { CliContext } from "../../cli-context/CliContext.js";
-import { CliError } from "@fern-api/task-context";
 
 export interface InstallationMethod {
     type: "npm" | "pnpm" | "yarn" | "bun" | "brew" | "unknown";

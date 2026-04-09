@@ -1,8 +1,8 @@
 import { isGithubSelfhosted } from "@fern-api/configuration-loader";
 import { replaceEnvVariables } from "@fern-api/core-utils";
+import { CliError } from "@fern-api/task-context";
 import { CliContext } from "./cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
-import { CliError } from "@fern-api/task-context";
 
 export interface ResolvedGithubConfig {
     githubRepo: string;
@@ -28,7 +28,9 @@ export async function resolveGroupGithubConfig(
 
     const generatorsConfig = workspace.generatorsConfiguration;
     if (generatorsConfig == null) {
-        return cliContext.failAndThrow("No generators.yml found in workspace.", undefined, { code: CliError.Code.ConfigError });
+        return cliContext.failAndThrow("No generators.yml found in workspace.", undefined, {
+            code: CliError.Code.ConfigError
+        });
     }
 
     const group = generatorsConfig.groups.find((g) => g.groupName === groupName);

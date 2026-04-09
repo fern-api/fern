@@ -1,7 +1,7 @@
 import { Audiences, generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
-import { CliError} from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { generateIrForFernWorkspace } from "../generate-ir/generateIrForFernWorkspace.js";

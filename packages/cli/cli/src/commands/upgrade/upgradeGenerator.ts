@@ -7,7 +7,7 @@ import {
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernRegistry } from "@fern-fern/generators-sdk";
 import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";

@@ -4,7 +4,7 @@ import { OpenApiIntermediateRepresentation, Schema } from "@fern-api/openapi-ir"
 import { parse } from "@fern-api/openapi-ir-parser";
 import { getEndpointLocation } from "@fern-api/openapi-ir-to-fern";
 import { Project } from "@fern-api/project-loader";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
