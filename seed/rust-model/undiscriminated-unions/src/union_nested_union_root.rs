@@ -19,7 +19,7 @@ impl NestedUnionRoot {
         matches!(self, Self::StringList(_))
     }
 
-    pub fn is_nested_union_l_1(&self) -> bool {
+    pub fn is_nested_union_l1(&self) -> bool {
         matches!(self, Self::NestedUnionL1(_))
     }
 
@@ -52,14 +52,14 @@ impl NestedUnionRoot {
                 }
     }
 
-    pub fn as_nested_union_l_1(&self) -> Option<&NestedUnionL1> {
+    pub fn as_nested_union_l1(&self) -> Option<&NestedUnionL1> {
         match self {
                     Self::NestedUnionL1(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_nested_union_l_1(self) -> Option<NestedUnionL1> {
+    pub fn into_nested_union_l1(self) -> Option<NestedUnionL1> {
         match self {
                     Self::NestedUnionL1(value) => Some(value),
                     _ => None,
