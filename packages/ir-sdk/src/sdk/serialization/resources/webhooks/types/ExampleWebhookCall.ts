@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 
 export const ExampleWebhookCall: core.serialization.ObjectSchema<
@@ -11,14 +11,14 @@ export const ExampleWebhookCall: core.serialization.ObjectSchema<
     FernIr.ExampleWebhookCall
 > = core.serialization
     .objectWithoutOptionalProperties({
-        name: Name.optional(),
+        name: NameOrString.optional(),
         payload: core.serialization.lazyObject(() => serializers.ExampleTypeReference),
     })
     .extend(WithDocs);
 
 export declare namespace ExampleWebhookCall {
     export interface Raw extends WithDocs.Raw {
-        name?: Name.Raw | null;
+        name?: NameOrString.Raw | null;
         payload: serializers.ExampleTypeReference.Raw;
     }
 }

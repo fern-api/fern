@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
-import com.seed.trace.model.v.2.problem.ProblemInfoV2;
+import com.seed.trace.model.v2.problem.ProblemInfoV2;
 import java.lang.Object;
 import java.lang.String;
 import java.util.ArrayList;

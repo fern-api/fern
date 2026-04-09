@@ -62,7 +62,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestNestedApiGetSomethingWithWireMock(
+func TestNestedAPIGetSomethingWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -72,13 +72,13 @@ func TestNestedApiGetSomethingWithWireMock(
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
-	invocationErr := client.Nested.Api.GetSomething(
+	invocationErr := client.Nested.API.GetSomething(
 		context.TODO(),
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestNestedApiGetSomethingWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestNestedAPIGetSomethingWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestNestedApiGetSomethingWithWireMock", "GET", "/nested/get-something", nil, 1)
+	VerifyRequestCount(t, "TestNestedAPIGetSomethingWithWireMock", "GET", "/nested/get-something", nil, 1)
 }

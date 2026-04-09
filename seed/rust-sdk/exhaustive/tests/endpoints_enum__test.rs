@@ -13,6 +13,7 @@ async fn test_endpoints_enum_get_and_return_enum_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client

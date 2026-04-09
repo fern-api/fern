@@ -21,7 +21,7 @@ import {
     undefinedIfSomeNullish
 } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
-import { formatBootstrapSummary, replayInit, replayResolve } from "@fern-api/generator-cli";
+import { formatBootstrapSummary, replayForget, replayInit, replayResolve, replayStatus } from "@fern-api/generator-cli";
 import {
     initializeAPI,
     initializeDocs,
@@ -81,6 +81,7 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
 import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
+import { getOrCreateFernRunId } from "./fernRunId.js";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
@@ -90,6 +91,8 @@ void runCli();
 const USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
 
 async function runCli() {
+    getOrCreateFernRunId();
+
     const isLocal = process.argv.includes("--local");
     const cliContext = new CliContext(process.stdout, process.stderr, { isLocal });
 
@@ -1395,17 +1398,22 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         "login",
         "Log in to Fern via GitHub",
         (yargs) =>
-            yargs.option("device-code", {
-                boolean: true,
-                default: false,
-                description: "Use device code authorization"
-            }),
+            yargs
+                .option("device-code", {
+                    boolean: true,
+                    default: false,
+                    description: "Use device code authorization"
+                })
+                .option("email", {
+                    string: true,
+                    description: "Log in via enterprise SSO using your email address"
+                }),
         async (argv) => {
             await cliContext.runTask(async (context) => {
                 await cliContext.instrumentPostHogEvent({
                     command: "fern login"
                 });
-                await login(context, { useDeviceCodeFlow: argv.deviceCode });
+                await login(context, { useDeviceCodeFlow: argv.deviceCode, email: argv.email });
             });
         }
     );
@@ -1966,7 +1974,7 @@ function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
             });
 
             if (hasErrors) {
-                cliContext.failAndThrow("MDX validation failed");
+                cliContext.failWithoutThrowing();
             }
         }
     );
@@ -2114,7 +2122,7 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "enrich <openapi>",
-        false, // Hidden from --help
+        "Merge an AI examples overrides file into an OpenAPI spec",
         (yargs) =>
             yargs
                 .positional("openapi", {
@@ -2180,6 +2188,13 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     boolean: true,
                     default: false,
                     description: "Output result as JSON"
+                })
+                .option("output", {
+                    type: "array",
+                    string: true,
+                    description:
+                        "Output targets: filesystem paths and/or registry URLs. " +
+                        "Omit to publish to the default preview registry and write to a temp directory."
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
@@ -2192,7 +2207,8 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 groupName: argv.group,
                 generatorFilter,
                 apiName: argv.api,
-                json: argv.json
+                json: argv.json,
+                output: argv.output
             });
         }
     );
@@ -2294,6 +2310,8 @@ function addReplayCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         builder: (yargs) => {
             addReplayInitCommand(yargs, cliContext);
             addReplayResolveCommand(yargs, cliContext);
+            addReplayStatusCommand(yargs, cliContext);
+            addReplayForgetCommand(yargs, cliContext);
             return yargs;
         },
         handler: () => {
@@ -2354,12 +2372,16 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 token = token ?? resolved.token;
             }
 
-            if (githubRepo == null || token == null) {
-                const hint =
-                    githubRepo != null
-                        ? "Repository found but no token. Pass --token or set GITHUB_TOKEN environment variable."
-                        : "Either use --group to read from generators.yml, or provide --github and --token directly.";
-                return cliContext.failAndThrow(`Missing required github config. ${hint}`);
+            if (githubRepo == null) {
+                return cliContext.failAndThrow(
+                    "Missing required github config. Either use --group to read from generators.yml, or provide --github directly."
+                );
+            }
+
+            if (token == null) {
+                cliContext.logger.warn(
+                    "No GitHub token found. Clone may fail for private repos. Set GITHUB_TOKEN or pass --token."
+                );
             }
 
             cliContext.logger.info(`Initializing Replay for: ${githubRepo}`);
@@ -2507,6 +2529,251 @@ function addReplayResolveCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                 }
             } catch (error) {
                 cliContext.failAndThrow(`Failed to resolve: ${extractErrorMessage(error)}`);
+            }
+        }
+    );
+}
+
+function addReplayStatusCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "status [directory]",
+        false, // hidden from --help
+        (yargs) =>
+            yargs
+                .positional("directory", {
+                    type: "string",
+                    default: ".",
+                    description: "SDK directory containing .fern/replay.lock"
+                })
+                .option("verbose", {
+                    type: "boolean",
+                    alias: "v",
+                    default: false,
+                    description: "Show all patches with full details"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern replay status"
+            });
+
+            const outputDir = resolve(cwd(), argv.directory ?? ".");
+
+            try {
+                const result = replayStatus({ outputDir });
+
+                if (!result.initialized) {
+                    cliContext.logger.info("Replay is not initialized. Run `fern replay init` to get started.");
+                    return;
+                }
+
+                // Header
+                cliContext.logger.info(
+                    `Replay: ${result.patches.length} customization(s) tracked, ${result.generationCount} generation(s)`
+                );
+
+                if (result.lastGeneration) {
+                    cliContext.logger.info(
+                        `Last generation: ${result.lastGeneration.sha} (${result.lastGeneration.timestamp})`
+                    );
+                }
+
+                if (result.patches.length === 0) {
+                    cliContext.logger.info("No customizations tracked.");
+                    return;
+                }
+
+                // Patches
+                const patchesToShow = argv.verbose ? result.patches : result.patches.slice(0, 10);
+                for (const patch of patchesToShow) {
+                    const statusTag = patch.status ? ` [${patch.status}]` : "";
+                    if (argv.verbose) {
+                        cliContext.logger.info(
+                            `\n  ${patch.id} (${patch.type})${statusTag}\n` +
+                                `    ${patch.message}\n` +
+                                `    Author: ${patch.author} (${patch.sha})\n` +
+                                `    Files (${patch.fileCount}): ${patch.files.join(", ")}`
+                        );
+                    } else {
+                        cliContext.logger.info(
+                            `  ${patch.id}: ${patch.message} (${patch.fileCount} file(s))${statusTag}`
+                        );
+                    }
+                }
+
+                if (!argv.verbose && result.patches.length > 10) {
+                    cliContext.logger.info(`  ... and ${result.patches.length - 10} more (use --verbose to see all)`);
+                }
+
+                if (result.unresolvedCount > 0) {
+                    cliContext.logger.warn(
+                        `\n${result.unresolvedCount} patch(es) have unresolved conflicts. Run \`fern replay resolve\` to fix.`
+                    );
+                }
+
+                if (result.excludePatterns.length > 0) {
+                    cliContext.logger.info(`\nExclude patterns: ${result.excludePatterns.join(", ")}`);
+                }
+            } catch (error) {
+                cliContext.failAndThrow(`Failed to get Replay status: ${extractErrorMessage(error)}`);
+            }
+        }
+    );
+}
+
+function addReplayForgetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "forget [args..]",
+        false, // hidden from --help
+        (yargs) =>
+            yargs
+                .positional("args", {
+                    type: "string",
+                    array: true,
+                    description: "Patch IDs (e.g. patch-abc12345) or a search pattern"
+                })
+                .option("dry-run", {
+                    type: "boolean",
+                    default: false,
+                    description: "Show what would be removed without actually removing"
+                })
+                .option("yes", {
+                    type: "boolean",
+                    alias: "y",
+                    default: false,
+                    description: "Skip confirmation prompts"
+                })
+                .option("all", {
+                    type: "boolean",
+                    default: false,
+                    description: "Remove all tracked patches"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern replay forget"
+            });
+
+            const outputDir = resolve(cwd(), ".");
+            const args = argv.args ?? [];
+            const dryRun = argv.dryRun;
+
+            try {
+                // --all mode
+                if (argv.all) {
+                    const result = replayForget({ outputDir, options: { all: true, dryRun } });
+
+                    if (!result.initialized) {
+                        cliContext.logger.info("Replay is not initialized. Nothing to forget.");
+                        return;
+                    }
+
+                    if (result.removed.length === 0) {
+                        cliContext.logger.info("No patches to remove.");
+                        return;
+                    }
+
+                    if (dryRun) {
+                        cliContext.logger.info(`Would remove ${result.removed.length} patch(es):`);
+                    } else {
+                        cliContext.logger.info(`Removed ${result.removed.length} patch(es):`);
+                    }
+                    for (const patch of result.removed) {
+                        cliContext.logger.info(`  ${patch.id}: ${patch.message}`);
+                    }
+                    for (const warning of result.warnings) {
+                        cliContext.logger.warn(warning);
+                    }
+                    return;
+                }
+
+                // Patch ID mode: all args start with "patch-"
+                if (args.length > 0 && args.every((a) => a.startsWith("patch-"))) {
+                    const result = replayForget({ outputDir, options: { patchIds: args, dryRun } });
+
+                    if (!result.initialized) {
+                        cliContext.logger.info("Replay is not initialized. Nothing to forget.");
+                        return;
+                    }
+
+                    if (result.removed.length > 0) {
+                        const verb = dryRun ? "Would remove" : "Removed";
+                        for (const patch of result.removed) {
+                            cliContext.logger.info(`${verb}: ${patch.id} — ${patch.message}`);
+                        }
+                    }
+                    for (const id of result.alreadyForgotten) {
+                        cliContext.logger.info(`Already forgotten: ${id}`);
+                    }
+                    for (const warning of result.warnings) {
+                        cliContext.logger.warn(warning);
+                    }
+                    return;
+                }
+
+                // Search/pattern mode or no-args mode
+                const pattern = args.length === 1 ? args[0] : undefined;
+                const result = replayForget({ outputDir, options: { pattern } });
+
+                if (!result.initialized) {
+                    cliContext.logger.info("Replay is not initialized. Nothing to forget.");
+                    return;
+                }
+
+                const matched = result.matched ?? [];
+                if (matched.length === 0) {
+                    if (pattern) {
+                        cliContext.logger.info(`No patches matching "${pattern}".`);
+                    } else {
+                        cliContext.logger.info("No patches tracked.");
+                    }
+                    return;
+                }
+
+                // Show matched patches
+                cliContext.logger.info(`${matched.length} patch(es) matched:`);
+                for (const patch of matched) {
+                    const stat = `+${patch.diffstat.additions}/-${patch.diffstat.deletions}`;
+                    cliContext.logger.info(`  ${patch.id}: ${patch.message} (${stat})`);
+                }
+
+                if (dryRun) {
+                    cliContext.logger.info("\nDry run — no patches removed.");
+                    return;
+                }
+
+                if (!argv.yes) {
+                    if (!process.stdout.isTTY) {
+                        cliContext.failAndThrow(
+                            "Confirmation required. Use --yes to skip confirmation in non-interactive mode."
+                        );
+                        return;
+                    }
+
+                    // Simple y/N confirmation
+                    const readline = await import("readline");
+                    const rl = readline.createInterface({ input: process.stdin, output: process.stderr });
+                    const answer = await new Promise<string>((resolvePrompt) => {
+                        rl.question(`\nRemove ${matched.length} patch(es)? [y/N] `, resolvePrompt);
+                    });
+                    rl.close();
+
+                    if (answer.toLowerCase() !== "y") {
+                        cliContext.logger.info("Cancelled.");
+                        return;
+                    }
+                }
+
+                // Actually remove the matched patches
+                const patchIds = matched.map((p) => p.id);
+                const removeResult = replayForget({ outputDir, options: { patchIds, dryRun: false } });
+
+                cliContext.logger.info(
+                    `Removed ${removeResult.removed.length} patch(es). ${removeResult.remaining} remaining.`
+                );
+                for (const warning of removeResult.warnings) {
+                    cliContext.logger.warn(warning);
+                }
+            } catch (error) {
+                cliContext.failAndThrow(`Failed to forget patches: ${extractErrorMessage(error)}`);
             }
         }
     );

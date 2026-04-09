@@ -3,5 +3,5 @@
 import type * as FernIr from "../../../index.js";
 
 export interface ExampleEnumType {
-    value: FernIr.NameAndWireValue;
+    value: FernIr.NameAndWireValueOrString;
 }

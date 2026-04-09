@@ -1,4 +1,5 @@
 import { fail } from "node:assert";
+import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator, GrpcClientInfo } from "@fern-api/csharp-base";
 import { ast, escapeForCSharpString, lazy } from "@fern-api/csharp-codegen";
@@ -449,27 +450,50 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
                     // Add Basic Auth header if applicable
                     if (hasBasicAuth) {
-                        const basicScheme = this.context.ir.auth.schemes.find((s) => s.type === "basic");
-                        if (basicScheme != null && basicScheme.type === "basic") {
-                            const usernameName = basicScheme.username.camelCase.safeName;
-                            const passwordName = basicScheme.password.camelCase.safeName;
+                        const basicSchemes = this.context.ir.auth.schemes.filter(
+                            (s): s is typeof s & { type: "basic" } => s.type === "basic"
+                        );
+                        const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+                        let isFirstBlock = true;
+                        for (let i = 0; i < basicSchemes.length; i++) {
+                            const basicScheme = basicSchemes[i];
+                            if (basicScheme == null) {
+                                continue;
+                            }
+                            const usernameName = this.case.camelSafe(basicScheme.username);
+                            const passwordName = this.case.camelSafe(basicScheme.password);
                             const usernameAccess = unified
                                 ? `clientOptions.${this.toPascalCase(usernameName)}`
                                 : usernameName;
                             const passwordAccess = unified
                                 ? `clientOptions.${this.toPascalCase(passwordName)}`
                                 : passwordName;
-                            const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
-                            if (isAuthOptional) {
-                                innerWriter.controlFlow(
-                                    "if",
-                                    this.csharp.codeblock(`${usernameAccess} != null && ${passwordAccess} != null`)
-                                );
+                            const usernameOmitted = !!basicScheme.usernameOmit;
+                            const passwordOmitted = !!basicScheme.passwordOmit;
+                            // Condition: only require non-omitted fields to be present
+                            let condition: string;
+                            if (!usernameOmitted && !passwordOmitted) {
+                                condition = `${usernameAccess} != null && ${passwordAccess} != null`;
+                            } else if (usernameOmitted && !passwordOmitted) {
+                                condition = `${passwordAccess} != null`;
+                            } else if (!usernameOmitted && passwordOmitted) {
+                                condition = `${usernameAccess} != null`;
+                            } else {
+                                // Both fields omitted — skip auth header entirely when auth is non-mandatory
+                                continue;
                             }
+                            if (isAuthOptional || basicSchemes.length > 1) {
+                                const controlFlowKeyword = isFirstBlock ? "if" : "else if";
+                                innerWriter.controlFlow(controlFlowKeyword, this.csharp.codeblock(condition));
+                            }
+                            isFirstBlock = false;
+                            // Build credential string: omitted fields are empty, provided fields use interpolation
+                            const usernamePart = usernameOmitted ? "" : `{${usernameAccess}}`;
+                            const passwordPart = passwordOmitted ? "" : `{${passwordAccess}}`;
                             innerWriter.writeTextStatement(
-                                `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameAccess}}:{${passwordAccess}}"))}"`
+                                `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"${usernamePart}:${passwordPart}"))}"`
                             );
-                            if (isAuthOptional) {
+                            if (isAuthOptional || basicSchemes.length > 1) {
                                 innerWriter.endControlFlow();
                             }
                         }
@@ -577,7 +601,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     const arguments_ = [this.csharp.codeblock(this.members.clientName)];
                     for (const subpackage of this.getSubpackages()) {
                         if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
-                            innerWriter.writeLine(`${subpackage.name.pascalCase.safeName} = `);
+                            innerWriter.writeLine(`${this.case.pascalSafe(subpackage.name)} = `);
                             innerWriter.writeNodeStatement(
                                 this.csharp.instantiateClass({
                                     classReference: this.context.getSubpackageClassReference(subpackage),
@@ -746,14 +770,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         const isOptional = this.context.ir.sdkConfig.isAuthMandatory;
         if (scheme.type === "header") {
             {
-                const name = scheme.name.name.camelCase.safeName;
+                const name = this.case.camelSafe(scheme.name);
                 return [
                     {
                         name,
                         docs: scheme.docs ?? `The ${name} to use for authentication.`,
                         isOptional,
                         header: {
-                            name: scheme.name.wireValue,
+                            name: getWireValue(scheme.name),
                             prefix: scheme.prefix
                         },
                         typeReference: scheme.valueType,
@@ -761,13 +785,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             reference: scheme.valueType
                         }),
                         environmentVariable: scheme.headerEnvVar,
-                        exampleValue: scheme.name.name.screamingSnakeCase.safeName
+                        exampleValue: this.case.screamingSnakeSafe(scheme.name)
                     }
                 ];
             }
         } else if (scheme.type === "bearer") {
             {
-                const name = scheme.token.camelCase.safeName;
+                const name = this.case.camelSafe(scheme.token);
                 return [
                     {
                         name,
@@ -786,16 +810,20 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.tokenEnvVar,
-                        exampleValue: scheme.token.screamingSnakeCase.safeName
+                        exampleValue: this.case.screamingSnakeSafe(scheme.token)
                     }
                 ];
             }
         } else if (scheme.type === "basic") {
             {
-                const usernameName = scheme.username.camelCase.safeName;
-                const passwordName = scheme.password.camelCase.safeName;
-                return [
-                    {
+                const usernameName = this.case.camelSafe(scheme.username);
+                const passwordName = this.case.camelSafe(scheme.password);
+                const usernameOmitted = !!scheme.usernameOmit;
+                const passwordOmitted = !!scheme.passwordOmit;
+                // When omit is true, the field is completely removed from the end-user API.
+                const params: ConstructorParameter[] = [];
+                if (!usernameOmitted) {
+                    params.push({
                         name: usernameName,
                         docs: scheme.docs ?? `The ${usernameName} to use for authentication.`,
                         isOptional,
@@ -808,9 +836,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.usernameEnvVar,
-                        exampleValue: scheme.username.screamingSnakeCase.safeName
-                    },
-                    {
+                        exampleValue: this.case.screamingSnakeSafe(scheme.username)
+                    });
+                }
+                if (!passwordOmitted) {
+                    params.push({
                         name: passwordName,
                         docs: scheme.docs ?? `The ${passwordName} to use for authentication.`,
                         isOptional,
@@ -823,9 +853,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.passwordEnvVar,
-                        exampleValue: scheme.password.screamingSnakeCase.safeName
-                    }
-                ];
+                        exampleValue: this.case.screamingSnakeSafe(scheme.password)
+                    });
+                }
+                return params;
             }
         } else if (scheme.type === "oauth") {
             if (this.oauth !== null) {
@@ -917,10 +948,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         return {
             name:
                 header.valueType.type === "container" && header.valueType.container.type === "literal"
-                    ? header.name.name.pascalCase.safeName
-                    : header.name.name.camelCase.safeName,
+                    ? this.case.pascalSafe(header.name)
+                    : this.case.camelSafe(header.name),
             header: {
-                name: header.name.wireValue
+                name: getWireValue(header.name)
             },
             docs: header.docs,
             isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional",
@@ -928,7 +959,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             type: this.context.csharpTypeMapper.convert({
                 reference: header.valueType
             }),
-            exampleValue: header.name.name.screamingSnakeCase.safeName
+            exampleValue: this.case.screamingSnakeSafe(header.name)
         };
     }
 
@@ -976,7 +1007,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             if (typeRef.isOptional) {
                 continue;
             }
-            const name = customProperty.property.name.name.camelCase.safeName;
+            const name = this.case.camelSafe(customProperty.property.name);
             params.push({
                 name,
                 docs: `The ${name} for OAuth authentication.`,
@@ -992,7 +1023,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 reference: scopes.property.valueType
             });
             if (!typeRef.isOptional) {
-                const name = scopes.property.name.name.camelCase.safeName;
+                const name = this.case.camelSafe(scopes.property.name);
                 params.push({
                     name,
                     docs: `The ${name} for OAuth authentication.`,

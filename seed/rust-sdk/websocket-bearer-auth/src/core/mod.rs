@@ -15,5 +15,5 @@ pub use request_options::RequestOptions;
 pub use utils::join_url;
 #[cfg(feature = "websocket")]
 pub use websocket::{
-    parse_websocket_message, WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState,
+    DisconnectInfo, WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState,
 };

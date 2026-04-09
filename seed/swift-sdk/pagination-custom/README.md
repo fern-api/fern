@@ -53,7 +53,10 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.users.listUsernamesCustom(startingAfter: "starting_after")
+    _ = try await client.users.listWithCustomPager(
+        limit: 1,
+        startingAfter: "starting_after"
+    )
 }
 
 try await main()
@@ -69,7 +72,7 @@ import Pagination
 let client = PaginationClient(...)
 
 do {
-    let response = try await client.users.listUsernamesCustom(...)
+    let response = try await client.users.listWithCustomPager(...)
     // Handle successful response
 } catch let error as PaginationError {
     switch error {
@@ -96,7 +99,7 @@ do {
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.users.listUsernamesCustom(..., requestOptions: .init(
+try await client.users.listWithCustomPager(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -108,7 +111,7 @@ try await client.users.listUsernamesCustom(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.users.listUsernamesCustom(..., requestOptions: .init(
+try await client.users.listWithCustomPager(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -120,7 +123,7 @@ try await client.users.listUsernamesCustom(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.users.listUsernamesCustom(..., requestOptions: .init(
+try await client.users.listWithCustomPager(..., requestOptions: .init(
     timeout: 30
 ))
 ```

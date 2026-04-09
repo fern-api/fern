@@ -46,6 +46,7 @@ export const CompatibleIrVersionsRule: Rule = {
                     const cliIrVersion = cliRelease.body.irVersion;
 
                     // Pull the generator release to get the IR version
+                    const invocationName = "image" in invocation ? invocation.image.name : invocation.name;
                     let invocationIrVersion: number;
                     if (invocation["ir-version"] != null) {
                         // You've overridden the IR version in the generator invocation, let's clean it up
@@ -56,7 +57,7 @@ export const CompatibleIrVersionsRule: Rule = {
                         // but the FDR API expects fully-qualified names like "fernapi/fern-csharp-sdk"
                         const normalizedInvocation = {
                             ...invocation,
-                            name: addDefaultDockerOrgIfNotPresent(invocation.name)
+                            name: addDefaultDockerOrgIfNotPresent(invocationName)
                         };
                         const maybeIrVersion = await getIrVersionForGenerator(normalizedInvocation);
 
@@ -77,7 +78,7 @@ export const CompatibleIrVersionsRule: Rule = {
                     // and throw an error for the user telling them what to upgrade to to use this generator.
                     const minCliVersion = await fdr.generators.cli.getMinCliForIr(invocationIrVersion);
                     if (minCliVersion.ok) {
-                        return getMaybeBadVersionMessage(invocation.name, minCliVersion.body.version, cliVersion) ?? [];
+                        return getMaybeBadVersionMessage(invocationName, minCliVersion.body.version, cliVersion) ?? [];
                     } else {
                         // Again, this is to allow for offline usage, and other transient errors
                         return [];

@@ -330,17 +330,17 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
 
         if (responseProperty.propertyPath != null && responseProperty.propertyPath.length > 0) {
             for (const pathElement of responseProperty.propertyPath) {
-                accessor += `.${pathElement.name.pascalCase.safeName}`;
+                accessor += `.${this.case.pascalSafe(pathElement.name)}`;
             }
         }
 
-        accessor += `.${responseProperty.property.name.name.pascalCase.safeName}`;
+        accessor += `.${this.case.pascalSafe(responseProperty.property.name)}`;
 
         return accessor;
     }
 
     private getRequestType(): ast.ClassReference {
-        const requestWrapper = this.requestWrapperName();
+        const requestWrapper = this.getRequestBody();
         if (requestWrapper) {
             return this.context.getRequestWrapperReference(this.tokenEndpointReference.serviceId, requestWrapper);
         }
@@ -365,19 +365,19 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
         );
     }
 
-    private requestWrapperName() {
+    private getRequestBody() {
         return (
             this.tokenEndpoint.sdkRequest?.shape._visit({
                 _other: () => undefined,
                 justRequestBody: () => undefined,
-                wrapper: (value) => value.wrapperName
+                wrapper: (value) => value
             }) ??
             this.tokenEndpoint.requestBody?._visit({
                 _other: () => undefined,
                 reference: () => undefined,
                 fileUpload: () => undefined,
                 bytes: () => undefined,
-                inlinedRequestBody: (value) => value.name
+                inlinedRequestBody: (value) => value
             })
         );
     }

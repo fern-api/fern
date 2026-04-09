@@ -4,7 +4,7 @@ export const FERN_TOKEN_ENV_VAR = "FERN_TOKEN";
 /**
  * Timeout for fetching API spec files over HTTP (in milliseconds).
  */
-export const FETCH_API_SPEC_REQUEST_TIMEOUT_MS = 3_000;
+export const FETCH_API_SPEC_REQUEST_TIMEOUT_MS = 30_000;
 
 /**
  * Timeout for the `fern sdk generate` command (in milliseconds).

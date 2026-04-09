@@ -1,13 +1,15 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 type ExampleObjectType = FernIr.ExampleObjectType;
-type NameAndWireValue = FernIr.NameAndWireValue;
+type NameAndWireValueOrString = FernIr.NameAndWireValueOrString;
 type ObjectProperty = FernIr.ObjectProperty;
 type ObjectTypeDeclaration = FernIr.ObjectTypeDeclaration;
 type TypeDeclaration = FernIr.TypeDeclaration;
+type TypeReference = FernIr.TypeReference;
 
 import { generateFields } from "../generateFields.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
@@ -73,45 +75,73 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
     }
 
     private addExtensionDataField(class_: ast.Class): void {
-        class_.addField({
-            origin: class_.explicit("_extensionData"),
-            annotations: [this.System.Text.Json.Serialization.JsonExtensionData],
-            access: ast.Access.Private,
-            readonly: true,
-            type: this.Collection.idictionary(
-                this.Primitive.string,
-                this.objectDeclaration.extraProperties
-                    ? this.Primitive.object.asOptional()
-                    : this.System.Text.Json.JsonElement,
-                {
-                    dontSimplify: true
-                }
-            ),
-            initializer: this.objectDeclaration.extraProperties
-                ? this.System.Collections.Generic.Dictionary(
-                      this.Primitive.string,
-                      this.Primitive.object.asOptional()
-                  ).new()
-                : this.System.Collections.Generic.Dictionary(
-                      this.Primitive.string,
-                      this.System.Text.Json.JsonElement
-                  ).new()
-        });
+        const hasBoundOrigin = class_.origin != null;
+        const fieldType = this.Collection.idictionary(
+            this.Primitive.string,
+            this.objectDeclaration.extraProperties
+                ? this.Primitive.object.asOptional()
+                : this.System.Text.Json.JsonElement,
+            {
+                dontSimplify: true
+            }
+        );
+        const fieldInitializer = this.objectDeclaration.extraProperties
+            ? this.System.Collections.Generic.Dictionary(
+                  this.Primitive.string,
+                  this.Primitive.object.asOptional()
+              ).new()
+            : this.System.Collections.Generic.Dictionary(
+                  this.Primitive.string,
+                  this.System.Text.Json.JsonElement
+              ).new();
+        if (hasBoundOrigin) {
+            class_.addField({
+                origin: class_.explicit("_extensionData"),
+                annotations: [this.System.Text.Json.Serialization.JsonExtensionData],
+                access: ast.Access.Private,
+                readonly: true,
+                type: fieldType,
+                initializer: fieldInitializer
+            });
+        } else {
+            class_.addField({
+                name: "_extensionData",
+                annotations: [this.System.Text.Json.Serialization.JsonExtensionData],
+                access: ast.Access.Private,
+                readonly: true,
+                type: fieldType,
+                initializer: fieldInitializer
+            });
+        }
     }
 
     private addAdditionalPropertiesProperty(class_: ast.Class) {
-        return class_.addField({
-            origin: class_.explicit("AdditionalProperties"),
-            annotations: [this.System.Text.Json.Serialization.JsonIgnore],
-            access: ast.Access.Public,
-            type: this.objectDeclaration.extraProperties
-                ? this.Types.AdditionalProperties()
-                : this.Types.ReadOnlyAdditionalProperties(),
-
-            get: true,
-            set: this.objectDeclaration.extraProperties ? true : ast.Access.Private,
-            initializer: this.csharp.codeblock("new()")
-        });
+        const hasBoundOrigin = class_.origin != null;
+        const fieldType = this.objectDeclaration.extraProperties
+            ? this.Types.AdditionalProperties()
+            : this.Types.ReadOnlyAdditionalProperties();
+        const fieldSet = this.objectDeclaration.extraProperties ? true : ast.Access.Private;
+        if (hasBoundOrigin) {
+            return class_.addField({
+                origin: class_.explicit("AdditionalProperties"),
+                annotations: [this.System.Text.Json.Serialization.JsonIgnore],
+                access: ast.Access.Public,
+                type: fieldType,
+                get: true,
+                set: fieldSet,
+                initializer: this.csharp.codeblock("new()")
+            });
+        } else {
+            return class_.addField({
+                name: "AdditionalProperties",
+                annotations: [this.System.Text.Json.Serialization.JsonIgnore],
+                access: ast.Access.Public,
+                type: fieldType,
+                get: true,
+                set: fieldSet,
+                initializer: this.csharp.codeblock("new()")
+            });
+        }
     }
 
     private addOnSerializing(class_: ast.Class, additionalProperties: ast.Field): void {
@@ -157,6 +187,29 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             return { name: propertyName, assignment };
         });
 
+        // Include default values for required properties missing from the example
+        // so the generated object initializer compiles without CS9035 errors.
+        const providedWireValues = new Set(exampleObject.properties.map((p) => getWireValue(p.name)));
+        const allProperties = [
+            ...this.objectDeclaration.properties,
+            ...(this.objectDeclaration.extendedProperties ?? [])
+        ];
+        for (const property of allProperties) {
+            if (providedWireValues.has(getWireValue(property.name))) {
+                continue;
+            }
+            if (this.isRequiredProperty(property.valueType)) {
+                const propertyName = this.getPropertyName({
+                    className: this.classReference.name,
+                    objectProperty: property.name
+                });
+                const defaultValue = this.getDefaultSnippetForType(property.valueType);
+                if (defaultValue != null) {
+                    args.push({ name: propertyName, assignment: defaultValue });
+                }
+            }
+        }
+
         if (
             this.objectDeclaration.extraProperties &&
             exampleObject.extraProperties != null &&
@@ -183,7 +236,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         extraProperties,
         parseDatetimes
     }: {
-        extraProperties: { name: NameAndWireValue; value: FernIr.ExampleTypeReference }[];
+        extraProperties: FernIr.ExampleExtraObjectProperty[];
         parseDatetimes: boolean;
     }): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
@@ -194,7 +247,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
                     exampleTypeReference: extraProperty.value,
                     parseDatetimes
                 });
-                writer.write(`["${extraProperty.name.wireValue}"] = `);
+                writer.write(`["${getWireValue(extraProperty.name)}"] = `);
                 writer.writeNode(valueSnippet);
                 writer.writeLine(",");
             }
@@ -230,6 +283,98 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
     }
 
     /**
+     * Returns true if a property's type will be marked as `required` in C#.
+     * A property is required when it is not optional, not nullable, and not a collection.
+     */
+    private isRequiredProperty(typeReference: TypeReference): boolean {
+        if (this.context.isOptional(typeReference) || this.context.isNullable(typeReference)) {
+            return false;
+        }
+        if (typeReference.type === "container") {
+            const ct = typeReference.container.type;
+            if (ct === "list" || ct === "set" || ct === "map") {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns a CodeBlock with the C# default value for a type reference.
+     * Used when a required property is missing from an example.
+     */
+    private getDefaultSnippetForType(
+        typeReference: TypeReference,
+        visitedTypeIds?: Set<string>
+    ): ast.CodeBlock | undefined {
+        switch (typeReference.type) {
+            case "primitive":
+                return this.context.getDefaultValueForPrimitive({ primitive: typeReference.primitive });
+            case "named": {
+                const typeDeclaration = this.context.model.dereferenceType(typeReference.typeId).typeDeclaration;
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.getDefaultSnippetForType(typeDeclaration.shape.aliasOf, visitedTypeIds);
+                }
+                if (typeDeclaration.shape.type === "enum" && typeDeclaration.shape.values.length > 0) {
+                    const firstEnumValue = typeDeclaration.shape.values[0];
+                    if (firstEnumValue != null) {
+                        const classRef = this.context.csharpTypeMapper.convertToClassReference(typeDeclaration);
+                        const firstValue = this.case.pascalSafe(firstEnumValue.name);
+                        return this.csharp.codeblock(`${classRef.name}.${firstValue}`);
+                    }
+                }
+                if (typeDeclaration.shape.type === "object") {
+                    return this.getDefaultSnippetForObject(typeDeclaration, typeDeclaration.shape, visitedTypeIds);
+                }
+                return undefined;
+            }
+            default:
+                return undefined;
+        }
+    }
+
+    /**
+     * Returns a CodeBlock that constructs a default object initializer for a required nested object.
+     * Recursively fills in required properties with defaults.
+     */
+    private getDefaultSnippetForObject(
+        typeDeclaration: TypeDeclaration,
+        objectShape: ObjectTypeDeclaration,
+        visitedTypeIds?: Set<string>
+    ): ast.CodeBlock | undefined {
+        const visited = visitedTypeIds ?? new Set<string>();
+        const typeId = typeDeclaration.name.typeId;
+        if (visited.has(typeId)) {
+            return undefined;
+        }
+        visited.add(typeId);
+
+        const classRef = this.context.csharpTypeMapper.convertToClassReference(typeDeclaration);
+        const allProperties = [...objectShape.properties, ...(objectShape.extendedProperties ?? [])];
+        const args: { name: string; assignment: ast.CodeBlock }[] = [];
+        for (const property of allProperties) {
+            if (this.isRequiredProperty(property.valueType)) {
+                const propertyName = this.getPropertyName({
+                    className: classRef.name,
+                    objectProperty: property.name
+                });
+                const defaultValue = this.getDefaultSnippetForType(property.valueType, visited);
+                if (defaultValue != null) {
+                    args.push({ name: propertyName, assignment: defaultValue });
+                }
+            }
+        }
+
+        visited.delete(typeId);
+
+        const instantiateClass = this.csharp.instantiateClass({
+            classReference: classRef,
+            arguments_: args
+        });
+        return this.csharp.codeblock((writer) => writer.writeNode(instantiateClass));
+    }
+
+    /**
      * Class Names and Property Names cannot overlap in C# otherwise there are compilation errors.
      */
     private getPropertyName({
@@ -237,9 +382,9 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         objectProperty
     }: {
         className: string;
-        objectProperty: NameAndWireValue;
+        objectProperty: NameAndWireValueOrString;
     }): string {
-        const propertyName = objectProperty.name.pascalCase.safeName;
+        const propertyName = this.case.pascalSafe(objectProperty);
         if (propertyName === className) {
             return `${propertyName}_`;
         }

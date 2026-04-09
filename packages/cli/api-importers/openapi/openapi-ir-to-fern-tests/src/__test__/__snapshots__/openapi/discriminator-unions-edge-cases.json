@@ -120,6 +120,7 @@
           "Animal": {
             "availability": undefined,
             "base-properties": {},
+            "default-variant": undefined,
             "discriminant": {
               "context": "data",
               "value": "animalType",
@@ -229,6 +230,7 @@
           "Payment": {
             "availability": undefined,
             "base-properties": {},
+            "default-variant": undefined,
             "discriminant": {
               "context": "data",
               "value": "paymentMethod",

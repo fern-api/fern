@@ -10,7 +10,7 @@ import (
 )
 
 type UserCreatedPayload struct {
-	UserId    string `json:"userId" url:"userId"`
+	UserID    string `json:"userId" url:"userId"`
 	Email     string `json:"email" url:"email"`
 	CreatedAt string `json:"createdAt" url:"createdAt"`
 
@@ -18,11 +18,11 @@ type UserCreatedPayload struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UserCreatedPayload) GetUserId() string {
+func (u *UserCreatedPayload) GetUserID() string {
 	if u == nil {
 		return ""
 	}
-	return u.UserId
+	return u.UserID
 }
 
 func (u *UserCreatedPayload) GetEmail() string {
@@ -77,7 +77,7 @@ func (u *UserCreatedPayload) String() string {
 }
 
 type OrderCompletedPayload struct {
-	OrderId  string  `json:"orderId" url:"orderId"`
+	OrderID  string  `json:"orderId" url:"orderId"`
 	Total    float64 `json:"total" url:"total"`
 	Currency string  `json:"currency" url:"currency"`
 
@@ -85,11 +85,11 @@ type OrderCompletedPayload struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *OrderCompletedPayload) GetOrderId() string {
+func (o *OrderCompletedPayload) GetOrderID() string {
 	if o == nil {
 		return ""
 	}
-	return o.OrderId
+	return o.OrderID
 }
 
 func (o *OrderCompletedPayload) GetTotal() float64 {
@@ -144,7 +144,7 @@ func (o *OrderCompletedPayload) String() string {
 }
 
 type PaymentNotificationPayload struct {
-	PaymentId string  `json:"paymentId" url:"paymentId"`
+	PaymentID string  `json:"paymentId" url:"paymentId"`
 	Amount    float64 `json:"amount" url:"amount"`
 	Status    string  `json:"status" url:"status"`
 
@@ -152,11 +152,11 @@ type PaymentNotificationPayload struct {
 	rawJSON         json.RawMessage
 }
 
-func (p *PaymentNotificationPayload) GetPaymentId() string {
+func (p *PaymentNotificationPayload) GetPaymentID() string {
 	if p == nil {
 		return ""
 	}
-	return p.PaymentId
+	return p.PaymentID
 }
 
 func (p *PaymentNotificationPayload) GetAmount() float64 {
@@ -211,7 +211,7 @@ func (p *PaymentNotificationPayload) String() string {
 }
 
 type RefundProcessedPayload struct {
-	RefundId string  `json:"refundId" url:"refundId"`
+	RefundID string  `json:"refundId" url:"refundId"`
 	Amount   float64 `json:"amount" url:"amount"`
 	Reason   *string `json:"reason,omitempty" url:"reason,omitempty"`
 
@@ -219,11 +219,11 @@ type RefundProcessedPayload struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *RefundProcessedPayload) GetRefundId() string {
+func (r *RefundProcessedPayload) GetRefundID() string {
 	if r == nil {
 		return ""
 	}
-	return r.RefundId
+	return r.RefundID
 }
 
 func (r *RefundProcessedPayload) GetAmount() float64 {

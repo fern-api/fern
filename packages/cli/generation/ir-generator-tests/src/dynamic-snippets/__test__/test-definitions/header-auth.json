@@ -8,6 +8,7 @@
                 "type": "header",
                 "header": {
                     "name": {
+                        "wireValue": "x-api-key",
                         "name": {
                             "originalName": "Header Token Auth",
                             "camelCase": {
@@ -26,8 +27,7 @@
                                 "unsafeName": "HeaderTokenAuth",
                                 "safeName": "HeaderTokenAuth"
                             }
-                        },
-                        "wireValue": "x-api-key"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",

@@ -7,6 +7,6 @@ public class Example51 {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpoints().urls().withEndingSlash();
+        client.endpoints().primitive().getAndReturnDate("2023-01-15");
     }
 }

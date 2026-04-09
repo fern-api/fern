@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "96beefdb",
+            "example_identifier": "c18d9d6a",
             "id": {
                 "method": "DELETE",
                 "path": "/container/",

@@ -652,7 +652,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .initializer("new $T<>()", HashMap.class)
                         .build())
                 .addField(FieldSpec.builder(TypeName.INT, MAX_RETRIES_FIELD.name, Modifier.PRIVATE)
-                        .initializer("2")
+                        .initializer("$L", getDefaultMaxRetries())
                         .build())
                 .addField(FieldSpec.builder(
                                 ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
@@ -716,7 +716,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .build())
                 .addMethod(MethodSpec.methodBuilder(MAX_RETRIES_FIELD.name)
                         .addModifiers(Modifier.PUBLIC)
-                        .addJavadoc("Override the maximum number of retries. Defaults to 2 retries.")
+                        .addJavadoc("Override the maximum number of retries. Defaults to " + getDefaultMaxRetries()
+                                + " retries.")
                         .returns(builderClassName)
                         .addParameter(TypeName.INT, MAX_RETRIES_FIELD.name)
                         .addStatement("this.$L = $L", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
@@ -1231,5 +1232,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .getCustomConfig()
                 .defaultTimeoutInSeconds()
                 .orElse(60);
+    }
+
+    private int getDefaultMaxRetries() {
+        return clientGeneratorContext.getCustomConfig().maxRetries().orElse(2);
     }
 }

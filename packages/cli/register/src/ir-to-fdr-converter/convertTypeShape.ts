@@ -2,6 +2,7 @@ import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { FernIr as Ir, TypeReference } from "@fern-api/ir-sdk";
 
 import { convertIrAvailability } from "./convertPackage.js";
+import { getOriginalName, getWireValue } from "./nameUtils.js";
 
 export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.register.TypeShape {
     return irType._visit<FdrCjsSdk.api.v1.register.TypeShape>({
@@ -14,11 +15,11 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
         enum: (enum_) => {
             return {
                 type: "enum",
-                default: enum_.default != null ? enum_.default.name.wireValue : undefined,
+                default: enum_.default != null ? getWireValue(enum_.default.name) : undefined,
                 values: enum_.values.map(
                     (value): FdrCjsSdk.api.v1.register.EnumValue => ({
                         description: value.docs ?? undefined,
-                        value: value.name.wireValue,
+                        value: getWireValue(value.name),
                         availability: convertIrAvailability(value.availability)
                     })
                 )
@@ -31,7 +32,7 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                 properties: object.properties.map(
                     (property): FdrCjsSdk.api.v1.register.ObjectProperty => ({
                         description: property.docs ?? undefined,
-                        key: FdrCjsSdk.PropertyKey(property.name.wireValue),
+                        key: FdrCjsSdk.PropertyKey(getWireValue(property.name)),
                         valueType: convertTypeReference(property.valueType),
                         availability: convertIrAvailability(property.availability),
                         propertyAccess: property.propertyAccess
@@ -44,7 +45,7 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
             const baseProperties: FdrCjsSdk.api.v1.register.ObjectProperty[] = union.baseProperties.map(
                 (baseProperty): FdrCjsSdk.api.v1.register.ObjectProperty => {
                     return {
-                        key: FdrCjsSdk.PropertyKey(baseProperty.name.wireValue),
+                        key: FdrCjsSdk.PropertyKey(getWireValue(baseProperty.name)),
                         valueType: convertTypeReference(baseProperty.valueType),
                         availability: convertIrAvailability(baseProperty.availability),
                         description: baseProperty.docs,
@@ -54,11 +55,11 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
             );
             return {
                 type: "discriminatedUnion",
-                discriminant: union.discriminant.wireValue,
+                discriminant: getWireValue(union.discriminant),
                 variants: union.types.map((variant): FdrCjsSdk.api.v1.register.DiscriminatedUnionVariant => {
                     return {
                         description: variant.docs ?? undefined,
-                        discriminantValue: variant.discriminantValue.wireValue,
+                        discriminantValue: getWireValue(variant.discriminantValue),
                         displayName: variant.displayName,
                         availability:
                             variant.availability != null ? convertIrAvailability(variant.availability) : undefined,
@@ -76,7 +77,7 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                                         extends: [],
                                         properties: [
                                             {
-                                                key: FdrCjsSdk.PropertyKey(singleProperty.name.wireValue),
+                                                key: FdrCjsSdk.PropertyKey(getWireValue(singleProperty.name)),
                                                 valueType: convertTypeReference(singleProperty.type),
                                                 description: undefined,
                                                 availability: undefined,
@@ -109,7 +110,7 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                 type: "undiscriminatedUnion",
                 variants: union.members.map((variant): FdrCjsSdk.api.v1.register.UndiscriminatedUnionVariant => {
                     return {
-                        typeName: variant.type.type === "named" ? variant.type.name.originalName : undefined,
+                        typeName: variant.type.type === "named" ? getOriginalName(variant.type.name) : undefined,
                         description: variant.docs ?? undefined,
                         type: convertTypeReference(variant.type),
                         availability: undefined,

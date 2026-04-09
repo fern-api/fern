@@ -14,7 +14,7 @@ import {
     resolveAffectedFixtures,
     resolveAffectedGenerators
 } from "./commands/affected/index.js";
-import { cleanOrphanedSeedFolders } from "./commands/clean/index.js";
+import { cleanEmptySeedDirectories, cleanOrphanedSeedFolders } from "./commands/clean/index.js";
 import { generateCliChangelog } from "./commands/generate/generateCliChangelog.js";
 import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog.js";
 import { buildGeneratorImage } from "./commands/img/buildGeneratorImage.js";
@@ -95,8 +95,9 @@ function addTestCommand(cli: Argv) {
                     type: "array",
                     string: true,
                     demandOption: false,
-                    alias: "g",
-                    description: "The generators to run tests for"
+                    alias: ["g", "sdk"],
+                    description:
+                        "The generators to run tests for (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("parallel", {
                     type: "number",
@@ -108,11 +109,13 @@ function addTestCommand(cli: Argv) {
                     string: true,
                     // default: FIXTURES,
                     demandOption: false,
+                    alias: "f",
                     description: "Runs on all fixtures if not provided"
                 })
                 .option("outputFolder", {
                     string: true,
                     demandOption: false,
+                    alias: "o",
                     description: "Runs on a specific output folder. Only relevant if there are >1 folders configured."
                 })
                 .option("keepContainer", {
@@ -125,12 +128,14 @@ function addTestCommand(cli: Argv) {
                 .option("skip-scripts", {
                     type: "boolean",
                     demandOption: false,
-                    default: false
+                    default: false,
+                    alias: "ss"
                 })
                 .option("local", {
                     type: "boolean",
                     demandOption: false,
-                    default: false
+                    default: false,
+                    alias: "l"
                 })
                 .option("log-level", {
                     default: LogLevel.Info,
@@ -146,22 +151,26 @@ function addTestCommand(cli: Argv) {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "i",
                     description: "Execute Node with --inspect flag for debugging"
                 })
                 .option("container-runtime", {
                     type: "string",
                     choices: ["docker", "podman"],
                     demandOption: false,
+                    alias: "cr",
                     description: "Explicitly specify which container runtime to use (docker or podman)"
                 })
                 .option("base-ref", {
                     type: "string",
                     demandOption: false,
                     default: "origin/main",
+                    alias: "br",
                     description: 'Git ref to diff against when using "affected" mode (default: origin/main)'
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
+            argv.generator = normalizeGeneratorNames(argv.generator, generators);
 
             // Handle "affected" mode for --generator and --fixture
             const isGeneratorAffected =
@@ -401,8 +410,9 @@ function addTestRemoteLocalCommand(cli: Argv) {
                     type: "array",
                     string: true,
                     demandOption: false,
-                    alias: "g",
-                    description: "The generators to run tests for"
+                    alias: ["g", "sdk"],
+                    description:
+                        "The generators to run tests for (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("parallel", {
                     type: "number",
@@ -414,11 +424,13 @@ function addTestRemoteLocalCommand(cli: Argv) {
                     type: "array",
                     string: true,
                     demandOption: false,
+                    alias: "f",
                     description: "Runs on all fixtures if not provided"
                 })
                 .option("outputFolder", {
                     string: true,
                     demandOption: false,
+                    alias: "o",
                     description: "Runs on a specific output folder. Only relevant if there are >1 folders configured."
                 })
                 .option("output-mode", {
@@ -435,6 +447,7 @@ function addTestRemoteLocalCommand(cli: Argv) {
                 .option("fern-repo-directory", {
                     string: true,
                     demandOption: false,
+                    alias: "frd",
                     description:
                         "These tests must run with the fern repo path as their working directory. Defaults to the current working directory."
                 })
@@ -453,10 +466,14 @@ function addTestRemoteLocalCommand(cli: Argv) {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "bg",
                     description:
                         "Build generator Docker images at version 99.99.99 for local generation mode. Uses 'pnpm seed img' internally."
                 }),
         async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            argv.generator = normalizeGeneratorNames(argv.generator, generators);
+
             // Verify that the working directory is a valid path and is the root folder of the fern repo
             const inputValidationErrors = [];
 
@@ -511,7 +528,8 @@ function addRunCommand(cli: Argv) {
                 .option("generator", {
                     string: true,
                     demandOption: true,
-                    description: "Generator to run"
+                    alias: "sdk",
+                    description: "Generator to run (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("path", {
                     type: "string",
@@ -523,6 +541,7 @@ function addRunCommand(cli: Argv) {
                     type: "string",
                     string: true,
                     demandOption: false,
+                    alias: "op",
                     description: "Path to output the generated files (defaults to tmp dir)"
                 })
                 .option("log-level", {
@@ -532,37 +551,50 @@ function addRunCommand(cli: Argv) {
                 .option("skip-scripts", {
                     type: "boolean",
                     demandOption: false,
-                    default: false
+                    default: false,
+                    alias: "ss"
                 })
                 .option("audience", {
                     string: true,
-                    demandOption: false
+                    demandOption: false,
+                    alias: "a"
                 })
                 .option("local", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "l",
                     description: "Run the generator locally instead of using Docker"
                 })
                 .option("keepContainer", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "k",
                     description: "Keeps the docker container after the generator finishes (Docker mode only)"
                 })
                 .option("inspect", {
                     type: "boolean",
                     demandOption: false,
-                    default: false
+                    default: false,
+                    alias: "i"
+                })
+                .option("prefer-manual-examples", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description:
+                        "Skip autogenerated examples when manual examples exist (matches CLI remote generation behavior)"
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
-            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+            const resolvedGenerator = normalizeGeneratorName(argv.generator, generators);
+            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [resolvedGenerator] });
 
-            const generator = generators.find((g) => g.workspaceName === argv.generator);
+            const generator = generators.find((g) => g.workspaceName === resolvedGenerator);
             if (generator == null) {
                 throw new Error(
-                    `Generator ${argv.generator} not found. Please make sure that there is a folder with the name ${argv.generator} in the seed directory.`
+                    `Generator ${resolvedGenerator} not found. Please make sure that there is a folder with the name ${resolvedGenerator} in the seed directory.`
                 );
             }
 
@@ -586,7 +618,8 @@ function addRunCommand(cli: Argv) {
                     : undefined,
                 inspect: argv.inspect,
                 local: argv.local,
-                keepContainer: argv.keepContainer
+                keepContainer: argv.keepContainer,
+                skipAutogenerationIfManualExamplesExist: argv.preferManualExamples
             });
         }
     );
@@ -666,23 +699,27 @@ function addGetAvailableFixturesCommand(cli: Argv) {
                 .option("generator", {
                     string: true,
                     demandOption: true,
-                    description: "Generator to get fixtures for"
+                    alias: "sdk",
+                    description:
+                        "Generator to get fixtures for (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("include-output-folders", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "iof",
                     description:
                         "Whether to separate by test subfolders or not (e.g., imdb:noScripts, imdb:no-custom-config, etc.)"
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
-            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+            const resolvedGenerator = normalizeGeneratorName(argv.generator, generators);
+            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [resolvedGenerator] });
 
-            const generator = generators.find((g) => g.workspaceName === argv.generator);
+            const generator = generators.find((g) => g.workspaceName === resolvedGenerator);
             if (generator == null) {
                 throw new Error(
-                    `Generator ${argv.generator} not found. Please make sure that there is a folder with the name ${argv.generator} in the seed directory.`
+                    `Generator ${resolvedGenerator} not found. Please make sure that there is a folder with the name ${resolvedGenerator} in the seed directory.`
                 );
             }
 
@@ -704,17 +741,20 @@ function addListTestFixturesCommand(cli: Argv) {
                     type: "array",
                     string: true,
                     demandOption: false,
-                    alias: "g",
-                    description: "The generators to list fixtures for (lists all if not provided)"
+                    alias: ["g", "sdk"],
+                    description:
+                        "The generators to list fixtures for (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("groups", {
                     type: "string",
                     demandOption: false,
+                    alias: "n",
                     description:
                         "Split fixtures into groups for parallel execution. Use 'auto' to automatically calculate based on fixture count, or a number for a specific group count."
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
+            argv.generator = normalizeGeneratorNames(argv.generator, generators);
             if (argv.generator != null) {
                 throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
             }
@@ -769,12 +809,14 @@ function addAffectedCommand(cli: Argv) {
                     type: "string",
                     demandOption: false,
                     default: "origin/main",
+                    alias: "br",
                     description: "Git ref to diff against (default: origin/main)"
                 })
                 .option("json", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "j",
                     description: "Output results as JSON"
                 }),
         async (argv) => {
@@ -836,17 +878,19 @@ function addCleanCommand(cli: Argv) {
                     type: "array",
                     string: true,
                     demandOption: false,
-                    alias: "g",
-                    description: "The generators to clean (cleans all if not provided)"
+                    alias: ["g", "sdk"],
+                    description: "The generators to clean (short names like 'csharp' are auto-expanded to 'csharp-sdk')"
                 })
                 .option("dry-run", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "dr",
                     description: "List orphaned folders without deleting them"
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
+            argv.generator = normalizeGeneratorNames(argv.generator, generators);
             if (argv.generator != null) {
                 throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
             }
@@ -857,8 +901,9 @@ function addCleanCommand(cli: Argv) {
                     : generators;
 
             const result = await cleanOrphanedSeedFolders(targetGenerators, argv.dryRun);
+            const emptyResult = await cleanEmptySeedDirectories(argv.dryRun);
 
-            if (argv.dryRun && result.orphanedFolders.length > 0) {
+            if (argv.dryRun && (result.orphanedFolders.length > 0 || emptyResult.emptyDirectories.length > 0)) {
                 process.exit(1);
             }
         }
@@ -1472,6 +1517,29 @@ function addGenerateCommands(cli: Argv) {
                 );
         });
     });
+}
+
+/**
+ * Resolves `--sdk` shorthand values into full generator names by appending `-sdk`.
+ * Merges them with any explicit `--generator` values.
+ */
+function normalizeGeneratorName(name: string, workspaces: GeneratorWorkspace[]): string {
+    const workspaceNames = new Set(workspaces.map((w) => w.workspaceName));
+    if (workspaceNames.has(name)) {
+        return name;
+    }
+    const expanded = `${name}-sdk`;
+    if (workspaceNames.has(expanded)) {
+        return expanded;
+    }
+    return name;
+}
+
+function normalizeGeneratorNames(names: string[] | undefined, workspaces: GeneratorWorkspace[]): string[] | undefined {
+    if (names == null) {
+        return undefined;
+    }
+    return names.map((name) => normalizeGeneratorName(name, workspaces));
 }
 
 function throwIfGeneratorDoesNotExist({

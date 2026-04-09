@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "6d5f467a",
+            "example_identifier": "c1dcb943",
             "id": {
                 "method": "POST",
                 "path": "/extends/extended-inline-request-body",

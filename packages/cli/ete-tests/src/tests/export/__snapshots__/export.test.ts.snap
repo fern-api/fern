@@ -41,7 +41,7 @@ paths:
                                                                                                         - BadRequestError
                         security:
                                 -
-                                        ApiKeyAuth: []
+                                        APIKeyAuth: []
                         requestBody:
                                 required: true
                                 content:
@@ -300,7 +300,7 @@ components:
                                 -
                                         $ref: '#/components/schemas/CreateMovieRequest'
         securitySchemes:
-                ApiKeyAuth:
+                APIKeyAuth:
                         type: apiKey
                         in: header
                         name: X_API_KEY
@@ -375,7 +375,7 @@ exports[`overrides > simple --indent 8 2`] = `
                                 },
                                 "security": [
                                         {
-                                                "ApiKeyAuth": []
+                                                "APIKeyAuth": []
                                         }
                                 ],
                                 "requestBody": {
@@ -772,7 +772,7 @@ exports[`overrides > simple --indent 8 2`] = `
                         }
                 },
                 "securitySchemes": {
-                        "ApiKeyAuth": {
+                        "APIKeyAuth": {
                                 "type": "apiKey",
                                 "in": "header",
                                 "name": "X_API_KEY"
@@ -830,7 +830,7 @@ paths:
                         enum:
                           - BadRequestError
       security:
-        - ApiKeyAuth: []
+        - APIKeyAuth: []
       requestBody:
         required: true
         content:
@@ -1066,7 +1066,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/CreateMovieRequest'
   securitySchemes:
-    ApiKeyAuth:
+    APIKeyAuth:
       type: apiKey
       in: header
       name: X_API_KEY
@@ -1139,7 +1139,7 @@ exports[`overrides > simple 2`] = `
         },
         "security": [
           {
-            "ApiKeyAuth": []
+            "APIKeyAuth": []
           }
         ],
         "requestBody": {
@@ -1536,7 +1536,7 @@ exports[`overrides > simple 2`] = `
       }
     },
     "securitySchemes": {
-      "ApiKeyAuth": {
+      "APIKeyAuth": {
         "type": "apiKey",
         "in": "header",
         "name": "X_API_KEY"

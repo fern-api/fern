@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -32,11 +33,14 @@ export class EnumGenerator extends AbstractModelGenerator {
     }
 
     private getMembers(): go.Enum.Member[] {
-        return this.enumDeclaration.values.map((value) => ({
-            name: this.context.getClassName(value.name.name),
-            value: value.name.wireValue,
-            docs: value.docs
-        }));
+        return this.enumDeclaration.values.map((value) => {
+            const nameVal = value.name;
+            return {
+                name: this.context.getClassName(nameVal),
+                value: getWireValue(value.name),
+                docs: value.docs
+            };
+        });
     }
 
     private getConstructor({

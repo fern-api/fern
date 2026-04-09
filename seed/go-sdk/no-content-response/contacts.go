@@ -65,11 +65,11 @@ func (c *CreateContactRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	getContactsRequestFieldId = big.NewInt(1 << 0)
+	getContactsRequestFieldID = big.NewInt(1 << 0)
 )
 
 type GetContactsRequest struct {
-	Id string `json:"-" url:"-"`
+	ID string `json:"-" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -82,21 +82,21 @@ func (g *GetContactsRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetContactsRequest) SetId(id string) {
-	g.Id = id
-	g.require(getContactsRequestFieldId)
+func (g *GetContactsRequest) SetID(id string) {
+	g.ID = id
+	g.require(getContactsRequestFieldID)
 }
 
 var (
-	contactFieldId    = big.NewInt(1 << 0)
+	contactFieldID    = big.NewInt(1 << 0)
 	contactFieldName  = big.NewInt(1 << 1)
 	contactFieldEmail = big.NewInt(1 << 2)
 )
 
 type Contact struct {
-	Id    string  `json:"id" url:"id"`
+	ID    string  `json:"id" url:"id"`
 	Name  string  `json:"name" url:"name"`
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
 
@@ -107,11 +107,11 @@ type Contact struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *Contact) GetId() string {
+func (c *Contact) GetID() string {
 	if c == nil {
 		return ""
 	}
-	return c.Id
+	return c.ID
 }
 
 func (c *Contact) GetName() string {
@@ -142,11 +142,11 @@ func (c *Contact) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *Contact) SetId(id string) {
-	c.Id = id
-	c.require(contactFieldId)
+func (c *Contact) SetID(id string) {
+	c.ID = id
+	c.require(contactFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;

@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     Attribute,
@@ -28,6 +29,8 @@ export declare namespace FileUploadRequestGenerator {
         bodyProperties: FernIr.InlinedRequestBodyProperty[];
         docsContent?: string;
         context: ModelGeneratorContext;
+        /** Field names that are query parameters and should be excluded from serialization */
+        queryParamFieldNames?: Set<string>;
     }
 }
 
@@ -45,6 +48,7 @@ export class FileUploadRequestGenerator {
     private readonly bodyProperties: FernIr.InlinedRequestBodyProperty[];
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
+    private readonly queryParamFieldNames: Set<string>;
 
     public constructor({
         name,
@@ -52,7 +56,8 @@ export class FileUploadRequestGenerator {
         fileProperties,
         bodyProperties,
         docsContent,
-        context
+        context,
+        queryParamFieldNames
     }: FileUploadRequestGenerator.Args) {
         this.name = name;
         this.properties = properties;
@@ -60,6 +65,7 @@ export class FileUploadRequestGenerator {
         this.bodyProperties = bodyProperties;
         this.docsContent = docsContent;
         this.context = context;
+        this.queryParamFieldNames = queryParamFieldNames ?? new Set();
     }
 
     public generateFileContents(): string {
@@ -188,7 +194,7 @@ export class FileUploadRequestGenerator {
 
         // Add body properties as text fields
         for (const bodyProp of this.bodyProperties) {
-            const propName = bodyProp.name.name.originalName;
+            const propName = getOriginalName(bodyProp.name);
             const fieldName = this.getFieldName(propName);
             const isOptional = isOptionalType(bodyProp.valueType);
 
@@ -241,9 +247,10 @@ export class FileUploadRequestGenerator {
     }
 
     private generateRustFieldForProperty(property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty): rust.Field {
-        const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
+        const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(property.name));
         const fieldType = generateFieldType(property, this.context);
-        const attributes = generateFieldAttributes(property, this.context);
+        const skipSerialization = this.queryParamFieldNames.has(fieldName);
+        const attributes = generateFieldAttributes(property, this.context, { skipSerialization });
 
         return rust.field({
             name: fieldName,

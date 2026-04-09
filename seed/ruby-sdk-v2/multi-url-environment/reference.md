@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>client.ec_2.<a href="/lib/seed/ec_2/client.rb">boot_instance</a>(request) -> </code></summary>
+<details><summary><code>client.ec2.<a href="/lib/seed/ec2/client.rb">boot_instance</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.ec_2.boot_instance(size: "size")
+client.ec2.boot_instance(size: "size")
 ```
 </dd>
 </dl>
@@ -49,7 +49,7 @@ client.ec_2.boot_instance(size: "size")
 </details>
 
 ## S3
-<details><summary><code>client.s_3.<a href="/lib/seed/s_3/client.rb">get_presigned_url</a>(request) -> String</code></summary>
+<details><summary><code>client.s3.<a href="/lib/seed/s3/client.rb">get_presigned_url</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -62,7 +62,7 @@ client.ec_2.boot_instance(size: "size")
 <dd>
 
 ```ruby
-client.s_3.get_presigned_url(s_3_key: "s3Key")
+client.s3.get_presigned_url(s3key: "s3Key")
 ```
 </dd>
 </dl>
@@ -77,7 +77,7 @@ client.s_3.get_presigned_url(s_3_key: "s3Key")
 <dl>
 <dd>
 
-**s_3_key:** `String` 
+**s3key:** `String` 
     
 </dd>
 </dl>

@@ -25,7 +25,7 @@ type RequestOptions struct {
 	QueryParameters url.Values
 	MaxAttempts     uint
 	MaxBufSize      int
-	ApiKey          string
+	APIKey          string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -48,8 +48,8 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 // for the request(s).
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
-	if r.ApiKey != "" {
-		header.Set("Authorization", "Bearer "+r.ApiKey)
+	if r.APIKey != "" {
+		header.Set("Authorization", "Bearer "+r.APIKey)
 	}
 	header.Set("X-API-Version", fmt.Sprintf("%v", "1.0.0"))
 	return header
@@ -127,11 +127,11 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
 }
 
-// ApiKeyOption implements the RequestOption interface.
-type ApiKeyOption struct {
-	ApiKey string
+// APIKeyOption implements the RequestOption interface.
+type APIKeyOption struct {
+	APIKey string
 }
 
-func (a *ApiKeyOption) applyRequestOptions(opts *RequestOptions) {
-	opts.ApiKey = a.ApiKey
+func (a *APIKeyOption) applyRequestOptions(opts *RequestOptions) {
+	opts.APIKey = a.APIKey
 }

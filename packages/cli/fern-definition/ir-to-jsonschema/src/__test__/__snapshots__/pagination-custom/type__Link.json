@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "rel": {
+      "type": "string"
+    },
+    "method": {
+      "type": "string"
+    },
+    "href": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "rel",
+    "method",
+    "href"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

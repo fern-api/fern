@@ -7,9 +7,12 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.noAuth.postWithNoAuth(request: .object([
-        "key": .string("value")
-    ]))
+    _ = try await client.endpoints.union.getAndReturnUnion(request: Animal.dog(
+        Dog(
+            name: "name",
+            likesToWoof: true
+        )
+    ))
 }
 
 try await main()

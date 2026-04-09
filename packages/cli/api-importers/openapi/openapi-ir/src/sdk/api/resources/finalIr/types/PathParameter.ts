@@ -11,4 +11,10 @@ export interface PathParameter
     variableReference: string | undefined;
     /** Populated by `x-fern-parameter-name` on a parameter object. */
     parameterNameOverride: string | undefined;
+    /**
+     * A client-side default value populated by `x-fern-default` on a parameter object.
+     * When present, the parameter is optional in the SDK and this value is sent when
+     * the user doesn't provide one. Supports string and boolean literals.
+     */
+    clientDefault: unknown | undefined;
 }

@@ -60,6 +60,10 @@ types:
       optional: optional<boolean>
       env: optional<string>
       schema: optional<Schema>
+      clientDefault:
+        type: optional<unknown>
+        docs: |
+          A client-side default value populated by `x-fern-default` on an `x-fern-global-headers` entry.
 
   IdempotencyHeader:
     properties:
@@ -543,6 +547,12 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
+      clientDefault:
+        type: optional<unknown>
+        docs: |
+          A client-side default value populated by `x-fern-default` on a parameter object.
+          When present, the parameter is optional in the SDK and this value is sent when
+          the user doesn't provide one. Supports string and boolean literals.
 
   QueryParameter:
     extends:
@@ -560,6 +570,12 @@ types:
         type: optional<boolean>
         docs: |
           Whether to explode the parameter. Only set when it differs from the OpenAPI default for the style.
+      clientDefault:
+        type: optional<unknown>
+        docs: |
+          A client-side default value populated by `x-fern-default` on a parameter object.
+          When present, the parameter is optional in the SDK and this value is sent when
+          the user doesn't provide one. Supports string and boolean literals.
 
   Header:
     extends:
@@ -574,6 +590,12 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
+      clientDefault:
+        type: optional<unknown>
+        docs: |
+          A client-side default value populated by `x-fern-default` on a parameter object.
+          When present, the parameter is optional in the SDK and this value is sent when
+          the user doesn't provide one. Supports string and boolean literals.
 
   Request:
     union:
@@ -991,6 +1013,12 @@ types:
           Context for where the discriminator exists. Defaults to "data" for backward compatibility.
           "data" means the discriminator is within the union data itself.
           "protocol" means the discriminator is at the SSE protocol level.
+      defaultDiscriminantValue:
+        type: optional<string>
+        docs: |
+          The discriminant value of the variant to use as the default when the discriminant
+          field is missing from input. Populated when a variant's discriminant property has a
+          default value matching its const value in the OpenAPI spec.
       commonProperties: list<CommonProperty>
       schemas: map<string, Schema>
 

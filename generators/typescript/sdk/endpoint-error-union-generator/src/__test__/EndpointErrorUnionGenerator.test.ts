@@ -2,6 +2,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import {
+    caseConverter,
     casingsGenerator,
     createMinimalIR,
     createMockReference,
@@ -22,7 +23,7 @@ import { GeneratedEndpointErrorUnionImpl } from "../GeneratedEndpointErrorUnionI
 
 const MOCK_PACKAGE_ID = "pkg_test" as unknown as PackageId;
 
-function createMockSdkContext() {
+function createMockFileContext() {
     const project = new Project({ useInMemoryFileSystem: true });
     const sourceFile = project.createSourceFile("test.ts", "");
     return {
@@ -164,7 +165,7 @@ describe("UnknownErrorSingleUnionTypeGenerator", () => {
 
     it("generateForInlineUnion returns content property with Fetcher.Error type", () => {
         const gen = createGenerator();
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         const result = gen.generateForInlineUnion(context);
         expect(getTextOfTsNode(result.typeNode)).toMatchSnapshot();
         expect(result.requestTypeNode).toBeUndefined();
@@ -188,7 +189,7 @@ describe("UnknownErrorSingleUnionTypeGenerator", () => {
 
     it("getNonDiscriminantPropertiesForInterface returns content property", () => {
         const gen = createGenerator();
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         const result = gen.getNonDiscriminantPropertiesForInterface(context);
         expect(result).toHaveLength(1);
         expect(result[0]?.property.name).toContain("content");
@@ -205,7 +206,7 @@ describe("UnknownErrorSingleUnionTypeGenerator", () => {
 
     it("getVisitMethodParameterType returns Fetcher.Error type", () => {
         const gen = createGenerator();
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         const result = gen.getVisitMethodParameterType(context);
         assert(result != null, "expected visit method parameter type");
         expect(getTextOfTsNode(result)).toContain("Fetcher.Error");
@@ -213,7 +214,7 @@ describe("UnknownErrorSingleUnionTypeGenerator", () => {
 
     it("getParametersForBuilder returns single parameter", () => {
         const gen = createGenerator();
-        const context = createMockSdkContext();
+        const context = createMockFileContext();
         const params = gen.getParametersForBuilder(context);
         expect(params).toHaveLength(1);
         assert(params[0] != null, "expected builder parameter");
@@ -307,7 +308,8 @@ describe("ParsedSingleUnionTypeForError", () => {
             noOptionalProperties: false,
             retainOriginalCasing: opts?.retainOriginalCasing ?? false,
             enableInlineTypes: false,
-            generateReadWriteOnlyTypes: false
+            generateReadWriteOnlyTypes: false,
+            caseConverter
         });
     }
 
@@ -411,7 +413,8 @@ describe("EndpointErrorUnionGenerator", () => {
             retainOriginalCasing: false,
             noOptionalProperties: false,
             enableInlineTypes: false,
-            generateReadWriteOnlyTypes: false
+            generateReadWriteOnlyTypes: false,
+            caseConverter
         });
 
         const result = generator.generateEndpointErrorUnion({
@@ -437,7 +440,8 @@ describe("EndpointErrorUnionGenerator", () => {
             retainOriginalCasing: false,
             noOptionalProperties: false,
             enableInlineTypes: false,
-            generateReadWriteOnlyTypes: false
+            generateReadWriteOnlyTypes: false,
+            caseConverter
         });
 
         const result = generator.generateEndpointErrorUnion({
@@ -474,14 +478,15 @@ describe("GeneratedEndpointErrorUnionImpl", () => {
             noOptionalProperties: false,
             retainOriginalCasing: opts?.retainOriginalCasing ?? false,
             enableInlineTypes: false,
-            generateReadWriteOnlyTypes: false
+            generateReadWriteOnlyTypes: false,
+            caseConverter
         });
     }
 
     describe("writeToFile", () => {
         it("writes error union with no errors (empty)", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -497,7 +502,7 @@ describe("GeneratedEndpointErrorUnionImpl", () => {
                 endpointErrors: [createResponseError("NotFound")],
                 discriminationStrategy: FernIr.ErrorDiscriminationStrategy.statusCode()
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -518,7 +523,7 @@ describe("GeneratedEndpointErrorUnionImpl", () => {
                     contentProperty
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -538,7 +543,7 @@ describe("GeneratedEndpointErrorUnionImpl", () => {
                 endpointErrors: [createResponseError("NotFound"), createResponseError("BadRequest")],
                 discriminationStrategy: FernIr.ErrorDiscriminationStrategy.statusCode()
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -554,7 +559,7 @@ describe("GeneratedEndpointErrorUnionImpl", () => {
                 endpointErrors: [createResponseError("NotFound")],
                 includeSerdeLayer: false
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -570,7 +575,7 @@ describe("GeneratedEndpointErrorUnionImpl", () => {
                 endpointErrors: [createResponseError("NotFound")],
                 retainOriginalCasing: true
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -592,7 +597,7 @@ describe("GeneratedEndpointErrorUnionImpl", () => {
                 }),
                 retainOriginalCasing: true
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });

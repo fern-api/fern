@@ -39,6 +39,8 @@ class ApiClient:
 
         client = SeedOauthClientCredentialsDefault(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.nested.api.get_something()
         """
@@ -80,6 +82,8 @@ class AsyncApiClient:
 
         client = AsyncSeedOauthClientCredentialsDefault(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 

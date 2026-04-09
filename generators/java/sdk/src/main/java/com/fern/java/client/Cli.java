@@ -690,7 +690,20 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         context.getCustomConfig().customDependencies().ifPresent(deps -> {
             for (String dep : deps) {
-                dependencies.add(GradleDependency.of(dep));
+                GradleDependency customDep = GradleDependency.of(dep);
+                // Extract group:artifact from the custom dependency coordinate
+                String rawCoordinate = dep.substring(dep.indexOf(" ") + 1);
+                String[] parts = rawCoordinate.split(":");
+                if (parts.length >= 2) {
+                    String groupArtifact = parts[0] + ":" + parts[1] + ":";
+                    // Remove any existing bundled dependency with the same group:artifact
+                    // so the custom dependency version takes precedence
+                    dependencies.removeIf(existing -> {
+                        String existingCoord = existing.coordinate().replace("'", "");
+                        return existingCoord.startsWith(groupArtifact);
+                    });
+                }
+                dependencies.add(customDep);
             }
         });
 

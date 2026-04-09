@@ -8,4 +8,6 @@ export interface GlobalHeader {
     optional: boolean | undefined;
     env: string | undefined;
     schema: FernOpenapiIr.Schema | undefined;
+    /** A client-side default value populated by `x-fern-default` on an `x-fern-global-headers` entry. */
+    clientDefault: unknown | undefined;
 }

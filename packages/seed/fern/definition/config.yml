@@ -37,7 +37,7 @@ types:
           Configuration that will be used for any custom fixture specified by --custom-fixture
       fixtures:
         type: optional<map<string, list<FixtureConfigurations>>>
-      scripts: optional<list<ContainerScriptConfig>>
+      scripts: optional<ScriptsConfiguration>
       allowedFailures:
         type: optional<list<string>>
         docs: |
@@ -155,6 +155,25 @@ types:
     extends: Script
     properties:
       image: string
+
+  ScriptsConfiguration:
+    docs: |
+      Scripts can be specified as either a simple list of container script configs (legacy format),
+      or as an object with separate docker and local script arrays for multi-environment support.
+    discriminated: false
+    union:
+      - list<ContainerScriptConfig>
+      - ScriptsByEnvironment
+
+  ScriptsByEnvironment:
+    docs: Scripts separated by runtime environment (docker/local)
+    properties:
+      docker:
+        docs: Scripts to run in a Docker container
+        type: optional<list<ContainerScriptConfig>>
+      local:
+        docs: Scripts to run locally (without a container)
+        type: optional<list<Script>>
 
   Language:
     enum:

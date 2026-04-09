@@ -3,13 +3,14 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { readdirSync } from "fs";
 import path from "path";
 
 import { loadApisOrThrow } from "../../loadApisOrThrow.js";
-import { generateAndSnapshotIR, generateAndSnapshotIRFromPath } from "./generateAndSnapshotIR.js";
+import { generateAndSnapshotIR, generateAndSnapshotIRFromPath, generateIRFromPath } from "./generateAndSnapshotIR.js";
 
 const IR_DIR = path.join(__dirname, "irs");
 
@@ -174,3 +175,39 @@ it("docs", async () => {
         workspaceName: "docs"
     });
 }, 200_000);
+
+describe("discriminator context inference", () => {
+    const TEST_DEFINITIONS_OPENAPI_DIR = path.join(__dirname, "../../../../../../../test-definitions-openapi");
+    const FIXTURE_DIR = path.join(TEST_DEFINITIONS_OPENAPI_DIR, "fern/apis/discriminator-context");
+
+    it("infers protocol for SSE-shaped unions, data for non-SSE, and respects explicit override", async () => {
+        const ir = await generateIRFromPath({
+            absolutePathToWorkspace: AbsoluteFilePath.of(FIXTURE_DIR),
+            workspaceName: "discriminator-context",
+            audiences: { type: "all" }
+        });
+
+        const unionTypes = new Map<string, { discriminatorContext: string | undefined }>();
+        for (const typeDecl of Object.values(ir.types)) {
+            if (typeDecl.shape.type === "union") {
+                unionTypes.set(getOriginalName(typeDecl.name.name), {
+                    discriminatorContext: typeDecl.shape.discriminatorContext
+                });
+            }
+        }
+
+        // SSE-shaped union: all variants have only event/data/id/retry fields
+        // Should infer discriminatorContext = "protocol"
+        expect(unionTypes.get("SseServerEvent")).toBeDefined();
+        expect(unionTypes.get("SseServerEvent")?.discriminatorContext).toBe("protocol");
+
+        // Non-SSE union: variants have extra fields (name, breed, indoor)
+        // Should default discriminatorContext = "data"
+        expect(unionTypes.get("RegularUnion")).toBeDefined();
+        expect(unionTypes.get("RegularUnion")?.discriminatorContext).toBe("data");
+
+        // Explicit override: x-fern-discriminator-context = "data" even though shape matches SSE
+        expect(unionTypes.get("ExplicitContextUnion")).toBeDefined();
+        expect(unionTypes.get("ExplicitContextUnion")?.discriminatorContext).toBe("data");
+    }, 60_000);
+});

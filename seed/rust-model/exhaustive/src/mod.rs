@@ -6,7 +6,7 @@
 //! ## Type Categories
 //!
 //! - **Request/Response Types**: 9 types for API operations
-//! - **Model Types**: 19 types for data representation
+//! - **Model Types**: 21 types for data representation
 
 pub mod endpoints_pagination_paginated_response;
 pub mod endpoints_put_error;
@@ -28,6 +28,8 @@ pub mod types_object_object_with_unknown_field;
 pub mod types_object_object_with_documented_unknown_type;
 pub mod types_object_documented_unknown_type;
 pub mod types_object_map_of_documented_unknown_type;
+pub mod types_object_object_with_mixed_required_and_optional_fields;
+pub mod types_object_object_with_required_nested_object;
 pub mod types_union_animal;
 pub mod types_union_mixed_type;
 pub mod post_with_object_body;
@@ -57,6 +59,8 @@ pub use types_object_object_with_unknown_field::ObjectWithUnknownField;
 pub use types_object_object_with_documented_unknown_type::ObjectWithDocumentedUnknownType;
 pub use types_object_documented_unknown_type::DocumentedUnknownType;
 pub use types_object_map_of_documented_unknown_type::MapOfDocumentedUnknownType;
+pub use types_object_object_with_mixed_required_and_optional_fields::ObjectWithMixedRequiredAndOptionalFields;
+pub use types_object_object_with_required_nested_object::ObjectWithRequiredNestedObject;
 pub use types_union_animal::Animal;
 pub use types_union_mixed_type::MixedType;
 pub use post_with_object_body::PostWithObjectBody;

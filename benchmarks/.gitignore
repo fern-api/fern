@@ -1,0 +1,5 @@
+# OpenAPI specs are fetched at CI runtime (Square from pinned SHA)
+**/openapi.json
+
+# Benchmark timing results generated during CI runs
+benchmark-results/

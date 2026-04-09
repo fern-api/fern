@@ -75,7 +75,7 @@ func (r *RawClient) Create(
 
 func (r *RawClient) Delete(
 	ctx context.Context,
-	paymentId string,
+	paymentID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -86,7 +86,7 @@ func (r *RawClient) Delete(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/payment/%v",
-		paymentId,
+		paymentID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

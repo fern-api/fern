@@ -7,11 +7,14 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import auth, nested, nested_no_auth, simple
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .auth import GetTokenRequest, RefreshTokenRequest, TokenResponse
     from .client import AsyncSeedInferredAuthImplicit, SeedInferredAuthImplicit
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedInferredAuthImplicit": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "GetTokenRequest": ".auth",
     "RefreshTokenRequest": ".auth",
     "SeedInferredAuthImplicit": ".client",
@@ -47,6 +50,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedInferredAuthImplicit",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "GetTokenRequest",
     "RefreshTokenRequest",
     "SeedInferredAuthImplicit",

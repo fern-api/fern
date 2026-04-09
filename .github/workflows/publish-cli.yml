@@ -27,7 +27,6 @@ env:
   DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-  TURBO_REMOTE_CACHE_TIMEOUT: 10
   TURBO_NO_UPDATE_NOTIFIER: "1"
   TURBO_DAEMON: "false"
 
@@ -81,6 +80,12 @@ jobs:
           git_version="$(./scripts/git-version.sh)"
           echo Publishing version: "${git_version}"
 
+      # npm >= 11.5.1 is required for OIDC trusted publishing (pnpm publish
+      # delegates to npm under the hood). Node 22 ships with npm 10.x.
+      # Two-step upgrade works around Node 22.22.2 regression (npm/cli#9151).
+      - name: Update npm for OIDC publishing
+        run: npm install -g npm@10.9.8 && npm install -g npm@11
+
       - name: Publish Dev CLI
         run: |
           git_version="$(./scripts/git-version.sh)"
@@ -133,6 +138,12 @@ jobs:
         run: |
           pnpm seed:build
 
+      # npm >= 11.5.1 is required for OIDC trusted publishing (pnpm publish
+      # delegates to npm under the hood). Node 22 ships with npm 10.x.
+      # Two-step upgrade works around Node 22.22.2 regression (npm/cli#9151).
+      - name: Update npm for OIDC publishing
+        run: npm install -g npm@10.9.8 && npm install -g npm@11
+
       - name: Publish + Register CLI
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
@@ -177,6 +188,12 @@ jobs:
       - name: Build Seed
         run: |
           pnpm seed:build
+
+      # npm >= 11.5.1 is required for OIDC trusted publishing (pnpm publish
+      # delegates to npm under the hood). Node 22 ships with npm 10.x.
+      # Two-step upgrade works around Node 22.22.2 regression (npm/cli#9151).
+      - name: Update npm for OIDC publishing
+        run: npm install -g npm@10.9.8 && npm install -g npm@11
 
       - name: Publish Dev CLI
         run: |

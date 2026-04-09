@@ -4,7 +4,6 @@ import (
     context "context"
 
     client "github.com/exhaustive/fern/client"
-    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
 )
 
@@ -17,10 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.PutRequest{
-        Id: "id",
-    }
-    client.Endpoints.Put.Add(
+    request := int64(1000000)
+    client.Endpoints.Primitive.GetAndReturnLong(
         context.TODO(),
         request,
     )

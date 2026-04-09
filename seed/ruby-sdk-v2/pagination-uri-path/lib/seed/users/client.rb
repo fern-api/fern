@@ -18,7 +18,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Seed::Users::Types::ListUsersUriPaginationResponse]
+      # @return [Seed::Users::Types::ListUsersURIPaginationResponse]
       def list_with_uri_pagination(request_options: {}, **params)
         Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
@@ -34,7 +34,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Users::Types::ListUsersUriPaginationResponse.load(response.body)
+          Seed::Users::Types::ListUsersURIPaginationResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

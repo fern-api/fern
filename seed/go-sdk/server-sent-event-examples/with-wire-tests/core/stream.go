@@ -568,8 +568,8 @@ func (s *SseStreamReader) injectDiscriminator(data []byte, value string) []byte 
 	if openIdx < 0 {
 		return data
 	}
-	// Skip injection if the key already exists in the data.
-	if bytes.Contains(data, s.discriminatorKeyCheck) || bytes.Contains(data, s.discriminatorKeyCheckSp) {
+	// Skip injection if the key already exists at the top level of the JSON object.
+	if jsonContainsTopLevelKey(data[openIdx:], s.discriminatorKeyCheck, s.discriminatorKeyCheckSp) {
 		return data
 	}
 	// Build the injected key-value: "field":"value"
@@ -591,6 +591,53 @@ func (s *SseStreamReader) injectDiscriminator(data []byte, value string) []byte 
 		result = append(result, after...)
 	}
 	return result
+}
+
+// jsonContainsTopLevelKey reports whether the JSON object in data contains the
+// given key at the top level (depth 1). It avoids false positives from keys
+// with the same name nested inside child objects or arrays.
+//
+// data must start at the opening '{' of the JSON object.
+// keyCheck and keyCheckSp are the precomputed patterns "key": and "key" :
+func jsonContainsTopLevelKey(data []byte, keyCheck []byte, keyCheckSp []byte) bool {
+	depth := 0
+	inString := false
+	escaped := false
+	for i := 0; i < len(data); i++ {
+		b := data[i]
+		if escaped {
+			escaped = false
+			continue
+		}
+		if b == '\\' && inString {
+			escaped = true
+			continue
+		}
+		if b == '"' {
+			if !inString && depth == 1 {
+				// At top-level depth, starting a new string — check for key match.
+				remaining := data[i:]
+				if bytes.HasPrefix(remaining, keyCheck) || bytes.HasPrefix(remaining, keyCheckSp) {
+					return true
+				}
+			}
+			inString = !inString
+			continue
+		}
+		if inString {
+			continue
+		}
+		switch b {
+		case '{', '[':
+			depth++
+		case '}', ']':
+			depth--
+			if depth <= 0 {
+				return false
+			}
+		}
+	}
+	return false
 }
 
 type SseEvent struct {

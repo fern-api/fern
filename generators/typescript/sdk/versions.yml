@@ -1,4 +1,166 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.63.3
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union variant matching in dynamic snippets selecting
+        incorrect variants when errors are added during conversion. The matcher
+        now checks whether errors were added (via `errors.size() > errorsBefore`)
+        alongside the existing `isNop` check, preventing empty objects from being
+        returned for union fields like `options` in generated code snippets.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
+
+- version: 3.63.2
+  changelogEntry:
+    - summary: |
+        Support alphabetical body parameter sorting in webhook signature verification.
+        When the IR specifies `bodySort: ALPHABETICAL` on the payload format, the generated
+        `verifySignature` method now accepts `string | Record<string, string>` for the
+        `requestBody` parameter. When a `Record` is provided, keys are sorted alphabetically
+        and concatenated as key-value pairs before signing. This is required by providers
+        whose signing algorithm sorts POST body parameters alphabetically.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 66
+
+- version: 3.63.1
+  changelogEntry:
+    - summary: |
+        Fix wire test expected response mismatch when `noSerdeLayer` is enabled and
+        the IR example shape contains fewer properties than the JSON example (e.g. for
+        inline types). The mock server sends the full raw JSON body, but the expected
+        assertion was built from the typed example which only included a subset of
+        properties. The test generator now uses the raw response body as the expected
+        value when `noSerdeLayer` is enabled, matching the SDK's pass-through behavior.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 66
+
+- version: 3.63.0
+  changelogEntry:
+    - summary: |
+        Support omitting username or password from basic auth when configured via
+        `usernameOmit` or `passwordOmit` in the IR. Omitted fields are removed from
+        the SDK's public API and treated as empty strings internally (e.g., omitting
+        password encodes `username:`, omitting username encodes `:password`). When
+        both are omitted, the Authorization header is skipped entirely.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 66
+
+- version: 3.62.1
+  changelogEntry:
+    - summary: |
+        Fix incorrect import paths in generated test files when using a custom
+        package path (e.g. `src/management`). Multi-line imports in test files
+        like `makeRequest.test.ts` were emitting `../../../src/management/core/...`
+        instead of `../../../core/...`, causing the import to resolve to a
+        nonexistent path.
+      type: fix
+  createdAt: "2026-04-02"
+  irVersion: 66
+
+- version: 3.62.0
+  changelogEntry:
+    - summary: |
+        Add `maxRetries` custom config option to override the default maximum
+        number of retries for failed requests. The default remains 2 when not
+        specified.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 66
+
+- version: 3.61.1
+  changelogEntry:
+    - summary: |
+        Propagate the original error as `cause` on the SDK error class using the
+        ES2022 `Error.cause` standard. When a custom fetcher throws (e.g. network
+        failure, DNS issues, or custom logic), the thrown error is now preserved as
+        `error.cause` on the resulting SDK error, giving consumers access to the
+        full stack trace and any custom properties from the original error.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 66
+- version: 3.61.0-rc.0
+  changelogEntry:
+    - summary: |
+        Upgrade to IR v66 which reduces the IR size by a lot and increases performance.
+      type: feat
+  createdAt: "2026-03-31"
+  irVersion: 66
+
+- version: 3.60.9
+  changelogEntry:
+    - summary: |
+        Fix wire test generator emitting pagination assertions (hasNextPage, getNextPage)
+        for endpoints whose results property type is a named alias to a list rather than
+        a direct list type. The client generator does not produce a Page object in this case,
+        so the test was calling methods that don't exist on the response. The test generator
+        now checks that the results property value type is a concrete list (or optional/nullable
+        wrapping a list) before emitting Page-specific assertions, matching the client
+        generator's behavior.
+      type: fix
+  createdAt: "2026-04-02"
+  irVersion: 65
+
+- version: 3.60.8
+  changelogEntry:
+    - summary: |
+        Sanitize non-primitive path parameter example values at test-generation time.
+        When the IR contains object-typed path params (e.g. from `unknown` types), the
+        test generator now coerces them to the parameter's original name string and
+        rebuilds the mock URL accordingly. This prevents `[object Object]` in generated
+        wire test URLs regardless of the CLI version used to produce the IR.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+- version: 3.60.7
+  changelogEntry:
+    - summary: |
+        Fix auto-generated error test examples producing object path parameter values
+        (e.g. `{ key: "value" }`) instead of strings. Path parameters are always scalar
+        URL segments, so `generatePathParameterExamples` now coerces non-primitive values
+        to a string fallback derived from the parameter name. This prevents `[object Object]`
+        from appearing in generated wire test URLs and removes the `getMockUrlForExample`
+        workaround added in 3.60.5.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+- version: 3.60.6
+  changelogEntry:
+    - summary: |
+        Fix wire test generator asserting `hasNextPage().toBe(true)` for offset-paginated
+        endpoints when the example response has `has_more: false` (or equivalent
+        `hasNextPage` property set to `false`). The generator now checks the actual value
+        of the has-next-page property in the mock response and skips the `hasNextPage()`
+        and `getNextPage()` assertions when the example indicates there is no next page,
+        matching the SDK's runtime behavior.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+- version: 3.60.5
+  changelogEntry:
+    - summary: |
+        Fix wire test mock URL encoding mismatch for path parameters with non-primitive
+        example values. The IR's `example.url` uses `JSON.stringify` for object path
+        parameter values (e.g. `%7B%22key%22%3A%22value%22%7D`), but the SDK's
+        `encodePathParam` uses `String()` (producing `%5Bobject%20Object%5D`). The test
+        generator now reconstructs mock URLs using the same encoding as `encodePathParam`,
+        ensuring MSW intercepts requests correctly in auto-generated error test cases.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+- version: 3.60.4
+  changelogEntry:
+    - summary: |
+        Redirect biome/lint/formatter output to a separate log file (`/tmp/fern-*.log`)
+        inside the Docker container instead of piping to the main generation log.
+        This reduces noise in the primary output while still preserving the tool
+        output for debugging.
+      type: chore
+  createdAt: "2026-03-31"
+  irVersion: 65
 - version: 3.60.3
   changelogEntry:
     - summary: |
@@ -6,7 +168,6 @@
       type: chore
   createdAt: "2026-03-30"
   irVersion: 65
-
 - version: 3.60.2
   changelogEntry:
     - summary: |

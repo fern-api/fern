@@ -32,6 +32,8 @@ use Seed\Users\Requests\ListWithGlobalConfigRequest;
 use Seed\Users\Types\UsernameContainer;
 use Seed\Users\Requests\ListUsersOptionalDataRequest;
 use Seed\Users\Types\ListUsersOptionalDataPaginationResponse;
+use Seed\Users\Requests\ListUsersAliasedDataRequest;
+use Seed\Users\Types\ListUsersAliasedDataPaginationResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -504,6 +506,33 @@ class UsersClient
             getItems: fn (?ListUsersOptionalDataPaginationResponse $response) => $response?->data ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
+        );
+    }
+
+    /**
+     * @param ListUsersAliasedDataRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithAliasedData(ListUsersAliasedDataRequest $request = new ListUsersAliasedDataRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            request: $request,
+            getNextPage: fn (ListUsersAliasedDataRequest $request) => $this->_listWithAliasedData($request, $options),
+            setCursor: function (ListUsersAliasedDataRequest $request, string $cursor) {
+                $request->startingAfter = $cursor;
+            },
+            /* @phpstan-ignore-next-line */
+            getNextCursor: fn (?ListUsersAliasedDataPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?ListUsersAliasedDataPaginationResponse $response) => $response?->data ?? [],
         );
     }
 
@@ -1290,6 +1319,63 @@ class UsersClient
                     return null;
                 }
                 return ListUsersOptionalDataPaginationResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param ListUsersAliasedDataRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?ListUsersAliasedDataPaginationResponse
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    private function _listWithAliasedData(ListUsersAliasedDataRequest $request = new ListUsersAliasedDataRequest(), ?array $options = null): ?ListUsersAliasedDataPaginationResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        if ($request->page != null) {
+            $query['page'] = $request->page;
+        }
+        if ($request->perPage != null) {
+            $query['per_page'] = $request->perPage;
+        }
+        if ($request->startingAfter != null) {
+            $query['starting_after'] = $request->startingAfter;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users/aliased-data",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return ListUsersAliasedDataPaginationResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

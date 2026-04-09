@@ -8,7 +8,7 @@ import (
 )
 
 // The unique identifier for a File in the database
-type FileId = string
+type FileID = string
 
 type UploadFileRequest struct {
 	File io.Reader `json:"-" url:"-"`

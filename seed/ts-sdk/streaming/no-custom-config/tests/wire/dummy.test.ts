@@ -22,9 +22,6 @@ describe("DummyClient", () => {
         const response = await client.dummy.generate({
             num_events: 5,
         });
-        expect(response).toEqual({
-            id: "id",
-            name: "name",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });
