@@ -158,7 +158,7 @@ impl CodeExecutionUpdate {
         }
     }
 
-    pub fn graded_v_2(
+    pub fn graded_v2(
         submission_id: SubmissionId,
         test_cases: HashMap<TestCaseId, TestCaseGrade>,
     ) -> Self {

@@ -12,8 +12,8 @@ async fn main() {
         .regular_patch(
             &"id".to_string(),
             &RegularPatchRequest {
-                field_1: Some("field1".to_string()),
-                field_2: Some(1),
+                field1: Some("field1".to_string()),
+                field2: Some(1),
                 ..Default::default()
             },
             None,

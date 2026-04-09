@@ -9,7 +9,7 @@ async fn main() {
     };
     let client = TraceClient::new(config).expect("Failed to build client");
     client
-        .v_2
+        .v2
         .problem
         .get_latest_problem(&ProblemId("problemId".to_string()), None)
         .await;
