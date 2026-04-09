@@ -1,3 +1,5 @@
+import { execSync } from "child_process";
+
 export interface CISource {
     type: "github" | "gitlab" | "bitbucket";
     repo?: string;
@@ -14,7 +16,7 @@ export interface CISource {
  * Returns undefined when not running in a recognized CI environment.
  */
 export function detectCISource(): CISource | undefined {
-    const deploySource = nonEmpty(process.env.FERN_DEPLOY_SOURCE);
+    const deploySource = detectDeploySource();
 
     if (process.env.GITHUB_ACTIONS === "true") {
         const repo = process.env.GITHUB_REPOSITORY;
@@ -59,6 +61,23 @@ export function detectCISource(): CISource | undefined {
             branch: process.env.BITBUCKET_BRANCH,
             ...(deploySource != null && { deploySource })
         };
+    }
+    return undefined;
+}
+
+/**
+ * Detects the deploy source by inspecting the current git commit message.
+ * If the commit subject contains `[source:postman]`, returns `"postman"`.
+ * Returns undefined when the marker is absent or git is unavailable.
+ */
+function detectDeploySource(): string | undefined {
+    try {
+        const subject = execSync("git log -1 --format=%s", { encoding: "utf-8", timeout: 5000 }).trim();
+        if (subject.includes("[source:postman]")) {
+            return "postman";
+        }
+    } catch {
+        // git not available or not in a repo — skip silently
     }
     return undefined;
 }
