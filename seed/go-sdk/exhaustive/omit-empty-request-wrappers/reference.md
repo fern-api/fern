@@ -2329,6 +2329,64 @@ client.Endpoints.Params.UploadWithPath(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Params.GetWithBooleanPath(Param) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with boolean path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Endpoints.Params.GetWithBooleanPath(
+        context.TODO(),
+        true,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `bool` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Params.GetWithPathAndErrors(Param) -> string</code></summary>
 <dl>
 <dd>
