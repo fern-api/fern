@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.31.0
+  changelogEntry:
+    - summary: |
+        Generate a `Version.swift` source file containing the SDK version
+        string. This embeds the version in the generated source code for
+        consistency with other generators and fixes auto-versioning for
+        Swift SDKs.
+      type: feat
+  createdAt: "2026-04-07"
+  irVersion: 61
+
 - version: 0.30.0
   changelogEntry:
     - summary: |

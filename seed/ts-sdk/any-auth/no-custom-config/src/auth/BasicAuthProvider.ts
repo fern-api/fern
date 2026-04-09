@@ -31,17 +31,12 @@ export class BasicAuthProvider implements core.AuthProvider {
         const username =
             (await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.[USERNAME_PARAM])) ?? process.env?.[ENV_USERNAME];
         if (username == null) {
-            throw new errors.SeedAnyAuthError({
-                message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
-            });
+            throw new errors.SeedAnyAuthError({ message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME });
         }
-
         const password =
             (await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.[PASSWORD_PARAM])) ?? process.env?.[ENV_PASSWORD];
         if (password == null) {
-            throw new errors.SeedAnyAuthError({
-                message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD,
-            });
+            throw new errors.SeedAnyAuthError({ message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD });
         }
 
         const authHeader = core.BasicAuth.toAuthorizationHeader({

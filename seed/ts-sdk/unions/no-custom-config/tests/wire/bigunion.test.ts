@@ -19,13 +19,7 @@ describe("BigunionClient", () => {
         server.mockEndpoint().get("/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.bigunion.get("id");
-        expect(response).toEqual({
-            type: "normalSweet",
-            id: "id",
-            "created-at": "2024-01-15T09:30:00Z",
-            "archived-at": "2024-01-15T09:30:00Z",
-            value: "value",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("update", async () => {
@@ -56,7 +50,7 @@ describe("BigunionClient", () => {
             "archived-at": "2024-01-15T09:30:00Z",
             value: "value",
         });
-        expect(response).toEqual(true);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("update-many", async () => {
@@ -105,8 +99,6 @@ describe("BigunionClient", () => {
                 value: "value",
             },
         ]);
-        expect(response).toEqual({
-            string: true,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

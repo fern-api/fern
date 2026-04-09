@@ -55,7 +55,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private readonly omitUndefined: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
-    private readonly caseConverter: CaseConverter;
+    private readonly case: CaseConverter;
 
     constructor({
         ir,
@@ -85,7 +85,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         this.omitUndefined = omitUndefined;
         this.formDataSupport = formDataSupport;
         this.parameterNaming = parameterNaming;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
         if (
             this.inlineFileProperties ||
             requestBody.properties.some((property) => property.type === "bodyProperty") ||
@@ -102,7 +102,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                 service,
                 endpoint,
                 sdkRequest: this.endpoint.sdkRequest,
-                caseConverter: this.caseConverter
+                caseConverter: this.case
             });
         }
     }

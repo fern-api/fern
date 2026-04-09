@@ -13,8 +13,8 @@ public class Example38
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAndErrorsAsync(
-            "param"
+        await client.Endpoints.Params.GetWithBooleanPathAsync(
+            true
         );
     }
 

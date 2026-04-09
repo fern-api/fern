@@ -359,6 +359,7 @@
               },
               "name": "testChannel_sendMessage",
               "typeId": "testChannel_sendMessage",
+              "displayName": "sendMessage",
               "inline": false,
               "type": "named"
             },
@@ -480,6 +481,7 @@
               },
               "name": "testChannel2_sendMessage",
               "typeId": "testChannel2_sendMessage",
+              "displayName": "sendMessage",
               "inline": false,
               "type": "named"
             },

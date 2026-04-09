@@ -1,3 +1,4 @@
+export * from "./ListUsersAliasedDataPaginationResponse.js";
 export * from "./ListUsersExtendedOptionalListResponse.js";
 export * from "./ListUsersExtendedResponse.js";
 export * from "./ListUsersMixedTypePaginationResponse.js";
@@ -8,6 +9,7 @@ export * from "./NextPage.js";
 export * from "./Order.js";
 export * from "./Page.js";
 export * from "./User.js";
+export * from "./UserList.js";
 export * from "./UserListContainer.js";
 export * from "./UsernameContainer.js";
 export * from "./UserOptionalListContainer.js";

@@ -3,8 +3,8 @@
 module Seed
   module Commons
     module Types
-      module ProblemId
-        # ProblemId is an alias for String
+      module ProblemID
+        # ProblemID is an alias for String
 
         # @option str [String]
         #

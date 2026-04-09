@@ -2,8 +2,8 @@
 
 module Seed
   module Types
-    module FileId
-      # FileId is an alias for String
+    module FileID
+      # FileID is an alias for String
 
       # @option str [String]
       #

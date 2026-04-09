@@ -14,7 +14,7 @@
 //!         ..Default::default()
 //!     };
 //!     let client = TraceClient::new(config).expect("Failed to build client");
-//!     client.v_2.test(None).await;
+//!     client.v2.test(None).await;
 //! }
 //! ```
 //!

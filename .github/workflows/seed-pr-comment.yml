@@ -61,7 +61,6 @@ jobs:
             - [ ] Swift
             - [ ] Rust
             - [ ] OpenAPI
-            - [ ] Postman
 
             ---
             **How to use:** Click the ⋯ menu above → "Edit" → check the boxes you want → click "Update comment". Tests will run automatically and snapshots will be committed to this PR.`;
@@ -113,9 +112,9 @@ jobs:
 
             // Language to generators mapping
             const languageMap = {
-              'Python': ['python-sdk', 'pydantic', 'pydantic-v2', 'fastapi'],
-              'TypeScript': ['ts-sdk', 'ts-express'],
-              'Java': ['java-sdk', 'java-model', 'java-spring'],
+              'Python': ['python-sdk', 'pydantic', 'pydantic-v2'],
+              'TypeScript': ['ts-sdk'],
+              'Java': ['java-sdk', 'java-model'],
               'Go': ['go-sdk', 'go-model'],
               'Ruby': ['ruby-sdk-v2'],
               'C#': ['csharp-sdk', 'csharp-model'],
@@ -123,7 +122,6 @@ jobs:
               'Swift': ['swift-sdk'],
               'Rust': ['rust-sdk', 'rust-model'],
               'OpenAPI': ['openapi'],
-              'Postman': ['postman']
             };
 
             // Generator to path mapping
@@ -131,11 +129,8 @@ jobs:
               'python-sdk': 'generators/python',
               'pydantic': 'generators/python',
               'pydantic-v2': 'generators/python-v2',
-              'fastapi': 'generators/python',
               'ts-sdk': 'generators/typescript',
-              'ts-express': 'generators/typescript',
               'java-sdk': 'generators/java',
-              'java-spring': 'generators/java',
               'java-model': 'generators/java',
               'go-sdk': 'generators/go',
               'go-model': 'generators/go',
@@ -148,7 +143,6 @@ jobs:
               'rust-sdk': 'generators/rust',
               'rust-model': 'generators/rust',
               'openapi': 'generators/openapi',
-              'postman': 'generators/postman'
             };
 
             // Parse checked languages

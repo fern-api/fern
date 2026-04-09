@@ -72,6 +72,7 @@ func TestEndpointsContainerGetAndReturnListOfPrimitivesWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := []string{
 		"string",
@@ -98,6 +99,7 @@ func TestEndpointsContainerGetAndReturnListOfObjectsWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := []*types.ObjectWithRequiredField{
 		&types.ObjectWithRequiredField{
@@ -128,6 +130,7 @@ func TestEndpointsContainerGetAndReturnSetOfPrimitivesWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := []string{
 		"string",
@@ -153,6 +156,7 @@ func TestEndpointsContainerGetAndReturnSetOfObjectsWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := []*types.ObjectWithRequiredField{
 		&types.ObjectWithRequiredField{
@@ -180,6 +184,7 @@ func TestEndpointsContainerGetAndReturnMapPrimToPrimWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := map[string]string{
 		"string": "string",
@@ -205,6 +210,7 @@ func TestEndpointsContainerGetAndReturnMapOfPrimToObjectWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := map[string]*types.ObjectWithRequiredField{
 		"string": &types.ObjectWithRequiredField{
@@ -232,6 +238,7 @@ func TestEndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnionWithWireMo
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := map[string]*types.MixedType{
 		"string": &types.MixedType{
@@ -259,6 +266,7 @@ func TestEndpointsContainerGetAndReturnOptionalWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithRequiredField{
 		FieldString: "string",

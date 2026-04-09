@@ -47,7 +47,7 @@ export class SdkInlinedRequestBodyDeclarationReferencer extends AbstractSdkClien
         if (name.endpoint.requestBody?.type !== "inlinedRequestBody") {
             throw new Error("Cannot get exported name for inlined request, because endpoint request is not inlined");
         }
-        return this.caseConverter.pascalUnsafe(name.endpoint.requestBody.name);
+        return this.case.pascalUnsafe(name.endpoint.requestBody.name);
     }
 
     public getReferenceToInlinedRequestBody(

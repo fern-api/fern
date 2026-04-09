@@ -106,7 +106,7 @@ func (s *StreamRequest) String() string {
 type Event struct {
 	Data  string  `json:"data" url:"data"`
 	Event *string `json:"event,omitempty" url:"event,omitempty"`
-	Id    *string `json:"id,omitempty" url:"id,omitempty"`
+	ID    *string `json:"id,omitempty" url:"id,omitempty"`
 	Retry *int    `json:"retry,omitempty" url:"retry,omitempty"`
 
 	extraProperties map[string]any
@@ -127,11 +127,11 @@ func (e *Event) GetEvent() *string {
 	return e.Event
 }
 
-func (e *Event) GetId() *string {
+func (e *Event) GetID() *string {
 	if e == nil {
 		return nil
 	}
-	return e.Id
+	return e.ID
 }
 
 func (e *Event) GetRetry() *int {
@@ -256,7 +256,7 @@ func (s *StatusPayload) String() string {
 }
 
 type ObjectPayloadWithEventField struct {
-	Id   string `json:"id" url:"id"`
+	ID   string `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 	// An event type field inside the data payload that collides with the SSE envelope's event field used for discrimination.
 	Event string `json:"event" url:"event"`
@@ -265,11 +265,11 @@ type ObjectPayloadWithEventField struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *ObjectPayloadWithEventField) GetId() string {
+func (o *ObjectPayloadWithEventField) GetID() string {
 	if o == nil {
 		return ""
 	}
-	return o.Id
+	return o.ID
 }
 
 func (o *ObjectPayloadWithEventField) GetName() string {
@@ -421,7 +421,7 @@ func (e EntityEventPayloadEventType) Ptr() *EntityEventPayloadEventType {
 }
 
 type EntityEventPayload struct {
-	EntityId    *string                      `json:"entityId,omitempty" url:"entityId,omitempty"`
+	EntityID    *string                      `json:"entityId,omitempty" url:"entityId,omitempty"`
 	EventType   *EntityEventPayloadEventType `json:"eventType,omitempty" url:"eventType,omitempty"`
 	UpdatedTime *time.Time                   `json:"updatedTime,omitempty" url:"updatedTime,omitempty"`
 
@@ -429,11 +429,11 @@ type EntityEventPayload struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EntityEventPayload) GetEntityId() *string {
+func (e *EntityEventPayload) GetEntityID() *string {
 	if e == nil {
 		return nil
 	}
-	return e.EntityId
+	return e.EntityID
 }
 
 func (e *EntityEventPayload) GetEventType() *EntityEventPayloadEventType {
@@ -821,7 +821,7 @@ func (d *DataContextHeartbeat) String() string {
 }
 
 type DataContextEntityEvent struct {
-	EntityId    *string                      `json:"entityId,omitempty" url:"entityId,omitempty"`
+	EntityID    *string                      `json:"entityId,omitempty" url:"entityId,omitempty"`
 	EventType   *EntityEventPayloadEventType `json:"eventType,omitempty" url:"eventType,omitempty"`
 	UpdatedTime *time.Time                   `json:"updatedTime,omitempty" url:"updatedTime,omitempty"`
 
@@ -829,11 +829,11 @@ type DataContextEntityEvent struct {
 	rawJSON         json.RawMessage
 }
 
-func (d *DataContextEntityEvent) GetEntityId() *string {
+func (d *DataContextEntityEvent) GetEntityID() *string {
 	if d == nil {
 		return nil
 	}
-	return d.EntityId
+	return d.EntityID
 }
 
 func (d *DataContextEntityEvent) GetEventType() *EntityEventPayloadEventType {

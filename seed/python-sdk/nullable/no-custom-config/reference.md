@@ -113,7 +113,7 @@ client.nullable.get_users(
 
 ```python
 from seed import SeedNullable
-from seed.nullable import Metadata
+from seed.nullable import Metadata, Status_Active
 import datetime
 
 client = SeedNullable(
@@ -131,9 +131,7 @@ client.nullable.create_user(
         updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         avatar="avatar",
         activated=True,
-        status={
-            "type": "active"
-        },
+        status=Status_Active(),
         values={
             "values": "values"
         },

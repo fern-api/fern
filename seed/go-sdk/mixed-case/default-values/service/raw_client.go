@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) GetResource(
 	ctx context.Context,
-	resourceId string,
+	resourceID string,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.Resource], error) {
 	options := core.NewRequestOptions(opts...)
@@ -44,7 +44,7 @@ func (r *RawClient) GetResource(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/resource/%v",
-		resourceId,
+		resourceID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

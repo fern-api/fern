@@ -1,9 +1,11 @@
+import { getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
+
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
@@ -611,26 +613,76 @@ export class WireTestGenerator {
         endpoint: FernIr.HttpEndpoint;
         snippet: string;
     }): go.CodeBlock {
-        // Generate the client constructor directly with WireMockBaseURL instead of parsing from snippet
-        // The snippet uses the original constructor args (e.g., WithToken), but we need WithBaseURL
+        // Generate the client constructor with WireMockBaseURL and auth options matching the WireMock matchers.
         return go.codeblock((writer) => {
             writer.write("client := ");
+            const arguments_: go.AstNode[] = [
+                go.invokeFunc({
+                    func: go.typeReference({
+                        name: "WithBaseURL",
+                        importPath: this.context.getOptionImportPath()
+                    }),
+                    arguments_: [go.codeblock("WireMockBaseURL")],
+                    multiline: false
+                })
+            ];
+            // Add auth options when the endpoint requires authentication, so that the
+            // request matches the WireMock stub's header matchers.
+            if (endpoint.auth) {
+                for (const scheme of this.context.ir.auth.schemes) {
+                    switch (scheme.type) {
+                        case "bearer":
+                            arguments_.push(
+                                go.invokeFunc({
+                                    func: go.typeReference({
+                                        name: "WithToken",
+                                        importPath: this.context.getOptionImportPath()
+                                    }),
+                                    arguments_: [go.codeblock('"test-token"')],
+                                    multiline: false
+                                })
+                            );
+                            break;
+                        case "basic":
+                            arguments_.push(
+                                go.invokeFunc({
+                                    func: go.typeReference({
+                                        name: "WithBasicAuth",
+                                        importPath: this.context.getOptionImportPath()
+                                    }),
+                                    arguments_: [go.codeblock('"test-username"'), go.codeblock('"test-password"')],
+                                    multiline: false
+                                })
+                            );
+                            break;
+                        case "header": {
+                            const fieldName = scheme.name
+                                ? this.context.caseConverter.pascalUnsafe(getNameFromWireValue(scheme.name))
+                                : undefined;
+                            if (fieldName) {
+                                arguments_.push(
+                                    go.invokeFunc({
+                                        func: go.typeReference({
+                                            name: `With${fieldName}`,
+                                            importPath: this.context.getOptionImportPath()
+                                        }),
+                                        arguments_: [go.codeblock('"test-value"')],
+                                        multiline: false
+                                    })
+                                );
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
             writer.writeNode(
                 go.invokeFunc({
                     func: go.typeReference({
                         name: this.context.getClientConstructorName(),
                         importPath: this.context.getRootClientImportPath()
                     }),
-                    arguments_: [
-                        go.invokeFunc({
-                            func: go.typeReference({
-                                name: "WithBaseURL",
-                                importPath: this.context.getOptionImportPath()
-                            }),
-                            arguments_: [go.codeblock("WireMockBaseURL")],
-                            multiline: false
-                        })
-                    ],
+                    arguments_,
                     multiline: true
                 })
             );
@@ -768,7 +820,8 @@ export class WireTestGenerator {
         for (const qp of endpoint.queryParameters) {
             const primitive = this.context.maybePrimitive(qp.valueType);
             if (primitive === FernIr.PrimitiveTypeV1.DateTime) {
-                datetimeQueryParams.add(qp.name.wireValue);
+                const qpWireValue = getWireValue(qp.name);
+                datetimeQueryParams.add(qpWireValue);
             }
         }
 
@@ -930,7 +983,10 @@ export class WireTestGenerator {
     }
 
     private getFormattedServiceName(service: FernIr.HttpService): string {
-        return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
+        return (
+            service.name?.fernFilepath?.allParts?.map((part) => this.context.caseConverter.snakeSafe(part)).join("_") ||
+            "root"
+        );
     }
 
     /**

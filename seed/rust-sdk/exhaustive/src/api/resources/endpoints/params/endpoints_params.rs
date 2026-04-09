@@ -253,6 +253,31 @@ impl ParamsClient {
             .await
     }
 
+    /// GET with boolean path param
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn get_with_boolean_path(
+        &self,
+        param: bool,
+        options: Option<RequestOptions>,
+    ) -> Result<String, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::GET,
+                &format!("/params/path-bool/{}", param),
+                None,
+                None,
+                options,
+            )
+            .await
+    }
+
     /// GET with path param that can throw errors
     ///
     /// # Arguments

@@ -479,6 +479,7 @@
                   "name": "CompletionChunk",
                   "typeId": "CompletionChunk",
                   "inline": false,
+                  "displayName": "CompletionChunk",
                   "type": "named"
                 },
                 "type": "json"
@@ -526,6 +527,7 @@
                       "name": "CompletionChunk",
                       "typeId": "CompletionChunk",
                       "inline": false,
+                      "displayName": "CompletionChunk",
                       "type": "named"
                     },
                     "type": "json"
@@ -870,6 +872,7 @@
                   "name": "Completion",
                   "typeId": "Completion",
                   "inline": false,
+                  "displayName": "Completion",
                   "type": "named"
                 },
                 "docs": "",
@@ -917,6 +920,7 @@
                       "name": "Completion",
                       "typeId": "Completion",
                       "inline": false,
+                      "displayName": "Completion",
                       "type": "named"
                     },
                     "docs": "",
@@ -1143,6 +1147,7 @@
               "name": "CompletionRequest",
               "typeId": "CompletionRequest",
               "inline": false,
+              "displayName": "CompletionRequest",
               "type": "named"
             },
             "v2Examples": {
@@ -1168,6 +1173,7 @@
                   "name": "CompletionRequest",
                   "typeId": "CompletionRequest",
                   "inline": false,
+                  "displayName": "CompletionRequest",
                   "type": "named"
                 },
                 "v2Examples": {
@@ -1195,6 +1201,7 @@
                   "name": "Completion",
                   "typeId": "Completion",
                   "inline": false,
+                  "displayName": "Completion",
                   "type": "named"
                 },
                 "docs": "Success",
@@ -1256,6 +1263,7 @@
                       "name": "Completion",
                       "typeId": "Completion",
                       "inline": false,
+                      "displayName": "Completion",
                       "type": "named"
                     },
                     "docs": "Success",

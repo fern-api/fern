@@ -11,7 +11,7 @@ import (
 
 type DocumentMetadata struct {
 	Author *string `json:"author,omitempty" url:"author,omitempty"`
-	Id     *int    `json:"id,omitempty" url:"id,omitempty"`
+	ID     *int    `json:"id,omitempty" url:"id,omitempty"`
 	Tags   []any   `json:"tags,omitempty" url:"tags,omitempty"`
 	Title  *string `json:"title,omitempty" url:"title,omitempty"`
 
@@ -26,11 +26,11 @@ func (d *DocumentMetadata) GetAuthor() *string {
 	return d.Author
 }
 
-func (d *DocumentMetadata) GetId() *int {
+func (d *DocumentMetadata) GetID() *int {
 	if d == nil {
 		return nil
 	}
-	return d.Id
+	return d.ID
 }
 
 func (d *DocumentMetadata) GetTags() []any {
@@ -85,18 +85,18 @@ func (d *DocumentMetadata) String() string {
 }
 
 type DocumentUploadResult struct {
-	FileId *string `json:"fileId,omitempty" url:"fileId,omitempty"`
+	FileID *string `json:"fileId,omitempty" url:"fileId,omitempty"`
 	Status *string `json:"status,omitempty" url:"status,omitempty"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (d *DocumentUploadResult) GetFileId() *string {
+func (d *DocumentUploadResult) GetFileID() *string {
 	if d == nil {
 		return nil
 	}
-	return d.FileId
+	return d.FileID
 }
 
 func (d *DocumentUploadResult) GetStatus() *string {

@@ -11,8 +11,8 @@ import com.seed.pagination.core.SeedPaginationApiException;
 import com.seed.pagination.core.SeedPaginationException;
 import com.seed.pagination.core.SeedPaginationHttpResponse;
 import com.seed.pagination.core.pagination.FernCustomPaginator;
-import com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;
-import com.seed.pagination.types.UsernameCursor;
+import com.seed.pagination.resources.users.requests.ListWithCustomPagerRequest;
+import com.seed.pagination.types.UsersListResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -28,24 +28,28 @@ public class RawUsersClient {
         this.clientOptions = clientOptions;
     }
 
-    public SeedPaginationHttpResponse<FernCustomPaginator<String>> listUsernamesCustom() {
-        return listUsernamesCustom(ListUsernamesRequestCustom.builder().build());
+    public SeedPaginationHttpResponse<FernCustomPaginator<String>> listWithCustomPager() {
+        return listWithCustomPager(ListWithCustomPagerRequest.builder().build());
     }
 
-    public SeedPaginationHttpResponse<FernCustomPaginator<String>> listUsernamesCustom(RequestOptions requestOptions) {
-        return listUsernamesCustom(ListUsernamesRequestCustom.builder().build(), requestOptions);
+    public SeedPaginationHttpResponse<FernCustomPaginator<String>> listWithCustomPager(RequestOptions requestOptions) {
+        return listWithCustomPager(ListWithCustomPagerRequest.builder().build(), requestOptions);
     }
 
-    public SeedPaginationHttpResponse<FernCustomPaginator<String>> listUsernamesCustom(
-            ListUsernamesRequestCustom request) {
-        return listUsernamesCustom(request, null);
+    public SeedPaginationHttpResponse<FernCustomPaginator<String>> listWithCustomPager(
+            ListWithCustomPagerRequest request) {
+        return listWithCustomPager(request, null);
     }
 
-    public SeedPaginationHttpResponse<FernCustomPaginator<String>> listUsernamesCustom(
-            ListUsernamesRequestCustom request, RequestOptions requestOptions) {
+    public SeedPaginationHttpResponse<FernCustomPaginator<String>> listWithCustomPager(
+            ListWithCustomPagerRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users");
+        if (request.getLimit().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "limit", request.getLimit().get(), false);
+        }
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "starting_after", request.getStartingAfter().get(), false);
@@ -69,8 +73,8 @@ public class RawUsersClient {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
-                UsernameCursor parsedResponse =
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UsernameCursor.class);
+                UsersListResponse parsedResponse =
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UsersListResponse.class);
                 return new SeedPaginationHttpResponse<>(
                         FernCustomPaginator.create(parsedResponse, clientOptions, requestOptions), response);
             }

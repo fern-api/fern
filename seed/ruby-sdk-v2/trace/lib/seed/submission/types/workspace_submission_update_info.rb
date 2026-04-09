@@ -12,7 +12,7 @@ module Seed
         member -> { Seed::Submission::Types::WorkspaceRunDetails }, key: "RAN"
         member -> { Object }, key: "STOPPED"
         member -> { Object }, key: "TRACED"
-        member -> { Seed::Submission::Types::WorkspaceTracedUpdate }, key: "TRACED_V_2"
+        member -> { Seed::Submission::Types::WorkspaceTracedUpdate }, key: "TRACED_V2"
         member -> { Seed::Submission::Types::ErrorInfo }, key: "ERRORED"
         member -> { Object }, key: "FINISHED"
       end

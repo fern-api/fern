@@ -38,7 +38,7 @@ import (
 
 func do() {
     client := client.NewClient(
-        option.WithApiKey(
+        option.WithAPIKey(
             "<token>",
         ),
     )

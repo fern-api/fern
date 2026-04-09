@@ -85,7 +85,7 @@ client.Plants.List(
 </dl>
 </details>
 
-<details><summary><code>client.Plants.Get(PlantId) -> *fern.Plant</code></summary>
+<details><summary><code>client.Plants.Get(PlantID) -> *fern.Plant</code></summary>
 <dl>
 <dd>
 
@@ -99,7 +99,7 @@ client.Plants.List(
 
 ```go
 request := &fern.GetPlantsRequest{
-        PlantId: "plantId",
+        PlantID: "plantId",
     }
 client.Plants.Get(
         context.TODO(),
@@ -120,7 +120,7 @@ client.Plants.Get(
 <dl>
 <dd>
 
-**plantId:** `string` 
+**plantID:** `string` 
     
 </dd>
 </dl>

@@ -116,7 +116,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "PaymentList",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -216,7 +216,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "PaymentList",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -287,7 +287,7 @@
             "requestBodyType": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "PaymentRequest",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -323,7 +323,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "Payment",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -475,7 +475,7 @@
                 "requestBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "PaymentRequest",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -515,7 +515,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "Payment",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -759,7 +759,7 @@
                     "list": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "Payment",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,

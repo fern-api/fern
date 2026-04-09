@@ -263,6 +263,7 @@
                   "name": "Data",
                   "typeId": "Data",
                   "inline": false,
+                  "displayName": "Data",
                   "type": "named"
                 },
                 "docs": "Success",
@@ -322,6 +323,7 @@
                       "name": "Data",
                       "typeId": "Data",
                       "inline": false,
+                      "displayName": "Data",
                       "type": "named"
                     },
                     "docs": "Success",
@@ -507,6 +509,7 @@
                   "name": "Data",
                   "typeId": "Data",
                   "inline": false,
+                  "displayName": "Data",
                   "type": "named"
                 },
                 "docs": "Success",
@@ -566,6 +569,7 @@
                       "name": "Data",
                       "typeId": "Data",
                       "inline": false,
+                      "displayName": "Data",
                       "type": "named"
                     },
                     "docs": "Success",

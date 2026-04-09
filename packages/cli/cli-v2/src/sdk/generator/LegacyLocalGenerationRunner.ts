@@ -76,6 +76,9 @@ export namespace LegacyLocalGenerationRunner {
 
         /** Whether to ignore .fernignore and overwrite all files */
         skipFernignore?: boolean;
+
+        /** Require all referenced environment variables to be defined */
+        requireEnvVars?: boolean;
     }
 
     export interface Result {
@@ -183,7 +186,8 @@ export class LegacyLocalGenerationRunner {
             absolutePathToPreview: undefined,
             inspect: false,
             ai: undefined,
-            skipFernignore: args.skipFernignore
+            skipFernignore: args.skipFernignore,
+            requireEnvVars: args.requireEnvVars
         });
 
         if (taskContext.getResult() === TaskResult.Failure) {

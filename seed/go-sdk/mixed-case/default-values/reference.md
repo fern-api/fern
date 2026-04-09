@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.GetResource(ResourceId) -> *fern.Resource</code></summary>
+<details><summary><code>client.Service.GetResource(ResourceID) -> *fern.Resource</code></summary>
 <dl>
 <dd>
 
@@ -32,7 +32,7 @@ client.Service.GetResource(
 <dl>
 <dd>
 
-**resourceId:** `string` 
+**resourceID:** `string` 
     
 </dd>
 </dl>

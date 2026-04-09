@@ -13,9 +13,9 @@ import (
 )
 
 
-type SubmissionId = uuid.UUID
+type SubmissionID = uuid.UUID
 
-type ShareId = string
+type ShareID = string
 
 type SubmissionRequest struct {
     Type string
@@ -27,18 +27,18 @@ type SubmissionRequest struct {
 }
 
 type InitializeProblemRequest struct {
-    ProblemId ProblemId `json:"problemId" url:"problemId"`
+    ProblemID ProblemID `json:"problemId" url:"problemId"`
     ProblemVersion *int `json:"problemVersion,omitempty" url:"problemVersion,omitempty"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (i *InitializeProblemRequest) GetProblemId() ProblemId{
+func (i *InitializeProblemRequest) GetProblemID() ProblemID{
     if i == nil {
         return ""
     }
-    return i.ProblemId
+    return i.ProblemID
 }
 
 func (i *InitializeProblemRequest) GetProblemVersion() *int{
@@ -87,22 +87,22 @@ func (i *InitializeProblemRequest) String() string{
 
 
 type SubmitRequestV2 struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
     Language *Language `json:"language" url:"language"`
     SubmissionFiles []*SubmissionFileInfo `json:"submissionFiles" url:"submissionFiles"`
-    ProblemId ProblemId `json:"problemId" url:"problemId"`
+    ProblemID ProblemID `json:"problemId" url:"problemId"`
     ProblemVersion *int `json:"problemVersion,omitempty" url:"problemVersion,omitempty"`
-    UserId *string `json:"userId,omitempty" url:"userId,omitempty"`
+    UserID *string `json:"userId,omitempty" url:"userId,omitempty"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (s *SubmitRequestV2) GetSubmissionId() SubmissionId{
+func (s *SubmitRequestV2) GetSubmissionID() SubmissionID{
     if s == nil {
         return uuid.UUID{}
     }
-    return s.SubmissionId
+    return s.SubmissionID
 }
 
 func (s *SubmitRequestV2) GetLanguage() *Language{
@@ -119,11 +119,11 @@ func (s *SubmitRequestV2) GetSubmissionFiles() []*SubmissionFileInfo{
     return s.SubmissionFiles
 }
 
-func (s *SubmitRequestV2) GetProblemId() ProblemId{
+func (s *SubmitRequestV2) GetProblemID() ProblemID{
     if s == nil {
         return ""
     }
-    return s.ProblemId
+    return s.ProblemID
 }
 
 func (s *SubmitRequestV2) GetProblemVersion() *int{
@@ -133,11 +133,11 @@ func (s *SubmitRequestV2) GetProblemVersion() *int{
     return s.ProblemVersion
 }
 
-func (s *SubmitRequestV2) GetUserId() *string{
+func (s *SubmitRequestV2) GetUserID() *string{
     if s == nil {
         return nil
     }
-    return s.UserId
+    return s.UserID
 }
 
 func (s *SubmitRequestV2) GetExtraProperties() map[string]any{
@@ -179,20 +179,20 @@ func (s *SubmitRequestV2) String() string{
 
 
 type WorkspaceSubmitRequest struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
     Language *Language `json:"language" url:"language"`
     SubmissionFiles []*SubmissionFileInfo `json:"submissionFiles" url:"submissionFiles"`
-    UserId *string `json:"userId,omitempty" url:"userId,omitempty"`
+    UserID *string `json:"userId,omitempty" url:"userId,omitempty"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (w *WorkspaceSubmitRequest) GetSubmissionId() SubmissionId{
+func (w *WorkspaceSubmitRequest) GetSubmissionID() SubmissionID{
     if w == nil {
         return uuid.UUID{}
     }
-    return w.SubmissionId
+    return w.SubmissionID
 }
 
 func (w *WorkspaceSubmitRequest) GetLanguage() *Language{
@@ -209,11 +209,11 @@ func (w *WorkspaceSubmitRequest) GetSubmissionFiles() []*SubmissionFileInfo{
     return w.SubmissionFiles
 }
 
-func (w *WorkspaceSubmitRequest) GetUserId() *string{
+func (w *WorkspaceSubmitRequest) GetUserID() *string{
     if w == nil {
         return nil
     }
-    return w.UserId
+    return w.UserID
 }
 
 func (w *WorkspaceSubmitRequest) GetExtraProperties() map[string]any{
@@ -343,17 +343,17 @@ func (s SubmissionTypeEnum) Ptr() *SubmissionTypeEnum{
 
 
 type StopRequest struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (s *StopRequest) GetSubmissionId() SubmissionId{
+func (s *StopRequest) GetSubmissionID() SubmissionID{
     if s == nil {
         return uuid.UUID{}
     }
-    return s.SubmissionId
+    return s.SubmissionID
 }
 
 func (s *StopRequest) GetExtraProperties() map[string]any{
@@ -397,7 +397,7 @@ func (s *StopRequest) String() string{
 type SubmissionResponse struct {
     Type string
     ServerInitialized any
-    ProblemInitialized ProblemId
+    ProblemInitialized ProblemID
     WorkspaceInitialized any
     ServerErrored ExceptionInfo
     CodeExecutionUpdate *CodeExecutionUpdate
@@ -420,18 +420,18 @@ type CodeExecutionUpdate struct {
 }
 
 type BuildingExecutorResponse struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
     Status *ExecutionSessionStatus `json:"status" url:"status"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (b *BuildingExecutorResponse) GetSubmissionId() SubmissionId{
+func (b *BuildingExecutorResponse) GetSubmissionID() SubmissionID{
     if b == nil {
         return uuid.UUID{}
     }
-    return b.SubmissionId
+    return b.SubmissionID
 }
 
 func (b *BuildingExecutorResponse) GetStatus() *ExecutionSessionStatus{
@@ -480,18 +480,18 @@ func (b *BuildingExecutorResponse) String() string{
 
 
 type RunningResponse struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
     State *RunningSubmissionState `json:"state" url:"state"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (r *RunningResponse) GetSubmissionId() SubmissionId{
+func (r *RunningResponse) GetSubmissionID() SubmissionID{
     if r == nil {
         return uuid.UUID{}
     }
-    return r.SubmissionId
+    return r.SubmissionID
 }
 
 func (r *RunningResponse) GetState() *RunningSubmissionState{
@@ -571,18 +571,18 @@ func (r RunningSubmissionState) Ptr() *RunningSubmissionState{
 
 
 type ErroredResponse struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
     ErrorInfo *ErrorInfo `json:"errorInfo" url:"errorInfo"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (e *ErroredResponse) GetSubmissionId() SubmissionId{
+func (e *ErroredResponse) GetSubmissionID() SubmissionID{
     if e == nil {
         return uuid.UUID{}
     }
-    return e.SubmissionId
+    return e.SubmissionID
 }
 
 func (e *ErroredResponse) GetErrorInfo() *ErrorInfo{
@@ -794,17 +794,17 @@ func (i *InternalError) String() string{
 
 
 type StoppedResponse struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (s *StoppedResponse) GetSubmissionId() SubmissionId{
+func (s *StoppedResponse) GetSubmissionID() SubmissionID{
     if s == nil {
         return uuid.UUID{}
     }
-    return s.SubmissionId
+    return s.SubmissionID
 }
 
 func (s *StoppedResponse) GetExtraProperties() map[string]any{
@@ -846,18 +846,18 @@ func (s *StoppedResponse) String() string{
 
 
 type WorkspaceRanResponse struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
     RunDetails *WorkspaceRunDetails `json:"runDetails" url:"runDetails"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (w *WorkspaceRanResponse) GetSubmissionId() SubmissionId{
+func (w *WorkspaceRanResponse) GetSubmissionID() SubmissionID{
     if w == nil {
         return uuid.UUID{}
     }
-    return w.SubmissionId
+    return w.SubmissionID
 }
 
 func (w *WorkspaceRanResponse) GetRunDetails() *WorkspaceRunDetails{
@@ -974,18 +974,18 @@ func (w *WorkspaceRunDetails) String() string{
 
 
 type GradedResponse struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
     TestCases map[string]*TestCaseResultWithStdout `json:"testCases" url:"testCases"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (g *GradedResponse) GetSubmissionId() SubmissionId{
+func (g *GradedResponse) GetSubmissionID() SubmissionID{
     if g == nil {
         return uuid.UUID{}
     }
-    return g.SubmissionId
+    return g.SubmissionID
 }
 
 func (g *GradedResponse) GetTestCases() map[string]*TestCaseResultWithStdout{
@@ -1034,21 +1034,21 @@ func (g *GradedResponse) String() string{
 
 
 type GradedResponseV2 struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
-    TestCases map[v2.TestCaseId]*TestCaseGrade `json:"testCases" url:"testCases"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
+    TestCases map[v2.TestCaseID]*TestCaseGrade `json:"testCases" url:"testCases"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (g *GradedResponseV2) GetSubmissionId() SubmissionId{
+func (g *GradedResponseV2) GetSubmissionID() SubmissionID{
     if g == nil {
         return uuid.UUID{}
     }
-    return g.SubmissionId
+    return g.SubmissionID
 }
 
-func (g *GradedResponseV2) GetTestCases() map[v2.TestCaseId]*TestCaseGrade{
+func (g *GradedResponseV2) GetTestCases() map[v2.TestCaseID]*TestCaseGrade{
     if g == nil {
         return nil
     }
@@ -1228,19 +1228,19 @@ func (t *TestCaseNonHiddenGrade) String() string{
 
 
 type RecordedResponseNotification struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
     TraceResponsesSize int `json:"traceResponsesSize" url:"traceResponsesSize"`
-    TestCaseId *string `json:"testCaseId,omitempty" url:"testCaseId,omitempty"`
+    TestCaseID *string `json:"testCaseId,omitempty" url:"testCaseId,omitempty"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (r *RecordedResponseNotification) GetSubmissionId() SubmissionId{
+func (r *RecordedResponseNotification) GetSubmissionID() SubmissionID{
     if r == nil {
         return uuid.UUID{}
     }
-    return r.SubmissionId
+    return r.SubmissionID
 }
 
 func (r *RecordedResponseNotification) GetTraceResponsesSize() int{
@@ -1250,11 +1250,11 @@ func (r *RecordedResponseNotification) GetTraceResponsesSize() int{
     return r.TraceResponsesSize
 }
 
-func (r *RecordedResponseNotification) GetTestCaseId() *string{
+func (r *RecordedResponseNotification) GetTestCaseID() *string{
     if r == nil {
         return nil
     }
-    return r.TestCaseId
+    return r.TestCaseID
 }
 
 func (r *RecordedResponseNotification) GetExtraProperties() map[string]any{
@@ -1296,8 +1296,8 @@ func (r *RecordedResponseNotification) String() string{
 
 
 type RecordingResponseNotification struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
-    TestCaseId *string `json:"testCaseId,omitempty" url:"testCaseId,omitempty"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
+    TestCaseID *string `json:"testCaseId,omitempty" url:"testCaseId,omitempty"`
     LineNumber int `json:"lineNumber" url:"lineNumber"`
     LightweightStackInfo *LightweightStackframeInformation `json:"lightweightStackInfo" url:"lightweightStackInfo"`
     TracedFile *TracedFile `json:"tracedFile,omitempty" url:"tracedFile,omitempty"`
@@ -1306,18 +1306,18 @@ type RecordingResponseNotification struct {
     rawJSON json.RawMessage
 }
 
-func (r *RecordingResponseNotification) GetSubmissionId() SubmissionId{
+func (r *RecordingResponseNotification) GetSubmissionID() SubmissionID{
     if r == nil {
         return uuid.UUID{}
     }
-    return r.SubmissionId
+    return r.SubmissionID
 }
 
-func (r *RecordingResponseNotification) GetTestCaseId() *string{
+func (r *RecordingResponseNotification) GetTestCaseID() *string{
     if r == nil {
         return nil
     }
-    return r.TestCaseId
+    return r.TestCaseID
 }
 
 func (r *RecordingResponseNotification) GetLineNumber() int{
@@ -1710,23 +1710,23 @@ func (i *InvalidRequestResponse) String() string{
 
 type InvalidRequestCause struct {
     Type string
-    SubmissionIdNotFound SubmissionIdNotFound
+    SubmissionIDNotFound SubmissionIDNotFound
     CustomTestCasesUnsupported CustomTestCasesUnsupported
     UnexpectedLanguage UnexpectedLanguageError
 }
 
 type ExistingSubmissionExecuting struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (e *ExistingSubmissionExecuting) GetSubmissionId() SubmissionId{
+func (e *ExistingSubmissionExecuting) GetSubmissionID() SubmissionID{
     if e == nil {
         return uuid.UUID{}
     }
-    return e.SubmissionId
+    return e.SubmissionID
 }
 
 func (e *ExistingSubmissionExecuting) GetExtraProperties() map[string]any{
@@ -1767,36 +1767,36 @@ func (e *ExistingSubmissionExecuting) String() string{
 }
 
 
-type SubmissionIdNotFound struct {
-    MissingSubmissionId SubmissionId `json:"missingSubmissionId" url:"missingSubmissionId"`
+type SubmissionIDNotFound struct {
+    MissingSubmissionID SubmissionID `json:"missingSubmissionId" url:"missingSubmissionId"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (s *SubmissionIdNotFound) GetMissingSubmissionId() SubmissionId{
+func (s *SubmissionIDNotFound) GetMissingSubmissionID() SubmissionID{
     if s == nil {
         return uuid.UUID{}
     }
-    return s.MissingSubmissionId
+    return s.MissingSubmissionID
 }
 
-func (s *SubmissionIdNotFound) GetExtraProperties() map[string]any{
+func (s *SubmissionIDNotFound) GetExtraProperties() map[string]any{
     if s == nil {
         return nil
     }
     return s.extraProperties
 }
 
-func (s *SubmissionIdNotFound) UnmarshalJSON(
+func (s *SubmissionIDNotFound) UnmarshalJSON(
     data []byte,
 ) error{
-    type unmarshaler SubmissionIdNotFound
+    type unmarshaler SubmissionIDNotFound
     var value unmarshaler
     if err := json.Unmarshal(data, &value); err != nil {
         return err
     }
-    *s = SubmissionIdNotFound(value)
+    *s = SubmissionIDNotFound(value)
     extraProperties, err := internal.ExtractExtraProperties(data, *s)
     if err != nil {
         return err
@@ -1806,7 +1806,7 @@ func (s *SubmissionIdNotFound) UnmarshalJSON(
     return nil
 }
 
-func (s *SubmissionIdNotFound) String() string{
+func (s *SubmissionIDNotFound) String() string{
     if len(s.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
             return value
@@ -1820,25 +1820,25 @@ func (s *SubmissionIdNotFound) String() string{
 
 
 type CustomTestCasesUnsupported struct {
-    ProblemId ProblemId `json:"problemId" url:"problemId"`
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    ProblemID ProblemID `json:"problemId" url:"problemId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (c *CustomTestCasesUnsupported) GetProblemId() ProblemId{
+func (c *CustomTestCasesUnsupported) GetProblemID() ProblemID{
     if c == nil {
         return ""
     }
-    return c.ProblemId
+    return c.ProblemID
 }
 
-func (c *CustomTestCasesUnsupported) GetSubmissionId() SubmissionId{
+func (c *CustomTestCasesUnsupported) GetSubmissionID() SubmissionID{
     if c == nil {
         return uuid.UUID{}
     }
-    return c.SubmissionId
+    return c.SubmissionID
 }
 
 func (c *CustomTestCasesUnsupported) GetExtraProperties() map[string]any{
@@ -1983,17 +1983,17 @@ func (t *TerminatedResponse) String() string{
 
 
 type FinishedResponse struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (f *FinishedResponse) GetSubmissionId() SubmissionId{
+func (f *FinishedResponse) GetSubmissionID() SubmissionID{
     if f == nil {
         return uuid.UUID{}
     }
-    return f.SubmissionId
+    return f.SubmissionID
 }
 
 func (f *FinishedResponse) GetExtraProperties() map[string]any{
@@ -2035,18 +2035,18 @@ func (f *FinishedResponse) String() string{
 
 
 type StdoutResponse struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
     Stdout string `json:"stdout" url:"stdout"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (s *StdoutResponse) GetSubmissionId() SubmissionId{
+func (s *StdoutResponse) GetSubmissionID() SubmissionID{
     if s == nil {
         return uuid.UUID{}
     }
-    return s.SubmissionId
+    return s.SubmissionID
 }
 
 func (s *StdoutResponse) GetStdout() string{
@@ -2095,18 +2095,18 @@ func (s *StdoutResponse) String() string{
 
 
 type StderrResponse struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
     Stderr string `json:"stderr" url:"stderr"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (s *StderrResponse) GetSubmissionId() SubmissionId{
+func (s *StderrResponse) GetSubmissionID() SubmissionID{
     if s == nil {
         return uuid.UUID{}
     }
-    return s.SubmissionId
+    return s.SubmissionID
 }
 
 func (s *StderrResponse) GetStderr() string{
@@ -2155,7 +2155,7 @@ func (s *StderrResponse) String() string{
 
 
 type TraceResponse struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
     LineNumber int `json:"lineNumber" url:"lineNumber"`
     ReturnValue *DebugVariableValue `json:"returnValue,omitempty" url:"returnValue,omitempty"`
     ExpressionLocation *ExpressionLocation `json:"expressionLocation,omitempty" url:"expressionLocation,omitempty"`
@@ -2166,11 +2166,11 @@ type TraceResponse struct {
     rawJSON json.RawMessage
 }
 
-func (t *TraceResponse) GetSubmissionId() SubmissionId{
+func (t *TraceResponse) GetSubmissionID() SubmissionID{
     if t == nil {
         return uuid.UUID{}
     }
-    return t.SubmissionId
+    return t.SubmissionID
 }
 
 func (t *TraceResponse) GetLineNumber() int{
@@ -2247,7 +2247,7 @@ func (t *TraceResponse) String() string{
 
 
 type TraceResponseV2 struct {
-    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    SubmissionID SubmissionID `json:"submissionId" url:"submissionId"`
     LineNumber int `json:"lineNumber" url:"lineNumber"`
     File *TracedFile `json:"file" url:"file"`
     ReturnValue *DebugVariableValue `json:"returnValue,omitempty" url:"returnValue,omitempty"`
@@ -2259,11 +2259,11 @@ type TraceResponseV2 struct {
     rawJSON json.RawMessage
 }
 
-func (t *TraceResponseV2) GetSubmissionId() SubmissionId{
+func (t *TraceResponseV2) GetSubmissionID() SubmissionID{
     if t == nil {
         return uuid.UUID{}
     }
-    return t.SubmissionId
+    return t.SubmissionID
 }
 
 func (t *TraceResponseV2) GetLineNumber() int{
@@ -2647,8 +2647,8 @@ func (s *Scope) String() string{
 
 
 type ExecutionSessionResponse struct {
-    SessionId string `json:"sessionId" url:"sessionId"`
-    ExecutionSessionUrl *string `json:"executionSessionUrl,omitempty" url:"executionSessionUrl,omitempty"`
+    SessionID string `json:"sessionId" url:"sessionId"`
+    ExecutionSessionURL *string `json:"executionSessionUrl,omitempty" url:"executionSessionUrl,omitempty"`
     Language *Language `json:"language" url:"language"`
     Status *ExecutionSessionStatus `json:"status" url:"status"`
 
@@ -2656,18 +2656,18 @@ type ExecutionSessionResponse struct {
     rawJSON json.RawMessage
 }
 
-func (e *ExecutionSessionResponse) GetSessionId() string{
+func (e *ExecutionSessionResponse) GetSessionID() string{
     if e == nil {
         return ""
     }
-    return e.SessionId
+    return e.SessionID
 }
 
-func (e *ExecutionSessionResponse) GetExecutionSessionUrl() *string{
+func (e *ExecutionSessionResponse) GetExecutionSessionURL() *string{
     if e == nil {
         return nil
     }
-    return e.ExecutionSessionUrl
+    return e.ExecutionSessionURL
 }
 
 func (e *ExecutionSessionResponse) GetLanguage() *Language{
@@ -2764,7 +2764,7 @@ type SubmissionStatusV2 struct {
 
 type TestSubmissionStatusV2 struct {
     Updates []*TestSubmissionUpdate `json:"updates" url:"updates"`
-    ProblemId ProblemId `json:"problemId" url:"problemId"`
+    ProblemID ProblemID `json:"problemId" url:"problemId"`
     ProblemVersion int `json:"problemVersion" url:"problemVersion"`
     ProblemInfo *v2.ProblemInfoV2 `json:"problemInfo" url:"problemInfo"`
 
@@ -2779,11 +2779,11 @@ func (t *TestSubmissionStatusV2) GetUpdates() []*TestSubmissionUpdate{
     return t.Updates
 }
 
-func (t *TestSubmissionStatusV2) GetProblemId() ProblemId{
+func (t *TestSubmissionStatusV2) GetProblemID() ProblemID{
     if t == nil {
         return ""
     }
-    return t.ProblemId
+    return t.ProblemID
 }
 
 func (t *TestSubmissionStatusV2) GetProblemVersion() int{
@@ -3068,18 +3068,18 @@ type WorkspaceSubmissionUpdateInfo struct {
 }
 
 type GradedTestCaseUpdate struct {
-    TestCaseId v2.TestCaseId `json:"testCaseId" url:"testCaseId"`
+    TestCaseID v2.TestCaseID `json:"testCaseId" url:"testCaseId"`
     Grade *TestCaseGrade `json:"grade" url:"grade"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (g *GradedTestCaseUpdate) GetTestCaseId() v2.TestCaseId{
+func (g *GradedTestCaseUpdate) GetTestCaseID() v2.TestCaseID{
     if g == nil {
         return ""
     }
-    return g.TestCaseId
+    return g.TestCaseID
 }
 
 func (g *GradedTestCaseUpdate) GetGrade() *TestCaseGrade{
@@ -3128,18 +3128,18 @@ func (g *GradedTestCaseUpdate) String() string{
 
 
 type RecordedTestCaseUpdate struct {
-    TestCaseId v2.TestCaseId `json:"testCaseId" url:"testCaseId"`
+    TestCaseID v2.TestCaseID `json:"testCaseId" url:"testCaseId"`
     TraceResponsesSize int `json:"traceResponsesSize" url:"traceResponsesSize"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (r *RecordedTestCaseUpdate) GetTestCaseId() v2.TestCaseId{
+func (r *RecordedTestCaseUpdate) GetTestCaseID() v2.TestCaseID{
     if r == nil {
         return ""
     }
-    return r.TestCaseId
+    return r.TestCaseID
 }
 
 func (r *RecordedTestCaseUpdate) GetTraceResponsesSize() int{
@@ -3307,7 +3307,7 @@ type WorkspaceSubmissionStatus struct {
 }
 
 type TestSubmissionState struct {
-    ProblemId ProblemId `json:"problemId" url:"problemId"`
+    ProblemID ProblemID `json:"problemId" url:"problemId"`
     DefaultTestCases []*TestCase `json:"defaultTestCases" url:"defaultTestCases"`
     CustomTestCases []*TestCase `json:"customTestCases" url:"customTestCases"`
     Status *TestSubmissionStatus `json:"status" url:"status"`
@@ -3316,11 +3316,11 @@ type TestSubmissionState struct {
     rawJSON json.RawMessage
 }
 
-func (t *TestSubmissionState) GetProblemId() ProblemId{
+func (t *TestSubmissionState) GetProblemID() ProblemID{
     if t == nil {
         return ""
     }
-    return t.ProblemId
+    return t.ProblemID
 }
 
 func (t *TestSubmissionState) GetDefaultTestCases() []*TestCase{
@@ -3387,7 +3387,7 @@ type TestSubmissionStatus struct {
     Stopped any
     Errored *ErrorInfo
     Running *RunningSubmissionState
-    TestCaseIdToState map[string]*SubmissionStatusForTestCase
+    TestCaseIDToState map[string]*SubmissionStatusForTestCase
 }
 
 type SubmissionStatusForTestCase struct {
@@ -3800,9 +3800,9 @@ func (w *WorkspaceFiles) String() string{
 type ExecutionSessionState struct {
     LastTimeContacted *string `json:"lastTimeContacted,omitempty" url:"lastTimeContacted,omitempty"`
     // The auto-generated session id. Formatted as a uuid.
-    SessionId string `json:"sessionId" url:"sessionId"`
+    SessionID string `json:"sessionId" url:"sessionId"`
     IsWarmInstance bool `json:"isWarmInstance" url:"isWarmInstance"`
-    AwsTaskId *string `json:"awsTaskId,omitempty" url:"awsTaskId,omitempty"`
+    AwsTaskID *string `json:"awsTaskId,omitempty" url:"awsTaskId,omitempty"`
     Language *Language `json:"language" url:"language"`
     Status *ExecutionSessionStatus `json:"status" url:"status"`
 
@@ -3817,11 +3817,11 @@ func (e *ExecutionSessionState) GetLastTimeContacted() *string{
     return e.LastTimeContacted
 }
 
-func (e *ExecutionSessionState) GetSessionId() string{
+func (e *ExecutionSessionState) GetSessionID() string{
     if e == nil {
         return ""
     }
-    return e.SessionId
+    return e.SessionID
 }
 
 func (e *ExecutionSessionState) GetIsWarmInstance() bool{
@@ -3831,11 +3831,11 @@ func (e *ExecutionSessionState) GetIsWarmInstance() bool{
     return e.IsWarmInstance
 }
 
-func (e *ExecutionSessionState) GetAwsTaskId() *string{
+func (e *ExecutionSessionState) GetAwsTaskID() *string{
     if e == nil {
         return nil
     }
-    return e.AwsTaskId
+    return e.AwsTaskID
 }
 
 func (e *ExecutionSessionState) GetLanguage() *Language{
@@ -3893,7 +3893,7 @@ func (e *ExecutionSessionState) String() string{
 type GetExecutionSessionStateResponse struct {
     States map[string]*ExecutionSessionState `json:"states" url:"states"`
     NumWarmingInstances *int `json:"numWarmingInstances,omitempty" url:"numWarmingInstances,omitempty"`
-    WarmingSessionIds []string `json:"warmingSessionIds" url:"warmingSessionIds"`
+    WarmingSessionIDs []string `json:"warmingSessionIds" url:"warmingSessionIds"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
@@ -3913,11 +3913,11 @@ func (g *GetExecutionSessionStateResponse) GetNumWarmingInstances() *int{
     return g.NumWarmingInstances
 }
 
-func (g *GetExecutionSessionStateResponse) GetWarmingSessionIds() []string{
+func (g *GetExecutionSessionStateResponse) GetWarmingSessionIDs() []string{
     if g == nil {
         return nil
     }
-    return g.WarmingSessionIds
+    return g.WarmingSessionIDs
 }
 
 func (g *GetExecutionSessionStateResponse) GetExtraProperties() map[string]any{

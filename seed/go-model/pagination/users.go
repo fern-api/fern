@@ -811,6 +811,85 @@ func (l *ListUsersTopLevelCursorPaginationResponse) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+// A type alias for a list of users
+type UserList = []*User
+
+type ListUsersAliasedDataPaginationResponse struct {
+	HasNextPage *bool `json:"hasNextPage,omitempty" url:"hasNextPage,omitempty"`
+	Page        *Page `json:"page,omitempty" url:"page,omitempty"`
+	// The totall number of /users
+	TotalCount int      `json:"total_count" url:"total_count"`
+	Data       UserList `json:"data" url:"data"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) GetHasNextPage() *bool {
+	if l == nil {
+		return nil
+	}
+	return l.HasNextPage
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) GetPage() *Page {
+	if l == nil {
+		return nil
+	}
+	return l.Page
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) GetTotalCount() int {
+	if l == nil {
+		return 0
+	}
+	return l.TotalCount
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) GetData() UserList {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) GetExtraProperties() map[string]any {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ListUsersAliasedDataPaginationResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersAliasedDataPaginationResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) String() string {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
 type Page struct {
 	// The current page
 	Page      int       `json:"page" url:"page"`
@@ -948,7 +1027,7 @@ func (n *NextPage) String() string {
 
 type User struct {
 	Name string `json:"name" url:"name"`
-	Id   int    `json:"id" url:"id"`
+	ID   int    `json:"id" url:"id"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
@@ -961,11 +1040,11 @@ func (u *User) GetName() string {
 	return u.Name
 }
 
-func (u *User) GetId() int {
+func (u *User) GetID() int {
 	if u == nil {
 		return 0
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetExtraProperties() map[string]any {
