@@ -1,3 +1,4 @@
+import { setSentryRunIdTags } from "@fern-api/cli-telemetry";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import * as Sentry from "@sentry/node";
 import { mkdir, readFile, writeFile } from "fs/promises";
@@ -10,7 +11,6 @@ import { validate as isValidUUID, v4 as uuidv4 } from "uuid";
 import { FernRcSchemaLoader } from "../config/fern-rc/FernRcSchemaLoader.js";
 import { Version } from "../version.js";
 import type { LifecycleEvent } from "./LifecycleEvent.js";
-import { setSentryRunIdTags } from "./sentryRunId.js";
 import type { Tags } from "./Tags.js";
 
 export class TelemetryClient {

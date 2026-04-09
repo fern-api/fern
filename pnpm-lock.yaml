@@ -4282,6 +4282,9 @@ importers:
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../cli-source-resolver
+      '@fern-api/cli-telemetry':
+        specifier: workspace:*
+        version: link:../cli-telemetry
       '@fern-api/cli-v2':
         specifier: workspace:*
         version: link:../cli-v2
@@ -4682,6 +4685,24 @@ importers:
         specifier: 'catalog:'
         version: 4.1.0(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
+  packages/cli/cli-telemetry:
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../configs
+      '@sentry/node':
+        specifier: ^10.45.0
+        version: 10.47.0
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.19.17
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.0(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
+
   packages/cli/cli-v2:
     dependencies:
       tmp-promise:
@@ -4709,6 +4730,9 @@ importers:
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../cli-source-resolver
+      '@fern-api/cli-telemetry':
+        specifier: workspace:*
+        version: link:../cli-telemetry
       '@fern-api/config':
         specifier: workspace:*
         version: link:../config

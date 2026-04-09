@@ -16,20 +16,6 @@
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
       "default": "./lib/index.js"
-    },
-    "./fernRunId": {
-      "development": "./src/fernRunId.ts",
-      "source": "./src/fernRunId.ts",
-      "types": "./lib/fernRunId.d.ts",
-      "import": "./lib/fernRunId.js",
-      "default": "./lib/fernRunId.js"
-    },
-    "./telemetry/sentryRunId": {
-      "development": "./src/telemetry/sentryRunId.ts",
-      "source": "./src/telemetry/sentryRunId.ts",
-      "types": "./lib/telemetry/sentryRunId.d.ts",
-      "import": "./lib/telemetry/sentryRunId.js",
-      "default": "./lib/telemetry/sentryRunId.js"
     }
   },
   "main": "lib/index.js",
@@ -60,6 +46,7 @@
     "@fern-api/casings-generator": "workspace:*",
     "@fern-api/cli-logger": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
+    "@fern-api/cli-telemetry": "workspace:*",
     "@fern-api/config": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/configuration": "workspace:*",

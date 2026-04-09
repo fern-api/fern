@@ -8,11 +8,7 @@ vi.mock("@sentry/node", () => ({
     setTag: mockSetTag
 }));
 
-import {
-    setSentryFernRunIdTag,
-    setSentryGithubRunIdTag,
-    setSentryRunIdTags
-} from "@fern-api/cli-v2/telemetry/sentryRunId";
+import { setSentryFernRunIdTag, setSentryGithubRunIdTag, setSentryRunIdTags } from "@fern-api/cli-telemetry";
 
 describe("setSentryFernRunIdTag", () => {
     afterEach(() => {
