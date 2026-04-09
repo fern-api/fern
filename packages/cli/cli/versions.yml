@@ -12,6 +12,15 @@
   createdAt: "2026-04-08"
   irVersion: 66
 
+- version: 4.63.5
+  changelogEntry:
+    - summary: |
+        Fix union variant display names showing "object" instead of proper
+        schema names in documentation.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 66
+
 - version: 4.63.4
   changelogEntry:
     - summary: |

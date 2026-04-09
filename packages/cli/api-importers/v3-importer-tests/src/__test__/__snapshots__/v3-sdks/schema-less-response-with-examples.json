@@ -376,6 +376,7 @@
               "name": "CreatePlant",
               "typeId": "CreatePlant",
               "inline": false,
+              "displayName": "CreatePlant",
               "type": "named"
             },
             "v2Examples": {
@@ -405,6 +406,7 @@
                   "name": "CreatePlant",
                   "typeId": "CreatePlant",
                   "inline": false,
+                  "displayName": "CreatePlant",
                   "type": "named"
                 },
                 "v2Examples": {

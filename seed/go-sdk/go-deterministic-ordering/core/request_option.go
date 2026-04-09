@@ -17,15 +17,14 @@ type RequestOption interface {
 // This type is primarily used by the generated code and is not meant
 // to be used directly; use the option package instead.
 type RequestOptions struct {
-	BaseURL              string
-	HTTPClient           HTTPClient
-	HTTPHeader           http.Header
-	BodyProperties       map[string]interface{}
-	QueryParameters      url.Values
-	MaxAttempts          uint
-	MaxBufSize           int
-	MaxReconnectAttempts *int
-	Token                string
+	BaseURL         string
+	HTTPClient      HTTPClient
+	HTTPHeader      http.Header
+	BodyProperties  map[string]interface{}
+	QueryParameters url.Values
+	MaxAttempts     uint
+	MaxBufSize      int
+	Token           string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -124,15 +123,6 @@ type MaxBufSizeOption struct {
 
 func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
-}
-
-// MaxReconnectAttemptsOption implements the RequestOption interface.
-type MaxReconnectAttemptsOption struct {
-	MaxReconnectAttempts *int
-}
-
-func (m *MaxReconnectAttemptsOption) applyRequestOptions(opts *RequestOptions) {
-	opts.MaxReconnectAttempts = m.MaxReconnectAttempts
 }
 
 // TokenOption implements the RequestOption interface.
