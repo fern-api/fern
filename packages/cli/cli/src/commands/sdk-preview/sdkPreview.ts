@@ -56,8 +56,7 @@ export async function sdkPreview({
     generatorFilter,
     apiName,
     json,
-    output,
-    pushDiff
+    output
 }: {
     cliContext: CliContext;
     groupName: string | undefined;
@@ -65,7 +64,6 @@ export async function sdkPreview({
     apiName: string | undefined;
     json: boolean;
     output: string[] | undefined;
-    pushDiff: boolean;
 }): Promise<void> {
     const previews: SdkPreviewSuccess["previews"] = [];
     let organization: string | undefined;
@@ -220,8 +218,7 @@ export async function sdkPreview({
                                   group: singleGeneratorGroup,
                                   packageName: previewPackageName,
                                   token: token.value,
-                                  registryUrl,
-                                  pushDiff
+                                  registryUrl
                               })
                             : overrideGroupOutputForPreview({
                                   group: singleGeneratorGroup,
@@ -246,11 +243,12 @@ export async function sdkPreview({
                             token,
                             whitelabel: workspace.generatorsConfiguration?.whitelabel,
                             absolutePathToPreview: undefined,
-                            // For publishV2(npmOverride), isPreview must be false so Fiddle
-                            // doesn't set dryRun=true (which causes `npm publish --dry-run`).
-                            // For githubV2(push) via --push-diff, isPreview must be true so
-                            // Fiddle pushes to a preview branch instead of the main branch.
-                            isPreview: pushDiff === true,
+                            // isPreview: true so CLI-side behavior is lenient (env var
+                            // substitution, skip version check). fiddlePreview: false so
+                            // Fiddle does NOT set dryRun=true (which would cause
+                            // `npm publish --dry-run` instead of actually publishing).
+                            isPreview: true,
+                            fiddlePreview: false,
                             mode: undefined,
                             fernignorePath: undefined,
                             skipFernignore: false,
