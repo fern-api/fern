@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.59.3
+  changelogEntry:
+    - summary: |
+        Fix mock server test and snippet generation to skip literal properties
+        in object initializers when `generate-literals` is enabled. Previously,
+        the generator emitted plain string/boolean assignments for `TypeLiteral`
+        properties, causing CS0029 compilation errors. Literal properties now
+        rely on their `= new()` default initializer.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
+
 - version: 2.59.2
   changelogEntry:
     - summary: |
