@@ -526,7 +526,7 @@ client.endpoints.content_type.post_json_patch_content_type(
     datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     date=datetime.date.fromisoformat("2023-01-15"),
     uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    base_64="SGVsbG8gd29ybGQh",
+    base64="SGVsbG8gd29ybGQh",
     list_=[
         "list",
         "list"
@@ -605,7 +605,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
     datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     date=datetime.date.fromisoformat("2023-01-15"),
     uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    base_64="SGVsbG8gd29ybGQh",
+    base64="SGVsbG8gd29ybGQh",
     list_=[
         "list",
         "list"
@@ -928,7 +928,7 @@ client.endpoints.http_methods.test_patch(
     datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     date=datetime.date.fromisoformat("2023-01-15"),
     uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    base_64="SGVsbG8gd29ybGQh",
+    base64="SGVsbG8gd29ybGQh",
     list_=[
         "list",
         "list"
@@ -1074,7 +1074,7 @@ client.endpoints.object.get_and_return_with_optional_field(
     datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     date=datetime.date.fromisoformat("2023-01-15"),
     uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    base_64="SGVsbG8gd29ybGQh",
+    base64="SGVsbG8gd29ybGQh",
     list_=[
         "list",
         "list"
@@ -1276,7 +1276,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
         datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         date=datetime.date.fromisoformat("2023-01-15"),
         uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-        base_64="SGVsbG8gd29ybGQh",
+        base64="SGVsbG8gd29ybGQh",
         list_=[
             "list",
             "list"
@@ -1360,7 +1360,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
         datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         date=datetime.date.fromisoformat("2023-01-15"),
         uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-        base_64="SGVsbG8gd29ybGQh",
+        base64="SGVsbG8gd29ybGQh",
         list_=[
             "list",
             "list"
@@ -1453,7 +1453,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
                 datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
                 date=datetime.date.fromisoformat("2023-01-15"),
                 uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                base_64="SGVsbG8gd29ybGQh",
+                base64="SGVsbG8gd29ybGQh",
                 list_=[
                     "list",
                     "list"
@@ -1478,7 +1478,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
                 datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
                 date=datetime.date.fromisoformat("2023-01-15"),
                 uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                base_64="SGVsbG8gd29ybGQh",
+                base64="SGVsbG8gd29ybGQh",
                 list_=[
                     "list",
                     "list"
@@ -3114,7 +3114,7 @@ client.endpoints.primitive.get_and_return_uuid(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_base_64</a>(...) -> str</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_base64</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -3134,7 +3134,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints.primitive.get_and_return_base_64(
+client.endpoints.primitive.get_and_return_base64(
     request="SGVsbG8gd29ybGQh",
 )
 
@@ -3537,7 +3537,7 @@ client.inlined_requests.post_with_object_bodyand_response(
         datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         date=datetime.date.fromisoformat("2023-01-15"),
         uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-        base_64="SGVsbG8gd29ybGQh",
+        base64="SGVsbG8gd29ybGQh",
         list_=[
             "list",
             "list"
