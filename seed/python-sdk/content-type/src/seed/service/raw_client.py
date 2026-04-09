@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from pydantic import ValidationError
@@ -118,7 +118,7 @@ class RawServiceClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"complex/{jsonable_encoder(id)}",
+            f"complex/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "name": name,
@@ -181,7 +181,7 @@ class RawServiceClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"named-mixed/{jsonable_encoder(id)}",
+            f"named-mixed/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "appId": app_id,
@@ -296,7 +296,7 @@ class RawServiceClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"regular/{jsonable_encoder(id)}",
+            f"regular/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "field1": field1,
@@ -421,7 +421,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"complex/{jsonable_encoder(id)}",
+            f"complex/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "name": name,
@@ -484,7 +484,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"named-mixed/{jsonable_encoder(id)}",
+            f"named-mixed/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "appId": app_id,
@@ -599,7 +599,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"regular/{jsonable_encoder(id)}",
+            f"regular/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "field1": field1,

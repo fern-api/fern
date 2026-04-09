@@ -2574,6 +2574,78 @@ client.endpoints.params.upload_with_path(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">get_with_boolean_path</a>(...) -> str</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with boolean path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.params.get_with_boolean_path(
+    param=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">get_with_path_and_errors</a>(...) -> str</code></summary>
 <dl>
 <dd>
