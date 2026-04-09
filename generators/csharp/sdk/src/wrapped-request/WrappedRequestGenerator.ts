@@ -351,7 +351,10 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         // would cause a CS0029 compilation error.
         const literalBodyPropertyWireValues = new Set<string>();
         if (this.generation.settings.generateLiterals && this.endpoint.requestBody?.type === "inlinedRequestBody") {
-            for (const prop of this.endpoint.requestBody.properties) {
+            for (const prop of [
+                ...this.endpoint.requestBody.properties,
+                ...(this.endpoint.requestBody.extendedProperties ?? [])
+            ]) {
                 if (this.context.getLiteralValue(prop.valueType) != null) {
                     literalBodyPropertyWireValues.add(getWireValue(prop.name));
                 }
