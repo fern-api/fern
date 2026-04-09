@@ -790,9 +790,9 @@ export class AutoVersioningService {
                 if (trimmed.length === 0 || trimmed.includes("^{}")) {
                     continue;
                 }
-                const lastSlash = trimmed.lastIndexOf("/");
-                if (lastSlash >= 0 && lastSlash < trimmed.length - 1) {
-                    tags.push(trimmed.substring(lastSlash + 1));
+                const match = trimmed.match(/refs\/tags\/(.+)$/);
+                if (match?.[1]) {
+                    tags.push(match[1]);
                 }
             }
             // Use semver library for sorting instead of git's versioncmp,
