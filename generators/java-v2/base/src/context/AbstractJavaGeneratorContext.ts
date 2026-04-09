@@ -2,9 +2,7 @@ import {
     AbstractGeneratorContext,
     CaseConverter,
     FernGeneratorExec,
-    GeneratorNotificationService,
-    getOriginalName,
-    NameInput
+    GeneratorNotificationService
 } from "@fern-api/base-generator";
 import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -69,13 +67,5 @@ export abstract class AbstractJavaGeneratorContext<
 
     public getClassName(name: FernIr.Name): string {
         return this.caseConverter.pascalSafe(name);
-    }
-
-    public getCaseConverter(): CaseConverter {
-        return this.caseConverter;
-    }
-
-    public getOriginalName(name: NameInput): string {
-        return getOriginalName(name);
     }
 }

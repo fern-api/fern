@@ -1,10 +1,14 @@
 package com.fern.java.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.commons.SafeAndUnsafeString;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -92,6 +96,7 @@ public final class CasingConfiguration {
     private final boolean smartCasing;
     private final String generationLanguage;
     private final Set<String> keywords;
+    private final Map<String, NameParts> nameCache = new HashMap<>();
 
     private CasingConfiguration(boolean smartCasing, String generationLanguage, Set<String> keywords) {
         this.smartCasing = smartCasing;
@@ -137,6 +142,16 @@ public final class CasingConfiguration {
      * NameParts object with all casing variants.
      */
     public NameParts computeName(String inputName) {
+        NameParts cached = nameCache.get(inputName);
+        if (cached != null) {
+            return cached;
+        }
+        NameParts result = computeNameInternal(inputName);
+        nameCache.put(inputName, result);
+        return result;
+    }
+
+    private NameParts computeNameInternal(String inputName) {
         String name = preprocessName(inputName);
 
         String camelCaseName = toCamelCase(name);
@@ -383,6 +398,24 @@ public final class CasingConfiguration {
         return result.toString();
     }
 
+    /** Builds a Name IR object from a JSON object node (v65 full form). */
+    static Name nameFromObjectNode(JsonNode node) {
+        return Name.builder()
+                .originalName(node.get("originalName").asText())
+                .camelCase(safeAndUnsafeFromNode(node.get("camelCase")))
+                .pascalCase(safeAndUnsafeFromNode(node.get("pascalCase")))
+                .snakeCase(safeAndUnsafeFromNode(node.get("snakeCase")))
+                .screamingSnakeCase(safeAndUnsafeFromNode(node.get("screamingSnakeCase")))
+                .build();
+    }
+
+    static SafeAndUnsafeString safeAndUnsafeFromNode(JsonNode node) {
+        return SafeAndUnsafeString.builder()
+                .unsafeName(node.get("unsafeName").asText())
+                .safeName(node.get("safeName").asText())
+                .build();
+    }
+
     /** Holds all casing variants for a name, used to construct the full Name JSON object. */
     public static final class NameParts {
         public final String originalName;
@@ -414,6 +447,29 @@ public final class CasingConfiguration {
             this.snakeSafe = snakeSafe;
             this.screamingSnakeUnsafe = screamingSnakeUnsafe;
             this.screamingSnakeSafe = screamingSnakeSafe;
+        }
+
+        /** Converts these casing variants into a Name IR object. */
+        public Name toName() {
+            return Name.builder()
+                    .originalName(originalName)
+                    .camelCase(SafeAndUnsafeString.builder()
+                            .unsafeName(camelUnsafe)
+                            .safeName(camelSafe)
+                            .build())
+                    .pascalCase(SafeAndUnsafeString.builder()
+                            .unsafeName(pascalUnsafe)
+                            .safeName(pascalSafe)
+                            .build())
+                    .snakeCase(SafeAndUnsafeString.builder()
+                            .unsafeName(snakeUnsafe)
+                            .safeName(snakeSafe)
+                            .build())
+                    .screamingSnakeCase(SafeAndUnsafeString.builder()
+                            .unsafeName(screamingSnakeUnsafe)
+                            .safeName(screamingSnakeSafe)
+                            .build())
+                    .build();
         }
     }
 }
