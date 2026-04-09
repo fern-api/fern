@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	accountFieldId               = big.NewInt(1 << 0)
+	accountFieldID               = big.NewInt(1 << 0)
 	accountFieldRelatedResources = big.NewInt(1 << 1)
 	accountFieldMemo             = big.NewInt(1 << 2)
 	accountFieldName             = big.NewInt(1 << 3)
@@ -19,7 +19,7 @@ var (
 )
 
 type Account struct {
-	Id               string          `json:"id" url:"id"`
+	ID               string          `json:"id" url:"id"`
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
 	Memo             *Memo           `json:"memo" url:"memo"`
 	Name             string          `json:"name" url:"name"`
@@ -34,11 +34,11 @@ type Account struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *Account) GetId() string {
+func (a *Account) GetID() string {
 	if a == nil {
 		return ""
 	}
-	return a.Id
+	return a.ID
 }
 
 func (a *Account) GetRelatedResources() []*ResourceList {
@@ -94,11 +94,11 @@ func (a *Account) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *Account) SetId(id string) {
-	a.Id = id
-	a.require(accountFieldId)
+func (a *Account) SetID(id string) {
+	a.ID = id
+	a.require(accountFieldID)
 }
 
 // SetRelatedResources sets the RelatedResources field and marks it as non-optional;
@@ -190,13 +190,13 @@ func (a *Account) String() string {
 }
 
 var (
-	baseResourceFieldId               = big.NewInt(1 << 0)
+	baseResourceFieldID               = big.NewInt(1 << 0)
 	baseResourceFieldRelatedResources = big.NewInt(1 << 1)
 	baseResourceFieldMemo             = big.NewInt(1 << 2)
 )
 
 type BaseResource struct {
-	Id               string          `json:"id" url:"id"`
+	ID               string          `json:"id" url:"id"`
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
 	Memo             *Memo           `json:"memo" url:"memo"`
 
@@ -207,11 +207,11 @@ type BaseResource struct {
 	rawJSON         json.RawMessage
 }
 
-func (b *BaseResource) GetId() string {
+func (b *BaseResource) GetID() string {
 	if b == nil {
 		return ""
 	}
-	return b.Id
+	return b.ID
 }
 
 func (b *BaseResource) GetRelatedResources() []*ResourceList {
@@ -242,11 +242,11 @@ func (b *BaseResource) require(field *big.Int) {
 	b.explicitFields.Or(b.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BaseResource) SetId(id string) {
-	b.Id = id
-	b.require(baseResourceFieldId)
+func (b *BaseResource) SetID(id string) {
+	b.ID = id
+	b.require(baseResourceFieldID)
 }
 
 // SetRelatedResources sets the RelatedResources field and marks it as non-optional;
@@ -406,7 +406,7 @@ func (m *Memo) String() string {
 }
 
 var (
-	patientFieldId               = big.NewInt(1 << 0)
+	patientFieldID               = big.NewInt(1 << 0)
 	patientFieldRelatedResources = big.NewInt(1 << 1)
 	patientFieldMemo             = big.NewInt(1 << 2)
 	patientFieldName             = big.NewInt(1 << 3)
@@ -414,7 +414,7 @@ var (
 )
 
 type Patient struct {
-	Id               string          `json:"id" url:"id"`
+	ID               string          `json:"id" url:"id"`
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
 	Memo             *Memo           `json:"memo" url:"memo"`
 	Name             string          `json:"name" url:"name"`
@@ -428,11 +428,11 @@ type Patient struct {
 	rawJSON         json.RawMessage
 }
 
-func (p *Patient) GetId() string {
+func (p *Patient) GetID() string {
 	if p == nil {
 		return ""
 	}
-	return p.Id
+	return p.ID
 }
 
 func (p *Patient) GetRelatedResources() []*ResourceList {
@@ -481,11 +481,11 @@ func (p *Patient) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *Patient) SetId(id string) {
-	p.Id = id
-	p.require(patientFieldId)
+func (p *Patient) SetID(id string) {
+	p.ID = id
+	p.require(patientFieldID)
 }
 
 // SetRelatedResources sets the RelatedResources field and marks it as non-optional;
@@ -570,14 +570,14 @@ func (p *Patient) String() string {
 }
 
 var (
-	practitionerFieldId               = big.NewInt(1 << 0)
+	practitionerFieldID               = big.NewInt(1 << 0)
 	practitionerFieldRelatedResources = big.NewInt(1 << 1)
 	practitionerFieldMemo             = big.NewInt(1 << 2)
 	practitionerFieldName             = big.NewInt(1 << 3)
 )
 
 type Practitioner struct {
-	Id               string          `json:"id" url:"id"`
+	ID               string          `json:"id" url:"id"`
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
 	Memo             *Memo           `json:"memo" url:"memo"`
 	Name             string          `json:"name" url:"name"`
@@ -590,11 +590,11 @@ type Practitioner struct {
 	rawJSON         json.RawMessage
 }
 
-func (p *Practitioner) GetId() string {
+func (p *Practitioner) GetID() string {
 	if p == nil {
 		return ""
 	}
-	return p.Id
+	return p.ID
 }
 
 func (p *Practitioner) GetRelatedResources() []*ResourceList {
@@ -636,11 +636,11 @@ func (p *Practitioner) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *Practitioner) SetId(id string) {
-	p.Id = id
-	p.require(practitionerFieldId)
+func (p *Practitioner) SetID(id string) {
+	p.ID = id
+	p.require(practitionerFieldID)
 }
 
 // SetRelatedResources sets the RelatedResources field and marks it as non-optional;
@@ -822,14 +822,14 @@ func (r *ResourceList) Accept(visitor ResourceListVisitor) error {
 }
 
 var (
-	scriptFieldId               = big.NewInt(1 << 0)
+	scriptFieldID               = big.NewInt(1 << 0)
 	scriptFieldRelatedResources = big.NewInt(1 << 1)
 	scriptFieldMemo             = big.NewInt(1 << 2)
 	scriptFieldName             = big.NewInt(1 << 3)
 )
 
 type Script struct {
-	Id               string          `json:"id" url:"id"`
+	ID               string          `json:"id" url:"id"`
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
 	Memo             *Memo           `json:"memo" url:"memo"`
 	Name             string          `json:"name" url:"name"`
@@ -842,11 +842,11 @@ type Script struct {
 	rawJSON         json.RawMessage
 }
 
-func (s *Script) GetId() string {
+func (s *Script) GetID() string {
 	if s == nil {
 		return ""
 	}
-	return s.Id
+	return s.ID
 }
 
 func (s *Script) GetRelatedResources() []*ResourceList {
@@ -888,11 +888,11 @@ func (s *Script) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *Script) SetId(id string) {
-	s.Id = id
-	s.require(scriptFieldId)
+func (s *Script) SetID(id string) {
+	s.ID = id
+	s.require(scriptFieldID)
 }
 
 // SetRelatedResources sets the RelatedResources field and marks it as non-optional;

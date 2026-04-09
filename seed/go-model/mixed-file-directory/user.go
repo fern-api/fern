@@ -10,7 +10,7 @@ import (
 )
 
 type User struct {
-	Id   Id     `json:"id" url:"id"`
+	ID   ID     `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 	Age  int    `json:"age" url:"age"`
 
@@ -18,11 +18,11 @@ type User struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *User) GetId() Id {
+func (u *User) GetID() ID {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetName() string {

@@ -46,6 +46,12 @@ export class ContainerTestRunner extends TestRunner {
     }
 
     public async build(): Promise<void> {
+        // Guard against redundant builds (e.g., when build() is called directly
+        // before TestRunner.run() which also triggers a build via buildInvocation)
+        if (this.reusableContainer != null) {
+            return;
+        }
+
         const testConfig =
             this.runner === "podman" && this.generator.workspaceConfig.test.podman != null
                 ? this.generator.workspaceConfig.test.podman
@@ -59,6 +65,7 @@ export class ContainerTestRunner extends TestRunner {
         // Rewrite -t flags in build commands to use :local (or :local-wt-<suffix>) tags.
         // This handles direct `docker build` / `podman build` commands.
         const namespacedCommands = containerCommands.map((cmd) => this.rewriteDockerBuildTag(cmd));
+        const rewriteApplied = namespacedCommands.some((cmd, i) => cmd !== containerCommands[i]);
 
         if (!this.shouldPipeOutput()) {
             CONSOLE_LOGGER.info(`Building container for ${this.generator.workspaceName}...`);
@@ -76,24 +83,21 @@ export class ContainerTestRunner extends TestRunner {
         // For turbo-wrapped or other indirect build commands that may have built
         // the image under its original tag (e.g. :latest), create a :local alias
         // so downstream consumers can find the image.
-        const originalImage = this.getOriginalImageFromConfig();
-        const localImage = this.getContainerImageName();
-        if (originalImage !== localImage) {
-            try {
-                await loggingExeca(undefined, this.runner, ["tag", originalImage, localImage], {
-                    doNotPipeOutput: !this.shouldPipeOutput()
-                });
-            } catch (error) {
-                // tag may fail if the rewrite already produced the :local image directly
-                CONSOLE_LOGGER.debug(
-                    `docker tag failed (expected if image was built with local tag directly): ${error}`
-                );
+        // Skip this when build commands were already rewritten to use :local directly.
+        if (!rewriteApplied) {
+            const originalImage = this.getOriginalImageFromConfig();
+            const localImage = this.getContainerImageName();
+            if (originalImage !== localImage) {
+                try {
+                    await loggingExeca(undefined, this.runner, ["tag", originalImage, localImage], {
+                        doNotPipeOutput: !this.shouldPipeOutput()
+                    });
+                } catch (error) {
+                    CONSOLE_LOGGER.debug(
+                        `docker tag failed (expected if image was built with local tag directly): ${error}`
+                    );
+                }
             }
-        }
-
-        // Start a reusable long-lived container for generation (guard against double build() calls)
-        if (this.reusableContainer != null) {
-            return;
         }
         this.reusableContainer = new ReusableContainerExecutionEnvironment({
             imageName: this.getContainerImageName(),

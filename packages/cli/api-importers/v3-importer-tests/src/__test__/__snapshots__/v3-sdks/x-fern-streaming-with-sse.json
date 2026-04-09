@@ -348,6 +348,7 @@
               "name": "CreateCompletionRequest",
               "typeId": "CreateCompletionRequest",
               "inline": false,
+              "displayName": "CreateCompletionRequest",
               "type": "named"
             },
             "v2Examples": {
@@ -372,6 +373,7 @@
                   "name": "CreateCompletionRequest",
                   "typeId": "CreateCompletionRequest",
                   "inline": false,
+                  "displayName": "CreateCompletionRequest",
                   "type": "named"
                 },
                 "v2Examples": {

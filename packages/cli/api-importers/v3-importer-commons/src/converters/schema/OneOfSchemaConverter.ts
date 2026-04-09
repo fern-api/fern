@@ -234,12 +234,28 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 });
 
                 // Extract raw schema name for display (not namespaced)
-                const rawSchemaName = reference.match(/\/schemas\/([^/]+)/)?.[1] ?? typeId;
+                const rawSchemaName = reference.split("/").pop() ?? typeId;
+
+                // Extract schema title once for reuse
+                const schemaTitle = resolvedSchema.resolved ? resolvedSchema.value.title : undefined;
+
+                // Determine variant display name with fallback priority:
+                // 1. Schema's title field (explicit user intention)
+                // 2. Discriminant key (e.g., "EMBEDDING_GENERATION")
+                // 3. Schema name from $ref or typeId (e.g., "CircleShape")
+                const variantDisplayName = schemaTitle ?? discriminant ?? rawSchemaName;
+
+                // Set displayName on the type declaration only when the schema has an explicit title.
+                // The discriminant key is context-specific to the union and should not be applied globally.
+                if (convertedSchema.schema?.typeDeclaration != null && schemaTitle != null) {
+                    convertedSchema.schema.typeDeclaration.name.displayName = schemaTitle;
+                }
+
                 unionTypes.push({
                     docs: undefined,
                     discriminantValue: nameAndWireValue,
                     availability: convertedSchema.availability,
-                    displayName: discriminant,
+                    displayName: variantDisplayName,
                     shape: SingleUnionTypeProperties.samePropertiesAsObject({
                         typeId,
                         name: this.context.casingsGenerator.generateName(rawSchemaName),
@@ -248,7 +264,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                             packagePath: [],
                             file: undefined
                         },
-                        displayName: discriminant
+                        displayName: variantDisplayName
                     })
                 });
                 inlinedTypes = {
@@ -330,11 +346,6 @@ export class OneOfSchemaConverter extends AbstractConverter<
         const referencedTypes: Set<string> = new Set();
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
 
-        // Collect all inlined object schemas for better naming
-        const allInlinedSchemas = [...(this.schema.oneOf ?? []), ...(this.schema.anyOf ?? [])].filter(
-            (schema) => !this.context.isReferenceObject(schema)
-        ) as OpenAPIV3_1.SchemaObject[];
-
         for (const [index, subSchema] of [
             ...(this.schema.oneOf ?? []).entries(),
             ...(this.schema.anyOf ?? []).entries()
@@ -349,19 +360,21 @@ export class OneOfSchemaConverter extends AbstractConverter<
                             subSchema.summary ?? subSchema.title ?? subSchema.name ?? subSchema.messageId,
                         displayNameOverrideSource: "reference_identifier"
                     });
-                } else if (this.getDiscriminatorKeyForRef(subSchema) != null) {
-                    const mappingEntry = this.getDiscriminatorKeyForRef(subSchema);
-                    maybeTypeReference = this.context.convertReferenceToTypeReference({
-                        reference: subSchema,
-                        displayNameOverride: mappingEntry,
-                        displayNameOverrideSource: "discriminator_key"
-                    });
                 } else {
-                    maybeTypeReference = this.context.convertReferenceToTypeReference({
-                        reference: subSchema,
-                        displayNameOverride: subSchema.$ref.split("/").pop(),
-                        displayNameOverrideSource: "schema_identifier"
-                    });
+                    const mappingEntry = this.getDiscriminatorKeyForRef(subSchema);
+                    if (mappingEntry != null) {
+                        maybeTypeReference = this.context.convertReferenceToTypeReference({
+                            reference: subSchema,
+                            displayNameOverride: mappingEntry,
+                            displayNameOverrideSource: "discriminator_key"
+                        });
+                    } else {
+                        // Standard schema reference - use internal extraction
+                        maybeTypeReference = this.context.convertReferenceToTypeReference({
+                            reference: subSchema,
+                            breadcrumbs: this.breadcrumbs
+                        });
+                    }
                 }
 
                 if (maybeTypeReference.ok) {

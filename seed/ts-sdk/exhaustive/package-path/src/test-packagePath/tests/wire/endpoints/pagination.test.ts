@@ -18,17 +18,7 @@ describe("PaginationClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            items: [
-                {
-                    string: "string",
-                },
-                {
-                    string: "string",
-                },
-            ],
-            next: "next",
-        };
+        const expected = rawResponseBody;
         const page = await client.endpoints.pagination.listItems({
             cursor: "cursor",
             limit: 1,

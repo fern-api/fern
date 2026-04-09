@@ -218,7 +218,7 @@ Get event metadata.
 
 ```go
 request := &events.GetEventMetadataRequest{
-        Id: "id",
+        ID: "id",
     }
 client.User.Events.Metadata.GetMetadata(
         context.TODO(),
@@ -239,7 +239,7 @@ client.User.Events.Metadata.GetMetadata(
 <dl>
 <dd>
 
-**id:** `fern.Id` 
+**id:** `fern.ID` 
     
 </dd>
 </dl>

@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.model.commons.Language;
-import com.seed.trace.model.v.2.problem.Files;
+import com.seed.trace.model.v2.problem.Files;
 import java.lang.Object;
 import java.lang.String;
 import java.util.LinkedHashMap;

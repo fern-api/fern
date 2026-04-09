@@ -3,11 +3,11 @@
 module Seed
   module Ast
     module Types
-      class JsonLikeWithNullAndUndefined < Internal::Types::Model
+      class JSONLikeWithNullAndUndefined < Internal::Types::Model
         extend Seed::Internal::Types::Union
 
-        member -> { Internal::Types::Array[Seed::Ast::Types::JsonLikeWithNullAndUndefined] }
-        member -> { Internal::Types::Hash[String, Seed::Ast::Types::JsonLikeWithNullAndUndefined] }
+        member -> { Internal::Types::Array[Seed::Ast::Types::JSONLikeWithNullAndUndefined] }
+        member -> { Internal::Types::Hash[String, Seed::Ast::Types::JSONLikeWithNullAndUndefined] }
         member -> { String }
         member -> { Integer }
         member -> { Internal::Types::Boolean }

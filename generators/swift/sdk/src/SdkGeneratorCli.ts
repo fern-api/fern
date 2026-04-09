@@ -172,6 +172,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         this.generateSourceSchemaFiles(context);
         this.generateSourceRootClientFile(context);
         this.generateSourceEnvironmentFile(context);
+        this.generateVersionFile(context);
     }
 
     private async generateSourceAsIsFiles(context: SdkGeneratorContext): Promise<void> {
@@ -574,6 +575,18 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             directory: RelativeFilePath.of(""),
             contents: [rootClientClass]
         });
+    }
+
+    private generateVersionFile(context: SdkGeneratorContext): void {
+        const spmDetails = context.getSPMDetails();
+        const version = spmDetails.minVersion;
+        if (version != null) {
+            context.project.addSourceAsIsFile({
+                nameCandidateWithoutExtension: "Version",
+                directory: RelativeFilePath.of(""),
+                contents: `public let sdkVersion = "${version}"\n`
+            });
+        }
     }
 
     private generateSourceEnvironmentFile(context: SdkGeneratorContext): void {

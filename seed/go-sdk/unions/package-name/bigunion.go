@@ -180,7 +180,7 @@ func (a *AttractiveScript) String() string {
 
 type BigUnion struct {
 	Type               string
-	Id                 string
+	ID                 string
 	CreatedAt          time.Time
 	ArchivedAt         *time.Time
 	NormalSweet        *NormalSweet
@@ -221,11 +221,11 @@ func (b *BigUnion) GetType() string {
 	return b.Type
 }
 
-func (b *BigUnion) GetId() string {
+func (b *BigUnion) GetID() string {
 	if b == nil {
 		return ""
 	}
-	return b.Id
+	return b.ID
 }
 
 func (b *BigUnion) GetCreatedAt() time.Time {
@@ -448,7 +448,7 @@ func (b *BigUnion) GetGaseousRoad() *GaseousRoad {
 func (b *BigUnion) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type       string     `json:"type"`
-		Id         string     `json:"id"`
+		ID         string     `json:"id"`
 		CreatedAt  time.Time  `json:"created-at"`
 		ArchivedAt *time.Time `json:"archived-at,omitempty"`
 	}
@@ -456,7 +456,7 @@ func (b *BigUnion) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	b.Type = unmarshaler.Type
-	b.Id = unmarshaler.Id
+	b.ID = unmarshaler.ID
 	b.CreatedAt = unmarshaler.CreatedAt
 	b.ArchivedAt = unmarshaler.ArchivedAt
 	if unmarshaler.Type == "" {

@@ -36,11 +36,34 @@ runs:
       uses: ./.github/actions/install
 
     - name: Log in to Docker Hub
+      id: docker-login
       if: ${{ inputs.dockerhub-username != '' }}
       uses: docker/login-action@v3
+      continue-on-error: true
       with:
         username: ${{ inputs.dockerhub-username }}
         password: ${{ inputs.dockerhub-token }}
+
+    - name: Retry Docker Hub login
+      id: docker-login-retry
+      if: ${{ inputs.dockerhub-username != '' && steps.docker-login.outcome == 'failure' }}
+      uses: docker/login-action@v3
+      continue-on-error: true
+      with:
+        username: ${{ inputs.dockerhub-username }}
+        password: ${{ inputs.dockerhub-token }}
+
+    - name: Docker Hub login status
+      if: ${{ inputs.dockerhub-username != '' }}
+      shell: bash
+      run: |
+        if [[ "${{ steps.docker-login.outcome }}" == "success" ]]; then
+          echo "Docker Hub login succeeded on first attempt"
+        elif [[ "${{ steps.docker-login-retry.outcome }}" == "success" ]]; then
+          echo "Docker Hub login succeeded on retry"
+        else
+          echo "::warning::Docker Hub login failed after 2 attempts — continuing without authentication (may hit rate limits)"
+        fi
 
     - name: Clear stale Docker image cache
       shell: bash

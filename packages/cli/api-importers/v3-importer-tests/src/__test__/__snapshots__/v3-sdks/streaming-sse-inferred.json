@@ -347,6 +347,7 @@
               "name": "CompletionRequest",
               "typeId": "CompletionRequest",
               "inline": false,
+              "displayName": "CompletionRequest",
               "type": "named"
             },
             "v2Examples": {
@@ -371,6 +372,7 @@
                   "name": "CompletionRequest",
                   "typeId": "CompletionRequest",
                   "inline": false,
+                  "displayName": "CompletionRequest",
                   "type": "named"
                 },
                 "v2Examples": {
@@ -398,6 +400,7 @@
                   "name": "CompletionChunk",
                   "typeId": "CompletionChunk",
                   "inline": false,
+                  "displayName": "CompletionChunk",
                   "type": "named"
                 },
                 "v2Examples": {
@@ -452,6 +455,7 @@
                       "name": "CompletionChunk",
                       "typeId": "CompletionChunk",
                       "inline": false,
+                      "displayName": "CompletionChunk",
                       "type": "named"
                     },
                     "v2Examples": {
@@ -634,6 +638,7 @@
               "name": "CompletionRequest",
               "typeId": "CompletionRequest",
               "inline": false,
+              "displayName": "CompletionRequest",
               "type": "named"
             },
             "v2Examples": {
@@ -658,6 +663,7 @@
                   "name": "CompletionRequest",
                   "typeId": "CompletionRequest",
                   "inline": false,
+                  "displayName": "CompletionRequest",
                   "type": "named"
                 },
                 "v2Examples": {
@@ -684,6 +690,7 @@
                   "name": "Completion",
                   "typeId": "Completion",
                   "inline": false,
+                  "displayName": "Completion",
                   "type": "named"
                 },
                 "docs": "Non-streaming completion response",
@@ -744,6 +751,7 @@
                       "name": "Completion",
                       "typeId": "Completion",
                       "inline": false,
+                      "displayName": "Completion",
                       "type": "named"
                     },
                     "docs": "Non-streaming completion response",
@@ -927,6 +935,7 @@
               "name": "CompletionRequest",
               "typeId": "CompletionRequest",
               "inline": false,
+              "displayName": "CompletionRequest",
               "type": "named"
             },
             "v2Examples": {
@@ -951,6 +960,7 @@
                   "name": "CompletionRequest",
                   "typeId": "CompletionRequest",
                   "inline": false,
+                  "displayName": "CompletionRequest",
                   "type": "named"
                 },
                 "v2Examples": {
@@ -977,6 +987,7 @@
                   "name": "Completion",
                   "typeId": "Completion",
                   "inline": false,
+                  "displayName": "Completion",
                   "type": "named"
                 },
                 "docs": "Response with both JSON and SSE content types",
@@ -1037,6 +1048,7 @@
                       "name": "Completion",
                       "typeId": "Completion",
                       "inline": false,
+                      "displayName": "Completion",
                       "type": "named"
                     },
                     "docs": "Response with both JSON and SSE content types",

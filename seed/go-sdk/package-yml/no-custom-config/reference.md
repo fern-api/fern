@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.Echo(Id, request) -> string</code></summary>
+<details><summary><code>client.Echo(ID, request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ client.Echo(
 </details>
 
 ## Service
-<details><summary><code>client.Service.Nop(Id, NestedId) -> error</code></summary>
+<details><summary><code>client.Service.Nop(ID, NestedID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -98,7 +98,7 @@ client.Service.Nop(
 <dl>
 <dd>
 
-**nestedId:** `string` 
+**nestedID:** `string` 
     
 </dd>
 </dl>

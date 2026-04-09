@@ -63,7 +63,7 @@
       "type": {
         "_visit": [Function],
         "default": undefined,
-        "displayName": undefined,
+        "displayName": "Error",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -186,7 +186,7 @@
             "requestBodyType": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "EventRequest",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -219,7 +219,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "EventResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -317,7 +317,7 @@
                 "requestBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "EventRequest",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -354,7 +354,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "EventResponse",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -1021,7 +1021,7 @@
             "valueType": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "EventRequest",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,

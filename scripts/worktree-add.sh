@@ -31,9 +31,15 @@ if [ -z "$path" ]; then
     path="$WORKTREE_BASE/$branch"
 fi
 
+# Fetch the branch from origin if it exists remotely, so we track it
+# instead of creating a disconnected local branch.
+git fetch origin "$branch" 2>/dev/null || true
+
 # Create worktree — use -b if the branch doesn't exist yet
 if git show-ref --verify --quiet "refs/heads/$branch"; then
     git worktree add "$path" "$branch"
+elif git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+    git worktree add --track -b "$branch" "$path" "origin/$branch"
 else
     git worktree add -b "$branch" "$path"
 fi

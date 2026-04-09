@@ -12,12 +12,12 @@ import (
 )
 
 var (
-	nameFieldId    = big.NewInt(1 << 0)
+	nameFieldID    = big.NewInt(1 << 0)
 	nameFieldValue = big.NewInt(1 << 1)
 )
 
 type Name struct {
-	Id    string `json:"id" url:"id"`
+	ID    string `json:"id" url:"id"`
 	Value string `json:"value" url:"value"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -27,11 +27,11 @@ type Name struct {
 	rawJSON         json.RawMessage
 }
 
-func (n *Name) GetId() string {
+func (n *Name) GetID() string {
 	if n == nil {
 		return ""
 	}
-	return n.Id
+	return n.ID
 }
 
 func (n *Name) GetValue() string {
@@ -55,11 +55,11 @@ func (n *Name) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (n *Name) SetId(id string) {
-	n.Id = id
-	n.require(nameFieldId)
+func (n *Name) SetID(id string) {
+	n.ID = id
+	n.require(nameFieldID)
 }
 
 // SetValue sets the Value field and marks it as non-optional;
