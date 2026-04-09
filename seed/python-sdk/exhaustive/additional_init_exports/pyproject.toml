@@ -68,6 +68,9 @@ markers = [
 [tool.mypy]
 plugins = ["pydantic.mypy"]
 
+[[tool.mypy.overrides]]
+module = "seed.client_additions"
+ignore_missing_imports = true
 [tool.ruff]
 line-length = 120
 
