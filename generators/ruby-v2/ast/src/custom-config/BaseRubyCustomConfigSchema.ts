@@ -33,9 +33,9 @@ export const BaseRubyCustomConfigSchema = z.object({
     useDefaultRequestParameterValues: z.boolean().optional(),
     omitFernHeaders: z.boolean().optional(),
     // RuboCop Naming/VariableNumber style for field names with numbers
-    // - "snake_case": requires underscores before numbers (e.g., recaptcha_v_2) - default
+    // - "snake_case": requires underscores before numbers (e.g., recaptcha_v_2)
     // - "normalcase": allows numbers without underscores (e.g., recaptcha_v2, office365)
-    // - "disabled": disables the cop entirely
+    // - "disabled": disables the cop entirely - default
     rubocopVariableNumberStyle: z.enum(["snake_case", "normalcase", "disabled"]).optional(),
     maxRetries: z.number().int().min(0).optional()
 });
