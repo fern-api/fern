@@ -10,8 +10,8 @@ from .metadata_union import MetadataUnion
 from .my_union import MyUnion
 from .name import Name
 from .named_metadata import NamedMetadata
-from .nested_union_l_1 import NestedUnionL1
-from .nested_union_l_2 import NestedUnionL2
+from .nested_union_l1 import NestedUnionL1
+from .nested_union_l2 import NestedUnionL2
 from .nested_union_root import NestedUnionRoot
 from .optional_metadata import OptionalMetadata
 from .payment_method_union import PaymentMethodUnion

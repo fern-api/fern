@@ -6,7 +6,7 @@ import pydantic
 import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...core.serialization import FieldMetadata
-from ..v_2.resources.problem.test_case_id import TestCaseId
+from ..v2.resources.problem.test_case_id import TestCaseId
 
 
 class RecordedTestCaseUpdate(UniversalBaseModel):
