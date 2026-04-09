@@ -487,12 +487,21 @@ export async function runAppPreviewServer({
     if (bundlePath != null) {
         context.logger.info(`Using bundle from path: ${bundlePath}`);
     } else {
+        // On Windows, use the Windows-specific bundle built without Unix symlinks
+        const isWindows = process.platform === "win32";
+        const tarBucketUrl = isWindows
+            ? process.env.APP_DOCS_TAR_PREVIEW_BUCKET_WINDOWS
+            : process.env.APP_DOCS_TAR_PREVIEW_BUCKET;
+
         try {
-            const url = process.env.APP_DOCS_TAR_PREVIEW_BUCKET;
+            const url = tarBucketUrl ?? process.env.APP_DOCS_TAR_PREVIEW_BUCKET;
             if (url == null) {
                 throw new Error(
                     "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
                 );
+            }
+            if (isWindows) {
+                context.logger.debug("Using Windows-specific bundle");
             }
             await downloadBundle({
                 bucketUrl: url,
