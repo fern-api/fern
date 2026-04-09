@@ -12,6 +12,13 @@
   createdAt: "2026-04-09"
   irVersion: 65
 
+- version: 5.3.7
+  changelogEntry:
+    - summary: |
+        Upgrade @fern-api/generator-cli to 0.9.4 which upgrades @fern-api/replay to 0.10.1.
+      type: chore
+  createdAt: "2026-04-09"
+  irVersion: 65
 - version: 5.3.6
   changelogEntry:
     - summary: |
