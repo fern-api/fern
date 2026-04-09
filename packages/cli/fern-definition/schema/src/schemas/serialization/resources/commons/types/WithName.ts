@@ -6,11 +6,11 @@ import type * as serializers from "../../../index.js";
 
 export const WithName: core.serialization.ObjectSchema<serializers.WithName.Raw, FernDefinition.WithName> =
     core.serialization.object({
-        name: core.serialization.string().optional(),
+        name: core.serialization.string().nullable(),
     });
 
 export declare namespace WithName {
     export interface Raw {
-        name?: string | null;
+        name: string | null;
     }
 }

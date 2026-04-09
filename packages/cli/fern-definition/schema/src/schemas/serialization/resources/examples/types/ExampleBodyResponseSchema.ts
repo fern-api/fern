@@ -9,13 +9,13 @@ export const ExampleBodyResponseSchema: core.serialization.ObjectSchema<
     serializers.ExampleBodyResponseSchema.Raw,
     FernDefinition.ExampleBodyResponseSchema
 > = core.serialization.object({
-    error: core.serialization.string().optional(),
-    body: ExampleTypeReferenceSchema.optional(),
+    error: core.serialization.string().nullable(),
+    body: ExampleTypeReferenceSchema.nullable(),
 });
 
 export declare namespace ExampleBodyResponseSchema {
     export interface Raw {
-        error?: string | null;
-        body?: (ExampleTypeReferenceSchema.Raw | undefined) | null;
+        error: string | null;
+        body: (ExampleTypeReferenceSchema.Raw | undefined) | null;
     }
 }

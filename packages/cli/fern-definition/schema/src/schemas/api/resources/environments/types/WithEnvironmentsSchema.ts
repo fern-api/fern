@@ -3,7 +3,7 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface WithEnvironmentsSchema {
-    "default-url"?: string;
-    "default-environment"?: string;
-    environments?: Record<string, FernDefinition.EnvironmentSchema>;
+    "default-url": string | null;
+    "default-environment": string | null;
+    environments: Record<string, FernDefinition.EnvironmentSchema> | null;
 }

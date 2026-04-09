@@ -4,5 +4,5 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface EnumValueSchema extends FernDefinition.WithDocsSchema, FernDefinition.WithName {
     value: string;
-    casing?: FernDefinition.CasingOverridesSchema;
+    casing: FernDefinition.CasingOverridesSchema | null;
 }

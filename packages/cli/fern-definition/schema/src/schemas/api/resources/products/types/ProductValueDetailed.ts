@@ -4,5 +4,5 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface ProductValueDetailed extends FernDefinition.WithDocsSchema, FernDefinition.WithName {
     value: string;
-    versions?: FernDefinition.VersionDeclarationSchema;
+    versions: FernDefinition.VersionDeclarationSchema | null;
 }

@@ -13,21 +13,21 @@ export const AsymmetricSignatureSchema: core.serialization.ObjectSchema<
 > = core.serialization.object({
     header: core.serialization.string(),
     "asymmetric-algorithm": AsymmetricAlgorithmSchema,
-    encoding: WebhookSignatureEncodingSchema.optional(),
-    "signature-prefix": core.serialization.string().optional(),
-    "jwks-url": core.serialization.string().optional(),
-    "key-id-header": core.serialization.string().optional(),
-    timestamp: WebhookTimestampSchema.optional(),
+    encoding: WebhookSignatureEncodingSchema.nullable(),
+    "signature-prefix": core.serialization.string().nullable(),
+    "jwks-url": core.serialization.string().nullable(),
+    "key-id-header": core.serialization.string().nullable(),
+    timestamp: WebhookTimestampSchema.nullable(),
 });
 
 export declare namespace AsymmetricSignatureSchema {
     export interface Raw {
         header: string;
         "asymmetric-algorithm": AsymmetricAlgorithmSchema.Raw;
-        encoding?: WebhookSignatureEncodingSchema.Raw | null;
-        "signature-prefix"?: string | null;
-        "jwks-url"?: string | null;
-        "key-id-header"?: string | null;
-        timestamp?: WebhookTimestampSchema.Raw | null;
+        encoding: WebhookSignatureEncodingSchema.Raw | null;
+        "signature-prefix": string | null;
+        "jwks-url": string | null;
+        "key-id-header": string | null;
+        timestamp: WebhookTimestampSchema.Raw | null;
     }
 }

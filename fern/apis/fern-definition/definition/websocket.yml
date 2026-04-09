@@ -11,14 +11,14 @@ types:
       - commons.WithDisplayName
     properties:
       auth: boolean
-      url: optional<string>
+      url: nullable<string>
       path: string
-      connect-method-name: optional<string>
-      headers: optional<map<string, service.HttpHeaderSchema>>
-      path-parameters: optional<map<string, service.HttpPathParameterSchema>>
-      query-parameters: optional<map<string, service.HttpQueryParameterSchema>>
-      messages: optional<map<string, WebSocketChannelMessageSchema>>
-      examples: optional<list<examples.ExampleWebSocketSession>>
+      connect-method-name: nullable<string>
+      headers: nullable<map<string, service.HttpHeaderSchema>>
+      path-parameters: nullable<map<string, service.HttpPathParameterSchema>>
+      query-parameters: nullable<map<string, service.HttpQueryParameterSchema>>
+      messages: nullable<map<string, WebSocketChannelMessageSchema>>
+      examples: nullable<list<examples.ExampleWebSocketSession>>
 
   WebSocketChannelMessageSchema:
     extends:
@@ -50,5 +50,5 @@ types:
   WebSocketChannelInlinedMessageSchema:
     properties:
       name: string
-      extends: optional<types.ObjectExtendsSchema>
-      properties: optional<map<string, types.ObjectPropertySchema>>
+      extends: nullable<types.ObjectExtendsSchema>
+      properties: nullable<map<string, types.ObjectPropertySchema>>

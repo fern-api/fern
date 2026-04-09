@@ -8,11 +8,11 @@ export const WithMethodName: core.serialization.ObjectSchema<
     serializers.WithMethodName.Raw,
     FernDefinition.WithMethodName
 > = core.serialization.object({
-    "method-name": core.serialization.string().optional(),
+    "method-name": core.serialization.string().nullable(),
 });
 
 export declare namespace WithMethodName {
     export interface Raw {
-        "method-name"?: string | null;
+        "method-name": string | null;
     }
 }

@@ -3,7 +3,7 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface ObjectSchema extends FernDefinition.BaseTypeDeclarationSchema {
-    extends?: FernDefinition.ObjectExtendsSchema;
-    properties?: Record<string, FernDefinition.ObjectPropertySchema>;
-    "extra-properties"?: boolean;
+    extends: FernDefinition.ObjectExtendsSchema | null;
+    properties: Record<string, FernDefinition.ObjectPropertySchema> | null;
+    "extra-properties": boolean | null;
 }

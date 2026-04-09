@@ -3,7 +3,7 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface EnumSchema extends FernDefinition.BaseTypeDeclarationSchema {
-    default?: string;
+    default: string | null;
     enum: FernDefinition.EnumValue[];
-    "forward-compatible"?: boolean;
+    "forward-compatible": boolean | null;
 }

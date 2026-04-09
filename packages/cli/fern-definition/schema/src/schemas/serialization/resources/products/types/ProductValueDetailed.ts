@@ -13,7 +13,7 @@ export const ProductValueDetailed: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         value: core.serialization.string(),
-        versions: VersionDeclarationSchema.optional(),
+        versions: VersionDeclarationSchema.nullable(),
     })
     .extend(WithDocsSchema)
     .extend(WithName);
@@ -21,6 +21,6 @@ export const ProductValueDetailed: core.serialization.ObjectSchema<
 export declare namespace ProductValueDetailed {
     export interface Raw extends WithDocsSchema.Raw, WithName.Raw {
         value: string;
-        versions?: VersionDeclarationSchema.Raw | null;
+        versions: VersionDeclarationSchema.Raw | null;
     }
 }

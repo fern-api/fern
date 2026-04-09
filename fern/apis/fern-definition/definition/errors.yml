@@ -9,5 +9,5 @@ types:
       - commons.WithDocsSchema
     properties:
       status-code: integer
-      type: optional<string>
-      examples: optional<list<examples.ExampleTypeSchema>>
+      type: nullable<string>
+      examples: nullable<list<examples.ExampleTypeSchema>>

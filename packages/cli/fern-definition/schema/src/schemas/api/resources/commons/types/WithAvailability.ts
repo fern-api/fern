@@ -3,5 +3,5 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface WithAvailability {
-    availability?: FernDefinition.AvailabilityUnionSchema;
+    availability: FernDefinition.AvailabilityUnionSchema | null;
 }

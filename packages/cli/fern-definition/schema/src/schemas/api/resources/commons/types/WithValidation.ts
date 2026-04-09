@@ -3,5 +3,5 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface WithValidation {
-    validation?: FernDefinition.ValidationSchema;
+    validation: FernDefinition.ValidationSchema | null;
 }

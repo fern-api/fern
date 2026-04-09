@@ -13,9 +13,9 @@ export const SingleBaseUrlEnvironmentSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         url: core.serialization.string(),
-        "default-url": core.serialization.string().optional(),
-        "url-template": core.serialization.string().optional(),
-        variables: core.serialization.list(ServerVariableSchema).optional(),
+        "default-url": core.serialization.string().nullable(),
+        "url-template": core.serialization.string().nullable(),
+        variables: core.serialization.list(ServerVariableSchema).nullable(),
     })
     .extend(WithAudiences)
     .extend(WithDocsSchema);
@@ -23,8 +23,8 @@ export const SingleBaseUrlEnvironmentSchema: core.serialization.ObjectSchema<
 export declare namespace SingleBaseUrlEnvironmentSchema {
     export interface Raw extends WithAudiences.Raw, WithDocsSchema.Raw {
         url: string;
-        "default-url"?: string | null;
-        "url-template"?: string | null;
-        variables?: ServerVariableSchema.Raw[] | null;
+        "default-url": string | null;
+        "url-template": string | null;
+        variables: ServerVariableSchema.Raw[] | null;
     }
 }

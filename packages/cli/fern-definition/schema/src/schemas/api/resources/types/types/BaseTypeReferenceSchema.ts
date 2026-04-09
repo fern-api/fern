@@ -3,7 +3,7 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface BaseTypeReferenceSchema extends FernDefinition.WithDocsSchema, FernDefinition.WithAvailability {
-    default?: unknown;
-    encoding?: FernDefinition.EncodingSchema;
-    validation?: FernDefinition.ValidationSchema;
+    default: unknown | null;
+    encoding: FernDefinition.EncodingSchema | null;
+    validation: FernDefinition.ValidationSchema | null;
 }

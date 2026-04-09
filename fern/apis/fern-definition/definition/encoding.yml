@@ -1,7 +1,7 @@
 types:
   EncodingSchema:
     properties:
-      proto: optional<ProtobufTypeSchema>
+      proto: nullable<ProtobufTypeSchema>
 
   ProtobufTypeSchema:
     properties:

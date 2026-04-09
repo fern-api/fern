@@ -3,15 +3,15 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface DefinitionFileSchema extends FernDefinition.WithDocsSchema {
-    imports?: Record<string, string>;
-    types?: Record<string, FernDefinition.TypeDeclarationSchema>;
-    service?: FernDefinition.HttpServiceSchema;
-    errors?: Record<string, FernDefinition.ErrorDeclarationSchema>;
-    webhooks?: Record<string, FernDefinition.WebhookSchema>;
+    imports: Record<string, string> | null;
+    types: Record<string, FernDefinition.TypeDeclarationSchema> | null;
+    service: FernDefinition.HttpServiceSchema | null;
+    errors: Record<string, FernDefinition.ErrorDeclarationSchema> | null;
+    webhooks: Record<string, FernDefinition.WebhookSchema> | null;
     /**
      * Default webhook signature verification configuration.
      * Applied to all webhooks in this file that do not declare their own signature.
      */
-    "webhook-signature"?: FernDefinition.WebhookSignatureSchema;
-    channel?: FernDefinition.WebSocketChannelSchema;
+    "webhook-signature": FernDefinition.WebhookSignatureSchema | null;
+    channel: FernDefinition.WebSocketChannelSchema | null;
 }

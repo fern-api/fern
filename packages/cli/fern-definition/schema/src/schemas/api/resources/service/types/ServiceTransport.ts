@@ -3,5 +3,5 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface ServiceTransport {
-    grpc?: FernDefinition.GrpcTransport;
+    grpc: FernDefinition.GrpcTransport | null;
 }

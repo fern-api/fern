@@ -8,11 +8,11 @@ export const WithEnvironmentVariable: core.serialization.ObjectSchema<
     serializers.WithEnvironmentVariable.Raw,
     FernDefinition.WithEnvironmentVariable
 > = core.serialization.object({
-    env: core.serialization.string().optional(),
+    env: core.serialization.string().nullable(),
 });
 
 export declare namespace WithEnvironmentVariable {
     export interface Raw {
-        env?: string | null;
+        env: string | null;
     }
 }

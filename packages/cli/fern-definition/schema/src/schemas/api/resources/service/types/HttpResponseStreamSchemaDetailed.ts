@@ -4,6 +4,6 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface HttpResponseStreamSchemaDetailed extends FernDefinition.WithDocsSchema {
     type: string;
-    format?: FernDefinition.StreamFormat;
-    terminator?: string;
+    format: FernDefinition.StreamFormat | null;
+    terminator: string | null;
 }

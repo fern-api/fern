@@ -8,15 +8,15 @@ export const ProductDeclarationHeaderObjectSchema: core.serialization.ObjectSche
     serializers.ProductDeclarationHeaderObjectSchema.Raw,
     FernDefinition.ProductDeclarationHeaderObjectSchema
 > = core.serialization.object({
-    name: core.serialization.string().optional(),
-    env: core.serialization.string().optional(),
+    name: core.serialization.string().nullable(),
+    env: core.serialization.string().nullable(),
     value: core.serialization.string(),
 });
 
 export declare namespace ProductDeclarationHeaderObjectSchema {
     export interface Raw {
-        name?: string | null;
-        env?: string | null;
+        name: string | null;
+        env: string | null;
         value: string;
     }
 }

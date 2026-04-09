@@ -2,9 +2,9 @@
 
 export interface OAuthAccessTokenRequestPropertiesSchema {
     /** The property name for the client ID. */
-    "client-id"?: string;
+    "client-id": string | null;
     /** The property name for the client secret. */
-    "client-secret"?: string;
+    "client-secret": string | null;
     /** The property name for the scopes. */
-    scopes?: string;
+    scopes: string | null;
 }

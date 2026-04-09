@@ -8,15 +8,15 @@ export const OAuthRefreshTokenResponsePropertiesSchema: core.serialization.Objec
     serializers.OAuthRefreshTokenResponsePropertiesSchema.Raw,
     FernDefinition.OAuthRefreshTokenResponsePropertiesSchema
 > = core.serialization.object({
-    "access-token": core.serialization.string().optional(),
-    "expires-in": core.serialization.string().optional(),
-    "refresh-token": core.serialization.string().optional(),
+    "access-token": core.serialization.string().nullable(),
+    "expires-in": core.serialization.string().nullable(),
+    "refresh-token": core.serialization.string().nullable(),
 });
 
 export declare namespace OAuthRefreshTokenResponsePropertiesSchema {
     export interface Raw {
-        "access-token"?: string | null;
-        "expires-in"?: string | null;
-        "refresh-token"?: string | null;
+        "access-token": string | null;
+        "expires-in": string | null;
+        "refresh-token": string | null;
     }
 }

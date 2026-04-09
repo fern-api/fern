@@ -3,6 +3,6 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface ExampleBodyResponseSchema {
-    error?: string;
-    body?: FernDefinition.ExampleTypeReferenceSchema;
+    error: string | null;
+    body: FernDefinition.ExampleTypeReferenceSchema | null;
 }

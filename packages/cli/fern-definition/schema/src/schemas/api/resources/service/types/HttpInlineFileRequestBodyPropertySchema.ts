@@ -4,6 +4,6 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface HttpInlineFileRequestBodyPropertySchema extends FernDefinition.TypeReferenceDeclarationWithName {
     /** Defaults to json encoding */
-    style?: FernDefinition.FormDataBodyEncodingStyle;
-    "content-type"?: string;
+    style: FernDefinition.FormDataBodyEncodingStyle | null;
+    "content-type": string | null;
 }

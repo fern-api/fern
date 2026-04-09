@@ -3,8 +3,8 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface ExampleWebSocketSession extends FernDefinition.WithName, FernDefinition.WithDocsSchema {
-    "path-parameters"?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;
-    "query-parameters"?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;
-    headers?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;
+    "path-parameters": Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined> | null;
+    "query-parameters": Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined> | null;
+    headers: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined> | null;
     messages: FernDefinition.ExampleWebSocketMessage[];
 }

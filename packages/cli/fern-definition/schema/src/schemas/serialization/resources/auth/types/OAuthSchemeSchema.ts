@@ -15,13 +15,13 @@ export const OAuthSchemeSchema: core.serialization.ObjectSchema<
     .object({
         scheme: core.serialization.stringLiteral("oauth"),
         type: core.serialization.stringLiteral("client-credentials"),
-        scopes: core.serialization.list(AuthScope).optional(),
-        "client-id-env": core.serialization.string().optional(),
-        "client-secret-env": core.serialization.string().optional(),
-        "token-prefix": core.serialization.string().optional(),
-        "token-header": core.serialization.string().optional(),
+        scopes: core.serialization.list(AuthScope).nullable(),
+        "client-id-env": core.serialization.string().nullable(),
+        "client-secret-env": core.serialization.string().nullable(),
+        "token-prefix": core.serialization.string().nullable(),
+        "token-header": core.serialization.string().nullable(),
         "get-token": OAuthGetTokenEndpointSchema,
-        "refresh-token": OAuthRefreshTokenEndpointSchema.optional(),
+        "refresh-token": OAuthRefreshTokenEndpointSchema.nullable(),
     })
     .extend(WithDocsSchema);
 
@@ -29,12 +29,12 @@ export declare namespace OAuthSchemeSchema {
     export interface Raw extends WithDocsSchema.Raw {
         scheme: "oauth";
         type: "client-credentials";
-        scopes?: AuthScope.Raw[] | null;
-        "client-id-env"?: string | null;
-        "client-secret-env"?: string | null;
-        "token-prefix"?: string | null;
-        "token-header"?: string | null;
+        scopes: AuthScope.Raw[] | null;
+        "client-id-env": string | null;
+        "client-secret-env": string | null;
+        "token-prefix": string | null;
+        "token-header": string | null;
         "get-token": OAuthGetTokenEndpointSchema.Raw;
-        "refresh-token"?: OAuthRefreshTokenEndpointSchema.Raw | null;
+        "refresh-token": OAuthRefreshTokenEndpointSchema.Raw | null;
     }
 }

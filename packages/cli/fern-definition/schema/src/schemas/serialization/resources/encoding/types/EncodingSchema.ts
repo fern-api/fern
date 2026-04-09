@@ -9,11 +9,11 @@ export const EncodingSchema: core.serialization.ObjectSchema<
     serializers.EncodingSchema.Raw,
     FernDefinition.EncodingSchema
 > = core.serialization.object({
-    proto: ProtobufTypeSchema.optional(),
+    proto: ProtobufTypeSchema.nullable(),
 });
 
 export declare namespace EncodingSchema {
     export interface Raw {
-        proto?: ProtobufTypeSchema.Raw | null;
+        proto: ProtobufTypeSchema.Raw | null;
     }
 }

@@ -19,6 +19,6 @@ export const ExampleTypeSchema: core.serialization.ObjectSchema<
 
 export declare namespace ExampleTypeSchema {
     export interface Raw extends WithName.Raw, WithDocsSchema.Raw {
-        value?: ExampleTypeValueSchema.Raw;
+        value: ExampleTypeValueSchema.Raw | null;
     }
 }

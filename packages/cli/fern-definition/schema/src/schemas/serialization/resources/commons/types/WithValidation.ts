@@ -9,11 +9,11 @@ export const WithValidation: core.serialization.ObjectSchema<
     serializers.WithValidation.Raw,
     FernDefinition.WithValidation
 > = core.serialization.object({
-    validation: ValidationSchema.optional(),
+    validation: ValidationSchema.nullable(),
 });
 
 export declare namespace WithValidation {
     export interface Raw {
-        validation?: ValidationSchema.Raw | null;
+        validation: ValidationSchema.Raw | null;
     }
 }

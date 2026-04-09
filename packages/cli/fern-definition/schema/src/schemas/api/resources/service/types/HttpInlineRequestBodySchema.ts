@@ -3,7 +3,7 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface HttpInlineRequestBodySchema {
-    extends?: FernDefinition.ObjectExtendsSchema;
-    "extra-properties"?: boolean;
-    properties?: Record<string, FernDefinition.HttpInlineRequestBodyPropertySchema>;
+    extends: FernDefinition.ObjectExtendsSchema | null;
+    "extra-properties": boolean | null;
+    properties: Record<string, FernDefinition.HttpInlineRequestBodyPropertySchema> | null;
 }

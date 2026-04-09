@@ -16,24 +16,24 @@ export const DefinitionFileSchema: core.serialization.ObjectSchema<
     FernDefinition.DefinitionFileSchema
 > = core.serialization
     .object({
-        imports: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
-        types: core.serialization.record(core.serialization.string(), TypeDeclarationSchema).optional(),
-        service: HttpServiceSchema.optional(),
-        errors: core.serialization.record(core.serialization.string(), ErrorDeclarationSchema).optional(),
-        webhooks: core.serialization.record(core.serialization.string(), WebhookSchema).optional(),
-        "webhook-signature": WebhookSignatureSchema.optional(),
-        channel: WebSocketChannelSchema.optional(),
+        imports: core.serialization.record(core.serialization.string(), core.serialization.string()).nullable(),
+        types: core.serialization.record(core.serialization.string(), TypeDeclarationSchema).nullable(),
+        service: HttpServiceSchema.nullable(),
+        errors: core.serialization.record(core.serialization.string(), ErrorDeclarationSchema).nullable(),
+        webhooks: core.serialization.record(core.serialization.string(), WebhookSchema).nullable(),
+        "webhook-signature": WebhookSignatureSchema.nullable(),
+        channel: WebSocketChannelSchema.nullable(),
     })
     .extend(WithDocsSchema);
 
 export declare namespace DefinitionFileSchema {
     export interface Raw extends WithDocsSchema.Raw {
-        imports?: Record<string, string> | null;
-        types?: Record<string, TypeDeclarationSchema.Raw> | null;
-        service?: HttpServiceSchema.Raw | null;
-        errors?: Record<string, ErrorDeclarationSchema.Raw> | null;
-        webhooks?: Record<string, WebhookSchema.Raw> | null;
-        "webhook-signature"?: WebhookSignatureSchema.Raw | null;
-        channel?: WebSocketChannelSchema.Raw | null;
+        imports: Record<string, string> | null;
+        types: Record<string, TypeDeclarationSchema.Raw> | null;
+        service: HttpServiceSchema.Raw | null;
+        errors: Record<string, ErrorDeclarationSchema.Raw> | null;
+        webhooks: Record<string, WebhookSchema.Raw> | null;
+        "webhook-signature": WebhookSignatureSchema.Raw | null;
+        channel: WebSocketChannelSchema.Raw | null;
     }
 }

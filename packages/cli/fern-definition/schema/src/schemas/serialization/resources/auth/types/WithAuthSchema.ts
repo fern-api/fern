@@ -11,13 +11,13 @@ export const WithAuthSchema: core.serialization.ObjectSchema<
     serializers.WithAuthSchema.Raw,
     FernDefinition.WithAuthSchema
 > = core.serialization.object({
-    auth: ApiAuthSchema.optional(),
-    "auth-schemes": core.serialization.record(AuthSchemeKey, AuthSchemeDeclarationSchema).optional(),
+    auth: ApiAuthSchema.nullable(),
+    "auth-schemes": core.serialization.record(AuthSchemeKey, AuthSchemeDeclarationSchema).nullable(),
 });
 
 export declare namespace WithAuthSchema {
     export interface Raw {
-        auth?: ApiAuthSchema.Raw | null;
-        "auth-schemes"?: Record<AuthSchemeKey.Raw, AuthSchemeDeclarationSchema.Raw> | null;
+        auth: ApiAuthSchema.Raw | null;
+        "auth-schemes": Record<AuthSchemeKey.Raw, AuthSchemeDeclarationSchema.Raw> | null;
     }
 }

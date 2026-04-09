@@ -3,6 +3,6 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface WithAuthSchema {
-    auth?: FernDefinition.ApiAuthSchema;
-    "auth-schemes"?: Record<FernDefinition.AuthSchemeKey, FernDefinition.AuthSchemeDeclarationSchema>;
+    auth: FernDefinition.ApiAuthSchema | null;
+    "auth-schemes": Record<FernDefinition.AuthSchemeKey, FernDefinition.AuthSchemeDeclarationSchema> | null;
 }

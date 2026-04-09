@@ -2,5 +2,5 @@
 
 export interface ExampleWebSocketMessage {
     type: string;
-    body?: unknown;
+    body: unknown | null;
 }

@@ -17,14 +17,14 @@ export const WebSocketChannelSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         auth: core.serialization.boolean(),
-        url: core.serialization.string().optional(),
+        url: core.serialization.string().nullable(),
         path: core.serialization.string(),
-        "connect-method-name": core.serialization.string().optional(),
-        headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
-        "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).optional(),
-        "query-parameters": core.serialization.record(core.serialization.string(), HttpQueryParameterSchema).optional(),
-        messages: core.serialization.record(core.serialization.string(), WebSocketChannelMessageSchema).optional(),
-        examples: core.serialization.list(ExampleWebSocketSession).optional(),
+        "connect-method-name": core.serialization.string().nullable(),
+        headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).nullable(),
+        "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).nullable(),
+        "query-parameters": core.serialization.record(core.serialization.string(), HttpQueryParameterSchema).nullable(),
+        messages: core.serialization.record(core.serialization.string(), WebSocketChannelMessageSchema).nullable(),
+        examples: core.serialization.list(ExampleWebSocketSession).nullable(),
     })
     .extend(DeclarationSchema)
     .extend(WithDisplayName);
@@ -32,13 +32,13 @@ export const WebSocketChannelSchema: core.serialization.ObjectSchema<
 export declare namespace WebSocketChannelSchema {
     export interface Raw extends DeclarationSchema.Raw, WithDisplayName.Raw {
         auth: boolean;
-        url?: string | null;
+        url: string | null;
         path: string;
-        "connect-method-name"?: string | null;
-        headers?: Record<string, HttpHeaderSchema.Raw> | null;
-        "path-parameters"?: Record<string, HttpPathParameterSchema.Raw> | null;
-        "query-parameters"?: Record<string, HttpQueryParameterSchema.Raw> | null;
-        messages?: Record<string, WebSocketChannelMessageSchema.Raw> | null;
-        examples?: ExampleWebSocketSession.Raw[] | null;
+        "connect-method-name": string | null;
+        headers: Record<string, HttpHeaderSchema.Raw> | null;
+        "path-parameters": Record<string, HttpPathParameterSchema.Raw> | null;
+        "query-parameters": Record<string, HttpQueryParameterSchema.Raw> | null;
+        messages: Record<string, WebSocketChannelMessageSchema.Raw> | null;
+        examples: ExampleWebSocketSession.Raw[] | null;
     }
 }

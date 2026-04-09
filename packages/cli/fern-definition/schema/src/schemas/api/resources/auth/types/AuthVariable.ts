@@ -4,5 +4,5 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface AuthVariable extends FernDefinition.WithEnvironmentVariable, FernDefinition.WithName {
     /** If true, the auth variable will be omitted from the SDK. */
-    omit?: boolean;
+    omit: boolean | null;
 }

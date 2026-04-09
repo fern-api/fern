@@ -8,7 +8,7 @@ types:
   AvailabilitySchema:
     properties:
       status: AvailabilityStatusSchema
-      message: optional<string>
+      message: nullable<string>
 
   AvailabilityStatusSchema:
     enum:

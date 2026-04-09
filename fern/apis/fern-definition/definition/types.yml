@@ -55,9 +55,9 @@ types:
       - commons.WithDocsSchema
       - commons.WithAvailability
     properties:
-      default: optional<unknown>
-      encoding: optional<encoding.EncodingSchema>
-      validation: optional<validation.ValidationSchema>
+      default: nullable<unknown>
+      encoding: nullable<encoding.EncodingSchema>
+      validation: nullable<validation.ValidationSchema>
 
   TypeReferenceDetailedSchema:
     extends:
@@ -87,10 +87,10 @@ types:
       - commons.WithAvailability
       - commons.WithAudiences
     properties:
-      examples: optional<list<examples.ExampleTypeSchema>>
-      encoding: optional<encoding.EncodingSchema>
-      source: optional<source.SourceSchema>
-      inline: optional<boolean>
+      examples: nullable<list<examples.ExampleTypeSchema>>
+      encoding: nullable<encoding.EncodingSchema>
+      source: nullable<source.SourceSchema>
+      inline: nullable<boolean>
 
   ### Aliases ####
 
@@ -98,16 +98,16 @@ types:
     extends: BaseTypeDeclarationSchema
     properties:
       type: string
-      validation: optional<validation.ValidationSchema>
+      validation: nullable<validation.ValidationSchema>
 
   #### Objects ####
 
   ObjectSchema:
     extends: BaseTypeDeclarationSchema
     properties:
-      extends: optional<ObjectExtendsSchema>
-      properties: optional<map<string, ObjectPropertySchema>>
-      extra-properties: optional<boolean>
+      extends: nullable<ObjectExtendsSchema>
+      properties: nullable<map<string, ObjectPropertySchema>>
+      extra-properties: nullable<boolean>
 
   ObjectPropertySchema:
     discriminated: false
@@ -119,7 +119,7 @@ types:
     extends:
       - TypeReferenceDeclarationWithName
     properties:
-      access: optional<ObjectPropertyAccess>
+      access: nullable<ObjectPropertyAccess>
 
   ObjectPropertyAccess:
     enum:
@@ -145,9 +145,9 @@ types:
   EnumSchema:
     extends: BaseTypeDeclarationSchema
     properties:
-      default: optional<string>
+      default: nullable<string>
       enum: list<EnumValue>
-      forward-compatible: optional<boolean>
+      forward-compatible: nullable<boolean>
 
   EnumValue:
     discriminated: false
@@ -161,14 +161,14 @@ types:
       - commons.WithName
     properties:
       value: string
-      casing: optional<CasingOverridesSchema>
+      casing: nullable<CasingOverridesSchema>
 
   CasingOverridesSchema:
     properties:
-      camel: optional<string>
-      snake: optional<string>
-      pascal: optional<string>
-      screaming-snake: optional<string>
+      camel: nullable<string>
+      snake: nullable<string>
+      pascal: nullable<string>
+      screaming-snake: nullable<string>
 
   #### Discriminated Union ####
 
@@ -186,8 +186,8 @@ types:
       - commons.WithDisplayName
       - commons.WithValidation
     properties:
-      type: optional<string>
-      key: optional<SingleUnionTypeKey>
+      type: nullable<string>
+      key: nullable<SingleUnionTypeKey>
 
   SingleUnionTypeKey:
     discriminated: false
@@ -204,9 +204,9 @@ types:
   DiscriminatedUnionSchema:
     extends: BaseTypeDeclarationSchema
     properties:
-      discriminant: optional<UnionDiscriminant>
-      extends: optional<ObjectExtendsSchema>
-      base-properties: optional<map<string, TypeReferenceSchema>>
+      discriminant: nullable<UnionDiscriminant>
+      extends: nullable<ObjectExtendsSchema>
+      base-properties: nullable<map<string, TypeReferenceSchema>>
       union: map<string, SingleUnionTypeSchema>
 
   UnionDiscriminant:
@@ -221,7 +221,7 @@ types:
     properties:
       value: string
       context:
-        type: optional<UnionDiscriminatorContext>
+        type: nullable<UnionDiscriminatorContext>
         docs: |
           Context for where the discriminator exists. Defaults to "data" for backward compatibility.
           "data" means the discriminator is within the union data itself.

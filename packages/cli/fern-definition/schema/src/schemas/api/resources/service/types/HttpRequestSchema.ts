@@ -3,9 +3,9 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface HttpRequestSchema extends FernDefinition.WithName, FernDefinition.WithDocsSchema {
-    "content-type"?: string;
-    "path-parameters"?: Record<string, FernDefinition.HttpPathParameterSchema>;
-    "query-parameters"?: Record<string, FernDefinition.HttpQueryParameterSchema>;
-    headers?: Record<string, FernDefinition.HttpHeaderSchema>;
-    body?: FernDefinition.HttpRequestBodySchema;
+    "content-type": string | null;
+    "path-parameters": Record<string, FernDefinition.HttpPathParameterSchema> | null;
+    "query-parameters": Record<string, FernDefinition.HttpQueryParameterSchema> | null;
+    headers: Record<string, FernDefinition.HttpHeaderSchema> | null;
+    body: FernDefinition.HttpRequestBodySchema | null;
 }

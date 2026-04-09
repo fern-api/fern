@@ -6,8 +6,8 @@ export interface BaseTypeDeclarationSchema
     extends FernDefinition.WithDocsSchema,
         FernDefinition.WithAvailability,
         FernDefinition.WithAudiences {
-    examples?: FernDefinition.ExampleTypeSchema[];
-    encoding?: FernDefinition.EncodingSchema;
-    source?: FernDefinition.SourceSchema;
-    inline?: boolean;
+    examples: FernDefinition.ExampleTypeSchema[] | null;
+    encoding: FernDefinition.EncodingSchema | null;
+    source: FernDefinition.SourceSchema | null;
+    inline: boolean | null;
 }

@@ -10,12 +10,12 @@ export const ExampleSseEventSchema: core.serialization.ObjectSchema<
     FernDefinition.ExampleSseEventSchema
 > = core.serialization.object({
     event: core.serialization.string(),
-    data: ExampleTypeReferenceSchema.optional(),
+    data: ExampleTypeReferenceSchema.nullable(),
 });
 
 export declare namespace ExampleSseEventSchema {
     export interface Raw {
         event: string;
-        data?: (ExampleTypeReferenceSchema.Raw | undefined) | null;
+        data: (ExampleTypeReferenceSchema.Raw | undefined) | null;
     }
 }

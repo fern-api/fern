@@ -5,7 +5,7 @@ import type * as FernDefinition from "../../../index.js";
 export interface WebhookTimestampSchema {
     header: string;
     /** Defaults to unix-seconds. */
-    format?: FernDefinition.WebhookTimestampFormatSchema;
+    format: FernDefinition.WebhookTimestampFormatSchema | null;
     /** Allowed clock skew in seconds. Defaults to 300. */
-    tolerance?: number;
+    tolerance: number | null;
 }

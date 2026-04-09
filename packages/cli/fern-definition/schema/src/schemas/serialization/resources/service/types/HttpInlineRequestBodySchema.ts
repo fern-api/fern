@@ -10,15 +10,15 @@ export const HttpInlineRequestBodySchema: core.serialization.ObjectSchema<
     serializers.HttpInlineRequestBodySchema.Raw,
     FernDefinition.HttpInlineRequestBodySchema
 > = core.serialization.object({
-    extends: ObjectExtendsSchema.optional(),
-    "extra-properties": core.serialization.boolean().optional(),
-    properties: core.serialization.record(core.serialization.string(), HttpInlineRequestBodyPropertySchema).optional(),
+    extends: ObjectExtendsSchema.nullable(),
+    "extra-properties": core.serialization.boolean().nullable(),
+    properties: core.serialization.record(core.serialization.string(), HttpInlineRequestBodyPropertySchema).nullable(),
 });
 
 export declare namespace HttpInlineRequestBodySchema {
     export interface Raw {
-        extends?: ObjectExtendsSchema.Raw | null;
-        "extra-properties"?: boolean | null;
-        properties?: Record<string, HttpInlineRequestBodyPropertySchema.Raw> | null;
+        extends: ObjectExtendsSchema.Raw | null;
+        "extra-properties": boolean | null;
+        properties: Record<string, HttpInlineRequestBodyPropertySchema.Raw> | null;
     }
 }

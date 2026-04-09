@@ -9,25 +9,25 @@ types:
 
   StringValidationSchema:
     properties:
-      minLength: optional<integer>
-      maxLength: optional<integer>
-      pattern: optional<string>
-      format: optional<string>
+      minLength: nullable<integer>
+      maxLength: nullable<integer>
+      pattern: nullable<string>
+      format: nullable<string>
 
   NumberValidationSchema:
     properties:
-      min: optional<double>
-      max: optional<double>
-      exclusiveMin: optional<boolean>
-      exclusiveMax: optional<boolean>
-      multipleOf: optional<double>
+      min: nullable<double>
+      max: nullable<double>
+      exclusiveMin: nullable<boolean>
+      exclusiveMax: nullable<boolean>
+      multipleOf: nullable<double>
 
   ListValidationSchema:
     properties:
-      minItems: optional<integer>
-      maxItems: optional<integer>
+      minItems: nullable<integer>
+      maxItems: nullable<integer>
 
   MapValidationSchema:
     properties:
-      minProperties: optional<integer>
-      maxProperties: optional<integer>
+      minProperties: nullable<integer>
+      maxProperties: nullable<integer>

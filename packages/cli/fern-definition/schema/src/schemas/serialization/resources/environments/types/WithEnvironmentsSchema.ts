@@ -9,15 +9,15 @@ export const WithEnvironmentsSchema: core.serialization.ObjectSchema<
     serializers.WithEnvironmentsSchema.Raw,
     FernDefinition.WithEnvironmentsSchema
 > = core.serialization.object({
-    "default-url": core.serialization.string().optional(),
-    "default-environment": core.serialization.string().optional(),
-    environments: core.serialization.record(core.serialization.string(), EnvironmentSchema).optional(),
+    "default-url": core.serialization.string().nullable(),
+    "default-environment": core.serialization.string().nullable(),
+    environments: core.serialization.record(core.serialization.string(), EnvironmentSchema).nullable(),
 });
 
 export declare namespace WithEnvironmentsSchema {
     export interface Raw {
-        "default-url"?: string | null;
-        "default-environment"?: string | null;
-        environments?: Record<string, EnvironmentSchema.Raw> | null;
+        "default-url": string | null;
+        "default-environment": string | null;
+        environments: Record<string, EnvironmentSchema.Raw> | null;
     }
 }

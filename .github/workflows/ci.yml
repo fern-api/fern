@@ -93,7 +93,10 @@ jobs:
 
       - name: Format
         run: pnpm format:check
-        
+
+      - name: Validate Fern definition uses nullable (not optional)
+        run: bash scripts/validate-fern-definition-types.sh
+
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 

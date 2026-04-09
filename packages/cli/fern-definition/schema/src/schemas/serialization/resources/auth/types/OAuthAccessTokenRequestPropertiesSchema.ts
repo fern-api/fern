@@ -8,15 +8,15 @@ export const OAuthAccessTokenRequestPropertiesSchema: core.serialization.ObjectS
     serializers.OAuthAccessTokenRequestPropertiesSchema.Raw,
     FernDefinition.OAuthAccessTokenRequestPropertiesSchema
 > = core.serialization.object({
-    "client-id": core.serialization.string().optional(),
-    "client-secret": core.serialization.string().optional(),
-    scopes: core.serialization.string().optional(),
+    "client-id": core.serialization.string().nullable(),
+    "client-secret": core.serialization.string().nullable(),
+    scopes: core.serialization.string().nullable(),
 });
 
 export declare namespace OAuthAccessTokenRequestPropertiesSchema {
     export interface Raw {
-        "client-id"?: string | null;
-        "client-secret"?: string | null;
-        scopes?: string | null;
+        "client-id": string | null;
+        "client-secret": string | null;
+        scopes: string | null;
     }
 }

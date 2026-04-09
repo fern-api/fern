@@ -5,13 +5,13 @@ import type * as FernDefinition from "../../../index.js";
 export interface OAuthSchemeSchema extends FernDefinition.WithDocsSchema {
     scheme: "oauth";
     type: "client-credentials";
-    scopes?: FernDefinition.AuthScope[];
-    "client-id-env"?: string;
-    "client-secret-env"?: string;
+    scopes: FernDefinition.AuthScope[] | null;
+    "client-id-env": string | null;
+    "client-secret-env": string | null;
     /** Sets the token header value prefix. Defaults to 'Bearer' */
-    "token-prefix"?: string;
+    "token-prefix": string | null;
     /** Sets the token header key name. Defaults to 'Authorization' */
-    "token-header"?: string;
+    "token-header": string | null;
     "get-token": FernDefinition.OAuthGetTokenEndpointSchema;
-    "refresh-token"?: FernDefinition.OAuthRefreshTokenEndpointSchema;
+    "refresh-token": FernDefinition.OAuthRefreshTokenEndpointSchema | null;
 }

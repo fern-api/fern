@@ -8,10 +8,10 @@ export interface WebhookSchema
         FernDefinition.WithDocsSchema,
         FernDefinition.WithDisplayName {
     method: FernDefinition.WebhookMethodSchema;
-    headers?: Record<string, FernDefinition.HttpHeaderSchema>;
+    headers: Record<string, FernDefinition.HttpHeaderSchema> | null;
     payload: FernDefinition.WebhookPayloadSchema;
-    signature?: FernDefinition.WebhookSignatureSchema;
-    response?: FernDefinition.HttpResponseSchema;
-    "response-stream"?: FernDefinition.HttpResponseStreamSchema;
-    examples?: FernDefinition.ExampleWebhookCallSchema[];
+    signature: FernDefinition.WebhookSignatureSchema | null;
+    response: FernDefinition.HttpResponseSchema | null;
+    "response-stream": FernDefinition.HttpResponseStreamSchema | null;
+    examples: FernDefinition.ExampleWebhookCallSchema[] | null;
 }

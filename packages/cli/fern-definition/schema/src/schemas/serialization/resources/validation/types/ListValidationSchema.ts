@@ -8,13 +8,13 @@ export const ListValidationSchema: core.serialization.ObjectSchema<
     serializers.ListValidationSchema.Raw,
     FernDefinition.ListValidationSchema
 > = core.serialization.object({
-    minItems: core.serialization.number().optional(),
-    maxItems: core.serialization.number().optional(),
+    minItems: core.serialization.number().nullable(),
+    maxItems: core.serialization.number().nullable(),
 });
 
 export declare namespace ListValidationSchema {
     export interface Raw {
-        minItems?: number | null;
-        maxItems?: number | null;
+        minItems: number | null;
+        maxItems: number | null;
     }
 }

@@ -10,13 +10,13 @@ export const AliasSchema: core.serialization.ObjectSchema<serializers.AliasSchem
     core.serialization
         .object({
             type: core.serialization.string(),
-            validation: ValidationSchema.optional(),
+            validation: ValidationSchema.nullable(),
         })
         .extend(BaseTypeDeclarationSchema);
 
 export declare namespace AliasSchema {
     export interface Raw extends BaseTypeDeclarationSchema.Raw {
         type: string;
-        validation?: ValidationSchema.Raw | null;
+        validation: ValidationSchema.Raw | null;
     }
 }

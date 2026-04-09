@@ -3,5 +3,5 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface EncodingSchema {
-    proto?: FernDefinition.ProtobufTypeSchema;
+    proto: FernDefinition.ProtobufTypeSchema | null;
 }

@@ -4,6 +4,6 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface WebSocketChannelInlinedMessageSchema {
     name: string;
-    extends?: FernDefinition.ObjectExtendsSchema;
-    properties?: Record<string, FernDefinition.ObjectPropertySchema>;
+    extends: FernDefinition.ObjectExtendsSchema | null;
+    properties: Record<string, FernDefinition.ObjectPropertySchema> | null;
 }

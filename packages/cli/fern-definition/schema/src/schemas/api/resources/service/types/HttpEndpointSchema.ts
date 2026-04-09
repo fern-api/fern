@@ -3,21 +3,21 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface HttpEndpointSchema extends FernDefinition.WithDisplayName, FernDefinition.DeclarationSchema {
-    method?: FernDefinition.HttpMethodSchema;
-    "base-path"?: string;
+    method: FernDefinition.HttpMethodSchema | null;
+    "base-path": string | null;
     path: string;
-    url?: string;
-    "path-parameters"?: Record<string, FernDefinition.HttpPathParameterSchema>;
-    auth?: FernDefinition.HttpEndpointAuth;
-    idempotent?: boolean;
-    "stream-condition"?: string;
-    request?: FernDefinition.HttpRequest;
-    response?: FernDefinition.HttpResponseSchema;
-    "response-stream"?: FernDefinition.HttpResponseStreamSchema;
-    errors?: FernDefinition.ResponseErrorsSchema;
-    examples?: FernDefinition.ExampleEndpointCallSchema[];
-    pagination?: FernDefinition.Pagination;
-    transport?: FernDefinition.ServiceTransport;
-    source?: FernDefinition.SourceSchema;
-    retries?: FernDefinition.RetriesConfiguration;
+    url: string | null;
+    "path-parameters": Record<string, FernDefinition.HttpPathParameterSchema> | null;
+    auth: FernDefinition.HttpEndpointAuth | null;
+    idempotent: boolean | null;
+    "stream-condition": string | null;
+    request: FernDefinition.HttpRequest | null;
+    response: FernDefinition.HttpResponseSchema | null;
+    "response-stream": FernDefinition.HttpResponseStreamSchema | null;
+    errors: FernDefinition.ResponseErrorsSchema | null;
+    examples: FernDefinition.ExampleEndpointCallSchema[] | null;
+    pagination: FernDefinition.Pagination | null;
+    transport: FernDefinition.ServiceTransport | null;
+    source: FernDefinition.SourceSchema | null;
+    retries: FernDefinition.RetriesConfiguration | null;
 }

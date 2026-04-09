@@ -8,6 +8,6 @@ export interface HeaderAuthSchemeSchema
         FernDefinition.WithDocsSchema {
     header: string;
     /** Defaults to string */
-    type?: string;
-    prefix?: string;
+    type: string | null;
+    prefix: string | null;
 }

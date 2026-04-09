@@ -4,12 +4,12 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface WebSocketChannelSchema extends FernDefinition.DeclarationSchema, FernDefinition.WithDisplayName {
     auth: boolean;
-    url?: string;
+    url: string | null;
     path: string;
-    "connect-method-name"?: string;
-    headers?: Record<string, FernDefinition.HttpHeaderSchema>;
-    "path-parameters"?: Record<string, FernDefinition.HttpPathParameterSchema>;
-    "query-parameters"?: Record<string, FernDefinition.HttpQueryParameterSchema>;
-    messages?: Record<string, FernDefinition.WebSocketChannelMessageSchema>;
-    examples?: FernDefinition.ExampleWebSocketSession[];
+    "connect-method-name": string | null;
+    headers: Record<string, FernDefinition.HttpHeaderSchema> | null;
+    "path-parameters": Record<string, FernDefinition.HttpPathParameterSchema> | null;
+    "query-parameters": Record<string, FernDefinition.HttpQueryParameterSchema> | null;
+    messages: Record<string, FernDefinition.WebSocketChannelMessageSchema> | null;
+    examples: FernDefinition.ExampleWebSocketSession[] | null;
 }

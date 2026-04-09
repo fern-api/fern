@@ -8,15 +8,15 @@ export const VersionDeclarationHeaderObjectSchema: core.serialization.ObjectSche
     serializers.VersionDeclarationHeaderObjectSchema.Raw,
     FernDefinition.VersionDeclarationHeaderObjectSchema
 > = core.serialization.object({
-    name: core.serialization.string().optional(),
-    env: core.serialization.string().optional(),
+    name: core.serialization.string().nullable(),
+    env: core.serialization.string().nullable(),
     value: core.serialization.string(),
 });
 
 export declare namespace VersionDeclarationHeaderObjectSchema {
     export interface Raw {
-        name?: string | null;
-        env?: string | null;
+        name: string | null;
+        env: string | null;
         value: string;
     }
 }

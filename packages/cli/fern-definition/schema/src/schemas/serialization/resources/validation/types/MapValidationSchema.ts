@@ -8,13 +8,13 @@ export const MapValidationSchema: core.serialization.ObjectSchema<
     serializers.MapValidationSchema.Raw,
     FernDefinition.MapValidationSchema
 > = core.serialization.object({
-    minProperties: core.serialization.number().optional(),
-    maxProperties: core.serialization.number().optional(),
+    minProperties: core.serialization.number().nullable(),
+    maxProperties: core.serialization.number().nullable(),
 });
 
 export declare namespace MapValidationSchema {
     export interface Raw {
-        minProperties?: number | null;
-        maxProperties?: number | null;
+        minProperties: number | null;
+        maxProperties: number | null;
     }
 }

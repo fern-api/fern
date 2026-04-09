@@ -10,16 +10,16 @@ import { ObjectPropertySchema } from "./ObjectPropertySchema.js";
 export const ObjectSchema: core.serialization.ObjectSchema<serializers.ObjectSchema.Raw, FernDefinition.ObjectSchema> =
     core.serialization
         .object({
-            extends: ObjectExtendsSchema.optional(),
-            properties: core.serialization.record(core.serialization.string(), ObjectPropertySchema).optional(),
-            "extra-properties": core.serialization.boolean().optional(),
+            extends: ObjectExtendsSchema.nullable(),
+            properties: core.serialization.record(core.serialization.string(), ObjectPropertySchema).nullable(),
+            "extra-properties": core.serialization.boolean().nullable(),
         })
         .extend(BaseTypeDeclarationSchema);
 
 export declare namespace ObjectSchema {
     export interface Raw extends BaseTypeDeclarationSchema.Raw {
-        extends?: ObjectExtendsSchema.Raw | null;
-        properties?: Record<string, ObjectPropertySchema.Raw> | null;
-        "extra-properties"?: boolean | null;
+        extends: ObjectExtendsSchema.Raw | null;
+        properties: Record<string, ObjectPropertySchema.Raw> | null;
+        "extra-properties": boolean | null;
     }
 }

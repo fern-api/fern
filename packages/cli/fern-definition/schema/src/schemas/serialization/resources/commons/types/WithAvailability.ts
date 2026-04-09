@@ -9,11 +9,11 @@ export const WithAvailability: core.serialization.ObjectSchema<
     serializers.WithAvailability.Raw,
     FernDefinition.WithAvailability
 > = core.serialization.object({
-    availability: AvailabilityUnionSchema.optional(),
+    availability: AvailabilityUnionSchema.nullable(),
 });
 
 export declare namespace WithAvailability {
     export interface Raw {
-        availability?: AvailabilityUnionSchema.Raw | null;
+        availability: AvailabilityUnionSchema.Raw | null;
     }
 }

@@ -4,5 +4,5 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface AliasSchema extends FernDefinition.BaseTypeDeclarationSchema {
     type: string;
-    validation?: FernDefinition.ValidationSchema;
+    validation: FernDefinition.ValidationSchema | null;
 }

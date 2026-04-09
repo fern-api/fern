@@ -4,6 +4,6 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface BasicAuthSchemeSchema extends FernDefinition.WithDocsSchema {
     scheme: "basic";
-    username?: FernDefinition.AuthVariable;
-    password?: FernDefinition.AuthVariable;
+    username: FernDefinition.AuthVariable | null;
+    password: FernDefinition.AuthVariable | null;
 }

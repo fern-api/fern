@@ -9,14 +9,14 @@ export const ServerVariableSchema: core.serialization.ObjectSchema<
     FernDefinition.ServerVariableSchema
 > = core.serialization.object({
     id: core.serialization.string(),
-    default: core.serialization.string().optional(),
-    values: core.serialization.list(core.serialization.string()).optional(),
+    default: core.serialization.string().nullable(),
+    values: core.serialization.list(core.serialization.string()).nullable(),
 });
 
 export declare namespace ServerVariableSchema {
     export interface Raw {
         id: string;
-        default?: string | null;
-        values?: string[] | null;
+        default: string | null;
+        values: string[] | null;
     }
 }

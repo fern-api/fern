@@ -4,5 +4,5 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface AvailabilitySchema {
     status: FernDefinition.AvailabilityStatusSchema;
-    message?: string;
+    message: string | null;
 }

@@ -12,7 +12,7 @@ export const ExampleWebhookCallSchema: core.serialization.ObjectSchema<
     FernDefinition.ExampleWebhookCallSchema
 > = core.serialization
     .object({
-        id: core.serialization.string().optional(),
+        id: core.serialization.string().nullable(),
         payload: ExampleTypeReferenceSchema,
     })
     .extend(WithName)
@@ -20,7 +20,7 @@ export const ExampleWebhookCallSchema: core.serialization.ObjectSchema<
 
 export declare namespace ExampleWebhookCallSchema {
     export interface Raw extends WithName.Raw, WithDocsSchema.Raw {
-        id?: string | null;
-        payload?: ExampleTypeReferenceSchema.Raw;
+        id: string | null;
+        payload: ExampleTypeReferenceSchema.Raw | null;
     }
 }

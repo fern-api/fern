@@ -13,8 +13,8 @@ export const HeaderAuthSchemeSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         header: core.serialization.string(),
-        type: core.serialization.string().optional(),
-        prefix: core.serialization.string().optional(),
+        type: core.serialization.string().nullable(),
+        prefix: core.serialization.string().nullable(),
     })
     .extend(WithEnvironmentVariable)
     .extend(WithName)
@@ -23,7 +23,7 @@ export const HeaderAuthSchemeSchema: core.serialization.ObjectSchema<
 export declare namespace HeaderAuthSchemeSchema {
     export interface Raw extends WithEnvironmentVariable.Raw, WithName.Raw, WithDocsSchema.Raw {
         header: string;
-        type?: string | null;
-        prefix?: string | null;
+        type: string | null;
+        prefix: string | null;
     }
 }

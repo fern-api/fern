@@ -12,15 +12,15 @@ export const BasicAuthSchemeSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         scheme: core.serialization.stringLiteral("basic"),
-        username: AuthVariable.optional(),
-        password: AuthVariable.optional(),
+        username: AuthVariable.nullable(),
+        password: AuthVariable.nullable(),
     })
     .extend(WithDocsSchema);
 
 export declare namespace BasicAuthSchemeSchema {
     export interface Raw extends WithDocsSchema.Raw {
         scheme: "basic";
-        username?: AuthVariable.Raw | null;
-        password?: AuthVariable.Raw | null;
+        username: AuthVariable.Raw | null;
+        password: AuthVariable.Raw | null;
     }
 }

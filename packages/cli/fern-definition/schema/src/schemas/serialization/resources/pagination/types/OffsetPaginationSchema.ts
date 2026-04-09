@@ -10,15 +10,15 @@ export const OffsetPaginationSchema: core.serialization.ObjectSchema<
 > = core.serialization.object({
     offset: core.serialization.string(),
     results: core.serialization.string(),
-    step: core.serialization.string().optional(),
-    "has-next-page": core.serialization.string().optional(),
+    step: core.serialization.string().nullable(),
+    "has-next-page": core.serialization.string().nullable(),
 });
 
 export declare namespace OffsetPaginationSchema {
     export interface Raw {
         offset: string;
         results: string;
-        step?: string | null;
-        "has-next-page"?: string | null;
+        step: string | null;
+        "has-next-page": string | null;
     }
 }

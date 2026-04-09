@@ -3,5 +3,5 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface TypeReferenceDeclarationWithEnvOverrideSchema extends FernDefinition.TypeReferenceDeclarationWithName {
-    env?: string;
+    env: string | null;
 }

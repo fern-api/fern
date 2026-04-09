@@ -10,14 +10,14 @@ export const VersionDeclarationSchema: core.serialization.ObjectSchema<
     serializers.VersionDeclarationSchema.Raw,
     FernDefinition.VersionDeclarationSchema
 > = core.serialization.object({
-    default: core.serialization.string().optional(),
+    default: core.serialization.string().nullable(),
     values: core.serialization.list(VersionValue),
     header: VersionDeclarationHeaderSchema,
 });
 
 export declare namespace VersionDeclarationSchema {
     export interface Raw {
-        default?: string | null;
+        default: string | null;
         values: VersionValue.Raw[];
         header: VersionDeclarationHeaderSchema.Raw;
     }

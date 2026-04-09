@@ -11,14 +11,14 @@ export const OAuthGetTokenEndpointSchema: core.serialization.ObjectSchema<
     FernDefinition.OAuthGetTokenEndpointSchema
 > = core.serialization.object({
     endpoint: core.serialization.string(),
-    "request-properties": OAuthAccessTokenRequestPropertiesSchema.optional(),
-    "response-properties": OAuthAccessTokenResponsePropertiesSchema.optional(),
+    "request-properties": OAuthAccessTokenRequestPropertiesSchema.nullable(),
+    "response-properties": OAuthAccessTokenResponsePropertiesSchema.nullable(),
 });
 
 export declare namespace OAuthGetTokenEndpointSchema {
     export interface Raw {
         endpoint: string;
-        "request-properties"?: OAuthAccessTokenRequestPropertiesSchema.Raw | null;
-        "response-properties"?: OAuthAccessTokenResponsePropertiesSchema.Raw | null;
+        "request-properties": OAuthAccessTokenRequestPropertiesSchema.Raw | null;
+        "response-properties": OAuthAccessTokenResponsePropertiesSchema.Raw | null;
     }
 }

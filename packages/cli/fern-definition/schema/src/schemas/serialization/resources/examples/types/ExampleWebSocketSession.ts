@@ -15,11 +15,11 @@ export const ExampleWebSocketSession: core.serialization.ObjectSchema<
     .object({
         "path-parameters": core.serialization
             .record(core.serialization.string(), ExampleTypeReferenceSchema)
-            .optional(),
+            .nullable(),
         "query-parameters": core.serialization
             .record(core.serialization.string(), ExampleTypeReferenceSchema)
-            .optional(),
-        headers: core.serialization.record(core.serialization.string(), ExampleTypeReferenceSchema).optional(),
+            .nullable(),
+        headers: core.serialization.record(core.serialization.string(), ExampleTypeReferenceSchema).nullable(),
         messages: core.serialization.list(ExampleWebSocketMessage),
     })
     .extend(WithName)
@@ -27,9 +27,9 @@ export const ExampleWebSocketSession: core.serialization.ObjectSchema<
 
 export declare namespace ExampleWebSocketSession {
     export interface Raw extends WithName.Raw, WithDocsSchema.Raw {
-        "path-parameters"?: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
-        "query-parameters"?: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
-        headers?: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
+        "path-parameters": Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
+        "query-parameters": Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
+        headers: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
         messages: ExampleWebSocketMessage.Raw[];
     }
 }

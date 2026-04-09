@@ -13,20 +13,20 @@ export const HmacSignatureSchema: core.serialization.ObjectSchema<
     FernDefinition.HmacSignatureSchema
 > = core.serialization.object({
     header: core.serialization.string(),
-    algorithm: WebhookSignatureAlgorithmSchema.optional(),
-    encoding: WebhookSignatureEncodingSchema.optional(),
-    "signature-prefix": core.serialization.string().optional(),
-    "payload-format": WebhookPayloadFormatSchema.optional(),
-    timestamp: WebhookTimestampSchema.optional(),
+    algorithm: WebhookSignatureAlgorithmSchema.nullable(),
+    encoding: WebhookSignatureEncodingSchema.nullable(),
+    "signature-prefix": core.serialization.string().nullable(),
+    "payload-format": WebhookPayloadFormatSchema.nullable(),
+    timestamp: WebhookTimestampSchema.nullable(),
 });
 
 export declare namespace HmacSignatureSchema {
     export interface Raw {
         header: string;
-        algorithm?: WebhookSignatureAlgorithmSchema.Raw | null;
-        encoding?: WebhookSignatureEncodingSchema.Raw | null;
-        "signature-prefix"?: string | null;
-        "payload-format"?: WebhookPayloadFormatSchema.Raw | null;
-        timestamp?: WebhookTimestampSchema.Raw | null;
+        algorithm: WebhookSignatureAlgorithmSchema.Raw | null;
+        encoding: WebhookSignatureEncodingSchema.Raw | null;
+        "signature-prefix": string | null;
+        "payload-format": WebhookPayloadFormatSchema.Raw | null;
+        timestamp: WebhookTimestampSchema.Raw | null;
     }
 }

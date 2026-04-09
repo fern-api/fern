@@ -3,5 +3,5 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface ExampleTypeSchema extends FernDefinition.WithName, FernDefinition.WithDocsSchema {
-    value?: FernDefinition.ExampleTypeValueSchema;
+    value: FernDefinition.ExampleTypeValueSchema | null;
 }

@@ -14,18 +14,18 @@ export const DiscriminatedUnionSchema: core.serialization.ObjectSchema<
     FernDefinition.DiscriminatedUnionSchema
 > = core.serialization
     .object({
-        discriminant: UnionDiscriminant.optional(),
-        extends: ObjectExtendsSchema.optional(),
-        "base-properties": core.serialization.record(core.serialization.string(), TypeReferenceSchema).optional(),
+        discriminant: UnionDiscriminant.nullable(),
+        extends: ObjectExtendsSchema.nullable(),
+        "base-properties": core.serialization.record(core.serialization.string(), TypeReferenceSchema).nullable(),
         union: core.serialization.record(core.serialization.string(), SingleUnionTypeSchema),
     })
     .extend(BaseTypeDeclarationSchema);
 
 export declare namespace DiscriminatedUnionSchema {
     export interface Raw extends BaseTypeDeclarationSchema.Raw {
-        discriminant?: UnionDiscriminant.Raw | null;
-        extends?: ObjectExtendsSchema.Raw | null;
-        "base-properties"?: Record<string, TypeReferenceSchema.Raw> | null;
+        discriminant: UnionDiscriminant.Raw | null;
+        extends: ObjectExtendsSchema.Raw | null;
+        "base-properties": Record<string, TypeReferenceSchema.Raw> | null;
         union: Record<string, SingleUnionTypeSchema.Raw>;
     }
 }

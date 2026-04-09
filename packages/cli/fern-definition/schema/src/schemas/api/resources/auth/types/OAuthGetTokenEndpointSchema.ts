@@ -5,6 +5,6 @@ import type * as FernDefinition from "../../../index.js";
 export interface OAuthGetTokenEndpointSchema {
     /** The endpoint to get the access token, such as 'auth.get_token */
     endpoint: string;
-    "request-properties"?: FernDefinition.OAuthAccessTokenRequestPropertiesSchema;
-    "response-properties"?: FernDefinition.OAuthAccessTokenResponsePropertiesSchema;
+    "request-properties": FernDefinition.OAuthAccessTokenRequestPropertiesSchema | null;
+    "response-properties": FernDefinition.OAuthAccessTokenResponsePropertiesSchema | null;
 }

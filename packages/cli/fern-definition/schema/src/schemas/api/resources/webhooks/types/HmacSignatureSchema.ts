@@ -5,12 +5,12 @@ import type * as FernDefinition from "../../../index.js";
 export interface HmacSignatureSchema {
     header: string;
     /** Defaults to sha256. */
-    algorithm?: FernDefinition.WebhookSignatureAlgorithmSchema;
+    algorithm: FernDefinition.WebhookSignatureAlgorithmSchema | null;
     /** Defaults to base64. */
-    encoding?: FernDefinition.WebhookSignatureEncodingSchema;
+    encoding: FernDefinition.WebhookSignatureEncodingSchema | null;
     /** Prefix in the header value before the signature (e.g. "sha256="). */
-    "signature-prefix"?: string;
+    "signature-prefix": string | null;
     /** Defaults to body-only (components: [body], delimiter: ""). */
-    "payload-format"?: FernDefinition.WebhookPayloadFormatSchema;
-    timestamp?: FernDefinition.WebhookTimestampSchema;
+    "payload-format": FernDefinition.WebhookPayloadFormatSchema | null;
+    timestamp: FernDefinition.WebhookTimestampSchema | null;
 }

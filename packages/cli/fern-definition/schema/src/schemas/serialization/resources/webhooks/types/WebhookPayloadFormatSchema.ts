@@ -11,14 +11,14 @@ export const WebhookPayloadFormatSchema: core.serialization.ObjectSchema<
     FernDefinition.WebhookPayloadFormatSchema
 > = core.serialization.object({
     components: core.serialization.list(WebhookPayloadComponentSchema),
-    delimiter: core.serialization.string().optional(),
-    "body-sort": WebhookPayloadBodySortSchema.optional(),
+    delimiter: core.serialization.string().nullable(),
+    "body-sort": WebhookPayloadBodySortSchema.nullable(),
 });
 
 export declare namespace WebhookPayloadFormatSchema {
     export interface Raw {
         components: WebhookPayloadComponentSchema.Raw[];
-        delimiter?: string | null;
-        "body-sort"?: WebhookPayloadBodySortSchema.Raw | null;
+        delimiter: string | null;
+        "body-sort": WebhookPayloadBodySortSchema.Raw | null;
     }
 }

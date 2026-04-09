@@ -12,14 +12,14 @@ export const PackageMarkerFileSchema: core.serialization.ObjectSchema<
     FernDefinition.PackageMarkerFileSchema
 > = core.serialization
     .object({
-        navigation: Navigation.optional(),
-        export: Export.optional(),
+        navigation: Navigation.nullable(),
+        export: Export.nullable(),
     })
     .extend(DefinitionFileSchema);
 
 export declare namespace PackageMarkerFileSchema {
     export interface Raw extends DefinitionFileSchema.Raw {
-        navigation?: Navigation.Raw | null;
-        export?: Export.Raw | null;
+        navigation: Navigation.Raw | null;
+        export: Export.Raw | null;
     }
 }

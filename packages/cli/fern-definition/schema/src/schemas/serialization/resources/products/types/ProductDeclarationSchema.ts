@@ -10,14 +10,14 @@ export const ProductDeclarationSchema: core.serialization.ObjectSchema<
     serializers.ProductDeclarationSchema.Raw,
     FernDefinition.ProductDeclarationSchema
 > = core.serialization.object({
-    default: core.serialization.string().optional(),
+    default: core.serialization.string().nullable(),
     values: core.serialization.list(ProductValue),
     header: ProductDeclarationHeaderSchema,
 });
 
 export declare namespace ProductDeclarationSchema {
     export interface Raw {
-        default?: string | null;
+        default: string | null;
         values: ProductValue.Raw[];
         header: ProductDeclarationHeaderSchema.Raw;
     }

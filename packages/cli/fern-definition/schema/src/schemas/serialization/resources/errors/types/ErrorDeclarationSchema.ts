@@ -12,15 +12,15 @@ export const ErrorDeclarationSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         "status-code": core.serialization.number(),
-        type: core.serialization.string().optional(),
-        examples: core.serialization.list(ExampleTypeSchema).optional(),
+        type: core.serialization.string().nullable(),
+        examples: core.serialization.list(ExampleTypeSchema).nullable(),
     })
     .extend(WithDocsSchema);
 
 export declare namespace ErrorDeclarationSchema {
     export interface Raw extends WithDocsSchema.Raw {
         "status-code": number;
-        type?: string | null;
-        examples?: ExampleTypeSchema.Raw[] | null;
+        type: string | null;
+        examples: ExampleTypeSchema.Raw[] | null;
     }
 }

@@ -10,12 +10,12 @@ export const AvailabilitySchema: core.serialization.ObjectSchema<
     FernDefinition.AvailabilitySchema
 > = core.serialization.object({
     status: AvailabilityStatusSchema,
-    message: core.serialization.string().optional(),
+    message: core.serialization.string().nullable(),
 });
 
 export declare namespace AvailabilitySchema {
     export interface Raw {
         status: AvailabilityStatusSchema.Raw;
-        message?: string | null;
+        message: string | null;
     }
 }

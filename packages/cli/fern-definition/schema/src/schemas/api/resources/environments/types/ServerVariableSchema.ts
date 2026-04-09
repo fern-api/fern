@@ -4,7 +4,7 @@ export interface ServerVariableSchema {
     /** The variable name as it appears in the URL template */
     id: string;
     /** The default value for this variable */
-    default?: string;
+    default: string | null;
     /** Allowed values for this variable (from enum) */
-    values?: string[];
+    values: string[] | null;
 }

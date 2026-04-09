@@ -5,5 +5,5 @@ import type * as FernDefinition from "../../../index.js";
 export interface ExampleCodeSampleSchemaLanguage extends FernDefinition.WithDocsSchema, FernDefinition.WithName {
     language: string;
     code: string;
-    install?: string;
+    install: string | null;
 }

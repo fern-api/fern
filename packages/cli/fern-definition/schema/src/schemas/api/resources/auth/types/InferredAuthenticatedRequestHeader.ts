@@ -9,5 +9,5 @@ export interface InferredAuthenticatedRequestHeader {
     /** The header name to put the token in for any authenticated HTTP request. */
     "header-name": string;
     /** Commonly used for setting the `Authorization` scheme, but could be used for other things. */
-    "value-prefix"?: string;
+    "value-prefix": string | null;
 }

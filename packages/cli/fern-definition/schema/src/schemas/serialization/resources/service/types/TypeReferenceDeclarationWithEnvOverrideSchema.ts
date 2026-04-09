@@ -10,12 +10,12 @@ export const TypeReferenceDeclarationWithEnvOverrideSchema: core.serialization.O
     FernDefinition.TypeReferenceDeclarationWithEnvOverrideSchema
 > = core.serialization
     .object({
-        env: core.serialization.string().optional(),
+        env: core.serialization.string().nullable(),
     })
     .extend(TypeReferenceDeclarationWithName);
 
 export declare namespace TypeReferenceDeclarationWithEnvOverrideSchema {
     export interface Raw extends TypeReferenceDeclarationWithName.Raw {
-        env?: string | null;
+        env: string | null;
     }
 }

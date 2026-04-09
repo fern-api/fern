@@ -4,6 +4,6 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface ErrorDeclarationSchema extends FernDefinition.WithDocsSchema {
     "status-code": number;
-    type?: string;
-    examples?: FernDefinition.ExampleTypeSchema[];
+    type: string | null;
+    examples: FernDefinition.ExampleTypeSchema[] | null;
 }

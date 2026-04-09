@@ -5,10 +5,10 @@ import type * as FernDefinition from "../../../index.js";
 export interface WebhookPayloadFormatSchema {
     components: FernDefinition.WebhookPayloadComponentSchema[];
     /** Defaults to empty string. */
-    delimiter?: string;
+    delimiter: string | null;
     /**
      * When set, POST body parameters are sorted before being concatenated
      * into the signing payload. Required by providers like Twilio.
      */
-    "body-sort"?: FernDefinition.WebhookPayloadBodySortSchema;
+    "body-sort": FernDefinition.WebhookPayloadBodySortSchema | null;
 }

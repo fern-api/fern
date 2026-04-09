@@ -9,13 +9,13 @@ import { WithEnvironmentVariable } from "./WithEnvironmentVariable.js";
 export const AuthVariable: core.serialization.ObjectSchema<serializers.AuthVariable.Raw, FernDefinition.AuthVariable> =
     core.serialization
         .object({
-            omit: core.serialization.boolean().optional(),
+            omit: core.serialization.boolean().nullable(),
         })
         .extend(WithEnvironmentVariable)
         .extend(WithName);
 
 export declare namespace AuthVariable {
     export interface Raw extends WithEnvironmentVariable.Raw, WithName.Raw {
-        omit?: boolean | null;
+        omit: boolean | null;
     }
 }

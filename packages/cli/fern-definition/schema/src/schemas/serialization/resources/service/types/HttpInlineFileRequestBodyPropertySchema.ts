@@ -11,14 +11,14 @@ export const HttpInlineFileRequestBodyPropertySchema: core.serialization.ObjectS
     FernDefinition.HttpInlineFileRequestBodyPropertySchema
 > = core.serialization
     .object({
-        style: FormDataBodyEncodingStyle.optional(),
-        "content-type": core.serialization.string().optional(),
+        style: FormDataBodyEncodingStyle.nullable(),
+        "content-type": core.serialization.string().nullable(),
     })
     .extend(TypeReferenceDeclarationWithName);
 
 export declare namespace HttpInlineFileRequestBodyPropertySchema {
     export interface Raw extends TypeReferenceDeclarationWithName.Raw {
-        style?: FormDataBodyEncodingStyle.Raw | null;
-        "content-type"?: string | null;
+        style: FormDataBodyEncodingStyle.Raw | null;
+        "content-type": string | null;
     }
 }

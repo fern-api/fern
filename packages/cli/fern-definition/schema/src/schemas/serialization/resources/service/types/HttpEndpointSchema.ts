@@ -23,45 +23,45 @@ export const HttpEndpointSchema: core.serialization.ObjectSchema<
     FernDefinition.HttpEndpointSchema
 > = core.serialization
     .object({
-        method: HttpMethodSchema.optional(),
-        "base-path": core.serialization.string().optional(),
+        method: HttpMethodSchema.nullable(),
+        "base-path": core.serialization.string().nullable(),
         path: core.serialization.string(),
-        url: core.serialization.string().optional(),
-        "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).optional(),
-        auth: HttpEndpointAuth.optional(),
-        idempotent: core.serialization.boolean().optional(),
-        "stream-condition": core.serialization.string().optional(),
-        request: HttpRequest.optional(),
-        response: HttpResponseSchema.optional(),
-        "response-stream": HttpResponseStreamSchema.optional(),
-        errors: ResponseErrorsSchema.optional(),
-        examples: core.serialization.list(ExampleEndpointCallSchema).optional(),
-        pagination: Pagination.optional(),
-        transport: ServiceTransport.optional(),
-        source: SourceSchema.optional(),
-        retries: RetriesConfiguration.optional(),
+        url: core.serialization.string().nullable(),
+        "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).nullable(),
+        auth: HttpEndpointAuth.nullable(),
+        idempotent: core.serialization.boolean().nullable(),
+        "stream-condition": core.serialization.string().nullable(),
+        request: HttpRequest.nullable(),
+        response: HttpResponseSchema.nullable(),
+        "response-stream": HttpResponseStreamSchema.nullable(),
+        errors: ResponseErrorsSchema.nullable(),
+        examples: core.serialization.list(ExampleEndpointCallSchema).nullable(),
+        pagination: Pagination.nullable(),
+        transport: ServiceTransport.nullable(),
+        source: SourceSchema.nullable(),
+        retries: RetriesConfiguration.nullable(),
     })
     .extend(WithDisplayName)
     .extend(DeclarationSchema);
 
 export declare namespace HttpEndpointSchema {
     export interface Raw extends WithDisplayName.Raw, DeclarationSchema.Raw {
-        method?: HttpMethodSchema.Raw | null;
-        "base-path"?: string | null;
+        method: HttpMethodSchema.Raw | null;
+        "base-path": string | null;
         path: string;
-        url?: string | null;
-        "path-parameters"?: Record<string, HttpPathParameterSchema.Raw> | null;
-        auth?: HttpEndpointAuth.Raw | null;
-        idempotent?: boolean | null;
-        "stream-condition"?: string | null;
-        request?: HttpRequest.Raw | null;
-        response?: HttpResponseSchema.Raw | null;
-        "response-stream"?: HttpResponseStreamSchema.Raw | null;
-        errors?: ResponseErrorsSchema.Raw | null;
-        examples?: ExampleEndpointCallSchema.Raw[] | null;
-        pagination?: Pagination.Raw | null;
-        transport?: ServiceTransport.Raw | null;
-        source?: SourceSchema.Raw | null;
-        retries?: RetriesConfiguration.Raw | null;
+        url: string | null;
+        "path-parameters": Record<string, HttpPathParameterSchema.Raw> | null;
+        auth: HttpEndpointAuth.Raw | null;
+        idempotent: boolean | null;
+        "stream-condition": string | null;
+        request: HttpRequest.Raw | null;
+        response: HttpResponseSchema.Raw | null;
+        "response-stream": HttpResponseStreamSchema.Raw | null;
+        errors: ResponseErrorsSchema.Raw | null;
+        examples: ExampleEndpointCallSchema.Raw[] | null;
+        pagination: Pagination.Raw | null;
+        transport: ServiceTransport.Raw | null;
+        source: SourceSchema.Raw | null;
+        retries: RetriesConfiguration.Raw | null;
     }
 }

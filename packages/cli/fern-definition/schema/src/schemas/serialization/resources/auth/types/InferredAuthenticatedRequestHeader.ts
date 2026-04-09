@@ -10,13 +10,13 @@ export const InferredAuthenticatedRequestHeader: core.serialization.ObjectSchema
 > = core.serialization.object({
     "response-property": core.serialization.string(),
     "header-name": core.serialization.string(),
-    "value-prefix": core.serialization.string().optional(),
+    "value-prefix": core.serialization.string().nullable(),
 });
 
 export declare namespace InferredAuthenticatedRequestHeader {
     export interface Raw {
         "response-property": string;
         "header-name": string;
-        "value-prefix"?: string | null;
+        "value-prefix": string | null;
     }
 }

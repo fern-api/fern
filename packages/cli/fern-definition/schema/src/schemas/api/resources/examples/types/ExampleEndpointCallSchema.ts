@@ -3,11 +3,11 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface ExampleEndpointCallSchema extends FernDefinition.WithName, FernDefinition.WithDocsSchema {
-    id?: string;
-    "path-parameters"?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;
-    "query-parameters"?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;
-    headers?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;
-    request?: FernDefinition.ExampleTypeReferenceSchema;
-    response?: FernDefinition.ExampleResponseSchema;
-    "code-samples"?: FernDefinition.ExampleCodeSampleSchema[];
+    id: string | null;
+    "path-parameters": Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined> | null;
+    "query-parameters": Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined> | null;
+    headers: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined> | null;
+    request: FernDefinition.ExampleTypeReferenceSchema | null;
+    response: FernDefinition.ExampleResponseSchema | null;
+    "code-samples": FernDefinition.ExampleCodeSampleSchema[] | null;
 }

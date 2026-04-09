@@ -2,9 +2,9 @@
 
 export interface OAuthAccessTokenResponsePropertiesSchema {
     /** The property name for the access token. */
-    "access-token"?: string;
+    "access-token": string | null;
     /** The property name for the expires in property. */
-    "expires-in"?: string;
+    "expires-in": string | null;
     /** The property name for the refresh token */
-    "refresh-token"?: string;
+    "refresh-token": string | null;
 }

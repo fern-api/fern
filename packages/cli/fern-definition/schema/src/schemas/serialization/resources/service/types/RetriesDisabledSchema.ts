@@ -8,11 +8,11 @@ export const RetriesDisabledSchema: core.serialization.ObjectSchema<
     serializers.RetriesDisabledSchema.Raw,
     FernDefinition.RetriesDisabledSchema
 > = core.serialization.object({
-    disabled: core.serialization.boolean().optional(),
+    disabled: core.serialization.boolean().nullable(),
 });
 
 export declare namespace RetriesDisabledSchema {
     export interface Raw {
-        disabled?: boolean | null;
+        disabled: boolean | null;
     }
 }

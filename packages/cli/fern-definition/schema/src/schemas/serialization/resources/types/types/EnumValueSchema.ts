@@ -13,7 +13,7 @@ export const EnumValueSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         value: core.serialization.string(),
-        casing: CasingOverridesSchema.optional(),
+        casing: CasingOverridesSchema.nullable(),
     })
     .extend(WithDocsSchema)
     .extend(WithName);
@@ -21,6 +21,6 @@ export const EnumValueSchema: core.serialization.ObjectSchema<
 export declare namespace EnumValueSchema {
     export interface Raw extends WithDocsSchema.Raw, WithName.Raw {
         value: string;
-        casing?: CasingOverridesSchema.Raw | null;
+        casing: CasingOverridesSchema.Raw | null;
     }
 }

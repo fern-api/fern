@@ -4,12 +4,12 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface HttpServiceSchema extends FernDefinition.DeclarationWithoutDocsSchema, FernDefinition.WithDisplayName {
     auth: boolean;
-    url?: string;
+    url: string | null;
     "base-path": string;
-    "path-parameters"?: Record<string, FernDefinition.TypeReferenceSchema>;
-    idempotent?: boolean;
-    headers?: Record<string, FernDefinition.TypeReferenceSchema>;
-    transport?: FernDefinition.ServiceTransport;
-    source?: FernDefinition.SourceSchema;
+    "path-parameters": Record<string, FernDefinition.TypeReferenceSchema> | null;
+    idempotent: boolean | null;
+    headers: Record<string, FernDefinition.TypeReferenceSchema> | null;
+    transport: FernDefinition.ServiceTransport | null;
+    source: FernDefinition.SourceSchema | null;
     endpoints: Record<string, FernDefinition.HttpEndpointSchema>;
 }

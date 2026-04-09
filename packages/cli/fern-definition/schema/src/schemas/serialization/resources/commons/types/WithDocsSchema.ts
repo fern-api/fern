@@ -8,11 +8,11 @@ export const WithDocsSchema: core.serialization.ObjectSchema<
     serializers.WithDocsSchema.Raw,
     FernDefinition.WithDocsSchema
 > = core.serialization.object({
-    docs: core.serialization.string().optional(),
+    docs: core.serialization.string().nullable(),
 });
 
 export declare namespace WithDocsSchema {
     export interface Raw {
-        docs?: string | null;
+        docs: string | null;
     }
 }

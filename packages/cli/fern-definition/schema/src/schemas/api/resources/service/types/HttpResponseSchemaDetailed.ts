@@ -3,7 +3,7 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface HttpResponseSchemaDetailed extends FernDefinition.WithDocsSchema {
-    type?: string;
-    property?: string;
-    "status-code"?: number;
+    type: string | null;
+    property: string | null;
+    "status-code": number | null;
 }

@@ -3,7 +3,7 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface VersionDeclarationSchema {
-    default?: string;
+    default: string | null;
     values: FernDefinition.VersionValue[];
     header: FernDefinition.VersionDeclarationHeaderSchema;
 }

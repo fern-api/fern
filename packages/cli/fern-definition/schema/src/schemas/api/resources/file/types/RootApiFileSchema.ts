@@ -9,15 +9,15 @@ export interface RootApiFileSchema
         FernDefinition.WithAuthSchema,
         FernDefinition.WithHeadersSchema {
     name: string;
-    imports?: Record<string, string>;
-    "error-discrimination"?: FernDefinition.ErrorDiscriminationSchema;
-    audiences?: string[];
-    errors?: string[];
-    "base-path"?: string;
-    "path-parameters"?: Record<string, FernDefinition.HttpPathParameterSchema>;
-    "idempotency-headers"?: Record<string, FernDefinition.HttpHeaderSchema>;
-    variables?: Record<string, FernDefinition.VariableDeclarationSchema>;
-    pagination?: FernDefinition.PaginationSchema;
-    product?: FernDefinition.ProductDeclarationSchema;
-    version?: FernDefinition.VersionDeclarationSchema;
+    imports: Record<string, string> | null;
+    "error-discrimination": FernDefinition.ErrorDiscriminationSchema | null;
+    audiences: string[] | null;
+    errors: string[] | null;
+    "base-path": string | null;
+    "path-parameters": Record<string, FernDefinition.HttpPathParameterSchema> | null;
+    "idempotency-headers": Record<string, FernDefinition.HttpHeaderSchema> | null;
+    variables: Record<string, FernDefinition.VariableDeclarationSchema> | null;
+    pagination: FernDefinition.PaginationSchema | null;
+    product: FernDefinition.ProductDeclarationSchema | null;
+    version: FernDefinition.VersionDeclarationSchema | null;
 }

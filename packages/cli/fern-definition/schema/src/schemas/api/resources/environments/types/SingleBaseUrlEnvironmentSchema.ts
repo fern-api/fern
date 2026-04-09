@@ -5,9 +5,9 @@ import type * as FernDefinition from "../../../index.js";
 export interface SingleBaseUrlEnvironmentSchema extends FernDefinition.WithAudiences, FernDefinition.WithDocsSchema {
     url: string;
     /** A separate default URL to use when no variables are provided (from x-fern-default-url extension) */
-    "default-url"?: string;
+    "default-url": string | null;
     /** The original URL template with variable placeholders (e.g., "https://api.{region}.example.com") */
-    "url-template"?: string;
+    "url-template": string | null;
     /** Server variables for URL templating */
-    variables?: FernDefinition.ServerVariableSchema[];
+    variables: FernDefinition.ServerVariableSchema[] | null;
 }

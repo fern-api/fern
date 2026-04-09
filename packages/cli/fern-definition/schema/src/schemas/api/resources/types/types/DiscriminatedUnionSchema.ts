@@ -3,9 +3,9 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface DiscriminatedUnionSchema extends FernDefinition.BaseTypeDeclarationSchema {
-    discriminant?: FernDefinition.UnionDiscriminant;
-    extends?: FernDefinition.ObjectExtendsSchema;
-    "base-properties"?: Record<string, FernDefinition.TypeReferenceSchema>;
+    discriminant: FernDefinition.UnionDiscriminant | null;
+    extends: FernDefinition.ObjectExtendsSchema | null;
+    "base-properties": Record<string, FernDefinition.TypeReferenceSchema> | null;
     union: Record<string, FernDefinition.SingleUnionTypeSchema>;
-    "default-variant"?: string;
+    "default-variant": string | null;
 }

@@ -12,13 +12,13 @@ export const TokenBearerAuthSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         scheme: core.serialization.stringLiteral("bearer"),
-        token: AuthVariable.optional(),
+        token: AuthVariable.nullable(),
     })
     .extend(WithDocsSchema);
 
 export declare namespace TokenBearerAuthSchema {
     export interface Raw extends WithDocsSchema.Raw {
         scheme: "bearer";
-        token?: AuthVariable.Raw | null;
+        token: AuthVariable.Raw | null;
     }
 }

@@ -6,7 +6,7 @@ export interface InferredGetTokenEndpointSchemaObject {
     /** The endpoint to get the access token, such as 'auth.get_token' */
     endpoint: string;
     /** The property name for the expiry time in the response. */
-    "expiry-response-property"?: string;
+    "expiry-response-property": string | null;
     /** The headers that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint. */
-    "authenticated-request-headers"?: FernDefinition.InferredAuthenticatedRequestHeader[];
+    "authenticated-request-headers": FernDefinition.InferredAuthenticatedRequestHeader[] | null;
 }

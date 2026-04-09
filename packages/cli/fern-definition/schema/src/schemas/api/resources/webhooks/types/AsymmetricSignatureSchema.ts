@@ -6,12 +6,12 @@ export interface AsymmetricSignatureSchema {
     header: string;
     "asymmetric-algorithm": FernDefinition.AsymmetricAlgorithmSchema;
     /** Defaults to base64. */
-    encoding?: FernDefinition.WebhookSignatureEncodingSchema;
+    encoding: FernDefinition.WebhookSignatureEncodingSchema | null;
     /** Prefix in the header value before the signature. */
-    "signature-prefix"?: string;
+    "signature-prefix": string | null;
     /** JWKS endpoint URL. When omitted, a static public key is expected at runtime. */
-    "jwks-url"?: string;
+    "jwks-url": string | null;
     /** HTTP header containing the key ID for JWKS key selection. */
-    "key-id-header"?: string;
-    timestamp?: FernDefinition.WebhookTimestampSchema;
+    "key-id-header": string | null;
+    timestamp: FernDefinition.WebhookTimestampSchema | null;
 }

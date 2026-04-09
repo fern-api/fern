@@ -3,6 +3,6 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface PackageMarkerFileSchema extends FernDefinition.DefinitionFileSchema {
-    navigation?: FernDefinition.Navigation;
-    export?: FernDefinition.Export;
+    navigation: FernDefinition.Navigation | null;
+    export: FernDefinition.Export | null;
 }

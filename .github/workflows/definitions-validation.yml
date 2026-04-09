@@ -24,6 +24,9 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Validate Fern definition uses nullable (not optional)
+        run: bash scripts/validate-fern-definition-types.sh
+
       - name: Check API definition is valid
         env:
           FORCE_COLOR: "2"

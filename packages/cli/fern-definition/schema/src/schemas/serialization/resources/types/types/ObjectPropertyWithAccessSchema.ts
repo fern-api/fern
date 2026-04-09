@@ -11,12 +11,12 @@ export const ObjectPropertyWithAccessSchema: core.serialization.ObjectSchema<
     FernDefinition.ObjectPropertyWithAccessSchema
 > = core.serialization
     .object({
-        access: ObjectPropertyAccess.optional(),
+        access: ObjectPropertyAccess.nullable(),
     })
     .extend(TypeReferenceDeclarationWithName);
 
 export declare namespace ObjectPropertyWithAccessSchema {
     export interface Raw extends TypeReferenceDeclarationWithName.Raw {
-        access?: ObjectPropertyAccess.Raw | null;
+        access: ObjectPropertyAccess.Raw | null;
     }
 }

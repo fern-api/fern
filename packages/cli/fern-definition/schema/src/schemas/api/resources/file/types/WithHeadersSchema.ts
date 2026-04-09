@@ -4,5 +4,5 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface WithHeadersSchema {
     /** Global Headers for the entire API */
-    headers?: Record<string, FernDefinition.HttpHeaderSchema>;
+    headers: Record<string, FernDefinition.HttpHeaderSchema> | null;
 }

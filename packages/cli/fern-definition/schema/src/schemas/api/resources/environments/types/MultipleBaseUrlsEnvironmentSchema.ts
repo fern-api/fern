@@ -5,9 +5,9 @@ import type * as FernDefinition from "../../../index.js";
 export interface MultipleBaseUrlsEnvironmentSchema extends FernDefinition.WithAudiences, FernDefinition.WithDocsSchema {
     urls: Record<string, string>;
     /** URL templates with variable placeholders for each base URL (e.g., "https://api.{region}.example.com") */
-    "url-templates"?: Record<string, string>;
+    "url-templates": Record<string, string> | null;
     /** Default URLs to use when no variables are provided (from x-fern-default-url extension) */
-    "default-urls"?: Record<string, string>;
+    "default-urls": Record<string, string> | null;
     /** Server variables for URL templating, keyed by base URL ID */
-    variables?: Record<string, FernDefinition.ServerVariableSchema[]>;
+    variables: Record<string, FernDefinition.ServerVariableSchema[]> | null;
 }

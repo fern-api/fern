@@ -8,17 +8,17 @@ export const StringValidationSchema: core.serialization.ObjectSchema<
     serializers.StringValidationSchema.Raw,
     FernDefinition.StringValidationSchema
 > = core.serialization.object({
-    minLength: core.serialization.number().optional(),
-    maxLength: core.serialization.number().optional(),
-    pattern: core.serialization.string().optional(),
-    format: core.serialization.string().optional(),
+    minLength: core.serialization.number().nullable(),
+    maxLength: core.serialization.number().nullable(),
+    pattern: core.serialization.string().nullable(),
+    format: core.serialization.string().nullable(),
 });
 
 export declare namespace StringValidationSchema {
     export interface Raw {
-        minLength?: number | null;
-        maxLength?: number | null;
-        pattern?: string | null;
-        format?: string | null;
+        minLength: number | null;
+        maxLength: number | null;
+        pattern: string | null;
+        format: string | null;
     }
 }

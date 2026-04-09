@@ -7,8 +7,8 @@ types:
 
   WithAuthSchema:
     properties:
-      auth: optional<ApiAuthSchema>
-      auth-schemes: optional<map<AuthSchemeKey, AuthSchemeDeclarationSchema>>
+      auth: nullable<ApiAuthSchema>
+      auth-schemes: nullable<map<AuthSchemeKey, AuthSchemeDeclarationSchema>>
 
   ApiAuthSchema:
     discriminated: false
@@ -57,7 +57,7 @@ types:
 
   WithEnvironmentVariable:
     properties:
-      env: optional<string>
+      env: nullable<string>
 
   AuthVariable:
     extends:
@@ -65,7 +65,7 @@ types:
       - commons.WithName
     properties:
       omit:
-        type: optional<boolean>
+        type: nullable<boolean>
         docs: If true, the auth variable will be omitted from the SDK.
 
   HeaderAuthSchemeSchema:
@@ -76,17 +76,17 @@ types:
     properties:
       header: string
       type:
-        type: optional<string>
+        type: nullable<string>
         docs: Defaults to string
-      prefix: optional<string>
+      prefix: nullable<string>
 
   BasicAuthSchemeSchema:
     extends:
       - commons.WithDocsSchema
     properties:
       scheme: literal<"basic">
-      username: optional<AuthVariable>
-      password: optional<AuthVariable>
+      username: nullable<AuthVariable>
+      password: nullable<AuthVariable>
 
   BearerAuthSchemeSchema:
     discriminated: false
@@ -99,7 +99,7 @@ types:
       - commons.WithDocsSchema
     properties:
       scheme: literal<"bearer">
-      token: optional<AuthVariable>
+      token: nullable<AuthVariable>
 
   InferredBearerAuthSchema:
     extends:
@@ -107,7 +107,7 @@ types:
     properties:
       scheme: literal<"bearer">
       get-token: InferredGetTokenEndpointSchema
-    # refresh-token: optional<InferredRefreshTokenEndpointSchema>
+    # refresh-token: nullable<InferredRefreshTokenEndpointSchema>
 
   InferredGetTokenEndpointSchema:
     discriminated: false
@@ -121,10 +121,10 @@ types:
         type: string
         docs: The endpoint to get the access token, such as 'auth.get_token'
       expiry-response-property:
-        type: optional<string>
+        type: nullable<string>
         docs: The property name for the expiry time in the response.
       authenticated-request-headers:
-        type: optional<list<InferredAuthenticatedRequestHeader>>
+        type: nullable<list<InferredAuthenticatedRequestHeader>>
         docs: The headers that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint.
 
   InferredAuthenticatedRequestHeader:
@@ -138,7 +138,7 @@ types:
         type: string
         docs: The header name to put the token in for any authenticated HTTP request.
       value-prefix:
-        type: optional<string>
+        type: nullable<string>
         docs: Commonly used for setting the `Authorization` scheme, but could be used for other things.
 
   OAuthSchemeSchema:
@@ -147,17 +147,17 @@ types:
     properties:
       scheme: literal<"oauth">
       type: literal<"client-credentials">
-      scopes: optional<list<AuthScope>>
-      client-id-env: optional<string>
-      client-secret-env: optional<string>
+      scopes: nullable<list<AuthScope>>
+      client-id-env: nullable<string>
+      client-secret-env: nullable<string>
       token-prefix:
-        type: optional<string>
+        type: nullable<string>
         docs: Sets the token header value prefix. Defaults to 'Bearer'
       token-header:
-        type: optional<string>
+        type: nullable<string>
         docs: Sets the token header key name. Defaults to 'Authorization'
       get-token: OAuthGetTokenEndpointSchema
-      refresh-token: optional<OAuthRefreshTokenEndpointSchema>
+      refresh-token: nullable<OAuthRefreshTokenEndpointSchema>
 
   OAuthGetTokenEndpointSchema:
     properties:
@@ -165,32 +165,32 @@ types:
         type: string
         docs: "The endpoint to get the access token, such as 'auth.get_token"
       request-properties:
-        type: optional<OAuthAccessTokenRequestPropertiesSchema>
+        type: nullable<OAuthAccessTokenRequestPropertiesSchema>
       response-properties:
-        type: optional<OAuthAccessTokenResponsePropertiesSchema>
+        type: nullable<OAuthAccessTokenResponsePropertiesSchema>
 
   OAuthAccessTokenRequestPropertiesSchema:
     properties:
       client-id:
-        type: optional<string>
+        type: nullable<string>
         docs: The property name for the client ID.
       client-secret:
-        type: optional<string>
+        type: nullable<string>
         docs: The property name for the client secret.
       scopes:
-        type: optional<string>
+        type: nullable<string>
         docs: The property name for the scopes.
 
   OAuthAccessTokenResponsePropertiesSchema:
     properties:
       access-token:
-        type: optional<string>
+        type: nullable<string>
         docs: The property name for the access token.
       expires-in:
-        type: optional<string>
+        type: nullable<string>
         docs: The property name for the expires in property.
       refresh-token:
-        type: optional<string>
+        type: nullable<string>
         docs: The property name for the refresh token
 
   OAuthRefreshTokenEndpointSchema:
@@ -199,9 +199,9 @@ types:
         type: string
         docs: "The endpoint to refresh the access token, such as 'auth.refresh_token"
       request-properties:
-        type: optional<OAuthRefreshTokenRequestPropertiesSchema>
+        type: nullable<OAuthRefreshTokenRequestPropertiesSchema>
       response-properties:
-        type: optional<OAuthRefreshTokenResponsePropertiesSchema>
+        type: nullable<OAuthRefreshTokenResponsePropertiesSchema>
 
   OAuthRefreshTokenRequestPropertiesSchema:
     properties:
@@ -212,11 +212,11 @@ types:
   OAuthRefreshTokenResponsePropertiesSchema:
     properties:
       access-token:
-        type: optional<string>
+        type: nullable<string>
         docs: The property name for the access token.
       expires-in:
-        type: optional<string>
+        type: nullable<string>
         docs: The property name for the expires in property.
       refresh-token:
-        type: optional<string>
+        type: nullable<string>
         docs: The property name for the refresh token.

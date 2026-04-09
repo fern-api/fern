@@ -15,6 +15,6 @@ export const ExampleWebSocketMessage: core.serialization.ObjectSchema<
 export declare namespace ExampleWebSocketMessage {
     export interface Raw {
         type: string;
-        body?: unknown;
+        body: unknown | null;
     }
 }

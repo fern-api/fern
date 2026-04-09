@@ -13,17 +13,17 @@ export const BaseTypeReferenceSchema: core.serialization.ObjectSchema<
     FernDefinition.BaseTypeReferenceSchema
 > = core.serialization
     .object({
-        default: core.serialization.unknown().optional(),
-        encoding: EncodingSchema.optional(),
-        validation: ValidationSchema.optional(),
+        default: core.serialization.unknown().nullable(),
+        encoding: EncodingSchema.nullable(),
+        validation: ValidationSchema.nullable(),
     })
     .extend(WithDocsSchema)
     .extend(WithAvailability);
 
 export declare namespace BaseTypeReferenceSchema {
     export interface Raw extends WithDocsSchema.Raw, WithAvailability.Raw {
-        default?: unknown | null;
-        encoding?: EncodingSchema.Raw | null;
-        validation?: ValidationSchema.Raw | null;
+        default: unknown | null;
+        encoding: EncodingSchema.Raw | null;
+        validation: ValidationSchema.Raw | null;
     }
 }

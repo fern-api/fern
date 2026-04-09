@@ -12,13 +12,13 @@ export const UnionDiscriminantSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         value: core.serialization.string(),
-        context: UnionDiscriminatorContext.optional(),
+        context: UnionDiscriminatorContext.nullable(),
     })
     .extend(WithName);
 
 export declare namespace UnionDiscriminantSchema {
     export interface Raw extends WithName.Raw {
         value: string;
-        context?: UnionDiscriminatorContext.Raw | null;
+        context: UnionDiscriminatorContext.Raw | null;
     }
 }

@@ -22,17 +22,17 @@ export const RootApiFileSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         name: core.serialization.string(),
-        imports: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
-        "error-discrimination": ErrorDiscriminationSchema.optional(),
-        audiences: core.serialization.list(core.serialization.string()).optional(),
-        errors: core.serialization.list(core.serialization.string()).optional(),
-        "base-path": core.serialization.string().optional(),
-        "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).optional(),
-        "idempotency-headers": core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
-        variables: core.serialization.record(core.serialization.string(), VariableDeclarationSchema).optional(),
-        pagination: PaginationSchema.optional(),
-        product: ProductDeclarationSchema.optional(),
-        version: VersionDeclarationSchema.optional(),
+        imports: core.serialization.record(core.serialization.string(), core.serialization.string()).nullable(),
+        "error-discrimination": ErrorDiscriminationSchema.nullable(),
+        audiences: core.serialization.list(core.serialization.string()).nullable(),
+        errors: core.serialization.list(core.serialization.string()).nullable(),
+        "base-path": core.serialization.string().nullable(),
+        "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).nullable(),
+        "idempotency-headers": core.serialization.record(core.serialization.string(), HttpHeaderSchema).nullable(),
+        variables: core.serialization.record(core.serialization.string(), VariableDeclarationSchema).nullable(),
+        pagination: PaginationSchema.nullable(),
+        product: ProductDeclarationSchema.nullable(),
+        version: VersionDeclarationSchema.nullable(),
     })
     .extend(WithDocsSchema)
     .extend(WithDisplayName)
@@ -48,16 +48,16 @@ export declare namespace RootApiFileSchema {
             WithAuthSchema.Raw,
             WithHeadersSchema.Raw {
         name: string;
-        imports?: Record<string, string> | null;
-        "error-discrimination"?: ErrorDiscriminationSchema.Raw | null;
-        audiences?: string[] | null;
-        errors?: string[] | null;
-        "base-path"?: string | null;
-        "path-parameters"?: Record<string, HttpPathParameterSchema.Raw> | null;
-        "idempotency-headers"?: Record<string, HttpHeaderSchema.Raw> | null;
-        variables?: Record<string, VariableDeclarationSchema.Raw> | null;
-        pagination?: PaginationSchema.Raw | null;
-        product?: ProductDeclarationSchema.Raw | null;
-        version?: VersionDeclarationSchema.Raw | null;
+        imports: Record<string, string> | null;
+        "error-discrimination": ErrorDiscriminationSchema.Raw | null;
+        audiences: string[] | null;
+        errors: string[] | null;
+        "base-path": string | null;
+        "path-parameters": Record<string, HttpPathParameterSchema.Raw> | null;
+        "idempotency-headers": Record<string, HttpHeaderSchema.Raw> | null;
+        variables: Record<string, VariableDeclarationSchema.Raw> | null;
+        pagination: PaginationSchema.Raw | null;
+        product: ProductDeclarationSchema.Raw | null;
+        version: VersionDeclarationSchema.Raw | null;
     }
 }

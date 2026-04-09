@@ -15,21 +15,21 @@ export const HttpRequestSchema: core.serialization.ObjectSchema<
     FernDefinition.HttpRequestSchema
 > = core.serialization
     .object({
-        "content-type": core.serialization.string().optional(),
-        "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).optional(),
-        "query-parameters": core.serialization.record(core.serialization.string(), HttpQueryParameterSchema).optional(),
-        headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
-        body: HttpRequestBodySchema.optional(),
+        "content-type": core.serialization.string().nullable(),
+        "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).nullable(),
+        "query-parameters": core.serialization.record(core.serialization.string(), HttpQueryParameterSchema).nullable(),
+        headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).nullable(),
+        body: HttpRequestBodySchema.nullable(),
     })
     .extend(WithName)
     .extend(WithDocsSchema);
 
 export declare namespace HttpRequestSchema {
     export interface Raw extends WithName.Raw, WithDocsSchema.Raw {
-        "content-type"?: string | null;
-        "path-parameters"?: Record<string, HttpPathParameterSchema.Raw> | null;
-        "query-parameters"?: Record<string, HttpQueryParameterSchema.Raw> | null;
-        headers?: Record<string, HttpHeaderSchema.Raw> | null;
-        body?: HttpRequestBodySchema.Raw | null;
+        "content-type": string | null;
+        "path-parameters": Record<string, HttpPathParameterSchema.Raw> | null;
+        "query-parameters": Record<string, HttpQueryParameterSchema.Raw> | null;
+        headers: Record<string, HttpHeaderSchema.Raw> | null;
+        body: HttpRequestBodySchema.Raw | null;
     }
 }

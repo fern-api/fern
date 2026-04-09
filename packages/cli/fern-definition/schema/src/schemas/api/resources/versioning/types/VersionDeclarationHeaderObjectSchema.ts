@@ -2,9 +2,9 @@
 
 export interface VersionDeclarationHeaderObjectSchema {
     /** The name of the parameter used to represent the header */
-    name?: string;
+    name: string | null;
     /** The environment variable to read the header value from (if any) */
-    env?: string;
+    env: string | null;
     /** The wire representation of the header (e.g. X-API-Version) */
     value: string;
 }

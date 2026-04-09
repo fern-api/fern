@@ -9,5 +9,5 @@ export interface UnionDiscriminantSchema extends FernDefinition.WithName {
      * "data" means the discriminator is within the union data itself.
      * "protocol" means the discriminator is at the SSE protocol level.
      */
-    context?: FernDefinition.UnionDiscriminatorContext;
+    context: FernDefinition.UnionDiscriminatorContext | null;
 }

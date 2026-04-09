@@ -10,14 +10,14 @@ export const WebhookTimestampSchema: core.serialization.ObjectSchema<
     FernDefinition.WebhookTimestampSchema
 > = core.serialization.object({
     header: core.serialization.string(),
-    format: WebhookTimestampFormatSchema.optional(),
-    tolerance: core.serialization.number().optional(),
+    format: WebhookTimestampFormatSchema.nullable(),
+    tolerance: core.serialization.number().nullable(),
 });
 
 export declare namespace WebhookTimestampSchema {
     export interface Raw {
         header: string;
-        format?: WebhookTimestampFormatSchema.Raw | null;
-        tolerance?: number | null;
+        format: WebhookTimestampFormatSchema.Raw | null;
+        tolerance: number | null;
     }
 }

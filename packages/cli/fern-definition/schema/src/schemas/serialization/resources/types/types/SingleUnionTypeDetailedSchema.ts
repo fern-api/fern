@@ -15,8 +15,8 @@ export const SingleUnionTypeDetailedSchema: core.serialization.ObjectSchema<
     FernDefinition.SingleUnionTypeDetailedSchema
 > = core.serialization
     .object({
-        type: core.serialization.string().optional(),
-        key: SingleUnionTypeKey.optional(),
+        type: core.serialization.string().nullable(),
+        key: SingleUnionTypeKey.nullable(),
     })
     .extend(WithDocsSchema)
     .extend(WithName)
@@ -31,7 +31,7 @@ export declare namespace SingleUnionTypeDetailedSchema {
             WithAvailability.Raw,
             WithDisplayName.Raw,
             WithValidation.Raw {
-        type?: string | null;
-        key?: SingleUnionTypeKey.Raw | null;
+        type: string | null;
+        key: SingleUnionTypeKey.Raw | null;
     }
 }

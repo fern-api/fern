@@ -10,14 +10,14 @@ export const InferredGetTokenEndpointSchemaObject: core.serialization.ObjectSche
     FernDefinition.InferredGetTokenEndpointSchemaObject
 > = core.serialization.object({
     endpoint: core.serialization.string(),
-    "expiry-response-property": core.serialization.string().optional(),
-    "authenticated-request-headers": core.serialization.list(InferredAuthenticatedRequestHeader).optional(),
+    "expiry-response-property": core.serialization.string().nullable(),
+    "authenticated-request-headers": core.serialization.list(InferredAuthenticatedRequestHeader).nullable(),
 });
 
 export declare namespace InferredGetTokenEndpointSchemaObject {
     export interface Raw {
         endpoint: string;
-        "expiry-response-property"?: string | null;
-        "authenticated-request-headers"?: InferredAuthenticatedRequestHeader.Raw[] | null;
+        "expiry-response-property": string | null;
+        "authenticated-request-headers": InferredAuthenticatedRequestHeader.Raw[] | null;
     }
 }

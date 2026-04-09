@@ -18,9 +18,9 @@ types:
       - commons.WithName
       - commons.WithDocsSchema
     properties:
-      path-parameters: optional<map<string, ExampleTypeReferenceSchema>>
-      query-parameters: optional<map<string, ExampleTypeReferenceSchema>>
-      headers: optional<map<string, ExampleTypeReferenceSchema>>
+      path-parameters: nullable<map<string, ExampleTypeReferenceSchema>>
+      query-parameters: nullable<map<string, ExampleTypeReferenceSchema>>
+      headers: nullable<map<string, ExampleTypeReferenceSchema>>
       messages: list<ExampleWebSocketMessage>
 
   ExampleWebSocketMessage:
@@ -37,13 +37,13 @@ types:
       - commons.WithName
       - commons.WithDocsSchema
     properties:
-      id: optional<string>
-      path-parameters: optional<map<string, ExampleTypeReferenceSchema>>
-      query-parameters: optional<map<string, ExampleTypeReferenceSchema>>
-      headers: optional<map<string, ExampleTypeReferenceSchema>>
-      request: optional<ExampleTypeReferenceSchema>
-      response: optional<ExampleResponseSchema>
-      code-samples: optional<list<ExampleCodeSampleSchema>>
+      id: nullable<string>
+      path-parameters: nullable<map<string, ExampleTypeReferenceSchema>>
+      query-parameters: nullable<map<string, ExampleTypeReferenceSchema>>
+      headers: nullable<map<string, ExampleTypeReferenceSchema>>
+      request: nullable<ExampleTypeReferenceSchema>
+      response: nullable<ExampleResponseSchema>
+      code-samples: nullable<list<ExampleCodeSampleSchema>>
 
   ExampleWebhookCallSchema:
     audiences:
@@ -52,7 +52,7 @@ types:
       - commons.WithName
       - commons.WithDocsSchema
     properties:
-      id: optional<string>
+      id: nullable<string>
       payload: ExampleTypeReferenceSchema
 
   ExampleResponseSchema:
@@ -66,8 +66,8 @@ types:
 
   ExampleBodyResponseSchema:
     properties:
-      error: optional<string>
-      body: optional<ExampleTypeReferenceSchema>
+      error: nullable<string>
+      body: nullable<ExampleTypeReferenceSchema>
 
   ExampleStreamResponseSchema:
     properties:
@@ -80,7 +80,7 @@ types:
   ExampleSseEventSchema:
     properties:
       event: string
-      data: optional<ExampleTypeReferenceSchema>
+      data: nullable<ExampleTypeReferenceSchema>
 
   ExampleTypeReferenceSchema: unknown
 
@@ -125,4 +125,4 @@ types:
     properties:
       language: string
       code: string
-      install: optional<string>
+      install: nullable<string>

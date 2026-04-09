@@ -8,11 +8,11 @@ export const WithAudiences: core.serialization.ObjectSchema<
     serializers.WithAudiences.Raw,
     FernDefinition.WithAudiences
 > = core.serialization.object({
-    audiences: core.serialization.list(core.serialization.string()).optional(),
+    audiences: core.serialization.list(core.serialization.string()).nullable(),
 });
 
 export declare namespace WithAudiences {
     export interface Raw {
-        audiences?: string[] | null;
+        audiences: string[] | null;
     }
 }

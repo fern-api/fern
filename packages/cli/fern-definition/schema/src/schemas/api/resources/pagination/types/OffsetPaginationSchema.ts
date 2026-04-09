@@ -6,7 +6,7 @@ export interface OffsetPaginationSchema {
     /** The path to the response property for the page elements. */
     results: string;
     /** The path to the request property for the page step. */
-    step?: string;
+    step: string | null;
     /** The path to the response property indicating next page presence. */
-    "has-next-page"?: string;
+    "has-next-page": string | null;
 }

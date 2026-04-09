@@ -9,11 +9,11 @@ export const ServiceTransport: core.serialization.ObjectSchema<
     serializers.ServiceTransport.Raw,
     FernDefinition.ServiceTransport
 > = core.serialization.object({
-    grpc: GrpcTransport.optional(),
+    grpc: GrpcTransport.nullable(),
 });
 
 export declare namespace ServiceTransport {
     export interface Raw {
-        grpc?: GrpcTransport.Raw | null;
+        grpc: GrpcTransport.Raw | null;
     }
 }

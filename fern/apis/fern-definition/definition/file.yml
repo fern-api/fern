@@ -18,17 +18,17 @@ types:
     extends:
       - commons.WithDocsSchema
     properties:
-      imports: optional<map<string, string>>
-      types: optional<map<string, types.TypeDeclarationSchema>>
-      service: optional<service.HttpServiceSchema>
-      errors: optional<map<string, errors.ErrorDeclarationSchema>>
-      webhooks: optional<map<string, webhooks.WebhookSchema>>
+      imports: nullable<map<string, string>>
+      types: nullable<map<string, types.TypeDeclarationSchema>>
+      service: nullable<service.HttpServiceSchema>
+      errors: nullable<map<string, errors.ErrorDeclarationSchema>>
+      webhooks: nullable<map<string, webhooks.WebhookSchema>>
       webhook-signature:
-        type: optional<webhooks.WebhookSignatureSchema>
+        type: nullable<webhooks.WebhookSignatureSchema>
         docs: |
           Default webhook signature verification configuration.
           Applied to all webhooks in this file that do not declare their own signature.
-      channel: optional<websocket.WebSocketChannelSchema>
+      channel: nullable<websocket.WebSocketChannelSchema>
 
   ## Package marker file ##
   PackageMarkerFileSchema:
@@ -36,8 +36,8 @@ types:
     properties:
       navigation:
         availability: deprecated
-        type: optional<Navigation>
-      export: optional<Export>
+        type: nullable<Navigation>
+      export: nullable<Export>
 
   Navigation:
     discriminated: false
@@ -54,13 +54,13 @@ types:
   ExportDetailed:
     properties:
       dependency: string
-      url: optional<string>
+      url: nullable<string>
 
   ## Root api.yml file ##
   WithHeadersSchema:
     properties:
       headers:
-        type: optional<map<string, service.HttpHeaderSchema>>
+        type: nullable<map<string, service.HttpHeaderSchema>>
         docs: Global Headers for the entire API
 
   RootApiFileSchema:
@@ -72,17 +72,17 @@ types:
       - WithHeadersSchema
     properties:
       name: string
-      imports: optional<map<string, string>>
-      error-discrimination: optional<ErrorDiscriminationSchema>
-      audiences: optional<list<string>>
-      errors: optional<list<string>>
-      base-path: optional<string>
-      path-parameters: optional<map<string, service.HttpPathParameterSchema>>
-      idempotency-headers: optional<map<string, service.HttpHeaderSchema>>
-      variables: optional<map<string, variables.VariableDeclarationSchema>>
-      pagination: optional<pagination.PaginationSchema>
-      product: optional<products.ProductDeclarationSchema>
-      version: optional<versioning.VersionDeclarationSchema>
+      imports: nullable<map<string, string>>
+      error-discrimination: nullable<ErrorDiscriminationSchema>
+      audiences: nullable<list<string>>
+      errors: nullable<list<string>>
+      base-path: nullable<string>
+      path-parameters: nullable<map<string, service.HttpPathParameterSchema>>
+      idempotency-headers: nullable<map<string, service.HttpHeaderSchema>>
+      variables: nullable<map<string, variables.VariableDeclarationSchema>>
+      pagination: nullable<pagination.PaginationSchema>
+      product: nullable<products.ProductDeclarationSchema>
+      version: nullable<versioning.VersionDeclarationSchema>
 
   ErrorDiscriminationSchema:
     discriminated: false

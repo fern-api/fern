@@ -21,12 +21,12 @@ export const WebhookSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         method: WebhookMethodSchema,
-        headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
+        headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).nullable(),
         payload: WebhookPayloadSchema,
-        signature: WebhookSignatureSchema.optional(),
-        response: HttpResponseSchema.optional(),
-        "response-stream": HttpResponseStreamSchema.optional(),
-        examples: core.serialization.list(ExampleWebhookCallSchema).optional(),
+        signature: WebhookSignatureSchema.nullable(),
+        response: HttpResponseSchema.nullable(),
+        "response-stream": HttpResponseStreamSchema.nullable(),
+        examples: core.serialization.list(ExampleWebhookCallSchema).nullable(),
     })
     .extend(WithAvailability)
     .extend(WithAudiences)
@@ -36,11 +36,11 @@ export const WebhookSchema: core.serialization.ObjectSchema<
 export declare namespace WebhookSchema {
     export interface Raw extends WithAvailability.Raw, WithAudiences.Raw, WithDocsSchema.Raw, WithDisplayName.Raw {
         method: WebhookMethodSchema.Raw;
-        headers?: Record<string, HttpHeaderSchema.Raw> | null;
+        headers: Record<string, HttpHeaderSchema.Raw> | null;
         payload: WebhookPayloadSchema.Raw;
-        signature?: WebhookSignatureSchema.Raw | null;
-        response?: HttpResponseSchema.Raw | null;
-        "response-stream"?: HttpResponseStreamSchema.Raw | null;
-        examples?: ExampleWebhookCallSchema.Raw[] | null;
+        signature: WebhookSignatureSchema.Raw | null;
+        response: HttpResponseSchema.Raw | null;
+        "response-stream": HttpResponseStreamSchema.Raw | null;
+        examples: ExampleWebhookCallSchema.Raw[] | null;
     }
 }

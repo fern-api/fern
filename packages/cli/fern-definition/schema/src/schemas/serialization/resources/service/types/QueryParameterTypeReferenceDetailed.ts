@@ -10,14 +10,14 @@ export const QueryParameterTypeReferenceDetailed: core.serialization.ObjectSchem
     FernDefinition.QueryParameterTypeReferenceDetailed
 > = core.serialization
     .object({
-        "allow-multiple": core.serialization.boolean().optional(),
-        explode: core.serialization.boolean().optional(),
+        "allow-multiple": core.serialization.boolean().nullable(),
+        explode: core.serialization.boolean().nullable(),
     })
     .extend(TypeReferenceDeclarationWithName);
 
 export declare namespace QueryParameterTypeReferenceDetailed {
     export interface Raw extends TypeReferenceDeclarationWithName.Raw {
-        "allow-multiple"?: boolean | null;
-        explode?: boolean | null;
+        "allow-multiple": boolean | null;
+        explode: boolean | null;
     }
 }

@@ -12,15 +12,15 @@ export const HttpResponseStreamSchemaDetailed: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         type: core.serialization.string(),
-        format: StreamFormat.optional(),
-        terminator: core.serialization.string().optional(),
+        format: StreamFormat.nullable(),
+        terminator: core.serialization.string().nullable(),
     })
     .extend(WithDocsSchema);
 
 export declare namespace HttpResponseStreamSchemaDetailed {
     export interface Raw extends WithDocsSchema.Raw {
         type: string;
-        format?: StreamFormat.Raw | null;
-        terminator?: string | null;
+        format: StreamFormat.Raw | null;
+        terminator: string | null;
     }
 }

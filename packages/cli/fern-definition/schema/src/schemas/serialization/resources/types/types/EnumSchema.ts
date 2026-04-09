@@ -9,16 +9,16 @@ import { EnumValue } from "./EnumValue.js";
 export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.Raw, FernDefinition.EnumSchema> =
     core.serialization
         .object({
-            default: core.serialization.string().optional(),
+            default: core.serialization.string().nullable(),
             enum: core.serialization.list(EnumValue),
-            "forward-compatible": core.serialization.boolean().optional(),
+            "forward-compatible": core.serialization.boolean().nullable(),
         })
         .extend(BaseTypeDeclarationSchema);
 
 export declare namespace EnumSchema {
     export interface Raw extends BaseTypeDeclarationSchema.Raw {
-        default?: string | null;
+        default: string | null;
         enum: EnumValue.Raw[];
-        "forward-compatible"?: boolean | null;
+        "forward-compatible": boolean | null;
     }
 }

@@ -15,10 +15,10 @@ export const BaseTypeDeclarationSchema: core.serialization.ObjectSchema<
     FernDefinition.BaseTypeDeclarationSchema
 > = core.serialization
     .object({
-        examples: core.serialization.list(ExampleTypeSchema).optional(),
-        encoding: EncodingSchema.optional(),
-        source: SourceSchema.optional(),
-        inline: core.serialization.boolean().optional(),
+        examples: core.serialization.list(ExampleTypeSchema).nullable(),
+        encoding: EncodingSchema.nullable(),
+        source: SourceSchema.nullable(),
+        inline: core.serialization.boolean().nullable(),
     })
     .extend(WithDocsSchema)
     .extend(WithAvailability)
@@ -26,9 +26,9 @@ export const BaseTypeDeclarationSchema: core.serialization.ObjectSchema<
 
 export declare namespace BaseTypeDeclarationSchema {
     export interface Raw extends WithDocsSchema.Raw, WithAvailability.Raw, WithAudiences.Raw {
-        examples?: ExampleTypeSchema.Raw[] | null;
-        encoding?: EncodingSchema.Raw | null;
-        source?: SourceSchema.Raw | null;
-        inline?: boolean | null;
+        examples: ExampleTypeSchema.Raw[] | null;
+        encoding: EncodingSchema.Raw | null;
+        source: SourceSchema.Raw | null;
+        inline: boolean | null;
     }
 }

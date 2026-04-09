@@ -3,7 +3,7 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface ProductDeclarationSchema {
-    default?: string;
+    default: string | null;
     values: FernDefinition.ProductValue[];
     header: FernDefinition.ProductDeclarationHeaderSchema;
 }

@@ -14,29 +14,29 @@ export const ExampleEndpointCallSchema: core.serialization.ObjectSchema<
     FernDefinition.ExampleEndpointCallSchema
 > = core.serialization
     .object({
-        id: core.serialization.string().optional(),
+        id: core.serialization.string().nullable(),
         "path-parameters": core.serialization
             .record(core.serialization.string(), ExampleTypeReferenceSchema)
-            .optional(),
+            .nullable(),
         "query-parameters": core.serialization
             .record(core.serialization.string(), ExampleTypeReferenceSchema)
-            .optional(),
-        headers: core.serialization.record(core.serialization.string(), ExampleTypeReferenceSchema).optional(),
-        request: ExampleTypeReferenceSchema.optional(),
-        response: ExampleResponseSchema.optional(),
-        "code-samples": core.serialization.list(ExampleCodeSampleSchema).optional(),
+            .nullable(),
+        headers: core.serialization.record(core.serialization.string(), ExampleTypeReferenceSchema).nullable(),
+        request: ExampleTypeReferenceSchema.nullable(),
+        response: ExampleResponseSchema.nullable(),
+        "code-samples": core.serialization.list(ExampleCodeSampleSchema).nullable(),
     })
     .extend(WithName)
     .extend(WithDocsSchema);
 
 export declare namespace ExampleEndpointCallSchema {
     export interface Raw extends WithName.Raw, WithDocsSchema.Raw {
-        id?: string | null;
-        "path-parameters"?: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
-        "query-parameters"?: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
-        headers?: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
-        request?: (ExampleTypeReferenceSchema.Raw | undefined) | null;
-        response?: ExampleResponseSchema.Raw | null;
-        "code-samples"?: ExampleCodeSampleSchema.Raw[] | null;
+        id: string | null;
+        "path-parameters": Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
+        "query-parameters": Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
+        headers: Record<string, ExampleTypeReferenceSchema.Raw | undefined> | null;
+        request: (ExampleTypeReferenceSchema.Raw | undefined) | null;
+        response: ExampleResponseSchema.Raw | null;
+        "code-samples": ExampleCodeSampleSchema.Raw[] | null;
     }
 }

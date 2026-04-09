@@ -14,18 +14,18 @@ types:
       - commons.WithDisplayName
     properties:
       auth: boolean
-      url: optional<string>
+      url: nullable<string>
       base-path: string
-      path-parameters: optional<map<string, types.TypeReferenceSchema>>
-      idempotent: optional<boolean>
-      headers: optional<map<string, types.TypeReferenceSchema>>
-      transport: optional<ServiceTransport>
-      source: optional<source.SourceSchema>
+      path-parameters: nullable<map<string, types.TypeReferenceSchema>>
+      idempotent: nullable<boolean>
+      headers: nullable<map<string, types.TypeReferenceSchema>>
+      transport: nullable<ServiceTransport>
+      source: nullable<source.SourceSchema>
       endpoints: map<string, HttpEndpointSchema>
 
   ServiceTransport:
     properties:
-      grpc: optional<GrpcTransport>
+      grpc: nullable<GrpcTransport>
 
   GrpcTransport:
     properties:
@@ -38,23 +38,23 @@ types:
       - commons.WithDisplayName
       - commons.DeclarationSchema
     properties:
-      method: optional<HttpMethodSchema>
-      base-path: optional<string>
+      method: nullable<HttpMethodSchema>
+      base-path: nullable<string>
       path: string
-      url: optional<string>
-      path-parameters: optional<map<string, HttpPathParameterSchema>>
-      auth: optional<HttpEndpointAuth>
-      idempotent: optional<boolean>
-      stream-condition: optional<string>
-      request: optional<HttpRequest>
-      response: optional<HttpResponseSchema>
-      response-stream: optional<HttpResponseStreamSchema>
-      errors: optional<ResponseErrorsSchema>
-      examples: optional<list<examples.ExampleEndpointCallSchema>>
-      pagination: optional<Pagination>
-      transport: optional<ServiceTransport>
-      source: optional<source.SourceSchema>
-      retries: optional<RetriesConfiguration>
+      url: nullable<string>
+      path-parameters: nullable<map<string, HttpPathParameterSchema>>
+      auth: nullable<HttpEndpointAuth>
+      idempotent: nullable<boolean>
+      stream-condition: nullable<string>
+      request: nullable<HttpRequest>
+      response: nullable<HttpResponseSchema>
+      response-stream: nullable<HttpResponseStreamSchema>
+      errors: nullable<ResponseErrorsSchema>
+      examples: nullable<list<examples.ExampleEndpointCallSchema>>
+      pagination: nullable<Pagination>
+      transport: nullable<ServiceTransport>
+      source: nullable<source.SourceSchema>
+      retries: nullable<RetriesConfiguration>
 
   HttpEndpointAuth:
     discriminated: false
@@ -79,7 +79,7 @@ types:
 
   RetriesDisabledSchema:
     properties:
-      disabled: optional<boolean>
+      disabled: nullable<boolean>
 
   HttpMethodSchema:
     enum:
@@ -101,11 +101,11 @@ types:
       - commons.WithName
       - commons.WithDocsSchema
     properties:
-      content-type: optional<string>
-      path-parameters: optional<map<string, HttpPathParameterSchema>>
-      query-parameters: optional<map<string, HttpQueryParameterSchema>>
-      headers: optional<map<string, HttpHeaderSchema>>
-      body: optional<HttpRequestBodySchema>
+      content-type: nullable<string>
+      path-parameters: nullable<map<string, HttpPathParameterSchema>>
+      query-parameters: nullable<map<string, HttpQueryParameterSchema>>
+      headers: nullable<map<string, HttpHeaderSchema>>
+      body: nullable<HttpRequestBodySchema>
 
   TypeReferenceDeclarationWithEnvOverride:
     discriminated: false
@@ -116,7 +116,7 @@ types:
   TypeReferenceDeclarationWithEnvOverrideSchema:
     extends: types.TypeReferenceDeclarationWithName
     properties:
-      env: optional<string>
+      env: nullable<string>
 
   HttpHeaderSchema: TypeReferenceDeclarationWithEnvOverride
 
@@ -135,9 +135,9 @@ types:
 
   HttpInlineRequestBodySchema:
     properties:
-      extends: optional<types.ObjectExtendsSchema>
-      extra-properties: optional<boolean>
-      properties: optional<map<string, HttpInlineRequestBodyPropertySchema>>
+      extends: nullable<types.ObjectExtendsSchema>
+      extra-properties: nullable<boolean>
+      properties: nullable<map<string, HttpInlineRequestBodyPropertySchema>>
 
   HttpInlineRequestBodyPropertySchema:
     discriminated: false
@@ -149,9 +149,9 @@ types:
     extends: types.TypeReferenceDeclarationWithName
     properties:
       style:
-        type: optional<FormDataBodyEncodingStyle>
+        type: nullable<FormDataBodyEncodingStyle>
         docs: Defaults to json encoding
-      content-type: optional<string>
+      content-type: nullable<string>
 
   FormDataBodyEncodingStyle:
     enum:
@@ -169,7 +169,7 @@ types:
     extends:
       - types.TypeReferenceDeclarationWithName
     properties:
-      allow-multiple: optional<boolean>
+      allow-multiple: nullable<boolean>
 
   HttpResponseSchema:
     discriminated: false
@@ -181,9 +181,9 @@ types:
     extends:
       - commons.WithDocsSchema
     properties:
-      type: optional<string>
-      property: optional<string>
-      status-code: optional<integer>
+      type: nullable<string>
+      property: nullable<string>
+      status-code: nullable<integer>
 
   HttpResponseStreamSchema:
     discriminated: false
@@ -196,8 +196,8 @@ types:
       - commons.WithDocsSchema
     properties:
       type: string
-      format: optional<StreamFormat>
-      terminator: optional<string>
+      format: nullable<StreamFormat>
+      terminator: nullable<string>
 
   StreamFormat:
     enum:

@@ -5,6 +5,6 @@ import type * as FernDefinition from "../../../index.js";
 export interface OAuthRefreshTokenEndpointSchema {
     /** The endpoint to refresh the access token, such as 'auth.refresh_token */
     endpoint: string;
-    "request-properties"?: FernDefinition.OAuthRefreshTokenRequestPropertiesSchema;
-    "response-properties"?: FernDefinition.OAuthRefreshTokenResponsePropertiesSchema;
+    "request-properties": FernDefinition.OAuthRefreshTokenRequestPropertiesSchema | null;
+    "response-properties": FernDefinition.OAuthRefreshTokenResponsePropertiesSchema | null;
 }

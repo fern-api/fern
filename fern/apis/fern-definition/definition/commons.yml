@@ -5,31 +5,31 @@ imports:
 types:
   WithDocsSchema:
     properties:
-      docs: optional<string>
+      docs: nullable<string>
 
   WithName:
     properties:
-      name: optional<string>
+      name: nullable<string>
 
   WithAvailability:
     properties:
-      availability: optional<availability.AvailabilityUnionSchema>
+      availability: nullable<availability.AvailabilityUnionSchema>
 
   WithDisplayName:
     properties:
-      display-name: optional<string>
+      display-name: nullable<string>
 
   WithMethodName:
     properties:
-      method-name: optional<string>
+      method-name: nullable<string>
 
   WithValidation:
     properties:
-      validation: optional<validation.ValidationSchema>
+      validation: nullable<validation.ValidationSchema>
 
   WithAudiences:
     properties:
-      audiences: optional<list<string>>
+      audiences: nullable<list<string>>
 
   DeclarationSchema:
     extends:

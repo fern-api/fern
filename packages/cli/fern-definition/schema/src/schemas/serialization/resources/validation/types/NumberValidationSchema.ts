@@ -8,19 +8,19 @@ export const NumberValidationSchema: core.serialization.ObjectSchema<
     serializers.NumberValidationSchema.Raw,
     FernDefinition.NumberValidationSchema
 > = core.serialization.object({
-    min: core.serialization.number().optional(),
-    max: core.serialization.number().optional(),
-    exclusiveMin: core.serialization.boolean().optional(),
-    exclusiveMax: core.serialization.boolean().optional(),
-    multipleOf: core.serialization.number().optional(),
+    min: core.serialization.number().nullable(),
+    max: core.serialization.number().nullable(),
+    exclusiveMin: core.serialization.boolean().nullable(),
+    exclusiveMax: core.serialization.boolean().nullable(),
+    multipleOf: core.serialization.number().nullable(),
 });
 
 export declare namespace NumberValidationSchema {
     export interface Raw {
-        min?: number | null;
-        max?: number | null;
-        exclusiveMin?: boolean | null;
-        exclusiveMax?: boolean | null;
-        multipleOf?: number | null;
+        min: number | null;
+        max: number | null;
+        exclusiveMin: boolean | null;
+        exclusiveMax: boolean | null;
+        multipleOf: number | null;
     }
 }

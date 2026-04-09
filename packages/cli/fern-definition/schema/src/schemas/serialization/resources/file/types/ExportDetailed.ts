@@ -9,12 +9,12 @@ export const ExportDetailed: core.serialization.ObjectSchema<
     FernDefinition.ExportDetailed
 > = core.serialization.object({
     dependency: core.serialization.string(),
-    url: core.serialization.string().optional(),
+    url: core.serialization.string().nullable(),
 });
 
 export declare namespace ExportDetailed {
     export interface Raw {
         dependency: string;
-        url?: string | null;
+        url: string | null;
     }
 }

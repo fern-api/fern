@@ -2,5 +2,5 @@
 
 export interface ExportDetailed {
     dependency: string;
-    url?: string;
+    url: string | null;
 }

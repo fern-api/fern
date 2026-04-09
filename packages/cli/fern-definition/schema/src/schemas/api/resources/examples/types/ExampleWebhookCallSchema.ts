@@ -3,6 +3,6 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface ExampleWebhookCallSchema extends FernDefinition.WithName, FernDefinition.WithDocsSchema {
-    id?: string;
-    payload?: FernDefinition.ExampleTypeReferenceSchema;
+    id: string | null;
+    payload: FernDefinition.ExampleTypeReferenceSchema | null;
 }

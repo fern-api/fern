@@ -11,14 +11,14 @@ export const WebhookInlinedPayloadSchema: core.serialization.ObjectSchema<
     FernDefinition.WebhookInlinedPayloadSchema
 > = core.serialization.object({
     name: core.serialization.string(),
-    extends: ObjectExtendsSchema.optional(),
-    properties: core.serialization.record(core.serialization.string(), ObjectPropertySchema).optional(),
+    extends: ObjectExtendsSchema.nullable(),
+    properties: core.serialization.record(core.serialization.string(), ObjectPropertySchema).nullable(),
 });
 
 export declare namespace WebhookInlinedPayloadSchema {
     export interface Raw {
         name: string;
-        extends?: ObjectExtendsSchema.Raw | null;
-        properties?: Record<string, ObjectPropertySchema.Raw> | null;
+        extends: ObjectExtendsSchema.Raw | null;
+        properties: Record<string, ObjectPropertySchema.Raw> | null;
     }
 }

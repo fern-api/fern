@@ -9,11 +9,11 @@ export const WithHeadersSchema: core.serialization.ObjectSchema<
     serializers.WithHeadersSchema.Raw,
     FernDefinition.WithHeadersSchema
 > = core.serialization.object({
-    headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
+    headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).nullable(),
 });
 
 export declare namespace WithHeadersSchema {
     export interface Raw {
-        headers?: Record<string, HttpHeaderSchema.Raw> | null;
+        headers: Record<string, HttpHeaderSchema.Raw> | null;
     }
 }

@@ -8,11 +8,11 @@ export const WithDisplayName: core.serialization.ObjectSchema<
     serializers.WithDisplayName.Raw,
     FernDefinition.WithDisplayName
 > = core.serialization.object({
-    "display-name": core.serialization.string().optional(),
+    "display-name": core.serialization.string().nullable(),
 });
 
 export declare namespace WithDisplayName {
     export interface Raw {
-        "display-name"?: string | null;
+        "display-name": string | null;
     }
 }

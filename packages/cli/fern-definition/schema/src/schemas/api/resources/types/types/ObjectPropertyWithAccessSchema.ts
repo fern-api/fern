@@ -3,5 +3,5 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface ObjectPropertyWithAccessSchema extends FernDefinition.TypeReferenceDeclarationWithName {
-    access?: FernDefinition.ObjectPropertyAccess;
+    access: FernDefinition.ObjectPropertyAccess | null;
 }
