@@ -35,7 +35,6 @@ export async function createAndStartJob({
     irVersionOverride,
     absolutePathToPreview,
     isPreview: isPreviewOverride,
-    fiddlePreview,
     fernignorePath,
     skipFernignore,
     retryRateLimited
@@ -55,9 +54,6 @@ export async function createAndStartJob({
     /** Explicit preview override. When set, takes precedence over the default (absolutePathToPreview != null).
      *  Controls CLI-side behavior: lenient env var substitution, skip version check, skip dynamic IR upload. */
     isPreview?: boolean;
-    /** Explicit override for the `preview` field sent to Fiddle. When set, takes precedence over isPreview.
-     *  Use false to prevent Fiddle from setting dryRun=true while keeping CLI-side isPreview=true. */
-    fiddlePreview?: boolean;
     fernignorePath: string | undefined;
     skipFernignore?: boolean;
     retryRateLimited: boolean;
@@ -91,7 +87,6 @@ export async function createAndStartJob({
                 whitelabel,
                 absolutePathToPreview,
                 isPreview: isPreviewOverride,
-                fiddlePreview,
                 fernignoreContents
             }),
         retryRateLimited,
@@ -117,7 +112,6 @@ async function createJob({
     whitelabel,
     absolutePathToPreview,
     isPreview: isPreviewOverride,
-    fiddlePreview,
     fernignoreContents
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -131,7 +125,6 @@ async function createJob({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     isPreview?: boolean;
-    fiddlePreview?: boolean;
     fernignoreContents: string | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
@@ -156,7 +149,14 @@ async function createJob({
             shouldLogS3Url
         }),
         whitelabel,
-        preview: fiddlePreview ?? isPreviewOverride ?? absolutePathToPreview != null,
+        // Never send preview=true to Fiddle for publishV2 output mode. Fiddle maps
+        // preview to dryRun, which would cause `npm publish --dry-run` instead of
+        // actually publishing. publishV2 means "publish to a registry" — dry-run
+        // contradicts that intent.
+        preview:
+            generatorInvocation.outputMode.type === "publishV2"
+                ? false
+                : (isPreviewOverride ?? absolutePathToPreview != null),
         fernignoreContents
     });
 

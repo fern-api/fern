@@ -31,7 +31,6 @@ export async function runRemoteGenerationForAPIWorkspace({
     whitelabel,
     absolutePathToPreview,
     isPreview,
-    fiddlePreview,
     mode,
     fernignorePath,
     skipFernignore,
@@ -53,9 +52,6 @@ export async function runRemoteGenerationForAPIWorkspace({
     /** Explicit preview override. When set, takes precedence over the default (absolutePathToPreview != null).
      *  Controls CLI-side behavior: lenient env var substitution, skip version check, skip dynamic IR upload. */
     isPreview?: boolean;
-    /** Explicit override for the `preview` field sent to Fiddle. When set, takes precedence over isPreview.
-     *  Use false to prevent Fiddle from setting dryRun=true while keeping CLI-side isPreview=true. */
-    fiddlePreview?: boolean;
     mode: "pull-request" | undefined;
     fernignorePath: string | undefined;
     skipFernignore?: boolean;
@@ -141,7 +137,6 @@ export async function runRemoteGenerationForAPIWorkspace({
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     absolutePathToPreview,
                     isPreview,
-                    fiddlePreview,
                     fernignorePath: effectiveFernignorePath,
                     skipFernignore,
                     dynamicIrOnly,

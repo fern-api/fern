@@ -243,12 +243,7 @@ export async function sdkPreview({
                             token,
                             whitelabel: workspace.generatorsConfiguration?.whitelabel,
                             absolutePathToPreview: undefined,
-                            // isPreview: true so CLI-side behavior is lenient (env var
-                            // substitution, skip version check). fiddlePreview: false so
-                            // Fiddle does NOT set dryRun=true (which would cause
-                            // `npm publish --dry-run` instead of actually publishing).
                             isPreview: true,
-                            fiddlePreview: false,
                             mode: undefined,
                             fernignorePath: undefined,
                             skipFernignore: false,
