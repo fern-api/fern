@@ -1,6 +1,7 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
+import com.fern.sdk.resources.endpoints.put.requests.PutRequest;
 
 public class Example54 {
     public static void main(String[] args) {
@@ -10,6 +11,11 @@ public class Example54 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().urls().withEndingSlash();
+        client.endpoints().put().add(
+            PutRequest
+                .builder()
+                .id("id")
+                .build()
+        );
     }
 }

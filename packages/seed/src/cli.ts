@@ -109,11 +109,13 @@ function addTestCommand(cli: Argv) {
                     string: true,
                     // default: FIXTURES,
                     demandOption: false,
+                    alias: "f",
                     description: "Runs on all fixtures if not provided"
                 })
                 .option("outputFolder", {
                     string: true,
                     demandOption: false,
+                    alias: "o",
                     description: "Runs on a specific output folder. Only relevant if there are >1 folders configured."
                 })
                 .option("keepContainer", {
@@ -126,12 +128,14 @@ function addTestCommand(cli: Argv) {
                 .option("skip-scripts", {
                     type: "boolean",
                     demandOption: false,
-                    default: false
+                    default: false,
+                    alias: "ss"
                 })
                 .option("local", {
                     type: "boolean",
                     demandOption: false,
-                    default: false
+                    default: false,
+                    alias: "l"
                 })
                 .option("log-level", {
                     default: LogLevel.Info,
@@ -147,18 +151,21 @@ function addTestCommand(cli: Argv) {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "i",
                     description: "Execute Node with --inspect flag for debugging"
                 })
                 .option("container-runtime", {
                     type: "string",
                     choices: ["docker", "podman"],
                     demandOption: false,
+                    alias: "cr",
                     description: "Explicitly specify which container runtime to use (docker or podman)"
                 })
                 .option("base-ref", {
                     type: "string",
                     demandOption: false,
                     default: "origin/main",
+                    alias: "br",
                     description: 'Git ref to diff against when using "affected" mode (default: origin/main)'
                 }),
         async (argv) => {
@@ -417,11 +424,13 @@ function addTestRemoteLocalCommand(cli: Argv) {
                     type: "array",
                     string: true,
                     demandOption: false,
+                    alias: "f",
                     description: "Runs on all fixtures if not provided"
                 })
                 .option("outputFolder", {
                     string: true,
                     demandOption: false,
+                    alias: "o",
                     description: "Runs on a specific output folder. Only relevant if there are >1 folders configured."
                 })
                 .option("output-mode", {
@@ -438,6 +447,7 @@ function addTestRemoteLocalCommand(cli: Argv) {
                 .option("fern-repo-directory", {
                     string: true,
                     demandOption: false,
+                    alias: "frd",
                     description:
                         "These tests must run with the fern repo path as their working directory. Defaults to the current working directory."
                 })
@@ -456,6 +466,7 @@ function addTestRemoteLocalCommand(cli: Argv) {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "bg",
                     description:
                         "Build generator Docker images at version 99.99.99 for local generation mode. Uses 'pnpm seed img' internally."
                 }),
@@ -530,6 +541,7 @@ function addRunCommand(cli: Argv) {
                     type: "string",
                     string: true,
                     demandOption: false,
+                    alias: "op",
                     description: "Path to output the generated files (defaults to tmp dir)"
                 })
                 .option("log-level", {
@@ -539,28 +551,33 @@ function addRunCommand(cli: Argv) {
                 .option("skip-scripts", {
                     type: "boolean",
                     demandOption: false,
-                    default: false
+                    default: false,
+                    alias: "ss"
                 })
                 .option("audience", {
                     string: true,
-                    demandOption: false
+                    demandOption: false,
+                    alias: "a"
                 })
                 .option("local", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "l",
                     description: "Run the generator locally instead of using Docker"
                 })
                 .option("keepContainer", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "k",
                     description: "Keeps the docker container after the generator finishes (Docker mode only)"
                 })
                 .option("inspect", {
                     type: "boolean",
                     demandOption: false,
-                    default: false
+                    default: false,
+                    alias: "i"
                 })
                 .option("prefer-manual-examples", {
                     type: "boolean",
@@ -690,6 +707,7 @@ function addGetAvailableFixturesCommand(cli: Argv) {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "iof",
                     description:
                         "Whether to separate by test subfolders or not (e.g., imdb:noScripts, imdb:no-custom-config, etc.)"
                 }),
@@ -730,6 +748,7 @@ function addListTestFixturesCommand(cli: Argv) {
                 .option("groups", {
                     type: "string",
                     demandOption: false,
+                    alias: "n",
                     description:
                         "Split fixtures into groups for parallel execution. Use 'auto' to automatically calculate based on fixture count, or a number for a specific group count."
                 }),
@@ -790,12 +809,14 @@ function addAffectedCommand(cli: Argv) {
                     type: "string",
                     demandOption: false,
                     default: "origin/main",
+                    alias: "br",
                     description: "Git ref to diff against (default: origin/main)"
                 })
                 .option("json", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "j",
                     description: "Output results as JSON"
                 }),
         async (argv) => {
@@ -864,6 +885,7 @@ function addCleanCommand(cli: Argv) {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "dr",
                     description: "List orphaned folders without deleting them"
                 }),
         async (argv) => {

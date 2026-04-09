@@ -13,12 +13,7 @@ public class Example59
             }
         );
 
-        await client.NoAuth.PostWithNoAuthAsync(
-            new Dictionary<string, object>()
-            {
-                ["key"] = "value",
-            }
-        );
+        await client.Endpoints.Urls.WithUnderscoresAsync();
     }
 
 }

@@ -583,6 +583,141 @@ func (o *ObjectWithMapOfMap) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
+// Tests that dynamic snippets include all required properties even when
+// the example data only provides a subset. In C#, properties marked as
+// `required` must be set in the object initializer.
+var (
+	objectWithMixedRequiredAndOptionalFieldsFieldRequiredString  = big.NewInt(1 << 0)
+	objectWithMixedRequiredAndOptionalFieldsFieldRequiredInteger = big.NewInt(1 << 1)
+	objectWithMixedRequiredAndOptionalFieldsFieldOptionalString  = big.NewInt(1 << 2)
+	objectWithMixedRequiredAndOptionalFieldsFieldRequiredLong    = big.NewInt(1 << 3)
+)
+
+type ObjectWithMixedRequiredAndOptionalFields struct {
+	RequiredString  string  `json:"requiredString" url:"requiredString"`
+	RequiredInteger int     `json:"requiredInteger" url:"requiredInteger"`
+	OptionalString  *string `json:"optionalString,omitempty" url:"optionalString,omitempty"`
+	RequiredLong    int64   `json:"requiredLong" url:"requiredLong"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithMixedRequiredAndOptionalFields) GetRequiredString() string {
+	if o == nil {
+		return ""
+	}
+	return o.RequiredString
+}
+
+func (o *ObjectWithMixedRequiredAndOptionalFields) GetRequiredInteger() int {
+	if o == nil {
+		return 0
+	}
+	return o.RequiredInteger
+}
+
+func (o *ObjectWithMixedRequiredAndOptionalFields) GetOptionalString() *string {
+	if o == nil {
+		return nil
+	}
+	return o.OptionalString
+}
+
+func (o *ObjectWithMixedRequiredAndOptionalFields) GetRequiredLong() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.RequiredLong
+}
+
+func (o *ObjectWithMixedRequiredAndOptionalFields) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithMixedRequiredAndOptionalFields) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetRequiredString sets the RequiredString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithMixedRequiredAndOptionalFields) SetRequiredString(requiredString string) {
+	o.RequiredString = requiredString
+	o.require(objectWithMixedRequiredAndOptionalFieldsFieldRequiredString)
+}
+
+// SetRequiredInteger sets the RequiredInteger field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithMixedRequiredAndOptionalFields) SetRequiredInteger(requiredInteger int) {
+	o.RequiredInteger = requiredInteger
+	o.require(objectWithMixedRequiredAndOptionalFieldsFieldRequiredInteger)
+}
+
+// SetOptionalString sets the OptionalString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithMixedRequiredAndOptionalFields) SetOptionalString(optionalString *string) {
+	o.OptionalString = optionalString
+	o.require(objectWithMixedRequiredAndOptionalFieldsFieldOptionalString)
+}
+
+// SetRequiredLong sets the RequiredLong field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithMixedRequiredAndOptionalFields) SetRequiredLong(requiredLong int64) {
+	o.RequiredLong = requiredLong
+	o.require(objectWithMixedRequiredAndOptionalFieldsFieldRequiredLong)
+}
+
+func (o *ObjectWithMixedRequiredAndOptionalFields) UnmarshalJSON(data []byte) error {
+	type unmarshaler ObjectWithMixedRequiredAndOptionalFields
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithMixedRequiredAndOptionalFields(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithMixedRequiredAndOptionalFields) MarshalJSON() ([]byte, error) {
+	type embed ObjectWithMixedRequiredAndOptionalFields
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *ObjectWithMixedRequiredAndOptionalFields) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
 var (
 	objectWithOptionalFieldFieldFieldString = big.NewInt(1 << 0)
 	objectWithOptionalFieldFieldInteger     = big.NewInt(1 << 1)
@@ -942,6 +1077,109 @@ func (o *ObjectWithRequiredField) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectWithRequiredField) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// Tests that dynamic snippets recursively construct default objects for
+// required properties whose type is a named object. The nested object's
+// own required properties should also be filled with defaults.
+var (
+	objectWithRequiredNestedObjectFieldRequiredString = big.NewInt(1 << 0)
+	objectWithRequiredNestedObjectFieldRequiredObject = big.NewInt(1 << 1)
+)
+
+type ObjectWithRequiredNestedObject struct {
+	RequiredString string                         `json:"requiredString" url:"requiredString"`
+	RequiredObject *NestedObjectWithRequiredField `json:"requiredObject" url:"requiredObject"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithRequiredNestedObject) GetRequiredString() string {
+	if o == nil {
+		return ""
+	}
+	return o.RequiredString
+}
+
+func (o *ObjectWithRequiredNestedObject) GetRequiredObject() *NestedObjectWithRequiredField {
+	if o == nil {
+		return nil
+	}
+	return o.RequiredObject
+}
+
+func (o *ObjectWithRequiredNestedObject) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithRequiredNestedObject) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetRequiredString sets the RequiredString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithRequiredNestedObject) SetRequiredString(requiredString string) {
+	o.RequiredString = requiredString
+	o.require(objectWithRequiredNestedObjectFieldRequiredString)
+}
+
+// SetRequiredObject sets the RequiredObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithRequiredNestedObject) SetRequiredObject(requiredObject *NestedObjectWithRequiredField) {
+	o.RequiredObject = requiredObject
+	o.require(objectWithRequiredNestedObjectFieldRequiredObject)
+}
+
+func (o *ObjectWithRequiredNestedObject) UnmarshalJSON(data []byte) error {
+	type unmarshaler ObjectWithRequiredNestedObject
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithRequiredNestedObject(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithRequiredNestedObject) MarshalJSON() ([]byte, error) {
+	type embed ObjectWithRequiredNestedObject
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *ObjectWithRequiredNestedObject) String() string {
 	if o == nil {
 		return "<nil>"
 	}

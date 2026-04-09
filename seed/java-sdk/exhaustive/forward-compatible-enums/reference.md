@@ -1384,6 +1384,142 @@ client.endpoints().object().getAndReturnMapOfDocumentedUnknownType(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields(request) -> ObjectWithMixedRequiredAndOptionalFields</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that dynamic snippets include all required properties in the
+object initializer, even when the example omits some required fields.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().object().getAndReturnWithMixedRequiredAndOptionalFields(
+    ObjectWithMixedRequiredAndOptionalFields
+        .builder()
+        .requiredString("hello")
+        .requiredInteger(0)
+        .requiredLong(0L)
+        .optionalString("world")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithMixedRequiredAndOptionalFields` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.getAndReturnWithRequiredNestedObject(request) -> ObjectWithRequiredNestedObject</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that dynamic snippets recursively construct default objects for
+required properties whose type is a named object. When the example
+omits the nested object, the generator should construct a default
+initializer with the nested object's required properties filled in.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().object().getAndReturnWithRequiredNestedObject(
+    ObjectWithRequiredNestedObject
+        .builder()
+        .requiredString("hello")
+        .requiredObject(
+            NestedObjectWithRequiredField
+                .builder()
+                .string("nested")
+                .nestedObject(
+                    ObjectWithOptionalField
+                        .builder()
+                        .build()
+                )
+                .build()
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithRequiredNestedObject` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.object.getAndReturnWithDatetimeLikeString(request) -> ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>

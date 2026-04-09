@@ -1,5 +1,5 @@
 using SeedExhaustive;
-using SeedExhaustive.Endpoints.Put;
+using System.Globalization;
 
 namespace Usage;
 
@@ -13,10 +13,8 @@ public class Example50
             }
         );
 
-        await client.Endpoints.Put.AddAsync(
-            new PutRequest {
-                Id = "id"
-            }
+        await client.Endpoints.Primitive.GetAndReturnDatetimeAsync(
+            DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal)
         );
     }
 

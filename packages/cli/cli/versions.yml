@@ -12,6 +12,18 @@
   createdAt: "2026-04-08"
   irVersion: 66
 
+- version: 4.64.1
+  changelogEntry:
+    - summary: |
+        Tag Sentry errors with `fern_run_id` and `github_run_id` for cross-run
+        correlation. The CLI now generates a `FERN_RUN_ID` at startup if one is
+        not already set in the environment (e.g. by the `fern-api/actions/setup-cli`
+        GitHub Action), threading a single correlation ID through all CLI
+        invocations in a workflow run.
+      type: chore
+  createdAt: "2026-04-09"
+  irVersion: 66
+
 - version: 4.64.0
   changelogEntry:
     - summary: |

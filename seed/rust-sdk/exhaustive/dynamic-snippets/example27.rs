@@ -11,10 +11,12 @@ async fn main() {
     client
         .endpoints
         .object
-        .get_and_return_with_datetime_like_string(
-            &ObjectWithDatetimeLikeString {
-                datetime_like_string: "datetimeLikeString".to_string(),
-                actual_datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+        .get_and_return_with_mixed_required_and_optional_fields(
+            &ObjectWithMixedRequiredAndOptionalFields {
+                required_string: "requiredString".to_string(),
+                required_integer: 1,
+                optional_string: Some("optionalString".to_string()),
+                required_long: 1000000,
                 ..Default::default()
             },
             None,

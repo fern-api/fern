@@ -1,6 +1,5 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Types;
 
 namespace Usage;
 
@@ -14,13 +13,8 @@ public class Example51
             }
         );
 
-        await client.Endpoints.Union.GetAndReturnUnionAsync(
-            new Animal(
-                new Dog {
-                    Name = "name",
-                    LikesToWoof = true
-                }
-            )
+        await client.Endpoints.Primitive.GetAndReturnDateAsync(
+            DateOnly.Parse("2023-01-15")
         );
     }
 
