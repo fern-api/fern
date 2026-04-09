@@ -85,7 +85,7 @@ func (r *RawClient) UpdatePlant(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/plants/%v",
-		request.PlantId,
+		request.PlantID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

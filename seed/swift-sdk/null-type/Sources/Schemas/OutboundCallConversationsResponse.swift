@@ -4,13 +4,13 @@ public struct OutboundCallConversationsResponse: Codable, Hashable, Sendable {
     /// Always null when dry_run is true.
     public let conversationId: Nullable<JSONValue>
     /// Always true for this response.
-    public let dryRun: JSONValue
+    public let dryRun: Bool
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         conversationId: Nullable<JSONValue>,
-        dryRun: JSONValue,
+        dryRun: Bool,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.conversationId = conversationId
@@ -21,7 +21,7 @@ public struct OutboundCallConversationsResponse: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.conversationId = try container.decode(Nullable<JSONValue>.self, forKey: .conversationId)
-        self.dryRun = try container.decode(JSONValue.self, forKey: .dryRun)
+        self.dryRun = try container.decode(Bool.self, forKey: .dryRun)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

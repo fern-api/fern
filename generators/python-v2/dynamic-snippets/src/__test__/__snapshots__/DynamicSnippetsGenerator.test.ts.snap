@@ -38,6 +38,7 @@ client.service.get_metadata(
 exports[`snippets > examples > 'POST /big-entity (simple)' 1`] = `
 "from acme import Acme
 from acme.types import Actor, ExtendedMovie, Migration
+from acme.commons.types import EventInfo_Metadata
 
 client = Acme(
     token="<YOUR_API_KEY>",
@@ -68,15 +69,14 @@ client.service.create_big_entity(
         },
         revenue=1000000,
     ),
-    event_info={
-        "type": "metadata",
-        "id": "event-12345",
-        "data": {
+    event_info=EventInfo_Metadata(
+        id="event-12345",
+        data={
             "key1": "val1",
             "key2": "val2"
         },
-        "json_string": "abc"
-    },
+        json_string="abc",
+    ),
     migration=Migration(
         name="Migration 31 Aug",
         status="RUNNING",

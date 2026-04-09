@@ -21,11 +21,6 @@ describe("MetadataClient", () => {
         const response = await client.user.events.metadata.getMetadata({
             id: "id",
         });
-        expect(response).toEqual({
-            id: "id",
-            value: {
-                key: "value",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

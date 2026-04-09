@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/node";
+import { setSentryRunIdTags } from "./sentryRunId.js";
 
 export class SentryClient {
     private readonly sentry: Sentry.NodeClient | undefined;
@@ -19,6 +20,7 @@ export class SentryClient {
                 integrations: [Sentry.rewriteFramesIntegration()],
                 tracesSampleRate: 0
             });
+            setSentryRunIdTags();
         }
     }
 

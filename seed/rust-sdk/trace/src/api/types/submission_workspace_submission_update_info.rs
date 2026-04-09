@@ -56,7 +56,7 @@ impl WorkspaceSubmissionUpdateInfo {
         Self::Traced {}
     }
 
-    pub fn traced_v_2(trace_responses_size: i64) -> Self {
+    pub fn traced_v2(trace_responses_size: i64) -> Self {
         Self::TracedV2 {
             trace_responses_size,
         }

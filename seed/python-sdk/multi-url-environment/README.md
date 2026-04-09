@@ -41,7 +41,7 @@ client = SeedMultiUrlEnvironment(
     token="<token>",
 )
 
-client.ec_2.boot_instance(
+client.ec2.boot_instance(
     size="size",
 )
 ```
@@ -74,7 +74,7 @@ client = AsyncSeedMultiUrlEnvironment(
 
 
 async def main() -> None:
-    await client.ec_2.boot_instance(
+    await client.ec2.boot_instance(
         size="size",
     )
 
@@ -91,7 +91,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.ec_2.boot_instance(...)
+    client.ec2.boot_instance(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -108,7 +108,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 from seed import SeedMultiUrlEnvironment
 
 client = SeedMultiUrlEnvironment(...)
-response = client.ec_2.with_raw_response.boot_instance(...)
+response = client.ec2.with_raw_response.boot_instance(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -129,7 +129,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.ec_2.boot_instance(..., request_options={
+client.ec2.boot_instance(..., request_options={
     "max_retries": 1
 })
 ```
@@ -144,7 +144,7 @@ from seed import SeedMultiUrlEnvironment
 client = SeedMultiUrlEnvironment(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.ec_2.boot_instance(..., request_options={
+client.ec2.boot_instance(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

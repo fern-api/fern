@@ -29,12 +29,7 @@ describe("SubmissionClient", () => {
             .build();
 
         const response = await client.submission.createExecutionSession("JAVA");
-        expect(response).toEqual({
-            sessionId: "sessionId",
-            executionSessionUrl: "executionSessionUrl",
-            language: "JAVA",
-            status: "CREATING_CONTAINER",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getExecutionSession", async () => {
@@ -62,12 +57,7 @@ describe("SubmissionClient", () => {
             .build();
 
         const response = await client.submission.getExecutionSession("sessionId");
-        expect(response).toEqual({
-            sessionId: "sessionId",
-            executionSessionUrl: "executionSessionUrl",
-            language: "JAVA",
-            status: "CREATING_CONTAINER",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("stopExecutionSession", async () => {
@@ -118,19 +108,6 @@ describe("SubmissionClient", () => {
             .build();
 
         const response = await client.submission.getExecutionSessionsState();
-        expect(response).toEqual({
-            states: {
-                states: {
-                    lastTimeContacted: "lastTimeContacted",
-                    sessionId: "sessionId",
-                    isWarmInstance: true,
-                    awsTaskId: "awsTaskId",
-                    language: "JAVA",
-                    status: "CREATING_CONTAINER",
-                },
-            },
-            numWarmingInstances: 1,
-            warmingSessionIds: ["warmingSessionIds", "warmingSessionIds"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

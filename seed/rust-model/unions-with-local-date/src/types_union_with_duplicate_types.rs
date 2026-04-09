@@ -19,11 +19,11 @@ pub enum UnionWithDuplicateTypes {
 }
 
 impl UnionWithDuplicateTypes {
-    pub fn foo_1(data: Foo) -> Self {
+    pub fn foo1(data: Foo) -> Self {
         Self::Foo1 { data }
     }
 
-    pub fn foo_2(data: Foo) -> Self {
+    pub fn foo2(data: Foo) -> Self {
         Self::Foo2 { data }
     }
 }

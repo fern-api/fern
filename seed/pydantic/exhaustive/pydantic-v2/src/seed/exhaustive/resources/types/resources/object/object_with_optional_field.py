@@ -29,9 +29,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
     uuid_: typing_extensions.Annotated[
         typing.Optional[uuid.UUID], FieldMetadata(alias="uuid"), pydantic.Field(alias="uuid", default=None)
     ]
-    base_64: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="base64"), pydantic.Field(alias="base64", default=None)
-    ]
+    base64: typing.Optional[str] = None
     list_: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="list"), pydantic.Field(alias="list", default=None)
     ]

@@ -30,12 +30,25 @@ defaultOutputMode: github
 defaultCustomConfig: {}
 
 scripts:
-  - image: swift:6.1.2
-    commands:
-      build:
-        - swift build -c release --build-tests
-      test:
-        - swift test
+  docker:
+    - image: swift:6.1.2
+      commands:
+        build:
+          - swift build -c release --build-tests
+        test:
+          - swift test
+  local:
+    - commands:
+        build:
+          - if [ -d /Applications/Xcode.app/Contents/Developer ]; then export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer; else export DEVELOPER_DIR=/Library/Developer/CommandLineTools; fi
+          - if [ -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk ]; then export SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk; else export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk; fi
+          - export PATH="$HOME/.local/bin:$PATH"
+          - swift build -c release --build-tests
+        test:
+          - if [ -d /Applications/Xcode.app/Contents/Developer ]; then export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer; else export DEVELOPER_DIR=/Library/Developer/CommandLineTools; fi
+          - if [ -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk ]; then export SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk; else export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk; fi
+          - export PATH="$HOME/.local/bin:$PATH"
+          - swift test
 
 fixtures:
   client-side-params:

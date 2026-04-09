@@ -180,7 +180,7 @@ client.Inlined.Send(
 </details>
 
 ## Path
-<details><summary><code>client.Path.Send(Id) -> *fern.SendResponse</code></summary>
+<details><summary><code>client.Path.Send(ID) -> *fern.SendResponse</code></summary>
 <dl>
 <dd>
 

@@ -167,13 +167,13 @@ func (p *PostSubmitResponse) String() string {
 }
 
 var (
-	tokenRequestFieldClientId     = big.NewInt(1 << 0)
+	tokenRequestFieldClientID     = big.NewInt(1 << 0)
 	tokenRequestFieldClientSecret = big.NewInt(1 << 1)
 )
 
 type TokenRequest struct {
 	// Client identifier
-	ClientId string `json:"client_id" url:"client_id"`
+	ClientID string `json:"client_id" url:"client_id"`
 	// Client secret
 	ClientSecret string `json:"client_secret" url:"client_secret"`
 
@@ -184,11 +184,11 @@ type TokenRequest struct {
 	rawJSON         json.RawMessage
 }
 
-func (t *TokenRequest) GetClientId() string {
+func (t *TokenRequest) GetClientID() string {
 	if t == nil {
 		return ""
 	}
-	return t.ClientId
+	return t.ClientID
 }
 
 func (t *TokenRequest) GetClientSecret() string {
@@ -212,11 +212,11 @@ func (t *TokenRequest) require(field *big.Int) {
 	t.explicitFields.Or(t.explicitFields, field)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TokenRequest) SetClientId(clientId string) {
-	t.ClientId = clientId
-	t.require(tokenRequestFieldClientId)
+func (t *TokenRequest) SetClientID(clientID string) {
+	t.ClientID = clientID
+	t.require(tokenRequestFieldClientID)
 }
 
 // SetClientSecret sets the ClientSecret field and marks it as non-optional;

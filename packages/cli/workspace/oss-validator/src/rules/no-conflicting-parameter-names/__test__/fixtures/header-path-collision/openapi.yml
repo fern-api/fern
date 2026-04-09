@@ -1,0 +1,22 @@
+openapi: 3.0.3
+info:
+  title: Test API
+  version: 1.0.0
+paths:
+  /plants/{plant_id}:
+    get:
+      operationId: getPlant
+      parameters:
+        - name: Plant-Id
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: plant_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK

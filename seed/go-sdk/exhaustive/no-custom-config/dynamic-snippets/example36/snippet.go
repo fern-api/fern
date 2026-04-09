@@ -17,11 +17,15 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.ModifyResourceAtInlinedPath{
-        Param: "param",
-        Body: "string",
+    request := &endpoints.GetWithMultipleQuery{
+        Query: []string{
+            "query",
+        },
+        Number: []int{
+            1,
+        },
     }
-    client.Endpoints.Params.ModifyWithInlinePath(
+    client.Endpoints.Params.GetWithAllowMultipleQuery(
         context.TODO(),
         request,
     )

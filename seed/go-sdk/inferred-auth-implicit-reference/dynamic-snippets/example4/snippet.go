@@ -12,7 +12,7 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        option.WithClientId(
+        option.WithClientID(
             "client_id",
         ),
         option.WithClientSecret(

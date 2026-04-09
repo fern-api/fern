@@ -29,6 +29,7 @@ import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
 import { AutoVersioningCache } from "./AutoVersioningCache.js";
+import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 import { isAutoVersion } from "./VersionUtils.js";
 
@@ -49,7 +50,8 @@ export async function runLocalGenerationForWorkspace({
     validateWorkspace,
     requireEnvVars,
     skipFernignore,
-    publishToRegistry
+    publishToRegistry,
+    isPreview: isPreviewOverride
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -68,6 +70,7 @@ export async function runLocalGenerationForWorkspace({
     requireEnvVars?: boolean;
     skipFernignore?: boolean;
     publishToRegistry?: boolean;
+    isPreview?: boolean;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
     // This avoids wasted work when one generator would fail the version check.
@@ -95,7 +98,7 @@ export async function runLocalGenerationForWorkspace({
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
-                const isPreview = absolutePathToPreview != null;
+                const isPreview = isPreviewOverride ?? absolutePathToPreview != null;
                 const substituteEnvVars = <T>(stringOrObject: T) =>
                     replaceEnvVariables(
                         stringOrObject,
@@ -423,10 +426,8 @@ function resolveAbsolutePathToLocalPreview(
     if (absolutePathToPreview == null) {
         return undefined;
     }
-    const generatorName = generatorInvocation.name.split("/").pop() ?? "sdk";
-    const subfolderName = generatorName.replace(/[^a-zA-Z0-9-_]/g, "_");
-
-    return absolutePathToPreview ? join(absolutePathToPreview, RelativeFilePath.of(subfolderName)) : undefined;
+    const subfolderName = getGeneratorOutputSubfolder(generatorInvocation.name);
+    return join(absolutePathToPreview, RelativeFilePath.of(subfolderName));
 }
 
 export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {

@@ -423,6 +423,7 @@
                   "name": "CompletionChunk",
                   "typeId": "CompletionChunk",
                   "inline": false,
+                  "displayName": "CompletionChunk",
                   "type": "named"
                 },
                 "type": "json"
@@ -469,6 +470,7 @@
                       "name": "CompletionChunk",
                       "typeId": "CompletionChunk",
                       "inline": false,
+                      "displayName": "CompletionChunk",
                       "type": "named"
                     },
                     "type": "json"
@@ -757,6 +759,7 @@
                   "name": "Completion",
                   "typeId": "Completion",
                   "inline": false,
+                  "displayName": "Completion",
                   "type": "named"
                 },
                 "docs": "",
@@ -803,6 +806,7 @@
                       "name": "Completion",
                       "typeId": "Completion",
                       "inline": false,
+                      "displayName": "Completion",
                       "type": "named"
                     },
                     "docs": "",

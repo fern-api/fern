@@ -11,6 +11,12 @@ async fn main() {
     client
         .endpoints
         .params
-        .upload_with_path(&"upload-path".to_string(), &vec![], None)
+        .get_with_path_and_query(
+            &"param".to_string(),
+            &GetWithPathAndQueryQueryRequest {
+                query: "query".to_string(),
+            },
+            None,
+        )
         .await;
 }

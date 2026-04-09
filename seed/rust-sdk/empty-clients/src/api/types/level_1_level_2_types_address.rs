@@ -2,12 +2,10 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct Address {
-    #[serde(rename = "line1")]
     #[serde(default)]
-    pub line_1: String,
-    #[serde(rename = "line2")]
+    pub line1: String,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub line_2: Option<String>,
+    pub line2: Option<String>,
     #[serde(default)]
     pub city: String,
     #[serde(default)]
@@ -26,8 +24,8 @@ impl Address {
 #[derive(Clone, PartialEq, Default, Debug)]
 #[non_exhaustive]
 pub struct AddressBuilder {
-    line_1: Option<String>,
-    line_2: Option<String>,
+    line1: Option<String>,
+    line2: Option<String>,
     city: Option<String>,
     state: Option<String>,
     zip: Option<String>,
@@ -35,13 +33,13 @@ pub struct AddressBuilder {
 }
 
 impl AddressBuilder {
-    pub fn line_1(mut self, value: impl Into<String>) -> Self {
-        self.line_1 = Some(value.into());
+    pub fn line1(mut self, value: impl Into<String>) -> Self {
+        self.line1 = Some(value.into());
         self
     }
 
-    pub fn line_2(mut self, value: impl Into<String>) -> Self {
-        self.line_2 = Some(value.into());
+    pub fn line2(mut self, value: impl Into<String>) -> Self {
+        self.line2 = Some(value.into());
         self
     }
 
@@ -67,17 +65,17 @@ impl AddressBuilder {
 
     /// Consumes the builder and constructs a [`Address`].
     /// This method will fail if any of the following fields are not set:
-    /// - [`line_1`](AddressBuilder::line_1)
+    /// - [`line1`](AddressBuilder::line1)
     /// - [`city`](AddressBuilder::city)
     /// - [`state`](AddressBuilder::state)
     /// - [`zip`](AddressBuilder::zip)
     /// - [`country`](AddressBuilder::country)
     pub fn build(self) -> Result<Address, BuildError> {
         Ok(Address {
-            line_1: self
-                .line_1
-                .ok_or_else(|| BuildError::missing_field("line_1"))?,
-            line_2: self.line_2,
+            line1: self
+                .line1
+                .ok_or_else(|| BuildError::missing_field("line1"))?,
+            line2: self.line2,
             city: self.city.ok_or_else(|| BuildError::missing_field("city"))?,
             state: self
                 .state

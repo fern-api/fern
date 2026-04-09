@@ -4,6 +4,9 @@ import static com.fern.java.GeneratorLogging.log;
 import static com.fern.java.GeneratorLogging.logError;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -20,6 +23,8 @@ import com.fern.generator.exec.model.logging.MavenCoordinate;
 import com.fern.generator.exec.model.logging.PackageCoordinate;
 import com.fern.generator.exec.model.logging.SuccessfulStatusUpdate;
 import com.fern.ir.core.ObjectMappers;
+import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.ir.model.publish.DirectPublish;
 import com.fern.ir.model.publish.Filesystem;
@@ -37,6 +42,9 @@ import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.GradlePublishingConfig;
 import com.fern.java.output.gradle.GradleRepository;
+import com.fern.java.utils.CasingConfiguration;
+import com.fern.java.utils.NameAndWireValueDeserializer;
+import com.fern.java.utils.NameDeserializer;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -93,7 +101,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
     }
 
-    /** Loads and preprocesses the IR from file, handling integer overflow values. */
+    /**
+     * Loads and preprocesses the IR from file, handling integer overflow values and v66 compressed name
+     * deserialization.
+     */
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {
             File irFile = new File(generatorConfig.getIrFilepath());
@@ -107,11 +118,38 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 log.info("Converted {} integer overflow value(s) to long type in IR", processor.getConversions());
             }
 
-            return ObjectMappers.JSON_MAPPER.treeToValue(rootNode, IntermediateRepresentation.class);
+            // Extract casingsConfig from IR JSON before full deserialization,
+            // then register custom deserializers for v66 compressed names.
+            // The generated Name and NameAndWireValue classes have @JsonDeserialize(builder=...)
+            // annotations that take precedence over module-level addDeserializer() calls.
+            // We use mix-in annotations to override those class-level annotations,
+            // clearing the builder configuration so our custom deserializers are used instead.
+            CasingConfiguration casingConfig = CasingConfiguration.fromIrJson(rootNode);
+
+            SimpleModule nameModule = new SimpleModule("NameOrStringModule");
+            nameModule.addDeserializer(Name.class, new NameDeserializer(casingConfig));
+            nameModule.addDeserializer(NameAndWireValue.class, new NameAndWireValueDeserializer(casingConfig));
+
+            ObjectMapper irMapper = ObjectMappers.JSON_MAPPER.copy();
+            // Mix-in annotations override class-level @JsonDeserialize(builder=...) annotations,
+            // allowing the module-level custom deserializers to take effect.
+            irMapper.addMixIn(Name.class, NameOrStringMixIn.class);
+            irMapper.addMixIn(NameAndWireValue.class, NameOrStringMixIn.class);
+            irMapper.registerModule(nameModule);
+
+            return irMapper.treeToValue(rootNode, IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
         }
     }
+
+    /**
+     * Mix-in annotation class that overrides @JsonDeserialize(builder=...) on generated IR classes. When applied via
+     * ObjectMapper.addMixIn(), this clears the builder-based deserialization, allowing module-level custom
+     * deserializers to handle both v65 object and v66 string forms.
+     */
+    @JsonDeserialize
+    abstract static class NameOrStringMixIn {}
 
     /** Processes JSON nodes in-place to convert integer overflow values to long type. */
     private static class IntegerOverflowProcessor {

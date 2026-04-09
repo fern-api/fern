@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) Nop(
 	ctx context.Context,
 	id string,
-	nestedId string,
+	nestedID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -45,7 +45,7 @@ func (r *RawClient) Nop(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v//%v",
 		id,
-		nestedId,
+		nestedID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

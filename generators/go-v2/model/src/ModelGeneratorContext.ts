@@ -13,7 +13,7 @@ export class ModelGeneratorContext extends AbstractGoGeneratorContext<ModelCusto
 
     public getTypeFilename({ fernFilepath }: { fernFilepath: FernIr.FernFilepath }): string {
         if (fernFilepath.file != null) {
-            return `${fernFilepath.file.snakeCase.unsafeName}.go`;
+            return `${this.caseConverter.snakeUnsafe(fernFilepath.file)}.go`;
         }
         return "types.go";
     }

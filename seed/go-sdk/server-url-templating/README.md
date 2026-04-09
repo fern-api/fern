@@ -39,7 +39,7 @@ import (
 func do() {
     client := client.NewClient()
     request := &fern.TokenRequest{
-        ClientId: "client_id",
+        ClientID: "client_id",
         ClientSecret: "client_secret",
     }
     client.GetToken(
@@ -56,7 +56,7 @@ URL, which is particularly useful in test environments.
 
 ```go
 client := client.NewClient(
-    option.WithBaseURL(api.Environments.RegionalApiServer),
+    option.WithBaseURL(api.Environments.RegionalAPIServer),
 )
 ```
 

@@ -20,7 +20,7 @@ describe("PrimitiveClient", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnString("string");
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnInt", async () => {
@@ -39,7 +39,7 @@ describe("PrimitiveClient", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnInt(1);
-        expect(response).toEqual(1);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnLong", async () => {
@@ -58,7 +58,7 @@ describe("PrimitiveClient", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnLong(1000000);
-        expect(response).toEqual(1000000);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnDouble", async () => {
@@ -77,7 +77,7 @@ describe("PrimitiveClient", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnDouble(1.1);
-        expect(response).toEqual(1.1);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnBool", async () => {
@@ -96,7 +96,7 @@ describe("PrimitiveClient", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnBool(true);
-        expect(response).toEqual(true);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnDatetime", async () => {
@@ -115,7 +115,7 @@ describe("PrimitiveClient", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
-        expect(response).toEqual("2024-01-15T09:30:00Z");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnDate", async () => {
@@ -134,7 +134,7 @@ describe("PrimitiveClient", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnDate("2023-01-15");
-        expect(response).toEqual("2023-01-15");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnUUID", async () => {
@@ -153,7 +153,7 @@ describe("PrimitiveClient", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
-        expect(response).toEqual("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnBase64", async () => {
@@ -172,6 +172,6 @@ describe("PrimitiveClient", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
-        expect(response).toEqual("SGVsbG8gd29ybGQh");
+        expect(response).toEqual(rawResponseBody);
     });
 });

@@ -724,6 +724,7 @@ export function buildOneOfTypeDeclaration({
                 docs: schema.description ?? undefined,
                 availability: schema.availability != null ? convertAvailability(schema.availability) : undefined,
                 union,
+                "default-variant": schema.defaultDiscriminantValue ?? undefined,
                 encoding,
                 source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
             }
