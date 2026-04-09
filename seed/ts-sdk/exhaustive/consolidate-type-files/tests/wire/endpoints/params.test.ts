@@ -14,7 +14,7 @@ describe("ParamsClient", () => {
         server.mockEndpoint().get("/params/path/param").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.endpoints.params.getWithPath("param");
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getWithInlinePath", async () => {
@@ -28,7 +28,7 @@ describe("ParamsClient", () => {
         const response = await client.endpoints.params.getWithInlinePath({
             param: "param",
         });
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getWithQuery", async () => {
@@ -98,7 +98,7 @@ describe("ParamsClient", () => {
             .build();
 
         const response = await client.endpoints.params.modifyWithPath("param", "string");
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("modifyWithInlinePath", async () => {
@@ -120,7 +120,7 @@ describe("ParamsClient", () => {
             param: "param",
             body: "string",
         });
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getWithPathAndErrors (1)", async () => {
@@ -132,7 +132,7 @@ describe("ParamsClient", () => {
         server.mockEndpoint().get("/params/path/param").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.endpoints.params.getWithPathAndErrors("param");
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getWithPathAndErrors (2)", async () => {

@@ -1196,11 +1196,23 @@ describe("${serviceName}", () => {
 
         const willThrowError = responseStatusCode >= 400 && this.neverThrowErrors === false;
 
-        const expected = getExpectedResponse({
-            response: example.response,
-            context,
-            neverThrowErrors: this.neverThrowErrors
-        });
+        // When noSerdeLayer is enabled, the SDK returns raw JSON without transformation,
+        // so the expected response should match the raw response body exactly.
+        const expected =
+            !context.includeSerdeLayer && rawResponseBody != null && responseStatusCode < 400
+                ? this.neverThrowErrors
+                    ? code`{
+                        body: rawResponseBody,
+                        ok: true,
+                        headers: expect.any(Object),
+                        rawResponse: expect.any(Object),
+                    }`
+                    : code`rawResponseBody`
+                : getExpectedResponse({
+                      response: example.response,
+                      context,
+                      neverThrowErrors: this.neverThrowErrors
+                  });
 
         const sseExpectedEvents: Code | undefined = isSSEStreaming
             ? this.getSseExpectedEvents({ endpoint, example, context })
