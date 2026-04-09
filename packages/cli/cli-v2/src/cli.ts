@@ -12,9 +12,11 @@ import { addOrgCommand } from "./commands/org/index.js";
 import { addSdkCommand } from "./commands/sdk/index.js";
 import { addTelemetryCommand } from "./commands/telemetry/index.js";
 import { GlobalArgs } from "./context/GlobalArgs.js";
+import { getOrCreateFernRunId } from "./fernRunId.js";
 import { Version } from "./version.js";
 
 export async function runCliV2(argv?: string[]): Promise<void> {
+    getOrCreateFernRunId();
     const cli = createCliV2(argv);
     await cli.parse();
 }
