@@ -39,7 +39,7 @@ import (
 
 func do() {
     client := client.NewClient(
-        option.WithClientId(
+        option.WithClientID(
             "client_id",
         ),
         option.WithClientSecret(
@@ -47,7 +47,7 @@ func do() {
         ),
     )
     request := &fern.GetTokenRequest{
-        ClientId: "client_id",
+        ClientID: "client_id",
         ClientSecret: "client_secret",
         Scope: fern.String(
             "scope",

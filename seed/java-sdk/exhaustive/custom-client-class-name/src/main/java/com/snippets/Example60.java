@@ -7,6 +7,6 @@ public class Example60 {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.noReqBody().postWithNoRequestBody();
+        client.noReqBody().getWithNoRequestBody();
     }
 }

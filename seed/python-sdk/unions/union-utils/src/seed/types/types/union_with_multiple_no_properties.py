@@ -23,13 +23,13 @@ class _Factory:
                 __root__=_UnionWithMultipleNoProperties.Foo(**value.dict(exclude_unset=True), type="foo")
             )  # type: ignore
 
-    def empty_1(self) -> UnionWithMultipleNoProperties:
+    def empty1(self) -> UnionWithMultipleNoProperties:
         if IS_PYDANTIC_V2:
             return UnionWithMultipleNoProperties(root=_UnionWithMultipleNoProperties.Empty1(type="empty1"))  # type: ignore
         else:
             return UnionWithMultipleNoProperties(__root__=_UnionWithMultipleNoProperties.Empty1(type="empty1"))  # type: ignore
 
-    def empty_2(self) -> UnionWithMultipleNoProperties:
+    def empty2(self) -> UnionWithMultipleNoProperties:
         if IS_PYDANTIC_V2:
             return UnionWithMultipleNoProperties(root=_UnionWithMultipleNoProperties.Empty2(type="empty2"))  # type: ignore
         else:
@@ -95,16 +95,16 @@ class UnionWithMultipleNoProperties(UniversalRootModel):
     def visit(
         self,
         foo: typing.Callable[[types_types_foo_Foo], T_Result],
-        empty_1: typing.Callable[[], T_Result],
-        empty_2: typing.Callable[[], T_Result],
+        empty1: typing.Callable[[], T_Result],
+        empty2: typing.Callable[[], T_Result],
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "foo":
             return foo(types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "empty1":
-            return empty_1()
+            return empty1()
         if unioned_value.type == "empty2":
-            return empty_2()
+            return empty2()
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2

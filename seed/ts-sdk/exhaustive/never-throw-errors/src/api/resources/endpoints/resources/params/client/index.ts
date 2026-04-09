@@ -1,4 +1,5 @@
 export * as getWithAllowMultipleQuery from "./getWithAllowMultipleQuery.js";
+export * as getWithBooleanPath from "./getWithBooleanPath.js";
 export * as getWithInlinePath from "./getWithInlinePath.js";
 export * as getWithInlinePathAndQuery from "./getWithInlinePathAndQuery.js";
 export * as getWithPath from "./getWithPath.js";

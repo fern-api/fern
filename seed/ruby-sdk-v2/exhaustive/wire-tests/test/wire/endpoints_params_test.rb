@@ -207,6 +207,27 @@ class EndpointsParamsWireTest < WireMockTestCase
     )
   end
 
+  def test_endpoints_params_get_with_boolean_path_with_wiremock
+    test_id = "endpoints.params.get_with_boolean_path.0"
+
+    @client.endpoints.params.get_with_boolean_path(
+      param: true,
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.params.get_with_boolean_path.0"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "GET",
+      url_path: "/params/path-bool/true",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
   def test_endpoints_params_get_with_path_and_errors_with_wiremock
     test_id = "endpoints.params.get_with_path_and_errors.0"
 

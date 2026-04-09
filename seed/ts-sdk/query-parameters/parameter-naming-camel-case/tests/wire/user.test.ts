@@ -54,9 +54,6 @@ describe("UserClient", () => {
             },
             filter: "filter",
         });
-        expect(response).toEqual({
-            name: "name",
-            tags: ["tags", "tags"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

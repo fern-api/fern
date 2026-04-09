@@ -1,5 +1,5 @@
 using SeedExhaustive;
-using SeedExhaustive.Types.Union;
+using SeedExhaustive.Endpoints.Put;
 
 namespace Usage;
 
@@ -13,13 +13,10 @@ public class Example50
             }
         );
 
-        await client.Endpoints.Union.GetAndReturnUnionAsync(
-            new Animal(
-                new Dog {
-                    Name = "name",
-                    LikesToWoof = true
-                }
-            )
+        await client.Endpoints.Put.AddAsync(
+            new PutRequest {
+                Id = "id"
+            }
         );
     }
 

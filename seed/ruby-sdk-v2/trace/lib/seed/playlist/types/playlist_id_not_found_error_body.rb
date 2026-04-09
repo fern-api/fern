@@ -3,7 +3,7 @@
 module Seed
   module Playlist
     module Types
-      class PlaylistIdNotFoundErrorBody < Internal::Types::Model
+      class PlaylistIDNotFoundErrorBody < Internal::Types::Model
         extend Seed::Internal::Types::Union
 
         discriminant :type

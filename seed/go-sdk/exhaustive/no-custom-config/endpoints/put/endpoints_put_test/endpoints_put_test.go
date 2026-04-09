@@ -75,7 +75,7 @@ func TestEndpointsPutAddWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &endpoints.PutRequest{
-		Id: "id",
+		ID: "id",
 	}
 	_, invocationErr := client.Endpoints.Put.Add(
 		context.TODO(),

@@ -18,7 +18,7 @@ func do() {
         ),
     )
     request := &pleaseinhere.RefreshTokenRequest{
-        Ttl: 420,
+        TTL: 420,
     }
     client.Service.RefreshToken(
         context.TODO(),

@@ -319,7 +319,7 @@ func (r *RawClient) GetAndReturnDate(
 	}, nil
 }
 
-func (r *RawClient) GetAndReturnUuid(
+func (r *RawClient) GetAndReturnUUID(
 	ctx context.Context,
 	request uuid.UUID,
 	opts ...option.RequestOption,

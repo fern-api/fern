@@ -26,29 +26,7 @@ describe("UsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            hasNextPage: true,
-            page: {
-                page: 1,
-                next: {
-                    page: 1,
-                    starting_after: "starting_after",
-                },
-                per_page: 1,
-                total_page: 1,
-            },
-            total_count: 1,
-            data: [
-                {
-                    name: "name",
-                    id: 1,
-                },
-                {
-                    name: "name",
-                    id: 1,
-                },
-            ],
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listWithCursorPagination({
             page: 1,
             per_page: 1,
@@ -82,19 +60,7 @@ describe("UsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            next: "next",
-            data: [
-                {
-                    name: "name",
-                    id: 1,
-                },
-                {
-                    name: "name",
-                    id: 1,
-                },
-            ],
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listWithMixedTypeCursorPagination({
             cursor: "cursor",
         });
@@ -128,29 +94,7 @@ describe("UsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            hasNextPage: true,
-            page: {
-                page: 1,
-                next: {
-                    page: 1,
-                    starting_after: "starting_after",
-                },
-                per_page: 1,
-                total_page: 1,
-            },
-            total_count: 1,
-            data: [
-                {
-                    name: "name",
-                    id: 1,
-                },
-                {
-                    name: "name",
-                    id: 1,
-                },
-            ],
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listWithBodyCursorPagination({
             pagination: {
                 cursor: "cursor",
@@ -184,19 +128,7 @@ describe("UsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            next_cursor: "next_cursor_value",
-            data: [
-                {
-                    name: "Alice",
-                    id: 1,
-                },
-                {
-                    name: "Bob",
-                    id: 2,
-                },
-            ],
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listWithTopLevelBodyCursorPagination({
             cursor: "initial_cursor",
             filter: "active",
@@ -230,29 +162,7 @@ describe("UsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            hasNextPage: true,
-            page: {
-                page: 1,
-                next: {
-                    page: 1,
-                    starting_after: "starting_after",
-                },
-                per_page: 1,
-                total_page: 1,
-            },
-            total_count: 1,
-            data: [
-                {
-                    name: "name",
-                    id: 1,
-                },
-                {
-                    name: "name",
-                    id: 1,
-                },
-            ],
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listWithOffsetPagination({
             page: 1,
             per_page: 1,
@@ -288,29 +198,7 @@ describe("UsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            hasNextPage: true,
-            page: {
-                page: 1,
-                next: {
-                    page: 1,
-                    starting_after: "starting_after",
-                },
-                per_page: 1,
-                total_page: 1,
-            },
-            total_count: 1,
-            data: [
-                {
-                    name: "name",
-                    id: 1,
-                },
-                {
-                    name: "name",
-                    id: 1,
-                },
-            ],
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listWithDoubleOffsetPagination({
             page: 1.1,
             per_page: 1.1,
@@ -347,29 +235,7 @@ describe("UsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            hasNextPage: true,
-            page: {
-                page: 1,
-                next: {
-                    page: 1,
-                    starting_after: "starting_after",
-                },
-                per_page: 1,
-                total_page: 1,
-            },
-            total_count: 1,
-            data: [
-                {
-                    name: "name",
-                    id: 1,
-                },
-                {
-                    name: "name",
-                    id: 1,
-                },
-            ],
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listWithBodyOffsetPagination({
             pagination: {
                 page: 1,
@@ -404,29 +270,7 @@ describe("UsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            hasNextPage: true,
-            page: {
-                page: 1,
-                next: {
-                    page: 1,
-                    starting_after: "starting_after",
-                },
-                per_page: 1,
-                total_page: 1,
-            },
-            total_count: 1,
-            data: [
-                {
-                    name: "name",
-                    id: 1,
-                },
-                {
-                    name: "name",
-                    id: 1,
-                },
-            ],
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listWithOffsetStepPagination({
             page: 1,
             limit: 1,
@@ -461,29 +305,7 @@ describe("UsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            hasNextPage: true,
-            page: {
-                page: 1,
-                next: {
-                    page: 2,
-                    starting_after: "next_cursor",
-                },
-                per_page: 3,
-                total_page: 5,
-            },
-            total_count: 15,
-            data: [
-                {
-                    name: "Alice",
-                    id: 1,
-                },
-                {
-                    name: "Bob",
-                    id: 2,
-                },
-            ],
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listWithOffsetPaginationHasNextPage({
             page: 1,
             limit: 3,
@@ -512,29 +334,7 @@ describe("UsersClient", () => {
 
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const expected = {
-            hasNextPage: false,
-            page: {
-                page: 1,
-                next: {
-                    page: 2,
-                    starting_after: "next_cursor",
-                },
-                per_page: 10,
-                total_page: 1,
-            },
-            total_count: 2,
-            data: [
-                {
-                    name: "Alice",
-                    id: 1,
-                },
-                {
-                    name: "Bob",
-                    id: 2,
-                },
-            ],
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listWithOffsetPaginationHasNextPage({
             page: 1,
             limit: 10,
@@ -567,22 +367,7 @@ describe("UsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            total_count: 1,
-            data: {
-                users: [
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                ],
-            },
-            next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listWithExtendedResults({
             cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         });
@@ -616,22 +401,7 @@ describe("UsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            total_count: 1,
-            data: {
-                users: [
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                ],
-            },
-            next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listWithExtendedResultsAndOptionalData({
             cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         });
@@ -656,12 +426,7 @@ describe("UsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            cursor: {
-                after: "after",
-                data: ["data", "data"],
-            },
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listUsernames({
             starting_after: "starting_after",
         });
@@ -686,12 +451,7 @@ describe("UsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            cursor: {
-                after: "after",
-                data: ["data", "data"],
-            },
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listUsernamesWithOptionalResponse({
             starting_after: "starting_after",
         });
@@ -716,9 +476,7 @@ describe("UsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            results: ["results", "results"],
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listWithGlobalConfig({
             offset: 1,
         });
@@ -751,29 +509,7 @@ describe("UsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            hasNextPage: true,
-            page: {
-                page: 1,
-                next: {
-                    page: 2,
-                    starting_after: "next_cursor",
-                },
-                per_page: 10,
-                total_page: 5,
-            },
-            total_count: 50,
-            data: [
-                {
-                    name: "Alice",
-                    id: 1,
-                },
-                {
-                    name: "Bob",
-                    id: 2,
-                },
-            ],
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listWithOptionalData({
             page: 1,
         });
@@ -835,28 +571,6 @@ describe("UsersClient", () => {
             per_page: 1,
             starting_after: "starting_after",
         });
-        expect(response).toEqual({
-            hasNextPage: true,
-            page: {
-                page: 1,
-                next: {
-                    page: 1,
-                    starting_after: "starting_after",
-                },
-                per_page: 1,
-                total_page: 1,
-            },
-            total_count: 1,
-            data: [
-                {
-                    name: "name",
-                    id: 1,
-                },
-                {
-                    name: "name",
-                    id: 1,
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });
