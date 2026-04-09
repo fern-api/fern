@@ -32,17 +32,17 @@ jobs:
         id: config
         run: |
           if [ "${{ inputs.is_dev }}" = "true" ]; then
-            echo "image=fernapi/fern-cli-dev" >> $GITHUB_OUTPUT
+            echo "image=fernapi/fern-dev" >> $GITHUB_OUTPUT
             echo "package=@fern-api/fern-api-dev" >> $GITHUB_OUTPUT
           else
-            echo "image=fernapi/fern-cli" >> $GITHUB_OUTPUT
+            echo "image=fernapi/fern" >> $GITHUB_OUTPUT
             echo "package=fern-api" >> $GITHUB_OUTPUT
           fi
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v7
         with:
-          file: docker/fern-cli/Dockerfile
+          file: packages/cli/cli/Dockerfile
           push: true
           build-args: |
             FERN_CLI_PACKAGE=${{ steps.config.outputs.package }}
