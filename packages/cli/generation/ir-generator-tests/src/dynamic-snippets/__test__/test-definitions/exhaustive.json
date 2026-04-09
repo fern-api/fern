@@ -10948,6 +10948,177 @@
             },
             "examples": null
         },
+        "endpoint_endpoints/params.getWithBooleanPath": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getWithBooleanPath",
+                    "camelCase": {
+                        "unsafeName": "getWithBooleanPath",
+                        "safeName": "getWithBooleanPath"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_with_boolean_path",
+                        "safeName": "get_with_boolean_path"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_WITH_BOOLEAN_PATH",
+                        "safeName": "GET_WITH_BOOLEAN_PATH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetWithBooleanPath",
+                        "safeName": "GetWithBooleanPath"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        },
+                        {
+                            "originalName": "params",
+                            "camelCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "params",
+                                "safeName": "params"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PARAMS",
+                                "safeName": "PARAMS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Params",
+                                "safeName": "Params"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "params",
+                        "camelCase": {
+                            "unsafeName": "params",
+                            "safeName": "params"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "params",
+                            "safeName": "params"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PARAMS",
+                            "safeName": "PARAMS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Params",
+                            "safeName": "Params"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/params/path-bool/{param}"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "param",
+                                "camelCase": {
+                                    "unsafeName": "param",
+                                    "safeName": "param"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "param",
+                                    "safeName": "param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PARAM",
+                                    "safeName": "PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Param",
+                                    "safeName": "Param"
+                                }
+                            },
+                            "wireValue": "param"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "BOOLEAN"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
         "endpoint_endpoints/params.getWithPathAndErrors": {
             "auth": {
                 "type": "bearer",
