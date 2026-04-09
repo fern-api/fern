@@ -84,15 +84,14 @@ function getGithubOwnerRepo(outputMode: FernFiddle.remoteGen.OutputMode): { owne
 }
 
 /**
- * Overrides a generator group's output mode for remote Fiddle generation.
+ * Overrides a generator group's output mode for remote generation via Fiddle.
  *
- * By default, uses publishV2(npmOverride) so Fiddle publishes to the preview
+ * By default, uses publishV2(npmOverride) so the server publishes to the preview
  * registry without touching the SDK repo.
  *
  * When pushDiff is true AND the generator has github configuration (owner/repo),
- * uses githubV2(push) with npm publishInfo so Fiddle routes the task to
- * GithubFiddleTask, which handles both npm publishing and pushing a preview
- * diff branch to the SDK repo.
+ * uses githubV2(push) with npm publishInfo so the server handles both npm
+ * publishing and pushing a preview diff branch to the SDK repo.
  *
  * @param token - The Fern org token (FERN_TOKEN). Used for registry auth.
  * @param pushDiff - When true, use githubV2(push) to push a diff branch to the SDK repo.
@@ -114,8 +113,8 @@ export function overrideGroupOutputForRemotePreview({
         if (pushDiff === true) {
             const githubInfo = getGithubOwnerRepo(generator.outputMode);
             if (githubInfo != null && githubInfo.owner !== "" && githubInfo.repo !== "") {
-                // Use githubV2(push) so Fiddle routes to GithubFiddleTask, which
-                // handles publishing + pushing the preview diff branch.
+                // Use githubV2(push) so the server handles both publishing
+                // and pushing the preview diff branch to the SDK repo.
                 const modifiedGenerator: generatorsYml.GeneratorInvocation = {
                     ...generator,
                     outputMode: FernFiddle.OutputMode.githubV2(
