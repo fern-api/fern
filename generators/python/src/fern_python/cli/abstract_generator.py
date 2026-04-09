@@ -121,10 +121,7 @@ class AbstractGenerator(ABC):
             import_paths = generator_config.custom_config.get("import_paths")
 
         additional_init_exports = None
-        if (
-            generator_config.custom_config is not None
-            and "additional_init_exports" in generator_config.custom_config
-        ):
+        if generator_config.custom_config is not None and "additional_init_exports" in generator_config.custom_config:
             raw_exports = generator_config.custom_config.get("additional_init_exports")
             if raw_exports is not None:
                 additional_init_exports = [ModuleExport.parse_obj(e) for e in raw_exports]

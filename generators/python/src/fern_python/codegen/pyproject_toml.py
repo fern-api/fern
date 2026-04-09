@@ -270,7 +270,7 @@ types-python-dateutil = "^2.9.0.20240316"
         def to_string(self) -> str:
             mypy_exclude_config = ""
             if self.mypy_exclude:
-                exclude_patterns = ", ".join([f'"{ pattern}"' for pattern in self.mypy_exclude])
+                exclude_patterns = ", ".join([f'"{pattern}"' for pattern in self.mypy_exclude])
                 mypy_exclude_config = f"\nexclude = [{exclude_patterns}]"
 
             mypy_overrides = ""

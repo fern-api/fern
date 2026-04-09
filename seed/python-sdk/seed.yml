@@ -449,7 +449,6 @@ allowedFailures:
   - any-auth
   - endpoint-security-auth
   - examples:legacy-wire-tests
-  - exhaustive:additional_init_exports
   - exhaustive:deps_with_min_python_version
   - exhaustive:pydantic-v1-with-utils
   - oauth-client-credentials-custom
