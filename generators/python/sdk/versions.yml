@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.3.4
+  changelogEntry:
+    - summary: |
+        Fix boolean path parameters being serialized as Python-style `True`/`False`
+        instead of JSON-style `true`/`false` in URL paths. Adds `encode_path_param`
+        utility that ensures proper lowercase boolean encoding for path segments.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 65
+
 - version: 5.3.3
   changelogEntry:
     - summary: |
