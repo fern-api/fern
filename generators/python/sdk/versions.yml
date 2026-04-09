@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.3.6
+  changelogEntry:
+    - summary: |
+        Fix wire test and snippet imports ignoring `package_path` config. When `package_path`
+        was set (e.g. `package_path: myorganization`), generated wire tests and README/reference
+        snippets would import types from the root package (e.g. `from auth0 import OrgBranding`)
+        instead of the nested module (e.g. `from auth0.myorganization import OrgBranding`),
+        causing mypy and pytest failures.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 65
+
 - version: 5.3.5
   changelogEntry:
     - summary: |
