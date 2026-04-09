@@ -55,7 +55,7 @@ paths:
                   $ref: '#/components/schemas/User'
       security:
         - Bearer: []
-        - ApiKey: []
+        - APIKey: []
         - OAuth: []
         - Basic: []
         - InferredAuth: []
@@ -76,7 +76,7 @@ paths:
                   $ref: '#/components/schemas/User'
       security:
         - Bearer: []
-        - ApiKey: []
+        - APIKey: []
         - OAuth: []
         - Basic: []
         - InferredAuth: []
@@ -112,7 +112,7 @@ components:
     Bearer:
       type: http
       scheme: bearer
-    ApiKey:
+    APIKey:
       type: apiKey
       in: header
       name: X-API-Key
