@@ -36,6 +36,7 @@ import java.util.concurrent.CompletableFuture;
 import javax.lang.model.element.Modifier;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
+import com.fern.java.utils.NameUtils;
 
 public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
 
@@ -95,21 +96,21 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                 .addModifiers(Modifier.PUBLIC)
                 .addJavadoc(
                         "Creates a new async WebSocket client for the $L channel.\n",
-                        websocketChannel.getName().get().getCamelCase().getSafeName())
+                        NameUtils.resolveName(websocketChannel.getName().get()).getCamelCase().getSafeName())
                 .addParameter(clientOptionsField.type, clientOptionsField.name);
 
         // Add path parameters
         for (PathParameter pathParam : websocketChannel.getPathParameters()) {
             TypeName paramType =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParam.getValueType());
-            builder.addParameter(paramType, pathParam.getName().getCamelCase().getSafeName())
+            builder.addParameter(paramType, NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName())
                     .addJavadoc(
                             "@param $L $L\n",
-                            pathParam.getName().getCamelCase().getSafeName(),
+                            NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName(),
                             pathParam
                                     .getDocs()
                                     .orElse("the "
-                                            + pathParam.getName().getCamelCase().getSafeName() + " path parameter"));
+                                            + NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName() + " path parameter"));
         }
 
         // Constructor body
@@ -119,7 +120,7 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
 
         // Assign path parameters
         for (PathParameter pathParam : websocketChannel.getPathParameters()) {
-            String paramName = pathParam.getName().getCamelCase().getSafeName();
+            String paramName = NameUtils.resolveName(pathParam.getName()).getCamelCase().getSafeName();
             builder.addStatement("this.$L = $L", paramName, paramName);
         }
 
@@ -173,8 +174,8 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
             for (QueryParameter queryParam : websocketChannel.getQueryParameters()) {
                 String getterName = "get"
                         + capitalize(
-                                queryParam.getName().getName().getCamelCase().getSafeName());
-                String wireValue = queryParam.getName().getWireValue();
+                                NameUtils.resolveName(NameUtils.resolveNameAndWireValue(queryParam.getName()).getName()).getCamelCase().getSafeName());
+                String wireValue = NameUtils.getWireValue(queryParam.getName());
 
                 boolean isOptional = queryParam.getValueType().getContainer().isPresent()
                         && queryParam.getValueType().getContainer().get().isOptional();

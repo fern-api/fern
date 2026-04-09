@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.ObjectMethodFactory;
+import com.fern.java.utils.NameUtils;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
 import com.fern.java.PoetTypeNameMapper;
 import com.squareup.javapoet.AnnotationSpec;
@@ -126,7 +127,7 @@ public abstract class UnionSubType {
         }
         // TODO(ajgateno): We'll want to ignore base properties as well when we support them in the Java generator
         unionSubTypeBuilder.addAnnotation(AnnotationSpec.builder(JsonIgnoreProperties.class)
-                .addMember("value", "$S", unionTypeDeclaration.getDiscriminant().getWireValue())
+                .addMember("value", "$S", NameUtils.resolveNameAndWireValue(unionTypeDeclaration.getDiscriminant()).getWireValue())
                 .build());
         EqualsMethod equalsMethod = getEqualsMethod();
         unionSubTypeBuilder

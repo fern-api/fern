@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import com.fern.java.utils.NameUtils;
 
 public class PaginationPathUtils {
 
@@ -60,10 +61,10 @@ public class PaginationPathUtils {
 
         Optional<TypeReference> maybeFoundExtended = objectDeclaration.getExtendedProperties().stream()
                 .flatMap(List::stream)
-                .filter(prop -> prop.getName()
-                        .getName()
-                        .getCamelCase()
-                        .getSafeName()
+                .filter(prop ->                 NameUtils.resolveName(NameUtils.resolveNameAndWireValue(prop.getName())
+                                        .getName())
+                                        .getCamelCase()
+                                        .getSafeName()
                         .equals(desiredPropertyName.getCamelCase().getSafeName()))
                 .map(ObjectProperty::getValueType)
                 .findAny();
@@ -73,10 +74,10 @@ public class PaginationPathUtils {
         }
 
         return objectDeclaration.getProperties().stream()
-                .filter(prop -> prop.getName()
-                        .getName()
-                        .getCamelCase()
-                        .getSafeName()
+                .filter(prop ->                 NameUtils.resolveName(NameUtils.resolveNameAndWireValue(prop.getName())
+                                        .getName())
+                                        .getCamelCase()
+                                        .getSafeName()
                         .equals(desiredPropertyName.getCamelCase().getSafeName()))
                 .map(ObjectProperty::getValueType)
                 .findAny();
@@ -393,8 +394,8 @@ public class PaginationPathUtils {
         public Optional<TypeReference> visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
             Optional<TypeReference> maybeFoundExtended = inlinedRequestBody.getExtendedProperties().stream()
                     .flatMap(List::stream)
-                    .filter(prop -> prop.getName()
-                            .getName()
+                    .filter(prop -> NameUtils.resolveName(NameUtils.resolveNameAndWireValue(prop.getName())
+                            .getName())
                             .getCamelCase()
                             .getSafeName()
                             .equals(desiredPropertyName.getCamelCase().getSafeName()))
@@ -406,8 +407,8 @@ public class PaginationPathUtils {
             }
 
             return inlinedRequestBody.getProperties().stream()
-                    .filter(prop -> prop.getName()
-                            .getName()
+                    .filter(prop -> NameUtils.resolveName(NameUtils.resolveNameAndWireValue(prop.getName())
+                            .getName())
                             .getCamelCase()
                             .getSafeName()
                             .equals(desiredPropertyName.getCamelCase().getSafeName()))
@@ -442,8 +443,8 @@ public class PaginationPathUtils {
 
             Optional<TypeReference> maybeFoundExtended = objectDeclaration.getExtendedProperties().stream()
                     .flatMap(List::stream)
-                    .filter(prop -> prop.getName()
-                            .getName()
+                    .filter(prop -> NameUtils.resolveName(NameUtils.resolveNameAndWireValue(prop.getName())
+                            .getName())
                             .getCamelCase()
                             .getSafeName()
                             .equals(desiredPropertyName.getCamelCase().getSafeName()))
@@ -455,8 +456,8 @@ public class PaginationPathUtils {
             }
 
             return objectDeclaration.getProperties().stream()
-                    .filter(prop -> prop.getName()
-                            .getName()
+                    .filter(prop -> NameUtils.resolveName(NameUtils.resolveNameAndWireValue(prop.getName())
+                            .getName())
                             .getCamelCase()
                             .getSafeName()
                             .equals(desiredPropertyName.getCamelCase().getSafeName()))

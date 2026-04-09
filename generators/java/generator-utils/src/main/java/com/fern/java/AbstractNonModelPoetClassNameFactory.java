@@ -17,10 +17,10 @@
 package com.fern.java;
 
 import com.fern.ir.model.commons.FernFilepath;
-import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.java.utils.KeyWordUtils;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,14 +41,14 @@ public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetC
     public final ClassName getTypeClassName(DeclaredTypeName declaredTypeName) {
         String packageName = getTypesPackageName(declaredTypeName.getFernFilepath());
         return ClassName.get(
-                packageName, declaredTypeName.getName().getPascalCase().getSafeName());
+                packageName, NameUtils.resolveName(declaredTypeName.getName()).getPascalCase().getSafeName());
     }
 
     @Override
     public final ClassName getInterfaceClassName(DeclaredTypeName declaredTypeName) {
         String packageName = getTypesPackageName(declaredTypeName.getFernFilepath());
         return ClassName.get(
-                packageName, "I" + declaredTypeName.getName().getPascalCase().getSafeName());
+                packageName, "I" + NameUtils.resolveName(declaredTypeName.getName()).getPascalCase().getSafeName());
     }
 
     protected final String getTypesPackageName(FernFilepath fernFilepath) {
@@ -64,7 +64,8 @@ public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetC
         switch (packageLayout) {
             case FLAT:
                 fernFilepath.ifPresent(filePath -> tokens.addAll(filePath.getPackagePath().stream()
-                        .map(Name::getCamelCase)
+                        .map(NameUtils::resolveName)
+                        .map(n -> n.getCamelCase())
                         .map(SafeAndUnsafeString::getSafeName)
                         .map(String::toLowerCase)
                         .map(KeyWordUtils::getKeyWordCompatibleName)
@@ -77,7 +78,8 @@ public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetC
                     tokens.add("resources");
                 }
                 fernFilepath.ifPresent(filepath -> tokens.addAll(filepath.getAllParts().stream()
-                        .map(Name::getCamelCase)
+                        .map(NameUtils::resolveName)
+                        .map(n -> n.getCamelCase())
                         .map(SafeAndUnsafeString::getSafeName)
                         // names should be lower case
                         .map(String::toLowerCase)

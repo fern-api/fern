@@ -18,10 +18,13 @@ package com.fern.java;
 
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.NameAndWireValueOrString;
+import com.fern.ir.model.commons.NameOrString;
 import com.fern.ir.model.http.FileUploadRequest;
 import com.fern.ir.model.http.FileUploadRequestProperty;
 import com.fern.ir.model.http.InlinedRequestBody;
 import com.fern.ir.model.types.ObjectProperty;
+import com.fern.java.utils.NameUtils;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,34 +35,24 @@ public final class RequestBodyUtils {
 
     public static List<ObjectProperty> convertToObjectProperties(InlinedRequestBody inlinedRequestBody) {
         return inlinedRequestBody.getProperties().stream()
-                .map(inlinedRequestBodyProperty -> ObjectProperty.builder()
-                        .name(NameAndWireValue.builder()
-                                .wireValue(inlinedRequestBodyProperty.getName().getWireValue())
-                                .name(Name.builder()
-                                        .originalName(inlinedRequestBodyProperty
-                                                .getName()
-                                                .getWireValue())
-                                        .camelCase(inlinedRequestBodyProperty
-                                                .getName()
-                                                .getName()
-                                                .getCamelCase())
-                                        .pascalCase(inlinedRequestBodyProperty
-                                                .getName()
-                                                .getName()
-                                                .getPascalCase())
-                                        .snakeCase(inlinedRequestBodyProperty
-                                                .getName()
-                                                .getName()
-                                                .getSnakeCase())
-                                        .screamingSnakeCase(inlinedRequestBodyProperty
-                                                .getName()
-                                                .getName()
-                                                .getScreamingSnakeCase())
-                                        .build())
-                                .build())
-                        .valueType(inlinedRequestBodyProperty.getValueType())
-                        .docs(inlinedRequestBodyProperty.getDocs())
-                        .build())
+                .map(inlinedRequestBodyProperty -> {
+                    NameAndWireValue resolved = NameUtils.resolveNameAndWireValue(inlinedRequestBodyProperty.getName());
+                    Name resolvedName = NameUtils.resolveName(resolved.getName());
+                    return ObjectProperty.builder()
+                            .name(NameAndWireValueOrString.of(NameAndWireValue.builder()
+                                    .wireValue(resolved.getWireValue())
+                                    .name(NameOrString.of(Name.builder()
+                                            .originalName(resolved.getWireValue())
+                                            .camelCase(resolvedName.getCamelCase())
+                                            .pascalCase(resolvedName.getPascalCase())
+                                            .snakeCase(resolvedName.getSnakeCase())
+                                            .screamingSnakeCase(resolvedName.getScreamingSnakeCase())
+                                            .build()))
+                                    .build()))
+                            .valueType(inlinedRequestBodyProperty.getValueType())
+                            .docs(inlinedRequestBodyProperty.getDocs())
+                            .build();
+                })
                 .collect(Collectors.toList());
     }
 
@@ -67,33 +60,24 @@ public final class RequestBodyUtils {
         return uploadRequest.getProperties().stream()
                 .map(FileUploadRequestProperty::getBodyProperty)
                 .flatMap(Optional::stream)
-                .map(fileUploadProperty -> ObjectProperty.builder()
-                        .name(NameAndWireValue.builder()
-                                .wireValue(fileUploadProperty.getName().getWireValue())
-                                .name(Name.builder()
-                                        .originalName(
-                                                fileUploadProperty.getName().getWireValue())
-                                        .camelCase(fileUploadProperty
-                                                .getName()
-                                                .getName()
-                                                .getCamelCase())
-                                        .pascalCase(fileUploadProperty
-                                                .getName()
-                                                .getName()
-                                                .getPascalCase())
-                                        .snakeCase(fileUploadProperty
-                                                .getName()
-                                                .getName()
-                                                .getSnakeCase())
-                                        .screamingSnakeCase(fileUploadProperty
-                                                .getName()
-                                                .getName()
-                                                .getScreamingSnakeCase())
-                                        .build())
-                                .build())
-                        .valueType(fileUploadProperty.getValueType())
-                        .docs(fileUploadProperty.getDocs())
-                        .build())
+                .map(fileUploadProperty -> {
+                    NameAndWireValue resolved = NameUtils.resolveNameAndWireValue(fileUploadProperty.getName());
+                    Name resolvedName = NameUtils.resolveName(resolved.getName());
+                    return ObjectProperty.builder()
+                            .name(NameAndWireValueOrString.of(NameAndWireValue.builder()
+                                    .wireValue(resolved.getWireValue())
+                                    .name(NameOrString.of(Name.builder()
+                                            .originalName(resolved.getWireValue())
+                                            .camelCase(resolvedName.getCamelCase())
+                                            .pascalCase(resolvedName.getPascalCase())
+                                            .snakeCase(resolvedName.getSnakeCase())
+                                            .screamingSnakeCase(resolvedName.getScreamingSnakeCase())
+                                            .build()))
+                                    .build()))
+                            .valueType(fileUploadProperty.getValueType())
+                            .docs(fileUploadProperty.getDocs())
+                            .build();
+                })
                 .collect(Collectors.toList());
     }
 }

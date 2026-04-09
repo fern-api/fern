@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.utils.NameUtils;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.JavaDocUtils;
 import com.fern.java.utils.KeyWordUtils;
@@ -390,7 +392,8 @@ public interface EnrichedObjectProperty {
             TypeName poetTypeName,
             boolean allowMultiple,
             boolean useNullableAnnotation) {
-        Name name = objectProperty.getName().getName();
+        NameAndWireValue resolvedNameAndWireValue = NameUtils.resolveNameAndWireValue(objectProperty.getName());
+        Name name = NameUtils.resolveName(resolvedNameAndWireValue.getName());
         Optional<Literal> maybeLiteral =
                 objectProperty.getValueType().getContainer().flatMap(ContainerType::getLiteral);
         return EnrichedObjectProperty.builder()
@@ -405,7 +408,7 @@ public interface EnrichedObjectProperty {
                 .generator(generator)
                 .allowMultiple(allowMultiple)
                 .useNullableAnnotation(useNullableAnnotation)
-                .wireKey(objectProperty.getName().getWireValue())
+                .wireKey(resolvedNameAndWireValue.getWireValue())
                 .docs(objectProperty.getDocs())
                 .literal(maybeLiteral)
                 .typeDeclaration(typeDeclaration)

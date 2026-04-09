@@ -17,6 +17,7 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.Optional;
 import javax.lang.model.element.Modifier;
 import okhttp3.Response;
+import com.fern.java.utils.NameUtils;
 
 public class ErrorGenerator extends AbstractFileGenerator {
     private static final String BODY_FIELD_NAME = "body";
@@ -45,7 +46,7 @@ public class ErrorGenerator extends AbstractFileGenerator {
             bodyTypeName = Optional.of(generatorContext.getPoetTypeNameMapper().convertToTypeName(true, typeReference));
         }
 
-        String errorName = errorDeclaration.getName().getName().getPascalCase().getUnsafeName();
+        String errorName = NameUtils.resolveName(errorDeclaration.getName().getName()).getPascalCase().getUnsafeName();
         bodyTypeName.ifPresent(typeName -> {
             FieldSpec bodyFieldSpec = FieldSpec.builder(typeName, BODY_FIELD_NAME)
                     .addModifiers(Modifier.PRIVATE, Modifier.FINAL)

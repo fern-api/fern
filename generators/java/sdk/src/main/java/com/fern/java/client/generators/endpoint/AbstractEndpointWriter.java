@@ -49,6 +49,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.lang.model.element.Modifier;
+import com.fern.java.utils.NameUtils;
 
 public abstract class AbstractEndpointWriter {
 
@@ -96,7 +97,7 @@ public abstract class AbstractEndpointWriter {
         this.responseParserGenerator = responseParserGenerator;
         this.httpEndpointMethodSpecsFactory = httpEndpointMethodSpecsFactory;
         this.endpointMethodBuilder = MethodSpec.methodBuilder(
-                        httpEndpoint.getName().get().getCamelCase().getSafeName())
+                        NameUtils.resolveName(httpEndpoint.getName().get()).getCamelCase().getSafeName())
                 .addModifiers(Modifier.PUBLIC);
         this.apiErrorClassName = apiErrorClassName;
         this.baseErrorClassName = baseErrorClassName;
@@ -173,8 +174,8 @@ public abstract class AbstractEndpointWriter {
                 variables.getHttpUrlName(),
                 variables
                         .sdkRequest()
-                        .map(sdkRequest -> sdkRequest
-                                .getRequestParameterName()
+                        .map(sdkRequest -> NameUtils.resolveName(sdkRequest
+                                .getRequestParameterName())
                                 .getCamelCase()
                                 .getSafeName())
                         .orElse(null),
@@ -274,10 +275,10 @@ public abstract class AbstractEndpointWriter {
                     .addParameters(variables.pathParameters)
                     .returns(endpointWithoutRequestOptions.returnType);
             List<ParameterSpec> additionalParamsWithoutBody = additionalParameters.stream()
-                    .filter(parameterSpec -> !parameterSpec.name.equals(variables
+                    .filter(parameterSpec -> !parameterSpec.name.equals(NameUtils.resolveName(variables
                             .sdkRequest()
                             .get()
-                            .getRequestParameterName()
+                            .getRequestParameterName())
                             .getCamelCase()
                             .getUnsafeName()))
                     .collect(Collectors.toList());
@@ -287,10 +288,10 @@ public abstract class AbstractEndpointWriter {
                     .map(parameterSpec -> parameterSpec.name)
                     .collect(Collectors.toList());
             ParameterSpec bodyParameterSpec = additionalParameters.stream()
-                    .filter(parameterSpec -> parameterSpec.name.equals(variables
+                    .filter(parameterSpec -> parameterSpec.name.equals(NameUtils.resolveName(variables
                             .sdkRequest()
                             .get()
-                            .getRequestParameterName()
+                            .getRequestParameterName())
                             .getCamelCase()
                             .getUnsafeName()))
                     .collect(Collectors.toList())
@@ -321,10 +322,10 @@ public abstract class AbstractEndpointWriter {
                     .addParameters(variables.pathParameters)
                     .returns(endpointWithRequestOptions.returnType);
             List<ParameterSpec> additionalParamsWithoutBody = additionalParameters.stream()
-                    .filter(parameterSpec -> !parameterSpec.name.equals(variables
+                    .filter(parameterSpec -> !parameterSpec.name.equals(NameUtils.resolveName(variables
                             .sdkRequest()
                             .get()
-                            .getRequestParameterName()
+                            .getRequestParameterName())
                             .getCamelCase()
                             .getUnsafeName()))
                     .collect(Collectors.toList());
@@ -343,10 +344,10 @@ public abstract class AbstractEndpointWriter {
                     .map(parameterSpec -> parameterSpec.name)
                     .collect(Collectors.toList());
             ParameterSpec bodyParameterSpec = additionalParameters.stream()
-                    .filter(parameterSpec -> parameterSpec.name.equals(variables
+                    .filter(parameterSpec -> parameterSpec.name.equals(NameUtils.resolveName(variables
                             .sdkRequest()
                             .get()
-                            .getRequestParameterName()
+                            .getRequestParameterName())
                             .getCamelCase()
                             .getUnsafeName()))
                     .collect(Collectors.toList())
@@ -557,7 +558,7 @@ public abstract class AbstractEndpointWriter {
 
                     if (isSingleFile) {
                         com.fern.ir.model.commons.NameAndWireValue filePropertyKey =
-                                fileProperty.visit(new com.fern.java.client.generators.visitors.GetFilePropertyKey());
+                                NameUtils.resolveNameAndWireValue(fileProperty.visit(new com.fern.java.client.generators.visitors.GetFilePropertyKey()));
                         String wireKey = filePropertyKey.getWireValue();
 
                         // Filter out both the request body parameter and the file parameter
@@ -565,10 +566,10 @@ public abstract class AbstractEndpointWriter {
                                 .filter(parameterSpec -> {
                                     // Exclude the request body parameter
                                     if (variables.sdkRequest().isPresent()
-                                            && parameterSpec.name.equals(variables
+                                            && parameterSpec.name.equals(NameUtils.resolveName(variables
                                                     .sdkRequest()
                                                     .get()
-                                                    .getRequestParameterName()
+                                                    .getRequestParameterName())
                                                     .getCamelCase()
                                                     .getUnsafeName())) {
                                         return false;
@@ -920,14 +921,14 @@ public abstract class AbstractEndpointWriter {
     private Map<String, PathParamInfo> convertPathParametersToSpecMap(List<PathParameter> pathParameters) {
         return pathParameters.stream()
                 .collect(Collectors.toMap(
-                        pathParameter -> pathParameter.getName().getOriginalName(), this::convertPathParameter));
+                        pathParameter -> NameUtils.resolveName(pathParameter.getName()).getOriginalName(), this::convertPathParameter));
     }
 
     private PathParamInfo convertPathParameter(PathParameter pathParameter) {
         TypeName typeName =
                 clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParameter.getValueType());
         ParameterSpec.Builder paramBuilder = ParameterSpec.builder(
-                typeName, pathParameter.getName().getCamelCase().getSafeName());
+                typeName, NameUtils.resolveName(pathParameter.getName()).getCamelCase().getSafeName());
 
         return PathParamInfo.builder()
                 .irParam(pathParameter)

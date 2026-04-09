@@ -17,6 +17,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import com.fern.java.utils.NameUtils;
 
 public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEndpointWriterVariableNameContext {
 
@@ -35,7 +36,7 @@ public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEnd
         this.generatedWrappedRequest = generatedWrappedRequest;
         this.sdkRequest = sdkRequest;
         this.requestParameterName =
-                sdkRequest.getRequestParameterName().getCamelCase().getSafeName();
+                NameUtils.resolveName(sdkRequest.getRequestParameterName()).getCamelCase().getSafeName();
         initializeCollections();
     }
 
@@ -84,15 +85,15 @@ public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEnd
             ClientGeneratorContext clientGeneratorContext, FileProperty fileProperty) {
         if (clientGeneratorContext.getCustomConfig().inlineFileProperties()) {
             return "request.get"
-                    + fileProperty
-                            .visit(new GetFilePropertyKey())
-                            .getName()
+                    + NameUtils.resolveName(NameUtils.resolveNameAndWireValue(fileProperty
+                            .visit(new GetFilePropertyKey()))
+                            .getName())
                             .getPascalCase()
                             .getSafeName() + "()";
         } else {
-            return fileProperty
-                    .visit(new GetFilePropertyKey())
-                    .getName()
+            return NameUtils.resolveName(NameUtils.resolveNameAndWireValue(fileProperty
+                    .visit(new GetFilePropertyKey()))
+                    .getName())
                     .getCamelCase()
                     .getSafeName();
         }

@@ -2,6 +2,7 @@ package com.fern.java.utils;
 
 import com.fern.ir.model.types.*;
 import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.utils.NameUtils;
 import java.util.Optional;
 
 public class TypeReferenceUtils {
@@ -127,7 +128,7 @@ public class TypeReferenceUtils {
 
         @Override
         public String visitNamed(NamedType named) {
-            return named.getName().getPascalCase().getUnsafeName();
+            return NameUtils.resolveName(named.getName()).getPascalCase().getUnsafeName();
         }
 
         @Override

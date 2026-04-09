@@ -18,6 +18,7 @@ package com.fern.java.generators;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.utils.NameUtils;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedJavaInterface.PropertyMethodSpec;
 import com.fern.java.utils.TypeReferenceInlineChecker;
@@ -74,11 +75,7 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
                             .getPoetTypeNameMapper()
                             .convertToTypeName(true, objectProperty.getValueType());
                     MethodSpec getter = MethodSpec.methodBuilder("get"
-                                    + objectProperty
-                                            .getName()
-                                            .getName()
-                                            .getPascalCase()
-                                            .getSafeName())
+                                    + NameUtils.resolveName(NameUtils.getNameFromWireValue(objectProperty.getName())).getPascalCase().getSafeName())
                             .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                             .returns(poetTypeName)
                             .build();
@@ -104,11 +101,7 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
                             .getPoetTypeNameMapper()
                             .convertToTypeName(true, objectProperty.getValueType());
                     MethodSpec getter = MethodSpec.methodBuilder("get"
-                                    + objectProperty
-                                            .getName()
-                                            .getName()
-                                            .getPascalCase()
-                                            .getSafeName())
+                                    + NameUtils.resolveName(NameUtils.getNameFromWireValue(objectProperty.getName())).getPascalCase().getSafeName())
                             .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                             .returns(poetTypeName)
                             .build();

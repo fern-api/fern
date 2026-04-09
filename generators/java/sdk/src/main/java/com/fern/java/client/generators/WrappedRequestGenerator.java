@@ -18,6 +18,8 @@ package com.fern.java.client.generators;
 
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.NameAndWireValueOrString;
+import com.fern.ir.model.commons.NameOrString;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.http.*;
 import com.fern.ir.model.types.ContainerType;
@@ -29,6 +31,7 @@ import com.fern.ir.model.types.PrimitiveTypeV1;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.RequestBodyUtils;
 import com.fern.java.client.ClientGeneratorContext;
+import com.fern.java.utils.NameUtils;
 import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.GeneratedWrappedRequest.FilePropertyContainer;
 import com.fern.java.client.GeneratedWrappedRequest.FileUploadProperty;
@@ -146,10 +149,10 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                             valueType = TypeReference.container(ContainerType.optional(valueType));
                         }
                         pathParameterObjectProperties.add(ObjectProperty.builder()
-                                .name(NameAndWireValue.builder()
-                                        .wireValue(pathParameter.getName().getOriginalName())
+                                .name(NameAndWireValueOrString.of(NameAndWireValue.builder()
+                                        .wireValue(NameUtils.resolveName(pathParameter.getName()).getOriginalName())
                                         .name(pathParameter.getName())
-                                        .build())
+                                        .build()))
                                 .valueType(valueType)
                                 .docs(pathParameter.getDocs())
                                 .build());
@@ -162,19 +165,19 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
             fileUploadRequest.getProperties().stream()
                     .flatMap(property -> property.getFile().stream())
                     .forEach(fileProperty -> {
-                        NameAndWireValue name = fileProperty.visit(new FileProperty.Visitor<NameAndWireValue>() {
+                        NameAndWireValueOrString name = fileProperty.visit(new FileProperty.Visitor<NameAndWireValueOrString>() {
                             @Override
-                            public NameAndWireValue visitFile(FilePropertySingle filePropertySingle) {
+                            public NameAndWireValueOrString visitFile(FilePropertySingle filePropertySingle) {
                                 return filePropertySingle.getKey();
                             }
 
                             @Override
-                            public NameAndWireValue visitFileArray(FilePropertyArray filePropertyArray) {
+                            public NameAndWireValueOrString visitFileArray(FilePropertyArray filePropertyArray) {
                                 return filePropertyArray.getKey();
                             }
 
                             @Override
-                            public NameAndWireValue _visitUnknown(Object o) {
+                            public NameAndWireValueOrString _visitUnknown(Object o) {
                                 throw new RuntimeException("Received unknown file property type: " + o);
                             }
                         });
@@ -289,8 +292,9 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         if (defaultValueExtractor.hasDefaultValue(valueType)) {
             valueType = TypeReference.container(ContainerType.optional(valueType));
         }
-        String sdkName = httpHeader.getName().getName().getCamelCase().getSafeName();
-        String wireValue = httpHeader.getName().getWireValue();
+        NameAndWireValue resolvedHeader = NameUtils.resolveNameAndWireValue(httpHeader.getName());
+        String sdkName = NameUtils.resolveName(resolvedHeader.getName()).getCamelCase().getSafeName();
+        String wireValue = resolvedHeader.getWireValue();
         if (headerWireValues.containsKey(sdkName)) {
             String existingWireValue = headerWireValues.get(sdkName);
             if (!existingWireValue.equals(wireValue)) {
@@ -301,10 +305,10 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         headerWireValues.put(sdkName, wireValue);
         NameAndWireValue nameWithoutWire = NameAndWireValue.builder()
                 .wireValue("")
-                .name(httpHeader.getName().getName())
+                .name(resolvedHeader.getName())
                 .build();
         headerObjectProperties.add(ObjectProperty.builder()
-                .name(nameWithoutWire)
+                .name(NameAndWireValueOrString.of(nameWithoutWire))
                 .valueType(valueType)
                 .docs(httpHeader.getDocs())
                 .build());
@@ -415,18 +419,19 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
 
         @Override
         public List<ObjectProperty> visitReference(HttpRequestBodyReference reference) {
+            Name resolvedBodyKey = NameUtils.resolveName(sdkRequestWrapper.getBodyKey());
             return List.of(ObjectProperty.builder()
-                    .name(NameAndWireValue.builder()
-                            .wireValue(sdkRequestWrapper.getBodyKey().getOriginalName())
-                            .name(Name.builder()
-                                    .originalName(sdkRequestWrapper.getBodyKey().getOriginalName())
-                                    .camelCase(sdkRequestWrapper.getBodyKey().getCamelCase())
-                                    .pascalCase(sdkRequestWrapper.getBodyKey().getPascalCase())
-                                    .snakeCase(sdkRequestWrapper.getBodyKey().getSnakeCase())
+                    .name(NameAndWireValueOrString.of(NameAndWireValue.builder()
+                            .wireValue(resolvedBodyKey.getOriginalName())
+                            .name(NameOrString.of(Name.builder()
+                                    .originalName(resolvedBodyKey.getOriginalName())
+                                    .camelCase(resolvedBodyKey.getCamelCase())
+                                    .pascalCase(resolvedBodyKey.getPascalCase())
+                                    .snakeCase(resolvedBodyKey.getSnakeCase())
                                     .screamingSnakeCase(
-                                            sdkRequestWrapper.getBodyKey().getScreamingSnakeCase())
-                                    .build())
-                            .build())
+                                            resolvedBodyKey.getScreamingSnakeCase())
+                                    .build()))
+                            .build()))
                     .valueType(reference.getRequestBodyType())
                     .docs(reference.getDocs())
                     .build());
@@ -443,18 +448,19 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         public List<ObjectProperty> visitBytes(BytesRequest bytes) {
             TypeReference base64TypeReference = TypeReference.primitive(
                     PrimitiveType.builder().v1(PrimitiveTypeV1.BASE_64).build());
+            Name resolvedBytesBodyKey = NameUtils.resolveName(sdkRequestWrapper.getBodyKey());
             return List.of(ObjectProperty.builder()
-                    .name(NameAndWireValue.builder()
-                            .wireValue(sdkRequestWrapper.getBodyKey().getOriginalName())
-                            .name(Name.builder()
-                                    .originalName(sdkRequestWrapper.getBodyKey().getOriginalName())
-                                    .camelCase(sdkRequestWrapper.getBodyKey().getCamelCase())
-                                    .pascalCase(sdkRequestWrapper.getBodyKey().getPascalCase())
-                                    .snakeCase(sdkRequestWrapper.getBodyKey().getSnakeCase())
+                    .name(NameAndWireValueOrString.of(NameAndWireValue.builder()
+                            .wireValue(resolvedBytesBodyKey.getOriginalName())
+                            .name(NameOrString.of(Name.builder()
+                                    .originalName(resolvedBytesBodyKey.getOriginalName())
+                                    .camelCase(resolvedBytesBodyKey.getCamelCase())
+                                    .pascalCase(resolvedBytesBodyKey.getPascalCase())
+                                    .snakeCase(resolvedBytesBodyKey.getSnakeCase())
                                     .screamingSnakeCase(
-                                            sdkRequestWrapper.getBodyKey().getScreamingSnakeCase())
-                                    .build())
-                            .build())
+                                            resolvedBytesBodyKey.getScreamingSnakeCase())
+                                    .build()))
+                            .build()))
                     .valueType(
                             bytes.getIsOptional()
                                     ? TypeReference.container(ContainerType.optional(base64TypeReference))

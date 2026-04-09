@@ -9,6 +9,7 @@ import com.fern.ir.model.types.EnumValue;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
+import com.fern.java.utils.NameUtils;
 import com.fern.java.VisitorFactory;
 import com.fern.java.VisitorFactory.GeneratedVisitor;
 import com.squareup.javapoet.ClassName;
@@ -85,11 +86,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
         return enumTypeDeclaration.getValues().stream()
                 .collect(Collectors.toMap(Function.identity(), enumValue -> FieldSpec.builder(
                                 className,
-                                enumValue
-                                        .getName()
-                                        .getName()
-                                        .getScreamingSnakeCase()
-                                        .getSafeName(),
+                                NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName())).getScreamingSnakeCase().getSafeName(),
                                 Modifier.PUBLIC,
                                 Modifier.STATIC,
                                 Modifier.FINAL)
@@ -97,12 +94,8 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
                                 "new $T($T.$L, $S)",
                                 className,
                                 valueFieldClassName,
-                                enumValue
-                                        .getName()
-                                        .getName()
-                                        .getScreamingSnakeCase()
-                                        .getSafeName(),
-                                enumValue.getName().getWireValue())
+                                NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName())).getScreamingSnakeCase().getSafeName(),
+                                NameUtils.getWireValue(enumValue.getName()))
                         .build()));
     }
 
@@ -178,11 +171,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
             acceptMethodImplementation
                     .add(
                             "case $L:\n",
-                            enumValue
-                                    .getName()
-                                    .getName()
-                                    .getScreamingSnakeCase()
-                                    .getSafeName())
+                            NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName())).getScreamingSnakeCase().getSafeName())
                     .indent()
                     .addStatement("return visitor.$L()", visitMethod.name)
                     .unindent();
@@ -209,7 +198,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
                 CodeBlock.builder().beginControlFlow("switch ($L)", VALUE_FIELD_NAME);
         constants.forEach((enumValue, constantField) -> {
             valueOfCodeBlockBuilder
-                    .add("case $S:\n", enumValue.getName().getWireValue())
+                    .add("case $S:\n", NameUtils.getWireValue(enumValue.getName()))
                     .indent()
                     .addStatement("return $L", constantField.name)
                     .unindent();
@@ -238,7 +227,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
         enumTypeDeclaration
                 .getValues()
                 .forEach(enumValue -> nestedValueEnumBuilder.addEnumConstant(
-                        enumValue.getName().getName().getScreamingSnakeCase().getSafeName()));
+                        NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName())).getScreamingSnakeCase().getSafeName()));
         nestedValueEnumBuilder.addEnumConstant(resolveName(UNKNOWN_ENUM_CONSTANT));
         return nestedValueEnumBuilder.build();
     }
@@ -248,11 +237,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
                 .map(enumValue -> {
                     return VisitorFactory.VisitMethodArgs.<EnumValue>builder()
                             .key(enumValue)
-                            .pascalCaseName(enumValue
-                                    .getName()
-                                    .getName()
-                                    .getPascalCase()
-                                    .getSafeName())
+                            .pascalCaseName(NameUtils.resolveName(NameUtils.getNameFromWireValue(enumValue.getName())).getPascalCase().getSafeName())
                             .build();
                 })
                 .collect(Collectors.toList());
@@ -262,7 +247,8 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
     private String resolveName(String newName) {
         Set<String> existingNames = enumTypeDeclaration.getValues().stream()
                 .map(EnumValue::getName)
-                .map(NameAndWireValue::getName)
+                .map(NameUtils::getNameFromWireValue)
+                .map(NameUtils::resolveName)
                 .map(Name::getScreamingSnakeCase)
                 .map(SafeAndUnsafeString::getSafeName)
                 .collect(Collectors.toSet());

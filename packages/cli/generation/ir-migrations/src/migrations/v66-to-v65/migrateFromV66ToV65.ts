@@ -21,7 +21,7 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.20.0-rc.0",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_SDK]: "4.2.0-rc.0",
         [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: "0.4.0-rc.0",

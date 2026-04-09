@@ -1,24 +1,24 @@
 package com.fern.java.client.generators.visitors;
 
-import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.NameAndWireValueOrString;
 import com.fern.ir.model.http.FileProperty;
 import com.fern.ir.model.http.FilePropertyArray;
 import com.fern.ir.model.http.FilePropertySingle;
 
-public class GetFilePropertyKey implements FileProperty.Visitor<NameAndWireValue> {
+public class GetFilePropertyKey implements FileProperty.Visitor<NameAndWireValueOrString> {
 
     @Override
-    public NameAndWireValue visitFile(FilePropertySingle file) {
+    public NameAndWireValueOrString visitFile(FilePropertySingle file) {
         return file.getKey();
     }
 
     @Override
-    public NameAndWireValue visitFileArray(FilePropertyArray fileArray) {
+    public NameAndWireValueOrString visitFileArray(FilePropertyArray fileArray) {
         return fileArray.getKey();
     }
 
     @Override
-    public NameAndWireValue _visitUnknown(Object unknownType) {
+    public NameAndWireValueOrString _visitUnknown(Object unknownType) {
         throw new RuntimeException("Encountered unknown file property key " + unknownType);
     }
 }

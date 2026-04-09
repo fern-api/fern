@@ -18,6 +18,7 @@ package com.fern.java.client.generators.endpoint;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.NameAndWireValueOrString;
 import com.fern.ir.model.http.*;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.Literal;
@@ -52,6 +53,7 @@ import com.squareup.javapoet.TypeName;
 import java.nio.file.Files;
 import java.util.Optional;
 import okhttp3.*;
+import com.fern.java.utils.NameUtils;
 
 public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
 
@@ -94,7 +96,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         this.generatedWrappedRequest = generatedWrappedRequest;
         this.sdkRequest = sdkRequest;
         this.requestParameterName =
-                sdkRequest.getRequestParameterName().getCamelCase().getSafeName();
+                NameUtils.resolveName(sdkRequest.getRequestParameterName()).getCamelCase().getSafeName();
     }
 
     @SuppressWarnings("checkstyle:CyclomaticComplexity")
@@ -215,10 +217,10 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             String sdkName = header.camelCaseKey();
             String headerName = generatedWrappedRequest.headerWireValues().get(sdkName);
             if (headerName == null) {
-                String wireValue = header.objectProperty().getName().getWireValue();
+                String wireValue = NameUtils.getWireValue(header.objectProperty().getName());
                 headerName = (wireValue != null && !wireValue.isEmpty())
                         ? wireValue
-                        : header.objectProperty().getName().getName().getOriginalName();
+                        : NameUtils.resolveName(NameUtils.resolveNameAndWireValue(header.objectProperty().getName()).getName()).getOriginalName();
             }
             if (typeNameIsOptional(header.poetTypeName())) {
                 requestBodyCodeBlock
@@ -433,9 +435,10 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 }
             } else if (fileUploadProperty instanceof FilePropertyContainer) {
                 FileProperty fileProperty = ((FilePropertyContainer) fileUploadProperty).fileProperty();
-                NameAndWireValue filePropertyKey = fileProperty.visit(new GetFilePropertyKey());
+                NameAndWireValueOrString filePropertyKeyOrString = fileProperty.visit(new GetFilePropertyKey());
+                NameAndWireValue filePropertyKey = NameUtils.resolveNameAndWireValue(filePropertyKeyOrString);
                 String filePropertyName =
-                        filePropertyKey.getName().getCamelCase().getUnsafeName();
+                        NameUtils.resolveName(filePropertyKey.getName()).getCamelCase().getUnsafeName();
                 String mimeTypeVariableName = filePropertyName + "MimeType";
                 String mediaTypeVariableName = mimeTypeVariableName + "MediaType";
                 String filePropertyParameterName =
