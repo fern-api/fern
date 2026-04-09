@@ -278,6 +278,30 @@
         },
         {
             "id": {
+                "path": "/object/get-and-return-with-mixed-required-and-optional-fields",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithMixedRequiredAndOptionalFields"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"./src/Client\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields({\n    requiredString: \"hello\",\n    requiredInteger: 0,\n    optionalString: \"world\",\n    requiredLong: 0\n});\n"
+            },
+            "example_identifier": "PartialRequiredFields"
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-required-nested-object",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithRequiredNestedObject"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"./src/Client\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithRequiredNestedObject({\n    requiredString: \"hello\",\n    requiredObject: {\n        string: \"nested\",\n        NestedObject: {}\n    }\n});\n"
+            },
+            "example_identifier": "NestedObjectMissing"
+        },
+        {
+            "id": {
                 "path": "/object/get-and-return-with-datetime-like-string",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/object.getAndReturnWithDatetimeLikeString"
