@@ -88,7 +88,7 @@ match client.foo.find(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_cross_package_type_names::prelude::*;
+use seed_cross_package_type_names::prelude::{*};
 
 let request = FindRequest {
     ...

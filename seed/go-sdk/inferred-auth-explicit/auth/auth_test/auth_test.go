@@ -74,8 +74,8 @@ func TestAuthGetTokenWithClientCredentialsWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.GetTokenRequest{
-		XApiKey:      "X-Api-Key",
-		ClientId:     "client_id",
+		XAPIKey:      "X-Api-Key",
+		ClientID:     "client_id",
 		ClientSecret: "client_secret",
 		Scope: fern.String(
 			"scope",
@@ -104,8 +104,8 @@ func TestAuthRefreshTokenWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.RefreshTokenRequest{
-		XApiKey:      "X-Api-Key",
-		ClientId:     "client_id",
+		XAPIKey:      "X-Api-Key",
+		ClientID:     "client_id",
 		ClientSecret: "client_secret",
 		RefreshToken: "refresh_token",
 		Scope: fern.String(

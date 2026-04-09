@@ -99,7 +99,7 @@ func (r *RawClient) GetUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/users/%v",
-		request.UserId,
+		request.UserID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

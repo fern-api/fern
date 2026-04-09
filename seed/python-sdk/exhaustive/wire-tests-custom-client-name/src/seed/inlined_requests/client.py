@@ -82,7 +82,7 @@ class InlinedRequestsClient:
                 uuid_=uuid.UUID(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
-                base_64="SGVsbG8gd29ybGQh",
+                base64="SGVsbG8gd29ybGQh",
                 list_=["list", "list"],
                 set_={"set"},
                 map_={1: "map"},
@@ -171,7 +171,7 @@ class AsyncInlinedRequestsClient:
                     uuid_=uuid.UUID(
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
-                    base_64="SGVsbG8gd29ybGQh",
+                    base64="SGVsbG8gd29ybGQh",
                     list_=["list", "list"],
                     set_={"set"},
                     map_={1: "map"},

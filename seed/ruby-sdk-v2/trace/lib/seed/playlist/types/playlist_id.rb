@@ -3,8 +3,8 @@
 module Seed
   module Playlist
     module Types
-      module PlaylistId
-        # PlaylistId is an alias for String
+      module PlaylistID
+        # PlaylistID is an alias for String
 
         # @option str [String]
         #

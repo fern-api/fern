@@ -173,6 +173,7 @@
                 "name": "SearchFilter",
                 "typeId": "SearchFilter",
                 "inline": false,
+                "displayName": "SearchFilter",
                 "type": "named"
               },
               "allowMultiple": false,

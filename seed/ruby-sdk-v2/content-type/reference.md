@@ -440,8 +440,8 @@ Regular PATCH endpoint without merge-patch semantics
 ```ruby
 client.service.regular_patch(
   id: "id",
-  field_1: "field1",
-  field_2: 1
+  field1: "field1",
+  field2: 1
 )
 ```
 </dd>
@@ -465,7 +465,7 @@ client.service.regular_patch(
 <dl>
 <dd>
 
-**field_1:** `String` 
+**field1:** `String` 
     
 </dd>
 </dl>
@@ -473,7 +473,7 @@ client.service.regular_patch(
 <dl>
 <dd>
 
-**field_2:** `Integer` 
+**field2:** `Integer` 
     
 </dd>
 </dl>

@@ -43,7 +43,7 @@ class RawObjectClient:
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
         uuid_: typing.Optional[uuid.UUID] = OMIT,
-        base_64: typing.Optional[str] = OMIT,
+        base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
@@ -70,7 +70,7 @@ class RawObjectClient:
 
         uuid_ : typing.Optional[uuid.UUID]
 
-        base_64 : typing.Optional[str]
+        base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
@@ -99,7 +99,7 @@ class RawObjectClient:
                 "datetime": datetime,
                 "date": date,
                 "uuid": uuid_,
-                "base64": base_64,
+                "base64": base64,
                 "list": list_,
                 "set": set_,
                 "map": map_,
@@ -559,7 +559,7 @@ class AsyncRawObjectClient:
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
         uuid_: typing.Optional[uuid.UUID] = OMIT,
-        base_64: typing.Optional[str] = OMIT,
+        base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
@@ -586,7 +586,7 @@ class AsyncRawObjectClient:
 
         uuid_ : typing.Optional[uuid.UUID]
 
-        base_64 : typing.Optional[str]
+        base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
@@ -615,7 +615,7 @@ class AsyncRawObjectClient:
                 "datetime": datetime,
                 "date": date,
                 "uuid": uuid_,
-                "base64": base_64,
+                "base64": base64,
                 "list": list_,
                 "set": set_,
                 "map": map_,

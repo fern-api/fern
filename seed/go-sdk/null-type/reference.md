@@ -70,7 +70,7 @@ client.Conversations.OutboundCall(
 </details>
 
 ## Users
-<details><summary><code>client.Users.Get(Id) -> *fern.User</code></summary>
+<details><summary><code>client.Users.Get(ID) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -98,7 +98,7 @@ Gets a user by ID. The deleted_at field uses type null.
 
 ```go
 request := &fern.GetUsersRequest{
-        Id: "id",
+        ID: "id",
     }
 client.Users.Get(
         context.TODO(),

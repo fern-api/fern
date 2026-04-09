@@ -18,11 +18,11 @@ func TestSettersDocumentMetadata(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetId", func(t *testing.T) {
+	t.Run("SetID", func(t *testing.T) {
 		obj := &DocumentMetadata{}
-		var fernTestValueId *int
-		obj.SetId(fernTestValueId)
-		assert.Equal(t, fernTestValueId, obj.Id)
+		var fernTestValueID *int
+		obj.SetID(fernTestValueID)
+		assert.Equal(t, fernTestValueID, obj.ID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -78,28 +78,28 @@ func TestGettersDocumentMetadata(t *testing.T) {
 		_ = obj.GetAuthor() // Should return zero value
 	})
 
-	t.Run("GetId", func(t *testing.T) {
+	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &DocumentMetadata{}
 		var expected *int
-		obj.Id = expected
+		obj.ID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetId(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
 	})
 
-	t.Run("GetId_NilValue", func(t *testing.T) {
+	t.Run("GetID_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &DocumentMetadata{}
-		obj.Id = nil
+		obj.ID = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetId(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetID(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetId_NilReceiver", func(t *testing.T) {
+	t.Run("GetID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *DocumentMetadata
 		// Should not panic - getters should handle nil receiver gracefully
@@ -108,7 +108,7 @@ func TestGettersDocumentMetadata(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetId() // Should return zero value
+		_ = obj.GetID() // Should return zero value
 	})
 
 	t.Run("GetTags", func(t *testing.T) {
@@ -211,14 +211,14 @@ func TestSettersMarkExplicitDocumentMetadata(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &DocumentMetadata{}
-		var fernTestValueId *int
+		var fernTestValueID *int
 
 		// Act
-		obj.SetId(fernTestValueId)
+		obj.SetID(fernTestValueID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -307,11 +307,11 @@ func TestSettersMarkExplicitDocumentMetadata(t *testing.T) {
 }
 
 func TestSettersDocumentUploadResult(t *testing.T) {
-	t.Run("SetFileId", func(t *testing.T) {
+	t.Run("SetFileID", func(t *testing.T) {
 		obj := &DocumentUploadResult{}
-		var fernTestValueFileId *string
-		obj.SetFileId(fernTestValueFileId)
-		assert.Equal(t, fernTestValueFileId, obj.FileId)
+		var fernTestValueFileID *string
+		obj.SetFileID(fernTestValueFileID)
+		assert.Equal(t, fernTestValueFileID, obj.FileID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -326,28 +326,28 @@ func TestSettersDocumentUploadResult(t *testing.T) {
 }
 
 func TestGettersDocumentUploadResult(t *testing.T) {
-	t.Run("GetFileId", func(t *testing.T) {
+	t.Run("GetFileID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &DocumentUploadResult{}
 		var expected *string
-		obj.FileId = expected
+		obj.FileID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFileId(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFileID(), "getter should return the property value")
 	})
 
-	t.Run("GetFileId_NilValue", func(t *testing.T) {
+	t.Run("GetFileID_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &DocumentUploadResult{}
-		obj.FileId = nil
+		obj.FileID = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFileId(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFileID(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFileId_NilReceiver", func(t *testing.T) {
+	t.Run("GetFileID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *DocumentUploadResult
 		// Should not panic - getters should handle nil receiver gracefully
@@ -356,7 +356,7 @@ func TestGettersDocumentUploadResult(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFileId() // Should return zero value
+		_ = obj.GetFileID() // Should return zero value
 	})
 
 	t.Run("GetStatus", func(t *testing.T) {
@@ -395,14 +395,14 @@ func TestGettersDocumentUploadResult(t *testing.T) {
 }
 
 func TestSettersMarkExplicitDocumentUploadResult(t *testing.T) {
-	t.Run("SetFileId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetFileID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &DocumentUploadResult{}
-		var fernTestValueFileId *string
+		var fernTestValueFileID *string
 
 		// Act
-		obj.SetFileId(fernTestValueFileId)
+		obj.SetFileID(fernTestValueFileID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

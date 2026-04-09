@@ -59,6 +59,15 @@ describe("no-conflicting-request-wrapper-properties", () => {
                 relativeFilepath: RelativeFilePath.of("body-property-key.yml"),
                 name: "no-conflicting-request-wrapper-properties",
                 severity: "fatal"
+            },
+            {
+                message: `Multiple request properties resolve to the same generated name organizationId after camelCase normalization. This causes broken generated code. Use the "name" property to disambiguate.
+  - Service header "Organization-Id" (name: "organizationId")
+  - Query Parameter "organization_id" (name: "organization_id")`,
+                nodePath: ["service", "endpoints", "list"],
+                relativeFilepath: RelativeFilePath.of("camel-case-collision.yml"),
+                name: "no-conflicting-request-wrapper-properties",
+                severity: "fatal"
             }
         ]);
     });

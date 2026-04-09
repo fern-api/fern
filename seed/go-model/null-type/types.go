@@ -10,7 +10,7 @@ import (
 )
 
 type User struct {
-	Id   string `json:"id" url:"id"`
+	ID   string `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 	// Always null for active users.
 	DeletedAt any `json:"deleted_at" url:"deleted_at"`
@@ -19,11 +19,11 @@ type User struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *User) GetId() string {
+func (u *User) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetName() string {

@@ -75,7 +75,7 @@ impl SubmissionRequest {
         Self::InitializeWorkspaceRequest {}
     }
 
-    pub fn submit_v_2(
+    pub fn submit_v2(
         submission_id: SubmissionId,
         language: Language,
         submission_files: Vec<SubmissionFileInfo>,
@@ -118,7 +118,7 @@ impl SubmissionRequest {
         }
     }
 
-    pub fn submit_v_2_with_problem_version(
+    pub fn submit_v2_with_problem_version(
         submission_id: SubmissionId,
         language: Language,
         submission_files: Vec<SubmissionFileInfo>,
@@ -136,7 +136,7 @@ impl SubmissionRequest {
         }
     }
 
-    pub fn submit_v_2_with_user_id(
+    pub fn submit_v2_with_user_id(
         submission_id: SubmissionId,
         language: Language,
         submission_files: Vec<SubmissionFileInfo>,

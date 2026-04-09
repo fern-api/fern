@@ -65,12 +65,12 @@ func (c *CreatePlantWithSchemaRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	createPlantResponseFieldId   = big.NewInt(1 << 0)
+	createPlantResponseFieldID   = big.NewInt(1 << 0)
 	createPlantResponseFieldName = big.NewInt(1 << 1)
 )
 
 type CreatePlantResponse struct {
-	Id   *string `json:"id,omitempty" url:"id,omitempty"`
+	ID   *string `json:"id,omitempty" url:"id,omitempty"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -80,11 +80,11 @@ type CreatePlantResponse struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreatePlantResponse) GetId() *string {
+func (c *CreatePlantResponse) GetID() *string {
 	if c == nil {
 		return nil
 	}
-	return c.Id
+	return c.ID
 }
 
 func (c *CreatePlantResponse) GetName() *string {
@@ -108,11 +108,11 @@ func (c *CreatePlantResponse) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreatePlantResponse) SetId(id *string) {
-	c.Id = id
-	c.require(createPlantResponseFieldId)
+func (c *CreatePlantResponse) SetID(id *string) {
+	c.ID = id
+	c.require(createPlantResponseFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -165,12 +165,12 @@ func (c *CreatePlantResponse) String() string {
 }
 
 var (
-	createPlantWithSchemaResponseFieldId   = big.NewInt(1 << 0)
+	createPlantWithSchemaResponseFieldID   = big.NewInt(1 << 0)
 	createPlantWithSchemaResponseFieldName = big.NewInt(1 << 1)
 )
 
 type CreatePlantWithSchemaResponse struct {
-	Id   *string `json:"id,omitempty" url:"id,omitempty"`
+	ID   *string `json:"id,omitempty" url:"id,omitempty"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -180,11 +180,11 @@ type CreatePlantWithSchemaResponse struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreatePlantWithSchemaResponse) GetId() *string {
+func (c *CreatePlantWithSchemaResponse) GetID() *string {
 	if c == nil {
 		return nil
 	}
-	return c.Id
+	return c.ID
 }
 
 func (c *CreatePlantWithSchemaResponse) GetName() *string {
@@ -208,11 +208,11 @@ func (c *CreatePlantWithSchemaResponse) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreatePlantWithSchemaResponse) SetId(id *string) {
-	c.Id = id
-	c.require(createPlantWithSchemaResponseFieldId)
+func (c *CreatePlantWithSchemaResponse) SetID(id *string) {
+	c.ID = id
+	c.require(createPlantWithSchemaResponseFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -265,12 +265,12 @@ func (c *CreatePlantWithSchemaResponse) String() string {
 }
 
 var (
-	updatePlantResponseFieldId   = big.NewInt(1 << 0)
+	updatePlantResponseFieldID   = big.NewInt(1 << 0)
 	updatePlantResponseFieldName = big.NewInt(1 << 1)
 )
 
 type UpdatePlantResponse struct {
-	Id   *string `json:"id,omitempty" url:"id,omitempty"`
+	ID   *string `json:"id,omitempty" url:"id,omitempty"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -280,11 +280,11 @@ type UpdatePlantResponse struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdatePlantResponse) GetId() *string {
+func (u *UpdatePlantResponse) GetID() *string {
 	if u == nil {
 		return nil
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *UpdatePlantResponse) GetName() *string {
@@ -308,11 +308,11 @@ func (u *UpdatePlantResponse) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdatePlantResponse) SetId(id *string) {
-	u.Id = id
-	u.require(updatePlantResponseFieldId)
+func (u *UpdatePlantResponse) SetID(id *string) {
+	u.ID = id
+	u.require(updatePlantResponseFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -365,11 +365,11 @@ func (u *UpdatePlantResponse) String() string {
 }
 
 var (
-	updatePlantRequestFieldPlantId = big.NewInt(1 << 0)
+	updatePlantRequestFieldPlantID = big.NewInt(1 << 0)
 )
 
 type UpdatePlantRequest struct {
-	PlantId string `json:"-" url:"-"`
+	PlantID string `json:"-" url:"-"`
 	Body    any    `json:"-" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -383,11 +383,11 @@ func (u *UpdatePlantRequest) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetPlantId sets the PlantId field and marks it as non-optional;
+// SetPlantID sets the PlantID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdatePlantRequest) SetPlantId(plantId string) {
-	u.PlantId = plantId
-	u.require(updatePlantRequestFieldPlantId)
+func (u *UpdatePlantRequest) SetPlantID(plantID string) {
+	u.PlantID = plantID
+	u.require(updatePlantRequestFieldPlantID)
 }
 
 func (u *UpdatePlantRequest) UnmarshalJSON(data []byte) error {

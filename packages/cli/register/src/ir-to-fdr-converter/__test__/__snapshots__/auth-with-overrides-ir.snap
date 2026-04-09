@@ -190,7 +190,7 @@
                     "list": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "User",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -296,7 +296,7 @@
                         "list": {
                           "_visit": [Function],
                           "default": undefined,
-                          "displayName": undefined,
+                          "displayName": "User",
                           "fernFilepath": {
                             "allParts": [],
                             "file": undefined,
@@ -448,7 +448,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "User",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -544,7 +544,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "User",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,

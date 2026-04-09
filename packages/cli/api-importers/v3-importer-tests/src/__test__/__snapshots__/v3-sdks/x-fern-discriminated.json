@@ -219,6 +219,7 @@
               "name": "Circle",
               "typeId": "Circle",
               "inline": false,
+              "displayName": "Circle",
               "type": "named"
             }
           },
@@ -231,6 +232,7 @@
               "name": "Square",
               "typeId": "Square",
               "inline": false,
+              "displayName": "Square",
               "type": "named"
             }
           }
@@ -271,6 +273,7 @@
               "name": "Circle",
               "typeId": "Circle",
               "inline": false,
+              "displayName": "Circle",
               "type": "named"
             }
           },
@@ -283,6 +286,7 @@
               "name": "Square",
               "typeId": "Square",
               "inline": false,
+              "displayName": "Square",
               "type": "named"
             }
           }

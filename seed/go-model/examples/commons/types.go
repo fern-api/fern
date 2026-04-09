@@ -12,19 +12,19 @@ import (
 type Tag = string
 
 type Metadata struct {
-	Id         string            `json:"id" url:"id"`
+	ID         string            `json:"id" url:"id"`
 	Data       map[string]string `json:"data,omitempty" url:"data,omitempty"`
-	JsonString *string           `json:"jsonString,omitempty" url:"jsonString,omitempty"`
+	JSONString *string           `json:"jsonString,omitempty" url:"jsonString,omitempty"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (m *Metadata) GetId() string {
+func (m *Metadata) GetID() string {
 	if m == nil {
 		return ""
 	}
-	return m.Id
+	return m.ID
 }
 
 func (m *Metadata) GetData() map[string]string {
@@ -34,11 +34,11 @@ func (m *Metadata) GetData() map[string]string {
 	return m.Data
 }
 
-func (m *Metadata) GetJsonString() *string {
+func (m *Metadata) GetJSONString() *string {
 	if m == nil {
 		return nil
 	}
-	return m.JsonString
+	return m.JSONString
 }
 
 func (m *Metadata) GetExtraProperties() map[string]any {

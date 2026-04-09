@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.UploadJsonDocument(request) -> *fern.UploadDocumentResponse</code></summary>
+<details><summary><code>client.UploadJSONDocument(request) -> *fern.UploadDocumentResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 
 ```go
 request := &fern.UploadDocumentRequest{}
-client.UploadJsonDocument(
+client.UploadJSONDocument(
         context.TODO(),
         request,
     )

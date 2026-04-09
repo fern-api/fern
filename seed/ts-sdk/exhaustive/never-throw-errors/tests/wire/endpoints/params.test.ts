@@ -14,7 +14,7 @@ describe("ParamsClient", () => {
 
         const response = await client.endpoints.params.getWithPath("param");
         expect(response).toEqual({
-            body: "string",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -33,7 +33,7 @@ describe("ParamsClient", () => {
             param: "param",
         });
         expect(response).toEqual({
-            body: "string",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -128,7 +128,7 @@ describe("ParamsClient", () => {
 
         const response = await client.endpoints.params.modifyWithPath("param", "string");
         expect(response).toEqual({
-            body: "string",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -155,7 +155,7 @@ describe("ParamsClient", () => {
             body: "string",
         });
         expect(response).toEqual({
-            body: "string",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -172,7 +172,7 @@ describe("ParamsClient", () => {
 
         const response = await client.endpoints.params.getWithPathAndErrors("param");
         expect(response).toEqual({
-            body: "string",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

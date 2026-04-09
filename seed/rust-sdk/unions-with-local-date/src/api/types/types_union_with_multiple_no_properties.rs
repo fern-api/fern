@@ -24,11 +24,11 @@ impl UnionWithMultipleNoProperties {
         Self::Foo { data }
     }
 
-    pub fn empty_1() -> Self {
+    pub fn empty1() -> Self {
         Self::Empty1 {}
     }
 
-    pub fn empty_2() -> Self {
+    pub fn empty2() -> Self {
         Self::Empty2 {}
     }
 }

@@ -5,7 +5,12 @@
       "name": "getDummy - default",
       "request": {
         "urlPathTemplate": "/dummy",
-        "method": "GET"
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
       },
       "response": {
         "status": 200,

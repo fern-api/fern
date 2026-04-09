@@ -349,7 +349,7 @@ class RawPrimitiveClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_and_return_base_64(
+    def get_and_return_base64(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[str]:
         """
@@ -723,7 +723,7 @@ class AsyncRawPrimitiveClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def get_and_return_base_64(
+    async def get_and_return_base64(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[str]:
         """

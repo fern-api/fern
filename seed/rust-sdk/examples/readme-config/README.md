@@ -110,7 +110,7 @@ async fn main() {
 This SDK allows you to configure different environments for API requests.
 
 ```rust
-use seed_examples::prelude::*;
+use seed_examples::prelude::{*};
 
 let config = ClientConfig {
     base_url: Environment::Production.url().to_string(),
