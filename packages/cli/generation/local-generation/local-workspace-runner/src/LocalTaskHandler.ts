@@ -620,28 +620,34 @@ export class LocalTaskHandler {
     }
 
     /**
-     * Reads the SDK version from `.fern/metadata.json` in the local output directory.
-     * This file is written by all Fern generators and contains the `sdkVersion` field.
-     * Returns undefined if the file doesn't exist (older SDKs) or can't be parsed.
+     * Reads the SDK version from the *previously committed* `.fern/metadata.json`.
+     * Uses `git show HEAD:.fern/metadata.json` instead of reading from the filesystem
+     * because by the time auto-versioning runs, the generated files have already been
+     * copied over — the on-disk metadata.json contains the magic placeholder version,
+     * not the real previous version.
+     * Returns undefined if the file doesn't exist in HEAD (older SDKs) or can't be parsed.
      */
     private async getVersionFromLocalMetadata(): Promise<string | undefined> {
         try {
-            const metadataPath = join(this.absolutePathToLocalOutput, RelativeFilePath.of(".fern/metadata.json"));
-            if (!(await doesPathExist(AbsoluteFilePath.of(metadataPath)))) {
-                this.context.logger.debug(".fern/metadata.json not found in local output");
+            const result = await loggingExeca(this.context.logger, "git", ["show", "HEAD:.fern/metadata.json"], {
+                cwd: this.absolutePathToLocalOutput,
+                doNotPipeOutput: true,
+                reject: false
+            });
+            if (result.exitCode !== 0) {
+                this.context.logger.debug(".fern/metadata.json not found in HEAD commit");
                 return undefined;
             }
-            const content = await readFile(metadataPath, "utf-8");
-            const metadata = JSON.parse(content) as { sdkVersion?: string };
+            const metadata = JSON.parse(result.stdout) as { sdkVersion?: string };
             if (metadata.sdkVersion != null) {
                 const normalized = this.normalizeVersionPrefix(metadata.sdkVersion);
-                this.context.logger.info(`Found version from .fern/metadata.json: ${normalized}`);
+                this.context.logger.info(`Found version from .fern/metadata.json (HEAD): ${normalized}`);
                 return normalized;
             }
-            this.context.logger.debug(".fern/metadata.json found but no sdkVersion field");
+            this.context.logger.debug(".fern/metadata.json found in HEAD but no sdkVersion field");
             return undefined;
         } catch (error) {
-            this.context.logger.debug(`Failed to read .fern/metadata.json: ${error}`);
+            this.context.logger.debug(`Failed to read .fern/metadata.json from HEAD: ${error}`);
             return undefined;
         }
     }
