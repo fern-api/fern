@@ -69,7 +69,7 @@ func (m *Memo) String() string {
 }
 
 type BaseResource struct {
-	Id               string          `json:"id" url:"id"`
+	ID               string          `json:"id" url:"id"`
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
 	Memo             *Memo           `json:"memo" url:"memo"`
 
@@ -77,11 +77,11 @@ type BaseResource struct {
 	rawJSON         json.RawMessage
 }
 
-func (b *BaseResource) GetId() string {
+func (b *BaseResource) GetID() string {
 	if b == nil {
 		return ""
 	}
-	return b.Id
+	return b.ID
 }
 
 func (b *BaseResource) GetRelatedResources() []*ResourceList {
@@ -143,7 +143,7 @@ type ResourceList struct {
 }
 
 type Account struct {
-	Id               string          `json:"id" url:"id"`
+	ID               string          `json:"id" url:"id"`
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
 	Memo             *Memo           `json:"memo" url:"memo"`
 	Name             string          `json:"name" url:"name"`
@@ -155,11 +155,11 @@ type Account struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *Account) GetId() string {
+func (a *Account) GetID() string {
 	if a == nil {
 		return ""
 	}
-	return a.Id
+	return a.ID
 }
 
 func (a *Account) GetRelatedResources() []*ResourceList {
@@ -263,7 +263,7 @@ func (a *Account) String() string {
 }
 
 type Patient struct {
-	Id               string          `json:"id" url:"id"`
+	ID               string          `json:"id" url:"id"`
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
 	Memo             *Memo           `json:"memo" url:"memo"`
 	Name             string          `json:"name" url:"name"`
@@ -274,11 +274,11 @@ type Patient struct {
 	rawJSON         json.RawMessage
 }
 
-func (p *Patient) GetId() string {
+func (p *Patient) GetID() string {
 	if p == nil {
 		return ""
 	}
-	return p.Id
+	return p.ID
 }
 
 func (p *Patient) GetRelatedResources() []*ResourceList {
@@ -375,7 +375,7 @@ func (p *Patient) String() string {
 }
 
 type Practitioner struct {
-	Id               string          `json:"id" url:"id"`
+	ID               string          `json:"id" url:"id"`
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
 	Memo             *Memo           `json:"memo" url:"memo"`
 	Name             string          `json:"name" url:"name"`
@@ -385,11 +385,11 @@ type Practitioner struct {
 	rawJSON         json.RawMessage
 }
 
-func (p *Practitioner) GetId() string {
+func (p *Practitioner) GetID() string {
 	if p == nil {
 		return ""
 	}
-	return p.Id
+	return p.ID
 }
 
 func (p *Practitioner) GetRelatedResources() []*ResourceList {
@@ -479,7 +479,7 @@ func (p *Practitioner) String() string {
 }
 
 type Script struct {
-	Id               string          `json:"id" url:"id"`
+	ID               string          `json:"id" url:"id"`
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
 	Memo             *Memo           `json:"memo" url:"memo"`
 	Name             string          `json:"name" url:"name"`
@@ -489,11 +489,11 @@ type Script struct {
 	rawJSON         json.RawMessage
 }
 
-func (s *Script) GetId() string {
+func (s *Script) GetID() string {
 	if s == nil {
 		return ""
 	}
-	return s.Id
+	return s.ID
 }
 
 func (s *Script) GetRelatedResources() []*ResourceList {

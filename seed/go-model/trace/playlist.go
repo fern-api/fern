@@ -10,13 +10,13 @@ import (
 )
 
 
-type PlaylistId = string
+type PlaylistID = string
 
 type Playlist struct {
     Name string `json:"name" url:"name"`
-    Problems []ProblemId `json:"problems" url:"problems"`
-    PlaylistId PlaylistId `json:"playlist_id" url:"playlist_id"`
-    OwnerId UserId `json:"owner-id" url:"owner-id"`
+    Problems []ProblemID `json:"problems" url:"problems"`
+    PlaylistID PlaylistID `json:"playlist_id" url:"playlist_id"`
+    OwnerID UserID `json:"owner-id" url:"owner-id"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
@@ -29,25 +29,25 @@ func (p *Playlist) GetName() string{
     return p.Name
 }
 
-func (p *Playlist) GetProblems() []ProblemId{
+func (p *Playlist) GetProblems() []ProblemID{
     if p == nil {
         return nil
     }
     return p.Problems
 }
 
-func (p *Playlist) GetPlaylistId() PlaylistId{
+func (p *Playlist) GetPlaylistID() PlaylistID{
     if p == nil {
         return ""
     }
-    return p.PlaylistId
+    return p.PlaylistID
 }
 
-func (p *Playlist) GetOwnerId() UserId{
+func (p *Playlist) GetOwnerID() UserID{
     if p == nil {
         return ""
     }
-    return p.OwnerId
+    return p.OwnerID
 }
 
 func (p *Playlist) GetExtraProperties() map[string]any{
@@ -90,7 +90,7 @@ func (p *Playlist) String() string{
 
 type PlaylistCreateRequest struct {
     Name string `json:"name" url:"name"`
-    Problems []ProblemId `json:"problems" url:"problems"`
+    Problems []ProblemID `json:"problems" url:"problems"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
@@ -103,7 +103,7 @@ func (p *PlaylistCreateRequest) GetName() string{
     return p.Name
 }
 
-func (p *PlaylistCreateRequest) GetProblems() []ProblemId{
+func (p *PlaylistCreateRequest) GetProblems() []ProblemID{
     if p == nil {
         return nil
     }
@@ -151,7 +151,7 @@ func (p *PlaylistCreateRequest) String() string{
 type UpdatePlaylistRequest struct {
     Name string `json:"name" url:"name"`
     // The problems that make up the playlist.
-    Problems []ProblemId `json:"problems" url:"problems"`
+    Problems []ProblemID `json:"problems" url:"problems"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
@@ -164,7 +164,7 @@ func (u *UpdatePlaylistRequest) GetName() string{
     return u.Name
 }
 
-func (u *UpdatePlaylistRequest) GetProblems() []ProblemId{
+func (u *UpdatePlaylistRequest) GetProblems() []ProblemID{
     if u == nil {
         return nil
     }
@@ -209,9 +209,9 @@ func (u *UpdatePlaylistRequest) String() string{
 }
 
 
-type PlaylistIdNotFoundErrorBody struct {
+type PlaylistIDNotFoundErrorBody struct {
     Type string
-    PlaylistId PlaylistId
+    PlaylistID PlaylistID
 }
 
 type ReservedKeywordEnum string
