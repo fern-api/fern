@@ -29,7 +29,6 @@ minimumReleaseAgeExclude:
   - "@fern-api/*"
   - "@fern-fern/*"
   - "vite"
-  - "basic-ftp"
 
 # Prevent trust level downgrades (e.g. a previously trusted-publisher package
 # losing its attestation). Catches compromised maintainer accounts.
