@@ -71,11 +71,11 @@ function getGithubOwnerRepo(outputMode: FernFiddle.remoteGen.OutputMode): { owne
         downloadFiles: () => undefined,
         github: (val) => ({ owner: val.owner, repo: val.repo }),
         githubV2: (val) =>
-            val._visit<{ owner: string; repo: string }>({
+            val._visit<{ owner: string; repo: string } | undefined>({
                 push: (v) => ({ owner: v.owner, repo: v.repo }),
                 commitAndRelease: (v) => ({ owner: v.owner, repo: v.repo }),
                 pullRequest: (v) => ({ owner: v.owner, repo: v.repo }),
-                _other: () => ({ owner: "", repo: "" })
+                _other: () => undefined
             }),
         publish: () => undefined,
         publishV2: () => undefined,
@@ -112,7 +112,7 @@ export function overrideGroupOutputForRemotePreview({
     const modifiedGenerators = group.generators.map((generator) => {
         if (pushDiff === true) {
             const githubInfo = getGithubOwnerRepo(generator.outputMode);
-            if (githubInfo != null && githubInfo.owner !== "" && githubInfo.repo !== "") {
+            if (githubInfo != null) {
                 // Use githubV2(push) so the server handles both publishing
                 // and pushing the preview diff branch to the SDK repo.
                 const modifiedGenerator: generatorsYml.GeneratorInvocation = {

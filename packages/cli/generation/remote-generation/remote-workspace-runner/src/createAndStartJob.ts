@@ -51,7 +51,8 @@ export async function createAndStartJob({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
-    /** Explicit preview flag. When true, signals Fiddle that this is a preview job. Falls back to absolutePathToPreview != null. */
+    /** Explicit preview override. When set, takes precedence over the default (absolutePathToPreview != null).
+     *  Set to false for publishV2 to avoid dry-run; set to true for githubV2(push) to enable preview branching. */
     isPreview?: boolean;
     fernignorePath: string | undefined;
     skipFernignore?: boolean;

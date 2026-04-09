@@ -246,11 +246,11 @@ export async function sdkPreview({
                             token,
                             whitelabel: workspace.generatorsConfiguration?.whitelabel,
                             absolutePathToPreview: undefined,
-                            // Do NOT set isPreview: true here. In Fiddle, preview=true causes
-                            // dryRun=true in the generator config, which makes `npm publish --dry-run`
-                            // instead of actually publishing. For sdk preview via publishV2(npmOverride),
-                            // we want the generator to actually publish to the registry.
-                            isPreview: false,
+                            // For publishV2(npmOverride), isPreview must be false so Fiddle
+                            // doesn't set dryRun=true (which causes `npm publish --dry-run`).
+                            // For githubV2(push) via --push-diff, isPreview must be true so
+                            // Fiddle pushes to a preview branch instead of the main branch.
+                            isPreview: pushDiff === true,
                             mode: undefined,
                             fernignorePath: undefined,
                             skipFernignore: false,
