@@ -7795,8 +7795,8 @@ importers:
         specifier: workspace:*
         version: link:../commons/core-utils
       '@fern-api/replay':
-        specifier: ^0.10.0
-        version: 0.10.0
+        specifier: ^0.10.1
+        version: 0.10.1
       '@octokit/rest':
         specifier: 'catalog:'
         version: 22.0.1
@@ -9304,8 +9304,8 @@ packages:
   '@fern-api/logger@0.4.24-rc1':
     resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
 
-  '@fern-api/replay@0.10.0':
-    resolution: {integrity: sha512-BKrXgraasWC7FfeHQl7KZVeNFPZN8H1oOdi+5DQS4Zt+BOSYsDoQwYYoSglFrS/gyBvZ0DNeF+qEGrPYxQIsow==}
+  '@fern-api/replay@0.10.1':
+    resolution: {integrity: sha512-WjBT2GiEnsYlybLOLE13Cy0z389+45s+zN7RAf1AcxnCmc2P/JVtPwxVUReoVlFtnAxlyb3YMGPsKdsYIN+maw==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -16339,7 +16339,7 @@ snapshots:
       '@fern-api/core-utils': 0.4.24-rc1
       chalk: 5.6.2
 
-  '@fern-api/replay@0.10.0':
+  '@fern-api/replay@0.10.1':
     dependencies:
       minimatch: 10.2.5
       node-diff3: 3.2.0
