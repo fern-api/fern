@@ -12,8 +12,8 @@ public class Example44
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnDoubleAsync(
-            1.1
+        await client.Endpoints.Params.GetWithPathAndErrorsAsync(
+            "param"
         );
     }
 

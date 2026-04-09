@@ -86,6 +86,52 @@ service:
       request: objects.MapOfDocumentedUnknownType
       response: objects.MapOfDocumentedUnknownType
 
+    getAndReturnWithMixedRequiredAndOptionalFields:
+      docs: |
+        Tests that dynamic snippets include all required properties in the
+        object initializer, even when the example omits some required fields.
+      path: /get-and-return-with-mixed-required-and-optional-fields
+      method: POST
+      request: objects.ObjectWithMixedRequiredAndOptionalFields
+      response: objects.ObjectWithMixedRequiredAndOptionalFields
+      examples:
+        - name: PartialRequiredFields
+          request:
+            requiredString: "hello"
+            requiredInteger: 0
+            optionalString: "world"
+            requiredLong: 0
+          response:
+            body:
+              requiredString: "hello"
+              requiredInteger: 0
+              optionalString: "world"
+              requiredLong: 0
+
+    getAndReturnWithRequiredNestedObject:
+      docs: |
+        Tests that dynamic snippets recursively construct default objects for
+        required properties whose type is a named object. When the example
+        omits the nested object, the generator should construct a default
+        initializer with the nested object's required properties filled in.
+      path: /get-and-return-with-required-nested-object
+      method: POST
+      request: objects.ObjectWithRequiredNestedObject
+      response: objects.ObjectWithRequiredNestedObject
+      examples:
+        - name: NestedObjectMissing
+          request:
+            requiredString: "hello"
+            requiredObject:
+              string: "nested"
+              NestedObject: {}
+          response:
+            body:
+              requiredString: "hello"
+              requiredObject:
+                string: "nested"
+                NestedObject: {}
+
     getAndReturnWithDatetimeLikeString:
       docs: |
         Tests that string fields containing datetime-like values are NOT reformatted.
