@@ -2,7 +2,8 @@
 import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
-import { getOrCreateFernRunId, runCliV2 } from "@fern-api/cli-v2";
+import { runCliV2 } from "@fern-api/cli-v2";
+import { getOrCreateFernRunId } from "@fern-api/cli-v2/fernRunId";
 import {
     correctIncorrectDockerOrg,
     GENERATORS_CONFIGURATION_FILENAME,

@@ -1,4 +1,4 @@
-import { setSentryRunIdTags } from "@fern-api/cli-v2";
+import { setSentryRunIdTags } from "@fern-api/cli-v2/telemetry/sentryRunId";
 import * as Sentry from "@sentry/node";
 
 export class SentryClient {
