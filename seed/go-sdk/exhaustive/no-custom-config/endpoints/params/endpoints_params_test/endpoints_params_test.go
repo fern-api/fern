@@ -267,6 +267,29 @@ func TestEndpointsParamsModifyWithPathWithWireMock2(
 	VerifyRequestCount(t, "TestEndpointsParamsModifyWithPathWithWireMock2", "PUT", "/params/path/param", nil, 1)
 }
 
+func TestEndpointsParamsGetWithBooleanPathWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Endpoints.Params.GetWithBooleanPath(
+		context.TODO(),
+		true,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEndpointsParamsGetWithBooleanPathWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEndpointsParamsGetWithBooleanPathWithWireMock", "GET", "/params/path-bool/true", nil, 1)
+}
+
 func TestEndpointsParamsGetWithPathWithWireMock3(
 	t *testing.T,
 ) {

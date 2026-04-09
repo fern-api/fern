@@ -4,7 +4,7 @@ pub use crate::prelude::*;
 pub struct WorkspaceRunDetails {
     #[serde(rename = "exceptionV2")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub exception_v_2: Option<ExceptionV2>,
+    pub exception_v2: Option<ExceptionV2>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub exception: Option<ExceptionInfo>,
     #[serde(default)]
@@ -20,14 +20,14 @@ impl WorkspaceRunDetails {
 #[derive(Clone, PartialEq, Default, Debug)]
 #[non_exhaustive]
 pub struct WorkspaceRunDetailsBuilder {
-    exception_v_2: Option<ExceptionV2>,
+    exception_v2: Option<ExceptionV2>,
     exception: Option<ExceptionInfo>,
     stdout: Option<String>,
 }
 
 impl WorkspaceRunDetailsBuilder {
-    pub fn exception_v_2(mut self, value: ExceptionV2) -> Self {
-        self.exception_v_2 = Some(value);
+    pub fn exception_v2(mut self, value: ExceptionV2) -> Self {
+        self.exception_v2 = Some(value);
         self
     }
 
@@ -46,7 +46,7 @@ impl WorkspaceRunDetailsBuilder {
     /// - [`stdout`](WorkspaceRunDetailsBuilder::stdout)
     pub fn build(self) -> Result<WorkspaceRunDetails, BuildError> {
         Ok(WorkspaceRunDetails {
-            exception_v_2: self.exception_v_2,
+            exception_v2: self.exception_v2,
             exception: self.exception,
             stdout: self.stdout.ok_or_else(|| BuildError::missing_field("stdout"))?,
         })

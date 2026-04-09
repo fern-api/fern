@@ -35,7 +35,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -56,7 +56,6 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
-from seed import SeedExhaustive
 
 from seed.matryoshka.doll.structure import AsyncSeedExhaustive
 
@@ -98,7 +97,7 @@ except ApiError as e:
 Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",

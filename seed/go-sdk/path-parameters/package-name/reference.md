@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.Organizations.GetOrganization(TenantId, OrganizationId) -> *path.Organization</code></summary>
+<details><summary><code>client.Organizations.GetOrganization(TenantID, OrganizationID) -> *path.Organization</code></summary>
 <dl>
 <dd>
 
@@ -33,7 +33,7 @@ client.Organizations.GetOrganization(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -41,7 +41,7 @@ client.Organizations.GetOrganization(
 <dl>
 <dd>
 
-**organizationId:** `string` 
+**organizationID:** `string` 
     
 </dd>
 </dl>
@@ -53,7 +53,7 @@ client.Organizations.GetOrganization(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.GetOrganizationUser(TenantId, OrganizationId, UserId) -> *path.User</code></summary>
+<details><summary><code>client.Organizations.GetOrganizationUser(TenantID, OrganizationID, UserID) -> *path.User</code></summary>
 <dl>
 <dd>
 
@@ -67,9 +67,9 @@ client.Organizations.GetOrganization(
 
 ```go
 request := &path.GetOrganizationUserRequest{
-        TenantId: "tenant_id",
-        OrganizationId: "organization_id",
-        UserId: "user_id",
+        TenantID: "tenant_id",
+        OrganizationID: "organization_id",
+        UserID: "user_id",
     }
 client.Organizations.GetOrganizationUser(
         context.TODO(),
@@ -90,7 +90,7 @@ client.Organizations.GetOrganizationUser(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -98,7 +98,7 @@ client.Organizations.GetOrganizationUser(
 <dl>
 <dd>
 
-**organizationId:** `string` 
+**organizationID:** `string` 
     
 </dd>
 </dl>
@@ -106,7 +106,7 @@ client.Organizations.GetOrganizationUser(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -118,7 +118,7 @@ client.Organizations.GetOrganizationUser(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.SearchOrganizations(TenantId, OrganizationId) -> []*path.Organization</code></summary>
+<details><summary><code>client.Organizations.SearchOrganizations(TenantID, OrganizationID) -> []*path.Organization</code></summary>
 <dl>
 <dd>
 
@@ -157,7 +157,7 @@ client.Organizations.SearchOrganizations(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -165,7 +165,7 @@ client.Organizations.SearchOrganizations(
 <dl>
 <dd>
 
-**organizationId:** `string` 
+**organizationID:** `string` 
     
 </dd>
 </dl>
@@ -186,7 +186,7 @@ client.Organizations.SearchOrganizations(
 </details>
 
 ## User
-<details><summary><code>client.User.GetUser(TenantId, UserId) -> *path.User</code></summary>
+<details><summary><code>client.User.GetUser(TenantID, UserID) -> *path.User</code></summary>
 <dl>
 <dd>
 
@@ -200,8 +200,8 @@ client.Organizations.SearchOrganizations(
 
 ```go
 request := &path.GetUsersRequest{
-        TenantId: "tenant_id",
-        UserId: "user_id",
+        TenantID: "tenant_id",
+        UserID: "user_id",
     }
 client.User.GetUser(
         context.TODO(),
@@ -222,7 +222,7 @@ client.User.GetUser(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -230,7 +230,7 @@ client.User.GetUser(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -242,7 +242,7 @@ client.User.GetUser(
 </dl>
 </details>
 
-<details><summary><code>client.User.CreateUser(TenantId, request) -> *path.User</code></summary>
+<details><summary><code>client.User.CreateUser(TenantID, request) -> *path.User</code></summary>
 <dl>
 <dd>
 
@@ -282,7 +282,7 @@ client.User.CreateUser(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -302,7 +302,7 @@ client.User.CreateUser(
 </dl>
 </details>
 
-<details><summary><code>client.User.UpdateUser(TenantId, UserId, request) -> *path.User</code></summary>
+<details><summary><code>client.User.UpdateUser(TenantID, UserID, request) -> *path.User</code></summary>
 <dl>
 <dd>
 
@@ -316,8 +316,8 @@ client.User.CreateUser(
 
 ```go
 request := &path.UpdateUserRequest{
-        TenantId: "tenant_id",
-        UserId: "user_id",
+        TenantID: "tenant_id",
+        UserID: "user_id",
         Body: &path.User{
             Name: "name",
             Tags: []string{
@@ -345,7 +345,7 @@ client.User.UpdateUser(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -353,7 +353,7 @@ client.User.UpdateUser(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -373,7 +373,7 @@ client.User.UpdateUser(
 </dl>
 </details>
 
-<details><summary><code>client.User.SearchUsers(TenantId, UserId) -> []*path.User</code></summary>
+<details><summary><code>client.User.SearchUsers(TenantID, UserID) -> []*path.User</code></summary>
 <dl>
 <dd>
 
@@ -387,8 +387,8 @@ client.User.UpdateUser(
 
 ```go
 request := &path.SearchUsersRequest{
-        TenantId: "tenant_id",
-        UserId: "user_id",
+        TenantID: "tenant_id",
+        UserID: "user_id",
         Limit: path.Int(
             1,
         ),
@@ -412,7 +412,7 @@ client.User.SearchUsers(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -420,7 +420,7 @@ client.User.SearchUsers(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -440,7 +440,7 @@ client.User.SearchUsers(
 </dl>
 </details>
 
-<details><summary><code>client.User.GetUserMetadata(TenantId, UserId, Version) -> *path.User</code></summary>
+<details><summary><code>client.User.GetUserMetadata(TenantID, UserID, Version) -> *path.User</code></summary>
 <dl>
 <dd>
 
@@ -468,8 +468,8 @@ Test endpoint with path parameter that has a text prefix (v{version})
 
 ```go
 request := &path.GetUserMetadataRequest{
-        TenantId: "tenant_id",
-        UserId: "user_id",
+        TenantID: "tenant_id",
+        UserID: "user_id",
         Version: 1,
     }
 client.User.GetUserMetadata(
@@ -491,7 +491,7 @@ client.User.GetUserMetadata(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -499,7 +499,7 @@ client.User.GetUserMetadata(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -519,7 +519,7 @@ client.User.GetUserMetadata(
 </dl>
 </details>
 
-<details><summary><code>client.User.GetUserSpecifics(TenantId, UserId, Version, Thought) -> *path.User</code></summary>
+<details><summary><code>client.User.GetUserSpecifics(TenantID, UserID, Version, Thought) -> *path.User</code></summary>
 <dl>
 <dd>
 
@@ -547,8 +547,8 @@ Test endpoint with path parameters listed in different order than found in path
 
 ```go
 request := &path.GetUserSpecificsRequest{
-        TenantId: "tenant_id",
-        UserId: "user_id",
+        TenantID: "tenant_id",
+        UserID: "user_id",
         Version: 1,
         Thought: "thought",
     }
@@ -571,7 +571,7 @@ client.User.GetUserSpecifics(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -579,7 +579,7 @@ client.User.GetUserSpecifics(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>

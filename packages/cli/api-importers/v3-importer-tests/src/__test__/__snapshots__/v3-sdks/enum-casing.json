@@ -486,6 +486,7 @@
                   "name": "ExampleResponse",
                   "typeId": "ExampleResponse",
                   "inline": false,
+                  "displayName": "ExampleResponse",
                   "type": "named"
                 },
                 "docs": "Successful response",
@@ -547,6 +548,7 @@
                       "name": "ExampleResponse",
                       "typeId": "ExampleResponse",
                       "inline": false,
+                      "displayName": "ExampleResponse",
                       "type": "named"
                     },
                     "docs": "Successful response",

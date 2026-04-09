@@ -24,7 +24,7 @@ describe("OptionalClient", () => {
                 key: "value",
             },
         });
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("sendOptionalTypedBody", async () => {
@@ -45,7 +45,7 @@ describe("OptionalClient", () => {
         const response = await client.optional.sendOptionalTypedBody({
             message: "message",
         });
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("sendOptionalNullableWithAllOptionalProperties", async () => {
@@ -66,8 +66,6 @@ describe("OptionalClient", () => {
         const response = await client.optional.sendOptionalNullableWithAllOptionalProperties("actionId", "id", {
             updateDraft: true,
         });
-        expect(response).toEqual({
-            success: true,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

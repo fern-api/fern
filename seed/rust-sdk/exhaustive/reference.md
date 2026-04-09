@@ -387,7 +387,7 @@ async fn main() {
                 datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some(
+                base64: Some(
                     base64::engine::general_purpose::STANDARD
                         .decode("SGVsbG8gd29ybGQh")
                         .unwrap(),
@@ -448,7 +448,7 @@ async fn main() {
                 datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some(
+                base64: Some(
                     base64::engine::general_purpose::STANDARD
                         .decode("SGVsbG8gd29ybGQh")
                         .unwrap(),
@@ -711,7 +711,7 @@ async fn main() {
                 datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some(
+                base64: Some(
                     base64::engine::general_purpose::STANDARD
                         .decode("SGVsbG8gd29ybGQh")
                         .unwrap(),
@@ -842,7 +842,7 @@ async fn main() {
                 datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some(
+                base64: Some(
                     base64::engine::general_purpose::STANDARD
                         .decode("SGVsbG8gd29ybGQh")
                         .unwrap(),
@@ -998,7 +998,7 @@ async fn main() {
                     datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                     date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                     uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                    base_64: Some(
+                    base64: Some(
                         base64::engine::general_purpose::STANDARD
                             .decode("SGVsbG8gd29ybGQh")
                             .unwrap(),
@@ -1064,7 +1064,7 @@ async fn main() {
                     datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                     date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                     uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                    base_64: Some(
+                    base64: Some(
                         base64::engine::general_purpose::STANDARD
                             .decode("SGVsbG8gd29ybGQh")
                             .unwrap(),
@@ -1149,7 +1149,7 @@ async fn main() {
                         uuid: Some(
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
-                        base_64: Some(
+                        base64: Some(
                             base64::engine::general_purpose::STANDARD
                                 .decode("SGVsbG8gd29ybGQh")
                                 .unwrap(),
@@ -1177,7 +1177,7 @@ async fn main() {
                         uuid: Some(
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
-                        base_64: Some(
+                        base64: Some(
                             base64::engine::general_purpose::STANDARD
                                 .decode("SGVsbG8gd29ybGQh")
                                 .unwrap(),
@@ -2156,6 +2156,74 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">get_with_boolean_path</a>(param: bool) -> Result&lt;String, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with boolean path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .params
+        .get_with_boolean_path(true, None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `bool` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">get_with_path_and_errors</a>(param: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
@@ -2546,7 +2614,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints().primitive.<a href="/src/api/resources/endpoints/primitive/client.rs">get_and_return_base_64</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().primitive.<a href="/src/api/resources/endpoints/primitive/client.rs">get_and_return_base64</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2571,7 +2639,7 @@ async fn main() {
     client
         .endpoints
         .primitive
-        .get_and_return_base_64(
+        .get_and_return_base64(
             &base64::engine::general_purpose::STANDARD
                 .decode("SGVsbG8gd29ybGQh")
                 .unwrap(),
@@ -2883,7 +2951,7 @@ async fn main() {
                     datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                     date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                     uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                    base_64: Some(
+                    base64: Some(
                         base64::engine::general_purpose::STANDARD
                             .decode("SGVsbG8gd29ybGQh")
                             .unwrap(),

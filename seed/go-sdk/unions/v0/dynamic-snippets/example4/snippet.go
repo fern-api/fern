@@ -18,7 +18,7 @@ func do() {
         Circle: &fern.Circle{
             Radius: 1.1,
         },
-        Id: "id",
+        ID: "id",
     }
     client.Union.Update(
         context.TODO(),

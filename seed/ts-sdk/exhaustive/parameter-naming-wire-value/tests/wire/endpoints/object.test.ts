@@ -64,23 +64,7 @@ describe("ObjectClient", () => {
             },
             bigint: "1000000",
         });
-        expect(response).toEqual({
-            string: "string",
-            integer: 1,
-            long: 1000000,
-            double: 1.1,
-            bool: true,
-            datetime: "2024-01-15T09:30:00Z",
-            date: "2023-01-15",
-            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            base64: "SGVsbG8gd29ybGQh",
-            list: ["list", "list"],
-            set: ["set"],
-            map: {
-                1: "map",
-            },
-            bigint: "1000000",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnWithRequiredField", async () => {
@@ -101,9 +85,7 @@ describe("ObjectClient", () => {
         const response = await client.endpoints.object.getAndReturnWithRequiredField({
             string: "string",
         });
-        expect(response).toEqual({
-            string: "string",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnWithMapOfMap", async () => {
@@ -128,13 +110,7 @@ describe("ObjectClient", () => {
                 },
             },
         });
-        expect(response).toEqual({
-            map: {
-                map: {
-                    map: "map",
-                },
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnNestedWithOptionalField", async () => {
@@ -206,26 +182,7 @@ describe("ObjectClient", () => {
                 bigint: "1000000",
             },
         });
-        expect(response).toEqual({
-            string: "string",
-            NestedObject: {
-                string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: "2024-01-15T09:30:00Z",
-                date: "2023-01-15",
-                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                base64: "SGVsbG8gd29ybGQh",
-                list: ["list", "list"],
-                set: ["set"],
-                map: {
-                    1: "map",
-                },
-                bigint: "1000000",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnNestedWithRequiredField", async () => {
@@ -297,26 +254,7 @@ describe("ObjectClient", () => {
                 bigint: "1000000",
             },
         });
-        expect(response).toEqual({
-            string: "string",
-            NestedObject: {
-                string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: "2024-01-15T09:30:00Z",
-                date: "2023-01-15",
-                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                base64: "SGVsbG8gd29ybGQh",
-                list: ["list", "list"],
-                set: ["set"],
-                map: {
-                    1: "map",
-                },
-                bigint: "1000000",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnNestedWithRequiredFieldAsList", async () => {
@@ -430,26 +368,7 @@ describe("ObjectClient", () => {
                 },
             },
         ]);
-        expect(response).toEqual({
-            string: "string",
-            NestedObject: {
-                string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: "2024-01-15T09:30:00Z",
-                date: "2023-01-15",
-                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                base64: "SGVsbG8gd29ybGQh",
-                list: ["list", "list"],
-                set: ["set"],
-                map: {
-                    1: "map",
-                },
-                bigint: "1000000",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnWithUnknownField", async () => {
@@ -472,11 +391,7 @@ describe("ObjectClient", () => {
                 $ref: "https://example.com/schema",
             },
         });
-        expect(response).toEqual({
-            unknown: {
-                $ref: "https://example.com/schema",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnWithDocumentedUnknownType", async () => {
@@ -499,11 +414,7 @@ describe("ObjectClient", () => {
                 key: "value",
             },
         });
-        expect(response).toEqual({
-            documentedUnknownType: {
-                key: "value",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnMapOfDocumentedUnknownType", async () => {
@@ -526,11 +437,7 @@ describe("ObjectClient", () => {
                 key: "value",
             },
         });
-        expect(response).toEqual({
-            string: {
-                key: "value",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnWithDatetimeLikeString", async () => {
@@ -552,9 +459,6 @@ describe("ObjectClient", () => {
             datetimeLikeString: "2023-08-31T14:15:22Z",
             actualDatetime: "2023-08-31T14:15:22Z",
         });
-        expect(response).toEqual({
-            datetimeLikeString: "2023-08-31T14:15:22Z",
-            actualDatetime: "2023-08-31T14:15:22Z",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

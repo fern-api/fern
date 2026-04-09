@@ -72,10 +72,10 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 	}
 }
 
-// WithClientId sets the clientId auth request parameter.
-func WithClientId(clientId string) *core.ClientIdOption {
-	return &core.ClientIdOption{
-		ClientId: clientId,
+// WithClientID sets the clientID auth request parameter.
+func WithClientID(clientID string) *core.ClientIDOption {
+	return &core.ClientIDOption{
+		ClientID: clientID,
 	}
 }
 

@@ -2,7 +2,7 @@
 
 # isort: skip_file
 
-from . import admin, commons, lang_server, migration, playlist, problem, submission, v_2
+from . import admin, commons, lang_server, migration, playlist, problem, submission, v2
 from .admin import Test, Test_And, Test_Or
 from .commons import (
     BinaryTreeNodeAndTreeValue,
@@ -486,5 +486,5 @@ __all__ = [
     "playlist",
     "problem",
     "submission",
-    "v_2",
+    "v2",
 ]

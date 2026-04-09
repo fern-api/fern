@@ -10,7 +10,7 @@ import (
 )
 
 type Contact struct {
-	Id    string  `json:"id" url:"id"`
+	ID    string  `json:"id" url:"id"`
 	Name  string  `json:"name" url:"name"`
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
 
@@ -18,11 +18,11 @@ type Contact struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *Contact) GetId() string {
+func (c *Contact) GetID() string {
 	if c == nil {
 		return ""
 	}
-	return c.Id
+	return c.ID
 }
 
 func (c *Contact) GetName() string {

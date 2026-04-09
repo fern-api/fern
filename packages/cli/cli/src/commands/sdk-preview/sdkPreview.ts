@@ -130,9 +130,10 @@ export async function sdkPreview({
         // It lives under os.tmpdir() and is cleaned up by the OS; we don't remove it
         // ourselves because the JSON consumer (e.g. the GitHub Action) reads from it
         // after this function returns.
+        const firstPath = pathOutputs[0];
         const absolutePathToOutput =
-            pathOutputs.length > 0
-                ? AbsoluteFilePath.of(resolve(cwd(), pathOutputs[0]))
+            firstPath != null
+                ? AbsoluteFilePath.of(resolve(cwd(), firstPath))
                 : output == null
                   ? AbsoluteFilePath.of(await fs.mkdtemp(path.join(os.tmpdir(), "fern-sdk-preview-")))
                   : undefined;

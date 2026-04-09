@@ -106,7 +106,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="jsonable_encoder"),
             ),
-            exports={"jsonable_encoder"} if not self._exclude_types_from_init_exports else set(),
+            exports={"jsonable_encoder", "encode_path_param"} if not self._exclude_types_from_init_exports else set(),
         )
         self._copy_file_to_project(
             project=project,
@@ -616,6 +616,20 @@ class CoreUtilities:
                     import_=AST.ReferenceImport(
                         module=AST.Module.local(*self._module_path, "jsonable_encoder"),
                         named_import="jsonable_encoder",
+                    ),
+                ),
+                args=[obj],
+            )
+        )
+
+    def encode_path_param(self, obj: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "jsonable_encoder"),
+                        named_import="encode_path_param",
                     ),
                 ),
                 args=[obj],

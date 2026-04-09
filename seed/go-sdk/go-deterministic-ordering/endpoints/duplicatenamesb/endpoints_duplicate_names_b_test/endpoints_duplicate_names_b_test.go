@@ -102,7 +102,7 @@ func TestEndpointsDuplicateNamesBGetWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &fern.GetRequestB{
-		Id: "id",
+		ID: "id",
 		Expand: fern.Bool(
 			true,
 		),

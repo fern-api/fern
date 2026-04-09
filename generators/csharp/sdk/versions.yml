@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.58.1
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation to include all required properties in
+        object initializers. Previously, required properties missing from the
+        example data were omitted, causing CS9035 compilation errors in C#.
+        Required properties now receive deterministic placeholder values when
+        not present in the snippet request.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 66
+
 - version: 2.58.0
   changelogEntry:
     - summary: |

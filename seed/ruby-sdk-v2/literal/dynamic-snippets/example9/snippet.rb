@@ -11,12 +11,12 @@ client.reference.send_(
   maybe_context: "You're super wise",
   container_object: {
     nested_objects: [{
-      literal_1: "literal1",
-      literal_2: "literal2",
+      literal1: "literal1",
+      literal2: "literal2",
       str_prop: "strProp"
     }, {
-      literal_1: "literal1",
-      literal_2: "literal2",
+      literal1: "literal1",
+      literal2: "literal2",
       str_prop: "strProp"
     }]
   }

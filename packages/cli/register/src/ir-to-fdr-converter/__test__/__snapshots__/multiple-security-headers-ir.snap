@@ -229,7 +229,7 @@
       "type": {
         "_visit": [Function],
         "default": undefined,
-        "displayName": undefined,
+        "displayName": "Error",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -351,7 +351,7 @@
             "requestBodyType": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "TransactionRequest",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -383,7 +383,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "TransactionResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -473,7 +473,7 @@
                 "requestBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "TransactionRequest",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -509,7 +509,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "TransactionResponse",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -574,7 +574,7 @@
             "requestBodyType": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "TransactionRequest",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -606,7 +606,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "TransactionResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -700,7 +700,7 @@
                 "requestBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "TransactionRequest",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -736,7 +736,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "TransactionResponse",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -805,7 +805,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "MerchantSettings",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -897,7 +897,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "MerchantSettings",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -970,7 +970,7 @@
                     "list": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "User",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -1074,7 +1074,7 @@
                         "list": {
                           "_visit": [Function],
                           "default": undefined,
-                          "displayName": undefined,
+                          "displayName": "User",
                           "fernFilepath": {
                             "allParts": [],
                             "file": undefined,

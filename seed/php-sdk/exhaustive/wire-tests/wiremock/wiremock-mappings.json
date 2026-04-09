@@ -1144,6 +1144,42 @@
       }
     },
     {
+      "id": "25a5031e-ad21-4379-8965-4732818bb823",
+      "name": "getWithBooleanPath - default",
+      "request": {
+        "urlPathTemplate": "/params/path-bool/{param}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "param": {
+            "equalTo": "true"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "25a5031e-ad21-4379-8965-4732818bb823",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "6898aaa2-3e4b-403e-a91f-473b4eb84b93",
       "name": "getWithPathAndErrors - default",
       "request": {
@@ -1801,6 +1837,6 @@
     }
   ],
   "meta": {
-    "total": 56
+    "total": 57
   }
 }

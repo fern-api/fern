@@ -11,6 +11,7 @@ export const BasePythonCustomConfigSchema = z.object({
     client: ClientConfig.optional(),
     improved_imports: z.boolean().optional().default(true),
     package_name: z.string().optional(),
+    package_path: z.string().optional(),
     pydantic_config: PydanticConfig.optional(),
     use_typeddict_requests: z.boolean().optional(),
 

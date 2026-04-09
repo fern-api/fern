@@ -10,11 +10,11 @@ import (
 )
 
 
-type UserId = string
+type UserID = string
 
-type ProblemId = string
+type ProblemID = string
 
-type NodeId = string
+type NodeID = string
 
 type VariableType struct {
     Type string
@@ -356,21 +356,21 @@ func (k *KeyValuePair) String() string{
 
 
 type BinaryTreeValue struct {
-    Root *NodeId `json:"root,omitempty" url:"root,omitempty"`
-    Nodes map[NodeId]*BinaryTreeNodeValue `json:"nodes" url:"nodes"`
+    Root *NodeID `json:"root,omitempty" url:"root,omitempty"`
+    Nodes map[NodeID]*BinaryTreeNodeValue `json:"nodes" url:"nodes"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (b *BinaryTreeValue) GetRoot() *NodeId{
+func (b *BinaryTreeValue) GetRoot() *NodeID{
     if b == nil {
         return nil
     }
     return b.Root
 }
 
-func (b *BinaryTreeValue) GetNodes() map[NodeId]*BinaryTreeNodeValue{
+func (b *BinaryTreeValue) GetNodes() map[NodeID]*BinaryTreeNodeValue{
     if b == nil {
         return nil
     }
@@ -416,20 +416,20 @@ func (b *BinaryTreeValue) String() string{
 
 
 type BinaryTreeNodeValue struct {
-    NodeId NodeId `json:"nodeId" url:"nodeId"`
+    NodeID NodeID `json:"nodeId" url:"nodeId"`
     Val float64 `json:"val" url:"val"`
-    Right *NodeId `json:"right,omitempty" url:"right,omitempty"`
-    Left *NodeId `json:"left,omitempty" url:"left,omitempty"`
+    Right *NodeID `json:"right,omitempty" url:"right,omitempty"`
+    Left *NodeID `json:"left,omitempty" url:"left,omitempty"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (b *BinaryTreeNodeValue) GetNodeId() NodeId{
+func (b *BinaryTreeNodeValue) GetNodeID() NodeID{
     if b == nil {
         return ""
     }
-    return b.NodeId
+    return b.NodeID
 }
 
 func (b *BinaryTreeNodeValue) GetVal() float64{
@@ -439,14 +439,14 @@ func (b *BinaryTreeNodeValue) GetVal() float64{
     return b.Val
 }
 
-func (b *BinaryTreeNodeValue) GetRight() *NodeId{
+func (b *BinaryTreeNodeValue) GetRight() *NodeID{
     if b == nil {
         return nil
     }
     return b.Right
 }
 
-func (b *BinaryTreeNodeValue) GetLeft() *NodeId{
+func (b *BinaryTreeNodeValue) GetLeft() *NodeID{
     if b == nil {
         return nil
     }
@@ -492,18 +492,18 @@ func (b *BinaryTreeNodeValue) String() string{
 
 
 type BinaryTreeNodeAndTreeValue struct {
-    NodeId NodeId `json:"nodeId" url:"nodeId"`
+    NodeID NodeID `json:"nodeId" url:"nodeId"`
     FullTree *BinaryTreeValue `json:"fullTree" url:"fullTree"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (b *BinaryTreeNodeAndTreeValue) GetNodeId() NodeId{
+func (b *BinaryTreeNodeAndTreeValue) GetNodeID() NodeID{
     if b == nil {
         return ""
     }
-    return b.NodeId
+    return b.NodeID
 }
 
 func (b *BinaryTreeNodeAndTreeValue) GetFullTree() *BinaryTreeValue{
@@ -552,21 +552,21 @@ func (b *BinaryTreeNodeAndTreeValue) String() string{
 
 
 type SinglyLinkedListValue struct {
-    Head *NodeId `json:"head,omitempty" url:"head,omitempty"`
-    Nodes map[NodeId]*SinglyLinkedListNodeValue `json:"nodes" url:"nodes"`
+    Head *NodeID `json:"head,omitempty" url:"head,omitempty"`
+    Nodes map[NodeID]*SinglyLinkedListNodeValue `json:"nodes" url:"nodes"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (s *SinglyLinkedListValue) GetHead() *NodeId{
+func (s *SinglyLinkedListValue) GetHead() *NodeID{
     if s == nil {
         return nil
     }
     return s.Head
 }
 
-func (s *SinglyLinkedListValue) GetNodes() map[NodeId]*SinglyLinkedListNodeValue{
+func (s *SinglyLinkedListValue) GetNodes() map[NodeID]*SinglyLinkedListNodeValue{
     if s == nil {
         return nil
     }
@@ -612,19 +612,19 @@ func (s *SinglyLinkedListValue) String() string{
 
 
 type SinglyLinkedListNodeValue struct {
-    NodeId NodeId `json:"nodeId" url:"nodeId"`
+    NodeID NodeID `json:"nodeId" url:"nodeId"`
     Val float64 `json:"val" url:"val"`
-    Next *NodeId `json:"next,omitempty" url:"next,omitempty"`
+    Next *NodeID `json:"next,omitempty" url:"next,omitempty"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (s *SinglyLinkedListNodeValue) GetNodeId() NodeId{
+func (s *SinglyLinkedListNodeValue) GetNodeID() NodeID{
     if s == nil {
         return ""
     }
-    return s.NodeId
+    return s.NodeID
 }
 
 func (s *SinglyLinkedListNodeValue) GetVal() float64{
@@ -634,7 +634,7 @@ func (s *SinglyLinkedListNodeValue) GetVal() float64{
     return s.Val
 }
 
-func (s *SinglyLinkedListNodeValue) GetNext() *NodeId{
+func (s *SinglyLinkedListNodeValue) GetNext() *NodeID{
     if s == nil {
         return nil
     }
@@ -680,18 +680,18 @@ func (s *SinglyLinkedListNodeValue) String() string{
 
 
 type SinglyLinkedListNodeAndListValue struct {
-    NodeId NodeId `json:"nodeId" url:"nodeId"`
+    NodeID NodeID `json:"nodeId" url:"nodeId"`
     FullList *SinglyLinkedListValue `json:"fullList" url:"fullList"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (s *SinglyLinkedListNodeAndListValue) GetNodeId() NodeId{
+func (s *SinglyLinkedListNodeAndListValue) GetNodeID() NodeID{
     if s == nil {
         return ""
     }
-    return s.NodeId
+    return s.NodeID
 }
 
 func (s *SinglyLinkedListNodeAndListValue) GetFullList() *SinglyLinkedListValue{
@@ -740,21 +740,21 @@ func (s *SinglyLinkedListNodeAndListValue) String() string{
 
 
 type DoublyLinkedListValue struct {
-    Head *NodeId `json:"head,omitempty" url:"head,omitempty"`
-    Nodes map[NodeId]*DoublyLinkedListNodeValue `json:"nodes" url:"nodes"`
+    Head *NodeID `json:"head,omitempty" url:"head,omitempty"`
+    Nodes map[NodeID]*DoublyLinkedListNodeValue `json:"nodes" url:"nodes"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (d *DoublyLinkedListValue) GetHead() *NodeId{
+func (d *DoublyLinkedListValue) GetHead() *NodeID{
     if d == nil {
         return nil
     }
     return d.Head
 }
 
-func (d *DoublyLinkedListValue) GetNodes() map[NodeId]*DoublyLinkedListNodeValue{
+func (d *DoublyLinkedListValue) GetNodes() map[NodeID]*DoublyLinkedListNodeValue{
     if d == nil {
         return nil
     }
@@ -800,20 +800,20 @@ func (d *DoublyLinkedListValue) String() string{
 
 
 type DoublyLinkedListNodeValue struct {
-    NodeId NodeId `json:"nodeId" url:"nodeId"`
+    NodeID NodeID `json:"nodeId" url:"nodeId"`
     Val float64 `json:"val" url:"val"`
-    Next *NodeId `json:"next,omitempty" url:"next,omitempty"`
-    Prev *NodeId `json:"prev,omitempty" url:"prev,omitempty"`
+    Next *NodeID `json:"next,omitempty" url:"next,omitempty"`
+    Prev *NodeID `json:"prev,omitempty" url:"prev,omitempty"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (d *DoublyLinkedListNodeValue) GetNodeId() NodeId{
+func (d *DoublyLinkedListNodeValue) GetNodeID() NodeID{
     if d == nil {
         return ""
     }
-    return d.NodeId
+    return d.NodeID
 }
 
 func (d *DoublyLinkedListNodeValue) GetVal() float64{
@@ -823,14 +823,14 @@ func (d *DoublyLinkedListNodeValue) GetVal() float64{
     return d.Val
 }
 
-func (d *DoublyLinkedListNodeValue) GetNext() *NodeId{
+func (d *DoublyLinkedListNodeValue) GetNext() *NodeID{
     if d == nil {
         return nil
     }
     return d.Next
 }
 
-func (d *DoublyLinkedListNodeValue) GetPrev() *NodeId{
+func (d *DoublyLinkedListNodeValue) GetPrev() *NodeID{
     if d == nil {
         return nil
     }
@@ -876,18 +876,18 @@ func (d *DoublyLinkedListNodeValue) String() string{
 
 
 type DoublyLinkedListNodeAndListValue struct {
-    NodeId NodeId `json:"nodeId" url:"nodeId"`
+    NodeID NodeID `json:"nodeId" url:"nodeId"`
     FullList *DoublyLinkedListValue `json:"fullList" url:"fullList"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (d *DoublyLinkedListNodeAndListValue) GetNodeId() NodeId{
+func (d *DoublyLinkedListNodeAndListValue) GetNodeID() NodeID{
     if d == nil {
         return ""
     }
-    return d.NodeId
+    return d.NodeID
 }
 
 func (d *DoublyLinkedListNodeAndListValue) GetFullList() *DoublyLinkedListValue{
@@ -1048,18 +1048,18 @@ func (d *DebugKeyValuePairs) String() string{
 
 
 type TestCase struct {
-    Id string `json:"id" url:"id"`
+    ID string `json:"id" url:"id"`
     Params []*VariableValue `json:"params" url:"params"`
 
     extraProperties map[string]any
     rawJSON json.RawMessage
 }
 
-func (t *TestCase) GetId() string{
+func (t *TestCase) GetID() string{
     if t == nil {
         return ""
     }
-    return t.Id
+    return t.ID
 }
 
 func (t *TestCase) GetParams() []*VariableValue{

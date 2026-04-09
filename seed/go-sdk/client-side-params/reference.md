@@ -119,7 +119,7 @@ client.Service.ListResources(
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetResource(ResourceId) -> *fern.Resource</code></summary>
+<details><summary><code>client.Service.GetResource(ResourceID) -> *fern.Resource</code></summary>
 <dl>
 <dd>
 
@@ -170,7 +170,7 @@ client.Service.GetResource(
 <dl>
 <dd>
 
-**resourceId:** `string` 
+**resourceID:** `string` 
     
 </dd>
 </dl>
@@ -432,7 +432,7 @@ client.Service.ListUsers(
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetUserById(UserId) -> *fern.User</code></summary>
+<details><summary><code>client.Service.GetUserByID(UserID) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -467,7 +467,7 @@ request := &fern.GetUserRequest{
             true,
         ),
     }
-client.Service.GetUserById(
+client.Service.GetUserByID(
         context.TODO(),
         "userId",
         request,
@@ -487,7 +487,7 @@ client.Service.GetUserById(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -602,7 +602,7 @@ client.Service.CreateUser(
 </dl>
 </details>
 
-<details><summary><code>client.Service.UpdateUser(UserId, request) -> *fern.User</code></summary>
+<details><summary><code>client.Service.UpdateUser(UserID, request) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -682,7 +682,7 @@ client.Service.UpdateUser(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -702,7 +702,7 @@ client.Service.UpdateUser(
 </dl>
 </details>
 
-<details><summary><code>client.Service.DeleteUser(UserId) -> error</code></summary>
+<details><summary><code>client.Service.DeleteUser(UserID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -748,7 +748,7 @@ client.Service.DeleteUser(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -845,7 +845,7 @@ client.Service.ListConnections(
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetConnection(ConnectionId) -> *fern.Connection</code></summary>
+<details><summary><code>client.Service.GetConnection(ConnectionID) -> *fern.Connection</code></summary>
 <dl>
 <dd>
 
@@ -897,7 +897,7 @@ client.Service.GetConnection(
 <dl>
 <dd>
 
-**connectionId:** `string` 
+**connectionID:** `string` 
     
 </dd>
 </dl>
@@ -1058,7 +1058,7 @@ client.Service.ListClients(
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetClient(ClientId) -> *fern.Client</code></summary>
+<details><summary><code>client.Service.GetClient(ClientID) -> *fern.Client</code></summary>
 <dl>
 <dd>
 
@@ -1113,7 +1113,7 @@ client.Service.GetClient(
 <dl>
 <dd>
 
-**clientId:** `string` 
+**clientID:** `string` 
     
 </dd>
 </dl>

@@ -42,7 +42,7 @@ func do() {
         Bio: fern.String(
             "bio",
         ),
-        ProfileImageUrl: fern.String(
+        ProfileImageURL: fern.String(
             "profileImageUrl",
         ),
         Settings: map[string]any{

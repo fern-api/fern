@@ -70,7 +70,7 @@ client.CreatePlant(
 </dl>
 </details>
 
-<details><summary><code>client.UpdatePlant(PlantId, request) -> *fern.UpdatePlantResponse</code></summary>
+<details><summary><code>client.UpdatePlant(PlantID, request) -> *fern.UpdatePlantResponse</code></summary>
 <dl>
 <dd>
 
@@ -98,7 +98,7 @@ Updates a plant with example JSON but no request body schema.
 
 ```go
 request := &fern.UpdatePlantRequest{
-        PlantId: "plantId",
+        PlantID: "plantId",
         Body: map[string]any{
             "care": map[string]any{
                 "light": "partial shade",
@@ -125,7 +125,7 @@ client.UpdatePlant(
 <dl>
 <dd>
 
-**plantId:** `string` 
+**plantID:** `string` 
     
 </dd>
 </dl>

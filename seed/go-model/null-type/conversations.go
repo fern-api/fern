@@ -11,7 +11,7 @@ import (
 
 type OutboundCallConversationsResponse struct {
 	// Always null when dry_run is true.
-	ConversationId any `json:"conversation_id" url:"conversation_id"`
+	ConversationID any `json:"conversation_id" url:"conversation_id"`
 	// Always true for this response.
 	DryRun bool `json:"dry_run" url:"dry_run"`
 
@@ -19,11 +19,11 @@ type OutboundCallConversationsResponse struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *OutboundCallConversationsResponse) GetConversationId() any {
+func (o *OutboundCallConversationsResponse) GetConversationID() any {
 	if o == nil {
 		return nil
 	}
-	return o.ConversationId
+	return o.ConversationID
 }
 
 func (o *OutboundCallConversationsResponse) GetDryRun() bool {
