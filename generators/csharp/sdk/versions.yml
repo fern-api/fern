@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.59.1
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union variant matching in dynamic snippets selecting
+        incorrect variants when errors are added during conversion. The matcher
+        now checks whether errors were added (via `errors.size() > errorsBefore`)
+        alongside the existing `isNop` check, and adds a missing `nop` check that
+        was causing the first variant to be unconditionally returned. This prevents
+        empty objects from being returned for union fields like `options` in
+        generated code snippets.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
+
 - version: 2.59.0
   changelogEntry:
     - summary: |
