@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.65.1
+  changelogEntry:
+    - summary: |
+        Fixed a performance issue in `fern check` where `valid-markdown-links`
+        repeatedly reprocessed duplicate API descriptions and pathnames in API
+        sections, significantly improving runtime on large docs sites.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
+
 - version: 4.65.0
   changelogEntry:
     - summary: |
