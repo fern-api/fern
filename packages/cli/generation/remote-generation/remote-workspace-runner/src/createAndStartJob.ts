@@ -34,6 +34,7 @@ export async function createAndStartJob({
     whitelabel,
     irVersionOverride,
     absolutePathToPreview,
+    isPreview: isPreviewOverride,
     fernignorePath,
     skipFernignore,
     retryRateLimited
@@ -50,6 +51,8 @@ export async function createAndStartJob({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    /** Explicit preview flag. When true, signals Fiddle that this is a preview job. Falls back to absolutePathToPreview != null. */
+    isPreview?: boolean;
     fernignorePath: string | undefined;
     skipFernignore?: boolean;
     retryRateLimited: boolean;
@@ -82,6 +85,7 @@ export async function createAndStartJob({
                 token,
                 whitelabel,
                 absolutePathToPreview,
+                isPreview: isPreviewOverride,
                 fernignoreContents
             }),
         retryRateLimited,
@@ -106,6 +110,7 @@ async function createJob({
     token,
     whitelabel,
     absolutePathToPreview,
+    isPreview: isPreviewOverride,
     fernignoreContents
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -118,6 +123,7 @@ async function createJob({
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    isPreview?: boolean;
     fernignoreContents: string | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
@@ -142,7 +148,7 @@ async function createJob({
             shouldLogS3Url
         }),
         whitelabel,
-        preview: absolutePathToPreview != null,
+        preview: isPreviewOverride ?? absolutePathToPreview != null,
         fernignoreContents
     });
 

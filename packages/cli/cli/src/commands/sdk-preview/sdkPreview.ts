@@ -56,7 +56,8 @@ export async function sdkPreview({
     generatorFilter,
     apiName,
     json,
-    output
+    output,
+    pushDiff
 }: {
     cliContext: CliContext;
     groupName: string | undefined;
@@ -64,6 +65,7 @@ export async function sdkPreview({
     apiName: string | undefined;
     json: boolean;
     output: string[] | undefined;
+    pushDiff: boolean;
 }): Promise<void> {
     const previews: SdkPreviewSuccess["previews"] = [];
     let organization: string | undefined;
@@ -211,17 +213,22 @@ export async function sdkPreview({
                 // token.value is the Fern org token (FERN_TOKEN) — the registry
                 // must accept this token for publish authentication.
                 const singleGeneratorGroup = { ...group, generators: [generator] };
-                const overrideFn = useRemoteGeneration
-                    ? overrideGroupOutputForRemotePreview
-                    : overrideGroupOutputForPreview;
                 const modifiedGroup =
                     publishToRegistry && registryUrl != null
-                        ? overrideFn({
-                              group: singleGeneratorGroup,
-                              packageName: previewPackageName,
-                              token: token.value,
-                              registryUrl
-                          })
+                        ? useRemoteGeneration
+                            ? overrideGroupOutputForRemotePreview({
+                                  group: singleGeneratorGroup,
+                                  packageName: previewPackageName,
+                                  token: token.value,
+                                  registryUrl,
+                                  pushDiff
+                              })
+                            : overrideGroupOutputForPreview({
+                                  group: singleGeneratorGroup,
+                                  packageName: previewPackageName,
+                                  token: token.value,
+                                  registryUrl
+                              })
                         : singleGeneratorGroup;
 
                 if (useRemoteGeneration) {
@@ -239,6 +246,7 @@ export async function sdkPreview({
                             token,
                             whitelabel: workspace.generatorsConfiguration?.whitelabel,
                             absolutePathToPreview: undefined,
+                            isPreview: true,
                             mode: undefined,
                             fernignorePath: undefined,
                             skipFernignore: false,

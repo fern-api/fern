@@ -30,6 +30,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     token,
     whitelabel,
     absolutePathToPreview,
+    isPreview,
     mode,
     fernignorePath,
     skipFernignore,
@@ -48,6 +49,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    /** Explicit preview flag. When true, signals Fiddle that this is a preview job. Falls back to absolutePathToPreview != null. */
+    isPreview?: boolean;
     mode: "pull-request" | undefined;
     fernignorePath: string | undefined;
     skipFernignore?: boolean;
@@ -132,6 +135,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     readme: generatorInvocation.readme,
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     absolutePathToPreview,
+                    isPreview,
                     fernignorePath: effectiveFernignorePath,
                     skipFernignore,
                     dynamicIrOnly,

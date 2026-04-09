@@ -2195,6 +2195,13 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     description:
                         "Output targets: filesystem paths and/or registry URLs. " +
                         "Omit to publish to the default preview registry and write to a temp directory."
+                })
+                .option("push-diff", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Push a preview diff branch to the SDK repo. " +
+                        "Requires the generator to have github output configuration and the Fern GitHub App installed."
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
@@ -2208,7 +2215,8 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 generatorFilter,
                 apiName: argv.api,
                 json: argv.json,
-                output: argv.output
+                output: argv.output,
+                pushDiff: argv.pushDiff
             });
         }
     );

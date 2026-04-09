@@ -86,55 +86,59 @@ function getGithubOwnerRepo(outputMode: FernFiddle.remoteGen.OutputMode): { owne
 /**
  * Overrides a generator group's output mode for remote Fiddle generation.
  *
- * Uses githubV2(push) with npm publishInfo so that Fiddle routes the task to
- * GithubFiddleTask, which handles both npm publishing and pushing the preview
+ * By default, uses publishV2(npmOverride) so Fiddle publishes to the preview
+ * registry without touching the SDK repo.
+ *
+ * When pushDiff is true AND the generator has github configuration (owner/repo),
+ * uses githubV2(push) with npm publishInfo so Fiddle routes the task to
+ * GithubFiddleTask, which handles both npm publishing and pushing a preview
  * diff branch to the SDK repo.
  *
- * Falls back to publishV2(npmOverride) if the generator doesn't have github
- * configuration (owner/repo) — this still publishes to the preview registry
- * but skips the diff branch push.
- *
  * @param token - The Fern org token (FERN_TOKEN). Used for registry auth.
+ * @param pushDiff - When true, use githubV2(push) to push a diff branch to the SDK repo.
  */
 export function overrideGroupOutputForRemotePreview({
     group,
     packageName,
     token,
-    registryUrl
+    registryUrl,
+    pushDiff
 }: {
     group: generatorsYml.GeneratorGroup;
     packageName: string;
     token: string;
     registryUrl: string;
+    pushDiff?: boolean;
 }): generatorsYml.GeneratorGroup {
     const modifiedGenerators = group.generators.map((generator) => {
-        const githubInfo = getGithubOwnerRepo(generator.outputMode);
-
-        if (githubInfo != null && githubInfo.owner !== "" && githubInfo.repo !== "") {
-            // Use githubV2(push) so Fiddle routes to GithubFiddleTask, which
-            // handles publishing + pushing the preview diff branch.
-            const modifiedGenerator: generatorsYml.GeneratorInvocation = {
-                ...generator,
-                outputMode: FernFiddle.OutputMode.githubV2(
-                    FernFiddle.GithubOutputModeV2.push({
-                        owner: githubInfo.owner,
-                        repo: githubInfo.repo,
-                        branch: undefined,
-                        license: undefined,
-                        publishInfo: FernFiddle.GithubPublishInfo.npm({
-                            registryUrl,
-                            packageName,
-                            token
-                        }),
-                        downloadSnippets: false
-                    })
-                ),
-                absolutePathToLocalOutput: undefined
-            };
-            return modifiedGenerator;
+        if (pushDiff === true) {
+            const githubInfo = getGithubOwnerRepo(generator.outputMode);
+            if (githubInfo != null && githubInfo.owner !== "" && githubInfo.repo !== "") {
+                // Use githubV2(push) so Fiddle routes to GithubFiddleTask, which
+                // handles publishing + pushing the preview diff branch.
+                const modifiedGenerator: generatorsYml.GeneratorInvocation = {
+                    ...generator,
+                    outputMode: FernFiddle.OutputMode.githubV2(
+                        FernFiddle.GithubOutputModeV2.push({
+                            owner: githubInfo.owner,
+                            repo: githubInfo.repo,
+                            branch: undefined,
+                            license: undefined,
+                            publishInfo: FernFiddle.GithubPublishInfo.npm({
+                                registryUrl,
+                                packageName,
+                                token
+                            }),
+                            downloadSnippets: false
+                        })
+                    ),
+                    absolutePathToLocalOutput: undefined
+                };
+                return modifiedGenerator;
+            }
         }
 
-        // Fallback: no github config — use publishV2 for registry-only publish.
+        // Default: publishV2 for registry-only publish (no SDK repo push).
         const modifiedGenerator: generatorsYml.GeneratorInvocation = {
             ...generator,
             outputMode: FernFiddle.OutputMode.publishV2(
