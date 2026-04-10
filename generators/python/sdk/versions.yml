@@ -3,6 +3,7 @@
 - version: 5.3.10
   changelogEntry:
     - summary: |
+<<<<<<< jsklan/fix-streaming-parsing
         Fix duplicate keyword arguments in generated code for discriminated union
         request bodies with stream condition properties. When a union variant inherits
         the stream condition field from a base schema via extends, the property was
@@ -18,6 +19,10 @@
         to suppress mypy call-overload errors when the base client has overloaded
         __init__ signatures (e.g., OAuth + bearer token auth).
       type: fix
+=======
+        Bump generator-cli to 0.9.6 which upgrades @fern-api/replay to 0.10.3.
+      type: chore
+>>>>>>> main
   createdAt: "2026-04-10"
   irVersion: 65
 

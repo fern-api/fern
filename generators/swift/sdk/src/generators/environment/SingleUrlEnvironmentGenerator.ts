@@ -28,7 +28,7 @@ export class SingleUrlEnvironmentGenerator {
             accessLevel: swift.AccessLevel.Public,
             conformances: ["String", swift.Protocol.CaseIterable],
             cases: this.environments.environments.map((e) => ({
-                unsafeName: e.name.camelCase.unsafeName,
+                unsafeName: this.sdkGeneratorContext.caseConverter.camelUnsafe(e.name),
                 rawValue: e.url,
                 docs: e.docs ? swift.docComment({ summary: e.docs }) : undefined
             }))

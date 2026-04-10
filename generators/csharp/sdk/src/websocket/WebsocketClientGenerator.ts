@@ -1097,7 +1097,8 @@ export class WebSocketClientGenerator extends WithGeneration {
         for (const each of this.events) {
             cls.addField({
                 origin: cls.explicit(`${each.name}`),
-                readonly: true,
+                get: true,
+                useExpressionBody: false,
                 initializer: this.csharp.codeblock((writer) => writer.write(`new()`)),
                 access: ast.Access.Public,
                 doc: this.csharp.xmlDocBlockOf({
@@ -1109,7 +1110,8 @@ export class WebSocketClientGenerator extends WithGeneration {
 
         cls.addField({
             origin: cls.explicit("UnknownMessage"),
-            readonly: true,
+            get: true,
+            useExpressionBody: false,
             initializer: this.csharp.codeblock((writer) => writer.write(`new()`)),
             access: ast.Access.Public,
             doc: this.csharp.xmlDocBlockOf({
@@ -1382,6 +1384,29 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             get: true,
             type: this.Types.WebSocketEvent(this.Types.ReconnectionInfo)
+        });
+
+        // Domain-specific events (server-to-client messages)
+        for (const each of this.events) {
+            if (each.name == null) {
+                continue;
+            }
+            interface_.addField({
+                name: each.name,
+                enclosingType: interface_,
+                access: ast.Access.Public,
+                get: true,
+                type: each.eventType
+            });
+        }
+
+        // UnknownMessage event
+        interface_.addField({
+            name: "UnknownMessage",
+            enclosingType: interface_,
+            access: ast.Access.Public,
+            get: true,
+            type: this.Types.WebSocketEvent(this.System.Text.Json.JsonElement)
         });
 
         // Status property

@@ -34,7 +34,7 @@ import {
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
-import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
+import { LoggableFernCliError, TaskAbortSignal } from "@fern-api/task-context";
 import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -142,11 +142,11 @@ async function runCli() {
                 error
             }
         });
-        if ((error as Error)?.message.includes("globalThis")) {
-            cliContext.logger.error(USE_NODE_18_OR_ABOVE_MESSAGE);
-            cliContext.failWithoutThrowing();
-        } else if (error instanceof FernCliError) {
+        if (error instanceof TaskAbortSignal) {
             // thrower is responsible for logging, so we generally don't need to log here.
+            cliContext.failWithoutThrowing();
+        } else if ((error as Error)?.message.includes("globalThis")) {
+            cliContext.logger.error(USE_NODE_18_OR_ABOVE_MESSAGE);
             cliContext.failWithoutThrowing();
         } else if (error instanceof LoggableFernCliError) {
             cliContext.logger.error(`Failed. ${error.log}`);
@@ -2447,7 +2447,27 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     string: true,
                     description:
                         "Output targets: filesystem paths and/or registry URLs. " +
-                        "Omit to publish to the default preview registry and write to a temp directory."
+                        "When omitted, publishes to the default preview registry via remote generation. " +
+                        "Examples: --output ./out (disk only), --output https://registry.example.com (registry only), " +
+                        "--output ./out --output https://registry.example.com (both)."
+                })
+                .option("local", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Run generation locally via Docker instead of remotely through Fiddle. " +
+                        "Requires Docker to be installed. " +
+                        "Can be combined with --output for local disk output."
+                })
+                .option("push-diff", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Push a preview diff branch (fern-preview-{version}) to the SDK repo " +
+                        "in addition to publishing to the preview registry. " +
+                        "Requires the generator to have github output configuration " +
+                        "and the Fern GitHub App installed on the target repo. " +
+                        "Cannot be combined with --local."
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
@@ -2461,7 +2481,9 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 generatorFilter,
                 apiName: argv.api,
                 json: argv.json,
-                output: argv.output
+                output: argv.output,
+                local: argv.local,
+                pushDiff: argv.pushDiff
             });
         }
     );

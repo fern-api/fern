@@ -39,6 +39,7 @@ import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
 import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.utils.InlineTypeIdResolver;
+import com.fern.java.utils.NameUtils;
 import com.fern.java.utils.NamedTypeId;
 import com.fern.java.utils.TypeReferenceUtils;
 import com.fern.java.utils.TypeReferenceUtils.ContainerTypeEnum;
@@ -197,7 +198,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                                                 .values()
                                                 .stream()
                                                 .map(TypeDeclaration::getName)
-                                                .map(DeclaredTypeName::getName)
+                                                .map(d -> NameUtils.toName(d.getName()))
                                                 .map(Name::getPascalCase)
                                                 .map(SafeAndUnsafeString::getSafeName)
                                                 .collect(Collectors.toList())
@@ -334,8 +335,9 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
 
                 Set<String> allReservedTypeNames = new HashSet<>(reservedTypeNames);
 
-                String name =
-                        rawTypeDeclaration.getName().getName().getPascalCase().getSafeName();
+                String name = NameUtils.toName(rawTypeDeclaration.getName().getName())
+                        .getPascalCase()
+                        .getSafeName();
 
                 // Omit the prefix from type names that start with it, for better style
                 if (name.startsWith(undiscriminatedUnionPrefix) && !name.equals(undiscriminatedUnionPrefix)) {

@@ -371,4 +371,6 @@ allowedFailures:
   - file-upload-openapi
 
   - go-deterministic-ordering:.
+
+  # exhaustive:omit-empty-request-wrappers wire tests fail due to missing Authorization header
   - exhaustive:omit-empty-request-wrappers

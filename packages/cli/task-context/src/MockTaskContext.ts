@@ -1,6 +1,6 @@
 import { CONSOLE_LOGGER, Logger } from "@fern-api/logger";
 
-import { FernCliError } from "./FernCliError.js";
+import { TaskAbortSignal } from "./TaskAbortSignal.js";
 import { TaskContext, TaskResult } from "./TaskContext.js";
 
 export function createMockTaskContext({ logger = CONSOLE_LOGGER }: { logger?: Logger } = {}): TaskContext {
@@ -20,7 +20,7 @@ export function createMockTaskContext({ logger = CONSOLE_LOGGER }: { logger?: Lo
             if (parts.length > 0) {
                 context.logger.error(...parts);
             }
-            throw new FernCliError();
+            throw new TaskAbortSignal();
         },
         failWithoutThrowing: (message?: string, error?: unknown) => {
             // in mock contexts, any failures should throw

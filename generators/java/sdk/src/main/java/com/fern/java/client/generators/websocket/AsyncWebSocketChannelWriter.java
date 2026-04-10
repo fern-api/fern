@@ -25,6 +25,7 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
@@ -95,21 +96,27 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                 .addModifiers(Modifier.PUBLIC)
                 .addJavadoc(
                         "Creates a new async WebSocket client for the $L channel.\n",
-                        websocketChannel.getName().get().getCamelCase().getSafeName())
+                        NameUtils.toName(websocketChannel.getName().get())
+                                .getCamelCase()
+                                .getSafeName())
                 .addParameter(clientOptionsField.type, clientOptionsField.name);
 
         // Add path parameters
         for (PathParameter pathParam : websocketChannel.getPathParameters()) {
             TypeName paramType =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParam.getValueType());
-            builder.addParameter(paramType, pathParam.getName().getCamelCase().getSafeName())
+            builder.addParameter(
+                            paramType,
+                            NameUtils.toName(pathParam.getName()).getCamelCase().getSafeName())
                     .addJavadoc(
                             "@param $L $L\n",
-                            pathParam.getName().getCamelCase().getSafeName(),
+                            NameUtils.toName(pathParam.getName()).getCamelCase().getSafeName(),
                             pathParam
                                     .getDocs()
                                     .orElse("the "
-                                            + pathParam.getName().getCamelCase().getSafeName() + " path parameter"));
+                                            + NameUtils.toName(pathParam.getName())
+                                                    .getCamelCase()
+                                                    .getSafeName() + " path parameter"));
         }
 
         // Constructor body
@@ -119,7 +126,8 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
 
         // Assign path parameters
         for (PathParameter pathParam : websocketChannel.getPathParameters()) {
-            String paramName = pathParam.getName().getCamelCase().getSafeName();
+            String paramName =
+                    NameUtils.toName(pathParam.getName()).getCamelCase().getSafeName();
             builder.addStatement("this.$L = $L", paramName, paramName);
         }
 
@@ -172,9 +180,10 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
         if (connectOptionsClassName.isPresent()) {
             for (QueryParameter queryParam : websocketChannel.getQueryParameters()) {
                 String getterName = "get"
-                        + capitalize(
-                                queryParam.getName().getName().getCamelCase().getSafeName());
-                String wireValue = queryParam.getName().getWireValue();
+                        + capitalize(NameUtils.getName(queryParam.getName())
+                                .getCamelCase()
+                                .getSafeName());
+                String wireValue = NameUtils.getWireValue(queryParam.getName());
 
                 boolean isOptional = queryParam.getValueType().getContainer().isPresent()
                         && queryParam.getValueType().getContainer().get().isOptional();
