@@ -76,13 +76,13 @@ public partial class RealtimeApi
     /// Event handler for ReceiveEvent.
     /// Use ReceiveEvent.Subscribe(...) to receive messages.
     /// </summary>
-    public Event<ReceiveEvent> ReceiveEvent { get; private set; } = new();
+    public Event<ReceiveEvent> ReceiveEvent { get; } = new();
 
     /// <summary>
     /// Event handler for unknown/unrecognized message types.
     /// Use UnknownMessage.Subscribe(...) to handle messages from newer server versions.
     /// </summary>
-    public Event<JsonElement> UnknownMessage { get; private set; } = new();
+    public Event<JsonElement> UnknownMessage { get; } = new();
 
     /// <summary>
     /// Disposes of event subscriptions

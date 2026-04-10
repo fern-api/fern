@@ -75,7 +75,7 @@ public partial class EmptyRealtimeApi
     /// Event handler for unknown/unrecognized message types.
     /// Use UnknownMessage.Subscribe(...) to handle messages from newer server versions.
     /// </summary>
-    public Event<JsonElement> UnknownMessage { get; private set; } = new();
+    public Event<JsonElement> UnknownMessage { get; } = new();
 
     /// <summary>
     /// Disposes of event subscriptions

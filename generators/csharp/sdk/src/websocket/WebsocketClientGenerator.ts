@@ -1098,7 +1098,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             cls.addField({
                 origin: cls.explicit(`${each.name}`),
                 get: true,
-                set: ast.Access.Private,
+                useExpressionBody: false,
                 initializer: this.csharp.codeblock((writer) => writer.write(`new()`)),
                 access: ast.Access.Public,
                 doc: this.csharp.xmlDocBlockOf({
@@ -1111,7 +1111,7 @@ export class WebSocketClientGenerator extends WithGeneration {
         cls.addField({
             origin: cls.explicit("UnknownMessage"),
             get: true,
-            set: ast.Access.Private,
+            useExpressionBody: false,
             initializer: this.csharp.codeblock((writer) => writer.write(`new()`)),
             access: ast.Access.Public,
             doc: this.csharp.xmlDocBlockOf({
