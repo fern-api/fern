@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.65.5
+  changelogEntry:
+    - summary: |
+        Fix GraphQL converter to properly handle interface types. Interfaces
+        with implementing types (e.g., `CatalogProductOption` with
+        `CheckboxOption`, `MultipleChoiceOption`, etc.) are now converted to
+        `undiscriminatedUnion` shapes so that all possible concrete types are
+        discoverable in generated docs. Interfaces with no implementations
+        fall back to plain object types.
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
+
 - version: 4.65.4
   changelogEntry:
     - summary: |
@@ -11,20 +24,6 @@
       type: fix
   createdAt: "2026-04-01"
   irVersion: 66
-
-- version: 4.62.5
-  changelogEntry:
-    - summary: |
-        Fix GraphQL converter to properly handle interface types. Interfaces
-        with implementing types (e.g., `CatalogProductOption` with
-        `CheckboxOption`, `MultipleChoiceOption`, etc.) are now converted to
-        `undiscriminatedUnion` shapes so that all possible concrete types are
-        discoverable in generated docs. Interfaces with no implementations
-        fall back to plain object types.
-      type: fix
-  createdAt: "2026-04-08"
-  irVersion: 66
-
 
 - version: 4.65.3
   changelogEntry:
