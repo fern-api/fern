@@ -2455,9 +2455,6 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: 66.0.0
         version: 66.0.0
-      '@fern-fern/ir-v59-sdk':
-        specifier: 0.0.8
-        version: 0.0.8
       '@types/lodash-es':
         specifier: 'catalog:'
         version: 4.17.12
