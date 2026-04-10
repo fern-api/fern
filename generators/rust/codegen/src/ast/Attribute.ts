@@ -1,5 +1,5 @@
-import { AstNode } from "./AstNode";
-import { Writer } from "./Writer";
+import { AstNode } from "./AstNode.js";
+import { Writer } from "./Writer.js";
 
 export declare namespace Attribute {
     interface Args {
@@ -82,6 +82,12 @@ export class Attribute extends AstNode {
                 args: ["skip"]
             }),
 
+        skipSerializing: (): Attribute =>
+            new Attribute({
+                name: "serde",
+                args: ["skip_serializing"]
+            }),
+
         skipSerializingIf: (condition: string): Attribute =>
             new Attribute({
                 name: "serde",
@@ -124,6 +130,18 @@ export class Attribute extends AstNode {
             new Attribute({
                 name: "serde",
                 args: [`tag = ${JSON.stringify(tag)}`, `content = ${JSON.stringify(content)}`]
+            }),
+
+        transparent: (): Attribute =>
+            new Attribute({
+                name: "serde",
+                args: ["transparent"]
             })
     };
+
+    public static nonExhaustive(): Attribute {
+        return new Attribute({
+            name: "non_exhaustive"
+        });
+    }
 }

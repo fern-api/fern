@@ -1,6 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { EnvironmentSchema, MultipleBaseUrlsEnvironmentSchema, SingleBaseUrlEnvironmentSchema } from "../schemas";
+import {
+    EnvironmentSchema,
+    MultipleBaseUrlsEnvironmentSchema,
+    SingleBaseUrlEnvironmentSchema
+} from "../schemas/index.js";
 
 export interface EnvironmentDeclarationVisitor<R> {
     singleBaseUrl: (environment: string | SingleBaseUrlEnvironmentSchema) => R;

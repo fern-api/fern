@@ -3,8 +3,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { go } from "@fern-api/go-ast";
 
-import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { FilePropertyInfo } from "./context/FilePropertyMapper";
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
+import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
 
 const SNIPPET_PACKAGE_NAME = "example";
 const SNIPPET_IMPORT_PATH = "fern";
@@ -244,7 +244,12 @@ export class EndpointSnippetGenerator {
                     go.invokeMethod({
                         on: go.codeblock(CLIENT_VAR_NAME),
                         method: this.getMethod({ endpoint }),
-                        arguments_: [this.context.getContextTodoFunctionInvocation(), ...otherArgs, go.codeblock("nil")]
+                        arguments_: [
+                            this.context.getContextTodoFunctionInvocation(),
+                            ...otherArgs,
+                            go.codeblock("nil"),
+                            ...optionArgsInvocation
+                        ]
                     })
                 );
             } else {
@@ -306,7 +311,7 @@ export class EndpointSnippetGenerator {
         }
         if (endpoint.auth != null) {
             if (snippet.auth != null) {
-                args.push(this.getConstructorAuthArg({ auth: endpoint.auth, values: snippet.auth }));
+                args.push(...this.getConstructorAuthArgs({ auth: endpoint.auth, values: snippet.auth }));
             } else {
                 this.context.errors.add({
                     severity: Severity.Warning,
@@ -338,29 +343,28 @@ export class EndpointSnippetGenerator {
         ];
     }
 
-    private getConstructorAuthArg({
+    private getConstructorAuthArgs({
         auth,
         values
     }: {
         auth: FernIr.dynamic.Auth;
         values: FernIr.dynamic.AuthValues;
-    }): go.AstNode {
+    }): go.AstNode[] {
         if (values.type !== auth.type) {
             this.addError(this.context.newAuthMismatchError({ auth, values }).message);
-            return TypeInst.nop();
+            return [];
         }
         switch (auth.type) {
             case "basic":
-                return values.type === "basic" ? this.getConstructorBasicAuthArg({ auth, values }) : TypeInst.nop();
+                return values.type === "basic" ? [this.getConstructorBasicAuthArg({ auth, values })] : [];
             case "bearer":
-                return values.type === "bearer" ? this.getConstructorBearerAuthArg({ auth, values }) : TypeInst.nop();
+                return values.type === "bearer" ? [this.getConstructorBearerAuthArg({ auth, values })] : [];
             case "header":
-                return values.type === "header" ? this.getConstructorHeaderAuthArg({ auth, values }) : TypeInst.nop();
+                return values.type === "header" ? [this.getConstructorHeaderAuthArg({ auth, values })] : [];
             case "oauth":
-                return values.type === "oauth" ? this.getConstructorOAuthAuthArg({ values }) : TypeInst.nop();
+                return values.type === "oauth" ? [this.getConstructorOAuthAuthArg({ values })] : [];
             case "inferred":
-                this.addWarning("The Go SDK Generator does not support Inferred auth scheme yet");
-                return TypeInst.nop();
+                return values.type === "inferred" ? this.getConstructorInferredAuthArgs({ auth, values }) : [];
             default:
                 assertNever(auth);
         }
@@ -523,6 +527,49 @@ export class EndpointSnippetGenerator {
         });
     }
 
+    private getConstructorInferredAuthArgs({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.InferredAuth;
+        values: FernIr.dynamic.InferredAuthValues;
+    }): go.AstNode[] {
+        const parameters = auth.parameters;
+        if (parameters == null || parameters.length === 0) {
+            return [];
+        }
+        const args: go.AstNode[] = [];
+        for (const param of parameters) {
+            // Skip optional and literal parameters — they don't have WithXxx() options.
+            if (param.typeReference.type === "optional" || param.typeReference.type === "literal") {
+                continue;
+            }
+            const wireValue = param.name.wireValue;
+            const value = values.values?.[wireValue] ?? param.name.name.originalName;
+            const typeInstantiation = this.context.dynamicTypeInstantiationMapper.convert({
+                typeReference: param.typeReference,
+                value
+            });
+            if (go.TypeInstantiation.isNop(typeInstantiation)) {
+                continue;
+            }
+            args.push(
+                go.codeblock((writer) => {
+                    writer.writeNode(
+                        go.invokeFunc({
+                            func: go.typeReference({
+                                name: `With${param.name.name.pascalCase.unsafeName}`,
+                                importPath: this.context.getOptionImportPath()
+                            }),
+                            arguments_: [typeInstantiation]
+                        })
+                    );
+                })
+            );
+        }
+        return args;
+    }
+
     private getConstructorHeaderArgs({
         headers,
         values
@@ -532,7 +579,8 @@ export class EndpointSnippetGenerator {
     }): go.AstNode[] {
         const args: go.AstNode[] = [];
         for (const header of headers) {
-            const arg = this.getConstructorHeaderArg({ header, value: values.value });
+            const value = values[header.name.wireValue];
+            const arg = this.getConstructorHeaderArg({ header, value });
             if (arg != null) {
                 args.push(arg);
             }
@@ -636,14 +684,16 @@ export class EndpointSnippetGenerator {
     }
 
     private getBytesBodyRequestArg({ value }: { value: unknown }): go.TypeInstantiation {
-        if (typeof value !== "string") {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: `Expected bytes value to be a string, got ${typeof value}`
-            });
-            return go.TypeInstantiation.nop();
-        }
-        return go.TypeInstantiation.bytes(value as string);
+        const bytesValue = typeof value === "string" ? (value as string) : "";
+        return go.TypeInstantiation.reference(
+            go.invokeFunc({
+                func: go.typeReference({
+                    name: "NewReader",
+                    importPath: "bytes"
+                }),
+                arguments_: [go.TypeInstantiation.bytes(bytesValue)]
+            })
+        );
     }
 
     private getMethodArgsForInlinedRequest({
@@ -872,7 +922,7 @@ export class EndpointSnippetGenerator {
     }): go.StructField[] {
         const args: go.StructField[] = [];
 
-        const pathParameters = this.context.associateByWireValue({
+        const pathParameters = this.context.associateByWireValueOrDefault({
             parameters: namedParameters,
             values: snippet.pathParameters ?? {}
         });

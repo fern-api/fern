@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.Users.ListUsernamesCustom() -> *fern.UsernameCursor</code></summary>
+<details><summary><code>client.Users.ListWithCustomPager() -> *core.PayrocPager[*fern.UsersListResponse, []string, *fern.Link]</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +13,15 @@
 <dd>
 
 ```go
-request := &fern.ListUsernamesRequestCustom{
+request := &fern.ListWithCustomPagerRequest{
+        Limit: fern.Int(
+            1,
+        ),
         StartingAfter: fern.String(
             "starting_after",
         ),
     }
-client.Users.ListUsernamesCustom(
+client.Users.ListWithCustomPager(
         context.TODO(),
         request,
     )
@@ -37,10 +40,15 @@ client.Users.ListUsernamesCustom(
 <dl>
 <dd>
 
-**startingAfter:** `*string` 
+**limit:** `*int` — The maximum number of results to return.
+    
+</dd>
+</dl>
 
-The cursor used for pagination in order to fetch
-the next page of results.
+<dl>
+<dd>
+
+**startingAfter:** `*string` — The cursor used for pagination.
     
 </dd>
 </dl>
@@ -51,3 +59,4 @@ the next page of results.
 </dd>
 </dl>
 </details>
+

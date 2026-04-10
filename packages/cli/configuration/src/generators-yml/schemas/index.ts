@@ -1,2 +1,2 @@
-export * from "./api";
-export * as serialization from "./serialization";
+export * from "./api/index.js";
+export * as serialization from "./serialization/index.js";

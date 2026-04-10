@@ -1,3 +1,3 @@
-export { type ConvertOpenAPIOptions, getConvertOptions } from "./ConvertOpenAPIOptions";
-export { convert, type OpenApiConvertedFernDefinition } from "./convert";
-export { getEndpointLocation } from "./utils/getEndpointLocation";
+export { type ConvertOpenAPIOptions, getConvertOptions } from "./ConvertOpenAPIOptions.js";
+export { convert, type OpenApiConvertedFernDefinition } from "./convert.js";
+export { getEndpointLocation } from "./utils/getEndpointLocation.js";

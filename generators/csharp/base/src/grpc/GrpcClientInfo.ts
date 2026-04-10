@@ -1,5 +1,7 @@
 import { ast } from "@fern-api/csharp-codegen";
-import { ProtobufService } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ProtobufService = FernIr.ProtobufService;
 
 /**
  * Information relevant to a particular gRPC client instance instantiated from a gRPC

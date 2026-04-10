@@ -1,11 +1,80 @@
+# Document-level default: HMAC SHA-256 with hex encoding and timestamp-based payload
+webhook-signature:
+  type: hmac
+  header: x-webhook-signature
+  algorithm: sha256
+  encoding: hex
+  signature-prefix: "sha256="
+  payload-format:
+    components:
+      - timestamp
+      - body
+    delimiter: "."
+  timestamp:
+    header: x-webhook-timestamp
+    format: unix-seconds
+    tolerance: 300
+
+types:
+  UserCreatedPayload:
+    properties:
+      userId: string
+      email: string
+
+  OrderCompletedPayload:
+    properties:
+      orderId: string
+      total: double
+
+  PaymentNotificationPayload:
+    properties:
+      paymentId: string
+      amount: double
+      status: string
+
+  RefundProcessedPayload:
+    properties:
+      refundId: string
+      amount: double
+      reason: optional<string>
+
 webhooks:
-  sendNotification:
+  # Inherits document-level HMAC config (no explicit signature)
+  userCreated:
     method: POST
-    docs: This is a webhook to receive notifications.
-    payload:
-      name: NotificationPayload
-      properties:
-        name: string
-        urgent:
-          type: boolean
-          docs: Some docs about urgency
+    docs: Fired when a new user is created.
+    payload: UserCreatedPayload
+
+  # Inherits document-level HMAC config (no explicit signature)
+  orderCompleted:
+    method: POST
+    docs: Fired when an order is completed.
+    payload: OrderCompletedPayload
+
+  # Per-webhook override: Asymmetric RSA-SHA256 via JWKS endpoint
+  paymentNotification:
+    method: POST
+    docs: Fired when a payment status changes.
+    payload: PaymentNotificationPayload
+    signature:
+      type: asymmetric
+      header: x-payment-signature
+      asymmetric-algorithm: rsa-sha256
+      encoding: base64
+      signature-prefix: "rsa="
+      jwks-url: https://api.example.com/.well-known/jwks.json
+      key-id-header: x-key-id
+      timestamp:
+        header: x-payment-timestamp
+        format: iso8601
+
+  # Per-webhook override: Asymmetric ECDSA-SHA256 with static public key
+  refundProcessed:
+    method: POST
+    docs: Fired when a refund is processed.
+    payload: RefundProcessedPayload
+    signature:
+      type: asymmetric
+      header: x-refund-signature
+      asymmetric-algorithm: ecdsa-sha256
+      encoding: hex

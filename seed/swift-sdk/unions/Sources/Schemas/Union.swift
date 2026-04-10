@@ -10,9 +10,9 @@ public enum Union: Codable, Hashable, Sendable {
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
         case "bar":
-            self = .bar(try Bar(from: decoder))
+            self = .bar(try container.decode(Bar.self, forKey: .bar))
         case "foo":
-            self = .foo(try Foo(from: decoder))
+            self = .foo(try container.decode(Foo.self, forKey: .foo))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -24,83 +24,20 @@ public enum Union: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
         case .bar(let data):
-            try data.encode(to: encoder)
+            try container.encode("bar", forKey: .type)
+            try container.encode(data, forKey: .bar)
         case .foo(let data):
-            try data.encode(to: encoder)
-        }
-    }
-
-    public struct Foo: Codable, Hashable, Sendable {
-        public let type: String = "foo"
-        public let foo: Unions.Foo
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            foo: Unions.Foo,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.foo = foo
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.foo = try container.decode(Unions.Foo.self, forKey: .foo)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.foo, forKey: .foo)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case foo
-        }
-    }
-
-    public struct Bar: Codable, Hashable, Sendable {
-        public let type: String = "bar"
-        public let bar: Unions.Bar
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            bar: Unions.Bar,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.bar = bar
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.bar = try container.decode(Unions.Bar.self, forKey: .bar)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.bar, forKey: .bar)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case bar
+            try container.encode("foo", forKey: .type)
+            try container.encode(data, forKey: .foo)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
+        case bar
+        case foo
     }
 }

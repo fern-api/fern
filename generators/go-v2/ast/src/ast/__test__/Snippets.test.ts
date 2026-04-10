@@ -1,12 +1,12 @@
-import { AstNode } from "../core/AstNode";
-import { GoFile } from "../core/GoFile";
-import { Field } from "../Field";
-import { File } from "../File";
-import { GoTypeReference } from "../GoTypeReference";
-import { MultiNode } from "../MultiNode";
-import { Struct } from "../Struct";
-import { Type } from "../Type";
-import { TypeInstantiation } from "../TypeInstantiation";
+import { AstNode } from "../core/AstNode.js";
+import { GoFile } from "../core/GoFile.js";
+import { Field } from "../Field.js";
+import { File } from "../File.js";
+import { GoTypeReference } from "../GoTypeReference.js";
+import { MultiNode } from "../MultiNode.js";
+import { Struct } from "../Struct.js";
+import { Type } from "../Type.js";
+import { TypeInstantiation } from "../TypeInstantiation.js";
 
 interface TestCase {
     description: string;

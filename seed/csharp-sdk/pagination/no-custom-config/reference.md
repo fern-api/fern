@@ -1008,7 +1008,7 @@ await client.Users.ListWithOffsetPaginationHasNextPageAsync(
     new SeedPagination.ListWithOffsetPaginationHasNextPageRequest
     {
         Page = 1,
-        Limit = 1,
+        Limit = 3,
         Order = SeedPagination.Order.Asc,
     }
 );
@@ -1290,3 +1290,51 @@ await client.Users.ListWithOptionalDataAsync(new ListUsersOptionalDataRequest { 
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithAliasedDataAsync</a>(ListUsersAliasedDataRequest { ... }) -> Pager&lt;User&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Users.ListWithAliasedDataAsync(
+    new ListUsersAliasedDataRequest
+    {
+        Page = 1,
+        PerPage = 1,
+        StartingAfter = "starting_after",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ListUsersAliasedDataRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

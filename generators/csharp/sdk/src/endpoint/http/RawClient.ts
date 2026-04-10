@@ -1,12 +1,15 @@
 import { fail } from "node:assert";
-import { Arguments } from "@fern-api/base-generator";
+import { Arguments, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, WithGeneration, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { EndpointRequest } from "../request/EndpointRequest";
-import { getContentTypeFromRequestBody } from "../utils/getContentTypeFromRequestBody";
+
+type HttpEndpoint = FernIr.HttpEndpoint;
+type HttpMethod = FernIr.HttpMethod;
+
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { EndpointRequest } from "../request/EndpointRequest.js";
+import { getContentTypeFromRequestBody } from "../utils/getContentTypeFromRequestBody.js";
 
 export declare namespace RawClient {
     export type RequestBodyType = "json" | "bytes" | "multipartform" | "urlencoded";
@@ -37,7 +40,7 @@ export declare namespace RawClient {
     }
 
     export interface CreateHttpRequestWrapperArgs {
-        baseUrl: ast.CodeBlock;
+        baseUrl?: ast.CodeBlock;
         /** the endpoint for the endpoint */
         endpoint: HttpEndpoint;
         /** reference to a variable that is the body */
@@ -81,10 +84,14 @@ export class RawClient extends WithGeneration {
         requestType
     }: RawClient.CreateHttpRequestWrapperArgs): RawClient.CreateHttpRequestWrapperCodeBlock {
         const args: Arguments = [
-            {
-                name: "BaseUrl",
-                assignment: baseUrl
-            },
+            ...(baseUrl != null
+                ? [
+                      {
+                          name: "BaseUrl",
+                          assignment: baseUrl
+                      }
+                  ]
+                : []),
             {
                 name: "Method",
                 assignment: this.getCsharpHttpMethod(endpoint.method)
@@ -217,16 +224,16 @@ export class RawClient extends WithGeneration {
         let encoding: FernIr.FileUploadBodyPropertyEncoding | undefined;
         switch (property.type) {
             case "file":
-                propertyName = property.value.key.name.pascalCase.safeName;
-                partName = property.value.key.wireValue;
+                propertyName = this.case.pascalSafe(property.value.key);
+                partName = getWireValue(property.value.key);
                 contentType = property.value.contentType;
                 csharpType = this.context.csharpTypeMapper.convertFromFileProperty({
                     property: property.value
                 });
                 break;
             case "bodyProperty": {
-                propertyName = property.name.name.pascalCase.safeName;
-                partName = property.name.wireValue;
+                propertyName = this.case.pascalSafe(property.name);
+                partName = getWireValue(property.name);
                 contentType = property.contentType;
                 encoding = property.style;
                 csharpType = this.context.csharpTypeMapper.convert({

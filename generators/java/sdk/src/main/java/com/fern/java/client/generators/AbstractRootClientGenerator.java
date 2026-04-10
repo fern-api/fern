@@ -31,6 +31,14 @@ import com.fern.ir.model.commons.EndpointReference;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.commons.WebSocketChannelId;
+import com.fern.ir.model.environment.EnvironmentBaseUrlWithId;
+import com.fern.ir.model.environment.Environments;
+import com.fern.ir.model.environment.EnvironmentsConfig;
+import com.fern.ir.model.environment.MultipleBaseUrlsEnvironment;
+import com.fern.ir.model.environment.MultipleBaseUrlsEnvironments;
+import com.fern.ir.model.environment.ServerVariable;
+import com.fern.ir.model.environment.SingleBaseUrlEnvironment;
+import com.fern.ir.model.environment.SingleBaseUrlEnvironments;
 import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.http.QueryParameter;
@@ -44,6 +52,7 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
+import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
 import com.fern.java.client.GeneratedRootClient;
 import com.fern.java.client.generators.AbstractClientGeneratorUtils.Result;
@@ -72,6 +81,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import javax.lang.model.element.Modifier;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 
 public abstract class AbstractRootClientGenerator extends AbstractFileGenerator {
@@ -587,6 +597,47 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addStatement(isExtensible ? "return self()" : "return this")
                 .build());
 
+        // Add interceptors field and addInterceptor method when custom-interceptors is enabled
+        if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+            clientBuilder.addField(FieldSpec.builder(
+                            ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get(Interceptor.class)),
+                            "interceptors")
+                    .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                    .initializer("new $T<>()", ArrayList.class)
+                    .build());
+
+            clientBuilder.addMethod(MethodSpec.methodBuilder("addInterceptor")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addJavadoc(
+                            "Add a custom OkHttp interceptor to the client.\n"
+                                    + "Interceptors are applied to the OkHttpClient when the client is built.\n"
+                                    + "This can be used for custom request signing, logging, or other request/response modifications.\n")
+                    .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                    .addParameter(Interceptor.class, "interceptor")
+                    .addStatement("this.interceptors.add(interceptor)")
+                    .addStatement(isExtensible ? "return self()" : "return this")
+                    .build());
+        }
+
+        clientBuilder.addField(FieldSpec.builder(
+                        ParameterizedTypeName.get(
+                                ClassName.get(Optional.class),
+                                clientGeneratorContext.getPoetClassNameFactory().getLogConfigClassName()),
+                        "logging")
+                .addModifiers(Modifier.PRIVATE)
+                .initializer("$T.empty()", Optional.class)
+                .build());
+
+        clientBuilder.addMethod(MethodSpec.methodBuilder("logging")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc(
+                        "Configure logging for the SDK. Silent by default — no log output unless explicitly configured.")
+                .addParameter(clientGeneratorContext.getPoetClassNameFactory().getLogConfigClassName(), "logging")
+                .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                .addStatement("this.logging = $T.of(logging)", Optional.class)
+                .addStatement(isExtensible ? "return self()" : "return this")
+                .build());
+
         clientBuilder.addMethod(MethodSpec.methodBuilder("addHeader")
                 .addModifiers(Modifier.PUBLIC)
                 .addJavadoc("Add a custom header to be sent with all requests.\n"
@@ -661,6 +712,24 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 })
                 .forEach(clientBuilder::addMethod);
 
+        List<ServerVariable> serverVariables = getServerVariables();
+        for (ServerVariable serverVar : serverVariables) {
+            String paramName = getServerVariableParamName(serverVar);
+            clientBuilder.addField(FieldSpec.builder(String.class, paramName)
+                    .addModifiers(Modifier.PRIVATE)
+                    .build());
+        }
+        for (ServerVariable serverVar : serverVariables) {
+            String paramName = getServerVariableParamName(serverVar);
+            clientBuilder.addMethod(MethodSpec.methodBuilder(paramName)
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                    .addParameter(String.class, paramName)
+                    .addStatement("this.$L = $L", paramName, paramName)
+                    .addStatement(isExtensible ? "return self()" : "return this")
+                    .build());
+        }
+
         MethodSpec.Builder buildClientOptionsMethodBuilder = MethodSpec.methodBuilder("buildClientOptions")
                 .addModifiers(Modifier.PROTECTED)
                 .returns(generatedClientOptions.getClassName())
@@ -688,10 +757,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             buildClientOptionsMethodBuilder.addStatement("setApiPathParameters(builder)");
         }
 
+        buildClientOptionsMethodBuilder.addStatement("setHttpClient(builder)");
+
+        // Add setInterceptors call when custom-interceptors is enabled
+        if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+            buildClientOptionsMethodBuilder.addStatement("setInterceptors(builder)");
+        }
+
         buildClientOptionsMethodBuilder
-                .addStatement("setHttpClient(builder)")
                 .addStatement("setTimeouts(builder)")
                 .addStatement("setRetries(builder)")
+                .addStatement("setLogging(builder)")
                 .beginControlFlow("for ($T.Entry<String, String> header : this.customHeaders.entrySet())", Map.class)
                 .addStatement("builder.addHeader(header.getKey(), header.getValue())")
                 .endControlFlow()
@@ -700,16 +776,108 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         clientBuilder.addMethod(buildClientOptionsMethodBuilder.build());
 
-        MethodSpec setEnvironmentMethod = MethodSpec.methodBuilder("setEnvironment")
+        MethodSpec.Builder setEnvironmentMethodBuilder = MethodSpec.methodBuilder("setEnvironment")
                 .addModifiers(Modifier.PROTECTED)
                 .addParameter(generatedClientOptions.builderClassName(), "builder")
                 .addJavadoc("Sets the environment configuration for the client.\n"
                         + "Override this method to modify URLs or add environment-specific logic.\n"
                         + "\n"
-                        + "@param builder The ClientOptions.Builder to configure")
-                .addStatement("builder.$N(this.$N)", generatedClientOptions.environment(), environmentField)
-                .build();
-        clientBuilder.addMethod(setEnvironmentMethod);
+                        + "@param builder The ClientOptions.Builder to configure");
+
+        if (!serverVariables.isEmpty()) {
+            Optional<EnvironmentsConfig> envConfig = generatorContext.getIr().getEnvironments();
+            if (envConfig.isPresent()) {
+                StringBuilder conditionBuilder = new StringBuilder();
+                for (int i = 0; i < serverVariables.size(); i++) {
+                    if (i > 0) conditionBuilder.append(" || ");
+                    conditionBuilder
+                            .append("this.")
+                            .append(getServerVariableParamName(serverVariables.get(i)))
+                            .append(" != null");
+                }
+                setEnvironmentMethodBuilder.beginControlFlow("if ($L)", conditionBuilder.toString());
+
+                for (ServerVariable serverVar : serverVariables) {
+                    String paramName = getServerVariableParamName(serverVar);
+                    String defaultValue = serverVar.getDefault().orElse("");
+                    setEnvironmentMethodBuilder.addStatement(
+                            "$T _$L = this.$L != null ? this.$L : $S",
+                            String.class,
+                            paramName,
+                            paramName,
+                            paramName,
+                            defaultValue);
+                }
+
+                Environments envs = envConfig.get().getEnvironments();
+                if (generatedEnvironmentsClass.info() instanceof SingleUrlEnvironmentClass) {
+                    envs.getSingleBaseUrl().ifPresent(singleBaseUrl -> {
+                        if (!singleBaseUrl.getEnvironments().isEmpty()) {
+                            SingleBaseUrlEnvironment firstEnv =
+                                    singleBaseUrl.getEnvironments().get(0);
+                            String urlTemplate = firstEnv.getUrlTemplate()
+                                    .orElse(firstEnv.getUrl().get());
+
+                            CodeBlock.Builder replaceChain = CodeBlock.builder().add("$S", urlTemplate);
+                            for (ServerVariable sv : serverVariables) {
+                                replaceChain.add(
+                                        ".replace($S, _$L)", "{" + sv.getId() + "}", getServerVariableParamName(sv));
+                            }
+                            setEnvironmentMethodBuilder.addStatement(
+                                    "this.$N = $T.custom($L)",
+                                    environmentField,
+                                    generatedEnvironmentsClass.getClassName(),
+                                    replaceChain.build());
+                        }
+                    });
+                } else if (generatedEnvironmentsClass.info() instanceof MultiUrlEnvironmentsClass) {
+                    envs.getMultipleBaseUrls().ifPresent(multiBase -> {
+                        if (!multiBase.getEnvironments().isEmpty()) {
+                            MultipleBaseUrlsEnvironment firstEnv =
+                                    multiBase.getEnvironments().get(0);
+
+                            CodeBlock.Builder envCode = CodeBlock.builder();
+                            envCode.add(
+                                    "this.$N = $T.custom()",
+                                    environmentField,
+                                    generatedEnvironmentsClass.getClassName());
+
+                            for (EnvironmentBaseUrlWithId baseUrl : multiBase.getBaseUrls()) {
+                                String urlName =
+                                        baseUrl.getName().getCamelCase().getSafeName();
+                                String template;
+                                if (firstEnv.getUrlTemplates().isPresent()
+                                        && firstEnv.getUrlTemplates().get().containsKey(baseUrl.getId())) {
+                                    template = firstEnv.getUrlTemplates().get().get(baseUrl.getId());
+                                } else {
+                                    template = firstEnv.getUrls()
+                                            .get(baseUrl.getId())
+                                            .get();
+                                }
+
+                                CodeBlock.Builder replaceChain =
+                                        CodeBlock.builder().add("$S", template);
+                                for (ServerVariable sv : serverVariables) {
+                                    replaceChain.add(
+                                            ".replace($S, _$L)",
+                                            "{" + sv.getId() + "}",
+                                            getServerVariableParamName(sv));
+                                }
+                                envCode.add("\n.$L($L)", urlName, replaceChain.build());
+                            }
+                            envCode.add("\n.build()");
+                            setEnvironmentMethodBuilder.addStatement("$L", envCode.build());
+                        }
+                    });
+                }
+
+                setEnvironmentMethodBuilder.endControlFlow();
+            }
+        }
+
+        setEnvironmentMethodBuilder.addStatement(
+                "builder.$N(this.$N)", generatedClientOptions.environment(), environmentField);
+        clientBuilder.addMethod(setEnvironmentMethodBuilder.build());
 
         if (hasAuth) {
             clientBuilder.addMethod(configureAuthBuilder.build());
@@ -811,6 +979,35 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .build();
         clientBuilder.addMethod(setHttpClientMethod);
 
+        // Add setInterceptors method when custom-interceptors is enabled
+        if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+            MethodSpec setInterceptorsMethod = MethodSpec.methodBuilder("setInterceptors")
+                    .addModifiers(Modifier.PROTECTED)
+                    .addParameter(generatedClientOptions.builderClassName(), "builder")
+                    .addJavadoc("Sets the custom OkHttp interceptors.\n"
+                            + "Override this method to add or modify custom interceptors.\n"
+                            + "\n"
+                            + "@param builder The ClientOptions.Builder to configure")
+                    .beginControlFlow("for ($T interceptor : this.interceptors)", Interceptor.class)
+                    .addStatement("builder.addInterceptor(interceptor)")
+                    .endControlFlow()
+                    .build();
+            clientBuilder.addMethod(setInterceptorsMethod);
+        }
+
+        MethodSpec setLoggingMethod = MethodSpec.methodBuilder("setLogging")
+                .addModifiers(Modifier.PROTECTED)
+                .addParameter(generatedClientOptions.builderClassName(), "builder")
+                .addJavadoc("Sets the logging configuration for the SDK.\n"
+                        + "Override this method to customize logging behavior.\n"
+                        + "\n"
+                        + "@param builder The ClientOptions.Builder to configure")
+                .beginControlFlow("if (this.logging.isPresent())")
+                .addStatement("builder.logging(this.logging.get())")
+                .endControlFlow()
+                .build();
+        clientBuilder.addMethod(setLoggingMethod);
+
         MethodSpec setAdditionalMethod = MethodSpec.methodBuilder("setAdditional")
                 .addModifiers(Modifier.PROTECTED)
                 .addParameter(generatedClientOptions.builderClassName(), "builder")
@@ -882,6 +1079,71 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         generatorContext.getGeneratorConfig().getOrganization())
                 + CasingUtils.convertKebabCaseToUpperCamelCase(
                         generatorContext.getGeneratorConfig().getWorkspaceName());
+    }
+
+    private static final Set<String> RESERVED_BUILDER_PARAM_NAMES =
+            Set.of("environment", "url", "timeout", "maxRetries", "httpClient");
+
+    private List<ServerVariable> getServerVariables() {
+        Optional<EnvironmentsConfig> envConfig = generatorContext.getIr().getEnvironments();
+        if (!envConfig.isPresent()) {
+            return new ArrayList<>();
+        }
+
+        Environments environments = envConfig.get().getEnvironments();
+        Set<String> seenIds = new HashSet<>();
+        List<ServerVariable> variables = new ArrayList<>();
+
+        environments.visit(new Environments.Visitor<Void>() {
+            @Override
+            public Void visitSingleBaseUrl(SingleBaseUrlEnvironments singleBaseUrl) {
+                if (!singleBaseUrl.getEnvironments().isEmpty()) {
+                    SingleBaseUrlEnvironment firstEnv =
+                            singleBaseUrl.getEnvironments().get(0);
+                    firstEnv.getUrlVariables().ifPresent(vars -> {
+                        for (ServerVariable var : vars) {
+                            if (seenIds.add(var.getId())) {
+                                variables.add(var);
+                            }
+                        }
+                    });
+                }
+                return null;
+            }
+
+            @Override
+            public Void visitMultipleBaseUrls(MultipleBaseUrlsEnvironments multipleBaseUrls) {
+                if (!multipleBaseUrls.getEnvironments().isEmpty()) {
+                    MultipleBaseUrlsEnvironment firstEnv =
+                            multipleBaseUrls.getEnvironments().get(0);
+                    firstEnv.getUrlVariables().ifPresent(urlVarsMap -> {
+                        for (List<ServerVariable> vars : urlVarsMap.values()) {
+                            for (ServerVariable var : vars) {
+                                if (seenIds.add(var.getId())) {
+                                    variables.add(var);
+                                }
+                            }
+                        }
+                    });
+                }
+                return null;
+            }
+
+            @Override
+            public Void _visitUnknown(Object unknown) {
+                return null;
+            }
+        });
+
+        return variables;
+    }
+
+    private String getServerVariableParamName(ServerVariable var) {
+        String name = var.getName().getCamelCase().getSafeName();
+        if (RESERVED_BUILDER_PARAM_NAMES.contains(name)) {
+            return "serverUrl" + var.getName().getPascalCase().getSafeName();
+        }
+        return name;
     }
 
     private final class AuthSchemeHandler implements AuthScheme.Visitor<Void> {
@@ -1634,6 +1896,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .initializer("new $T<>()", HashMap.class)
                         .build());
 
+                // Add interceptors field when custom-interceptors is enabled
+                if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+                    builderStageBuilder.addField(FieldSpec.builder(
+                                    ParameterizedTypeName.get(
+                                            ClassName.get(List.class), ClassName.get(Interceptor.class)),
+                                    "interceptors")
+                            .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                            .initializer("new $T<>()", ArrayList.class)
+                            .build());
+                }
+
                 // Add environment() method if environments are present
                 if (generatedEnvironmentsClass.optionsPresent()) {
                     builderStageBuilder.addMethod(MethodSpec.methodBuilder("environment")
@@ -1705,6 +1978,20 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addStatement("return this")
                         .build());
 
+                // Add addInterceptor() method when custom-interceptors is enabled
+                if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+                    builderStageBuilder.addMethod(MethodSpec.methodBuilder("addInterceptor")
+                            .addModifiers(Modifier.PUBLIC)
+                            .addJavadoc("Add a custom OkHttp interceptor to the client.\n"
+                                    + "Interceptors added here are forwarded to the auth builder when\n"
+                                    + "{@link #token(String)} or {@link #credentials(String, String)} is called.")
+                            .addParameter(Interceptor.class, "interceptor")
+                            .returns(builderStageClassName)
+                            .addStatement("this.interceptors.add(interceptor)")
+                            .addStatement("return this")
+                            .build());
+                }
+
                 // Add token() method that returns _TokenAuth with configuration copied using setter methods
                 MethodSpec.Builder tokenMethodBuilder = MethodSpec.methodBuilder("token")
                         .addModifiers(Modifier.PUBLIC)
@@ -1733,8 +2020,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .endControlFlow()
                         .beginControlFlow("for ($T.Entry<String, String> header : this.headers.entrySet())", Map.class)
                         .addStatement("auth.addHeader(header.getKey(), header.getValue())")
-                        .endControlFlow()
-                        .addStatement("return auth");
+                        .endControlFlow();
+
+                // Forward interceptors from _Builder to _TokenAuth
+                if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+                    tokenMethodBuilder
+                            .beginControlFlow("for ($T interceptor : this.interceptors)", Interceptor.class)
+                            .addStatement("auth.addInterceptor(interceptor)")
+                            .endControlFlow();
+                }
+
+                tokenMethodBuilder.addStatement("return auth");
                 builderStageBuilder.addMethod(tokenMethodBuilder.build());
 
                 // Add credentials() method that returns _CredentialsAuth with configuration copied using setter methods
@@ -1764,8 +2060,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .endControlFlow()
                         .beginControlFlow("for ($T.Entry<String, String> header : this.headers.entrySet())", Map.class)
                         .addStatement("auth.addHeader(header.getKey(), header.getValue())")
-                        .endControlFlow()
-                        .addStatement("return auth");
+                        .endControlFlow();
+
+                // Forward interceptors from _Builder to _CredentialsAuth
+                if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+                    credentialsMethodBuilder
+                            .beginControlFlow("for ($T interceptor : this.interceptors)", Interceptor.class)
+                            .addStatement("auth.addInterceptor(interceptor)")
+                            .endControlFlow();
+                }
+
+                credentialsMethodBuilder.addStatement("return auth");
                 builderStageBuilder.addMethod(credentialsMethodBuilder.build());
 
                 clientBuilder.addType(builderStageBuilder.build());
@@ -1882,7 +2187,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 maybeConditionalAdditionFlow = maybeConditionalAdditionFlow.addStatement(
                         "builder.addHeader($S, $S + this.$L)",
                         header.getName().getWireValue(),
-                        header.getPrefix().get(),
+                        header.getPrefix().get() + " ",
                         fieldName);
             } else {
                 maybeConditionalAdditionFlow = maybeConditionalAdditionFlow.addStatement(

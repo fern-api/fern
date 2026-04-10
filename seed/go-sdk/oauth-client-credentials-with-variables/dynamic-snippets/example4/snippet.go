@@ -1,9 +1,10 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/oauth-client-credentials-with-variables/fern/client"
     option "github.com/oauth-client-credentials-with-variables/fern/option"
-    context "context"
 )
 
 func do() {
@@ -18,5 +19,6 @@ func do() {
     )
     client.Service.Post(
         context.TODO(),
+        "<endpointParam>",
     )
 }

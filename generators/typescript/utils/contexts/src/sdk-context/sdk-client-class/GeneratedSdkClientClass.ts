@@ -1,28 +1,28 @@
-import { EndpointId, ExampleEndpointCall } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { NpmPackage } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
-import { EndpointSampleCode } from "../../commons";
-import { GeneratedFile } from "../../commons/GeneratedFile";
-import { SdkContext } from "..";
-import { GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
+import { GeneratedFile } from "../../commons/GeneratedFile.js";
+import { EndpointSampleCode } from "../../commons/index.js";
+import { FileContext } from "../index.js";
+import { GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation.js";
 
-export interface GeneratedSdkClientClass extends GeneratedFile<SdkContext> {
+export interface GeneratedSdkClientClass extends GeneratedFile<FileContext> {
     instantiate: (args: { referenceToClient: ts.Expression; referenceToOptions: ts.Expression }) => ts.Expression;
     accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.Expression;
-    instantiateAsRoot(args: { context: SdkContext; npmPackage?: NpmPackage | undefined }): ts.Expression;
+    instantiateAsRoot(args: { context: FileContext; npmPackage?: NpmPackage | undefined }): ts.Expression;
     invokeEndpoint(args: {
-        context: SdkContext;
-        endpointId: EndpointId;
-        example: ExampleEndpointCall;
+        context: FileContext;
+        endpointId: FernIr.EndpointId;
+        example: FernIr.ExampleEndpointCall;
         clientReference: ts.Identifier;
     }): EndpointSampleCode | undefined;
 
-    getEndpoint(args: { context: SdkContext; endpointId: string }): GeneratedEndpointImplementation | undefined;
+    getEndpoint(args: { context: FileContext; endpointId: string }): GeneratedEndpointImplementation | undefined;
 
     maybeLeverageInvocation: (args: {
-        context: SdkContext;
-        endpointId: EndpointId;
-        example: ExampleEndpointCall;
+        context: FileContext;
+        endpointId: FernIr.EndpointId;
+        example: FernIr.ExampleEndpointCall;
         clientReference: ts.Identifier;
     }) => ts.Node[] | undefined;
 

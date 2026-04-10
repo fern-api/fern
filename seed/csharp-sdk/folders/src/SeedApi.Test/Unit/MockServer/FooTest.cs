@@ -3,6 +3,7 @@ using NUnit.Framework;
 namespace SeedApi.Test.Unit.MockServer;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class FooTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

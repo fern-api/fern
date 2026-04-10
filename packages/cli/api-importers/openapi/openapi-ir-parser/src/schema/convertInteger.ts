@@ -1,7 +1,7 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { Availability, PrimitiveSchemaValueWithExample, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir";
 
-import { wrapPrimitive } from "./convertSchemas";
+import { wrapPrimitive } from "./convertSchemas.js";
 
 export function convertInteger({
     nameOverride,

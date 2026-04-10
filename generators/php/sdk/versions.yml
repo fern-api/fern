@@ -1,4 +1,363 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.4.0
+  changelogEntry:
+    - summary: |
+        Support omitting username or password from basic auth when configured via
+        `usernameOmit` or `passwordOmit` in the IR. Omitted fields are removed from
+        the SDK's public API and treated as empty strings internally (e.g., omitting
+        password encodes `username:`, omitting username encodes `:password`). When
+        both are omitted, the Authorization header is skipped entirely.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 66
+
+- version: 2.3.2-rc.0
+  changelogEntry:
+    - summary: |
+        Upgrade to IR v66 which compresses the IR Name type, reducing IR size and increasing performance.
+      type: feat
+  createdAt: "2026-04-01"
+  irVersion: 66
+
+- version: 2.3.1
+  changelogEntry:
+    - summary: |
+        Migrate template engine from lodash to Eta for consistency with other generators.
+      type: chore
+  createdAt: "2026-04-02"
+  irVersion: 62
+
+- version: 2.3.0
+  changelogEntry:
+    - summary: |
+        Add `maxRetries` custom config option to override the default maximum
+        number of retries for failed requests. The default remains 2 when not
+        specified.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 62
+
+- version: 2.2.6
+  changelogEntry:
+    - summary: |
+        Support multiple Basic Auth schemes with `AuthSchemesRequirement.Any`.
+        When an API defines more than one basic auth scheme (e.g.,
+        accountId/authToken and apiKey/apiKeySecret), the generated client now
+        produces conditional if/else if blocks that check which credential pair
+        was provided and sets the Authorization header accordingly. Previously,
+        only the first basic auth scheme was used.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 62
+
+- version: 2.2.5
+  changelogEntry:
+    - summary: |
+        Wire Basic Auth credentials into the Authorization header. Previously,
+        the generated client accepted username/password constructor parameters
+        but never set the `Authorization: Basic <base64>` header on outgoing
+        requests. The constructor now encodes the credentials and adds the
+        header automatically.
+      type: fix
+  createdAt: "2026-03-26"
+  irVersion: 62
+
+- version: 2.2.4
+  changelogEntry:
+    - summary: |
+        Thread endpoint ID through dynamic snippet generator to differentiate
+        generated snippets by endpoint.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 62
+- version: 2.2.3
+  changelogEntry:
+    - summary: |
+        Fix 204 No Content handling for endpoints with a JSON response type.
+        Previously, endpoints returning an empty body (e.g. 204) would throw a
+        `BrevoException` even on a successful response. Now all JSON response
+        return types are nullable (`?Type`) and the generated code returns `null`
+        instead of throwing when the response body is empty.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 62
+
+- version: 2.2.2
+  changelogEntry:
+    - summary: |
+        Fix JSON deserialization error when API returns an empty response body for
+        endpoints with a declared JSON response type. Previously, a `JsonException:
+        Syntax error` was thrown because the SDK attempted to JSON-decode an empty
+        string. Now the generated code checks for an empty response body before
+        attempting deserialization and returns null gracefully.
+      type: fix
+  createdAt: "2026-03-23"
+  irVersion: 62
+
+- version: 2.2.1
+  changelogEntry:
+    - summary: |
+        Fix Wire test files to read `WIREMOCK_URL` environment variable instead of
+        hardcoding `http://localhost:8080`. The `setUp()` method now declares a
+        `$wiremockUrl` variable that reads from the environment with a fallback,
+        enabling tests to work with dynamically assigned Docker ports in local
+        development and CI/CD environments.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 62
+
+- version: 2.2.0
+  changelogEntry:
+    - summary: |
+        Add `omitFernHeaders` configuration option. When enabled, Fern platform headers
+        (X-Fern-Language, X-Fern-SDK-Name, X-Fern-SDK-Version, User-Agent) are omitted
+        from generated SDK requests.
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 62
+
+- version: 2.1.12
+  changelogEntry:
+    - summary: |
+        Fix WireMock datetime mismatch in wire tests. The mock-utils package generates datetime
+        query parameter values with milliseconds (e.g., `2022-01-02T00:00:00.000Z`) via
+        `Date.toISOString()`, but PHP's `DateTimeInterface::RFC3339` format omits fractional
+        seconds (e.g., `2022-01-02T00:00:00Z`). Since WireMock's `equalTo` is an exact-match,
+        the stubs never fired. Now strips zero milliseconds from WireMock datetime query
+        parameter values to match the PHP SDK's serialization format.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 62
+
+- version: 2.1.11
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 62
+
+- version: 2.1.10
+  changelogEntry:
+    - summary: |
+        Fix serialization and deserialization of boolean values in union types.
+        (Matches existing fix for floats.)
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 62
+
+- version: 2.1.9
+  changelogEntry:
+    - summary: |
+        Re-throw errors after logging for README.md and reference.md generation failures.
+        Documentation generation errors now break the generation flow so they are treated
+        as important to fix.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 62
+
+- version: 2.1.8
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 62
+- version: 2.1.7
+  changelogEntry:
+    - summary: |
+        Improve error logging for README.md and reference.md generation failures.
+        The generator now logs the actual error message and stack trace instead
+        of a generic message, making it easier to diagnose generation issues.
+      type: chore
+  createdAt: "2026-03-09"
+  irVersion: 62
+
+- version: 2.1.6
+  changelogEntry:
+    - summary: |
+        Parallelize endpoint snippet generation in `populateSnippetsCache()`. All
+        endpoints are now processed concurrently via `Promise.all` instead of
+        sequentially, reducing snippet generation time for large APIs.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
+- version: 2.1.5
+  changelogEntry:
+    - summary: |
+        Standardize WireMock configuration to use `WIREMOCK_URL` environment variable
+        (e.g., `http://localhost:8080`) instead of a hardcoded URL. Docker Compose
+        now uses dynamic port mapping (`0:8080`) to avoid port conflicts when running
+        multiple SDK tests in parallel. The bootstrap script discovers the assigned
+        port and sets `WIREMOCK_URL` automatically. Falls back to `http://localhost:8080`
+        if the variable is not set.
+      type: chore
+  createdAt: "2026-03-02"
+  irVersion: 62
+
+- version: 2.1.4
+  changelogEntry:
+    - summary: |
+        Fix PHP 8.5 deprecation warning for `ReflectionProperty::getDefaultValue()` called on
+        properties without a default value. Now checks `hasDefaultValue()` before calling
+        `getDefaultValue()` in `JsonSerializableType::jsonDeserialize()`.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 62
+
+- version: 2.1.3
+  changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 62
+- version: 2.1.2
+  changelogEntry:
+    - summary: |
+        Fix `generateClientInterfaces` to generate interfaces for aggregator-only clients (clients
+        that hold sub-client properties but have no direct API endpoints). Previously, these clients
+        were skipped, leaving the top-level client and intermediate grouping clients without interfaces.
+
+        Interfaces now include typed getter method signatures for each sub-client (e.g.,
+        `getUsers(): UsersClientInterface`), and the corresponding client classes implement these
+        getters.
+      type: fix
+  createdAt: "2026-02-18"
+  irVersion: 62
+
+- version: 2.1.1
+  changelogEntry:
+    - summary: |
+        Fix PHPStan static analysis errors in core runtime classes. Tightens return types
+        (e.g., `castKey` now returns `int|string` instead of `mixed`), adds missing null checks,
+        and improves PHPDoc annotations across JsonSerializer, JsonDeserializer, and Utils.
+        Also fixes `BaseApiException::__toString()` to use `getCode()` instead of direct property
+        access and `print_r()` for non-scalar body values.
+      type: fix
+    - summary: |
+        Add `of object` bound to pagination template generics (`CursorPager`, `OffsetPager`)
+        to satisfy PHPStan's requirement for `clone` on object types.
+      type: fix
+  createdAt: "2026-02-18"
+  irVersion: 62
+
+- version: 2.1.0
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for types with required constructor fields. Previously, the
+        test generator would pass empty arrays `[]` as constructor arguments when no example
+        values were provided for required fields (e.g., `new SomeType([])`). Now generates
+        appropriate placeholder values based on each field's type (e.g., `new SomeType(['ids' => [1]])`).
+      type: fix
+    - summary: |
+        Add support for fileDownload (application/octet-stream) and bytes response types.
+        Previously, endpoints returning binary data would throw an error at runtime because no
+        success handling was generated. Now these endpoints return the raw response body as a string.
+      type: feat
+  createdAt: "2026-02-17"
+  irVersion: 62
+
+- version: 2.0.0
+  changelogEntry:
+    - summary: |
+        Introduce PSR-7/17/18 HTTP interfaces for framework-agnostic HTTP client support.
+
+        This restores the PSR-7/17/18 agnostic approach that was temporarily reverted in v1.30.0.
+        The SDK now supports any PSR-18 compliant HTTP client (Guzzle, Symfony HttpClient, etc.)
+        and uses php-http/discovery to automatically find an installed client at runtime.
+
+        Breaking changes are minimal, but do exist:
+        - Guzzle is no longer a hard dependency (moved to suggest/require-dev)
+        - Per-request timeout behavior may differ between HTTP client implementations (currently supported for Guzzle and Symfony)
+        - Code that directly catches GuzzleHttp\Exception\RequestException will require a refactor
+
+        Migration: Existing Guzzle users should be largely unaffected as Guzzle implements PSR-18.
+        For custom HTTP clients, ensure they implement PSR-18 interfaces.
+      type: feat
+  createdAt: "2026-02-12"
+  irVersion: 62
+
+- version: 1.30.0
+  changelogEntry:
+    - summary: |
+        Temporarily revert PSR-7/17/18 HTTP interfaces back to hard Guzzle dependency.
+        This restores the pre-1.27.0 behavior where the SDK requires Guzzle as a hard dependency.
+        Users should expect this to be re-introduced as a breaking change in v2.0.0.
+
+        This change reverts the framework-agnostic HTTP client support introduced in v1.27.0,
+        restoring Guzzle middleware-based retry logic and direct Guzzle dependency.
+      type: fix
+  createdAt: "2026-02-12"
+  irVersion: 62
+
+- version: 1.29.1
+  changelogEntry:
+    - summary: |
+        Fix wire tests for paginated endpoints. Previously, wire tests called paginated SDK methods
+        without iterating the returned Pager, so no HTTP request was made and WireMock verification
+        always failed with "Expected 1 requests, found 0". The generated test now iterates the Pager
+        to trigger the first page request.
+      type: fix
+  createdAt: "2026-02-11"
+  irVersion: 62
+
+- version: 1.29.0
+  changelogEntry:
+    - summary: |
+        Add support for generating interfaces for all SDK client classes. When `generateClientInterfaces: true`
+        is configured, each client `{ClientName}` gets a corresponding `{ClientName}Interface` with public
+        method signatures. Concrete clients declare `implements {ClientName}Interface`. This enables standard
+        PHP mocking and DI patterns (`PHPUnit::createMock()`, Laravel/Symfony DI containers) without requiring
+        concrete class dependencies.
+
+        ```yaml
+        generators:
+          - name: fernapi/fern-php-sdk
+            config:
+              generateClientInterfaces: true
+        ```
+      type: feat
+  createdAt: "2026-02-11"
+  irVersion: 62
+
+- version: 1.28.0
+  changelogEntry:
+    - summary: |
+        Add support for default request parameter values.
+
+        When `useDefaultRequestParameterValues: true` is configured in `generators.yml`, the SDK will
+        generate default values for query parameters and headers that have defaults defined in the API
+        schema. Parameters with defaults become optional in the constructor, falling back to their
+        default value when omitted.
+
+        ```yaml
+        generators:
+          - name: fernapi/fern-php-sdk
+            config:
+              useDefaultRequestParameterValues: true
+        ```
+      type: feat
+  createdAt: "2026-02-11"
+  irVersion: 62
+
+- version: 1.27.0
+  changelogEntry:
+    - summary: |
+        Switch from Guzzle to PSR-7/17/18 HTTP interfaces; SDKs are now framework-agnostic
+        and should work with any PSR-18 compliant HTTP client (Guzzle, Symfony HttpClient, etc.)
+        The SDK uses `php-http/discovery` to automatically find an installed PSR-18 client at runtime.
+        Retry logic is now implemented via a `RetryDecoratingClient` decorator instead of as Guzzle
+        middleware. Existing Guzzle users should be unaffected as Guzzle implements PSR-18.
+      type: feat
+  createdAt: "2026-02-09"
+  irVersion: 62
 
 - version: 1.26.0
   changelogEntry:
@@ -301,7 +660,7 @@
 - version: 1.16.9
   changelogEntry:
     - summary: |
-        Fixes an issue where the generated usage snippets in the README.md was not prioritizing 
+        Fixes an issue where the generated usage snippets in the README.md was not prioritizing
         user defined example values over autogenerated example values.
       type: fix
   createdAt: "2025-09-17"
@@ -324,9 +683,9 @@
 - version: 1.16.5
   changelogEntry:
     - summary: |
-        Fix duplicate array types in undiscriminated union properties. Previously, nested unions 
-        containing different array types (e.g., `array<string, mixed>` and `array<Recipient>`) would 
-        generate duplicate array annotations in PHP union types (array|array|null). The fix implements 
+        Fix duplicate array types in undiscriminated union properties. Previously, nested unions
+        containing different array types (e.g., `array<string, mixed>` and `array<Recipient>`) would
+        generate duplicate array annotations in PHP union types (array|array|null). The fix implements
         recursive union flattening with proper deduplication during type generation.
       type: fix
   createdAt: "2025-07-10"

@@ -11,6 +11,7 @@ export type PrimitiveExample =
     | FernOpenapiIr.PrimitiveExample.Double
     | FernOpenapiIr.PrimitiveExample.String
     | FernOpenapiIr.PrimitiveExample.Datetime
+    | FernOpenapiIr.PrimitiveExample.DatetimeRfc2822
     | FernOpenapiIr.PrimitiveExample.Date_
     | FernOpenapiIr.PrimitiveExample.Base64
     | FernOpenapiIr.PrimitiveExample.Boolean;
@@ -56,6 +57,11 @@ export namespace PrimitiveExample {
         value: string;
     }
 
+    export interface DatetimeRfc2822 extends _Utils {
+        type: "datetimeRfc2822";
+        value: string;
+    }
+
     export interface Date_ extends _Utils {
         type: "date";
         value: string;
@@ -84,6 +90,7 @@ export namespace PrimitiveExample {
         double: (value: number) => _Result;
         string: (value: string) => _Result;
         datetime: (value: string) => _Result;
+        datetimeRfc2822: (value: string) => _Result;
         date: (value: string) => _Result;
         base64: (value: string) => _Result;
         boolean: (value: boolean) => _Result;
@@ -196,6 +203,19 @@ export const PrimitiveExample = {
         };
     },
 
+    datetimeRfc2822: (value: string): FernOpenapiIr.PrimitiveExample.DatetimeRfc2822 => {
+        return {
+            value: value,
+            type: "datetimeRfc2822",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.PrimitiveExample.DatetimeRfc2822,
+                visitor: FernOpenapiIr.PrimitiveExample._Visitor<_Result>,
+            ) {
+                return FernOpenapiIr.PrimitiveExample._visit(this, visitor);
+            },
+        };
+    },
+
     date: (value: string): FernOpenapiIr.PrimitiveExample.Date_ => {
         return {
             value: value,
@@ -256,6 +276,8 @@ export const PrimitiveExample = {
                 return visitor.string(value.value);
             case "datetime":
                 return visitor.datetime(value.value);
+            case "datetimeRfc2822":
+                return visitor.datetimeRfc2822(value.value);
             case "date":
                 return visitor.date(value.value);
             case "base64":

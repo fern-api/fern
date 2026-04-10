@@ -8,5 +8,12 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client.no_req_body.post_with_no_request_body(None).await;
+    client
+        .endpoints
+        .primitive
+        .get_and_return_date(
+            &NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
+            None,
+        )
+        .await;
 }

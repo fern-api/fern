@@ -49,6 +49,9 @@ func (f *File) GetInfo() FileInfo {
 }
 
 func (f *File) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -108,6 +111,9 @@ func (f *File) MarshalJSON() ([]byte, error) {
 }
 
 func (f *File) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value

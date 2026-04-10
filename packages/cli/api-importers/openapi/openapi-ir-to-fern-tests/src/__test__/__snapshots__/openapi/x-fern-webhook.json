@@ -63,6 +63,7 @@
             "headers": {},
             "method": "POST",
             "payload": "root.Update",
+            "signature": undefined,
           },
           "updateInlined": {
             "audiences": [],
@@ -77,6 +78,7 @@
             "headers": {},
             "method": "POST",
             "payload": "UpdateInlinedStatusPayload",
+            "signature": undefined,
           },
         },
       },
@@ -131,6 +133,7 @@ types:
             "headers": {},
             "method": "POST",
             "payload": "root.Update",
+            "signature": undefined,
           },
         },
       },

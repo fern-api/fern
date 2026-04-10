@@ -9,6 +9,7 @@ describe("UnionClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { animal: "dog", name: "name", likesToWoof: true };
         const rawResponseBody = { animal: "dog", name: "name", likesToWoof: true };
+
         server
             .mockEndpoint()
             .post("/union")
@@ -23,10 +24,6 @@ describe("UnionClient", () => {
             name: "name",
             likesToWoof: true,
         });
-        expect(response).toEqual({
-            animal: "dog",
-            name: "name",
-            likesToWoof: true,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

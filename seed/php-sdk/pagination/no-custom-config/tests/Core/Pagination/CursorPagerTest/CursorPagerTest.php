@@ -127,6 +127,6 @@ class CursorPagerTest extends TestCase
 
         // no more pages
         $pages->next();
-        $this->assertNull($pages->current());
+        $this->assertFalse($pages->valid());
     }
 }

@@ -1,7 +1,7 @@
 import { ts } from "ts-morph";
 
-import { CoreUtility } from "./CoreUtility";
-import { MANIFEST as FetcherManifest } from "./Fetcher";
+import { CoreUtility } from "./CoreUtility.js";
+import { MANIFEST as FetcherManifest } from "./Fetcher.js";
 
 export interface Pagination {
     readonly Page: {
@@ -26,7 +26,10 @@ export const MANIFEST: CoreUtility.Manifest = {
     },
     dependsOn: [FetcherManifest],
     getFilesPatterns: () => {
-        return { patterns: "src/core/pagination/**" };
+        return {
+            patterns: "src/core/pagination/**",
+            ignore: ["src/core/pagination/CustomPager.ts", "src/core/pagination/index.ts"]
+        };
     }
 };
 

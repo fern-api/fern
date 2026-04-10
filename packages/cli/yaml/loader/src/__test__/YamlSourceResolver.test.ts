@@ -3,8 +3,8 @@ import { RelativeFilePath } from "@fern-api/path-utils";
 import type { Sourced } from "@fern-api/source";
 import { beforeEach, describe, expect, it } from "vitest";
 import { parseDocument } from "yaml";
-import { YamlDocument } from "../YamlDocument";
-import { YamlSourceResolver } from "../YamlSourceResolver";
+import { YamlDocument } from "../YamlDocument.js";
+import { YamlSourceResolver } from "../YamlSourceResolver.js";
 
 const TEST_FILE_PATH = AbsoluteFilePath.of("/test/sample.yaml");
 const TEST_RELATIVE_PATH = RelativeFilePath.of("sample.yaml");

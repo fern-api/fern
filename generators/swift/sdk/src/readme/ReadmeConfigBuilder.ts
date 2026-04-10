@@ -2,10 +2,10 @@ import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
-import { SDKRequirements } from "../requirements";
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
+import { SDKRequirements } from "../requirements.js";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder.js";
 
 export class ReadmeConfigBuilder {
     public build({

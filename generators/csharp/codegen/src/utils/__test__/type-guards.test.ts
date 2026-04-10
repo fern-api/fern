@@ -1,4 +1,4 @@
-import { assert, is } from "../type-guards";
+import { assert, is } from "../type-guards.js";
 
 describe("type-guards", () => {
     describe("primitive type guards", () => {

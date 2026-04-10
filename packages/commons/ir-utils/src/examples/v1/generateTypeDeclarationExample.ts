@@ -1,18 +1,18 @@
 import {
     ExampleObjectProperty,
     ExampleObjectType,
-    ExampleSingleUnionTypeProperties,
     ExampleTypeShape,
     ExampleUnionBaseProperty,
+    FernIr,
     ObjectTypeDeclaration,
     TypeDeclaration,
     TypeId,
     TypeReference
 } from "@fern-api/ir-sdk";
-
-import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
-import { ExampleGenerationResult } from "./ExampleGenerationResult";
-import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional.js";
+import { getWireValue } from "../../utils/namesUtils.js";
+import { ExampleGenerationResult } from "./ExampleGenerationResult.js";
+import { generateTypeReferenceExample } from "./generateTypeReferenceExample.js";
 
 /**
  * Checks if a union member is "simple" (primitive, literal, or enum).
@@ -52,6 +52,8 @@ export declare namespace generateTypeDeclarationExample {
         currentDepth: number;
 
         skipOptionalProperties: boolean;
+
+        visitedTypes?: Map<string, number>;
     }
 }
 
@@ -61,7 +63,8 @@ export function generateTypeDeclarationExample({
     typeDeclaration,
     maxDepth,
     currentDepth,
-    skipOptionalProperties
+    skipOptionalProperties,
+    visitedTypes
 }: generateTypeDeclarationExample.Args): ExampleGenerationResult<ExampleTypeShape> | undefined {
     switch (typeDeclaration.shape.type) {
         case "alias": {
@@ -71,7 +74,8 @@ export function generateTypeDeclarationExample({
                 typeReference: typeDeclaration.shape.aliasOf,
                 maxDepth,
                 currentDepth,
-                skipOptionalProperties
+                skipOptionalProperties,
+                visitedTypes
             });
             if (generatedExample.type === "failure") {
                 return generatedExample;
@@ -95,7 +99,7 @@ export function generateTypeDeclarationExample({
                 example: ExampleTypeShape.enum({
                     value: enumValue.name
                 }),
-                jsonExample: enumValue.name.wireValue
+                jsonExample: getWireValue(enumValue.name)
             };
         }
         case "object": {
@@ -121,7 +125,8 @@ export function generateTypeDeclarationExample({
                         typeDeclarations,
                         currentDepth: currentDepth + 1,
                         maxDepth,
-                        skipOptionalProperties
+                        skipOptionalProperties,
+                        visitedTypes
                     });
                     if (extendedExample == null) {
                         continue;
@@ -139,7 +144,8 @@ export function generateTypeDeclarationExample({
                 typeDeclarations,
                 currentDepth,
                 maxDepth,
-                skipOptionalProperties
+                skipOptionalProperties,
+                visitedTypes
             });
             if (objectExample.type === "failure") {
                 return objectExample;
@@ -192,7 +198,8 @@ export function generateTypeDeclarationExample({
                             typeDeclarations,
                             currentDepth: currentDepth + 1,
                             maxDepth,
-                            skipOptionalProperties
+                            skipOptionalProperties,
+                            visitedTypes
                         });
                         if (variantExample.type === "success") {
                             const { example, jsonExample } = variantExample;
@@ -218,7 +225,8 @@ export function generateTypeDeclarationExample({
                     typeDeclarations,
                     currentDepth: currentDepth + 1,
                     maxDepth,
-                    skipOptionalProperties
+                    skipOptionalProperties,
+                    visitedTypes
                 });
                 if (variantExample.type === "failure") {
                     ++i;
@@ -242,30 +250,34 @@ export function generateTypeDeclarationExample({
             if (typeDeclaration.shape.baseProperties != null) {
                 for (const baseProperty of typeDeclaration.shape.baseProperties) {
                     const basePropertyExample = generateTypeReferenceExample({
-                        fieldName: baseProperty.name.wireValue,
+                        fieldName: getWireValue(baseProperty.name),
                         typeReference: baseProperty.valueType,
                         typeDeclarations,
                         currentDepth: currentDepth + 1,
                         maxDepth,
-                        skipOptionalProperties
+                        skipOptionalProperties,
+                        visitedTypes
                     });
                     if (basePropertyExample.type === "success") {
-                        basePropertyExamples[baseProperty.name.wireValue] = basePropertyExample.jsonExample;
+                        basePropertyExamples[getWireValue(baseProperty.name)] = basePropertyExample.jsonExample;
                     }
                 }
             }
 
             const baseProperties: ExampleUnionBaseProperty[] = typeDeclaration.shape.baseProperties.map((property) => {
                 const propertyExample = generateTypeReferenceExample({
-                    fieldName: property.name.wireValue,
+                    fieldName: getWireValue(property.name),
                     typeReference: property.valueType,
                     typeDeclarations,
                     currentDepth: currentDepth + 1,
                     maxDepth,
-                    skipOptionalProperties
+                    skipOptionalProperties,
+                    visitedTypes
                 });
                 if (propertyExample.type === "failure") {
-                    throw new Error(`Failed to generate example for union base property ${property.name.wireValue}`);
+                    throw new Error(
+                        `Failed to generate example for union base property ${getWireValue(property.name)}`
+                    );
                 }
                 const { example } = propertyExample;
                 return {
@@ -287,7 +299,8 @@ export function generateTypeDeclarationExample({
                         typeDeclarations,
                         currentDepth: currentDepth + 1,
                         maxDepth,
-                        skipOptionalProperties
+                        skipOptionalProperties,
+                        visitedTypes
                     });
                     if (extendedExample == null || extendedExample.type === "failure") {
                         throw new Error(
@@ -311,13 +324,13 @@ export function generateTypeDeclarationExample({
                                 discriminant,
                                 singleUnionType: {
                                     wireDiscriminantValue: variant.discriminantValue,
-                                    shape: ExampleSingleUnionTypeProperties.noProperties()
+                                    shape: FernIr.ExampleSingleUnionTypeProperties.noProperties()
                                 },
                                 baseProperties,
                                 extendProperties
                             }),
                             jsonExample: {
-                                [discriminant.wireValue]: variant.discriminantValue.wireValue,
+                                [getWireValue(discriminant)]: getWireValue(variant.discriminantValue),
                                 ...basePropertyExamples
                             }
                         };
@@ -337,7 +350,8 @@ export function generateTypeDeclarationExample({
                             fieldName,
                             typeDeclaration,
                             typeDeclarations,
-                            skipOptionalProperties
+                            skipOptionalProperties,
+                            visitedTypes
                         });
                         if (typeDeclarationExample == null) {
                             return { type: "failure", message: "Failed to generate example for type reference" };
@@ -354,7 +368,7 @@ export function generateTypeDeclarationExample({
                                 discriminant,
                                 singleUnionType: {
                                     wireDiscriminantValue: variant.discriminantValue,
-                                    shape: ExampleSingleUnionTypeProperties.samePropertiesAsObject({
+                                    shape: FernIr.ExampleSingleUnionTypeProperties.samePropertiesAsObject({
                                         typeId: typeDeclaration.name.typeId,
                                         object:
                                             example.type === "object"
@@ -366,7 +380,7 @@ export function generateTypeDeclarationExample({
                                 extendProperties
                             }),
                             jsonExample: {
-                                [discriminant.wireValue]: variant.discriminantValue.wireValue,
+                                [getWireValue(discriminant)]: getWireValue(variant.discriminantValue),
                                 ...(typeof jsonExample === "object" ? jsonExample : {}),
                                 ...basePropertyExamples
                             }
@@ -379,7 +393,8 @@ export function generateTypeDeclarationExample({
                             fieldName,
                             typeReference: value.type,
                             typeDeclarations,
-                            skipOptionalProperties
+                            skipOptionalProperties,
+                            visitedTypes
                         });
                         if (singlePropertyExample.type === "failure") {
                             return singlePropertyExample;
@@ -391,14 +406,14 @@ export function generateTypeDeclarationExample({
                                 discriminant,
                                 singleUnionType: {
                                     wireDiscriminantValue: variant.discriminantValue,
-                                    shape: ExampleSingleUnionTypeProperties.singleProperty(example)
+                                    shape: FernIr.ExampleSingleUnionTypeProperties.singleProperty(example)
                                 },
                                 baseProperties,
                                 extendProperties
                             }),
                             jsonExample: {
-                                [discriminant.wireValue]: variant.discriminantValue.wireValue,
-                                [value.name.wireValue]: jsonExample,
+                                [getWireValue(discriminant)]: getWireValue(variant.discriminantValue),
+                                [getWireValue(value.name)]: jsonExample,
                                 ...basePropertyExamples
                             }
                         };
@@ -424,7 +439,8 @@ function generateObjectDeclarationExample({
     typeDeclarations,
     maxDepth,
     currentDepth,
-    skipOptionalProperties
+    skipOptionalProperties,
+    visitedTypes
 }: {
     fieldName?: string;
     typeDeclaration: TypeDeclaration;
@@ -433,6 +449,7 @@ function generateObjectDeclarationExample({
     maxDepth: number;
     currentDepth: number;
     skipOptionalProperties: boolean;
+    visitedTypes?: Map<string, number>;
 }): ExampleGenerationResult<ExampleObjectType> {
     const jsonExample: Record<string, unknown> = {};
     const properties: ExampleObjectProperty[] = [];
@@ -441,12 +458,13 @@ function generateObjectDeclarationExample({
         ...(objectTypeDeclaration.extendedProperties ?? [])
     ]) {
         const propertyExample = generateTypeReferenceExample({
-            fieldName: property.name.wireValue,
+            fieldName: getWireValue(property.name),
             typeReference: property.valueType,
             typeDeclarations,
             currentDepth: currentDepth + 1,
             maxDepth,
-            skipOptionalProperties
+            skipOptionalProperties,
+            visitedTypes
         });
         if (
             propertyExample.type === "failure" &&
@@ -454,7 +472,7 @@ function generateObjectDeclarationExample({
         ) {
             return {
                 type: "failure",
-                message: `Failed to generate required property ${property.name.wireValue} b/c ${propertyExample.message}`
+                message: `Failed to generate required property ${getWireValue(property.name)} b/c ${propertyExample.message}`
             };
         } else if (propertyExample.type === "failure") {
             continue;
@@ -466,7 +484,7 @@ function generateObjectDeclarationExample({
             value: example,
             propertyAccess: property.propertyAccess
         });
-        jsonExample[property.name.wireValue] = propertyJsonExample;
+        jsonExample[getWireValue(property.name)] = propertyJsonExample;
     }
     return {
         type: "success",

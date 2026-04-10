@@ -1,16 +1,34 @@
-import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
+import {
+    correctIncorrectDockerOrg,
+    GENERATORS_CONFIGURATION_FILENAME,
+    INCORRECT_DOCKER_ORG
+} from "@fern-api/configuration-loader";
 import { FernRegistry } from "@fern-fern/generators-sdk";
 import { writeFile } from "fs/promises";
 import { Argv } from "yargs";
 
-import { CliContext } from "./cli-context/CliContext";
-import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage";
-import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions";
-import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
-import { GenerationModeFilter, getGeneratorList } from "./commands/generator-list/getGeneratorList";
-import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata";
-import { getOrganization } from "./commands/organization/getOrganization";
-import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator";
+import { CliContext } from "./cli-context/CliContext.js";
+import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage.js";
+import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions.js";
+import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
+import { GenerationModeFilter, getGeneratorList } from "./commands/generator-list/getGeneratorList.js";
+import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata.js";
+import { getOrganization } from "./commands/organization/getOrganization.js";
+import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator.js";
+
+/**
+ * Corrects the incorrect "fern-api/" Docker org prefix to "fernapi/" and logs a warning.
+ * Used for CLI arguments that accept generator names.
+ */
+function warnAndCorrectIncorrectDockerOrgV2(generatorName: string, cliContext: CliContext): string {
+    const corrected = correctIncorrectDockerOrg(generatorName);
+    if (corrected !== generatorName) {
+        cliContext.logger.warn(
+            `"${generatorName}" is not a valid generator name. Using "${corrected}" instead — the Docker org is "fernapi", not "${INCORRECT_DOCKER_ORG}".`
+        );
+    }
+    return corrected;
+}
 
 export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
@@ -156,6 +174,13 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             default: false,
                             description:
                                 "When specified, a list of available upgrades will be displayed, but no upgrade will be taken."
+                        })
+                        .option("skip-autorelease-disabled", {
+                            boolean: true,
+                            default: false,
+                            hidden: true,
+                            description:
+                                "Skip upgrading generators that have autorelease: false set in their configuration."
                         }),
                 async (argv) => {
                     await cliContext.instrumentPostHogEvent({
@@ -170,6 +195,10 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         }
                     });
 
+                    const correctedGenerator =
+                        argv.generator != null
+                            ? warnAndCorrectIncorrectDockerOrgV2(argv.generator, cliContext)
+                            : undefined;
                     const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
                         defaultToAllApiWorkspaces: true
@@ -181,7 +210,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         const upgrades = await getProjectGeneratorUpgrades({
                             cliContext,
                             project,
-                            generatorFilter: argv.generator,
+                            generatorFilter: correctedGenerator,
                             groupFilter: argv.group,
                             includeMajor: argv.includeMajor,
                             channel: argv.channel
@@ -198,13 +227,14 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                     } else {
                         await upgradeGenerator({
                             cliContext,
-                            generator: argv.generator,
+                            generator: correctedGenerator,
                             group: argv.group,
                             project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                                 commandLineApiWorkspace: argv.api,
                                 defaultToAllApiWorkspaces: true
                             }),
                             includeMajor: argv.includeMajor,
+                            skipAutoreleaseDisabled: argv.skipAutoreleaseDisabled,
                             channel: argv.channel
                         });
                     }
@@ -251,10 +281,11 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             description: "Get repository for the generator invocation, if one is specified."
                         }),
                 async (argv) => {
+                    const correctedGetGenerator = warnAndCorrectIncorrectDockerOrgV2(argv.generator, cliContext);
                     await cliContext.instrumentPostHogEvent({
                         command: "fern generator get",
                         properties: {
-                            generator: argv.generator,
+                            generator: correctedGetGenerator,
                             version: argv.version,
                             api: argv.api,
                             group: argv.group,
@@ -263,7 +294,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                     });
                     const generator = await getGeneratorMetadata({
                         cliContext,
-                        generatorFilter: argv.generator,
+                        generatorFilter: correctedGetGenerator,
                         groupFilter: argv.group,
                         apiFilter: argv.api,
                         project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {

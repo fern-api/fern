@@ -7,7 +7,7 @@ import {
     PackageId,
     toCamelCase
 } from "@fern-typescript/commons";
-import { GeneratedRequestWrapper, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedRequestWrapper } from "@fern-typescript/contexts";
 import {
     MethodDeclarationStructure,
     OptionalKind,
@@ -19,7 +19,7 @@ import {
     WriterFunction
 } from "ts-morph";
 
-import { AuthProviderGenerator } from "./AuthProviderGenerator";
+import { AuthProviderGenerator } from "./AuthProviderGenerator.js";
 
 export declare namespace InferredAuthProviderGenerator {
     export interface Init {
@@ -128,7 +128,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
     }
 
-    public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+    public getAuthOptionsProperties(context: FileContext): OptionalKind<PropertySignatureStructure>[] | undefined {
         const authTokenParams = context.authProvider.getPropertiesForAuthTokenParams(
             FernIr.AuthScheme.inferred(this.authScheme)
         );
@@ -165,14 +165,19 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         );
     }
 
-    public writeToFile(context: SdkContext): void {
-        const requestWrapper = context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name);
+    public writeToFile(context: FileContext): void {
+        // Only get the request wrapper if the endpoint has a wrapped request.
+        // Some endpoints (e.g., with justRequestBody or no sdkRequest) don't have wrappers.
+        const hasWrappedRequest = this.endpoint.sdkRequest != null && this.endpoint.sdkRequest.shape.type === "wrapper";
+        const requestWrapper = hasWrappedRequest
+            ? context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name)
+            : undefined;
         this.writeConstants(context);
         this.writeClass({ context, requestWrapper });
         this.writeOptions(context);
     }
 
-    private writeConstants(context: SdkContext): void {
+    private writeConstants(context: FileContext): void {
         const wrapperPropertyName = this.getWrapperPropertyName();
 
         const constants: string[] = [];
@@ -211,8 +216,8 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         context,
         requestWrapper
     }: {
-        context: SdkContext;
-        requestWrapper: GeneratedRequestWrapper;
+        context: FileContext;
+        requestWrapper: GeneratedRequestWrapper | undefined;
     }): void {
         context.sourceFile.addClass({
             name: CLASS_NAME,
@@ -390,10 +395,10 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         context,
         requestWrapper
     }: {
-        context: SdkContext;
-        requestWrapper: GeneratedRequestWrapper;
+        context: FileContext;
+        requestWrapper: GeneratedRequestWrapper | undefined;
     }): MethodDeclarationStructure {
-        const requestProperties = requestWrapper.getRequestProperties(context);
+        const requestProperties = requestWrapper?.getRequestProperties(context) ?? [];
 
         // Generate variable declarations and validation checks for each parameter
         const parameterStatements: (string | WriterFunction | StatementStructures)[] = [];
@@ -436,7 +441,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                                 undefined,
                                 ts.factory.createAwaitExpression(
                                     ts.factory.createCallExpression(
-                                        this.getAuthTokenEndpointReferenceFromRoot(),
+                                        this.getAuthTokenEndpointReferenceFromRoot(context),
                                         undefined,
                                         this.authTokenParametersToAuthTokenRequest({ context, requestWrapper })
                                     )
@@ -532,10 +537,10 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         return method;
     }
 
-    private getAuthTokenEndpointReferenceFromRoot(): ts.Expression {
+    private getAuthTokenEndpointReferenceFromRoot(context: FileContext): ts.Expression {
         return ts.factory.createPropertyAccessExpression(
             ts.factory.createPropertyAccessExpression(ts.factory.createThis(), CLIENT_FIELD_NAME),
-            ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
+            ts.factory.createIdentifier(context.case.camelUnsafe(this.endpoint.name))
         );
     }
 
@@ -543,10 +548,10 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         context,
         requestWrapper
     }: {
-        context: SdkContext;
-        requestWrapper: GeneratedRequestWrapper;
+        context: FileContext;
+        requestWrapper: GeneratedRequestWrapper | undefined;
     }): ts.Expression[] {
-        const requestProperties = requestWrapper.getRequestProperties(context);
+        const requestProperties = requestWrapper?.getRequestProperties(context) ?? [];
 
         // Build the request object
         const propertyAssignments = requestProperties.map((p) => {
@@ -571,7 +576,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         return [ts.factory.createObjectLiteralExpression(propertyAssignments, true)];
     }
 
-    private generateCanCreateStatements(context: SdkContext): string {
+    private generateCanCreateStatements(context: FileContext): string {
         const authTokenParams = context.authProvider.getPropertiesForAuthTokenParams(
             FernIr.AuthScheme.inferred(this.authScheme)
         );
@@ -593,11 +598,11 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         return `return ${checks};`;
     }
 
-    private getAuthClientTypeNode(context: SdkContext): ts.TypeNode {
+    private getAuthClientTypeNode(context: FileContext): ts.TypeNode {
         return context.sdkClientClass.getReferenceToClientClass(this.packageId).getTypeNode();
     }
 
-    private writeOptions(context: SdkContext): void {
+    private writeOptions(context: FileContext): void {
         // Import BaseClientOptions for Options to extend
         // InferredAuthProvider.Options needs to extend BaseClientOptions because it creates an AuthClient
         // which requires the full BaseClientOptions (environment, baseUrl, etc.)

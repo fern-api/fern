@@ -14,16 +14,11 @@ public class Example2
         await client.Inlined.SendAsync(
             new SendLiteralsInlinedRequest {
                 Temperature = 10.1,
-                Prompt = "You are a helpful assistant",
-                Context = "You're super wise",
-                AliasedContext = "You're super wise",
-                MaybeContext = "You're super wise",
+                AliasedContext = new SomeAliasedLiteral(),
+                MaybeContext = new SomeAliasedLiteral(),
                 ObjectWithLiteral = new ATopLevelLiteral {
-                    NestedLiteral = new ANestedLiteral {
-                        MyLiteral = "How super cool"
-                    }
+                    NestedLiteral = new ANestedLiteral()
                 },
-                Stream = false,
                 Query = "What is the weather today"
             }
         );

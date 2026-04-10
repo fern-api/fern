@@ -4,10 +4,11 @@ package dummy
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/single-url-environment-default/fern/core"
 	internal "github.com/single-url-environment-default/fern/internal"
 	option "github.com/single-url-environment-default/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

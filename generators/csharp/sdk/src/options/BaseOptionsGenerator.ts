@@ -1,9 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ast, lazy, WithGeneration } from "@fern-api/csharp-codegen";
+import { ast, type LazyResult, lazy, WithGeneration } from "@fern-api/csharp-codegen";
 
-import { HttpHeader, Literal } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+type HttpHeader = FernIr.HttpHeader;
+type Literal = FernIr.Literal;
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export interface OptionArgs {
     optional: boolean;
@@ -20,7 +23,9 @@ export class BaseOptionsGenerator extends WithGeneration {
         super(context.generation);
     }
 
-    public readonly members = lazy({
+    public readonly members: LazyResult<{
+        baseUrlSummary: () => string;
+    }> = lazy({
         baseUrlSummary: () => "The Base URL for the API."
     });
 
@@ -75,14 +80,15 @@ export class BaseOptionsGenerator extends WithGeneration {
         { optional, includeInitializer }: OptionArgs
     ) {
         const type = this.Primitive.integer;
+        const maxRetries = this.settings.maxRetries ?? 2;
         classOrInterface.addField({
             origin: classOrInterface.explicit("MaxRetries"),
             access: ast.Access.Public,
             get: true,
             init: true,
             type: optional ? type.asOptional() : type,
-            initializer: includeInitializer ? this.csharp.codeblock("2") : undefined,
-            summary: "The http client used to make requests."
+            initializer: includeInitializer ? this.csharp.codeblock(String(maxRetries)) : undefined,
+            summary: "The max number of retries to attempt."
         });
     }
 

@@ -81,6 +81,10 @@ public final class NamedMetadata {
     public interface _FinalStage {
         NamedMetadata build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage value(Map<String, Object> value);
 
         _FinalStage putAllValue(Map<String, Object> value);
@@ -140,6 +144,18 @@ public final class NamedMetadata {
         @java.lang.Override
         public NamedMetadata build() {
             return new NamedMetadata(name, value, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

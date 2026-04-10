@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/websocket-inferred-auth/fern"
     client "github.com/websocket-inferred-auth/fern/client"
     option "github.com/websocket-inferred-auth/fern/option"
-    fern "github.com/websocket-inferred-auth/fern"
-    context "context"
 )
 
 func do() {
@@ -12,11 +13,19 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        nil,
+        option.WithXAPIKey(
+            "X-Api-Key",
+        ),
+        option.WithClientID(
+            "client_id",
+        ),
+        option.WithClientSecret(
+            "client_secret",
+        ),
     )
     request := &fern.GetTokenRequest{
-        XApiKey: "X-Api-Key",
-        ClientId: "client_id",
+        XAPIKey: "X-Api-Key",
+        ClientID: "client_id",
         ClientSecret: "client_secret",
         Scope: fern.String(
             "scope",

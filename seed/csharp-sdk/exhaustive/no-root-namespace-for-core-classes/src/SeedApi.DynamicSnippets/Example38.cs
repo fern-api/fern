@@ -1,5 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
+using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
@@ -13,8 +14,11 @@ public class Example38
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnUuidAsync(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+        await client.Endpoints.Params.GetWithInlinePathAndQueryAsync(
+            new GetWithInlinePathAndQuery {
+                Param = "param",
+                Query = "query"
+            }
         );
     }
 

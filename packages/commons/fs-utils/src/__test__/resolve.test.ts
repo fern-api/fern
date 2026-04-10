@@ -1,5 +1,5 @@
-import { AbsoluteFilePath } from "../AbsoluteFilePath";
-import { resolve } from "../resolve";
+import { AbsoluteFilePath } from "../AbsoluteFilePath.js";
+import { resolve } from "../resolve.js";
 
 describe("join", () => {
     it("simple", async () => {

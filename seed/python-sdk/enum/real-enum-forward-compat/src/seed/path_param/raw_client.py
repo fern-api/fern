@@ -6,10 +6,12 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..types.color_or_operand import ColorOrOperand
 from ..types.operand import Operand
+from pydantic import ValidationError
 
 
 class RawPathParamClient:
@@ -38,7 +40,7 @@ class RawPathParamClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"path/{jsonable_encoder(operand)}/{jsonable_encoder(operand_or_color)}",
+            f"path/{encode_path_param(operand)}/{encode_path_param(operand_or_color)}",
             method="POST",
             request_options=request_options,
         )
@@ -48,6 +50,10 @@ class RawPathParamClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -77,7 +83,7 @@ class AsyncRawPathParamClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"path/{jsonable_encoder(operand)}/{jsonable_encoder(operand_or_color)}",
+            f"path/{encode_path_param(operand)}/{encode_path_param(operand_or_color)}",
             method="POST",
             request_options=request_options,
         )
@@ -87,4 +93,8 @@ class AsyncRawPathParamClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

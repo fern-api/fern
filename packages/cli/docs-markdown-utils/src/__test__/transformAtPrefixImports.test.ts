@@ -1,6 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
-import { transformAtPrefixImports } from "../transformAtPrefixImports";
+import { transformAtPrefixImports } from "../transformAtPrefixImports.js";
 
 const absolutePathToFernFolder = AbsoluteFilePath.of("/path/to/fern");
 

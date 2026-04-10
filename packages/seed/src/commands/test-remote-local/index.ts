@@ -1,16 +1,16 @@
 // Core execution
-export { executeTestRemoteLocalCommand } from "./command";
+export { executeTestRemoteLocalCommand } from "./command.js";
 // Configuration
-export { getGithubConfig, getPackageOutputConfig, loadCustomConfig, writeGeneratorsYml } from "./configuration";
-export type { GenerationMode, GeneratorName, GeneratorNickname, OutputMode, TestFixture } from "./constants";
+export { getGithubConfig, getPackageOutputConfig, loadCustomConfig, writeGeneratorsYml } from "./configuration.js";
+export type { GenerationMode, GeneratorName, GeneratorNickname, OutputMode, TestFixture } from "./constants.js";
 // Version management
-export { getLatestGeneratorVersions, getLocalGeneratorVersions } from "./dockerHubClient";
+export { getLatestGeneratorVersions, getLocalGeneratorVersions } from "./dockerHubClient.js";
 // Generation
-export { getOutputDirectory, runGeneration } from "./generation";
+export { getOutputDirectory, runGeneration } from "./generation.js";
 // GitHub integration
-export { copyGithubOutputToOutputDirectory } from "./githubIntegration";
+export { copyGithubOutputToOutputDirectory } from "./githubIntegration.js";
 // Test runner
-export { runTestCase } from "./testExecution";
+export { runTestCase } from "./testExecution.js";
 // Types
 export type {
     GenerationResult,
@@ -20,7 +20,7 @@ export type {
     RemoteVsLocalTestCase,
     TestCaseContext,
     TestCaseResult
-} from "./types";
+} from "./types.js";
 
 // Validation
-export { isFernRepo, isLocalFernCliBuilt } from "./utils";
+export { isFernRepo, isLocalFernCliBuilt } from "./utils.js";

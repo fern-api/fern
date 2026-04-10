@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">get_organization</a>(...) -&gt; AsyncHttpResponse[Organization]</code></summary>
+<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">get_organization</a>(...) -> Organization</code></summary>
 <dl>
 <dd>
 
@@ -16,9 +16,12 @@
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
+    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.organizations.get_organization(
+    tenant_id="tenant_id",
     organization_id="organization_id",
 )
 
@@ -64,7 +67,7 @@ client.organizations.get_organization(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">get_organization_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">get_organization_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -80,8 +83,10 @@ client.organizations.get_organization(
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
+    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.organizations.get_organization_user(
     organization_id="organization_id",
     user_id="user_id",
@@ -137,7 +142,7 @@ client.organizations.get_organization_user(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">search_organizations</a>(...) -&gt; AsyncHttpResponse[typing.List[Organization]]</code></summary>
+<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">search_organizations</a>(...) -> typing.List[Organization]</code></summary>
 <dl>
 <dd>
 
@@ -153,8 +158,10 @@ client.organizations.get_organization_user(
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
+    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.organizations.search_organizations(
     organization_id="organization_id",
     limit=1,
@@ -211,7 +218,7 @@ client.organizations.search_organizations(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -227,8 +234,10 @@ client.organizations.search_organizations(
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
+    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.user.get_user(
     user_id="user_id",
 )
@@ -275,7 +284,7 @@ client.user.get_user(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">create_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -291,11 +300,17 @@ client.user.get_user(
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
+    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.user.create_user(
+    tenant_id="tenant_id",
     name="name",
-    tags=["tags", "tags"],
+    tags=[
+        "tags",
+        "tags"
+    ],
 )
 
 ```
@@ -320,15 +335,7 @@ client.user.create_user(
 <dl>
 <dd>
 
-**name:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tags:** `typing.Sequence[str]` 
+**request:** `User` 
     
 </dd>
 </dl>
@@ -348,7 +355,7 @@ client.user.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">update_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">update_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -364,12 +371,17 @@ client.user.create_user(
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
+    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.user.update_user(
     user_id="user_id",
     name="name",
-    tags=["tags", "tags"],
+    tags=[
+        "tags",
+        "tags"
+    ],
 )
 
 ```
@@ -402,15 +414,7 @@ client.user.update_user(
 <dl>
 <dd>
 
-**name:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tags:** `typing.Sequence[str]` 
+**request:** `User` 
     
 </dd>
 </dl>
@@ -430,7 +434,7 @@ client.user.update_user(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">search_users</a>(...) -&gt; AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">search_users</a>(...) -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -446,8 +450,10 @@ client.user.update_user(
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
+    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.user.search_users(
     user_id="user_id",
     limit=1,
@@ -503,7 +509,7 @@ client.user.search_users(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user_metadata</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user_metadata</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -533,8 +539,10 @@ Test endpoint with path parameter that has a text prefix (v{version})
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
+    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.user.get_user_metadata(
     user_id="user_id",
     version=1,
@@ -590,7 +598,7 @@ client.user.get_user_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user_specifics</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user_specifics</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -620,8 +628,10 @@ Test endpoint with path parameters listed in different order than found in path
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
+    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.user.get_user_specifics(
     user_id="user_id",
     version=1,

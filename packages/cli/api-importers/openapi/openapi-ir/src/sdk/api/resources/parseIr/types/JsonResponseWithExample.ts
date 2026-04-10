@@ -8,5 +8,6 @@ export interface JsonResponseWithExample
         FernOpenapiIr.WithStatusCode {
     schema: FernOpenapiIr.SchemaWithExample;
     responseProperty: string | undefined;
+    terminator: string | undefined;
     fullExamples: FernOpenapiIr.NamedFullExample[] | undefined;
 }

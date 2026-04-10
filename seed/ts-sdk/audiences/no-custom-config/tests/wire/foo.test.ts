@@ -9,6 +9,7 @@ describe("FooClient", () => {
         const client = new SeedAudiencesClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { publicProperty: "publicProperty", privateProperty: 1 };
         const rawResponseBody = { imported: "imported" };
+
         server
             .mockEndpoint()
             .post("")
@@ -23,8 +24,6 @@ describe("FooClient", () => {
             publicProperty: "publicProperty",
             privateProperty: 1,
         });
-        expect(response).toEqual({
-            imported: "imported",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

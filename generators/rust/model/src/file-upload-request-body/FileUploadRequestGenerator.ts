@@ -1,3 +1,5 @@
+import { getOriginalName } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     Attribute,
     CodeBlock,
@@ -9,24 +11,26 @@ import {
     Statement,
     Type
 } from "@fern-api/rust-codegen";
-import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { isOptionalType } from "../utils/primitiveTypeUtils";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { collectBuilderFieldsFromProperties, writeBuilderCode } from "../utils/builderUtils.js";
+import { isOptionalType } from "../utils/primitiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
     canDerivePartialEq,
     generateFieldAttributes,
     generateFieldType
-} from "../utils/structUtils";
+} from "../utils/structUtils.js";
 
 export declare namespace FileUploadRequestGenerator {
     interface Args {
         name: string;
-        properties: (ObjectProperty | InlinedRequestBodyProperty)[];
+        properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
         fileProperties: Array<{ name: string; isArray: boolean; isOptional: boolean }>;
-        bodyProperties: InlinedRequestBodyProperty[];
+        bodyProperties: FernIr.InlinedRequestBodyProperty[];
         docsContent?: string;
         context: ModelGeneratorContext;
+        /** Field names that are query parameters and should be excluded from serialization */
+        queryParamFieldNames?: Set<string>;
     }
 }
 
@@ -39,11 +43,12 @@ export declare namespace FileUploadRequestGenerator {
  */
 export class FileUploadRequestGenerator {
     private readonly name: string;
-    private readonly properties: (ObjectProperty | InlinedRequestBodyProperty)[];
+    private readonly properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
     private readonly fileProperties: Array<{ name: string; isArray: boolean; isOptional: boolean }>;
-    private readonly bodyProperties: InlinedRequestBodyProperty[];
+    private readonly bodyProperties: FernIr.InlinedRequestBodyProperty[];
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
+    private readonly queryParamFieldNames: Set<string>;
 
     public constructor({
         name,
@@ -51,7 +56,8 @@ export class FileUploadRequestGenerator {
         fileProperties,
         bodyProperties,
         docsContent,
-        context
+        context,
+        queryParamFieldNames
     }: FileUploadRequestGenerator.Args) {
         this.name = name;
         this.properties = properties;
@@ -59,6 +65,7 @@ export class FileUploadRequestGenerator {
         this.bodyProperties = bodyProperties;
         this.docsContent = docsContent;
         this.context = context;
+        this.queryParamFieldNames = queryParamFieldNames ?? new Set();
     }
 
     public generateFileContents(): string {
@@ -76,6 +83,10 @@ export class FileUploadRequestGenerator {
         // Generate impl block
         const implBlock = this.generateImplBlock();
         implBlock.write(writer);
+
+        // Generate builder code
+        const fields = collectBuilderFieldsFromProperties(this.properties, this.context);
+        writeBuilderCode(writer, this.name, fields);
 
         return writer.toString();
     }
@@ -183,7 +194,7 @@ export class FileUploadRequestGenerator {
 
         // Add body properties as text fields
         for (const bodyProp of this.bodyProperties) {
-            const propName = bodyProp.name.name.originalName;
+            const propName = getOriginalName(bodyProp.name);
             const fieldName = this.getFieldName(propName);
             const isOptional = isOptionalType(bodyProp.valueType);
 
@@ -235,10 +246,11 @@ export class FileUploadRequestGenerator {
         return attributes;
     }
 
-    private generateRustFieldForProperty(property: ObjectProperty | InlinedRequestBodyProperty): rust.Field {
-        const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
+    private generateRustFieldForProperty(property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty): rust.Field {
+        const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(property.name));
         const fieldType = generateFieldType(property, this.context);
-        const attributes = generateFieldAttributes(property, this.context);
+        const skipSerialization = this.queryParamFieldNames.has(fieldName);
+        const attributes = generateFieldAttributes(property, this.context, { skipSerialization });
 
         return rust.field({
             name: fieldName,

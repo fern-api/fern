@@ -7,6 +7,6 @@ public class Example3 {
         SeedResponsePropertyClient client =
                 SeedResponsePropertyClient.builder().url("https://api.fern.com").build();
 
-        client.service().getMovie("string");
+        client.service().getMovieMetadata("string");
     }
 }

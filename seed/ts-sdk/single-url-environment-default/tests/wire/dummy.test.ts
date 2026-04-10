@@ -13,9 +13,10 @@ describe("DummyClient", () => {
         });
 
         const rawResponseBody = "string";
+
         server.mockEndpoint().get("/dummy").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.dummy.getDummy();
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 });

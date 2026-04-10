@@ -16,6 +16,9 @@ concurrency:
   group: seed-pr-comment-${{ github.event.pull_request.number || github.event.issue.number }}
   cancel-in-progress: true
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   post-seed-selector:
     name: Post Seed Selector Comment
@@ -23,7 +26,7 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - name: Post seed selector comment
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const marker = '<!-- seed-selector -->';
@@ -58,7 +61,6 @@ jobs:
             - [ ] Swift
             - [ ] Rust
             - [ ] OpenAPI
-            - [ ] Postman
 
             ---
             **How to use:** Click the ⋯ menu above → "Edit" → check the boxes you want → click "Update comment". Tests will run automatically and snapshots will be committed to this PR.`;
@@ -82,7 +84,7 @@ jobs:
     steps:
       - name: Parse checked languages
         id: parse
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const commentBody = context.payload.comment.body;
@@ -110,17 +112,16 @@ jobs:
 
             // Language to generators mapping
             const languageMap = {
-              'Python': ['python-sdk', 'pydantic', 'pydantic-v2', 'fastapi'],
-              'TypeScript': ['ts-sdk', 'ts-express'],
-              'Java': ['java-sdk', 'java-model', 'java-spring'],
-              'Go': ['go-sdk', 'go-model', 'go-fiber'],
-              'Ruby': ['ruby-sdk', 'ruby-model', 'ruby-sdk-v2'],
+              'Python': ['python-sdk', 'pydantic', 'pydantic-v2'],
+              'TypeScript': ['ts-sdk'],
+              'Java': ['java-sdk', 'java-model'],
+              'Go': ['go-sdk', 'go-model'],
+              'Ruby': ['ruby-sdk-v2'],
               'C#': ['csharp-sdk', 'csharp-model'],
               'PHP': ['php-sdk', 'php-model'],
               'Swift': ['swift-sdk'],
               'Rust': ['rust-sdk', 'rust-model'],
               'OpenAPI': ['openapi'],
-              'Postman': ['postman']
             };
 
             // Generator to path mapping
@@ -128,17 +129,11 @@ jobs:
               'python-sdk': 'generators/python',
               'pydantic': 'generators/python',
               'pydantic-v2': 'generators/python-v2',
-              'fastapi': 'generators/python',
               'ts-sdk': 'generators/typescript',
-              'ts-express': 'generators/typescript',
               'java-sdk': 'generators/java',
-              'java-spring': 'generators/java',
               'java-model': 'generators/java',
               'go-sdk': 'generators/go',
-              'go-fiber': 'generators/go',
               'go-model': 'generators/go',
-              'ruby-sdk': 'generators/ruby',
-              'ruby-model': 'generators/ruby',
               'ruby-sdk-v2': 'generators/ruby-v2',
               'csharp-sdk': 'generators/csharp',
               'csharp-model': 'generators/csharp',
@@ -148,7 +143,6 @@ jobs:
               'rust-sdk': 'generators/rust',
               'rust-model': 'generators/rust',
               'openapi': 'generators/openapi',
-              'postman': 'generators/postman'
             };
 
             // Parse checked languages
@@ -193,7 +187,7 @@ jobs:
       - name: Check if we can push to PR branch
         id: check-push
         if: steps.parse.outputs.checked-languages != ''
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const prRepoFullName = '${{ steps.parse.outputs.pr-repo-full-name }}';
@@ -208,10 +202,10 @@ jobs:
 
       - name: Checkout PR branch
         if: steps.parse.outputs.checked-languages != ''
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ steps.parse.outputs.pr-ref }}
-          fetch-depth: 0
+          fetch-tags: false
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install
@@ -220,7 +214,7 @@ jobs:
 
       - name: Run seed tests for selected languages
         if: steps.parse.outputs.checked-languages != ''
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const fs = require('fs');

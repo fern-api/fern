@@ -1,10 +1,10 @@
-import { AstNode } from "./AstNode";
-import { Attribute } from "./Attribute";
-import { DocComment } from "./DocComment";
-import { EnumVariant } from "./EnumVariant";
-import { Visibility } from "./types";
-import { writeVisibility } from "./utils/writeVisibility";
-import { Writer } from "./Writer";
+import { AstNode } from "./AstNode.js";
+import { Attribute } from "./Attribute.js";
+import { DocComment } from "./DocComment.js";
+import { EnumVariant } from "./EnumVariant.js";
+import { Visibility } from "./types.js";
+import { writeVisibility } from "./utils/writeVisibility.js";
+import { Writer } from "./Writer.js";
 
 export declare namespace Enum {
     interface Args {

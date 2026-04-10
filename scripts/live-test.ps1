@@ -25,7 +25,7 @@ try {
     Write-Host "Running Fern Commands!"
     $DebugPreference = "Continue"
     
-    & node $cli_path init --organization fern
+    & node $cli_path init --organization fern --fern-definition
     
     & node $cli_path add fern-java-sdk
     & node $cli_path add fern-python-sdk

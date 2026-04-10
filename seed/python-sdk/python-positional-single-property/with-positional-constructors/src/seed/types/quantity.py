@@ -10,8 +10,16 @@ class Quantity(UniversalBaseModel):
     quantity: float
     type: typing.Literal["QUANTITY"] = "QUANTITY"
 
-    def __init__(self, quantity: float, **kwargs: typing.Any) -> None:
-        super().__init__(quantity=quantity, **kwargs)
+    @typing.overload
+    def __init__(self, quantity: float) -> None: ...
+    @typing.overload
+    def __init__(self, *, quantity: float) -> None: ...
+    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
+        if args:
+            kwargs.pop("quantity", None)
+            super().__init__(quantity=args[0], **kwargs)
+        else:
+            super().__init__(**kwargs)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

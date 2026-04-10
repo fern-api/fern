@@ -1,6 +1,6 @@
 import type { schemas } from "@fern-api/config";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
-import type { ApiSpec } from "./ApiSpec";
+import type { ApiSpec } from "./ApiSpec.js";
 
 /**
  * An OpenAPI specification (OpenAPI 3.x).
@@ -12,8 +12,8 @@ export interface OpenApiSpec {
     /** URL origin for fetching remote specs */
     origin?: string;
 
-    /** Path to the overrides file */
-    overrides?: AbsoluteFilePath;
+    /** Path to the overrides file(s) */
+    overrides?: AbsoluteFilePath | AbsoluteFilePath[];
 
     /** Path to the overlays file */
     overlays?: AbsoluteFilePath;

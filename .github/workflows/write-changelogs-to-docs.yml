@@ -10,12 +10,15 @@ permissions:
   pull-requests: write
   contents: write
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   copy-changelogs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main branch of fern repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: main
 
@@ -37,7 +40,7 @@ jobs:
           pnpm seed:local generate changelog cli -o ./changelogs/cli/ --clean-directory
 
       - name: Checkout main branch of docs repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: fern-api/docs
           ref: main
@@ -59,7 +62,7 @@ jobs:
         run: rsync -av --delete "changelogs/python-sdk/" "docs/fern/products/sdks/overview/python/changelog"
 
       - name: update ruby-sdk changelog
-        run: rsync -av --delete "changelogs/ruby-sdk/" "docs/fern/products/sdks/overview/ruby/changelog"
+        run: rsync -av --delete "changelogs/ruby-sdk-v2/" "docs/fern/products/sdks/overview/ruby/changelog"
 
       - name: update ts-sdk changelog
         run: rsync -av --delete "changelogs/ts-sdk/" "docs/fern/products/sdks/overview/typescript/changelog"
@@ -75,7 +78,7 @@ jobs:
 
       - name: create PR
         id: cpr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
           commit-message: "update changelogs"
@@ -85,7 +88,7 @@ jobs:
           path: docs
 
       - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
+        if: steps.cpr.outputs.pull-request-number
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
           token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
@@ -94,7 +97,7 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
+        if: steps.cpr.outputs.pull-request-number
         env:
           GH_TOKEN: ${{ secrets.PR_BOT_GH_PAT }}
         run: gh pr review ${{ steps.cpr.outputs.pull-request-number }} --repo fern-api/docs --approve

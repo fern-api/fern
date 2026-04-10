@@ -59,6 +59,7 @@ describe("ProblemClient", () => {
             methodName: "methodName",
         };
         const rawResponseBody = { type: "success", value: "string" };
+
         server
             .mockEndpoint()
             .post("/problem-crud/create")
@@ -159,10 +160,7 @@ describe("ProblemClient", () => {
             ],
             methodName: "methodName",
         });
-        expect(response).toEqual({
-            type: "success",
-            value: "string",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("updateProblem", async () => {
@@ -220,6 +218,7 @@ describe("ProblemClient", () => {
             methodName: "methodName",
         };
         const rawResponseBody = { problemVersion: 1 };
+
         server
             .mockEndpoint()
             .post("/problem-crud/update/problemId")
@@ -320,9 +319,7 @@ describe("ProblemClient", () => {
             ],
             methodName: "methodName",
         });
-        expect(response).toEqual({
-            problemVersion: 1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("deleteProblem", async () => {
@@ -367,6 +364,7 @@ describe("ProblemClient", () => {
                 },
             },
         };
+
         server
             .mockEndpoint()
             .post("/problem-crud/default-starter-files")
@@ -396,25 +394,6 @@ describe("ProblemClient", () => {
             },
             methodName: "methodName",
         });
-        expect(response).toEqual({
-            files: {
-                JAVA: {
-                    solutionFile: {
-                        filename: "filename",
-                        contents: "contents",
-                    },
-                    readOnlyFiles: [
-                        {
-                            filename: "filename",
-                            contents: "contents",
-                        },
-                        {
-                            filename: "filename",
-                            contents: "contents",
-                        },
-                    ],
-                },
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

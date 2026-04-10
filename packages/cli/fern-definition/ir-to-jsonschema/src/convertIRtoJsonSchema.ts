@@ -1,8 +1,8 @@
 import { IntermediateRepresentation, TypeId } from "@fern-api/ir-sdk/";
 import { TaskContext } from "@fern-api/task-context";
 import { JSONSchema4 } from "json-schema";
-import { convertTypeDeclarationToJsonSchema } from "./converters/convertTypeDeclarationToJsonSchema";
-import { JsonSchemaConverterContext } from "./JsonSchemaConverterContext";
+import { convertTypeDeclarationToJsonSchema } from "./converters/convertTypeDeclarationToJsonSchema.js";
+import { JsonSchemaConverterContext } from "./JsonSchemaConverterContext.js";
 
 export declare namespace convertIRToJsonSchema {
     interface Args {

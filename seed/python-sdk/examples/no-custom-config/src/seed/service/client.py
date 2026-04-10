@@ -329,13 +329,9 @@ class ServiceClient:
                         nodes=[
                             Node(
                                 name="name",
-                                nodes=[],
-                                trees=[],
                             ),
                             Node(
                                 name="name",
-                                nodes=[],
-                                trees=[],
                             ),
                         ],
                         trees=[
@@ -352,13 +348,9 @@ class ServiceClient:
                         nodes=[
                             Node(
                                 name="name",
-                                nodes=[],
-                                trees=[],
                             ),
                             Node(
                                 name="name",
-                                nodes=[],
-                                trees=[],
                             ),
                         ],
                         trees=[
@@ -430,13 +422,9 @@ class ServiceClient:
                         directories=[
                             Directory(
                                 name="name",
-                                files=[],
-                                directories=[],
                             ),
                             Directory(
                                 name="name",
-                                files=[],
-                                directories=[],
                             ),
                         ],
                     ),
@@ -455,13 +443,9 @@ class ServiceClient:
                         directories=[
                             Directory(
                                 name="name",
-                                files=[],
-                                directories=[],
                             ),
                             Directory(
                                 name="name",
-                                files=[],
-                                directories=[],
                             ),
                         ],
                     ),
@@ -860,13 +844,9 @@ class AsyncServiceClient:
                             nodes=[
                                 Node(
                                     name="name",
-                                    nodes=[],
-                                    trees=[],
                                 ),
                                 Node(
                                     name="name",
-                                    nodes=[],
-                                    trees=[],
                                 ),
                             ],
                             trees=[
@@ -883,13 +863,9 @@ class AsyncServiceClient:
                             nodes=[
                                 Node(
                                     name="name",
-                                    nodes=[],
-                                    trees=[],
                                 ),
                                 Node(
                                     name="name",
-                                    nodes=[],
-                                    trees=[],
                                 ),
                             ],
                             trees=[
@@ -961,13 +937,9 @@ class AsyncServiceClient:
                             directories=[
                                 Directory(
                                     name="name",
-                                    files=[],
-                                    directories=[],
                                 ),
                                 Directory(
                                     name="name",
-                                    files=[],
-                                    directories=[],
                                 ),
                             ],
                         ),
@@ -986,13 +958,9 @@ class AsyncServiceClient:
                             directories=[
                                 Directory(
                                     name="name",
-                                    files=[],
-                                    directories=[],
                                 ),
                                 Directory(
                                     name="name",
-                                    files=[],
-                                    directories=[],
                                 ),
                             ],
                         ),

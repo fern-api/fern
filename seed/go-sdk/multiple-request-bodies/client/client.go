@@ -4,11 +4,12 @@ package client
 
 import (
 	context "context"
+	io "io"
+
 	fern "github.com/multiple-request-bodies/fern"
 	core "github.com/multiple-request-bodies/fern/core"
 	internal "github.com/multiple-request-bodies/fern/internal"
 	option "github.com/multiple-request-bodies/fern/option"
-	io "io"
 )
 
 type Client struct {
@@ -34,12 +35,12 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) UploadJsonDocument(
+func (c *Client) UploadJSONDocument(
 	ctx context.Context,
 	request *fern.UploadDocumentRequest,
 	opts ...option.RequestOption,
 ) (*fern.UploadDocumentResponse, error) {
-	response, err := c.WithRawResponse.UploadJsonDocument(
+	response, err := c.WithRawResponse.UploadJSONDocument(
 		ctx,
 		request,
 		opts...,

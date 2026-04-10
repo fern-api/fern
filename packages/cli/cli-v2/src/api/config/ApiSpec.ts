@@ -1,9 +1,9 @@
-import type { AsyncApiSpec } from "./AsyncApiSpec";
-import type { ConjureSpec } from "./ConjureSpec";
-import type { FernSpec } from "./FernSpec";
-import type { OpenApiSpec } from "./OpenApiSpec";
-import type { OpenRpcSpec } from "./OpenRpcSpec";
-import type { ProtobufSpec } from "./ProtobufSpec";
+import type { AsyncApiSpec } from "./AsyncApiSpec.js";
+import type { ConjureSpec } from "./ConjureSpec.js";
+import type { FernSpec } from "./FernSpec.js";
+import type { OpenApiSpec } from "./OpenApiSpec.js";
+import type { OpenRpcSpec } from "./OpenRpcSpec.js";
+import type { ProtobufSpec } from "./ProtobufSpec.js";
 
 /**
  * An individual API specification.

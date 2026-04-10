@@ -1,16 +1,30 @@
-import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
+import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
+
+import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext.js";
 
 export declare namespace RubocopFile {
     interface Args {
-        context: AbstractRubyGeneratorContext<object>;
+        context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
     }
 }
 
 export class RubocopFile {
-    private context: AbstractRubyGeneratorContext<object>;
+    private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
 
     constructor({ context }: RubocopFile.Args) {
         this.context = context;
+    }
+
+    private getVariableNumberConfig(): string {
+        const style = this.context.customConfig.rubocopVariableNumberStyle ?? "normalcase";
+
+        if (style === "disabled") {
+            return `Naming/VariableNumber:
+  Enabled: false`;
+        }
+
+        return `Naming/VariableNumber:
+  EnforcedStyle: ${style}`;
     }
 
     public async toString(): Promise<string> {
@@ -60,8 +74,7 @@ Metrics/ModuleLength:
 Layout/LineLength:
   Enabled: false
 
-Naming/VariableNumber:
-  EnforcedStyle: snake_case
+${this.getVariableNumberConfig()}
 
 Style/Documentation:
   Enabled: false
@@ -74,6 +87,15 @@ Minitest/MultipleAssertions:
 
 Minitest/UselessAssertion:
   Enabled: false
+
+# Dynamic snippets are code samples for documentation, not standalone Ruby files.
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - "dynamic-snippets/**/*"
+
+Layout/FirstHashElementIndentation:
+  Exclude:
+    - "dynamic-snippets/**/*"
 `;
     }
 }

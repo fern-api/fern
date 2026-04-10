@@ -25,6 +25,8 @@ public final class ClientOptions {
 
     private final AuthProvider authProvider;
 
+    private final Optional<LogConfig> logging;
+
     private ClientOptions(
             Environment environment,
             Map<String, String> headers,
@@ -32,7 +34,8 @@ public final class ClientOptions {
             OkHttpClient httpClient,
             int timeout,
             int maxRetries,
-            AuthProvider authProvider) {
+            AuthProvider authProvider,
+            Optional<LogConfig> logging) {
         this.environment = environment;
         this.headers = new HashMap<>();
         this.headers.putAll(headers);
@@ -48,6 +51,7 @@ public final class ClientOptions {
         this.timeout = timeout;
         this.maxRetries = maxRetries;
         this.authProvider = authProvider;
+        this.logging = logging;
     }
 
     public Environment environment() {
@@ -93,6 +97,10 @@ public final class ClientOptions {
         return this.maxRetries;
     }
 
+    public Optional<LogConfig> logging() {
+        return this.logging;
+    }
+
     public Map<String, String> getAuthHeaders(EndpointMetadata endpointMetadata) {
         return this.authProvider.getAuthHeaders(endpointMetadata);
     }
@@ -113,6 +121,8 @@ public final class ClientOptions {
         private Optional<Integer> timeout = Optional.empty();
 
         private OkHttpClient httpClient = null;
+
+        private Optional<LogConfig> logging = Optional.empty();
 
         private AuthProvider authProvider;
 
@@ -168,6 +178,14 @@ public final class ClientOptions {
             return this;
         }
 
+        /**
+         * Configure logging for the SDK. Silent by default — no log output unless explicitly configured.
+         */
+        public Builder logging(LogConfig logging) {
+            this.logging = Optional.of(logging);
+            return this;
+        }
+
         public ClientOptions build() {
             OkHttpClient.Builder httpClientBuilder =
                     this.httpClient != null ? this.httpClient.newBuilder() : new OkHttpClient.Builder();
@@ -187,6 +205,9 @@ public final class ClientOptions {
                         .addInterceptor(new RetryInterceptor(this.maxRetries));
             }
 
+            Logger logger = Logger.from(this.logging);
+            httpClientBuilder.addInterceptor(new LoggingInterceptor(logger));
+
             this.httpClient = httpClientBuilder.build();
             this.timeout = Optional.of(httpClient.callTimeoutMillis() / 1000);
 
@@ -197,7 +218,8 @@ public final class ClientOptions {
                     httpClient,
                     this.timeout.get(),
                     this.maxRetries,
-                    this.authProvider);
+                    this.authProvider,
+                    this.logging);
         }
 
         /**
@@ -211,6 +233,7 @@ public final class ClientOptions {
             builder.headers.putAll(clientOptions.headers);
             builder.headerSuppliers.putAll(clientOptions.headerSuppliers);
             builder.maxRetries = clientOptions.maxRetries();
+            builder.logging = clientOptions.logging();
             return builder;
         }
     }

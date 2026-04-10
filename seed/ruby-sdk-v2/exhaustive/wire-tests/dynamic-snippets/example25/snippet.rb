@@ -1,11 +1,8 @@
 require "seed"
 
-client = Seed::Client.new(
-  token: '<token>',
-  base_url: 'https://api.fern.com'
-);
+client = Seed::MyClient.new(
+  token: "<token>",
+  base_url: "https://api.fern.com"
+)
 
-client.endpoints.params.get_with_query(
-  query: 'query',
-  number: 1
-);
+client.endpoints.object.get_and_return_map_of_documented_unknown_type(request: {})

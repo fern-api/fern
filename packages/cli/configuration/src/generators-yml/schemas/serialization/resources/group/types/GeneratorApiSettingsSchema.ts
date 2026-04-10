@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { ApiAuthSchema } from "../../fernDefinition/resources/auth/types/ApiAuthSchema.js";
 import { AuthSchemeDeclarationSchema } from "../../fernDefinition/resources/auth/types/AuthSchemeDeclarationSchema.js";
+import { HttpHeaderSchema } from "../../fernDefinition/resources/service/types/HttpHeaderSchema.js";
 import { ApiConfigurationV2SettingsSchema } from "../../generators/types/ApiConfigurationV2SettingsSchema.js";
 import { ApiConfigurationV2SpecsSchema } from "../../generators/types/ApiConfigurationV2SpecsSchema.js";
 
@@ -14,6 +15,7 @@ export const GeneratorApiSettingsSchema: core.serialization.ObjectSchema<
 > = core.serialization.object({
     auth: ApiAuthSchema.optional(),
     "auth-schemes": core.serialization.record(core.serialization.string(), AuthSchemeDeclarationSchema).optional(),
+    headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
     settings: ApiConfigurationV2SettingsSchema.optional(),
     specs: ApiConfigurationV2SpecsSchema.optional(),
 });
@@ -22,6 +24,7 @@ export declare namespace GeneratorApiSettingsSchema {
     export interface Raw {
         auth?: ApiAuthSchema.Raw | null;
         "auth-schemes"?: Record<string, AuthSchemeDeclarationSchema.Raw> | null;
+        headers?: Record<string, HttpHeaderSchema.Raw> | null;
         settings?: ApiConfigurationV2SettingsSchema.Raw | null;
         specs?: ApiConfigurationV2SpecsSchema.Raw | null;
     }

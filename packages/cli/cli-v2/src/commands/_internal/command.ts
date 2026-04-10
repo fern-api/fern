@@ -1,7 +1,7 @@
 import type { Argv, BuilderCallback } from "yargs";
-import type { Context } from "../../context/Context";
-import type { GlobalArgs } from "../../context/GlobalArgs";
-import { withContext } from "../../context/withContext";
+import type { Context } from "../../context/Context.js";
+import type { GlobalArgs } from "../../context/GlobalArgs.js";
+import { withContext } from "../../context/withContext.js";
 
 type CommandHandler<T extends GlobalArgs = GlobalArgs> = (context: Context, args: T) => Promise<void>;
 
@@ -28,7 +28,7 @@ export function command<T extends GlobalArgs = GlobalArgs>(
         name,
         description,
         (yargs) => {
-            const configured = yargs.version(false).usage(`$0 ${name} [options]\n\n${description}`);
+            const configured = yargs.version(false).usage(description);
             return builder != null ? builder(configured) : configured;
         },
         withContext(handler) as unknown as () => void

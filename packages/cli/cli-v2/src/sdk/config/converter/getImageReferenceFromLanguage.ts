@@ -1,6 +1,6 @@
-import type { DockerImageReference } from "../DockerImageReference";
-import { Language } from "../Language";
-import { LANGUAGE_TO_DOCKER_IMAGE } from "./constants";
+import type { DockerImageReference } from "../DockerImageReference.js";
+import { Language } from "../Language.js";
+import { LANGUAGE_TO_DOCKER_IMAGE } from "./constants.js";
 
 /**
  * Returns the image reference for a given SDK language and version.

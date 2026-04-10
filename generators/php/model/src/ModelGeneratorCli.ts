@@ -1,11 +1,11 @@
 import { GeneratorConfig, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractPhpGeneratorCli } from "@fern-api/php-base";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { generateModels } from "./generateModels";
-import { generateTraits } from "./generateTraits";
-import { ModelCustomConfigSchema } from "./ModelCustomConfig";
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { generateModels } from "./generateModels.js";
+import { generateTraits } from "./generateTraits.js";
+import { ModelCustomConfigSchema } from "./ModelCustomConfig.js";
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
 
 export class ModelGeneratorCLI extends AbstractPhpGeneratorCli<ModelCustomConfigSchema, ModelGeneratorContext> {
     protected constructContext({
@@ -14,7 +14,7 @@ export class ModelGeneratorCLI extends AbstractPhpGeneratorCli<ModelCustomConfig
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: ModelCustomConfigSchema;
         generatorConfig: GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;

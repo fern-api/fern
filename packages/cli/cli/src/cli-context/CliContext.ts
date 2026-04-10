@@ -8,11 +8,13 @@ import { Workspace } from "@fern-api/workspace-loader";
 import { input, select } from "@inquirer/prompts";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
-import { CliEnvironment } from "./CliEnvironment";
-import { TaskContextImpl } from "./TaskContextImpl";
-import { getFernUpgradeMessage } from "./upgrade-utils/getFernUpgradeMessage";
-import { FernGeneratorUpgradeInfo, getProjectGeneratorUpgrades } from "./upgrade-utils/getGeneratorVersions";
-import { getLatestVersionOfCli } from "./upgrade-utils/getLatestVersionOfCli";
+import { SentryClient } from "../telemetry/SentryClient.js";
+import { CliEnvironment } from "./CliEnvironment.js";
+import { StdoutRedirector } from "./StdoutRedirector.js";
+import { TaskContextImpl } from "./TaskContextImpl.js";
+import { getFernUpgradeMessage } from "./upgrade-utils/getFernUpgradeMessage.js";
+import { FernGeneratorUpgradeInfo, getProjectGeneratorUpgrades } from "./upgrade-utils/getGeneratorVersions.js";
+import { getLatestVersionOfCli } from "./upgrade-utils/getLatestVersionOfCli.js";
 
 const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"];
 
@@ -28,6 +30,7 @@ export interface FernUpgradeInfo {
 
 export class CliContext {
     public readonly environment: CliEnvironment;
+    private readonly sentryClient: SentryClient;
 
     private didSucceed = true;
 
@@ -36,6 +39,8 @@ export class CliContext {
 
     private logLevel: LogLevel = LogLevel.Info;
     private isLocal: boolean;
+    private readonly stdoutRedirector = new StdoutRedirector();
+    private jsonMode = false;
 
     constructor(stdout: NodeJS.WriteStream, stderr: NodeJS.WriteStream, { isLocal }: { isLocal?: boolean }) {
         this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
@@ -52,6 +57,7 @@ export class CliContext {
             packageVersion,
             cliName
         };
+        this.sentryClient = new SentryClient({ release: `cli@${this.environment.packageVersion}` });
     }
 
     private getPackageName() {
@@ -97,6 +103,36 @@ export class CliContext {
         logErrorMessage({ message, error, logger: this.logger });
     }
 
+    /**
+     * Activate JSON-output mode: all logger output is forced to stderr
+     * and process.stdout is redirected to stderr as a safety net for
+     * third-party code. Call this as early as possible (e.g. in yargs
+     * middleware) so that even pre-command logs stay off stdout.
+     */
+    public enableJsonMode(): void {
+        if (this.jsonMode) {
+            return;
+        }
+        this.jsonMode = true;
+        this.stdoutRedirector.redirect();
+    }
+
+    public get isJsonMode(): boolean {
+        return this.jsonMode;
+    }
+
+    /**
+     * Write a value as formatted JSON to stdout.
+     * Temporarily restores the real stdout, writes, then re-redirects.
+     */
+    public writeJsonToStdout(value: unknown): void {
+        this.stdoutRedirector.restore();
+        process.stdout.write(JSON.stringify(value, null, 2) + "\n");
+        if (this.jsonMode) {
+            this.stdoutRedirector.redirect();
+        }
+    }
+
     public async exit({ code }: { code?: number } = {}): Promise<never> {
         if (!this._suppressUpgradeMessage && !this.isLocal) {
             await this.nudgeUpgradeIfAvailable();
@@ -104,6 +140,7 @@ export class CliContext {
         this.ttyAwareLogger.finish();
         const posthogManager = await getPosthogManager();
         await posthogManager.flush();
+        await this.sentryClient.flush();
         this.exitProgram({ code });
     }
 
@@ -205,6 +242,10 @@ export class CliContext {
         }
     }
 
+    public async captureException(error: unknown): Promise<void> {
+        await this.sentryClient.captureException(error);
+    }
+
     public readonly logger = createLogger((level, ...args) => this.log(level, ...args));
     public readonly stderr = createLogger((level, ...args) => this.logStderr(level, ...args));
 
@@ -276,7 +317,7 @@ export class CliContext {
         const filtered = logs.filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel));
         this.ttyAwareLogger.log(filtered, {
             includeDebugInfo: this.logLevel === LogLevel.Debug,
-            stderr
+            stderr: stderr || this.jsonMode
         });
     }
 

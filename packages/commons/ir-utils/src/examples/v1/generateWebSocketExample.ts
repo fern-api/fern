@@ -8,13 +8,14 @@ import {
     WebSocketMessage
 } from "@fern-api/ir-sdk";
 
-import { ExampleGenerationResult } from "./ExampleGenerationResult";
+import { getOriginalName } from "../../utils/namesUtils.js";
+import { ExampleGenerationResult } from "./ExampleGenerationResult.js";
 import {
     generateHeaderExamples,
     generatePathParameterExamples,
     generateQueryParameterExamples
-} from "./generateParameterExamples";
-import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+} from "./generateParameterExamples.js";
+import { generateTypeReferenceExample } from "./generateTypeReferenceExample.js";
 
 export declare namespace generateWebSocketExample {
     interface Args {
@@ -163,7 +164,7 @@ function getUrlForExample(channel: WebSocketChannel, example: Omit<ExampleWebSoc
     [...example.pathParameters].forEach((examplePathParameter) => {
         const value = examplePathParameter.value.jsonExample;
         const stringValue = typeof value === "string" ? value : JSON.stringify(value);
-        pathParameters[examplePathParameter.name.originalName] = stringValue;
+        pathParameters[getOriginalName(examplePathParameter.name)] = stringValue;
     });
     const url =
         channel.path.head +

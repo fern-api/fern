@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.service.get();
+client.service.get
 ```
 </dd>
 </dl>
@@ -39,3 +39,4 @@ client.service.get();
 </dd>
 </dl>
 </details>
+

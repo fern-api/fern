@@ -159,6 +159,10 @@ public final class CreateProblemRequest {
     public interface _FinalStage {
         CreateProblemRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage files(Map<Language, ProblemFiles> files);
 
         _FinalStage putAllFiles(Map<Language, ProblemFiles> files);
@@ -323,6 +327,18 @@ public final class CreateProblemRequest {
                     testcases,
                     methodName,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

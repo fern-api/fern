@@ -3,25 +3,25 @@
 import type * as FernSeedConfig from "../../../index.js";
 
 export interface FixtureConfigurations {
-    publishConfig?: unknown;
-    publishMetadata?: unknown;
-    customConfig?: unknown;
-    readmeConfig?: FernSeedConfig.ReadmeConfig;
-    audiences?: string[];
+    publishConfig?: unknown | undefined;
+    publishMetadata?: unknown | undefined;
+    customConfig?: unknown | undefined;
+    readmeConfig?: FernSeedConfig.ReadmeConfig | undefined;
+    audiences?: string[] | undefined;
     outputFolder: string;
-    outputVersion?: string;
+    outputVersion?: string | undefined;
     /**
      * If true, dynamic snippet tests will not be generated for this fixture.
      * This is useful for situations where the main parts of the sdk are working, but the dynamic snippet tests are not.
      * Disabling the dynamic snippet tests allows the fixture to compile and run tests, surfacing issues when failures there start to occur.
      */
-    disableDynamicSnippetTests?: boolean;
+    disableDynamicSnippetTests?: boolean | undefined;
     /** Overrides the default output mode */
-    outputMode?: FernSeedConfig.OutputMode;
-    license?: unknown;
+    outputMode?: FernSeedConfig.OutputMode | undefined;
+    license?: unknown | undefined;
     /**
      * Either a boolean to skip all scripts, or a list of script names to skip.
      * When true, all build and test scripts will be skipped for this fixture.
      */
-    skipScripts?: FernSeedConfig.SkipScripts;
+    skipScripts?: FernSeedConfig.SkipScripts | undefined;
 }

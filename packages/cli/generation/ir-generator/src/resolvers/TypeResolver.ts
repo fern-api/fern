@@ -7,10 +7,10 @@ import {
 } from "@fern-api/fern-definition-schema";
 import { ContainerType, TypeReference } from "@fern-api/ir-sdk";
 
-import { constructFernFileContext, FernFileContext } from "../FernFileContext";
-import { parseInlineType } from "../utils/parseInlineType";
-import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
-import { ObjectPathItem, ResolvedType } from "./ResolvedType";
+import { constructFernFileContext, FernFileContext } from "../FernFileContext.js";
+import { parseInlineType } from "../utils/parseInlineType.js";
+import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName.js";
+import { ObjectPathItem, ResolvedType } from "./ResolvedType.js";
 
 export interface TypeResolver {
     resolveType: (args: { type: string; file: FernFileContext }) => ResolvedType | undefined;

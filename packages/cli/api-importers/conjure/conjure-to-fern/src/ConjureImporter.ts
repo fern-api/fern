@@ -4,8 +4,8 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, getFilename, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { APIDefinitionImporter, FernDefinitionBuilderImpl, HttpServiceInfo } from "@fern-api/importer-commons";
 
-import { listConjureFiles } from "./utils/listConjureFiles";
-import { visitConjureTypeDeclaration } from "./utils/visitConjureTypeDeclaration";
+import { listConjureFiles } from "./utils/listConjureFiles.js";
+import { visitConjureTypeDeclaration } from "./utils/visitConjureTypeDeclaration.js";
 
 export declare namespace ConjureImporter {
     interface Args {

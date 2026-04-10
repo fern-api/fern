@@ -4,6 +4,7 @@ package dummy
 
 import (
 	context "context"
+
 	core "github.com/single-url-environment-no-default/fern/core"
 	internal "github.com/single-url-environment-no-default/fern/internal"
 	option "github.com/single-url-environment-no-default/fern/option"

@@ -18,8 +18,8 @@ import {
     TypeResolverImpl
 } from "@fern-api/ir-generator";
 
-import { RuleRunnerArgs } from "./Rule";
-import { CASINGS_GENERATOR } from "./utils/casingsGenerator";
+import { RuleRunnerArgs } from "./Rule.js";
+import { CASINGS_GENERATOR } from "./utils/casingsGenerator.js";
 
 export class ComplexQueryParamTypeDetector {
     private typeResolver: TypeResolver;

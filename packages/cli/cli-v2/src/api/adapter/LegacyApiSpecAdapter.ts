@@ -1,4 +1,5 @@
 import type {
+    OpenAPISettings,
     OpenAPISpec,
     Spec,
     OpenRPCSpec as V1OpenRPCSpec,
@@ -7,17 +8,16 @@ import type {
 import type { schemas } from "@fern-api/config";
 import { generatorsYml } from "@fern-api/configuration";
 import { relativize } from "@fern-api/fs-utils";
-import type { ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
-import type { Context } from "../../context/Context";
-import type { ApiSpec } from "../config/ApiSpec";
-import type { AsyncApiSpec } from "../config/AsyncApiSpec";
-import { isAsyncApiSpec } from "../config/AsyncApiSpec";
-import type { OpenApiSpec } from "../config/OpenApiSpec";
-import { isOpenApiSpec } from "../config/OpenApiSpec";
-import type { OpenRpcSpec } from "../config/OpenRpcSpec";
-import { isOpenRpcSpec } from "../config/OpenRpcSpec";
-import type { ProtobufSpec } from "../config/ProtobufSpec";
-import { isProtobufSpec } from "../config/ProtobufSpec";
+import type { Context } from "../../context/Context.js";
+import type { ApiSpec } from "../config/ApiSpec.js";
+import type { AsyncApiSpec } from "../config/AsyncApiSpec.js";
+import { isAsyncApiSpec } from "../config/AsyncApiSpec.js";
+import type { OpenApiSpec } from "../config/OpenApiSpec.js";
+import { isOpenApiSpec } from "../config/OpenApiSpec.js";
+import type { OpenRpcSpec } from "../config/OpenRpcSpec.js";
+import { isOpenRpcSpec } from "../config/OpenRpcSpec.js";
+import type { ProtobufSpec } from "../config/ProtobufSpec.js";
+import { isProtobufSpec } from "../config/ProtobufSpec.js";
 
 export namespace LegacyApiSpecAdapter {
     export interface Config {
@@ -110,12 +110,12 @@ export class LegacyApiSpecAdapter {
         };
     }
 
-    private adaptOpenApiSettings(settings: OpenApiSpec["settings"]): ParseOpenAPIOptions | undefined {
+    private adaptOpenApiSettings(settings: OpenApiSpec["settings"]): OpenAPISettings | undefined {
         if (settings == null) {
             return undefined;
         }
 
-        const result: Partial<ParseOpenAPIOptions> = {
+        const result: Partial<OpenAPISettings> = {
             // Base API settings
             respectNullableSchemas: settings.respectNullableSchemas,
             wrapReferencesToNullableInOptional: settings.wrapReferencesToNullableInOptional,
@@ -147,19 +147,20 @@ export class LegacyApiSpecAdapter {
             inlineAllOfSchemas: settings.inlineAllOfSchemas,
             resolveAliases: settings.resolveAliases,
             groupMultiApiEnvironments: settings.groupMultiApiEnvironments,
-            defaultIntegerFormat: this.adaptDefaultIntegerFormat(settings.defaultIntegerFormat)
+            defaultIntegerFormat: this.adaptDefaultIntegerFormat(settings.defaultIntegerFormat),
+            coerceConstsTo: settings.coerceConstsTo
         };
 
         const hasSettings = Object.values(result).some((v) => v != null);
-        return hasSettings ? (result as ParseOpenAPIOptions) : undefined;
+        return hasSettings ? (result as OpenAPISettings) : undefined;
     }
 
-    private adaptAsyncApiSettings(settings: AsyncApiSpec["settings"]): ParseOpenAPIOptions | undefined {
+    private adaptAsyncApiSettings(settings: AsyncApiSpec["settings"]): OpenAPISettings | undefined {
         if (settings == null) {
             return undefined;
         }
 
-        const result: Partial<ParseOpenAPIOptions> = {
+        const result: Partial<OpenAPISettings> = {
             // Base API settings (shared)
             respectNullableSchemas: settings.respectNullableSchemas,
             wrapReferencesToNullableInOptional: settings.wrapReferencesToNullableInOptional,
@@ -175,11 +176,12 @@ export class LegacyApiSpecAdapter {
             pathParameterOrder: this.adaptPathParameterOrder(settings.pathParameterOrder),
 
             // AsyncAPI-specific settings
-            asyncApiNaming: settings.messageNaming
+            asyncApiNaming: settings.messageNaming,
+            coerceConstsTo: settings.coerceConstsTo
         };
 
         const hasSettings = Object.values(result).some((v) => v != null);
-        return hasSettings ? (result as ParseOpenAPIOptions) : undefined;
+        return hasSettings ? (result as OpenAPISettings) : undefined;
     }
 
     private adaptRemoveDiscriminantsFromSchemas(

@@ -1,1 +1,1 @@
-export { GeneratorContext } from "./GeneratorContext";
+export { GeneratorContext } from "./GeneratorContext.js";

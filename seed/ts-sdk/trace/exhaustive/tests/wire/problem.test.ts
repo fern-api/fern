@@ -60,6 +60,7 @@ describe("ProblemClient", () => {
             methodName: "methodName",
         };
         const rawResponseBody = { type: "success", value: "string" };
+
         server
             .mockEndpoint()
             .post("/problem-crud/create")
@@ -161,10 +162,7 @@ describe("ProblemClient", () => {
             methodName: "methodName",
         });
         expect(response).toEqual({
-            body: {
-                type: "success",
-                value: SeedTrace.ProblemId("string"),
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -226,6 +224,7 @@ describe("ProblemClient", () => {
             methodName: "methodName",
         };
         const rawResponseBody = { problemVersion: 1 };
+
         server
             .mockEndpoint()
             .post("/problem-crud/update/problemId")
@@ -327,9 +326,7 @@ describe("ProblemClient", () => {
             methodName: "methodName",
         });
         expect(response).toEqual({
-            body: {
-                problemVersion: 1,
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -383,6 +380,7 @@ describe("ProblemClient", () => {
                 },
             },
         };
+
         server
             .mockEndpoint()
             .post("/problem-crud/default-starter-files")
@@ -413,26 +411,7 @@ describe("ProblemClient", () => {
             methodName: "methodName",
         });
         expect(response).toEqual({
-            body: {
-                files: {
-                    JAVA: {
-                        solutionFile: {
-                            filename: "filename",
-                            contents: "contents",
-                        },
-                        readOnlyFiles: [
-                            {
-                                filename: "filename",
-                                contents: "contents",
-                            },
-                            {
-                                filename: "filename",
-                                contents: "contents",
-                            },
-                        ],
-                    },
-                },
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

@@ -15,5 +15,6 @@ export type ApiReferenceLayoutItem =
     | Record<string, FernDocsConfig.ApiReferencePackageConfiguration>
     | FernDocsConfig.ApiReferenceSectionConfiguration
     | FernDocsConfig.ApiReferenceEndpointConfiguration
+    | FernDocsConfig.ApiReferenceOperationConfiguration
     | FernDocsConfig.PageConfiguration
     | FernDocsConfig.LinkConfiguration;

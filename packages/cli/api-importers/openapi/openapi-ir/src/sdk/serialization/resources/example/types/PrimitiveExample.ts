@@ -33,6 +33,9 @@ export const PrimitiveExample: core.serialization.Schema<
         datetime: core.serialization.object({
             value: core.serialization.string(),
         }),
+        datetimeRfc2822: core.serialization.object({
+            value: core.serialization.string(),
+        }),
         date: core.serialization.object({
             value: core.serialization.string(),
         }),
@@ -62,6 +65,8 @@ export const PrimitiveExample: core.serialization.Schema<
                     return FernOpenapiIr.PrimitiveExample.string(value.value);
                 case "datetime":
                     return FernOpenapiIr.PrimitiveExample.datetime(value.value);
+                case "datetimeRfc2822":
+                    return FernOpenapiIr.PrimitiveExample.datetimeRfc2822(value.value);
                 case "date":
                     return FernOpenapiIr.PrimitiveExample.date(value.value);
                 case "base64":
@@ -85,6 +90,7 @@ export declare namespace PrimitiveExample {
         | PrimitiveExample.Double
         | PrimitiveExample.String
         | PrimitiveExample.Datetime
+        | PrimitiveExample.DatetimeRfc2822
         | PrimitiveExample.Date
         | PrimitiveExample.Base64
         | PrimitiveExample.Boolean;
@@ -126,6 +132,11 @@ export declare namespace PrimitiveExample {
 
     export interface Datetime {
         type: "datetime";
+        value: string;
+    }
+
+    export interface DatetimeRfc2822 {
+        type: "datetimeRfc2822";
         value: string;
     }
 

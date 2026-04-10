@@ -3,7 +3,6 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\Object\Types\ObjectWithRequiredField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,8 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->httpMethods->testPost(
-    new ObjectWithRequiredField([
-        'string' => 'string',
-    ]),
+$client->endpoints->httpMethods->testGet(
+    'id',
 );

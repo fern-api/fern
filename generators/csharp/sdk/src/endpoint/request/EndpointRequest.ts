@@ -1,7 +1,11 @@
 import { ast, WithGeneration } from "@fern-api/csharp-codegen";
-import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RawClient } from "../http/RawClient";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type HttpEndpoint = FernIr.HttpEndpoint;
+type SdkRequest = FernIr.SdkRequest;
+
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { RawClient } from "../http/RawClient.js";
 
 export interface QueryParameterCodeBlock {
     code: ast.CodeBlock;
@@ -29,7 +33,7 @@ export abstract class EndpointRequest extends WithGeneration {
     }
 
     public getParameterName(): string {
-        return this.sdkRequest.requestParameterName.camelCase.safeName;
+        return this.case.camelSafe(this.sdkRequest.requestParameterName);
     }
 
     public getRequestBodyVariableName(): string {

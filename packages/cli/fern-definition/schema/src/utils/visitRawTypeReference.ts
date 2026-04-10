@@ -1,6 +1,6 @@
 import { Literal, PrimitiveType, PrimitiveTypeV1, PrimitiveTypeV2 } from "@fern-api/ir-sdk";
-import { NumberValidationSchema, StringValidationSchema, ValidationSchema } from "../schemas";
-import { RawPrimitiveType } from "./RawPrimitiveType";
+import { NumberValidationSchema, StringValidationSchema, ValidationSchema } from "../schemas/index.js";
+import { RawPrimitiveType } from "./RawPrimitiveType.js";
 
 export const FernContainerRegex: {
     readonly MAP: RegExp;
@@ -133,6 +133,11 @@ export function visitRawTypeReference<R>({
             return visitor.primitive({
                 v1: PrimitiveTypeV1.DateTime,
                 v2: undefined
+            });
+        case RawPrimitiveType.datetimeRfc2822:
+            return visitor.primitive({
+                v1: PrimitiveTypeV1.DateTimeRfc2822,
+                v2: PrimitiveTypeV2.dateTimeRfc2822({})
             });
         case RawPrimitiveType.date:
             return visitor.primitive({

@@ -2,7 +2,7 @@
 
 namespace Seed\Users;
 
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Users\Requests\ListUsersCursorPaginationRequest;
 use Seed\Core\Pagination\Pager;
@@ -32,12 +32,13 @@ use Seed\Users\Requests\ListWithGlobalConfigRequest;
 use Seed\Users\Types\UsernameContainer;
 use Seed\Users\Requests\ListUsersOptionalDataRequest;
 use Seed\Users\Types\ListUsersOptionalDataPaginationResponse;
+use Seed\Users\Requests\ListUsersAliasedDataRequest;
+use Seed\Users\Types\ListUsersAliasedDataPaginationResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
-use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class UsersClient
@@ -97,9 +98,9 @@ class UsersClient
                 $request->startingAfter = $cursor;
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
+            getNextCursor: fn (?ListUsersPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->data ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data ?? [],
         );
     }
 
@@ -124,9 +125,9 @@ class UsersClient
                 $request->cursor = $cursor;
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersMixedTypePaginationResponse $response) => $response?->next ?? null,
+            getNextCursor: fn (?ListUsersMixedTypePaginationResponse $response) => $response?->next ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersMixedTypePaginationResponse $response) => $response?->data ?? [],
+            getItems: fn (?ListUsersMixedTypePaginationResponse $response) => $response?->data ?? [],
         );
     }
 
@@ -151,9 +152,9 @@ class UsersClient
                 PaginationHelper::setDeep($request, ["pagination", "cursor"], $cursor);
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
+            getNextCursor: fn (?ListUsersPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->data ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data ?? [],
         );
     }
 
@@ -182,9 +183,9 @@ class UsersClient
                 $request->cursor = $cursor;
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersTopLevelCursorPaginationResponse $response) => $response?->nextCursor ?? null,
+            getNextCursor: fn (?ListUsersTopLevelCursorPaginationResponse $response) => $response?->nextCursor ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersTopLevelCursorPaginationResponse $response) => $response?->data ?? [],
+            getItems: fn (?ListUsersTopLevelCursorPaginationResponse $response) => $response?->data ?? [],
         );
     }
 
@@ -212,7 +213,7 @@ class UsersClient
             },
             getStep: null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->data ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -242,7 +243,7 @@ class UsersClient
             },
             getStep: null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->data ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -272,7 +273,7 @@ class UsersClient
             },
             getStep: null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->data ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -303,7 +304,7 @@ class UsersClient
             /* @phpstan-ignore-next-line */
             getStep: fn (ListUsersOffsetStepPaginationRequest $request) => $request?->limit ?? 0,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->data ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -334,9 +335,9 @@ class UsersClient
             /* @phpstan-ignore-next-line */
             getStep: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request?->limit ?? 0,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersPaginationResponse $response) => $response?->data ?? [],
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data ?? [],
             /* @phpstan-ignore-next-line */
-            hasNextPage: fn (ListUsersPaginationResponse $response) => $response?->hasNextPage,
+            hasNextPage: fn (?ListUsersPaginationResponse $response) => $response?->hasNextPage,
         );
     }
 
@@ -361,9 +362,9 @@ class UsersClient
                 $request->cursor = $cursor;
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersExtendedResponse $response) => $response?->next ?? null,
+            getNextCursor: fn (?ListUsersExtendedResponse $response) => $response?->next ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersExtendedResponse $response) => $response?->data?->users ?? [],
+            getItems: fn (?ListUsersExtendedResponse $response) => $response?->data?->users ?? [],
         );
     }
 
@@ -388,9 +389,9 @@ class UsersClient
                 $request->cursor = $cursor;
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (ListUsersExtendedOptionalListResponse $response) => $response?->next ?? null,
+            getNextCursor: fn (?ListUsersExtendedOptionalListResponse $response) => $response?->next ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersExtendedOptionalListResponse $response) => $response?->data?->users ?? [],
+            getItems: fn (?ListUsersExtendedOptionalListResponse $response) => $response?->data?->users ?? [],
         );
     }
 
@@ -415,9 +416,9 @@ class UsersClient
                 $request->startingAfter = $cursor;
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (UsernameCursor $response) => $response?->cursor?->after ?? null,
+            getNextCursor: fn (?UsernameCursor $response) => $response?->cursor?->after ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (UsernameCursor $response) => $response?->cursor?->data ?? [],
+            getItems: fn (?UsernameCursor $response) => $response?->cursor?->data ?? [],
         );
     }
 
@@ -472,7 +473,7 @@ class UsersClient
             },
             getStep: null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (UsernameContainer $response) => $response?->results ?? [],
+            getItems: fn (?UsernameContainer $response) => $response?->results ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -502,9 +503,36 @@ class UsersClient
             },
             getStep: null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (ListUsersOptionalDataPaginationResponse $response) => $response?->data ?? [],
+            getItems: fn (?ListUsersOptionalDataPaginationResponse $response) => $response?->data ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
+        );
+    }
+
+    /**
+     * @param ListUsersAliasedDataRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithAliasedData(ListUsersAliasedDataRequest $request = new ListUsersAliasedDataRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            request: $request,
+            getNextPage: fn (ListUsersAliasedDataRequest $request) => $this->_listWithAliasedData($request, $options),
+            setCursor: function (ListUsersAliasedDataRequest $request, string $cursor) {
+                $request->startingAfter = $cursor;
+            },
+            /* @phpstan-ignore-next-line */
+            getNextCursor: fn (?ListUsersAliasedDataPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?ListUsersAliasedDataPaginationResponse $response) => $response?->data ?? [],
         );
     }
 
@@ -518,11 +546,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithCursorPagination(ListUsersCursorPaginationRequest $request = new ListUsersCursorPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithCursorPagination(ListUsersCursorPaginationRequest $request = new ListUsersCursorPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -551,20 +579,13 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ListUsersPaginationResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -585,11 +606,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersMixedTypePaginationResponse
+     * @return ?ListUsersMixedTypePaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request = new ListUsersMixedTypeCursorPaginationRequest(), ?array $options = null): ListUsersMixedTypePaginationResponse
+    private function _listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request = new ListUsersMixedTypeCursorPaginationRequest(), ?array $options = null): ?ListUsersMixedTypePaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -609,20 +630,13 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ListUsersMixedTypePaginationResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -643,11 +657,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request = new ListUsersBodyCursorPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request = new ListUsersBodyCursorPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -663,20 +677,13 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ListUsersPaginationResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -701,11 +708,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersTopLevelCursorPaginationResponse
+     * @return ?ListUsersTopLevelCursorPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithTopLevelBodyCursorPagination(ListUsersTopLevelBodyCursorPaginationRequest $request = new ListUsersTopLevelBodyCursorPaginationRequest(), ?array $options = null): ListUsersTopLevelCursorPaginationResponse
+    private function _listWithTopLevelBodyCursorPagination(ListUsersTopLevelBodyCursorPaginationRequest $request = new ListUsersTopLevelBodyCursorPaginationRequest(), ?array $options = null): ?ListUsersTopLevelCursorPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -721,20 +728,13 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ListUsersTopLevelCursorPaginationResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -755,11 +755,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithOffsetPagination(ListUsersOffsetPaginationRequest $request = new ListUsersOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithOffsetPagination(ListUsersOffsetPaginationRequest $request = new ListUsersOffsetPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -788,20 +788,13 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ListUsersPaginationResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -822,11 +815,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request = new ListUsersDoubleOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request = new ListUsersDoubleOffsetPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -855,20 +848,13 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ListUsersPaginationResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -889,11 +875,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request = new ListUsersBodyOffsetPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request = new ListUsersBodyOffsetPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -909,20 +895,13 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ListUsersPaginationResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -943,11 +922,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request = new ListUsersOffsetStepPaginationRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request = new ListUsersOffsetStepPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -973,20 +952,13 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ListUsersPaginationResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -1007,11 +979,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersPaginationResponse
+     * @return ?ListUsersPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request = new ListWithOffsetPaginationHasNextPageRequest(), ?array $options = null): ListUsersPaginationResponse
+    private function _listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request = new ListWithOffsetPaginationHasNextPageRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -1037,20 +1009,13 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ListUsersPaginationResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -1071,11 +1036,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersExtendedResponse
+     * @return ?ListUsersExtendedResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithExtendedResults(ListUsersExtendedRequest $request = new ListUsersExtendedRequest(), ?array $options = null): ListUsersExtendedResponse
+    private function _listWithExtendedResults(ListUsersExtendedRequest $request = new ListUsersExtendedRequest(), ?array $options = null): ?ListUsersExtendedResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -1095,20 +1060,13 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ListUsersExtendedResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -1129,11 +1087,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersExtendedOptionalListResponse
+     * @return ?ListUsersExtendedOptionalListResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request = new ListUsersExtendedRequestForOptionalData(), ?array $options = null): ListUsersExtendedOptionalListResponse
+    private function _listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request = new ListUsersExtendedRequestForOptionalData(), ?array $options = null): ?ListUsersExtendedOptionalListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -1153,20 +1111,13 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ListUsersExtendedOptionalListResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -1187,11 +1138,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UsernameCursor
+     * @return ?UsernameCursor
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listUsernames(ListUsernamesRequest $request = new ListUsernamesRequest(), ?array $options = null): UsernameCursor
+    private function _listUsernames(ListUsernamesRequest $request = new ListUsernamesRequest(), ?array $options = null): ?UsernameCursor
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -1211,20 +1162,13 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return UsernameCursor::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -1276,16 +1220,6 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -1306,11 +1240,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UsernameContainer
+     * @return ?UsernameContainer
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithGlobalConfig(ListWithGlobalConfigRequest $request = new ListWithGlobalConfigRequest(), ?array $options = null): UsernameContainer
+    private function _listWithGlobalConfig(ListWithGlobalConfigRequest $request = new ListWithGlobalConfigRequest(), ?array $options = null): ?UsernameContainer
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -1330,20 +1264,13 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return UsernameContainer::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -1364,11 +1291,11 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ListUsersOptionalDataPaginationResponse
+     * @return ?ListUsersOptionalDataPaginationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listWithOptionalData(ListUsersOptionalDataRequest $request = new ListUsersOptionalDataRequest(), ?array $options = null): ListUsersOptionalDataPaginationResponse
+    private function _listWithOptionalData(ListUsersOptionalDataRequest $request = new ListUsersOptionalDataRequest(), ?array $options = null): ?ListUsersOptionalDataPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -1388,20 +1315,70 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ListUsersOptionalDataPaginationResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param ListUsersAliasedDataRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?ListUsersAliasedDataPaginationResponse
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    private function _listWithAliasedData(ListUsersAliasedDataRequest $request = new ListUsersAliasedDataRequest(), ?array $options = null): ?ListUsersAliasedDataPaginationResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        if ($request->page != null) {
+            $query['page'] = $request->page;
+        }
+        if ($request->perPage != null) {
+            $query['per_page'] = $request->perPage;
+        }
+        if ($request->startingAfter != null) {
+            $query['starting_after'] = $request->startingAfter;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users/aliased-data",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+                $options,
             );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return ListUsersAliasedDataPaginationResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

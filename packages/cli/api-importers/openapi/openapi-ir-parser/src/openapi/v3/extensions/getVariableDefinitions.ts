@@ -1,10 +1,10 @@
 import { PrimitiveSchema, PrimitiveSchemaValue } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../getExtension";
-import { getDefaultAsString } from "../../../schema/defaults/getDefault";
-import { getGeneratedTypeName } from "../../../schema/utils/getSchemaName";
-import { FernOpenAPIExtension } from "./fernExtensions";
+import { getExtension } from "../../../getExtension.js";
+import { getDefaultAsString } from "../../../schema/defaults/getDefault.js";
+import { getGeneratedTypeName } from "../../../schema/utils/getSchemaName.js";
+import { FernOpenAPIExtension } from "./fernExtensions.js";
 
 export function getVariableDefinitions(
     document: OpenAPIV3.Document,

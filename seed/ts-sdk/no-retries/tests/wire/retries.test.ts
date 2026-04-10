@@ -12,18 +12,10 @@ describe("RetriesClient", () => {
             { id: "id", name: "name" },
             { id: "id", name: "name" },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.retries.getUsers();
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-            },
-            {
-                id: "id",
-                name: "name",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 });

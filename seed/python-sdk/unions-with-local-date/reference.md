@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">get</a>(...) -&gt; AsyncHttpResponse[BigUnion]</code></summary>
+<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">get</a>(...) -> BigUnion</code></summary>
 <dl>
 <dd>
 
@@ -18,6 +18,7 @@ from seed import SeedUnions
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.bigunion.get(
     id="id",
 )
@@ -56,7 +57,7 @@ client.bigunion.get(
 </dl>
 </details>
 
-<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">update</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">update</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -71,12 +72,17 @@ client.bigunion.get(
 ```python
 from seed import SeedUnions
 from seed.bigunion import BigUnion_NormalSweet
+import datetime
 
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.bigunion.update(
     request=BigUnion_NormalSweet(
+        id="id",
+        created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        archived_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         value="value",
     ),
 )
@@ -115,7 +121,7 @@ client.bigunion.update(
 </dl>
 </details>
 
-<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">update_many</a>(...) -&gt; AsyncHttpResponse[typing.Dict[str, bool]]</code></summary>
+<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">update_many</a>(...) -> typing.Dict[str, bool]</code></summary>
 <dl>
 <dd>
 
@@ -130,18 +136,26 @@ client.bigunion.update(
 ```python
 from seed import SeedUnions
 from seed.bigunion import BigUnion_NormalSweet
+import datetime
 
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.bigunion.update_many(
     request=[
         BigUnion_NormalSweet(
+            id="id",
+            created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            archived_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
             value="value",
         ),
         BigUnion_NormalSweet(
+            id="id",
+            created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            archived_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
             value="value",
-        ),
+        )
     ],
 )
 
@@ -159,7 +173,7 @@ client.bigunion.update_many(
 <dl>
 <dd>
 
-**request:** `typing.Sequence[BigUnion]` 
+**request:** `typing.List[BigUnion]` 
     
 </dd>
 </dl>
@@ -180,7 +194,7 @@ client.bigunion.update_many(
 </details>
 
 ## Types
-<details><summary><code>client.types.<a href="src/seed/types/client.py">get</a>(...) -&gt; AsyncHttpResponse[UnionWithTime]</code></summary>
+<details><summary><code>client.types.<a href="src/seed/types/client.py">get</a>(...) -> UnionWithTime</code></summary>
 <dl>
 <dd>
 
@@ -198,8 +212,9 @@ from seed import SeedUnions
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.types.get(
-    id="datetime-example",
+    id="date-example",
 )
 
 ```
@@ -236,7 +251,7 @@ client.types.get(
 </dl>
 </details>
 
-<details><summary><code>client.types.<a href="src/seed/types/client.py">update</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.types.<a href="src/seed/types/client.py">update</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -249,19 +264,16 @@ client.types.get(
 <dd>
 
 ```python
-import datetime
-
 from seed import SeedUnions
-from seed.types import UnionWithTime_Datetime
+from seed.types import UnionWithTime_Date
 
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.types.update(
-    request=UnionWithTime_Datetime(
-        value=datetime.datetime.fromisoformat(
-            "1994-01-01 01:01:01+00:00",
-        )
+    request=UnionWithTime_Date(
+        date=,
     ),
 )
 
@@ -300,7 +312,7 @@ client.types.update(
 </details>
 
 ## Union
-<details><summary><code>client.union.<a href="src/seed/union/client.py">get</a>(...) -&gt; AsyncHttpResponse[Shape]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">get</a>(...) -> Shape</code></summary>
 <dl>
 <dd>
 
@@ -318,7 +330,8 @@ from seed import SeedUnions
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
-client.union.get(
+
+client.bigunion.get(
     id="id",
 )
 
@@ -356,7 +369,7 @@ client.union.get(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">update</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">update</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -375,8 +388,10 @@ from seed.union import Shape_Circle
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.union.update(
     request=Shape_Circle(
+        id="id",
         radius=1.1,
     ),
 )

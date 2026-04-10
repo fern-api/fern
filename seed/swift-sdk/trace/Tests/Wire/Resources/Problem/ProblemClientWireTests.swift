@@ -20,21 +20,17 @@ import Trace
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = "string"
+        let expectedResponse = CreateProblemResponse.success("string")
         let response = try await client.problem.createProblem(
             request: CreateProblemRequest(
                 problemName: "problemName",
                 problemDescription: ProblemDescription(
                     boards: [
                         ProblemDescriptionBoard.html(
-                            .init(
-                                html: 
-                            )
+
                         ),
                         ProblemDescriptionBoard.html(
-                            .init(
-                                html: 
-                            )
+
                         )
                     ]
                 ),
@@ -58,48 +54,30 @@ import Trace
                 ],
                 inputParams: [
                     VariableTypeAndName(
-                        variableType: VariableType.integerType(
-                            .init(
-
-                            )
-                        ),
+                        variableType: VariableType.integerType,
                         name: "name"
                     ),
                     VariableTypeAndName(
-                        variableType: VariableType.integerType(
-                            .init(
-
-                            )
-                        ),
+                        variableType: VariableType.integerType,
                         name: "name"
                     )
                 ],
-                outputType: VariableType.integerType(
-                    .init(
-
-                    )
-                ),
+                outputType: VariableType.integerType,
                 testcases: [
                     TestCaseWithExpectedResult(
                         testCase: TestCase(
                             id: "id",
                             params: [
                                 VariableValue.integerValue(
-                                    .init(
-                                        integerValue: 
-                                    )
+
                                 ),
                                 VariableValue.integerValue(
-                                    .init(
-                                        integerValue: 
-                                    )
+
                                 )
                             ]
                         ),
                         expectedResult: VariableValue.integerValue(
-                            .init(
-                                integerValue: 
-                            )
+
                         )
                     ),
                     TestCaseWithExpectedResult(
@@ -107,21 +85,15 @@ import Trace
                             id: "id",
                             params: [
                                 VariableValue.integerValue(
-                                    .init(
-                                        integerValue: 
-                                    )
+
                                 ),
                                 VariableValue.integerValue(
-                                    .init(
-                                        integerValue: 
-                                    )
+
                                 )
                             ]
                         ),
                         expectedResult: VariableValue.integerValue(
-                            .init(
-                                integerValue: 
-                            )
+
                         )
                     )
                 ],
@@ -158,14 +130,10 @@ import Trace
                 problemDescription: ProblemDescription(
                     boards: [
                         ProblemDescriptionBoard.html(
-                            .init(
-                                html: 
-                            )
+
                         ),
                         ProblemDescriptionBoard.html(
-                            .init(
-                                html: 
-                            )
+
                         )
                     ]
                 ),
@@ -189,48 +157,30 @@ import Trace
                 ],
                 inputParams: [
                     VariableTypeAndName(
-                        variableType: VariableType.integerType(
-                            .init(
-
-                            )
-                        ),
+                        variableType: VariableType.integerType,
                         name: "name"
                     ),
                     VariableTypeAndName(
-                        variableType: VariableType.integerType(
-                            .init(
-
-                            )
-                        ),
+                        variableType: VariableType.integerType,
                         name: "name"
                     )
                 ],
-                outputType: VariableType.integerType(
-                    .init(
-
-                    )
-                ),
+                outputType: VariableType.integerType,
                 testcases: [
                     TestCaseWithExpectedResult(
                         testCase: TestCase(
                             id: "id",
                             params: [
                                 VariableValue.integerValue(
-                                    .init(
-                                        integerValue: 
-                                    )
+
                                 ),
                                 VariableValue.integerValue(
-                                    .init(
-                                        integerValue: 
-                                    )
+
                                 )
                             ]
                         ),
                         expectedResult: VariableValue.integerValue(
-                            .init(
-                                integerValue: 
-                            )
+
                         )
                     ),
                     TestCaseWithExpectedResult(
@@ -238,21 +188,15 @@ import Trace
                             id: "id",
                             params: [
                                 VariableValue.integerValue(
-                                    .init(
-                                        integerValue: 
-                                    )
+
                                 ),
                                 VariableValue.integerValue(
-                                    .init(
-                                        integerValue: 
-                                    )
+
                                 )
                             ]
                         ),
                         expectedResult: VariableValue.integerValue(
-                            .init(
-                                integerValue: 
-                            )
+
                         )
                     )
                 ],
@@ -320,27 +264,15 @@ import Trace
             request: .init(
                 inputParams: [
                     VariableTypeAndName(
-                        variableType: VariableType.integerType(
-                            .init(
-
-                            )
-                        ),
+                        variableType: VariableType.integerType,
                         name: "name"
                     ),
                     VariableTypeAndName(
-                        variableType: VariableType.integerType(
-                            .init(
-
-                            )
-                        ),
+                        variableType: VariableType.integerType,
                         name: "name"
                     )
                 ],
-                outputType: VariableType.integerType(
-                    .init(
-
-                    )
-                ),
+                outputType: VariableType.integerType,
                 methodName: "methodName"
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)

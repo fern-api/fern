@@ -1,12 +1,13 @@
 import { schemas } from "@fern-api/config";
 import { generatorsYml } from "@fern-api/configuration";
+import { removeDefaultDockerOrgIfPresent } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { parseRepository } from "@fern-api/github";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { readFile } from "fs/promises";
-import type { Context } from "../../context/Context";
-import type { Target } from "../config/Target";
+import type { Context } from "../../context/Context.js";
+import type { Target } from "../config/Target.js";
 
 export namespace LegacyGeneratorInvocationAdapter {
     export interface Config {
@@ -24,14 +25,18 @@ export class LegacyGeneratorInvocationAdapter {
 
     public async adapt(target: Target): Promise<generatorsYml.GeneratorInvocation> {
         return {
+            raw: this.buildRaw(target),
             name: target.image,
+            containerImage: target.registry
+                ? `${target.registry}/${removeDefaultDockerOrgIfPresent(target.image)}`
+                : undefined,
             version: target.version,
             config: target.config,
             language: this.mapLanguage(target.lang),
             outputMode: await this.buildOutputMode(target),
             absolutePathToLocalOutput: this.context.resolveOutputFilePath(target.output.path),
             smartCasing: target.smartCasing ?? true,
-            readme: target.readme,
+            readme: this.buildReadme(target),
 
             // Legacy options which are no longer supported.
             absolutePathToLocalSnippets: undefined,
@@ -39,58 +44,146 @@ export class LegacyGeneratorInvocationAdapter {
             irVersionOverride: undefined,
             keywords: undefined,
             publishMetadata: undefined,
-            settings: undefined
+            settings: undefined,
+            automation: {
+                generate: true,
+                upgrade: true,
+                preview: true,
+                verify: true
+            }
         };
+    }
+
+    private buildRaw(target: Target): generatorsYml.GeneratorInvocationSchema | undefined {
+        const git = target.output.git;
+        if (git == null || !schemas.isGitOutputSelfHosted(git)) {
+            return undefined;
+        }
+        return {
+            name: target.image,
+            version: target.version,
+            github: {
+                uri: git.uri,
+                token: git.token,
+                mode: this.mapSelfHostedMode(git.mode),
+                branch: git.branch
+            }
+        };
+    }
+
+    private mapSelfHostedMode(
+        mode: schemas.GitSelfHostedOutputModeSchema | undefined
+    ): generatorsYml.GithubSelfhostedMode | undefined {
+        if (mode == null) {
+            return generatorsYml.GithubSelfhostedMode.PullRequest;
+        }
+        switch (mode) {
+            case "pr":
+                return generatorsYml.GithubSelfhostedMode.PullRequest;
+            case "push":
+                return generatorsYml.GithubSelfhostedMode.Push;
+            default:
+                assertNever(mode);
+        }
     }
 
     private async buildOutputMode(target: Target): Promise<FernFiddle.remoteGen.OutputMode> {
         if (target.output.git != null) {
             const git = target.output.git;
-            const repository = parseRepository(git.repository);
-            const license = git.license != null ? await this.convertLicense(git.license) : undefined;
-            const publishInfo = target.publish != null ? this.buildPublishInfo(target.publish) : undefined;
-            const reviewers = this.buildReviewers(git.reviewers);
-            const mode = git.mode ?? "pr";
-
-            switch (mode) {
-                case "pr":
-                    return FernFiddle.remoteGen.OutputMode.githubV2(
-                        FernFiddle.GithubOutputModeV2.pullRequest({
-                            owner: repository.owner,
-                            repo: repository.repo,
-                            license,
-                            publishInfo,
-                            reviewers,
-                            downloadSnippets: undefined
-                        })
-                    );
-                case "release":
-                    return FernFiddle.remoteGen.OutputMode.githubV2(
-                        FernFiddle.GithubOutputModeV2.commitAndRelease({
-                            owner: repository.owner,
-                            repo: repository.repo,
-                            license,
-                            publishInfo,
-                            downloadSnippets: undefined
-                        })
-                    );
-                case "push":
-                    return FernFiddle.remoteGen.OutputMode.githubV2(
-                        FernFiddle.GithubOutputModeV2.push({
-                            owner: repository.owner,
-                            repo: repository.repo,
-                            branch: git.branch,
-                            license,
-                            publishInfo,
-                            downloadSnippets: undefined
-                        })
-                    );
-                default:
-                    assertNever(mode);
+            if (schemas.isGitOutputSelfHosted(git)) {
+                return await this.buildGitSelfHostedOutputMode({ target, git });
             }
+            return await this.buildGitHubRepositoryOutputMode({ target, git });
         }
         // Default to downloadFiles for local output.
         return FernFiddle.remoteGen.OutputMode.downloadFiles({});
+    }
+
+    private async buildGitHubRepositoryOutputMode({
+        target,
+        git
+    }: {
+        target: Target;
+        git: schemas.GitHubRepositoryOutputSchema;
+    }): Promise<FernFiddle.OutputMode.GithubV2> {
+        const repository = parseRepository(git.repository);
+        const license = git.license != null ? await this.convertLicense(git.license) : undefined;
+        const publishInfo = target.publish != null ? this.buildPublishInfo(target.publish) : undefined;
+        const reviewers = this.buildReviewers(git.reviewers);
+        const mode = git.mode ?? "pr";
+        switch (mode) {
+            case "pr":
+                return FernFiddle.remoteGen.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.pullRequest({
+                        owner: repository.owner,
+                        repo: repository.repo,
+                        license,
+                        publishInfo,
+                        reviewers,
+                        downloadSnippets: undefined
+                    })
+                );
+            case "release":
+                return FernFiddle.remoteGen.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.commitAndRelease({
+                        owner: repository.owner,
+                        repo: repository.repo,
+                        license,
+                        publishInfo,
+                        downloadSnippets: undefined
+                    })
+                );
+            case "push":
+                return FernFiddle.remoteGen.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.push({
+                        owner: repository.owner,
+                        repo: repository.repo,
+                        branch: git.branch,
+                        license,
+                        publishInfo,
+                        downloadSnippets: undefined
+                    })
+                );
+            default:
+                assertNever(mode);
+        }
+    }
+
+    private async buildGitSelfHostedOutputMode({
+        target,
+        git
+    }: {
+        target: Target;
+        git: schemas.GitSelfHostedOutputSchema;
+    }): Promise<FernFiddle.OutputMode.GithubV2> {
+        const repository = parseRepository(git.uri);
+        const license = git.license != null ? await this.convertLicense(git.license) : undefined;
+        const publishInfo = target.publish != null ? this.buildPublishInfo(target.publish) : undefined;
+        const mode = git.mode ?? "pr";
+        switch (mode) {
+            case "pr":
+                return FernFiddle.remoteGen.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.pullRequest({
+                        owner: repository.owner,
+                        repo: repository.repo,
+                        branch: git.branch,
+                        license,
+                        publishInfo
+                    })
+                );
+            case "push":
+                return FernFiddle.remoteGen.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.push({
+                        owner: repository.owner,
+                        repo: repository.repo,
+                        branch: git.branch,
+                        license,
+                        publishInfo
+                    })
+                );
+            default:
+                assertNever(mode);
+        }
     }
 
     private buildPublishInfo(publish: schemas.PublishSchema): FernFiddle.GithubPublishInfo | undefined {
@@ -226,6 +319,46 @@ export class LegacyGeneratorInvocationAdapter {
         }
         const contents = await readFile(absolutePath, "utf-8");
         return FernFiddle.GithubLicense.custom({ contents });
+    }
+
+    private buildReadme(target: Target): generatorsYml.ReadmeSchema | undefined {
+        const readme = target.readme;
+        if (readme == null) {
+            return undefined;
+        }
+        const result: generatorsYml.ReadmeSchema = {};
+        if (readme.bannerLink != null) {
+            result.bannerLink = readme.bannerLink;
+        }
+        if (readme.introduction != null) {
+            result.introduction = readme.introduction;
+        }
+        if (readme.apiReferenceLink != null) {
+            result.apiReferenceLink = readme.apiReferenceLink;
+        }
+        if (readme.apiName != null) {
+            result.apiName = readme.apiName;
+        }
+        if (readme.disabledSections != null) {
+            result.disabledSections = readme.disabledSections;
+        }
+        if (readme.defaultEndpoint != null) {
+            result.defaultEndpoint = readme.defaultEndpoint as generatorsYml.ReadmeEndpointSchema;
+        }
+        if (readme.features != null) {
+            result.features = readme.features as Record<string, generatorsYml.ReadmeEndpointSchema[]>;
+        }
+        if (readme.customSections != null) {
+            result.customSections = readme.customSections.map((section) => ({
+                title: section.title,
+                language: (section.language ?? target.lang) as generatorsYml.Language,
+                content: section.content
+            }));
+        }
+        if (readme.exampleStyle != null) {
+            result.exampleStyle = readme.exampleStyle as generatorsYml.ExampleStyle;
+        }
+        return result;
     }
 
     private mapLanguage(lang: string): generatorsYml.GenerationLanguage | undefined {

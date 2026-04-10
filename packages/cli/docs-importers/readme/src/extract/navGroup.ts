@@ -1,4 +1,4 @@
-import { scrapedNavigationGroup } from "../types/scrapedNavigation";
+import { scrapedNavigationGroup } from "../types/scrapedNavigation.js";
 
 export function getFirstTabFromNavigationGroup({ navItem }: { navItem: scrapedNavigationGroup }): string | undefined {
     const findFirstPage = (item: scrapedNavigationGroup): string | undefined => {

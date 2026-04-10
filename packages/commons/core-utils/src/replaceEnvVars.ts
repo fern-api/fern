@@ -1,5 +1,5 @@
-import { isPlainObject } from "./objects/isPlainObject";
-import { mapValues } from "./objects/mapValues";
+import { isPlainObject } from "./objects/isPlainObject.js";
+import { mapValues } from "./objects/mapValues.js";
 
 /**
  * Captures templates inside "${}"

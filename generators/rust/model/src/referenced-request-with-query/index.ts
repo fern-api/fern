@@ -1,1 +1,1 @@
-export { ReferencedRequestWithQueryGenerator } from "./ReferencedRequestWithQueryGenerator";
+export { ReferencedRequestWithQueryGenerator } from "./ReferencedRequestWithQueryGenerator.js";

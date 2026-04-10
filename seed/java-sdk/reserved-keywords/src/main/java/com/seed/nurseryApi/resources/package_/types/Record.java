@@ -80,6 +80,10 @@ public final class Record {
     public interface _FinalStage {
         Record build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage foo(Map<String, String> foo);
 
         _FinalStage putAllFoo(Map<String, String> foo);
@@ -139,6 +143,18 @@ public final class Record {
         @java.lang.Override
         public Record build() {
             return new Record(foo, _3D, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

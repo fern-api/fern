@@ -1,21 +1,23 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import fetch from "node-fetch";
 
-import { runFernCli } from "../../utils/runFernCli";
+import { runFernCli } from "../../utils/runFernCli.js";
 
 const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
 describe("fern mock", () => {
     // biome-ignore lint/suspicious/noSkippedTests: allow
-    it.skip("mock request/response", async () => {
+    it.skip("mock request/response", async ({ signal }) => {
         void runFernCli(["mock", "--api", "simple", "--port", "3001"], {
-            cwd: join(fixturesDir, RelativeFilePath.of("simple"))
+            cwd: join(fixturesDir, RelativeFilePath.of("simple")),
+            signal
         });
 
         await sleep(5000);
 
         const getResponse = await fetch("http://localhost:3001/test/root/movies/id-123?movieName=hello", {
-            method: "GET"
+            method: "GET",
+            signal
         });
 
         expect(getResponse.body != null).toEqual(true);
@@ -32,7 +34,8 @@ describe("fern mock", () => {
             }),
             headers: {
                 "content-type": "application/json"
-            }
+            },
+            signal
         });
 
         expect(postResponse.body != null).toEqual(true);

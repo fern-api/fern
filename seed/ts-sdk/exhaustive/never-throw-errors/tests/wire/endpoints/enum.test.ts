@@ -9,6 +9,7 @@ describe("EnumClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "SUNNY";
         const rawResponseBody = "SUNNY";
+
         server
             .mockEndpoint()
             .post("/enum")
@@ -20,7 +21,7 @@ describe("EnumClient", () => {
 
         const response = await client.endpoints.enum.getAndReturnEnum("SUNNY");
         expect(response).toEqual({
-            body: "SUNNY",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

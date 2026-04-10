@@ -3,10 +3,15 @@ import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
-import { ExampleEndpointCall, ExampleTypeReference, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
-import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { MockEndpointGenerator } from "./MockEndpointGenerator";
+
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type ExampleTypeReference = FernIr.ExampleTypeReference;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type ServiceId = FernIr.ServiceId;
+
+import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator.js";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { MockEndpointGenerator } from "./MockEndpointGenerator.js";
 
 export declare namespace TestClass {
     interface TestInput {
@@ -30,7 +35,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
         this.classReference = this.csharp.classReference({
             origin: this.model.explicit(this.endpoint, `Test${this.getTestNamespace()}`),
-            name: `${this.endpoint.name.pascalCase.safeName}Test`,
+            name: `${this.case.pascalSafe(this.endpoint.name)}Test`,
             namespace: this.getTestNamespace()
         });
 
@@ -39,22 +44,42 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
     }
 
     public override shouldGenerate(): boolean {
-        if (this.endpoint.pagination?.type === "custom") {
+        if (
+            this.endpoint.pagination?.type === "custom" ||
+            this.endpoint.pagination?.type === "uri" ||
+            this.endpoint.pagination?.type === "path"
+        ) {
             return false;
         }
         return super.shouldGenerate();
     }
 
-    private getTestNamespace(): string {
+    /**
+     * Returns true only when pagination clients are actually generated for this endpoint.
+     * The IR may have pagination info even when `generatePaginatedClients` is disabled,
+     * so we must check the config flag to avoid emitting `await foreach` against a
+     * non-IAsyncEnumerable return type.
+     */
+    private hasPaginationEnabled(): boolean {
+        return this.context.config.generatePaginatedClients === true && this.endpoint.pagination != null;
+    }
+
+    private getServiceNamespaceSegments(): string[] {
         const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
         if (!subpackage) {
+            return [];
+        }
+        // Use allParts (not packagePath) to include the service name itself,
+        // ensuring each service gets its own subdirectory and namespace.
+        return subpackage.fernFilepath.allParts.map((part) => this.case.pascalSafe(part));
+    }
+
+    private getTestNamespace(): string {
+        const segments = this.getServiceNamespaceSegments();
+        if (segments.length === 0) {
             return this.namespaces.mockServerTest;
         }
-
-        return [
-            this.namespaces.mockServerTest,
-            ...this.context.getChildNamespaceSegments(subpackage.fernFilepath)
-        ].join(".");
+        return [this.namespaces.mockServerTest, ...segments].join(".");
     }
 
     protected doGenerate(): CSharpFile {
@@ -75,7 +100,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
             const responseBodyType = this.endpoint.response?.body?.type;
 
             let isAsyncTest = false;
-            const isPaginationEndpoint = !!this.endpoint.pagination;
+            const isPaginationEndpoint = this.hasPaginationEnabled();
             if (isPaginationEndpoint) {
                 isAsyncTest = true;
             }
@@ -105,7 +130,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 if (endpointSnippet == null) {
                     throw new Error("Endpoint snippet is null");
                 }
-                if (this.endpoint.pagination) {
+                if (this.hasPaginationEnabled()) {
                     writer.write("var items = ");
                     writer.writeNode(endpointSnippet);
                     writer.write(";");
@@ -183,14 +208,11 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
     }
 
     private getDirectory(): RelativeFilePath {
-        const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
-        if (!subpackage) {
+        const segments = this.getServiceNamespaceSegments();
+        if (segments.length === 0) {
             return this.constants.folders.mockServerTests;
         }
-        return join(
-            this.constants.folders.mockServerTests,
-            ...this.context.getChildNamespaceSegments(subpackage.fernFilepath).map(RelativeFilePath.of)
-        );
+        return join(this.constants.folders.mockServerTests, ...segments.map(RelativeFilePath.of));
     }
 
     protected getFilepath(): RelativeFilePath {

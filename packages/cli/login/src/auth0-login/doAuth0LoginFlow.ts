@@ -2,7 +2,15 @@ import axios from "axios";
 import { IncomingMessage, Server } from "http";
 import open from "open";
 
-import { createServer } from "./createServer";
+import { createServer } from "./createServer.js";
+
+/**
+ * Returns the base URL for Auth0, using HTTP for localhost (local dev) and HTTPS otherwise.
+ */
+function getAuth0BaseUrl(auth0Domain: string): string {
+    const protocol = auth0Domain.startsWith("localhost") ? "http" : "https";
+    return `${protocol}://${auth0Domain}`;
+}
 
 const SUCCESS_PAGE = `
 <!DOCTYPE html>
@@ -36,16 +44,19 @@ export async function doAuth0LoginFlow({
     auth0Domain,
     auth0ClientId,
     audience,
-    forceReauth = false
+    forceReauth = false,
+    connection
 }: {
     auth0Domain: string;
     auth0ClientId: string;
     audience: string;
     /** If true, forces re-authentication even if already logged in (allows switching accounts). */
     forceReauth?: boolean;
+    /** If set, passes the connection parameter to Auth0 to route directly to a specific IdP. */
+    connection?: string;
 }): Promise<Auth0TokenResponse> {
     const { origin, server } = await createServer();
-    const { code } = await getCode({ server, auth0Domain, auth0ClientId, origin, audience, forceReauth });
+    const { code } = await getCode({ server, auth0Domain, auth0ClientId, origin, audience, forceReauth, connection });
     server.close();
     return await getTokenFromCode({ auth0Domain, auth0ClientId, code, origin });
 }
@@ -56,7 +67,8 @@ function getCode({
     auth0ClientId,
     origin,
     audience,
-    forceReauth
+    forceReauth,
+    connection
 }: {
     server: Server;
     auth0Domain: string;
@@ -64,6 +76,7 @@ function getCode({
     origin: string;
     audience: string;
     forceReauth: boolean;
+    connection?: string;
 }) {
     return new Promise<{ code: string }>((resolve) => {
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -77,7 +90,7 @@ function getCode({
             }
         });
 
-        void open(constructAuth0Url({ auth0ClientId, auth0Domain, origin, audience, forceReauth }));
+        void open(constructAuth0Url({ auth0ClientId, auth0Domain, origin, audience, forceReauth, connection }));
     });
 }
 
@@ -101,7 +114,7 @@ async function getTokenFromCode({
     origin: string;
 }): Promise<Auth0TokenResponse> {
     const response = await axios.post(
-        `https://${auth0Domain}/oauth/token`,
+        `${getAuth0BaseUrl(auth0Domain)}/oauth/token`,
         new URLSearchParams({
             grant_type: "authorization_code",
             client_id: auth0ClientId,
@@ -127,13 +140,15 @@ function constructAuth0Url({
     auth0Domain,
     auth0ClientId,
     audience,
-    forceReauth
+    forceReauth,
+    connection
 }: {
     origin: string;
     auth0Domain: string;
     auth0ClientId: string;
     audience: string;
     forceReauth: boolean;
+    connection?: string;
 }) {
     const queryParams = new URLSearchParams({
         client_id: auth0ClientId,
@@ -143,11 +158,15 @@ function constructAuth0Url({
         audience
     });
 
+    if (connection != null) {
+        queryParams.set("connection", connection);
+    }
+
     // Force re-authentication to allow switching accounts.
     if (forceReauth) {
         queryParams.set("prompt", "login");
     }
 
-    const url = `https://${auth0Domain}/authorize?${queryParams.toString()}`;
+    const url = `${getAuth0BaseUrl(auth0Domain)}/authorize?${queryParams.toString()}`;
     return url;
 }

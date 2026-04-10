@@ -4,6 +4,7 @@ package service
 
 import (
 	context "context"
+
 	fern "github.com/examples/fern"
 	core "github.com/examples/fern/core"
 	internal "github.com/examples/fern/internal"
@@ -34,12 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) GetMovie(
 	ctx context.Context,
-	movieId fern.MovieId,
+	movieID fern.MovieID,
 	opts ...option.RequestOption,
 ) (*fern.Movie, error) {
 	response, err := c.WithRawResponse.GetMovie(
 		ctx,
-		movieId,
+		movieID,
 		opts...,
 	)
 	if err != nil {
@@ -52,7 +53,7 @@ func (c *Client) CreateMovie(
 	ctx context.Context,
 	request *fern.Movie,
 	opts ...option.RequestOption,
-) (fern.MovieId, error) {
+) (fern.MovieID, error) {
 	response, err := c.WithRawResponse.CreateMovie(
 		ctx,
 		request,

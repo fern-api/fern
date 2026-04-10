@@ -2,7 +2,7 @@ import { addDefaultDockerOrgIfNotPresent } from "@fern-api/configuration-loader"
 import { createFdrGeneratorsSdkService, getIrVersionForGenerator } from "@fern-api/core";
 import { isVersionAhead } from "@fern-api/semver-utils";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 function getMaybeBadVersionMessage(
     generatorName: string,
@@ -31,10 +31,11 @@ export const CompatibleIrVersionsRule: Rule = {
         return {
             generatorsYml: {
                 generatorInvocation: async ({ invocation, cliVersion }) => {
-                    const fdr = createFdrGeneratorsSdkService({ token: undefined });
-                    if (cliVersion == null) {
+                    if (cliVersion == null || cliVersion === "0.0.0") {
                         return [];
                     }
+
+                    const fdr = createFdrGeneratorsSdkService({ token: undefined });
 
                     // Pull the CLI release to get the IR version
                     const cliRelease = await fdr.generators.cli.getCliRelease(cliVersion);
@@ -45,6 +46,7 @@ export const CompatibleIrVersionsRule: Rule = {
                     const cliIrVersion = cliRelease.body.irVersion;
 
                     // Pull the generator release to get the IR version
+                    const invocationName = "image" in invocation ? invocation.image.name : invocation.name;
                     let invocationIrVersion: number;
                     if (invocation["ir-version"] != null) {
                         // You've overridden the IR version in the generator invocation, let's clean it up
@@ -55,7 +57,7 @@ export const CompatibleIrVersionsRule: Rule = {
                         // but the FDR API expects fully-qualified names like "fernapi/fern-csharp-sdk"
                         const normalizedInvocation = {
                             ...invocation,
-                            name: addDefaultDockerOrgIfNotPresent(invocation.name)
+                            name: addDefaultDockerOrgIfNotPresent(invocationName)
                         };
                         const maybeIrVersion = await getIrVersionForGenerator(normalizedInvocation);
 
@@ -76,7 +78,7 @@ export const CompatibleIrVersionsRule: Rule = {
                     // and throw an error for the user telling them what to upgrade to to use this generator.
                     const minCliVersion = await fdr.generators.cli.getMinCliForIr(invocationIrVersion);
                     if (minCliVersion.ok) {
-                        return getMaybeBadVersionMessage(invocation.name, minCliVersion.body.version, cliVersion) ?? [];
+                        return getMaybeBadVersionMessage(invocationName, minCliVersion.body.version, cliVersion) ?? [];
                     } else {
                         // Again, this is to allow for offline usage, and other transient errors
                         return [];

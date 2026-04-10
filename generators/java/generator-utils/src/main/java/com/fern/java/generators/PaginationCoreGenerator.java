@@ -18,6 +18,9 @@ package com.fern.java.generators;
 
 import static com.fern.java.GeneratorLogging.logError;
 
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.Pagination;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.output.GeneratedFile;
@@ -25,17 +28,25 @@ import com.fern.java.output.GeneratedResourcesJavaFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public final class PaginationCoreGenerator extends AbstractFilesGenerator {
     public static final String GET_MODULE_METHOD_NAME = "getModule";
     private final DefaultGeneratorExecClient generatorExecClient;
+    private final String apiExceptionSimpleName;
+    private final String baseExceptionSimpleName;
 
     public PaginationCoreGenerator(
-            AbstractGeneratorContext<?, ?> generatorContext, DefaultGeneratorExecClient generatorExecClient) {
+            AbstractGeneratorContext<?, ?> generatorContext,
+            DefaultGeneratorExecClient generatorExecClient,
+            String apiExceptionSimpleName,
+            String baseExceptionSimpleName) {
         super(generatorContext);
         this.generatorExecClient = generatorExecClient;
+        this.apiExceptionSimpleName = apiExceptionSimpleName;
+        this.baseExceptionSimpleName = baseExceptionSimpleName;
     }
 
     @Override
@@ -56,8 +67,37 @@ public final class PaginationCoreGenerator extends AbstractFilesGenerator {
             return List.of();
         }
 
-        List<String> fileNames = List.of(
-                "BasePage", "SyncPage", "SyncPagingIterable", "BiDirectionalPage", "CustomPager", "AsyncCustomPager");
+        // Scan IR to determine which pagination types are in use
+        boolean hasCustomPagination = false;
+        boolean hasUriPagination = false;
+        boolean hasPathPagination = false;
+        for (HttpService service : generatorContext.getIr().getServices().values()) {
+            for (HttpEndpoint endpoint : service.getEndpoints()) {
+                if (endpoint.getPagination().isPresent()) {
+                    Pagination pagination = endpoint.getPagination().get();
+                    if (pagination.isCustom()) {
+                        hasCustomPagination = true;
+                    } else if (pagination.isUri()) {
+                        hasUriPagination = true;
+                    } else if (pagination.isPath()) {
+                        hasPathPagination = true;
+                    }
+                }
+            }
+        }
+
+        List<String> fileNames = new ArrayList<>(List.of("BasePage", "SyncPage", "SyncPagingIterable"));
+        if (hasCustomPagination) {
+            fileNames.add("BiDirectionalPage");
+            fileNames.add("CustomPager");
+            fileNames.add("AsyncCustomPager");
+        }
+        if (hasUriPagination) {
+            fileNames.add("UriPage");
+        }
+        if (hasPathPagination) {
+            fileNames.add("PathPage");
+        }
 
         String corePackage = generatorContext.getPoetClassNameFactory().getCorePackage();
 
@@ -70,14 +110,27 @@ public final class PaginationCoreGenerator extends AbstractFilesGenerator {
                         }
                         String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
 
-                        // Add ClientOptions import for CustomPager and AsyncCustomPager
+                        // Replace core package placeholders in templates
                         if (fileName.equals("CustomPager") || fileName.equals("AsyncCustomPager")) {
                             String clientOptionsImport = "import " + corePackage + ".ClientOptions;\n";
-                            // Insert the import after the first import statement
                             int firstImportEnd = contents.indexOf(";\n") + 2;
                             contents = contents.substring(0, firstImportEnd)
                                     + clientOptionsImport
                                     + contents.substring(firstImportEnd);
+                        }
+
+                        if (fileName.equals("UriPage") || fileName.equals("PathPage")) {
+                            String coreImports = "import " + corePackage + ".ClientOptions;\n"
+                                    + "import " + corePackage + ".ObjectMappers;\n"
+                                    + "import " + corePackage + ".RequestOptions;\n"
+                                    + "import " + corePackage + "." + apiExceptionSimpleName + ";\n"
+                                    + "import " + corePackage + "." + baseExceptionSimpleName + ";\n";
+                            int firstImportEnd = contents.indexOf(";\n") + 2;
+                            contents = contents.substring(0, firstImportEnd)
+                                    + coreImports
+                                    + contents.substring(firstImportEnd);
+                            contents = contents.replace("__API_EXCEPTION__", apiExceptionSimpleName);
+                            contents = contents.replace("__BASE_EXCEPTION__", baseExceptionSimpleName);
                         }
 
                         // Apply custom pager name if configured

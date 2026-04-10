@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { type Bump, diffGeneratorVersions, mergeDiffResults } from "../commands/diff/diff";
-import { MockCliContext } from "./mockCliContext";
+import { type Bump, diffGeneratorVersions, mergeDiffResults } from "../commands/diff/diff.js";
+import { MockCliContext } from "./mockCliContext.js";
 
 describe("mergeDiffResults tests", () => {
     let context: MockCliContext;

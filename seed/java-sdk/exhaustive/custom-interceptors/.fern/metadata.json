@@ -1,0 +1,10 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-java-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "custom-interceptors": true
+  },
+  "originGitCommit": "DUMMY",
+  "sdkVersion": "0.0.1"
+}

@@ -41,6 +41,16 @@
     ]
   },
   "hooks": {
+    "WorktreeCreate": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$(git rev-parse --show-toplevel)/scripts/worktree-create-hook.sh\""
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Edit|MultiEdit|Write",
@@ -60,8 +70,7 @@
   "env": {
     "FERN_TOKEN": "${FERN_TOKEN}",
     "NODE_ENV": "development",
-    "PNPM_VERSION": "9.4.0"
+    "PNPM_VERSION": "9.15.9"
   },
-  "includeCoAuthoredBy": true,
-  "model": "claude-sonnet-4-20250514"
+  "includeCoAuthoredBy": true
 }

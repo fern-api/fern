@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { filterRequestBody, isEmptyObject, unwrapExampleValue } from "../filterHelpers";
+import { filterRequestBody, isEmptyObject, unwrapExampleValue } from "../filterHelpers.js";
 
 describe("isEmptyObject", () => {
     it("returns true for null", () => {

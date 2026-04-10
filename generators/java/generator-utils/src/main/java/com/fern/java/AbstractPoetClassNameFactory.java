@@ -65,8 +65,24 @@ public abstract class AbstractPoetClassNameFactory {
         return ClassName.get(getCorePackage(), "DateTimeDeserializer");
     }
 
+    public final ClassName getRfc2822DateTimeDeserializerClassName() {
+        return ClassName.get(getCorePackage(), "Rfc2822DateTimeDeserializer");
+    }
+
+    public final ClassName getDoubleSerializerClassName() {
+        return ClassName.get(getCorePackage(), "DoubleSerializer");
+    }
+
     public final ClassName getStreamClassName() {
         return ClassName.get(getCorePackage(), "Stream");
+    }
+
+    public final ClassName getSseEventClassName() {
+        return ClassName.get(getCorePackage(), "SseEvent");
+    }
+
+    public final ClassName getSseEventParserClassName() {
+        return ClassName.get(getCorePackage(), "SseEventParser");
     }
 
     public final ClassName getQueryStringMapperClassName() {

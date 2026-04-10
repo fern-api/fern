@@ -1,19 +1,20 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { ruby } from "@fern-api/ruby-ast";
-import { ObjectProperty, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export function generateFields({
     typeDeclaration,
     properties,
     context
 }: {
-    typeDeclaration?: TypeDeclaration;
-    properties: ObjectProperty[];
+    typeDeclaration?: FernIr.TypeDeclaration;
+    properties: FernIr.ObjectProperty[];
     context: ModelGeneratorContext;
 }): ruby.AstNode[] {
     return properties.map((prop, index) => {
-        const fieldName = prop.name.name.snakeCase.safeName;
-        const wireValue = prop.name.wireValue;
+        const fieldName = context.caseConverter.snakeSafe(prop.name);
+        const wireValue = getWireValue(prop.name);
         const rubyType = context.typeMapper.convert({ reference: prop.valueType });
 
         let isCircular: boolean = false;

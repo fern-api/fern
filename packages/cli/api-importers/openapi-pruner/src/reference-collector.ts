@@ -1,5 +1,5 @@
 import { OpenAPIV3 } from "openapi-types";
-import { ComponentReference, SchemaReference } from "./types";
+import { ComponentReference, SchemaReference } from "./types.js";
 
 export class ReferenceCollector {
     private schemas = new Set<SchemaReference>();

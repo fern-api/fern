@@ -5,6 +5,7 @@ package com.seed.exhaustive.endpoints;
 
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.types.types.MixedType;
 import com.seed.exhaustive.types.types.ObjectWithRequiredField;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +84,19 @@ public class ContainerClient {
             Map<String, ObjectWithRequiredField> request, RequestOptions requestOptions) {
         return this.rawClient
                 .getAndReturnMapOfPrimToObject(request, requestOptions)
+                .body();
+    }
+
+    public Map<String, MixedType> getAndReturnMapOfPrimToUndiscriminatedUnion(Map<String, MixedType> request) {
+        return this.rawClient
+                .getAndReturnMapOfPrimToUndiscriminatedUnion(request)
+                .body();
+    }
+
+    public Map<String, MixedType> getAndReturnMapOfPrimToUndiscriminatedUnion(
+            Map<String, MixedType> request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnMapOfPrimToUndiscriminatedUnion(request, requestOptions)
                 .body();
     }
 

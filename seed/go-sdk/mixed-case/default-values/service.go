@@ -75,6 +75,9 @@ func (n *NestedUser) GetNestedUser() *User {
 }
 
 func (n *NestedUser) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -127,6 +130,9 @@ func (n *NestedUser) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NestedUser) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -160,6 +166,9 @@ func (o *Organization) GetName() string {
 }
 
 func (o *Organization) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
@@ -205,6 +214,9 @@ func (o *Organization) MarshalJSON() ([]byte, error) {
 }
 
 func (o *Organization) String() string {
+	if o == nil {
+		return "<nil>"
+	}
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value
@@ -405,6 +417,9 @@ func (u *User) GetExtraProperties() map[string]string {
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -464,6 +479,9 @@ func (u *User) MarshalJSON() ([]byte, error) {
 }
 
 func (u *User) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

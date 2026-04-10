@@ -4,11 +4,12 @@ package client
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/simple-fhir/fern"
 	core "github.com/simple-fhir/fern/core"
 	internal "github.com/simple-fhir/fern/internal"
 	option "github.com/simple-fhir/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -32,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) GetAccount(
 	ctx context.Context,
-	accountId string,
+	accountID string,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.Account], error) {
 	options := core.NewRequestOptions(opts...)
@@ -43,7 +44,7 @@ func (r *RawClient) GetAccount(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/account/%v",
-		accountId,
+		accountID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

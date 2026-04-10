@@ -1,6 +1,6 @@
 import type { schemas } from "@fern-api/config";
 import type { generatorsYml } from "@fern-api/configuration";
-import type { MigratorWarning } from "../types";
+import type { MigratorWarning } from "../types/index.js";
 
 /**
  * Mapping from legacy kebab-case settings keys to new camelCase keys.
@@ -17,6 +17,7 @@ const SETTINGS_KEY_MAP: Record<string, string> = {
     "group-environments-by-host": "groupEnvironmentsByHost",
     "remove-discriminants-from-schemas": "removeDiscriminantsFromSchemas",
     "path-parameter-order": "pathParameterOrder",
+    "coerce-consts-to": "coerceConstsTo",
 
     // OpenAPI-specific settings
     "only-include-referenced-schemas": "onlyIncludeReferencedSchemas",

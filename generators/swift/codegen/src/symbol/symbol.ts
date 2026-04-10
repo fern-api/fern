@@ -1,4 +1,4 @@
-import { TypeSymbolShape } from "./symbol-registry";
+import { TypeSymbolShape } from "./symbol-registry/index.js";
 
 export type SwiftTypeSymbolName =
     | "String"

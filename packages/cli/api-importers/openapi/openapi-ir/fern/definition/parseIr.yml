@@ -94,6 +94,7 @@ types:
           Optional multipart form data payload for webhooks that use multipart/form-data content type.
           This is populated when the webhook request body uses multipart/form-data encoding.
       response: optional<ResponseWithExample>
+      signatureVerification: optional<finalIr.WebhookSignatureVerification>
       examples: list<finalIr.WebhookExampleCall>
 
   MultipartFormDataWebhookPayloadWithExample:
@@ -180,6 +181,7 @@ types:
     properties:
       schema: SchemaWithExample
       responseProperty: optional<string>
+      terminator: optional<string>
       fullExamples: optional<list<NamedFullExample>>
 
   PathParameterWithExample:
@@ -199,6 +201,12 @@ types:
         type: optional<boolean>
         docs: |
           Whether to explode the parameter. Only set when it differs from the OpenAPI default for the style.
+      clientDefault:
+        type: optional<unknown>
+        docs: |
+          A client-side default value populated by `x-fern-default` on a parameter object.
+          When present, the parameter is optional in the SDK and this value is sent when
+          the user doesn't provide one. Supports string and boolean literals.
 
   QueryParameterWithExample:
     extends:
@@ -216,6 +224,12 @@ types:
         type: optional<boolean>
         docs: |
           Whether to explode the parameter. Only set when it differs from the OpenAPI default for the style.
+      clientDefault:
+        type: optional<unknown>
+        docs: |
+          A client-side default value populated by `x-fern-default` on a parameter object.
+          When present, the parameter is optional in the SDK and this value is sent when
+          the user doesn't provide one. Supports string and boolean literals.
 
   HeaderWithExample:
     extends:
@@ -230,6 +244,12 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
+      clientDefault:
+        type: optional<unknown>
+        docs: |
+          A client-side default value populated by `x-fern-default` on a parameter object.
+          When present, the parameter is optional in the SDK and this value is sent when
+          the user doesn't provide one. Supports string and boolean literals.
 
   SchemaWithExample:
     union:
@@ -334,6 +354,7 @@ types:
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithEncoding
       - commons.WithSource
       - commons.WithTitle
       - commons.WithInline
@@ -391,6 +412,18 @@ types:
           Populated by `x-fern-property-name` on a discriminator object.
           When set, this is used as the code generation name while
           discriminantProperty is used as the wire format.
+      discriminatorContext:
+        type: optional<finalIr.DiscriminatorContext>
+        docs: |
+          Context for where the discriminator exists. Defaults to "data" for backward compatibility.
+          "data" means the discriminator is within the union data itself.
+          "protocol" means the discriminator is at the SSE protocol level.
+      defaultDiscriminantValue:
+        type: optional<string>
+        docs: |
+          The discriminant value of the variant to use as the default when the discriminant
+          field is missing from input. Populated when a variant's discriminant property has a
+          default value matching its const value in the OpenAPI spec.
       commonProperties: list<CommonPropertyWithExample>
       schemas: map<string, SchemaWithExample>
 
@@ -434,6 +467,7 @@ types:
       double: DoubleWithExample
       string: StringSchemaWithExample
       datetime: DatetimeWithExample
+      datetimeRfc2822: DatetimeWithExample
       date: DateWithExample
       base64: Base64WithExample
       boolean: BooleanWithExample

@@ -2,7 +2,7 @@ import { createReadStream } from "fs";
 import StreamJSON from "stream-json";
 import Assembler from "stream-json/Assembler.js";
 
-import { AbsoluteFilePath } from "./AbsoluteFilePath";
+import { AbsoluteFilePath } from "./AbsoluteFilePath.js";
 
 export async function streamObjectFromFile(filePath: AbsoluteFilePath): Promise<unknown> {
     return new Promise((resolve, reject) => {

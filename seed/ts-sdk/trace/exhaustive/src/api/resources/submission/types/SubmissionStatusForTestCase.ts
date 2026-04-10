@@ -23,6 +23,6 @@ export namespace SubmissionStatusForTestCase {
     }
 
     export interface _Unknown {
-        type: void;
+        type: string;
     }
 }

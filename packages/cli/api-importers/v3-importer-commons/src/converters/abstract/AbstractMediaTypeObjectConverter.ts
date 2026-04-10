@@ -2,10 +2,10 @@ import { V2SchemaExamples } from "@fern-api/ir-sdk";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext } from "../..";
-import { ExampleConverter } from "../ExampleConverter";
-import { SchemaOrReferenceConverter } from "../schema";
-import { SchemaConverter } from "../schema/SchemaConverter";
+import { AbstractConverter, AbstractConverterContext } from "../../index.js";
+import { ExampleConverter } from "../ExampleConverter.js";
+import { SchemaOrReferenceConverter } from "../schema/index.js";
+import { SchemaConverter } from "../schema/SchemaConverter.js";
 
 export declare namespace AbstractMediaTypeObjectConverter {
     export interface Args extends AbstractConverter.AbstractArgs {

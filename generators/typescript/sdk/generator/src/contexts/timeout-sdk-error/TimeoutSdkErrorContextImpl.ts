@@ -3,7 +3,7 @@ import { GeneratedTimeoutSdkError, TimeoutSdkErrorContext } from "@fern-typescri
 import { TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
 import { SourceFile } from "ts-morph";
 
-import { TimeoutSdkErrorDeclarationReferencer } from "../../declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
+import { TimeoutSdkErrorDeclarationReferencer } from "../../declaration-referencers/TimeoutSdkErrorDeclarationReferencer.js";
 
 export declare namespace TimeoutSdkErrorContextImpl {
     export interface Init {

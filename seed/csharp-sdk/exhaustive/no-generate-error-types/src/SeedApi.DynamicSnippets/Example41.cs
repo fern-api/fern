@@ -1,5 +1,5 @@
 using SeedExhaustive;
-using SeedExhaustive.Types;
+using System.Text;
 
 namespace Usage;
 
@@ -13,13 +13,9 @@ public class Example41
             }
         );
 
-        await client.Endpoints.Union.GetAndReturnUnionAsync(
-            new Animal(
-                new Dog {
-                    Name = "name",
-                    LikesToWoof = true
-                }
-            )
+        await client.Endpoints.Params.UploadWithPathAsync(
+            "upload-path",
+            new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
         );
     }
 

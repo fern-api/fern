@@ -1,5 +1,771 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.3.9
+  changelogEntry:
+    - summary: |
+        Bump generator-cli to 0.9.5 which upgrades @fern-api/replay to 0.10.2.
+      type: chore
+  createdAt: "2026-04-10"
+  irVersion: 65
+
+- version: 5.3.8
+  changelogEntry:
+    - summary: |
+        Bump generator-cli to 0.9.4.
+      type: chore
+  createdAt: "2026-04-09"
+  irVersion: 65
+
+- version: 5.3.7
+  changelogEntry:
+    - summary: |
+        Upgrade @fern-api/generator-cli to 0.9.4 which upgrades @fern-api/replay to 0.10.1.
+      type: chore
+  createdAt: "2026-04-09"
+  irVersion: 65
+
+- version: 5.3.6
+  changelogEntry:
+    - summary: |
+        Fix wire test and snippet imports ignoring `package_path` config. When `package_path`
+        was set (e.g. `package_path: myorganization`), generated wire tests and README/reference
+        snippets would import types from the root package (e.g. `from auth0 import OrgBranding`)
+        instead of the nested module (e.g. `from auth0.myorganization import OrgBranding`),
+        causing mypy and pytest failures.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 65
+
+- version: 5.3.5
+  changelogEntry:
+    - summary: |
+        Fix wire test generation producing invalid syntax (e.g. `strategy=,`) for object
+        properties with literal/const types. Literal properties that resolve to nop values
+        are now filtered out of generated constructor arguments.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 65
+
+- version: 5.3.4
+  changelogEntry:
+    - summary: |
+        Fix boolean path parameters being serialized as Python-style `True`/`False`
+        instead of JSON-style `true`/`false` in URL paths. Adds `encode_path_param`
+        utility that ensures proper lowercase boolean encoding for path segments.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 65
+
+- version: 5.3.3
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for undiscriminated unions where a non-first variant is used.
+        Previously, enum mismatches in nested objects were not detected during union matching,
+        causing empty values (e.g. `strategy=,`) in generated code.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 65
+
+- version: 5.3.2
+  changelogEntry:
+    - summary: |
+        Fix enum values in reference.md and README snippets being rendered as string
+        literals instead of enum references when using `python_enums` or
+        `forward_compatible_python_enums` pydantic config.
+      type: fix
+    - summary: |
+        Fix client_id and client_secret parameters missing from OAuth client credentials
+        client instantiation examples in docstrings.
+      type: fix
+    - summary: |
+        Fix objects and discriminated unions in reference.md and README snippets being
+        rendered as dict literals instead of Pydantic model constructors. For example,
+        `order_type=OrderType_Market()` instead of `order_type={"type": "MARKET"}`.
+      type: fix
+  createdAt: "2026-04-06"
+  irVersion: 65
+
+- version: 5.3.1
+  changelogEntry:
+    - summary: |
+        Fix an issue where type aliases were not supported for paginated data types.
+      type: fix
+  createdAt: "2026-04-03"
+  irVersion: 65
+
+- version: 5.3.0
+  changelogEntry:
+    - summary: |
+        Add aiohttp auto-detection for async clients. When the `httpx-aiohttp` package is installed,
+        the async client automatically uses `HttpxAiohttpClient` instead of the default `httpx.AsyncClient`.
+        Adds optional `aiohttp` and `httpx-aiohttp` dependencies exposed via a `[aiohttp]` pip extra,
+        along with `DefaultAioHttpClient` and `DefaultAsyncHttpxClient` convenience classes in `_default_clients.py`.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 65
+
+- version: 5.2.2
+  changelogEntry:
+    - summary: |
+        Fix `extra_dependencies` override behavior so user-specified dependency
+        versions reliably take precedence over bundled generator defaults.
+        Previously, bundled dependencies (e.g., pydantic, typing_extensions) added
+        during generation would overwrite customer version pins from
+        `extra_dependencies`. User overrides are now protected from being
+        overwritten by internal dependency additions.
+      type: fix
+  createdAt: "2026-04-02"
+  irVersion: 65
+
+- version: 5.2.1
+  changelogEntry:
+    - summary: |
+        Fix an issue where a user-provided `httpx_client` was ignored when instantiating the OAuth token
+        provider's internal HTTP client, causing custom transports, SSL certificates, and proxies to not
+        apply to token-refresh requests.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 65
+
+- version: 5.2.0
+  changelogEntry:
+    - summary: |
+        Add `maxRetries` custom config option. When set in `generators.yml`,
+        the generated SDK uses the specified value as the default retry count instead of
+        the hardcoded default of 2. Set to 0 to disable retries by default, which is
+        useful for APIs with non-idempotent endpoints. SDK users can still override this
+        per-request via `request_options`.
+      type: feat
+  createdAt: "2026-03-31"
+  irVersion: 65
+
+- version: 5.1.3
+  changelogEntry:
+    - summary: |
+        Add transport-level connection error retries to the HTTP client. The retry logic now
+        catches `httpx.ConnectError` and `httpx.RemoteProtocolError` (e.g., "Remote end closed
+        connection without response") and retries with exponential backoff, matching the existing
+        status-code-based retry behavior. Also fixes the existing status-code retry path to
+        forward the `data` and `force_multipart` parameters on retry.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 5.1.2
+  changelogEntry:
+    - summary: |
+        Pretty-print generated wiremock-mappings.json with 2-space indentation
+        to reduce diff sizes on subsequent SDK generations.
+      type: chore
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 5.1.1
+  changelogEntry:
+    - summary: |
+        Ensure `async_token` is accepted and forwarded in generated async client constructors
+        for bearer token auth. Previously, `AsyncClientWrapper` supported `async_token` but
+        the top-level async client only exposed it for OAuth client credentials flows, causing
+        sync token callables to block the event loop in async contexts.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 5.1.0
+  changelogEntry:
+    - summary: |
+        Add Environments section to generated README showing how to select
+        different environments (production/sandbox) when initializing the client.
+      type: feat
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 5.0.8
+  changelogEntry:
+    - summary: |
+        Eliminate Pydantic v2 deprecation warnings in `UniversalBaseModel`. Under Pydantic v2,
+        the class-based `Config` pattern with `smart_union` and `allow_population_by_field_name`
+        emits deprecation warnings. `UniversalBaseModel` now uses `model_config: ConfigDict` with
+        `populate_by_name=True`, `validate_by_name=True`, and `validate_by_alias=True` (for v2.11+
+        support) for v2, and a custom `@model_serializer` for datetime serialization instead of
+        the deprecated `json_encoders`. Pydantic v1 continues to use the original class-based Config.
+      type: fix
+  createdAt: "2026-03-26"
+  irVersion: 65
+
+- version: 5.0.7
+  changelogEntry:
+    - summary: |
+        Thread endpoint ID through dynamic snippet generator to differentiate
+        generated snippets by endpoint.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 5.0.6
+  changelogEntry:
+    - summary: |
+        Fix `construct_type` to resolve `ForwardRef` annotations in nested model fields
+        and use strict Literal discriminant matching for undiscriminated unions.
+
+        Under Pydantic v2 with `from __future__ import annotations`, field annotations
+        like `List["Block"]` remain as `list[ForwardRef('Block')]` even after
+        `model_rebuild`. `construct_type` now resolves these ForwardRefs via the host
+        model's module, ensuring nested data is recursively constructed into proper model
+        instances instead of staying as raw dicts.
+
+        Additionally, undiscriminated union resolution now requires Literal-typed
+        discriminant fields to be present AND matching before accepting a candidate type.
+        This prevents models with all-optional fields (e.g. `FigureDetails`) from greedily
+        matching inputs that belong to a different variant or to a plain-dict fallback.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 5.0.5
+  changelogEntry:
+    - summary: |
+        Add enum handling to `construct_type()` to prevent Pydantic serialization warnings
+        when enum values pass through untyped model construction paths.
+      type: fix
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 5.0.4
+  changelogEntry:
+    - summary: |
+        Fix optional complex-type parameters in multipart file upload requests being
+        sent as `"null"` instead of being omitted. When an optional body property
+        (e.g., `Optional[List[str]]`, `Optional[Any]`) defaults to `OMIT`,
+        `json.dumps(jsonable_encoder(OMIT))` was evaluating to the string `"null"`,
+        destroying the OMIT sentinel before `remove_omit_from_dict` could strip it.
+        Optional non-primitive body properties now emit a ternary guard
+        (`json.dumps(...) if prop is not OMIT else OMIT`) so that the OMIT sentinel
+        is preserved and correctly removed from the request data.
+      type: fix
+  createdAt: "2026-03-18"
+  irVersion: 65
+
+- version: 5.0.3
+  changelogEntry:
+    - summary: |
+        Skip Docker container management in generated `tests/conftest.py` when the
+        `WIREMOCK_URL` environment variable is already set. This allows wire tests to
+        run in CI/CD pipelines that provide an external WireMock sidecar container
+        without requiring Docker-in-Docker support.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 5.0.2
+  changelogEntry:
+    - summary: |
+        Add docstring emission for unknown/any type alias definitions. When a type alias
+        resolves to `typing.Any` and has a description in the API definition, the generated
+        Python code now includes the docstring below the type alias declaration.
+      type: fix
+  createdAt: "2026-03-17"
+  irVersion: 65
+
+- version: 5.0.1
+  changelogEntry:
+    - summary: |
+        Upgrade `pytest-asyncio` dev dependency from `^0.23.5` to `^1.0.0` in generated
+        `pyproject.toml`. This eliminates deprecation warnings about `asyncio.iscoroutinefunction`,
+        `asyncio.get_event_loop_policy`, and `asyncio.set_event_loop_policy` when running tests
+        on Python 3.14+.
+      type: chore
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 5.0.0
+  changelogEntry:
+    - summary: |
+        Raise the default minimum Python version from `^3.8` to `^3.10` in generated
+        `pyproject.toml`. This allows the dependency resolver to pick Pydantic 2.11+ and
+        pydantic-core 2.33+, which ship pre-built wheels for Python 3.14, fixing
+        installation failures on Python 3.14.
+      type: feat
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 4.64.1
+  changelogEntry:
+    - summary: |
+        Wrap `python-version` in quotes in generated GitHub CI workflow so versions like
+        `^3.10` are not misinterpreted as `3.1` by the YAML parser.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 65
+
+- version: 4.64.0
+  changelogEntry:
+    - summary: |
+        Add `omit_fern_headers` configuration option. When enabled, Fern platform headers
+        (X-Fern-Language, X-Fern-SDK-Name, X-Fern-SDK-Version, X-Fern-Runtime,
+        X-Fern-Platform, User-Agent) are omitted from generated SDK requests.
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 4.63.6
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for types with required fields missing from examples.
+        When an OpenAPI example omits required fields on a nested object type, the generated
+        test code now synthesizes reasonable default values (e.g., `""` for strings, `1` for
+        integers, `[]` for lists) instead of emitting empty constructors like `ClassName()`
+        that cause Pydantic `ValidationError` at runtime.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 4.63.5
+  changelogEntry:
+    - summary: |
+        Fix Python 3.14 compatibility by fully eliminating all `pydantic.v1` imports from the
+        Pydantic V2 code path. The previous fix (4.55.4) replaced `pydantic.v1.datetime_parse`
+        but left other `pydantic.v1` imports (typing utilities, json encoders, fields) that still
+        trigger the "Core Pydantic V1 functionality isn't compatible with Python 3.14" warning.
+        All `pydantic.v1` usages are now replaced with standard library equivalents
+        (`typing.get_args`, `typing.get_origin`, `typing_extensions.Literal`), Pydantic V2 APIs
+        (`pydantic.fields.FieldInfo`), and an inlined `encoders_by_type` dictionary.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 4.63.4
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 4.63.3
+  changelogEntry:
+    - summary: |
+        Make wire test datetime normalization type-aware. String-typed query parameters
+        that look like datetimes (e.g., `created_after: str`) are no longer incorrectly
+        normalized with `.000` milliseconds. Only `DATE_TIME`-typed parameters are affected
+        by the `datetime_milliseconds` config.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 4.63.2
+  changelogEntry:
+    - summary: |
+        Fix wire test datetime format mismatch. When `datetime_milliseconds` is false (default),
+        WireMock stubs are now stripped of `.000` milliseconds to match the SDK's default
+        `serialize_datetime` output. When true, test verification values include `.000` to match
+        millisecond-precision output. Fixes wire test failures for APIs with datetime query parameters.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 4.63.1
+  changelogEntry:
+    - summary: |
+        Fix socket client generation to use keyword arguments when calling `construct_type`.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 4.63.0
+  changelogEntry:
+    - summary: |
+        Add `datetime_milliseconds` custom config option. When set to `true`,
+        `serialize_datetime` always includes millisecond precision in ISO 8601 output
+        (e.g., `2008-01-02T00:00:00.000Z` instead of `2008-01-02T00:00:00Z`).
+        Useful for APIs that require a fixed-width datetime format with fractional seconds.
+        Default behavior is unchanged.
+      type: feat
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 4.62.4
+  changelogEntry:
+    - summary: |
+        Re-throw errors after logging for README.md and reference.md generation failures.
+        Documentation generation errors now break the generation flow so they are treated
+        as important to fix.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 4.62.3
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 4.62.2
+  changelogEntry:
+    - summary: |
+        Improve error logging for reference.md generation failures. The generator
+        now logs the actual error message and stack trace instead of a generic
+        "this is OK" message, making it easier to diagnose generation issues.
+      type: chore
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.62.1
+  changelogEntry:
+    - summary: |
+        SDK clients now catch `pydantic.ValidationError` during response parsing and
+        wrap it in `ParsingError` with the response body, headers, status code and cause. Previously,
+        validation errors from `parse_obj_as` would bubble up raw, preventing users from
+        inspecting the actual API response.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 4.62.0
+  changelogEntry:
+    - summary: |
+        Add `README.md` and `reference.md` generation to the python-v2 SDK generator.
+        The v2 generator now produces README documentation with feature snippets
+        (installation, usage, timeouts, custom client, exception handling, raw responses,
+        websockets, custom sections) and endpoint reference documentation.
+      type: feat
+    - summary: |
+        Format AST output with trailing commas in multiline function calls and
+        inline list/dict formatting for improved code readability.
+      type: chore
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.61.5
+  changelogEntry:
+    - summary: |
+        Fix WebSocket client generation to respect `pydantic_config.skip_validation: true`.
+        Previously, socket clients always used `parse_obj_as` (full Pydantic validation)
+        regardless of the skip_validation flag. They now correctly use `construct_type`
+        (no validation) when the flag is enabled, matching the behavior of HTTP clients.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.61.4
+  changelogEntry:
+    - summary: |
+        WebSocket clients now gracefully handle unknown message types instead of crashing.
+        When the server sends a message type not yet in the SDK's union, the client logs a
+        warning and skips the message rather than killing the connection with a validation error.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 4.61.3
+  changelogEntry:
+    - summary: |
+        Standardize WireMock configuration to use `WIREMOCK_URL` environment variable
+        (e.g., `http://localhost:8080`) instead of `WIREMOCK_PORT`. The conftest plugin
+        now sets `WIREMOCK_URL` after discovering the dynamically assigned port. Falls
+        back to `http://localhost:8080` if the variable is not set.
+      type: chore
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 4.61.2
+  changelogEntry:
+    - summary: |
+        Re-add `@fern-api/generator-cli` to Python SDK Docker image. The CLI was inadvertently
+        removed in 4.60.1 when JS-based generators migrated to using the generator-cli JS API
+        directly. The Python generator still relies on the CLI binary via subprocess for
+        README.md and reference.md generation.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 4.61.1
+  changelogEntry:
+    - summary: |
+        Fix `positional_single_property_constructors` breaking pydantic response deserialization.
+        The custom `__init__` now uses `@typing.overload` with a permissive `*args, **kwargs` runtime
+        signature, so pydantic can pass alias-keyed data freely during deserialization while still
+        allowing positional construction like `Wrapper("value")`.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 4.61.0
+  changelogEntry:
+    - summary: |
+        Add support for `DATE_TIME_RFC_2822` primitive type. Fields with `format: date-time-rfc-2822`
+        in OpenAPI specs now generate as `Rfc2822DateTime` (a `datetime.datetime` subclass) that
+        parses RFC 2822 date strings (e.g., "Wed, 02 Oct 2002 13:00:00 GMT") using Python's
+        `email.utils.parsedate_to_datetime`. Compatible with both Pydantic V1 (`__get_validators__`)
+        and V2 (`__get_pydantic_core_schema__`), passing mypy strict type checking.
+      type: feat
+    - summary: |
+        Fix code snippet generation for RFC 2822 datetime fields to use
+        `email.utils.parsedate_to_datetime()` with RFC 2822 format strings instead of
+        `datetime.fromisoformat()` with ISO 8601 format.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 4.60.2
+  changelogEntry:
+    - summary: |
+        Fix `explode: false` query parameter serialization for array types. When an OpenAPI spec
+        sets `explode: false` on an array query parameter, the generated SDK now serializes values
+        as comma-separated strings (e.g. `tags=A,B,C`) instead of repeated keys (e.g. `tags=A&tags=B&tags=C`).
+        This applies to both regular and streaming endpoints.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 4.60.1
+  changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 4.60.0
+  changelogEntry:
+    - summary: |
+        Support `connectMethodName` on WebSocket channels. When a channel specifies a custom
+        connection method name via `x-fern-sdk-method-name`, the generated SDK uses that name
+        (converted to snake_case) instead of the default `connect`.
+      type: feat
+  createdAt: "2026-02-25"
+  irVersion: 65
+- version: 4.59.4
+  changelogEntry:
+    - summary: |
+        Fix wire test import generation for organizations with hyphens in their name.
+        Use `package_name` from custom config when available, and auto-convert hyphens
+        to underscores in the fallback module path to produce valid Python import statements.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 4.59.3
+  changelogEntry:
+    - summary: Fix bytes body snippet generation to use `request` parameter name instead of dynamic IR body key.
+      type: fix
+    - summary: Skip wire test generation for bytes request body endpoints, which lack IR example support.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+
+- version: 4.59.2
+  changelogEntry:
+    - summary: |
+        Generate an appropriate `client.py` file when `client.exported_filename` differs from `client.filename`.
+        Previously, the `__init__.py` would import from the exported filename (e.g., `client.py`) but
+        that file was never created, causing mypy `import-not-found` errors.
+      type: fix
+  createdAt: "2026-02-20"
+  irVersion: 65
+
+- version: 4.59.1
+  changelogEntry:
+    - summary: Fix wire test imports to respect package_name custom config, preventing import errors when users specify custom package names
+      type: fix
+  createdAt: "2026-02-23"
+  irVersion: 65
+
+- version: 4.59.0
+  changelogEntry:
+    - summary: |
+        Add `offsetSemantics` custom config option. When set to `"page-index"`, offset pagination
+        increments by 1 each page instead of by the number of items returned (`"item-index"`, the default).
+      type: feat
+  createdAt: "2026-02-17"
+  irVersion: 65
+
+- version: 4.58.1
+  changelogEntry:
+    - summary: |
+        Export `ConsoleLogger` and `ILogger` from the `core` module, allowing users to import
+        and use them directly:
+
+        ```python
+        from acme.core import ConsoleLogger, ILogger
+        ```
+      type: fix
+  createdAt: "2026-02-18"
+  irVersion: 65
+
+- version: 4.58.0
+  changelogEntry:
+    - summary: |
+        Add support for logging to the generated SDK.
+        Users can configure the logger by passing in a `logging` parameter to the client constructor.
+
+        ```python
+        from acme import AcmeClient
+        from acme.core import ConsoleLogger
+
+        client = AcmeClient(
+            token="YOUR_TOKEN",
+            logging={
+                "level": "debug",  # "info" is the default
+                "logger": ConsoleLogger(),  # ConsoleLogger is the default
+                "silent": False,  # True is the default, set to False to enable logging
+            }
+        )
+        ```
+
+        The `logging` parameter accepts a `LogConfig` dict with the following properties:
+        - `level`: The log level to use. Defaults to `"info"`.
+        - `logger`: The logger to use. Defaults to `ConsoleLogger`.
+        - `silent`: Whether to silence the logger. Defaults to `True`.
+
+        The `level` property can be one of the following values:
+        - `"debug"`
+        - `"info"`
+        - `"warn"`
+        - `"error"`
+
+        To provide a custom logger, pass an object implementing the `ILogger` protocol
+        with `debug`, `info`, `warn`, and `error` methods.
+
+        Sensitive headers (`authorization`, `x-api-key`, `cookie`, etc.) are automatically
+        redacted in logs.
+      type: feat
+  createdAt: "2026-02-10"
+  irVersion: 65
+
+- version: 4.57.3
+  changelogEntry:
+    - summary: |
+        Handle optional access tokens in OAuth token provider by raising `RuntimeError`
+        when the token is `None`. Fix wire test setup to use `client_id`/`client_secret`
+        for OAuth client credentials and expect 2 requests when testing the token endpoint.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 65
+
+- version: 4.57.2
+  changelogEntry:
+    - summary: |
+        Fix path-based pagination to pass the next page path as `path=` instead of `url=`
+        in the generated HTTP client request call.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 65
+
+- version: 4.57.1
+  changelogEntry:
+    - summary: |
+        Only copy `custom_pagination.py` into generated SDKs when custom pagination endpoints
+        are present, and only copy `pagination.py` when standard pagination endpoints are present.
+      type: fix
+  createdAt: "2026-02-12"
+  irVersion: 65
+
+- version: 4.57.0
+  changelogEntry:
+    - summary: |
+        Add `custom_transport: true` generator config option that exposes an `http_client` parameter
+        on generated client constructors for custom httpx transport injection.
+
+        **Primary use case:** Enables PKCE (Proof Key for Code Exchange) OAuth flows and other
+        authentication schemes that require request interception at the transport layer.
+
+        **Configuration:**
+        ```yaml
+        generators:
+          - name: fernapi/fern-python-sdk
+            config:
+              custom_transport: true
+        ```
+
+        **Generated parameter types:**
+        - Sync client: `http_client: typing.Optional[httpx.BaseTransport]`
+        - Async client: `http_client: typing.Optional[httpx.AsyncBaseTransport]`
+
+        **Use cases:**
+        - PKCE OAuth authentication flows requiring code challenge/verifier injection
+        - Custom request signing or authentication header manipulation
+        - Request/response interception and modification
+        - Mock transports for testing without network calls
+        - Custom retry logic beyond the built-in exponential backoff
+
+        **Example pattern (Twilio SDK style):**
+        ```python
+        # SDK developer provides a factory method in custom code
+        class ValidationClient:
+            @classmethod
+            def create(cls, account_sid: str, auth_token: str) -> httpx.BaseTransport:
+                # Custom transport with PKCE or validation logic
+                return CustomValidationTransport(account_sid, auth_token)
+
+        # End-user usage
+        from myapi import MyClient, ValidationClient
+
+        validation_transport = ValidationClient.create("account_sid", "auth_token")
+        client = MyClient(http_client=validation_transport, base_url="https://api.example.com")
+        ```
+
+        This feature allows SDK developers to defer transport-specific logic to custom code while
+        the generator simply threads the transport through to `httpx.Client`/`httpx.AsyncClient`.
+      type: feat
+  createdAt: "2026-02-12"
+  irVersion: 65
+
+- version: 4.56.0
+  changelogEntry:
+    - summary: |
+        Add support for URI and path-based pagination.
+      type: feat
+  createdAt: "2026-02-11"
+  irVersion: 65
+- version: 4.55.5
+  changelogEntry:
+    - summary: |
+        Compute Docker Compose project name during generation to avoid invalid characters from runtime directory names (e.g. `.seed`).
+      type: fix
+    - summary: |
+        Cache client constructor signature check at module level and use httpx instead of requests for WireMock admin calls in generated wire test conftest.
+      type: chore
+  createdAt: "2026-02-11"
+  irVersion: 63
+
+- version: 4.55.4
+  changelogEntry:
+    - summary: |
+        Fix Python 3.14 compatibility by replacing `pydantic.v1.datetime_parse` imports with
+        Pydantic V2 `TypeAdapter`-based `parse_date`/`parse_datetime` implementations. Remaining
+        `pydantic.v1` imports are wrapped with warning suppression to avoid the
+        "Core Pydantic V1 functionality isn't compatible with Python 3.14" warning.
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
+
+- version: 4.55.3
+  changelogEntry:
+    - summary: |
+        Fix body property named `json` clashing with the `json` module import when generating
+        `json.dumps(jsonable_encoder(...))` for multipart file upload requests. The `json` module
+        is now aliased as `_json` when a body property named `json` is detected.
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
+
+- version: 4.55.2
+  changelogEntry:
+    - summary: |
+        Add websocket compatibility shim for websockets library v14. The generated SDK now
+        uses a `core/websocket_compat.py` module that abstracts the `InvalidStatusCode` vs
+        `InvalidStatus` exception difference, ensuring compatibility with both websockets
+        v12-13 and v14+.
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
+
 - version: 4.55.1
   changelogEntry:
     - summary: |
@@ -11,11 +777,49 @@
 - version: 4.55.0
   changelogEntry:
     - summary: |
-        Add support for server URL templating. Server variables defined in OpenAPI specs are
-        now exposed as optional constructor parameters (e.g., `region`, `city`) with runtime
-        URL template interpolation. When `x-fern-default-url` is present, the generated SDK
-        uses that as the environment default. Works for both single and multiple base URL
-        environments.
+        Add support for server URL templating with OpenAPI server variables. This enables
+        dynamic base URL construction at runtime based on user-provided configuration.
+
+        **OpenAPI definition example:**
+        ```yaml
+        servers:
+          - url: https://api.{region}.{environment}.example.com/v1
+            variables:
+              region:
+                default: us-east-1
+                enum: [us-east-1, us-west-2, eu-west-1]
+              environment:
+                default: prod
+                enum: [prod, staging, dev]
+        ```
+
+        **Generated constructor parameters:**
+        Server variables are exposed as optional constructor parameters with their default values:
+        - `region: typing.Optional[str]` - defaults to `"us-east-1"`
+        - `server_url_environment: typing.Optional[str]` - defaults to `"prod"` (prefixed to avoid shadowing)
+
+        **Runtime URL interpolation:**
+        When server variables are provided, the SDK performs runtime URL template interpolation:
+        ```python
+        from seed import SeedApi
+
+        # Uses default: https://api.us-east-1.prod.example.com/v1
+        client = SeedApi()
+
+        # Custom region: https://api.eu-west-1.prod.example.com/v1
+        client = SeedApi(region="eu-west-1")
+
+        # Custom region and environment: https://api.us-west-2.staging.example.com/v1
+        client = SeedApi(region="us-west-2", server_url_environment="staging")
+        ```
+
+        **Multiple base URL environments:**
+        For APIs with multiple base URLs (e.g., separate `base` and `auth` URLs), each URL
+        template is interpolated independently with the same server variables.
+
+        **`x-fern-default-url` extension:**
+        When present in the OpenAPI spec, this extension specifies which server URL should
+        be used as the default environment, overriding the first server in the list.
       type: feat
   createdAt: "2026-02-05"
   irVersion: 63

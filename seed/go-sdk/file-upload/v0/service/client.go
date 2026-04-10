@@ -4,11 +4,12 @@ package service
 
 import (
 	context "context"
+	io "io"
+
 	fern "github.com/file-upload/fern"
 	core "github.com/file-upload/fern/core"
 	internal "github.com/file-upload/fern/internal"
 	option "github.com/file-upload/fern/option"
-	io "io"
 )
 
 type Client struct {
@@ -194,6 +195,24 @@ func (c *Client) WithInlineType(
 	opts ...option.RequestOption,
 ) (string, error) {
 	response, err := c.WithRawResponse.WithInlineType(
+		ctx,
+		file,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) WithJSONProperty(
+	ctx context.Context,
+	file io.Reader,
+	request *fern.WithJSONPropertyRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.WithJSONProperty(
 		ctx,
 		file,
 		request,

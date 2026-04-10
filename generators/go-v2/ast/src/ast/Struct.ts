@@ -1,10 +1,10 @@
-import { Comment } from "./Comment";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { Field } from "./Field";
-import { GoTypeReference } from "./GoTypeReference";
-import { Method } from "./Method";
-import { Parameter } from "./Parameter";
+import { Comment } from "./Comment.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { Field } from "./Field.js";
+import { GoTypeReference } from "./GoTypeReference.js";
+import { Method } from "./Method.js";
+import { Parameter } from "./Parameter.js";
 
 export declare namespace Struct {
     interface Args {

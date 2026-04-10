@@ -1,26 +1,21 @@
+import { getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 import { WireMockMapping } from "@fern-api/mock-utils";
-import {
-    dynamic,
-    ExampleEndpointCall,
-    FernFilepath,
-    HttpEndpoint,
-    HttpService,
-    PrimitiveTypeV1,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
-import { OAuthWireTestGenerator } from "./OAuthWireTestGenerator";
-import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
+import { InferredAuthWireTestGenerator } from "./InferredAuthWireTestGenerator.js";
+import { OAuthWireTestGenerator } from "./OAuthWireTestGenerator.js";
+import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
-    private dynamicIr: dynamic.DynamicIntermediateRepresentation;
+    private dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
     private wireMockConfigContent: Record<string, WireMockMapping>;
 
@@ -28,7 +23,7 @@ export class WireTestGenerator {
         this.context = context;
         const dynamicIr = this.context.ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without dynamic IR");
+            throw new Error("Cannot generate wire tests without FernIr.dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
@@ -65,7 +60,10 @@ export class WireTestGenerator {
         const endpointsByService = this.groupEndpointsByService();
         const filePathsByServiceName = this.getFilePathsByServiceName();
 
-        for (const [serviceName, endpoints] of endpointsByService.entries()) {
+        const sortedServices = Array.from(endpointsByService.entries()).sort(([a], [b]) =>
+            a < b ? -1 : a > b ? 1 : 0
+        );
+        for (const [serviceName, endpoints] of sortedServices) {
             const endpointsWithExamples = endpoints.filter((endpoint) => {
                 const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
                 return dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0;
@@ -96,15 +94,29 @@ export class WireTestGenerator {
         if (oauthTestFile != null) {
             this.context.project.addGoFiles(oauthTestFile);
         }
+
+        // Generate inferred auth wire tests if the API uses inferred auth
+        const inferredAuthTestGenerator = new InferredAuthWireTestGenerator(this.context);
+        const inferredAuthTestFile = inferredAuthTestGenerator.generate();
+        if (inferredAuthTestFile != null) {
+            this.context.project.addGoFiles(inferredAuthTestFile);
+        }
     }
 
     private async generateServiceTestFile(
         serviceName: string,
-        endpoints: HttpEndpoint[],
-        filePath: FernFilepath
+        endpoints: FernIr.HttpEndpoint[],
+        filePath: FernIr.FernFilepath
     ): Promise<GoFile> {
         const endpointTestCases = new Map<string, string>();
         for (const endpoint of endpoints) {
+            // Skip bytes request body endpoints — they cannot be properly exercised in wire tests
+            // and have no corresponding wiremock mappings (wiremock mapping generation also skips them).
+            if (endpoint.requestBody?.type === "bytes") {
+                this.context.logger.debug(`Skipping wire test for endpoint ${endpoint.id} - bytes request body`);
+                continue;
+            }
+
             // Skip endpoints that return primitive date types due to Go SDK date parsing issue
             // (Go's time.Time JSON unmarshaling expects RFC3339 datetime format, not date-only)
             if (this.endpointReturnsPrimitiveDate(endpoint)) {
@@ -135,7 +147,7 @@ export class WireTestGenerator {
         imports.set("http", "net/http");
         imports.set("bytes", "bytes");
         imports.set("encoding/json", "encoding/json");
-        imports.set("os", "os"); // For reading WIREMOCK_PORT env var
+        imports.set("os", "os"); // For reading WIREMOCK_URL env var
 
         // Track test function name counts to generate unique names for duplicates (e.g., Test1, Test2, Test3)
         const testFunctionNameCounts = new Map<string, number>();
@@ -171,7 +183,8 @@ export class WireTestGenerator {
             .filter((endpointTestCaseCodeBlock) => endpointTestCaseCodeBlock !== null);
 
         const serviceTestFileContent = go.codeblock((writer) => {
-            for (const [_, importPath] of imports.entries()) {
+            const sortedImports = Array.from(imports.entries()).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+            for (const [_, importPath] of sortedImports) {
                 // Manually add any imports that were used in the snippet (client/request types)
                 // but that may not be used in the rest of the generated test file and therefore would be missed
                 writer.addImport(importPath);
@@ -203,7 +216,7 @@ export class WireTestGenerator {
             filename: serviceName + "_test.go",
             packageName: `${serviceName}_test`,
             rootImportPath: this.context.getRootImportPath(),
-            importPath: "", // unecessary for wire tests since nothing will import FROM this file
+            importPath: "", // unnecessary for wire tests since nothing will import FROM this file
             customConfig: this.context.customConfig ?? {},
             formatter: undefined
         });
@@ -242,10 +255,10 @@ export class WireTestGenerator {
                 return_: [],
                 body: go.codeblock((writer) => {
                     // Build the request body for WireMock's requests/find endpoint
-                    // Use WIREMOCK_PORT env var if set (for parallel test execution), otherwise default to 8080
+                    // Use WIREMOCK_URL env var if set (for orchestration), otherwise default to http://localhost:8080
                     writer.writeNode(
                         go.codeblock(
-                            'wiremockPort := os.Getenv("WIREMOCK_PORT")\n\tif wiremockPort == "" {\n\t\twiremockPort = "8080"\n\t}\n\tWiremockAdminURL := "http://localhost:" + wiremockPort + "/__admin"'
+                            'wiremockURL := os.Getenv("WIREMOCK_URL")\n\tif wiremockURL == "" {\n\t\twiremockURL = "http://localhost:8080"\n\t}\n\tWiremockAdminURL := wiremockURL + "/__admin"'
                         )
                     );
                     writer.newLine();
@@ -317,7 +330,7 @@ export class WireTestGenerator {
         );
     }
 
-    private async generateSnippetForExample(example: dynamic.EndpointExample): Promise<string> {
+    private async generateSnippetForExample(example: FernIr.dynamic.EndpointExample): Promise<string> {
         const snippetRequest = convertDynamicEndpointSnippetRequest(example);
         // Generate a wiremock test snippet with the test function wrapper
         const response = await this.dynamicSnippetsGenerator.generate(snippetRequest, {
@@ -330,7 +343,7 @@ export class WireTestGenerator {
     }
 
     private generateEndpointTestMethod(
-        endpoint: HttpEndpoint,
+        endpoint: FernIr.HttpEndpoint,
         snippet: string,
         testFunctionName: string
     ): [go.CodeBlock, Map<string, string>] {
@@ -348,10 +361,10 @@ export class WireTestGenerator {
                     ],
                     return_: [],
                     body: go.codeblock((writer) => {
-                        // Use WIREMOCK_PORT env var if set (for parallel test execution), otherwise default to 8080
+                        // Use WIREMOCK_URL env var if set (for orchestration), otherwise default to http://localhost:8080
                         writer.writeNode(
                             go.codeblock(
-                                'wiremockPort := os.Getenv("WIREMOCK_PORT")\n\tif wiremockPort == "" {\n\t\twiremockPort = "8080"\n\t}\n\tWireMockBaseURL := "http://localhost:" + wiremockPort'
+                                'WireMockBaseURL := os.Getenv("WIREMOCK_URL")\n\tif WireMockBaseURL == "" {\n\t\tWireMockBaseURL = "http://localhost:8080"\n\t}'
                             )
                         );
                         writer.newLine();
@@ -597,29 +610,79 @@ export class WireTestGenerator {
         endpoint,
         snippet
     }: {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         snippet: string;
     }): go.CodeBlock {
-        // Generate the client constructor directly with WireMockBaseURL instead of parsing from snippet
-        // The snippet uses the original constructor args (e.g., WithToken), but we need WithBaseURL
+        // Generate the client constructor with WireMockBaseURL and auth options matching the WireMock matchers.
         return go.codeblock((writer) => {
             writer.write("client := ");
+            const arguments_: go.AstNode[] = [
+                go.invokeFunc({
+                    func: go.typeReference({
+                        name: "WithBaseURL",
+                        importPath: this.context.getOptionImportPath()
+                    }),
+                    arguments_: [go.codeblock("WireMockBaseURL")],
+                    multiline: false
+                })
+            ];
+            // Add auth options when the endpoint requires authentication, so that the
+            // request matches the WireMock stub's header matchers.
+            if (endpoint.auth) {
+                for (const scheme of this.context.ir.auth.schemes) {
+                    switch (scheme.type) {
+                        case "bearer":
+                            arguments_.push(
+                                go.invokeFunc({
+                                    func: go.typeReference({
+                                        name: "WithToken",
+                                        importPath: this.context.getOptionImportPath()
+                                    }),
+                                    arguments_: [go.codeblock('"test-token"')],
+                                    multiline: false
+                                })
+                            );
+                            break;
+                        case "basic":
+                            arguments_.push(
+                                go.invokeFunc({
+                                    func: go.typeReference({
+                                        name: "WithBasicAuth",
+                                        importPath: this.context.getOptionImportPath()
+                                    }),
+                                    arguments_: [go.codeblock('"test-username"'), go.codeblock('"test-password"')],
+                                    multiline: false
+                                })
+                            );
+                            break;
+                        case "header": {
+                            const fieldName = scheme.name
+                                ? this.context.caseConverter.pascalUnsafe(getNameFromWireValue(scheme.name))
+                                : undefined;
+                            if (fieldName) {
+                                arguments_.push(
+                                    go.invokeFunc({
+                                        func: go.typeReference({
+                                            name: `With${fieldName}`,
+                                            importPath: this.context.getOptionImportPath()
+                                        }),
+                                        arguments_: [go.codeblock('"test-value"')],
+                                        multiline: false
+                                    })
+                                );
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
             writer.writeNode(
                 go.invokeFunc({
                     func: go.typeReference({
                         name: this.context.getClientConstructorName(),
                         importPath: this.context.getRootClientImportPath()
                     }),
-                    arguments_: [
-                        go.invokeFunc({
-                            func: go.typeReference({
-                                name: "WithBaseURL",
-                                importPath: this.context.getOptionImportPath()
-                            }),
-                            arguments_: [go.codeblock("WireMockBaseURL")],
-                            multiline: false
-                        })
-                    ],
+                    arguments_,
                     multiline: true
                 })
             );
@@ -631,7 +694,7 @@ export class WireTestGenerator {
         snippet,
         testFunctionName
     }: {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         snippet: string;
         testFunctionName: string;
     }): go.CodeBlock {
@@ -689,7 +752,7 @@ export class WireTestGenerator {
         });
     }
 
-    private buildBasePath(endpoint: HttpEndpoint): string {
+    private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
         let basePath =
             endpoint.fullPath.head +
             endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
@@ -729,21 +792,53 @@ export class WireTestGenerator {
             basePath = basePath.replace(`{${paramName}}`, paramValue.equalTo);
         });
 
+        // If there are still unresolved path parameter placeholders (e.g., when the example
+        // doesn't provide path parameter values), substitute them with the same default values
+        // that associateByWireValueOrDefault synthesizes (i.e., the parameter name itself).
+        // This ensures the VerifyRequestCount URL matches what the client actually sends.
+        for (const part of endpoint.fullPath.parts) {
+            const paramName = part.pathParameter;
+            if (paramName && basePath.includes(`{${paramName}}`)) {
+                basePath = basePath.replace(`{${paramName}}`, `%3C${paramName}%3E`);
+            }
+        }
+
         return basePath;
     }
 
-    private buildQueryParamsMap(endpoint: HttpEndpoint): string {
+    private buildQueryParamsMap(endpoint: FernIr.HttpEndpoint): string {
         const dynamicEndpointExample = this.getDynamicEndpointExample(endpoint);
 
         if (!dynamicEndpointExample?.queryParameters) {
             return "nil";
         }
 
+        // Build a set of query parameter wire names that have datetime type so we can
+        // normalize their values to include millisecond precision (matching RFC3339Milli
+        // format used by the Go SDK's query.go serialization).
+        const datetimeQueryParams = new Set<string>();
+        for (const qp of endpoint.queryParameters) {
+            const primitive = this.context.maybePrimitive(qp.valueType);
+            if (primitive === FernIr.PrimitiveTypeV1.DateTime) {
+                const qpWireValue = getWireValue(qp.name);
+                datetimeQueryParams.add(qpWireValue);
+            }
+        }
+
         const queryParamEntries: string[] = [];
         for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
             if (paramValue != null) {
                 const key = JSON.stringify(paramName);
-                const value = JSON.stringify(String(paramValue));
+                let stringValue = String(paramValue);
+                // Normalize datetime values to always include milliseconds, matching the
+                // Go SDK's RFC3339Milli format ("2006-01-02T15:04:05.000Z07:00").
+                if (datetimeQueryParams.has(paramName)) {
+                    const date = new Date(stringValue);
+                    if (!isNaN(date.getTime())) {
+                        stringValue = date.toISOString();
+                    }
+                }
+                const value = JSON.stringify(stringValue);
                 queryParamEntries.push(`${key}: ${value}`);
             }
         }
@@ -755,7 +850,7 @@ export class WireTestGenerator {
         return `map[string]string{${queryParamEntries.join(", ")}}`;
     }
 
-    private getDynamicEndpointExample(endpoint: HttpEndpoint): dynamic.EndpointExample | null {
+    private getDynamicEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.dynamic.EndpointExample | null {
         const example = this.dynamicIr.endpoints[endpoint.id];
         if (!example) {
             return null;
@@ -764,7 +859,7 @@ export class WireTestGenerator {
         return example.examples?.[0] ?? null;
     }
 
-    private getEndpointExample(endpoint: HttpEndpoint): ExampleEndpointCall | null {
+    private getEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.ExampleEndpointCall | null {
         const firstUserSpecifiedExample = endpoint.userSpecifiedExamples?.[0]?.example;
         const firstAutogeneratedExample = endpoint.autogeneratedExamples?.[0]?.example;
         const firstExample = firstUserSpecifiedExample ?? firstAutogeneratedExample;
@@ -776,28 +871,28 @@ export class WireTestGenerator {
         return firstExample;
     }
 
-    private getJsonSchemaType(valueType: TypeReference): string {
+    private getJsonSchemaType(valueType: FernIr.TypeReference): string {
         // Check if it's a primitive type
         const primitive = this.context.maybePrimitive(valueType);
         if (primitive != null) {
             switch (primitive) {
-                case PrimitiveTypeV1.Integer:
-                case PrimitiveTypeV1.Uint:
+                case FernIr.PrimitiveTypeV1.Integer:
+                case FernIr.PrimitiveTypeV1.Uint:
                     return '{"type": "integer"}';
-                case PrimitiveTypeV1.Long:
-                case PrimitiveTypeV1.Uint64:
+                case FernIr.PrimitiveTypeV1.Long:
+                case FernIr.PrimitiveTypeV1.Uint64:
                     return '{"type": "integer", "format": "int64"}';
-                case PrimitiveTypeV1.Float:
-                case PrimitiveTypeV1.Double:
+                case FernIr.PrimitiveTypeV1.Float:
+                case FernIr.PrimitiveTypeV1.Double:
                     return '{"type": "number"}';
-                case PrimitiveTypeV1.Boolean:
+                case FernIr.PrimitiveTypeV1.Boolean:
                     return '{"type": "boolean"}';
-                case PrimitiveTypeV1.String:
-                case PrimitiveTypeV1.Date:
-                case PrimitiveTypeV1.DateTime:
-                case PrimitiveTypeV1.Uuid:
-                case PrimitiveTypeV1.Base64:
-                case PrimitiveTypeV1.BigInteger:
+                case FernIr.PrimitiveTypeV1.String:
+                case FernIr.PrimitiveTypeV1.Date:
+                case FernIr.PrimitiveTypeV1.DateTime:
+                case FernIr.PrimitiveTypeV1.Uuid:
+                case FernIr.PrimitiveTypeV1.Base64:
+                case FernIr.PrimitiveTypeV1.BigInteger:
                     return '{"type": "string"}';
                 default:
                     return '{"type": "string"}';
@@ -852,7 +947,7 @@ export class WireTestGenerator {
         return '{"type": "string"}';
     }
 
-    private buildFullPath(endpoint: HttpEndpoint): string {
+    private buildFullPath(endpoint: FernIr.HttpEndpoint): string {
         const parts = endpoint.fullPath.parts;
         let fullPath = endpoint.fullPath.head.startsWith("/") ? endpoint.fullPath.head : "/" + endpoint.fullPath.head;
 
@@ -866,8 +961,8 @@ export class WireTestGenerator {
         return fullPath;
     }
 
-    private groupEndpointsByService(): Map<string, HttpEndpoint[]> {
-        const endpointsByService = new Map<string, HttpEndpoint[]>();
+    private groupEndpointsByService(): Map<string, FernIr.HttpEndpoint[]> {
+        const endpointsByService = new Map<string, FernIr.HttpEndpoint[]>();
 
         for (const service of Object.values(this.context.ir.services)) {
             const serviceName = this.getFormattedServiceName(service);
@@ -878,8 +973,8 @@ export class WireTestGenerator {
         return endpointsByService;
     }
 
-    private getFilePathsByServiceName(): Map<string, FernFilepath> {
-        const filePathsByServiceName = new Map<string, FernFilepath>();
+    private getFilePathsByServiceName(): Map<string, FernIr.FernFilepath> {
+        const filePathsByServiceName = new Map<string, FernIr.FernFilepath>();
         for (const service of Object.values(this.context.ir.services)) {
             const serviceName = this.getFormattedServiceName(service);
             filePathsByServiceName.set(serviceName, service.name?.fernFilepath);
@@ -887,8 +982,11 @@ export class WireTestGenerator {
         return filePathsByServiceName;
     }
 
-    private getFormattedServiceName(service: HttpService): string {
-        return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
+    private getFormattedServiceName(service: FernIr.HttpService): string {
+        return (
+            service.name?.fernFilepath?.allParts?.map((part) => this.context.caseConverter.snakeSafe(part)).join("_") ||
+            "root"
+        );
     }
 
     /**
@@ -897,7 +995,7 @@ export class WireTestGenerator {
      * but Go's standard library expects RFC3339 format (datetime) for JSON unmarshaling.
      * This causes wire tests to fail when the mock server returns date-only strings.
      */
-    private endpointReturnsPrimitiveDate(endpoint: HttpEndpoint): boolean {
+    private endpointReturnsPrimitiveDate(endpoint: FernIr.HttpEndpoint): boolean {
         const response = endpoint.response;
         if (response == null) {
             return false;
@@ -907,7 +1005,7 @@ export class WireTestGenerator {
             if (responseType.type === "response") {
                 const bodyType = responseType.responseBodyType;
                 const primitive = this.context.maybePrimitive(bodyType);
-                if (primitive === PrimitiveTypeV1.Date) {
+                if (primitive === FernIr.PrimitiveTypeV1.Date) {
                     return true;
                 }
             }

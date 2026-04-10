@@ -23,3 +23,5 @@ export interface Cat {
     name: string;
     likesToMeow: boolean;
 }
+
+export type MixedType = number | boolean | string | string[];

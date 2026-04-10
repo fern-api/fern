@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { ReadmeSchema } from "./ReadmeSchema";
-import { SdkTargetSchema } from "./SdkTargetSchema";
+import { ReadmeSchema } from "./ReadmeSchema.js";
+import { SdkTargetSchema } from "./SdkTargetSchema.js";
 
 export const SdksSchema = z.object({
     autorelease: z.boolean().optional(),

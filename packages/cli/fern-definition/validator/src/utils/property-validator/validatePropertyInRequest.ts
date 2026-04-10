@@ -1,8 +1,8 @@
 import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 
-import { RuleViolation } from "../../Rule";
-import { getAllPropertiesForRawObjectSchema, validatePropertyInType } from "./validatePropertyInType";
+import { RuleViolation } from "../../Rule.js";
+import { getAllPropertiesForRawObjectSchema, validatePropertyInType } from "./validatePropertyInType.js";
 
 export declare namespace ValidatePropertyInRequest {
     interface Args {

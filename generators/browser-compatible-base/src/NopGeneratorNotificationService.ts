@@ -1,6 +1,6 @@
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
-import { AbstractGeneratorNotificationService } from "./AbstractGeneratorNotificationService";
+import { AbstractGeneratorNotificationService } from "./AbstractGeneratorNotificationService.js";
 
 export class NopGeneratorNotificationService extends AbstractGeneratorNotificationService {
     public bufferUpdate(_: FernGeneratorExec.GeneratorUpdate): void {

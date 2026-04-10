@@ -62,3 +62,26 @@ func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {
 		MaxAttempts: attempts,
 	}
 }
+
+// WithMaxStreamBufSize configures the maximum buffer size for streaming responses.
+// This controls the maximum size of a single message (in bytes) that the stream
+// can process. By default, this is set to 1MB.
+func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
+	return &core.MaxBufSizeOption{
+		MaxBufSize: size,
+	}
+}
+
+// WithClientID sets the clientID auth request parameter.
+func WithClientID(clientID string) *core.ClientIDOption {
+	return &core.ClientIDOption{
+		ClientID: clientID,
+	}
+}
+
+// WithClientSecret sets the clientSecret auth request parameter.
+func WithClientSecret(clientSecret string) *core.ClientSecretOption {
+	return &core.ClientSecretOption{
+		ClientSecret: clientSecret,
+	}
+}

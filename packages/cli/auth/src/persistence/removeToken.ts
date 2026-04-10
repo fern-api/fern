@@ -1,5 +1,5 @@
 import { unlink } from "fs/promises";
-import { getPathToTokenFile } from "./getPathToTokenFile";
+import { getPathToTokenFile } from "./getPathToTokenFile.js";
 
 export async function removeToken(): Promise<void> {
     const pathToTokenFile = getPathToTokenFile();

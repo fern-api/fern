@@ -6,8 +6,8 @@ import { Server } from "http";
 import { noop } from "lodash-es";
 import urlJoin from "url-join";
 
-import { NotEqual } from "./equal/EqualRequestResponse";
-import { requestEqual } from "./equal/requestEqual";
+import { NotEqual } from "./equal/EqualRequestResponse.js";
+import { requestEqual } from "./equal/requestEqual.js";
 
 type RequestHandler = (req: Request, res: Response) => void;
 

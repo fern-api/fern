@@ -1,4 +1,4 @@
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 export const ValidEndpointPathRule: Rule = {
     name: "valid-endpoint-path",

@@ -16,7 +16,7 @@ import {
 } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
+import { FernStreamingExtension } from "../../extensions/x-fern-streaming.js";
 
 export declare namespace ResponseBodyConverter {
     export interface Args extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Args {
@@ -85,7 +85,17 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         if (this.streamingExtension.type === "stream") {
             const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
             const contentTypes = Object.keys(this.responseBody.content ?? {});
-            for (const contentType of contentTypes) {
+
+            // When format is SSE, prefer text/event-stream content type over others
+            const sortedContentTypes =
+                this.streamingExtension.format === "sse"
+                    ? [
+                          ...contentTypes.filter((type) => type.includes("text/event-stream")),
+                          ...contentTypes.filter((type) => !type.includes("text/event-stream"))
+                      ]
+                    : contentTypes;
+
+            for (const contentType of sortedContentTypes) {
                 const mediaTypeObject = this.responseBody.content?.[contentType];
                 if (mediaTypeObject == null) {
                     continue;
@@ -164,14 +174,30 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             }
         }
 
-        // For success status codes (2xx), return an empty response instead of undefined
+        // For success status codes (2xx), return an empty response instead of undefined.
+        // Skip 204 No Content responses — they have no body by definition,
+        // and creating a synthetic body would prevent generators from detecting
+        // the no-content case and making the return type optional.
         const statusCodeNum = parseInt(this.statusCode);
-        if (!isNaN(statusCodeNum) && statusCodeNum >= 200 && statusCodeNum < 300) {
+        if (!isNaN(statusCodeNum) && statusCodeNum >= 200 && statusCodeNum < 300 && statusCodeNum !== 204) {
+            // Preserve examples from the original media type object when the response
+            // has no schema but does have examples (e.g., OpenAPI specs that define
+            // response examples without a corresponding schema).
+            const originalJsonMediaTypeObject = jsonContentTypes
+                .map((ct) => this.responseBody.content?.[ct])
+                .find((mto) => mto != null);
+
             const mediaTypeObject: OpenAPIV3_1.MediaTypeObject = {
                 schema: {
                     type: "object",
                     description: "Empty response body"
-                }
+                },
+                ...(originalJsonMediaTypeObject?.examples != null && {
+                    examples: originalJsonMediaTypeObject.examples
+                }),
+                ...(originalJsonMediaTypeObject?.example != null && {
+                    example: originalJsonMediaTypeObject.example
+                })
             };
 
             const convertedSchema = this.parseMediaTypeObject({
@@ -222,7 +248,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 StreamingResponse.json({
                     docs: description,
                     payload: convertedStreamingSchema.type,
-                    terminator: undefined,
+                    terminator: this.streamingExtension?.terminator,
                     v2Examples: convertedStreamingSchema.schema?.typeDeclaration.v2Examples
                 })
             ),
@@ -253,7 +279,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         StreamingResponse.json({
                             docs: this.responseBody.description,
                             payload: convertedSchema.type,
-                            terminator: undefined,
+                            terminator: this.streamingExtension?.terminator,
                             v2Examples: this.convertMediaTypeObjectExamples({
                                 mediaTypeObject,
                                 generateOptionalProperties: true,
@@ -273,7 +299,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         StreamingResponse.sse({
                             docs: this.responseBody.description,
                             payload: convertedSchema.type,
-                            terminator: undefined,
+                            terminator: this.streamingExtension?.terminator,
                             v2Examples: this.convertMediaTypeObjectExamples({
                                 mediaTypeObject,
                                 generateOptionalProperties: true,
@@ -475,7 +501,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 valueType,
                 env: undefined,
                 v2Examples,
-                availability: undefined
+                availability: undefined,
+                clientDefault: undefined
             });
         }
 

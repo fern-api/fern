@@ -2,10 +2,10 @@ import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { generateEnumNameFromValue, QueryParameter, Schema, VALID_ENUM_NAME_REGEX } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-import { buildTypeReference } from "./buildTypeReference";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { convertAvailability } from "./utils/convertAvailability";
-import { getDefaultFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { buildTypeReference } from "./buildTypeReference.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { convertAvailability } from "./utils/convertAvailability.js";
+import { getDefaultFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference.js";
 
 export function buildQueryParameter({
     queryParameter,
@@ -42,12 +42,18 @@ export function buildQueryParameter({
         type: queryParameterType
     };
 
-    if (queryParameterDefault != null) {
+    if (queryParameter.clientDefault != null) {
+        queryParameterSchema.default = queryParameter.clientDefault;
+    } else if (queryParameterDefault != null) {
         queryParameterSchema.default = queryParameterDefault;
     }
 
     if (typeReference.allowMultiple) {
         queryParameterSchema["allow-multiple"] = true;
+    }
+
+    if (queryParameter.explode != null) {
+        queryParameterSchema.explode = queryParameter.explode;
     }
 
     if (queryParameter.description != null) {
@@ -74,7 +80,8 @@ export function buildQueryParameter({
         queryParameterSchema.docs == null &&
         queryParameterSchema.name == null &&
         queryParameterSchema.availability == null &&
-        queryParameterSchema.validation == null
+        queryParameterSchema.validation == null &&
+        queryParameterSchema.explode == null
     ) {
         return queryParameterType;
     }
@@ -209,7 +216,7 @@ function getQueryParameterTypeReference({
                 if (
                     firstSchema != null &&
                     secondSchema != null &&
-                    hasSamePrimitiveValueType({ array: firstSchema, primitive: secondSchema })
+                    hasSamePrimitiveValueType({ array: secondSchema, primitive: firstSchema })
                 ) {
                     return {
                         value: buildTypeReference({

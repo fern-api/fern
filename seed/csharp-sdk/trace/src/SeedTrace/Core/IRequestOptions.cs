@@ -28,7 +28,7 @@ internal interface IRequestOptions
     /// Additional headers to be sent with the request.
     /// Headers previously set with matching keys will be overwritten.
     /// </summary>
-    public IEnumerable<System.Collections.Generic.KeyValuePair<
+    public IEnumerable<global::System.Collections.Generic.KeyValuePair<
         string,
         string?
     >> AdditionalHeaders { get;
@@ -40,7 +40,7 @@ internal interface IRequestOptions
     }
 
     /// <summary>
-    /// The http client used to make requests.
+    /// The max number of retries to attempt.
     /// </summary>
     public int? MaxRetries { get;
 #if NET5_0_OR_GREATER
@@ -64,7 +64,7 @@ internal interface IRequestOptions
     /// <summary>
     /// Additional query parameters sent with the request.
     /// </summary>
-    public IEnumerable<System.Collections.Generic.KeyValuePair<
+    public IEnumerable<global::System.Collections.Generic.KeyValuePair<
         string,
         string
     >> AdditionalQueryParameters { get;

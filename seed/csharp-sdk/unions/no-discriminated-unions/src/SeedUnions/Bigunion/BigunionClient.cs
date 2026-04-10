@@ -1,11 +1,11 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedUnions.Core;
 
 namespace SeedUnions;
 
 public partial class BigunionClient : IBigunionClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal BigunionClient(RawClient client)
     {
@@ -28,7 +28,6 @@ public partial class BigunionClient : IBigunionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format("/{0}", ValueConvert.ToPathParameterString(id)),
                     Headers = _headers,
@@ -39,7 +38,9 @@ public partial class BigunionClient : IBigunionClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<object>(responseBody)!;
@@ -65,7 +66,9 @@ public partial class BigunionClient : IBigunionClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -90,7 +93,6 @@ public partial class BigunionClient : IBigunionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
                     Path = "",
                     Body = request,
@@ -102,7 +104,9 @@ public partial class BigunionClient : IBigunionClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
@@ -128,7 +132,9 @@ public partial class BigunionClient : IBigunionClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -153,7 +159,6 @@ public partial class BigunionClient : IBigunionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
                     Path = "/many",
                     Body = request,
@@ -165,7 +170,9 @@ public partial class BigunionClient : IBigunionClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<Dictionary<string, bool>>(responseBody)!;
@@ -191,7 +198,9 @@ public partial class BigunionClient : IBigunionClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

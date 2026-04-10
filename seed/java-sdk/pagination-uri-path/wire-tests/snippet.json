@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "180cce7f",
+            "id": {
+                "method": "GET",
+                "path": "/users/uri",
+                "identifier_override": "endpoint_users.listWithUriPagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.paginationUriPath.SeedPaginationUriPathClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationUriPathClient client = SeedPaginationUriPathClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithUriPagination();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.paginationUriPath.SeedPaginationUriPathClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationUriPathClient client = SeedPaginationUriPathClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithUriPagination();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "aa6a3345",
+            "id": {
+                "method": "GET",
+                "path": "/users/path",
+                "identifier_override": "endpoint_users.listWithPathPagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.paginationUriPath.SeedPaginationUriPathClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationUriPathClient client = SeedPaginationUriPathClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithPathPagination();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.paginationUriPath.SeedPaginationUriPathClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationUriPathClient client = SeedPaginationUriPathClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithPathPagination();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

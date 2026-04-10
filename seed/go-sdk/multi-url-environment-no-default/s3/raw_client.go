@@ -4,11 +4,12 @@ package s3
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/multi-url-environment-no-default/fern"
 	core "github.com/multi-url-environment-no-default/fern/core"
 	internal "github.com/multi-url-environment-no-default/fern/internal"
 	option "github.com/multi-url-environment-no-default/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -30,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetPresignedUrl(
+func (r *RawClient) GetPresignedURL(
 	ctx context.Context,
-	request *fern.GetPresignedUrlRequest,
+	request *fern.GetPresignedURLRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)

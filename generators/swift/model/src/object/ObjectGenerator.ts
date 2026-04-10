@@ -1,14 +1,14 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
-import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
-
-import { StructGenerator } from "../helpers/struct-generator/StructGenerator";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { StructGenerator } from "../helpers/struct-generator/StructGenerator.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export declare namespace ObjectGenerator {
     interface Args {
         symbol: swift.Symbol;
-        properties: (ObjectProperty | InlinedRequestBodyProperty)[];
-        extendedProperties?: ObjectProperty[];
+        properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
+        extendedProperties?: FernIr.ObjectProperty[];
         docsContent?: string;
         context: ModelGeneratorContext;
     }
@@ -16,8 +16,8 @@ export declare namespace ObjectGenerator {
 
 export class ObjectGenerator {
     private readonly symbol: swift.Symbol;
-    private readonly properties: (ObjectProperty | InlinedRequestBodyProperty)[];
-    private readonly extendedProperties: ObjectProperty[];
+    private readonly properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
+    private readonly extendedProperties: FernIr.ObjectProperty[];
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
 
@@ -40,10 +40,10 @@ export class ObjectGenerator {
             symbol: this.symbol,
             constantPropertyDefinitions: [],
             dataPropertyDefinitions: [...this.extendedProperties, ...this.properties].map((p) => ({
-                unsafeName: sanitizeSelf(p.name.name.camelCase.unsafeName),
-                rawName: p.name.wireValue,
+                unsafeName: sanitizeSelf(this.context.caseConverter.camelUnsafe(p.name)),
+                rawName: getWireValue(p.name),
                 type: p.valueType,
-                indirect: typeId != null && this.context.shouldGeneratePropertyAsIndirect(typeId, p.name.wireValue),
+                indirect: typeId != null && this.context.shouldGeneratePropertyAsIndirect(typeId, getWireValue(p.name)),
                 docsContent: p.docs
             })),
             additionalProperties: true,

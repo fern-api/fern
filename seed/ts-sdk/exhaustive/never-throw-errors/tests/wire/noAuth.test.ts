@@ -9,6 +9,7 @@ describe("NoAuthClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = true;
+
         server
             .mockEndpoint()
             .post("/no-auth")
@@ -22,7 +23,7 @@ describe("NoAuthClient", () => {
             key: "value",
         });
         expect(response).toEqual({
-            body: true,
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

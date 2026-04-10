@@ -30,15 +30,16 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/property-access/fern/client"
-    fern "github.com/property-access/fern"
     context "context"
+
+    fern "github.com/property-access/fern"
+    client "github.com/property-access/fern/client"
 )
 
 func do() {
     client := client.NewClient()
     request := &fern.User{
-        Id: "id",
+        ID: "id",
         Email: "email",
         Password: "password",
         Profile: &fern.UserProfile{

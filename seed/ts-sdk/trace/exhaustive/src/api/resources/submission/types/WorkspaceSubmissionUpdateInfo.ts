@@ -44,6 +44,6 @@ export namespace WorkspaceSubmissionUpdateInfo {
     }
 
     export interface _Unknown {
-        type: void;
+        type: string;
     }
 }

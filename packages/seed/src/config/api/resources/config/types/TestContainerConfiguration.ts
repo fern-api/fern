@@ -4,5 +4,5 @@ import type * as FernSeedConfig from "../../../index.js";
 
 export interface TestContainerConfiguration {
     image: string;
-    command?: FernSeedConfig.DockerCommand;
+    command?: FernSeedConfig.DockerCommand | undefined;
 }

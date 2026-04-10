@@ -9,11 +9,12 @@ describe("ParamsClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
+
         server.mockEndpoint().get("/params/path/param").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.endpoints.params.getWithPath("param");
         expect(response).toEqual({
-            body: "string",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -25,13 +26,14 @@ describe("ParamsClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
+
         server.mockEndpoint().get("/params/path/param").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.endpoints.params.getWithInlinePath({
             param: "param",
         });
         expect(response).toEqual({
-            body: "string",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -114,6 +116,7 @@ describe("ParamsClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .put("/params/path/param")
@@ -125,7 +128,7 @@ describe("ParamsClient", () => {
 
         const response = await client.endpoints.params.modifyWithPath("param", "string");
         expect(response).toEqual({
-            body: "string",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -137,6 +140,7 @@ describe("ParamsClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .put("/params/path/param")
@@ -151,7 +155,47 @@ describe("ParamsClient", () => {
             body: "string",
         });
         expect(response).toEqual({
-            body: "string",
+            body: rawResponseBody,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
+    });
+
+    test("getWithBooleanPath", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = "string";
+
+        server
+            .mockEndpoint()
+            .get("/params/path-bool/true")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.params.getWithBooleanPath(true);
+        expect(response).toEqual({
+            body: rawResponseBody,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
+    });
+
+    test("getWithPathAndErrors", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = "string";
+
+        server.mockEndpoint().get("/params/path/param").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.endpoints.params.getWithPathAndErrors("param");
+        expect(response).toEqual({
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

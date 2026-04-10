@@ -1,15 +1,16 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
-import { runFernCli } from "../../utils/runFernCli";
-import { init } from "../init/init";
+import { runFernCli } from "../../utils/runFernCli.js";
+import { init } from "../init/init.js";
 
 describe("jsonschema", () => {
-    it("works with latest version", async () => {
-        const pathOfDirectory = await init();
+    it("works with latest version", async ({ signal }) => {
+        const pathOfDirectory = await init({ additionalArgs: [{ name: "--fern-definition" }], signal });
         await runFernCli(["jsonschema", "schema.json", "--type", "imdb.Movie"], {
             cwd: pathOfDirectory,
-            reject: false
+            reject: false,
+            signal
         });
 
         const jsonSchema = JSON.parse(

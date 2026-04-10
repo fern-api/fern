@@ -82,6 +82,10 @@ public final class InitializeProblemRequest {
     public interface _FinalStage {
         InitializeProblemRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage problemVersion(Optional<Integer> problemVersion);
 
         _FinalStage problemVersion(Integer problemVersion);
@@ -128,6 +132,18 @@ public final class InitializeProblemRequest {
         @java.lang.Override
         public InitializeProblemRequest build() {
             return new InitializeProblemRequest(problemId, problemVersion, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { generateModels } from "../generateModels";
-import { createSampleGeneratorContext } from "./util/createSampleGeneratorContext";
+import { generateModels } from "../generateModels.js";
+import { createSampleGeneratorContext } from "./util/createSampleGeneratorContext.js";
 
 const testDefinitions = [
     "basic-object",
@@ -126,5 +126,24 @@ describe("generateModels type-specific tests", () => {
         // Should have tagged union attributes (Fern creates discriminated unions)
         const hasTaggedUnion = files.some((file) => file.fileContents.includes("#[serde(tag ="));
         expect(hasTaggedUnion).toBeTruthy();
+    });
+
+    it("should not apply serde(transparent) to single-property structs with enum fields", async () => {
+        const context = await createSampleGeneratorContext("undiscriminated-union-types");
+        const files = generateModels({ context });
+
+        // EventPayload has a single enum-typed field and is used by EventMessage union.
+        // Since EventPayload is only referenced by this one union variant, it gets inlined
+        // into the EventMessage enum variant (no separate struct file is generated).
+        // The inlined variant must NOT get #[serde(transparent)].
+        const eventMessageFile = files.find((f) => f.filename.toLowerCase().includes("event_message"));
+        expect(eventMessageFile).toBeDefined();
+        expect(eventMessageFile?.fileContents).not.toContain("#[serde(transparent)]");
+        // EventPayload's fields should be inlined into the Payload variant
+        expect(eventMessageFile?.fileContents).toContain("Payload");
+        expect(eventMessageFile?.fileContents).toContain("EventType");
+        // EventPayload should NOT have a separate file since it's inlined
+        const eventPayloadFile = files.find((f) => f.filename.toLowerCase().includes("event_payload"));
+        expect(eventPayloadFile).toBeUndefined();
     });
 });

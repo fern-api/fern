@@ -13,11 +13,8 @@ public class Example48
             }
         );
 
-        await client.NoAuth.PostWithNoAuthAsync(
-            new Dictionary<string, object>()
-            {
-                ["key"] = "value",
-            }
+        await client.Endpoints.Primitive.GetAndReturnDoubleAsync(
+            1.1
         );
     }
 

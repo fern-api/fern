@@ -31,10 +31,12 @@ async fn main() {
                 user: User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 },
                 user_list: vec![Some(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 })],
                 optional_deadline: Some(
                     DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
@@ -49,24 +51,32 @@ async fn main() {
                     user: Some(User {
                         name: Some("name".to_string()),
                         tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                        ..Default::default()
                     }),
+                    ..Default::default()
                 }),
                 optional_user: Some(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 }),
                 exclude_user: vec![Some(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 })],
                 filter: vec![Some("filter".to_string())],
+                tags: vec![Some("tags".to_string())],
+                optional_tags: vec![Some("optionalTags".to_string())],
                 neighbor: Some(SearchRequestNeighbor::User(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 })),
                 neighbor_required: SearchRequestNeighborRequired::User(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 }),
             },
             None,
@@ -199,6 +209,22 @@ async fn main() {
 <dl>
 <dd>
 
+**tags:** `Option<String>` — List of tags. Serialized as a comma-separated list.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optional_tags:** `Option<String>` — Optional list of tags. Serialized as a comma-separated list.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **neighbor:** `Option<SearchRequestNeighbor>` 
     
 </dd>
@@ -218,3 +244,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

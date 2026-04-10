@@ -1,6 +1,6 @@
-import { type Type } from "../ast/types/IType";
-import { type Generation } from "../context/generation-info";
-import { lazy } from "../utils/lazy";
+import { type Type } from "../ast/types/IType.js";
+import { type Generation } from "../context/generation-info.js";
+import { lazy } from "../utils/lazy.js";
 
 /**
  * Provides access to external type references for C# code generation.
@@ -771,6 +771,14 @@ export class Extern {
                     this.csharp.classReference({
                         name: "SetUpFixture",
                         namespace: "NUnit.Framework"
+                    }),
+                /**
+                 * Reference to NUnit.Framework.ParallelizableAttribute class.
+                 */
+                Parallelizable: () =>
+                    this.csharp.classReference({
+                        name: "Parallelizable",
+                        namespace: "NUnit.Framework"
                     })
             })
     });
@@ -825,6 +833,15 @@ export class Extern {
          */
         Protobuf: () =>
             lazy({
+                /**
+                 * Reference to Google.Protobuf.ByteString class.
+                 */
+                ByteString: () =>
+                    this.csharp.classReference({
+                        name: "ByteString",
+                        namespace: "Google.Protobuf"
+                    }),
+
                 /**
                  * Well-known types namespace references with namespace alias.
                  */

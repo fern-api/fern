@@ -9,6 +9,7 @@ describe("ServiceClient", () => {
         const client = new SeedResponsePropertyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = { data: { id: "id", name: "name" }, metadata: { metadata: "metadata" }, docs: "docs" };
+
         server
             .mockEndpoint()
             .post("/movie")
@@ -19,16 +20,7 @@ describe("ServiceClient", () => {
             .build();
 
         const response = await client.service.getMovie("string");
-        expect(response).toEqual({
-            data: {
-                id: "id",
-                name: "name",
-            },
-            metadata: {
-                metadata: "metadata",
-            },
-            docs: "docs",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getMovieDocs", async () => {
@@ -36,6 +28,7 @@ describe("ServiceClient", () => {
         const client = new SeedResponsePropertyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = { data: { id: "id", name: "name" }, metadata: { metadata: "metadata" }, docs: "docs" };
+
         server
             .mockEndpoint()
             .post("/movie")
@@ -46,16 +39,7 @@ describe("ServiceClient", () => {
             .build();
 
         const response = await client.service.getMovieDocs("string");
-        expect(response).toEqual({
-            data: {
-                id: "id",
-                name: "name",
-            },
-            metadata: {
-                metadata: "metadata",
-            },
-            docs: "docs",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getMovieName", async () => {
@@ -63,6 +47,7 @@ describe("ServiceClient", () => {
         const client = new SeedResponsePropertyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = { data: "data" };
+
         server
             .mockEndpoint()
             .post("/movie")
@@ -73,9 +58,7 @@ describe("ServiceClient", () => {
             .build();
 
         const response = await client.service.getMovieName("string");
-        expect(response).toEqual({
-            data: "data",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getMovieMetadata", async () => {
@@ -83,6 +66,7 @@ describe("ServiceClient", () => {
         const client = new SeedResponsePropertyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = { data: { id: "id", name: "name" }, metadata: { metadata: "metadata" }, docs: "docs" };
+
         server
             .mockEndpoint()
             .post("/movie")
@@ -93,16 +77,7 @@ describe("ServiceClient", () => {
             .build();
 
         const response = await client.service.getMovieMetadata("string");
-        expect(response).toEqual({
-            data: {
-                id: "id",
-                name: "name",
-            },
-            metadata: {
-                metadata: "metadata",
-            },
-            docs: "docs",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getOptionalMovie", async () => {
@@ -110,6 +85,7 @@ describe("ServiceClient", () => {
         const client = new SeedResponsePropertyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = { data: { id: "id", name: "name" }, metadata: { metadata: "metadata" }, docs: "docs" };
+
         server
             .mockEndpoint()
             .post("/movie")
@@ -120,16 +96,7 @@ describe("ServiceClient", () => {
             .build();
 
         const response = await client.service.getOptionalMovie("string");
-        expect(response).toEqual({
-            data: {
-                id: "id",
-                name: "name",
-            },
-            metadata: {
-                metadata: "metadata",
-            },
-            docs: "docs",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getOptionalMovieDocs", async () => {
@@ -137,6 +104,7 @@ describe("ServiceClient", () => {
         const client = new SeedResponsePropertyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = { docs: "docs" };
+
         server
             .mockEndpoint()
             .post("/movie")
@@ -147,9 +115,7 @@ describe("ServiceClient", () => {
             .build();
 
         const response = await client.service.getOptionalMovieDocs("string");
-        expect(response).toEqual({
-            docs: "docs",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getOptionalMovieName", async () => {
@@ -157,6 +123,7 @@ describe("ServiceClient", () => {
         const client = new SeedResponsePropertyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = { data: "data" };
+
         server
             .mockEndpoint()
             .post("/movie")
@@ -167,8 +134,6 @@ describe("ServiceClient", () => {
             .build();
 
         const response = await client.service.getOptionalMovieName("string");
-        expect(response).toEqual({
-            data: "data",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

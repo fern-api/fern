@@ -3,6 +3,7 @@
 namespace Custom\Package\Path\Tests\Core\Json;
 
 use PHPUnit\Framework\TestCase;
+use Custom\Package\Path\Core\Json\JsonEncoder;
 use Custom\Package\Path\Core\Json\JsonProperty;
 use Custom\Package\Path\Core\Json\JsonSerializableType;
 use Custom\Package\Path\Core\Types\ArrayType;
@@ -89,7 +90,7 @@ class ScalarTest extends TestCase
 {
     public function testAllScalarTypesIncludingFloat(): void
     {
-        $expectedJson = json_encode(
+        $expectedJson = JsonEncoder::encode(
             [
                 'integer_property' => 42,
                 'float_property' => 3.14159,
@@ -99,7 +100,6 @@ class ScalarTest extends TestCase
                 'int_float_array' => [1, 2.5, 3, 4.75],
                 'float_array' => [1, 2, 3, 4] // Ensure we handle "integer-looking" floats
             ],
-            JSON_THROW_ON_ERROR
         );
 
         $object = Scalar::fromJson($expectedJson);

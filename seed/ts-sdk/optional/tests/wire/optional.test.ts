@@ -9,6 +9,7 @@ describe("OptionalClient", () => {
         const client = new SeedObjectsWithImportsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { string: { key: "value" } };
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .post("/send-optional-body")
@@ -23,7 +24,7 @@ describe("OptionalClient", () => {
                 key: "value",
             },
         });
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("sendOptionalTypedBody", async () => {
@@ -31,6 +32,7 @@ describe("OptionalClient", () => {
         const client = new SeedObjectsWithImportsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { message: "message" };
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .post("/send-optional-typed-body")
@@ -43,7 +45,7 @@ describe("OptionalClient", () => {
         const response = await client.optional.sendOptionalTypedBody({
             message: "message",
         });
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("sendOptionalNullableWithAllOptionalProperties", async () => {
@@ -51,6 +53,7 @@ describe("OptionalClient", () => {
         const client = new SeedObjectsWithImportsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { updateDraft: true };
         const rawResponseBody = { success: true };
+
         server
             .mockEndpoint()
             .post("/deploy/actionId/versions/id")
@@ -63,8 +66,6 @@ describe("OptionalClient", () => {
         const response = await client.optional.sendOptionalNullableWithAllOptionalProperties("actionId", "id", {
             updateDraft: true,
         });
-        expect(response).toEqual({
-            success: true,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

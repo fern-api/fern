@@ -5,12 +5,14 @@
 //!
 //! ## Type Categories
 //!
-//! - **Request/Response Types**: 1 types for API operations
+//! - **Request/Response Types**: 2 types for API operations
 //! - **Model Types**: 1 types for data representation
 
 pub mod completions_streamed_completion;
 pub mod stream_completion_request;
+pub mod stream_completion_request_without_terminator;
 
 pub use completions_streamed_completion::StreamedCompletion;
 pub use stream_completion_request::StreamCompletionRequest;
+pub use stream_completion_request_without_terminator::StreamCompletionRequestWithoutTerminator;
 

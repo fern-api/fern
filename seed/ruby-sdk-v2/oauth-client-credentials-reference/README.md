@@ -29,14 +29,14 @@ Instantiate and use the client with the following:
 require "seed"
 
 client = Seed::Client.new(
-  client_id: '<clientId>',
-  client_secret: '<clientSecret>'
-);
+  client_id: "<clientId>",
+  client_secret: "<clientSecret>"
+)
 
 client.auth.get_token(
-  client_id: 'client_id',
-  client_secret: 'client_secret'
-);
+  client_id: "client_id",
+  client_secret: "client_secret"
+)
 ```
 
 ## Environments

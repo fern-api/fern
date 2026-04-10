@@ -4,11 +4,12 @@ package inlineusers
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/pagination/fern/core"
 	inlineusers "github.com/pagination/fern/inlineusers"
 	internal "github.com/pagination/fern/internal"
 	option "github.com/pagination/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

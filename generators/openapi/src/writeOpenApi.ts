@@ -7,14 +7,14 @@ import {
 } from "@fern-api/base-generator";
 import { mergeWithOverrides } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 
-import { convertToOpenApi } from "./convertToOpenApi";
-import { getCustomConfig } from "./customConfig";
+import { convertToOpenApi } from "./convertToOpenApi.js";
+import { getCustomConfig } from "./customConfig.js";
 
 export type Mode = "stoplight" | "openapi";
 
@@ -91,8 +91,8 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
     }
 }
 
-async function loadIntermediateRepresentation(pathToFile: string): Promise<IntermediateRepresentation> {
-    return await parseIR<IntermediateRepresentation>({
+async function loadIntermediateRepresentation(pathToFile: string): Promise<FernIr.IntermediateRepresentation> {
+    return await parseIR<FernIr.IntermediateRepresentation>({
         absolutePathToIR: AbsoluteFilePath.of(pathToFile),
         parse: IrSerialization.IntermediateRepresentation.parse
     });

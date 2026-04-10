@@ -1,6 +1,6 @@
 import path from "path";
 
-import { convertToOsPath } from "./osPathConverter";
+import { convertToOsPath } from "./osPathConverter.js";
 
 export type RelativeFilePath = string & {
     __RelativeFilePath: void;

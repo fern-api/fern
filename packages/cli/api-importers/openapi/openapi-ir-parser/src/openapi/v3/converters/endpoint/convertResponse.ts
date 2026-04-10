@@ -1,19 +1,19 @@
 import { assertNever, MediaType } from "@fern-api/core-utils";
-import { FernOpenapiIr, ResponseWithExample, Source } from "@fern-api/openapi-ir";
+import { FernOpenapiIr, ResponseWithExample, SchemaWithExample, Source } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../../getExtension";
-import { convertSchema } from "../../../../schema/convertSchemas";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
-import { OperationContext } from "../contexts";
-import { ERROR_NAMES_BY_STATUS_CODE } from "../convertToHttpError";
+import { getExtension } from "../../../../getExtension.js";
+import { convertSchema } from "../../../../schema/convertSchemas.js";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
+import { OperationContext } from "../contexts.js";
+import { ERROR_NAMES_BY_STATUS_CODE } from "../convertToHttpError.js";
 import {
     getApplicationJsonSchemaMediaObjectFromContent,
     getSchemaMediaObject,
     getTextEventStreamObject
-} from "./getApplicationJsonSchema";
+} from "./getApplicationJsonSchema.js";
 
 // The converter will attempt to get response in priority order
 // (i.e. try for 200, then 201, then 202...)
@@ -31,10 +31,12 @@ export function convertResponse({
     responseBreadcrumbs,
     responseStatusCode,
     streamFormat,
+    streamTerminator,
     source
 }: {
     operationContext: OperationContext;
     streamFormat: "sse" | "json" | undefined;
+    streamTerminator?: string;
     responses: OpenAPIV3.ResponsesObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
@@ -48,6 +50,7 @@ export function convertResponse({
     const errors = markErrorSchemas({ responses, context, source, namespace: context.namespace });
 
     let successStatusCodePresent = false;
+    let hasNoContentResponse = false;
     let convertedResponse: FernOpenapiIr.ResponseWithExample | undefined = undefined;
     for (const statusCode of responseStatusCode != null ? [responseStatusCode] : SUCCESSFUL_STATUS_CODES) {
         const response = responses[statusCode];
@@ -55,16 +58,59 @@ export function convertResponse({
             continue;
         }
         successStatusCodePresent = true;
+        const statusCodeNum = typeof statusCode === "string" ? parseInt(statusCode) : statusCode;
         if (convertedResponse == null) {
-            convertedResponse = convertResolvedResponse({
+            const converted = convertResolvedResponse({
                 operationContext,
                 response,
                 context,
                 responseBreadcrumbs,
                 streamFormat,
+                streamTerminator,
                 source,
                 namespace: context.namespace,
-                statusCode: typeof statusCode === "string" ? parseInt(statusCode) : statusCode
+                statusCode: statusCodeNum
+            });
+            if (converted != null) {
+                convertedResponse = converted;
+            } else if (statusCodeNum === 204) {
+                // A 204 response with no body (e.g., content: {})
+                hasNoContentResponse = true;
+            }
+        } else if (statusCodeNum === 204) {
+            // We already have a response body from another status code,
+            // but also have a 204 no-content response
+            const resolved = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
+            const jsonMedia = getApplicationJsonSchemaMediaObjectFromContent({
+                context,
+                content: resolved.content ?? {}
+            });
+            // Only mark as no-content if 204 has no JSON body
+            if (jsonMedia == null) {
+                hasNoContentResponse = true;
+            }
+        }
+    }
+
+    // If there's both a successful response with a body and a no-content response (e.g., 204),
+    // wrap the response body schema in optional so generators produce nullable return types.
+    if (hasNoContentResponse && convertedResponse != null && convertedResponse.type === "json") {
+        const schema = convertedResponse.schema;
+        // Only wrap if not already optional
+        if (schema.type !== "optional") {
+            convertedResponse = ResponseWithExample.json({
+                ...convertedResponse,
+                schema: SchemaWithExample.optional({
+                    value: schema,
+                    description: schema.type === "reference" ? schema.description : undefined,
+                    nameOverride: undefined,
+                    generatedName: "",
+                    groupName: undefined,
+                    namespace: undefined,
+                    availability: undefined,
+                    title: undefined,
+                    inline: undefined
+                })
             });
         }
     }
@@ -77,6 +123,7 @@ export function convertResponse({
             context,
             responseBreadcrumbs,
             streamFormat,
+            streamTerminator,
             source,
             namespace: context.namespace
         });
@@ -117,6 +164,7 @@ export function convertResponse({
 function convertResolvedResponse({
     operationContext,
     streamFormat,
+    streamTerminator,
     response,
     context,
     responseBreadcrumbs,
@@ -126,6 +174,7 @@ function convertResolvedResponse({
 }: {
     operationContext: OperationContext;
     streamFormat: "sse" | "json" | undefined;
+    streamTerminator?: string;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
@@ -143,7 +192,12 @@ function convertResolvedResponse({
             const resolvedSchema = isReferenceObject(mediaObject.schema)
                 ? context.resolveSchemaReference(mediaObject.schema)
                 : mediaObject.schema;
-            return resolvedSchema.type === "string" && resolvedSchema.format === "binary";
+            return (
+                resolvedSchema.type === "string" &&
+                (resolvedSchema.format === "binary" ||
+                    (resolvedSchema.format == null &&
+                        (resolvedSchema as Record<string, unknown>).contentMediaType === "application/octet-stream"))
+            );
         });
         if (binaryContent) {
             if (context.options.useBytesForBinaryResponse && streamFormat == null) {
@@ -165,6 +219,7 @@ function convertResolvedResponse({
                         operationContext.operation,
                         FernOpenAPIExtension.RESPONSE_PROPERTY
                     ),
+                    terminator: streamTerminator,
                     fullExamples: textEventStreamObject.examples,
                     schema: convertSchema(
                         textEventStreamObject.schema,
@@ -181,6 +236,7 @@ function convertResolvedResponse({
                 return ResponseWithExample.streamingSse({
                     description: resolvedResponse.description,
                     responseProperty: undefined,
+                    terminator: streamTerminator,
                     fullExamples: textEventStreamObject.examples,
                     schema: convertSchema(
                         textEventStreamObject.schema,
@@ -208,6 +264,7 @@ function convertResolvedResponse({
                     return ResponseWithExample.streamingJson({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
+                        terminator: streamTerminator,
                         fullExamples: jsonMediaObject.examples,
                         schema: convertSchema(
                             jsonMediaObject.schema,
@@ -225,6 +282,7 @@ function convertResolvedResponse({
                     return ResponseWithExample.streamingSse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
+                        terminator: streamTerminator,
                         fullExamples: jsonMediaObject.examples,
                         schema: convertSchema(
                             jsonMediaObject.schema,
@@ -252,6 +310,7 @@ function convertResolvedResponse({
                 namespace
             ),
             responseProperty: getExtension<string>(operationContext.operation, FernOpenAPIExtension.RESPONSE_PROPERTY),
+            terminator: undefined,
             fullExamples: jsonMediaObject.examples,
             source,
             statusCode
@@ -275,7 +334,7 @@ function convertResolvedResponse({
             return ResponseWithExample.file({ description: resolvedResponse.description, source, statusCode });
         }
 
-        if (mimeType.isPlainText()) {
+        if (mimeType.isText() && !mediaType.includes("event-stream")) {
             const textPlainSchema = mediaObject.schema;
             if (textPlainSchema == null) {
                 return ResponseWithExample.text({ description: resolvedResponse.description, source, statusCode });

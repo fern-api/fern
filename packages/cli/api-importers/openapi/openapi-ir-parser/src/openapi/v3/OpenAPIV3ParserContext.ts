@@ -2,14 +2,14 @@ import { SchemaId, Source } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 
-import { ParseOpenAPIOptions } from "../../options";
-import { SchemaParserContext } from "../../schema/SchemaParserContext";
+import { ParseOpenAPIOptions } from "../../options.js";
+import { SchemaParserContext } from "../../schema/SchemaParserContext.js";
 import {
     AbstractOpenAPIV3ParserContext,
     DiscriminatedUnionMetadata,
     DiscriminatedUnionReference
-} from "./AbstractOpenAPIV3ParserContext";
-import { DummyOpenAPIV3ParserContext } from "./DummyOpenAPIV3ParserContext";
+} from "./AbstractOpenAPIV3ParserContext.js";
+import { DummyOpenAPIV3ParserContext } from "./DummyOpenAPIV3ParserContext.js";
 
 export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
     public readonly nonRequestReferencedSchemas: Set<SchemaId> = new Set();

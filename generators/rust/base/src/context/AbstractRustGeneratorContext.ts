@@ -1,9 +1,8 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService, CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
-import type * as FernIr from "@fern-fern/ir-sdk/api";
-import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { AsIsFileDefinition } from "../AsIs";
-import { RustDependencyManager, RustDependencySpec, RustDependencyType, RustProject } from "../project";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { AsIsFileDefinition } from "../AsIs.js";
+import { RustDependencyManager, RustDependencySpec, RustDependencyType, RustProject } from "../project/index.js";
 import {
     convertPascalToSnakeCase,
     convertToSnakeCase,
@@ -12,22 +11,30 @@ import {
     generateDefaultCrateName,
     RustCycleDetector,
     validateAndSanitizeCrateName
-} from "../utils";
+} from "../utils/index.js";
 
 export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema
 > extends AbstractGeneratorContext {
+    public readonly case: CaseConverter;
     public readonly project: RustProject;
     public readonly dependencyManager: RustDependencyManager;
     public publishConfig: FernGeneratorExec.CratesGithubPublishInfo | undefined;
+    private readonly irUsesTypeCache = new Map<string, boolean>();
+    private readonly featureCache = new Map<string, boolean>();
 
     public constructor(
-        public readonly ir: IntermediateRepresentation,
+        public readonly ir: FernIr.IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
         public readonly customConfig: CustomConfig,
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
+        this.case = new CaseConverter({
+            generationLanguage: customConfig.capitalizeInitialisms ? undefined : "rust",
+            keywords: ir.casingsConfig?.keywords,
+            smartCasing: ir.casingsConfig?.smartCasing ?? true
+        });
 
         // Detect illegal recursive type cycles before any generation
         // This will throw an error if the schema has cycles that cannot be represented in Rust
@@ -49,6 +56,7 @@ export abstract class AbstractRustGeneratorContext<
         this.dependencyManager = new RustDependencyManager();
         this.addBaseDependencies();
         this.detectAndAddFeatureDependencies();
+        this.applyExtraDependencies();
 
         this.project = new RustProject({
             context: this,
@@ -76,19 +84,41 @@ export abstract class AbstractRustGeneratorContext<
         this.dependencyManager.add("futures", "0.3");
         this.dependencyManager.add("bytes", "1.0");
         this.dependencyManager.add("thiserror", "1.0");
-        this.dependencyManager.add("percent-encoding", "2.3");
-        this.dependencyManager.add("ordered-float", { version: "4.5", features: ["serde"] });
-        this.dependencyManager.add("num-bigint", { version: "0.4", features: ["serde"] });
 
-        // Always include chrono and uuid for QueryBuilder support
-        this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
-        this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
+        // Conditionally include ordered-float only when floating-point sets are used
+        if (this.usesOrderedFloat()) {
+            this.dependencyManager.add("ordered-float", { version: "4.5", features: ["serde"] });
+        }
 
-        // Add base64 for encoding/decoding base64 fields in JSON
-        this.dependencyManager.add("base64", "0.22");
+        // Conditionally include num-bigint only when big integer types are used
+        if (this.usesBigInteger()) {
+            this.dependencyManager.add("num-bigint", { version: "0.4", features: ["serde"] });
+        }
+
+        // Conditionally include chrono only when datetime/date types are used
+        if (this.usesDateTime()) {
+            this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
+        }
+
+        // Conditionally include uuid only when UUID types are used
+        if (this.usesUuid()) {
+            this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
+        }
+
+        // Conditionally include base64 only when base64 types are used
+        if (this.usesBase64()) {
+            this.dependencyManager.add("base64", "0.22");
+        }
 
         this.dependencyManager.add("tokio-test", "0.4", RustDependencyType.DEV);
+    }
 
+    /**
+     * Apply extra dependencies from config, overriding any bundled versions.
+     * Called after all bundled deps (base + conditional) are registered so
+     * user-specified versions always take precedence.
+     */
+    private applyExtraDependencies(): void {
         const extraDeps = this.customConfig.extraDependencies ?? {};
         for (const [name, versionOrSpec] of Object.entries(extraDeps)) {
             if (typeof versionOrSpec === "string") {
@@ -119,28 +149,31 @@ export abstract class AbstractRustGeneratorContext<
         // Track auto-detected default features
         const autoDetectedDefaults: string[] = [];
 
-        // Always declare multipart feature (empty if not used, to avoid cfg warnings)
+        // Only declare multipart feature when file upload endpoints exist
         if (hasFileUpload) {
-            // Add multipart feature that enables reqwest/multipart
             this.dependencyManager.addFeature("multipart", ["reqwest/multipart"]);
             autoDetectedDefaults.push("multipart");
-        } else {
-            // Add empty multipart feature to satisfy cfg checks
-            this.dependencyManager.addFeature("multipart", []);
         }
 
-        // Always declare sse feature (empty if not used, to avoid cfg warnings)
+        const hasWebSocket = this.hasWebSocketChannels();
+
+        // Only declare websocket feature when WebSocket channels exist
+        if (hasWebSocket) {
+            this.dependencyManager.add("tokio-tungstenite", { version: "0.24", features: ["native-tls"], optional: true });
+            this.dependencyManager.add("urlencoding", { version: "2.1", optional: true });
+            this.dependencyManager.add("rand", { version: "0.9", optional: true });
+
+            this.dependencyManager.addFeature("websocket", ["tokio-tungstenite", "urlencoding", "rand"]);
+            autoDetectedDefaults.push("websocket");
+        }
+
+        // Only declare sse feature when streaming endpoints exist
         if (hasStreaming) {
-            // Add SSE-specific dependencies as optional
             this.dependencyManager.add("reqwest-sse", { version: "0.1", optional: true });
             this.dependencyManager.add("pin-project", { version: "1.1", optional: true });
 
-            // Add sse feature that enables SSE dependencies
             this.dependencyManager.addFeature("sse", ["reqwest-sse", "pin-project"]);
             autoDetectedDefaults.push("sse");
-        } else {
-            // Add empty sse feature to satisfy cfg checks
-            this.dependencyManager.addFeature("sse", []);
         }
 
         // Add custom features from configuration
@@ -157,10 +190,31 @@ export abstract class AbstractRustGeneratorContext<
         }
     }
 
+    private cachedFeature(key: string, compute: () => boolean): boolean {
+        const cached = this.featureCache.get(key);
+        if (cached !== undefined) {
+            return cached;
+        }
+        const result = compute();
+        this.featureCache.set(key, result);
+        return result;
+    }
+
     /**
      * Check if IR uses a specific primitive type
      */
-    private irUsesType(typeName: "DATE_TIME" | "DATE" | "UUID" | "BIG_INTEGER"): boolean {
+    private irUsesType(typeName: "DATE_TIME" | "DATE" | "UUID" | "BIG_INTEGER" | "BASE_64" | "FLOAT" | "DOUBLE"): boolean {
+        const cached = this.irUsesTypeCache.get(typeName);
+        if (cached !== undefined) {
+            return cached;
+        }
+
+        const result = this.computeIrUsesType(typeName);
+        this.irUsesTypeCache.set(typeName, result);
+        return result;
+    }
+
+    private computeIrUsesType(typeName: "DATE_TIME" | "DATE" | "UUID" | "BIG_INTEGER" | "BASE_64" | "FLOAT" | "DOUBLE"): boolean {
         // Use a visited set to prevent infinite recursion on circular types
         const visited = new Set<string>();
 
@@ -182,6 +236,19 @@ export abstract class AbstractRustGeneratorContext<
                     } else if (endpoint.requestBody.type === "reference") {
                         if (this.typeReferenceUsesBuiltin(endpoint.requestBody.requestBodyType, typeName, visited)) {
                             return true;
+                        }
+                    } else if (endpoint.requestBody.type === "fileUpload") {
+                        // File upload properties are implicitly base64-encoded bytes
+                        if (typeName === "BASE_64") {
+                            return true;
+                        }
+                        // Also check body properties within file upload requests
+                        for (const property of endpoint.requestBody.properties) {
+                            if (property.type === "bodyProperty") {
+                                if (this.typeReferenceUsesBuiltin(property.valueType, typeName, visited)) {
+                                    return true;
+                                }
+                            }
                         }
                     }
                 }
@@ -352,6 +419,117 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Check if IR uses base64 types
+     */
+    public usesBase64(): boolean {
+        return this.irUsesType("BASE_64");
+    }
+
+    /**
+     * Check if IR uses floating point types (float or double)
+     */
+    public usesFloatingPoint(): boolean {
+        return this.irUsesType("FLOAT") || this.irUsesType("DOUBLE");
+    }
+
+    /**
+     * Check if IR uses floating point types (float or double) in sets,
+     * which requires ordered-float for Hash/Ord implementations.
+     */
+    public usesOrderedFloat(): boolean {
+        return this.cachedFeature("usesOrderedFloat", () => {
+            for (const typeDecl of Object.values(this.ir.types)) {
+                if (this.typeShapeUsesOrderedFloat(typeDecl.shape)) {
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
+
+    /**
+     * Check if a type shape uses floating point types inside sets
+     * (which requires OrderedFloat for Hash/Ord)
+     */
+    private typeShapeUsesOrderedFloat(shape: FernIr.Type): boolean {
+        return shape._visit({
+            alias: (alias: FernIr.AliasTypeDeclaration) =>
+                this.typeReferenceUsesOrderedFloat(alias.aliasOf),
+            enum: () => false,
+            object: (obj: FernIr.ObjectTypeDeclaration) => {
+                for (const property of obj.properties) {
+                    if (this.typeReferenceUsesOrderedFloat(property.valueType)) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            union: (union: FernIr.UnionTypeDeclaration) => {
+                for (const variant of union.types) {
+                    const uses = variant.shape._visit({
+                        singleProperty: (property: FernIr.SingleUnionTypeProperty) =>
+                            this.typeReferenceUsesOrderedFloat(property.type),
+                        samePropertiesAsObject: () => false,
+                        noProperties: () => false,
+                        _other: () => false
+                    });
+                    if (uses) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            undiscriminatedUnion: (union: FernIr.UndiscriminatedUnionTypeDeclaration) => {
+                for (const member of union.members) {
+                    if (this.typeReferenceUsesOrderedFloat(member.type)) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            _other: () => false
+        });
+    }
+
+    /**
+     * Check if a type reference uses a floating-point type inside a set container
+     */
+    private typeReferenceUsesOrderedFloat(typeRef: FernIr.TypeReference): boolean {
+        return typeRef._visit({
+            primitive: () => false,
+            container: (container: FernIr.ContainerType) => {
+                return container._visit({
+                    list: () => false,
+                    set: (setType: FernIr.TypeReference) => {
+                        // Check if the set element type is a float/double
+                        return setType._visit({
+                            primitive: (primitive: FernIr.PrimitiveType) => {
+                                return primitive.v1 === "FLOAT" || primitive.v1 === "DOUBLE";
+                            },
+                            container: () => false,
+                            named: () => false,
+                            unknown: () => false,
+                            _other: () => false
+                        });
+                    },
+                    optional: (optional: FernIr.TypeReference) =>
+                        this.typeReferenceUsesOrderedFloat(optional),
+                    nullable: (nullable: FernIr.TypeReference) =>
+                        this.typeReferenceUsesOrderedFloat(nullable),
+                    map: (map: FernIr.MapType) =>
+                        this.typeReferenceUsesOrderedFloat(map.keyType) ||
+                        this.typeReferenceUsesOrderedFloat(map.valueType),
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            named: () => false,
+            unknown: () => false,
+            _other: () => false
+        });
+    }
+
+    /**
      * Get the datetime type to use for datetime primitives.
      * Returns "offset" for DateTime<FixedOffset> (default) - preserves original timezone,
      * or "utc" for DateTime<Utc> - converts everything to UTC.
@@ -365,17 +543,39 @@ export abstract class AbstractRustGeneratorContext<
      * Check if IR has any file upload endpoints
      */
     public hasFileUploadEndpoints(): boolean {
-        return Object.values(this.ir.services).some((service) =>
-            service.endpoints.some((endpoint) => endpoint.requestBody?.type === "fileUpload")
+        return this.cachedFeature("hasFileUploadEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => endpoint.requestBody?.type === "fileUpload")
+            )
         );
     }
 
     /**
-     * Check if IR has any streaming endpoints
+     * Check if IR has any bytes (octet-stream) request body endpoints
      */
+    public hasBytesEndpoints(): boolean {
+        return this.cachedFeature("hasBytesEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => endpoint.requestBody?.type === "bytes")
+            )
+        );
+    }
+
+    public hasWebSocketChannels(): boolean {
+        return this.cachedFeature("hasWebSocketChannels", () => {
+            const websocketsEnabled = this.customConfig.enableWebsockets || this.customConfig.generateWebSocketClients === true;
+            return (
+                websocketsEnabled &&
+                this.ir.websocketChannels != null &&
+                Object.keys(this.ir.websocketChannels).length > 0
+            );
+        });
+    }
+
     public hasStreamingEndpoints(): boolean {
-        return Object.values(this.ir.services).some((service) =>
-            service.endpoints.some((endpoint) => {
+        return this.cachedFeature("hasStreamingEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => {
                 if (!endpoint.response?.body) {
                     return false;
                 }
@@ -389,6 +589,7 @@ export abstract class AbstractRustGeneratorContext<
                     _other: () => false
                 });
             })
+            )
         );
     }
 
@@ -402,22 +603,22 @@ export abstract class AbstractRustGeneratorContext<
      * 2. Inline request body types
      * 3. Query request types
      */
-    private registerAllFilenames(ir: IntermediateRepresentation): void {
+    private registerAllFilenames(ir: FernIr.IntermediateRepresentation): void {
         this.logger.debug("=== Pre-registering all filenames ===");
 
         // Priority 1: All IR types (covers Enum, Alias, Struct, Union, UndiscriminatedUnion)
         let schemaTypeCount = 0;
         for (const [typeId, typeDeclaration] of Object.entries(ir.types)) {
             // Register filename
-            const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-            const typeName = typeDeclaration.name.name.snakeCase.safeName;
+            const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => this.case.snakeSafe(part));
+            const typeName = this.case.snakeSafe(typeDeclaration.name.name);
             const fullPath = [...pathParts, typeName];
             const baseFilename = convertToSnakeCase(fullPath.join("_"));
 
             const registeredFilename = this.project.filenameRegistry.registerSchemaTypeFilename(typeId, baseFilename);
 
             // Register type name without path prefix
-            const baseTypeName = typeDeclaration.name.name.pascalCase.safeName;
+            const baseTypeName = this.case.pascalSafe(typeDeclaration.name.name);
 
             const registeredTypeName = this.project.filenameRegistry.registerSchemaTypeTypeName(typeId, baseTypeName);
 
@@ -438,7 +639,7 @@ export abstract class AbstractRustGeneratorContext<
         for (const service of Object.values(ir.services)) {
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    const requestName = endpoint.requestBody.name.pascalCase.unsafeName;
+                    const requestName = this.case.pascalUnsafe(endpoint.requestBody.name);
                     const baseFilename = convertPascalToSnakeCase(requestName);
 
                     // Register both filename and type name
@@ -471,7 +672,7 @@ export abstract class AbstractRustGeneratorContext<
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "fileUpload") {
                     // Use endpoint name to generate request type name (like TypeScript generator)
-                    const requestName = `${endpoint.name.pascalCase.safeName}Request`;
+                    const requestName = `${this.case.pascalSafe(endpoint.name)}Request`;
                     const baseFilename = convertPascalToSnakeCase(requestName);
 
                     // Register both filename and type name
@@ -538,7 +739,7 @@ export abstract class AbstractRustGeneratorContext<
                 // Only endpoints with referenced body AND query parameters
                 if (endpoint.requestBody?.type === "reference" && endpoint.queryParameters.length > 0) {
                     // Generate request type name like CreateUsernameReferencedRequest
-                    const requestName = `${endpoint.name.pascalCase.safeName}Request`;
+                    const requestName = `${this.case.pascalSafe(endpoint.name)}Request`;
                     const baseFilename = convertPascalToSnakeCase(requestName);
 
                     // Register both filename and type name
@@ -567,6 +768,39 @@ export abstract class AbstractRustGeneratorContext<
             `Registered ${referencedRequestWithQueryCount} referenced request with query filenames and type names`
         );
 
+        // Priority 3.6: Bytes request body with query parameters
+        let bytesRequestCount = 0;
+        for (const service of Object.values(ir.services)) {
+            for (const endpoint of service.endpoints) {
+                // Only bytes endpoints with query parameters
+                if (endpoint.requestBody?.type === "bytes" && endpoint.queryParameters.length > 0) {
+                    const requestName = `${this.case.pascalSafe(endpoint.name)}Request`;
+                    const baseFilename = convertPascalToSnakeCase(requestName);
+
+                    // Register both filename and type name
+                    const registeredFilename = this.project.filenameRegistry.registerBytesRequestFilename(
+                        endpoint.id,
+                        baseFilename
+                    );
+                    const registeredTypeName = this.project.filenameRegistry.registerBytesRequestTypeName(
+                        endpoint.id,
+                        requestName
+                    );
+
+                    // Log if collision was resolved
+                    if (registeredFilename !== baseFilename || registeredTypeName !== requestName) {
+                        this.logger.debug(
+                            `Bytes request collision resolved: ` +
+                                `${requestName} → ${registeredTypeName}, ` +
+                                `${baseFilename}.rs → ${registeredFilename}.rs`
+                        );
+                    }
+                    bytesRequestCount++;
+                }
+            }
+        }
+        this.logger.debug(`Registered ${bytesRequestCount} bytes request filenames and type names`);
+
         // Priority 4: Client names (root client + all subpackage clients)
         let clientNameCount = 0;
 
@@ -580,7 +814,7 @@ export abstract class AbstractRustGeneratorContext<
 
         // Register all subpackage clients
         for (const [subpackageId, subpackage] of Object.entries(ir.subpackages)) {
-            const baseClientName = `${subpackage.name.pascalCase.safeName}Client`;
+            const baseClientName = `${this.case.pascalSafe(subpackage.name)}Client`;
             const registeredClientName = this.project.filenameRegistry.registerClientName(subpackageId, baseClientName);
 
             if (registeredClientName !== baseClientName) {
@@ -680,7 +914,7 @@ export abstract class AbstractRustGeneratorContext<
         }
 
         // Fallback for initial registration phase (before project is created or registry is populated)
-        return this.customConfig.clientClassName ?? `${this.ir.apiName.pascalCase.safeName}Client`;
+        return this.customConfig.clientClassName ?? `${this.case.pascalSafe(this.ir.apiName)}Client`;
     }
 
     /**
@@ -716,12 +950,12 @@ export abstract class AbstractRustGeneratorContext<
     public getModulePathForType(typeNameSnake: string): string {
         // Find the type declaration in the IR
         for (const typeDeclaration of Object.values(this.ir.types)) {
-            if (typeDeclaration.name.name.snakeCase.unsafeName === typeNameSnake) {
+            if (this.case.snakeUnsafe(typeDeclaration.name.name) === typeNameSnake) {
                 // Use fernFilepath + type name for unique module names to prevent collisions
                 // E.g., "folder-a/Response" becomes "folder_a_response"
                 // E.g., "foo/ImportingType" becomes "foo_importing_type"
-                const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-                const typeName = typeDeclaration.name.name.snakeCase.safeName;
+                const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => this.case.snakeSafe(part));
+                const typeName = this.case.snakeSafe(typeDeclaration.name.name);
                 const fullPath = [...pathParts, typeName];
                 // Join with underscore and then apply snake_case conversion to ensure proper formatting
                 // This handles cases like "union__key" -> "union_key"
@@ -743,31 +977,24 @@ export abstract class AbstractRustGeneratorContext<
      * @param declaredTypeName The declared type name from a type reference
      * @returns The unique module path (fernFilepath parts + type name joined with underscores)
      */
-    public getModulePathForDeclaredType(declaredTypeName: {
-        fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
-        name: { pascalCase?: { safeName: string }; snakeCase?: { unsafeName: string }; originalName?: string };
-    }): string {
-        // Extract the type name - can be from pascalCase or snakeCase
-        const typeName =
-            declaredTypeName.name.snakeCase?.unsafeName ||
-            declaredTypeName.name.originalName ||
-            declaredTypeName.name.pascalCase?.safeName ||
-            "";
+    public getModulePathForDeclaredType(declaredTypeName: FernIr.DeclaredTypeName): string {
+        // Extract the type name using case converter
+        const typeName = this.case.snakeUnsafe(declaredTypeName.name);
 
         // Try to find the exact type declaration in IR that matches both name and fernFilepath
         const typeDeclaration = Object.values(this.ir.types).find((type) => {
-            // Match by name (try different formats)
+            // Match by name
             const nameMatches =
-                type.name.name.snakeCase.unsafeName === typeName ||
-                type.name.name.pascalCase.safeName === typeName ||
-                type.name.name.originalName === typeName;
+                this.case.snakeUnsafe(type.name.name) === typeName ||
+                this.case.pascalSafe(type.name.name) === typeName ||
+                getOriginalName(type.name.name) === typeName;
 
             // Match by fernFilepath
             const pathMatches =
                 type.name.fernFilepath.allParts.length === declaredTypeName.fernFilepath.allParts.length &&
                 type.name.fernFilepath.allParts.every(
                     (part, idx) =>
-                        part.pascalCase.safeName === declaredTypeName.fernFilepath.allParts[idx]?.pascalCase.safeName
+                        this.case.pascalSafe(part) === this.case.pascalSafe(declaredTypeName.fernFilepath.allParts[idx]!)
                 );
 
             return nameMatches && pathMatches;
@@ -775,8 +1002,8 @@ export abstract class AbstractRustGeneratorContext<
 
         if (typeDeclaration) {
             // Use fernFilepath + type name for unique module names
-            const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-            const typeNameSnake = typeDeclaration.name.name.snakeCase.safeName;
+            const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => this.case.snakeSafe(part));
+            const typeNameSnake = this.case.snakeSafe(typeDeclaration.name.name);
             const fullPath = [...pathParts, typeNameSnake];
             const rawName = fullPath.join("_");
             return convertToSnakeCase(rawName);
@@ -793,18 +1020,13 @@ export abstract class AbstractRustGeneratorContext<
      * @param typeDeclaration The type declaration to generate a filename for
      * @returns The unique filename (e.g., "foo_importing_type.rs")
      */
-    public getUniqueFilenameForType(typeDeclaration: {
-        name: {
-            fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> };
-            name: { snakeCase: { safeName: string }; pascalCase: { safeName: string } };
-        };
-    }): string {
+    public getUniqueFilenameForType(typeDeclaration: FernIr.TypeDeclaration): string {
         // Find typeId in IR by matching the typeDeclaration reference
         const typeId = Object.entries(this.ir.types).find(([_, type]) => type === typeDeclaration)?.[0];
 
         if (!typeId) {
             throw new Error(
-                `Type not found in IR: ${typeDeclaration.name.name.pascalCase.safeName}. ` +
+                `Type not found in IR: ${this.case.pascalSafe(typeDeclaration.name.name)}. ` +
                     `This should never happen - all types should be pre-registered.`
             );
         }
@@ -819,18 +1041,13 @@ export abstract class AbstractRustGeneratorContext<
      * @param typeDeclaration The type declaration to generate a type name for
      * @returns The unique type name (e.g., "TaskError" or "TypeTaskError" if collision)
      */
-    public getUniqueTypeNameForDeclaration(typeDeclaration: {
-        name: {
-            fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
-            name: { pascalCase: { safeName: string } };
-        };
-    }): string {
+    public getUniqueTypeNameForDeclaration(typeDeclaration: FernIr.TypeDeclaration): string {
         // Find typeId in IR by matching the typeDeclaration reference
         const typeId = Object.entries(this.ir.types).find(([_, type]) => type === typeDeclaration)?.[0];
 
         if (!typeId) {
             throw new Error(
-                `Type not found in IR: ${typeDeclaration.name.name.pascalCase.safeName}. ` +
+                `Type not found in IR: ${this.case.pascalSafe(typeDeclaration.name.name)}. ` +
                     `This should never happen - all types should be pre-registered.`
             );
         }
@@ -845,20 +1062,17 @@ export abstract class AbstractRustGeneratorContext<
      * @param declaredTypeName The declared type name from a type reference
      * @returns The unique type name, or the base name if not found in IR
      */
-    public getUniqueTypeNameForReference(declaredTypeName: {
-        fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
-        name: { pascalCase: { safeName: string } };
-    }): string {
-        const baseTypeName = declaredTypeName.name.pascalCase.safeName;
+    public getUniqueTypeNameForReference(declaredTypeName: FernIr.DeclaredTypeName): string {
+        const baseTypeName = this.case.pascalSafe(declaredTypeName.name);
 
         // Try to find the type declaration in IR
         const typeDeclaration = Object.values(this.ir.types).find(
             (type) =>
-                type.name.name.pascalCase.safeName === baseTypeName &&
+                this.case.pascalSafe(type.name.name) === baseTypeName &&
                 type.name.fernFilepath.allParts.length === declaredTypeName.fernFilepath.allParts.length &&
                 type.name.fernFilepath.allParts.every(
                     (part, idx) =>
-                        part.pascalCase.safeName === declaredTypeName.fernFilepath.allParts[idx]?.pascalCase.safeName
+                        this.case.pascalSafe(part) === this.case.pascalSafe(declaredTypeName.fernFilepath.allParts[idx]!)
                 )
         );
 
@@ -875,16 +1089,16 @@ export abstract class AbstractRustGeneratorContext<
 
     /**
      * Get the unique query type name (used in type references).
-     * This looks up the type in IR and endpoind and returns its unique name.
+     * This looks up the type in IR and endpoint and returns its unique name.
      *
      * @param endpoint
      * @param serviceId
      * @returns The unique type name, or the base name if not found in IR
      */
 
-    public getQueryRequestTypeName(endpoint: HttpEndpoint, serviceId: string): string {
+    public getQueryRequestTypeName(endpoint: FernIr.HttpEndpoint, serviceId: string): string {
         // Generate query-specific request type name with service context to prevent collisions
-        const methodName = endpoint.name.pascalCase.safeName;
+        const methodName = this.case.pascalSafe(endpoint.name);
         const baseTypeName = `${methodName}QueryRequest`;
 
         // Find the subpackage that owns this service to get naming context
@@ -904,7 +1118,7 @@ export abstract class AbstractRustGeneratorContext<
             // Check if this other service has an endpoint with the same name
             return otherService.endpoints.some(
                 (otherEndpoint) =>
-                    otherEndpoint.name.pascalCase.safeName === methodName &&
+                    this.case.pascalSafe(otherEndpoint.name) === methodName &&
                     otherEndpoint.queryParameters.length > 0 &&
                     !otherEndpoint.requestBody
             );
@@ -912,7 +1126,7 @@ export abstract class AbstractRustGeneratorContext<
 
         if (hasCollision) {
             // Include full subpackage path to make it unique (e.g., auth/analytics → AuthAnalytics)
-            const pathParts = subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+            const pathParts = subpackage.fernFilepath.allParts.map((part) => this.case.pascalSafe(part));
             const subpackagePrefix = pathParts.join("");
             return `${subpackagePrefix}${baseTypeName}`;
         }
@@ -1026,6 +1240,30 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Get filename for bytes request body using endpoint ID.
+     * @param endpointId - The unique endpoint ID from IR
+     */
+    public getFilenameForBytesRequestBody(endpointId: string): string {
+        return this.project.filenameRegistry.getBytesRequestFilenameOrThrow(endpointId);
+    }
+
+    /**
+     * Get module name for bytes request body from filename.
+     */
+    public getModuleNameForBytesRequestBody(endpointId: string): string {
+        const filename = this.getFilenameForBytesRequestBody(endpointId);
+        return filename.replace(".rs", "");
+    }
+
+    /**
+     * Get unique type name for bytes request body using endpoint ID.
+     * @param endpointId - The unique endpoint ID from IR
+     */
+    public getBytesRequestTypeName(endpointId: string): string {
+        return this.project.filenameRegistry.getBytesRequestTypeNameOrThrow(endpointId);
+    }
+
+    /**
      * Converts PascalCase to snake_case consistently across the generator
      */
     private convertPascalToSnakeCase(pascalCase: string): string {
@@ -1040,11 +1278,11 @@ export abstract class AbstractRustGeneratorContext<
      * @returns The unique filename (e.g., "nested_no_auth_api.rs")
      */
     public getUniqueFilenameForSubpackage(subpackage: {
-        fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> };
+        fernFilepath: FernIr.FernFilepath;
     }): string {
         // Use the full fernFilepath to create unique filenames to prevent collisions
         // E.g., "nested-no-auth/api" becomes "nested_no_auth_api.rs"
-        const pathParts = subpackage.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+        const pathParts = subpackage.fernFilepath.allParts.map((part) => this.case.snakeSafe(part));
         return `${pathParts.join("_")}.rs`;
     }
 
@@ -1056,7 +1294,7 @@ export abstract class AbstractRustGeneratorContext<
      * @returns The unique client name (e.g., "NestedNoAuthApiClient" or "BasicAuthClient2" if collision)
      */
     public getUniqueClientNameForSubpackage(subpackage: {
-        fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
+        fernFilepath: FernIr.FernFilepath;
     }): string {
         // Find the subpackage ID by matching fernFilepath
         const subpackageId = Object.entries(this.ir.subpackages).find(([, sp]) => {
@@ -1064,7 +1302,7 @@ export abstract class AbstractRustGeneratorContext<
                 sp.fernFilepath.allParts.length === subpackage.fernFilepath.allParts.length &&
                 sp.fernFilepath.allParts.every(
                     (part, index) =>
-                        part.pascalCase.safeName === subpackage.fernFilepath.allParts[index]?.pascalCase.safeName
+                        this.case.pascalSafe(part) === this.case.pascalSafe(subpackage.fernFilepath.allParts[index]!)
                 )
             );
         })?.[0];
@@ -1078,7 +1316,7 @@ export abstract class AbstractRustGeneratorContext<
         }
 
         // Fallback to old behavior if not found (shouldn't happen in normal flow)
-        const pathParts = subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+        const pathParts = subpackage.fernFilepath.allParts.map((part) => this.case.pascalSafe(part));
         return pathParts.join("") + "Client";
     }
 
@@ -1087,15 +1325,34 @@ export abstract class AbstractRustGeneratorContext<
      * Returns the wireValue of the first header auth scheme, or "api_key" as default.
      */
     public getApiKeyHeaderName(): string {
+        return this.getFirstHeaderAuthValue((header) => getWireValue(header.name)) ?? "api_key";
+    }
+
+    /**
+     * Get the API key prefix from the IR auth schemes (e.g., "Token", "Bearer").
+     * Returns undefined if no prefix is configured.
+     */
+    public getApiKeyPrefix(): string | undefined {
+        return this.getFirstHeaderAuthValue((header) => header.prefix);
+    }
+
+    private getFirstHeaderAuthValue<T>(selector: (header: FernIr.HeaderAuthScheme) => T | undefined): T | undefined {
         if (this.ir.auth?.schemes) {
             for (const scheme of this.ir.auth.schemes) {
-                const schemeAsUnion = scheme as { type?: string; name?: { wireValue?: string } };
-                if (schemeAsUnion.type === "header" && schemeAsUnion.name?.wireValue) {
-                    return schemeAsUnion.name.wireValue;
+                const result = FernIr.AuthScheme._visit(scheme, {
+                    header: (header) => selector(header),
+                    bearer: () => undefined,
+                    basic: () => undefined,
+                    oauth: () => undefined,
+                    inferred: () => undefined,
+                    _other: () => undefined
+                });
+                if (result !== undefined) {
+                    return result;
                 }
             }
         }
-        return "api_key";
+        return undefined;
     }
 
     /**
@@ -1112,7 +1369,7 @@ export abstract class AbstractRustGeneratorContext<
      */
     private generateDefaultCrateName(): string {
         const orgName = this.config.organization;
-        const apiName = this.ir.apiName.snakeCase.unsafeName;
+        const apiName = this.case.snakeUnsafe(this.ir.apiName);
         return generateDefaultCrateName(orgName, apiName);
     }
 }

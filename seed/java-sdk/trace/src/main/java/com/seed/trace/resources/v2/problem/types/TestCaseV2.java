@@ -111,6 +111,10 @@ public final class TestCaseV2 {
     public interface _FinalStage {
         TestCaseV2 build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage arguments(Map<String, VariableValue> arguments);
 
         _FinalStage putAllArguments(Map<String, VariableValue> arguments);
@@ -200,6 +204,18 @@ public final class TestCaseV2 {
         @java.lang.Override
         public TestCaseV2 build() {
             return new TestCaseV2(metadata, implementation, arguments, expects, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

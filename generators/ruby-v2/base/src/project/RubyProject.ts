@@ -1,14 +1,16 @@
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
-import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import dedent from "dedent";
+import { Eta } from "eta";
 import { mkdir, readFile, writeFile } from "fs/promises";
-import { template } from "lodash-es";
 import { join as pathJoin } from "path";
-import { AsIsFiles, topologicalCompareAsIsFiles } from "../AsIs";
-import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
-import { RubocopFile } from "./RubocopFile";
+import { AsIsFiles, topologicalCompareAsIsFiles } from "../AsIs.js";
+import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext.js";
+import { RubocopFile } from "./RubocopFile.js";
+
+const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 
 const GEMFILE_FILENAME = "Gemfile";
 const CUSTOM_GEMFILE_FILENAME = "Gemfile.custom";
@@ -16,6 +18,71 @@ const RAKEFILE_FILENAME = "Rakefile";
 const RUBOCOP_FILENAME = ".rubocop.yml";
 const CUSTOM_TEST_FILENAME = "custom.test.rb";
 const CUSTOM_GEMSPEC_FILENAME = "custom.gemspec.rb";
+
+interface Dependency {
+    name: string;
+    versionConstraint?: string;
+}
+
+function depToGemfileString(dep: Dependency): string {
+    return dep.versionConstraint != null ? `gem "${dep.name}", "${dep.versionConstraint}"` : `gem "${dep.name}"`;
+}
+
+function depToGemspecString(dep: Dependency): string {
+    return dep.versionConstraint != null
+        ? `spec.add_dependency "${dep.name}", "${dep.versionConstraint}"`
+        : `spec.add_dependency "${dep.name}"`;
+}
+
+function sanitizeRubyStringValue(value: string, field: string): string {
+    if (/["\r\n\\]/.test(value)) {
+        throw new Error(
+            `Invalid character in ${field} "${value}": values used in Ruby string ` +
+                `literals cannot contain unescaped quotes, backslashes, or newlines.`
+        );
+    }
+    return value;
+}
+
+function depsFromRecord(record: Record<string, string | undefined> | undefined): Dependency[] {
+    const deps = Object.entries(record ?? {});
+    if (deps == null || deps.length === 0) {
+        return [];
+    }
+
+    return deps.map(([packageName, versionConstraint]) => ({
+        name: sanitizeRubyStringValue(packageName, "package name"),
+        versionConstraint:
+            versionConstraint != null ? sanitizeRubyStringValue(versionConstraint, "version constraint") : undefined
+    }));
+}
+
+function mergedDependencies(baseDeps: Dependency[], overrideDeps: Dependency[]): Dependency[] {
+    const mergedDeps: Record<string, string | undefined> = {};
+    baseDeps.forEach((dep) => {
+        mergedDeps[dep.name] = dep.versionConstraint;
+    });
+    overrideDeps.forEach((dep) => {
+        mergedDeps[dep.name] = dep.versionConstraint;
+    });
+    return depsFromRecord(mergedDeps);
+}
+
+const BASE_DEV_DEPENDENCIES: Dependency[] = [
+    { name: "minitest", versionConstraint: "~> 5.16" },
+    { name: "minitest-rg" },
+    { name: "pry" },
+    { name: "rake", versionConstraint: "~> 13.0" },
+    { name: "rubocop", versionConstraint: "~> 1.21" },
+    { name: "rubocop-minitest" },
+    { name: "webmock" }
+];
+
+function hasBasicAuth(ir: FernIr.IntermediateRepresentation): boolean {
+    return ir.auth.schemes.some((s) => s.type === "basic");
+}
+
+const BASE_DEPENDENCIES: Dependency[] = [];
 
 /**
  * In memory representation of a Ruby project.
@@ -103,7 +170,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         // Use enableWireTests config to conditionally include wire-tests in the test command
         const enableWireTests = this.rubyContext.customConfig.enableWireTests ?? false;
 
-        const githubCiContents = template(githubCiTemplate)({ enableWireTests });
+        const githubCiContents = eta.renderString(githubCiTemplate, { enableWireTests });
         await writeFile(join(githubWorkflowsDir, RelativeFilePath.of("ci.yml")), githubCiContents);
     }
 
@@ -139,7 +206,9 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     filename,
                     gemNamespace: this.rubyContext.getRootModuleName(),
                     rootFolderName: this.rubyContext.getRootFolderName(),
-                    customPagerClassName: this.rubyContext.customConfig.customPagerName
+                    customPagerClassName: this.rubyContext.customConfig.customPagerName,
+                    omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
+                    maxRetries: this.rubyContext.customConfig.maxRetries
                 })
             );
         }
@@ -149,12 +218,16 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         filename,
         gemNamespace,
         rootFolderName,
-        customPagerClassName
+        customPagerClassName,
+        omitFernHeaders,
+        maxRetries
     }: {
         filename: string;
         gemNamespace: string;
         rootFolderName: string;
         customPagerClassName?: string;
+        omitFernHeaders?: boolean;
+        maxRetries?: number;
     }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
@@ -165,7 +238,9 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 variables: getTemplateVariables({
                     gemNamespace,
                     rootFolderName,
-                    customPagerClassName
+                    customPagerClassName,
+                    omitFernHeaders,
+                    maxRetries
                 })
             })
         );
@@ -210,17 +285,21 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
 }
 
 function replaceTemplate({ contents, variables }: { contents: string; variables: Record<string, unknown> }): string {
-    return template(contents)(variables);
+    return eta.renderString(contents, variables);
 }
 
 function getTemplateVariables({
     gemNamespace,
     rootFolderName,
-    customPagerClassName
+    customPagerClassName,
+    omitFernHeaders,
+    maxRetries
 }: {
     gemNamespace: string;
     rootFolderName: string;
     customPagerClassName?: string;
+    omitFernHeaders?: boolean;
+    maxRetries?: number;
 }): Record<string, unknown> {
     return {
         gem_namespace: gemNamespace,
@@ -228,7 +307,9 @@ function getTemplateVariables({
         sdkName: gemNamespace.toLowerCase(),
         // rootFolderName is used for require paths (matches actual file/folder names)
         rootFolderName,
-        custom_pager_class_name: customPagerClassName ?? "CustomPager"
+        custom_pager_class_name: customPagerClassName ?? "CustomPager",
+        omitFernHeaders: omitFernHeaders ?? false,
+        defaultMaxRetries: maxRetries ?? 2
     };
 }
 
@@ -245,29 +326,24 @@ declare namespace GemspecFile {
 
 class GemspecFile {
     private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+    private readonly baseDependencies: Dependency[];
 
     public constructor({ context, project }: GemspecFile.Args) {
         this.context = context;
-    }
-
-    private getExtraDependenciesString(): string {
-        const extraDependencies = this.context.customConfig.extraDependencies;
-        if (extraDependencies == null || Object.keys(extraDependencies).length === 0) {
-            return "";
-        }
-
-        const dependencyLines = Object.entries(extraDependencies).map(
-            ([packageName, versionConstraint]) => `spec.add_dependency "${packageName}", "${versionConstraint}"`
-        );
-
-        return "\n" + dependencyLines.join("\n");
+        this.baseDependencies = hasBasicAuth(context.ir)
+            ? [...BASE_DEPENDENCIES, { name: "base64" }]
+            : BASE_DEPENDENCIES;
     }
 
     public async toString(): Promise<string> {
         const moduleFolderName = this.context.getRootFolderName();
         const moduleName = this.context.getRootModuleName();
         const gemName = this.context.getGemName();
-        const extraDependenciesString = this.getExtraDependenciesString();
+
+        const dependencies = mergedDependencies(
+            this.baseDependencies,
+            depsFromRecord(this.context.customConfig.extraDependencies)
+        );
 
         return dedent`
             # frozen_string_literal: true
@@ -275,17 +351,17 @@ class GemspecFile {
             require_relative "lib/${moduleFolderName}/version"
             require_relative "${CUSTOM_GEMSPEC_FILENAME}"
 
-            # Note: A handful of these fields are required as part of the Ruby specification. 
+            # Note: A handful of these fields are required as part of the Ruby specification.
             #       You can change them here or overwrite them in the custom gemspec file.
             Gem::Specification.new do |spec|
             spec.name = "${gemName}"
-            spec.authors = ["${moduleName}"] 
+            spec.authors = ["${moduleName}"]
             spec.version = ${moduleName}::VERSION
             spec.summary = "Ruby client library for the ${moduleName} API"
             spec.description = "The ${moduleName} Ruby library provides convenient access to the ${moduleName} API from Ruby."
             spec.required_ruby_version = ">= 3.3.0"
             spec.metadata["rubygems_mfa_required"] = "true"
-            
+
             # Specify which files should be added to the gem when it is released.
             # The \`git ls-files -z\` loads the files in the RubyGem that have been added into git.
             gemspec = File.basename(__FILE__)
@@ -298,7 +374,7 @@ class GemspecFile {
             spec.bindir = "exe"
             spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
             spec.require_paths = ["lib"]
-${extraDependenciesString}
+            ${dependencies.map(depToGemspecString).join("\n            ")}
             # For more information and examples about making a new gem, check out our
             # guide at: https://bundler.io/guides/creating_gem.html
             
@@ -361,21 +437,11 @@ class Gemfile {
         this.context = context;
     }
 
-    private getExtraDevDependenciesString(): string {
-        const extraDevDependencies = this.context.customConfig.extraDevDependencies;
-        if (extraDevDependencies == null || Object.keys(extraDevDependencies).length === 0) {
-            return "";
-        }
-
-        const dependencyLines = Object.entries(extraDevDependencies).map(
-            ([packageName, versionConstraint]) => `gem "${packageName}", "${versionConstraint}"`
-        );
-
-        return "\n" + dependencyLines.join("\n");
-    }
-
     public async toString(): Promise<string> {
-        const extraDevDependenciesString = this.getExtraDevDependenciesString();
+        const devDependencies = mergedDependencies(
+            BASE_DEV_DEPENDENCIES,
+            depsFromRecord(this.context.customConfig.extraDevDependencies)
+        );
 
         return dedent`
             # frozen_string_literal: true
@@ -385,18 +451,8 @@ class Gemfile {
                 gemspec
 
                 group :test, :development do
-                gem "rake", "~> 13.0"
 
-                gem "minitest", "~> 5.16"
-                gem "minitest-rg"
-
-                gem "rubocop", "~> 1.21"
-                gem "rubocop-minitest"
-
-                gem "pry"
-
-                gem "webmock"
-${extraDevDependenciesString}
+                ${devDependencies.map(depToGemfileString).join("\n                ")}
             end
 
             # Load custom Gemfile configuration if it exists
@@ -582,12 +638,17 @@ class ModuleFile {
     private project: RubyProject;
     public readonly filePath: AbsoluteFilePath;
     public readonly fileName: string;
-    private readonly baseContents: string = dedent`
-        # frozen_string_literal: true
+    private get baseContents(): string {
+        const hasBasicAuth = this.context.ir.auth.schemes.some((s) => s.type === "basic");
+        const requires = ['"json"', '"net/http"', '"securerandom"'];
+        if (hasBasicAuth) {
+            requires.push('"base64"');
+        }
+        return dedent`
+            # frozen_string_literal: true
 
-        require "json"
-        require "net/http"
-        require "securerandom"\n\n`;
+            ${requires.map((r) => `require ${r}`).join("\n")}\n\n`;
+    }
 
     public constructor({ context, project }: ModuleFile.Args) {
         this.context = context;
@@ -596,7 +657,7 @@ class ModuleFile {
         this.fileName = this.context.getRootFolderName() + ".rb";
     }
 
-    private getAbsoluteFilePathForTypeDeclaration(typeDeclaration: TypeDeclaration): AbsoluteFilePath {
+    private getAbsoluteFilePathForTypeDeclaration(typeDeclaration: FernIr.TypeDeclaration): AbsoluteFilePath {
         return join(
             this.project.absolutePathToOutputDirectory,
             this.context.getLocationForTypeId(typeDeclaration.name.typeId),
@@ -665,7 +726,9 @@ class ModuleFile {
         const requirePaths = this.context.customConfig?.requirePaths;
         if (requirePaths != null && requirePaths.length > 0) {
             const rootFolder = this.context.getRootFolderName();
-            const pathsArray = requirePaths.map((p) => `"${rootFolder}/${p}"`).join(", ");
+            const pathsArray = requirePaths
+                .map((p) => `"${rootFolder}/${sanitizeRubyStringValue(p, "require path")}"`)
+                .join(", ");
             const requirePathsHook = `
 
 # Load user-defined files if present (e.g., for Sentry integration)
@@ -686,7 +749,7 @@ end`;
     }
 }
 
-function dependsOn(a: TypeDeclaration, b: TypeDeclaration): boolean {
+function dependsOn(a: FernIr.TypeDeclaration, b: FernIr.TypeDeclaration): boolean {
     if (a.name.typeId === b.name.typeId) {
         return false;
     }

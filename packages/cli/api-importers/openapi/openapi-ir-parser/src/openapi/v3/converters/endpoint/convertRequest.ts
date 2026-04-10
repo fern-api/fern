@@ -9,17 +9,17 @@ import {
     Source
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
-import { getExtension } from "../../../../getExtension";
-import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties";
-import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
+import { getExtension } from "../../../../getExtension.js";
+import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties.js";
+import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas.js";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
 import {
     findApplicationJsonRequest,
     getApplicationJsonSchemaMediaObject,
     getExamples
-} from "./getApplicationJsonSchema";
+} from "./getApplicationJsonSchema.js";
 
 function findApplicationUrlFormEncodedRequest({
     content,
@@ -133,7 +133,13 @@ function multipartRequestHasFile(
           };
     return (
         Object.entries(resolvedMultipartSchema.schema.properties ?? {}).find(([_, definition]) => {
-            return !isReferenceObject(definition) && definition.type === "string" && definition.format === "binary";
+            return (
+                !isReferenceObject(definition) &&
+                definition.type === "string" &&
+                (definition.format === "binary" ||
+                    (definition.format == null &&
+                        (definition as Record<string, unknown>).contentMediaType === "application/octet-stream"))
+            );
         }) != null
     );
 }
@@ -253,6 +259,19 @@ function multipartOrJsonOrNone<TResult, TNone>({
     const [, multipartMediaTypeObject] = multipart ?? [undefined, undefined];
 
     if (!jsonMediaTypeObject?.schema && !multipartMediaTypeObject?.schema) {
+        // Allow JSON content types through even without a schema so that
+        // raw examples are preserved for rendering in docs and code snippets.
+        // Only do this when the media type object actually contains examples;
+        // otherwise (e.g. google.protobuf.Empty → empty JSON body) we correctly
+        // treat the endpoint as having no request body.
+        if (json) {
+            const hasExamples =
+                jsonMediaTypeObject?.example != null ||
+                (jsonMediaTypeObject?.examples != null && Object.keys(jsonMediaTypeObject.examples).length > 0);
+            if (hasExamples) {
+                return visitor.json(json);
+            }
+        }
         return visitor.neither();
     }
 

@@ -7,9 +7,11 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.container.getAndReturnOptional(request: ObjectWithRequiredField(
-        string: "string"
-    ))
+    _ = try await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion(request: [
+        "string": MixedType.double(
+            1.1
+        )
+    ])
 }
 
 try await main()

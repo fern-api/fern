@@ -64,8 +64,8 @@ class ReferenceClient:
             container_object={
                 "nested_objects": [
                     {
-                        "literal_1": "literal1",
-                        "literal_2": "literal2",
+                        "literal1": "literal1",
+                        "literal2": "literal2",
                         "str_prop": "strProp",
                     }
                 ]
@@ -134,8 +134,8 @@ class AsyncReferenceClient:
                 container_object={
                     "nested_objects": [
                         {
-                            "literal_1": "literal1",
-                            "literal_2": "literal2",
+                            "literal1": "literal1",
+                            "literal2": "literal2",
                             "str_prop": "strProp",
                         }
                     ]

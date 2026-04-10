@@ -6,8 +6,8 @@ import chalk from "chalk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
-import { type ChangelogEntry, validateAngleBracketEscaping } from "./angleBracketValidator";
-import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils";
+import { type ChangelogEntry, validateAngleBracketEscaping } from "./angleBracketValidator.js";
+import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils.js";
 
 export interface ValidateVersionsYmlOptions {
     absolutePathToChangelog: AbsoluteFilePath;

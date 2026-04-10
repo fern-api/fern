@@ -11,13 +11,13 @@ import (
 
 // A request to obtain an OAuth token.
 var (
-	getTokenRequestFieldClientId     = big.NewInt(1 << 0)
+	getTokenRequestFieldClientID     = big.NewInt(1 << 0)
 	getTokenRequestFieldClientSecret = big.NewInt(1 << 1)
 	getTokenRequestFieldScope        = big.NewInt(1 << 2)
 )
 
 type GetTokenRequest struct {
-	ClientId     string  `json:"client_id" url:"client_id"`
+	ClientID     string  `json:"client_id" url:"client_id"`
 	ClientSecret string  `json:"client_secret" url:"client_secret"`
 	Scope        *string `json:"scope,omitempty" url:"scope,omitempty"`
 
@@ -30,11 +30,11 @@ type GetTokenRequest struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetTokenRequest) GetClientId() string {
+func (g *GetTokenRequest) GetClientID() string {
 	if g == nil {
 		return ""
 	}
-	return g.ClientId
+	return g.ClientID
 }
 
 func (g *GetTokenRequest) GetClientSecret() string {
@@ -60,6 +60,9 @@ func (g *GetTokenRequest) GrantType() string {
 }
 
 func (g *GetTokenRequest) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -70,11 +73,11 @@ func (g *GetTokenRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTokenRequest) SetClientId(clientId string) {
-	g.ClientId = clientId
-	g.require(getTokenRequestFieldClientId)
+func (g *GetTokenRequest) SetClientID(clientID string) {
+	g.ClientID = clientID
+	g.require(getTokenRequestFieldClientID)
 }
 
 // SetClientSecret sets the ClientSecret field and marks it as non-optional;
@@ -137,6 +140,9 @@ func (g *GetTokenRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetTokenRequest) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -150,14 +156,14 @@ func (g *GetTokenRequest) String() string {
 
 // A request to refresh an OAuth token.
 var (
-	refreshTokenRequestFieldClientId     = big.NewInt(1 << 0)
+	refreshTokenRequestFieldClientID     = big.NewInt(1 << 0)
 	refreshTokenRequestFieldClientSecret = big.NewInt(1 << 1)
 	refreshTokenRequestFieldRefreshToken = big.NewInt(1 << 2)
 	refreshTokenRequestFieldScope        = big.NewInt(1 << 3)
 )
 
 type RefreshTokenRequest struct {
-	ClientId     string  `json:"client_id" url:"client_id"`
+	ClientID     string  `json:"client_id" url:"client_id"`
 	ClientSecret string  `json:"client_secret" url:"client_secret"`
 	RefreshToken string  `json:"refresh_token" url:"refresh_token"`
 	Scope        *string `json:"scope,omitempty" url:"scope,omitempty"`
@@ -171,11 +177,11 @@ type RefreshTokenRequest struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *RefreshTokenRequest) GetClientId() string {
+func (r *RefreshTokenRequest) GetClientID() string {
 	if r == nil {
 		return ""
 	}
-	return r.ClientId
+	return r.ClientID
 }
 
 func (r *RefreshTokenRequest) GetClientSecret() string {
@@ -208,6 +214,9 @@ func (r *RefreshTokenRequest) GrantType() string {
 }
 
 func (r *RefreshTokenRequest) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -218,11 +227,11 @@ func (r *RefreshTokenRequest) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RefreshTokenRequest) SetClientId(clientId string) {
-	r.ClientId = clientId
-	r.require(refreshTokenRequestFieldClientId)
+func (r *RefreshTokenRequest) SetClientID(clientID string) {
+	r.ClientID = clientID
+	r.require(refreshTokenRequestFieldClientID)
 }
 
 // SetClientSecret sets the ClientSecret field and marks it as non-optional;
@@ -292,6 +301,9 @@ func (r *RefreshTokenRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (r *RefreshTokenRequest) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -344,6 +356,9 @@ func (t *TokenResponse) GetRefreshToken() *string {
 }
 
 func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -403,6 +418,9 @@ func (t *TokenResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TokenResponse) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value

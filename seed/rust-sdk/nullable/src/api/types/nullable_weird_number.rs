@@ -3,13 +3,13 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum WeirdNumber {
-        Integer(i64),
+    Integer(i64),
 
-        Nullable1(Option<f64>),
+    OptionalFloat(Option<f64>),
 
-        Optional2(Option<Option<String>>),
+    OptionalString(Option<String>),
 
-        Double(f64),
+    Double(f64),
 }
 
 impl WeirdNumber {
@@ -17,73 +17,71 @@ impl WeirdNumber {
         matches!(self, Self::Integer(_))
     }
 
-    pub fn is_nullable1(&self) -> bool {
-        matches!(self, Self::Nullable1(_))
+    pub fn is_optional_float(&self) -> bool {
+        matches!(self, Self::OptionalFloat(_))
     }
 
-    pub fn is_optional2(&self) -> bool {
-        matches!(self, Self::Optional2(_))
+    pub fn is_optional_string(&self) -> bool {
+        matches!(self, Self::OptionalString(_))
     }
 
     pub fn is_double(&self) -> bool {
         matches!(self, Self::Double(_))
     }
 
-
     pub fn as_integer(&self) -> Option<&i64> {
         match self {
-                    Self::Integer(value) => Some(value),
-                    _ => None,
-                }
+            Self::Integer(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_integer(self) -> Option<i64> {
         match self {
-                    Self::Integer(value) => Some(value),
-                    _ => None,
-                }
+            Self::Integer(value) => Some(value),
+            _ => None,
+        }
     }
 
-    pub fn as_nullable1(&self) -> Option<&Option<f64>> {
+    pub fn as_optional_float(&self) -> Option<&f64> {
         match self {
-                    Self::Nullable1(value) => Some(value),
-                    _ => None,
-                }
+            Self::OptionalFloat(value) => value.as_ref(),
+            _ => None,
+        }
     }
 
-    pub fn into_nullable1(self) -> Option<Option<f64>> {
+    pub fn into_optional_float(self) -> Option<f64> {
         match self {
-                    Self::Nullable1(value) => Some(value),
-                    _ => None,
-                }
+            Self::OptionalFloat(value) => value,
+            _ => None,
+        }
     }
 
-    pub fn as_optional2(&self) -> Option<&Option<Option<String>>> {
+    pub fn as_optional_string(&self) -> Option<&str> {
         match self {
-                    Self::Optional2(value) => Some(value),
-                    _ => None,
-                }
+            Self::OptionalString(value) => value.as_deref(),
+            _ => None,
+        }
     }
 
-    pub fn into_optional2(self) -> Option<Option<Option<String>>> {
+    pub fn into_optional_string(self) -> Option<String> {
         match self {
-                    Self::Optional2(value) => Some(value),
-                    _ => None,
-                }
+            Self::OptionalString(value) => value,
+            _ => None,
+        }
     }
 
     pub fn as_double(&self) -> Option<&f64> {
         match self {
-                    Self::Double(value) => Some(value),
-                    _ => None,
-                }
+            Self::Double(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_double(self) -> Option<f64> {
         match self {
-                    Self::Double(value) => Some(value),
-                    _ => None,
-                }
+            Self::Double(value) => Some(value),
+            _ => None,
+        }
     }
-
 }

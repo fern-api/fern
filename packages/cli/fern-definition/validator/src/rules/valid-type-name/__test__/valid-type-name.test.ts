@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { ValidationViolation } from "../../../ValidationViolation";
-import { ValidTypeNameRule } from "../valid-type-name";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { ValidationViolation } from "../../../ValidationViolation.js";
+import { ValidTypeNameRule } from "../valid-type-name.js";
 
 describe("valid-type-name", () => {
     it("simple", async () => {
@@ -19,6 +19,7 @@ describe("valid-type-name", () => {
                 message: "Type name must begin with a letter",
                 nodePath: ["types", "_InvalidType"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "valid-type-name",
                 severity: "fatal"
             }
         ];

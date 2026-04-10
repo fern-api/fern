@@ -1,11 +1,13 @@
-import * as FernIr from "@fern-fern/ir-sdk/api";
-import { HttpEndpoint, IntermediateRepresentation, QueryParameter } from "@fern-fern/ir-sdk/api";
+import { CaseConverter } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
-import { SubClientGenerator } from "../generators/SubClientGenerator";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SubClientGenerator } from "../generators/SubClientGenerator.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 // Mock function to create basic IR structure
-function createMockIR(services: Record<string, unknown> = {}): IntermediateRepresentation {
+function createMockIR(services: Record<string, unknown> = {}): FernIr.IntermediateRepresentation {
     return {
         apiName: {
             originalName: "TestAPI",
@@ -18,11 +20,11 @@ function createMockIR(services: Record<string, unknown> = {}): IntermediateRepre
         errors: {},
         types: {},
         services
-    } as unknown as IntermediateRepresentation;
+    } as unknown as FernIr.IntermediateRepresentation;
 }
 
 // Mock function to create query parameter
-function createQueryParameter(name: string, wireValue: string): QueryParameter {
+function createQueryParameter(name: string, wireValue: string): FernIr.QueryParameter {
     return {
         name: {
             name: {
@@ -50,11 +52,11 @@ function createQueryParameter(name: string, wireValue: string): QueryParameter {
         allowMultiple: false,
         docs: undefined,
         availability: undefined
-    } as QueryParameter;
+    } as FernIr.QueryParameter;
 }
 
 // Mock function to create HTTP endpoint with query parameters
-function createHttpEndpoint(name: string, queryParams: QueryParameter[] = []): HttpEndpoint {
+function createHttpEndpoint(name: string, queryParams: FernIr.QueryParameter[] = []): FernIr.HttpEndpoint {
     return {
         id: name,
         name: {
@@ -93,6 +95,7 @@ function createHttpEndpoint(name: string, queryParams: QueryParameter[] = []): H
         requestBody: undefined,
         sdkRequest: undefined,
         response: undefined,
+        responseHeaders: undefined,
         errors: [],
         auth: false,
         idempotent: false,
@@ -108,14 +111,16 @@ function createHttpEndpoint(name: string, queryParams: QueryParameter[] = []): H
         transport: undefined,
         source: undefined,
         security: undefined,
-        retries: undefined
-    } as HttpEndpoint;
+        retries: undefined,
+        apiPlayground: undefined
+    } as FernIr.HttpEndpoint;
 }
 
 // Mock function to create context
-function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext {
+function createMockContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorContext {
     return {
         ir,
+        case: caseConverter,
         getClientName: () => "TestClient",
         customConfig: { generateExamples: false },
         getHttpServiceOrThrow: () => ({ endpoints: [] }) as unknown as FernIr.HttpService,
@@ -129,22 +134,22 @@ function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext 
             );
         },
         getUniqueFilenameForSubpackage: (subpackage: {
-            fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> };
+            fernFilepath: FernIr.FernFilepath;
         }) => {
-            const pathParts = subpackage.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+            const pathParts = subpackage.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
             return `${pathParts.join("_")}.rs`;
         },
         getUniqueClientNameForSubpackage: (subpackage: {
-            fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
+            fernFilepath: FernIr.FernFilepath;
         }) => {
-            const pathParts = subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+            const pathParts = subpackage.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part));
             return pathParts.join("") + "Client";
         },
-        getDirectoryForFernFilepath: (fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> }) => {
-            return fernFilepath.allParts.map((part) => part.snakeCase.safeName).join("/");
+        getDirectoryForFernFilepath: (fernFilepath: FernIr.FernFilepath) => {
+            return fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part)).join("/");
         },
-        getQueryRequestTypeName: (endpoint: HttpEndpoint) => {
-            const methodName = endpoint.name.pascalCase.safeName;
+        getQueryRequestTypeName: (endpoint: FernIr.HttpEndpoint) => {
+            const methodName = caseConverter.pascalSafe(endpoint.name);
             return `${methodName}QueryRequest`;
         },
         getModuleNameForQueryRequest: (queryRequestTypeName: string) => {
@@ -153,6 +158,7 @@ function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext 
                 .toLowerCase()
                 .replace(/^_/, "");
         },
+        hasMultipleBaseUrls: () => false,
         escapeRustKeyword: (name: string) => {
             // Simple implementation for testing - just returns the name as-is
             // In production, this would escape Rust keywords with r# prefix
@@ -257,7 +263,7 @@ describe("QueryParameterGenerator", () => {
         // Access private method for testing
         const method = (
             generator as unknown as {
-                generateHttpMethod: (endpoint: HttpEndpoint) => {
+                generateHttpMethod: (endpoint: FernIr.HttpEndpoint) => {
                     name: string;
                     parameters: string[];
                     returnType: string;
@@ -286,7 +292,7 @@ describe("QueryParameterGenerator", () => {
         // Access private method for testing
         const method = (
             generator as unknown as {
-                generateHttpMethod: (endpoint: HttpEndpoint) => {
+                generateHttpMethod: (endpoint: FernIr.HttpEndpoint) => {
                     name: string;
                     parameters: string[];
                     returnType: string;
@@ -316,7 +322,7 @@ describe("QueryParameterGenerator", () => {
         // Access private method for testing
         const method = (
             generator as unknown as {
-                generateHttpMethod: (endpoint: HttpEndpoint) => {
+                generateHttpMethod: (endpoint: FernIr.HttpEndpoint) => {
                     name: string;
                     parameters: string[];
                     returnType: string;

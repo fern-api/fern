@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { FernRcAccountSchema } from "./FernRcAccountSchema";
+import { FernRcAccountSchema } from "./FernRcAccountSchema.js";
 
 export const FernRcAuthSchema = z.object({
     /** The currently active account identifier */

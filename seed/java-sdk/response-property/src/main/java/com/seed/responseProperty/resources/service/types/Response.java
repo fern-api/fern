@@ -96,6 +96,10 @@ public final class Response implements IWithMetadata, IWithDocs {
     public interface _FinalStage {
         Response build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage metadata(Map<String, String> metadata);
 
         _FinalStage putAllMetadata(Map<String, String> metadata);
@@ -165,6 +169,18 @@ public final class Response implements IWithMetadata, IWithDocs {
         @java.lang.Override
         public Response build() {
             return new Response(metadata, docs, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

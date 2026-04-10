@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -64,7 +64,7 @@ public record SubmissionStatusV2
     public SeedTrace.TestSubmissionStatusV2 AsTest() =>
         IsTest
             ? (SeedTrace.TestSubmissionStatusV2)Value!
-            : throw new System.Exception("SubmissionStatusV2.Type is not 'test'");
+            : throw new global::System.Exception("SubmissionStatusV2.Type is not 'test'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceSubmissionStatusV2"/> if <see cref="Type"/> is 'workspace', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record SubmissionStatusV2
     public SeedTrace.WorkspaceSubmissionStatusV2 AsWorkspace() =>
         IsWorkspace
             ? (SeedTrace.WorkspaceSubmissionStatusV2)Value!
-            : throw new System.Exception("SubmissionStatusV2.Type is not 'workspace'");
+            : throw new global::System.Exception("SubmissionStatusV2.Type is not 'workspace'");
 
     public T Match<T>(
         Func<SeedTrace.TestSubmissionStatusV2, T> onTest,
@@ -147,12 +147,12 @@ public record SubmissionStatusV2
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SubmissionStatusV2>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SubmissionStatusV2).IsAssignableFrom(typeToConvert);
 
         public override SubmissionStatusV2 Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -177,16 +177,27 @@ public record SubmissionStatusV2
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "test" => json.Deserialize<SeedTrace.TestSubmissionStatusV2?>(options)
+                "test" => jsonWithoutDiscriminator.Deserialize<SeedTrace.TestSubmissionStatusV2?>(
+                    options
+                )
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.TestSubmissionStatusV2"
                     ),
-                "workspace" => json.Deserialize<SeedTrace.WorkspaceSubmissionStatusV2?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.WorkspaceSubmissionStatusV2"
-                    ),
+                "workspace" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.WorkspaceSubmissionStatusV2?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.WorkspaceSubmissionStatusV2"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new SubmissionStatusV2(discriminator, value);
@@ -207,6 +218,27 @@ public record SubmissionStatusV2
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override SubmissionStatusV2 ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new SubmissionStatusV2(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            SubmissionStatusV2 value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

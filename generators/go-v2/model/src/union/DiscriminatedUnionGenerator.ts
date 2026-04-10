@@ -1,15 +1,16 @@
+import { getNameFromWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
-import { ObjectProperty, SingleUnionType, TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { AbstractModelGenerator } from "../AbstractModelGenerator";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { AbstractModelGenerator } from "../AbstractModelGenerator.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
     constructor(
         context: ModelGeneratorContext,
-        typeDeclaration: TypeDeclaration,
-        private readonly unionDeclaration: UnionTypeDeclaration
+        typeDeclaration: FernIr.TypeDeclaration,
+        private readonly unionDeclaration: FernIr.UnionTypeDeclaration
     ) {
         super(context, typeDeclaration);
     }
@@ -27,9 +28,10 @@ export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
     private getFields(): go.Field[] {
         const fields: go.Field[] = [this.getDiscriminantField()];
         for (const property of this.getAllObjectProperties()) {
+            const nameVal = property.name;
             fields.push(
                 go.field({
-                    name: this.context.getFieldName(property.name.name),
+                    name: this.context.getFieldName(nameVal),
                     type: this.context.goTypeMapper.convert({ reference: property.valueType }),
                     docs: property.docs
                 })
@@ -42,42 +44,48 @@ export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
     }
 
     private getDiscriminantField(): go.Field {
+        const discName = getNameFromWireValue(this.unionDeclaration.discriminant);
         return go.field({
-            name: this.context.getFieldName(this.unionDeclaration.discriminant.name),
+            name: this.context.getFieldName(discName),
             type: go.Type.string(),
             docs: this.typeDeclaration.docs
         });
     }
 
-    private getFieldForUnionType(unionType: SingleUnionType): go.Field {
+    private getFieldForUnionType(unionType: FernIr.SingleUnionType): go.Field {
         const shape = unionType.shape;
         switch (shape.propertiesType) {
             case "samePropertiesAsObject": {
                 const typeDeclaration = this.context.getTypeDeclarationOrThrow(shape.typeId);
+                const dvName = getNameFromWireValue(unionType.discriminantValue);
                 return go.field({
-                    name: this.context.getFieldName(unionType.discriminantValue.name),
+                    name: this.context.getFieldName(dvName),
                     type: go.Type.reference(this.context.goTypeMapper.convertToTypeReference(typeDeclaration.name)),
                     docs: typeDeclaration.docs
                 });
             }
-            case "singleProperty":
+            case "singleProperty": {
+                const dvName = getNameFromWireValue(unionType.discriminantValue);
                 return go.field({
-                    name: this.context.getFieldName(unionType.discriminantValue.name),
+                    name: this.context.getFieldName(dvName),
                     type: this.context.goTypeMapper.convert({ reference: shape.type })
                 });
-            case "noProperties":
+            }
+            case "noProperties": {
+                const dvName = getNameFromWireValue(unionType.discriminantValue);
                 return go.field({
-                    name: this.context.getFieldName(unionType.discriminantValue.name),
+                    name: this.context.getFieldName(dvName),
                     type: go.Type.any(),
                     docs: unionType.docs
                 });
+            }
             default:
                 assertNever(shape);
         }
     }
 
-    private getAllObjectProperties(): ObjectProperty[] {
-        const extendedProperties: ObjectProperty[] = [];
+    private getAllObjectProperties(): FernIr.ObjectProperty[] {
+        const extendedProperties: FernIr.ObjectProperty[] = [];
         for (const extendedType of this.unionDeclaration.extends) {
             const extendedTypeDeclaration = this.context.getTypeDeclarationOrThrow(extendedType.typeId);
             if (extendedTypeDeclaration.shape.type === "object") {

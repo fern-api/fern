@@ -3,7 +3,7 @@
 namespace Seed\NestedNoAuth;
 
 use Seed\NestedNoAuth\Api\ApiClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class NestedNoAuthClient

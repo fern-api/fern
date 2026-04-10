@@ -9,11 +9,17 @@ import com.fern.sdk.core.RequestOptions;
 import com.fern.sdk.resources.types.object.types.NestedObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.NestedObjectWithRequiredField;
 import com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;
+import com.fern.sdk.resources.types.object.types.ObjectWithDocumentedUnknownType;
 import com.fern.sdk.resources.types.object.types.ObjectWithMapOfMap;
+import com.fern.sdk.resources.types.object.types.ObjectWithMixedRequiredAndOptionalFields;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
+import com.fern.sdk.resources.types.object.types.ObjectWithRequiredNestedObject;
+import com.fern.sdk.resources.types.object.types.ObjectWithUnknownField;
+import java.lang.Object;
 import java.lang.String;
 import java.util.List;
+import java.util.Map;
 
 public class ObjectClient {
   protected final ClientOptions clientOptions;
@@ -104,6 +110,74 @@ public class ObjectClient {
   public NestedObjectWithRequiredField getAndReturnNestedWithRequiredFieldAsList(
       List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnNestedWithRequiredFieldAsList(request, requestOptions).body();
+  }
+
+  public ObjectWithUnknownField getAndReturnWithUnknownField(ObjectWithUnknownField request) {
+    return this.rawClient.getAndReturnWithUnknownField(request).body();
+  }
+
+  public ObjectWithUnknownField getAndReturnWithUnknownField(ObjectWithUnknownField request,
+      RequestOptions requestOptions) {
+    return this.rawClient.getAndReturnWithUnknownField(request, requestOptions).body();
+  }
+
+  public ObjectWithDocumentedUnknownType getAndReturnWithDocumentedUnknownType(
+      ObjectWithDocumentedUnknownType request) {
+    return this.rawClient.getAndReturnWithDocumentedUnknownType(request).body();
+  }
+
+  public ObjectWithDocumentedUnknownType getAndReturnWithDocumentedUnknownType(
+      ObjectWithDocumentedUnknownType request, RequestOptions requestOptions) {
+    return this.rawClient.getAndReturnWithDocumentedUnknownType(request, requestOptions).body();
+  }
+
+  public Map<String, Object> getAndReturnMapOfDocumentedUnknownType(Map<String, Object> request) {
+    return this.rawClient.getAndReturnMapOfDocumentedUnknownType(request).body();
+  }
+
+  public Map<String, Object> getAndReturnMapOfDocumentedUnknownType(Map<String, Object> request,
+      RequestOptions requestOptions) {
+    return this.rawClient.getAndReturnMapOfDocumentedUnknownType(request, requestOptions).body();
+  }
+
+  /**
+   * Tests that dynamic snippets include all required properties in the
+   * object initializer, even when the example omits some required fields.
+   */
+  public ObjectWithMixedRequiredAndOptionalFields getAndReturnWithMixedRequiredAndOptionalFields(
+      ObjectWithMixedRequiredAndOptionalFields request) {
+    return this.rawClient.getAndReturnWithMixedRequiredAndOptionalFields(request).body();
+  }
+
+  /**
+   * Tests that dynamic snippets include all required properties in the
+   * object initializer, even when the example omits some required fields.
+   */
+  public ObjectWithMixedRequiredAndOptionalFields getAndReturnWithMixedRequiredAndOptionalFields(
+      ObjectWithMixedRequiredAndOptionalFields request, RequestOptions requestOptions) {
+    return this.rawClient.getAndReturnWithMixedRequiredAndOptionalFields(request, requestOptions).body();
+  }
+
+  /**
+   * Tests that dynamic snippets recursively construct default objects for
+   * required properties whose type is a named object. When the example
+   * omits the nested object, the generator should construct a default
+   * initializer with the nested object's required properties filled in.
+   */
+  public ObjectWithRequiredNestedObject getAndReturnWithRequiredNestedObject(
+      ObjectWithRequiredNestedObject request) {
+    return this.rawClient.getAndReturnWithRequiredNestedObject(request).body();
+  }
+
+  /**
+   * Tests that dynamic snippets recursively construct default objects for
+   * required properties whose type is a named object. When the example
+   * omits the nested object, the generator should construct a default
+   * initializer with the nested object's required properties filled in.
+   */
+  public ObjectWithRequiredNestedObject getAndReturnWithRequiredNestedObject(
+      ObjectWithRequiredNestedObject request, RequestOptions requestOptions) {
+    return this.rawClient.getAndReturnWithRequiredNestedObject(request, requestOptions).body();
   }
 
   /**

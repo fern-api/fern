@@ -4,11 +4,12 @@ package completions
 
 import (
 	context "context"
+	http "net/http"
+
 	sse "github.com/fern-api/sse-go"
 	core "github.com/fern-api/sse-go/core"
 	internal "github.com/fern-api/sse-go/internal"
 	option "github.com/fern-api/sse-go/option"
-	http "net/http"
 )
 
 type Client struct {
@@ -61,8 +62,47 @@ func (c *Client) Stream(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
+			MaxBufSize:      options.MaxBufSize,
 			Prefix:          internal.DefaultSSEDataPrefix,
 			Terminator:      "[[DONE]]",
+			Format:          core.StreamFormatSSE,
+			Request:         request,
+			ErrorDecoder:    internal.NewErrorDecoder(sse.ErrorCodes),
+		},
+	)
+}
+
+func (c *Client) StreamWithoutTerminator(
+	ctx context.Context,
+	request *sse.StreamCompletionRequestWithoutTerminator,
+	opts ...option.RequestOption,
+) (*core.Stream[sse.StreamedCompletion], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/stream-no-terminator"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Accept", "text/event-stream")
+	streamer := internal.NewStreamer[sse.StreamedCompletion](c.caller)
+	return streamer.Stream(
+		ctx,
+		&internal.StreamParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			MaxBufSize:      options.MaxBufSize,
+			Prefix:          internal.DefaultSSEDataPrefix,
+			Terminator:      internal.DefaultSSETerminator,
 			Format:          core.StreamFormatSSE,
 			Request:         request,
 			ErrorDecoder:    internal.NewErrorDecoder(sse.ErrorCodes),

@@ -2,25 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": {
-        "originalName": "accept",
-        "camelCase": {
-            "unsafeName": "accept",
-            "safeName": "accept"
-        },
-        "snakeCase": {
-            "unsafeName": "accept",
-            "safeName": "accept"
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "ACCEPT",
-            "safeName": "ACCEPT"
-        },
-        "pascalCase": {
-            "unsafeName": "Accept",
-            "safeName": "Accept"
-        }
-    },
+    "apiName": "accept",
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -28,25 +10,7 @@
         "schemes": [
             {
                 "_type": "bearer",
-                "token": {
-                    "originalName": "token",
-                    "camelCase": {
-                        "unsafeName": "token",
-                        "safeName": "token"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "token",
-                        "safeName": "token"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "TOKEN",
-                        "safeName": "TOKEN"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Token",
-                        "safeName": "Token"
-                    }
-                },
+                "token": "token",
                 "tokenEnvVar": null,
                 "key": "bearer",
                 "docs": null
@@ -60,92 +24,17 @@
     "errors": {
         "error_service:NotFoundError": {
             "name": {
-                "name": {
-                    "originalName": "NotFoundError",
-                    "camelCase": {
-                        "unsafeName": "notFoundError",
-                        "safeName": "notFoundError"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "not_found_error",
-                        "safeName": "not_found_error"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "NOT_FOUND_ERROR",
-                        "safeName": "NOT_FOUND_ERROR"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "NotFoundError",
-                        "safeName": "NotFoundError"
-                    }
-                },
+                "name": "NotFoundError",
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
+                        "service"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "service",
-                        "camelCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SERVICE",
-                            "safeName": "SERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Service",
-                            "safeName": "Service"
-                        }
-                    }
+                    "file": "service"
                 },
                 "errorId": "error_service:NotFoundError"
             },
-            "discriminantValue": {
-                "name": {
-                    "originalName": "NotFoundError",
-                    "camelCase": {
-                        "unsafeName": "notFoundError",
-                        "safeName": "notFoundError"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "not_found_error",
-                        "safeName": "not_found_error"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "NOT_FOUND_ERROR",
-                        "safeName": "NOT_FOUND_ERROR"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "NotFoundError",
-                        "safeName": "NotFoundError"
-                    }
-                },
-                "wireValue": "NotFoundError"
-            },
+            "discriminantValue": "NotFoundError",
             "statusCode": 404,
             "isWildcardStatusCode": null,
             "type": {
@@ -164,46 +53,10 @@
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
+                        "service"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "service",
-                        "camelCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SERVICE",
-                            "safeName": "SERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Service",
-                            "safeName": "Service"
-                        }
-                    }
+                    "file": "service"
                 }
             },
             "displayName": null,
@@ -223,25 +76,7 @@
             "endpoints": [
                 {
                     "id": "endpoint_service.endpoint",
-                    "name": {
-                        "originalName": "endpoint",
-                        "camelCase": {
-                            "unsafeName": "endpoint",
-                            "safeName": "endpoint"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "endpoint",
-                            "safeName": "endpoint"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ENDPOINT",
-                            "safeName": "ENDPOINT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Endpoint",
-                            "safeName": "Endpoint"
-                        }
-                    },
+                    "name": "endpoint",
                     "displayName": null,
                     "auth": true,
                     "security": [
@@ -279,67 +114,13 @@
                     "errors": [
                         {
                             "error": {
-                                "name": {
-                                    "originalName": "NotFoundError",
-                                    "camelCase": {
-                                        "unsafeName": "notFoundError",
-                                        "safeName": "notFoundError"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "not_found_error",
-                                        "safeName": "not_found_error"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "NOT_FOUND_ERROR",
-                                        "safeName": "NOT_FOUND_ERROR"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "NotFoundError",
-                                        "safeName": "NotFoundError"
-                                    }
-                                },
+                                "name": "NotFoundError",
                                 "fernFilepath": {
                                     "allParts": [
-                                        {
-                                            "originalName": "service",
-                                            "camelCase": {
-                                                "unsafeName": "service",
-                                                "safeName": "service"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "service",
-                                                "safeName": "service"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "SERVICE",
-                                                "safeName": "SERVICE"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Service",
-                                                "safeName": "Service"
-                                            }
-                                        }
+                                        "service"
                                     ],
                                     "packagePath": [],
-                                    "file": {
-                                        "originalName": "service",
-                                        "camelCase": {
-                                            "unsafeName": "service",
-                                            "safeName": "service"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "service",
-                                            "safeName": "service"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "SERVICE",
-                                            "safeName": "SERVICE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Service",
-                                            "safeName": "Service"
-                                        }
-                                    }
+                                    "file": "service"
                                 },
                                 "errorId": "error_service:NotFoundError"
                             },
@@ -372,7 +153,7 @@
                         },
                         {
                             "example": {
-                                "id": "bffe7747",
+                                "id": "b432390e",
                                 "url": "/container/",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -396,67 +177,13 @@
                                         }
                                     },
                                     "error": {
-                                        "name": {
-                                            "originalName": "NotFoundError",
-                                            "camelCase": {
-                                                "unsafeName": "notFoundError",
-                                                "safeName": "notFoundError"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "not_found_error",
-                                                "safeName": "not_found_error"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "NOT_FOUND_ERROR",
-                                                "safeName": "NOT_FOUND_ERROR"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "NotFoundError",
-                                                "safeName": "NotFoundError"
-                                            }
-                                        },
+                                        "name": "NotFoundError",
                                         "fernFilepath": {
                                             "allParts": [
-                                                {
-                                                    "originalName": "service",
-                                                    "camelCase": {
-                                                        "unsafeName": "service",
-                                                        "safeName": "service"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "service",
-                                                        "safeName": "service"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "SERVICE",
-                                                        "safeName": "SERVICE"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Service",
-                                                        "safeName": "Service"
-                                                    }
-                                                }
+                                                "service"
                                             ],
                                             "packagePath": [],
-                                            "file": {
-                                                "originalName": "service",
-                                                "camelCase": {
-                                                    "unsafeName": "service",
-                                                    "safeName": "service"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "service",
-                                                    "safeName": "service"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "SERVICE",
-                                                    "safeName": "SERVICE"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Service",
-                                                    "safeName": "Service"
-                                                }
-                                            }
+                                            "file": "service"
                                         },
                                         "errorId": "error_service:NotFoundError"
                                     }
@@ -481,28 +208,7 @@
         }
     },
     "constants": {
-        "errorInstanceIdKey": {
-            "name": {
-                "originalName": "errorInstanceId",
-                "camelCase": {
-                    "unsafeName": "errorInstanceID",
-                    "safeName": "errorInstanceID"
-                },
-                "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
-                },
-                "pascalCase": {
-                    "unsafeName": "ErrorInstanceID",
-                    "safeName": "ErrorInstanceID"
-                }
-            },
-            "wireValue": "errorInstanceId"
-        }
+        "errorInstanceIdKey": "errorInstanceId"
     },
     "environments": null,
     "errorDiscriminationStrategy": {
@@ -635,70 +341,21 @@
     "audiences": null,
     "generationMetadata": null,
     "apiPlayground": true,
+    "casingsConfig": {
+        "generationLanguage": null,
+        "keywords": null,
+        "smartCasing": true
+    },
     "subpackages": {
         "subpackage_service": {
-            "name": {
-                "originalName": "service",
-                "camelCase": {
-                    "unsafeName": "service",
-                    "safeName": "service"
-                },
-                "snakeCase": {
-                    "unsafeName": "service",
-                    "safeName": "service"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "SERVICE",
-                    "safeName": "SERVICE"
-                },
-                "pascalCase": {
-                    "unsafeName": "Service",
-                    "safeName": "Service"
-                }
-            },
+            "name": "service",
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    {
-                        "originalName": "service",
-                        "camelCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SERVICE",
-                            "safeName": "SERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Service",
-                            "safeName": "Service"
-                        }
-                    }
+                    "service"
                 ],
                 "packagePath": [],
-                "file": {
-                    "originalName": "service",
-                    "camelCase": {
-                        "unsafeName": "service",
-                        "safeName": "service"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "service",
-                        "safeName": "service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "SERVICE",
-                        "safeName": "SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Service",
-                        "safeName": "Service"
-                    }
-                }
+                "file": "service"
             },
             "service": "service_service",
             "types": [],

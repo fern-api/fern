@@ -1,9 +1,10 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-csharp-sdk",
-  "generatorVersion": "latest",
+  "generatorVersion": "local",
   "generatorConfig": {
     "include-exception-handler": true
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

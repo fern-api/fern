@@ -60,8 +60,8 @@ public final class ObjectWithDocs {
    * <li>** /: Block comment end</li>
    * </ul>
    * <p>XMLDoc (C#) (Example of actual XML tags):
-   * See &lt;a href=&quot;https://example.com/docs&quot;&gt;the docs&lt;/a&gt; for more info.
-   * Use &lt;code&gt;getValue()&lt;/code&gt; to retrieve the value.
+   * See <a href="https://example.com/docs">the docs</a> for more info.
+   * Use <code>getValue()</code> to retrieve the value.
    * Note: when count &lt; 10 or count &gt; 100, special handling applies.</p>
    * <p>Javadoc (Java):</p>
    * <ul>
@@ -167,8 +167,8 @@ public final class ObjectWithDocs {
      * <li>** /: Block comment end</li>
      * </ul>
      * <p>XMLDoc (C#) (Example of actual XML tags):
-     * See &lt;a href=&quot;https://example.com/docs&quot;&gt;the docs&lt;/a&gt; for more info.
-     * Use &lt;code&gt;getValue()&lt;/code&gt; to retrieve the value.
+     * See <a href="https://example.com/docs">the docs</a> for more info.
+     * Use <code>getValue()</code> to retrieve the value.
      * Note: when count &lt; 10 or count &gt; 100, special handling applies.</p>
      * <p>Javadoc (Java):</p>
      * <ul>
@@ -219,6 +219,10 @@ public final class ObjectWithDocs {
 
   public interface _FinalStage {
     ObjectWithDocs build();
+
+    _FinalStage additionalProperty(String key, Object value);
+
+    _FinalStage additionalProperties(Map<String, Object> additionalProperties);
   }
 
   @JsonIgnoreProperties(
@@ -266,8 +270,8 @@ public final class ObjectWithDocs {
      * <li>** /: Block comment end</li>
      * </ul>
      * <p>XMLDoc (C#) (Example of actual XML tags):
-     * See &lt;a href=&quot;https://example.com/docs&quot;&gt;the docs&lt;/a&gt; for more info.
-     * Use &lt;code&gt;getValue()&lt;/code&gt; to retrieve the value.
+     * See <a href="https://example.com/docs">the docs</a> for more info.
+     * Use <code>getValue()</code> to retrieve the value.
      * Note: when count &lt; 10 or count &gt; 100, special handling applies.</p>
      * <p>Javadoc (Java):</p>
      * <ul>
@@ -336,8 +340,8 @@ public final class ObjectWithDocs {
      * <li>** /: Block comment end</li>
      * </ul>
      * <p>XMLDoc (C#) (Example of actual XML tags):
-     * See &lt;a href=&quot;https://example.com/docs&quot;&gt;the docs&lt;/a&gt; for more info.
-     * Use &lt;code&gt;getValue()&lt;/code&gt; to retrieve the value.
+     * See <a href="https://example.com/docs">the docs</a> for more info.
+     * Use <code>getValue()</code> to retrieve the value.
      * Note: when count &lt; 10 or count &gt; 100, special handling applies.</p>
      * <p>Javadoc (Java):</p>
      * <ul>
@@ -392,6 +396,18 @@ public final class ObjectWithDocs {
     @java.lang.Override
     public ObjectWithDocs build() {
       return new ObjectWithDocs(string, additionalProperties);
+    }
+
+    @java.lang.Override
+    public Builder additionalProperty(String key, Object value) {
+      this.additionalProperties.put(key, value);
+      return this;
+    }
+
+    @java.lang.Override
+    public Builder additionalProperties(Map<String, Object> additionalProperties) {
+      this.additionalProperties.putAll(additionalProperties);
+      return this;
     }
   }
 }

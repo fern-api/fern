@@ -8,8 +8,8 @@ import type * as FernSeedConfig from "../../../index.js";
  * Commands can be multi-line, we'll run them all!
  */
 export interface PublishCommand {
-    workingDirectory?: string;
+    workingDirectory?: string | undefined;
     /** The string to substitute for the version in the command. ex. `"$VERSION"` */
-    versionSubstitution?: string;
+    versionSubstitution?: string | undefined;
     command: FernSeedConfig.DockerCommand;
 }

@@ -348,6 +348,10 @@ public final class UserProfile {
     public interface _FinalStage {
         UserProfile build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage nullableString(@Nullable String nullableString);
 
         _FinalStage nullableInteger(@Nullable Integer nullableInteger);
@@ -739,6 +743,18 @@ public final class UserProfile {
                     optionalNullableString,
                     optionalNullableObject,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

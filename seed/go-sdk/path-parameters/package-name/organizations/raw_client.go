@@ -4,11 +4,12 @@ package organizations
 
 import (
 	context "context"
+	http "net/http"
+
 	path "github.com/fern-api/path-parameters-go"
 	core "github.com/fern-api/path-parameters-go/core"
 	internal "github.com/fern-api/path-parameters-go/internal"
 	option "github.com/fern-api/path-parameters-go/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -32,8 +33,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) GetOrganization(
 	ctx context.Context,
-	tenantId string,
-	organizationId string,
+	tenantID string,
+	organizationID string,
 	opts ...option.RequestOption,
 ) (*core.Response[*path.Organization], error) {
 	options := core.NewRequestOptions(opts...)
@@ -44,8 +45,8 @@ func (r *RawClient) GetOrganization(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/organizations/%v/",
-		tenantId,
-		organizationId,
+		tenantID,
+		organizationID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -88,9 +89,9 @@ func (r *RawClient) GetOrganizationUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/organizations/%v/users/%v",
-		request.TenantId,
-		request.OrganizationId,
-		request.UserId,
+		request.TenantID,
+		request.OrganizationID,
+		request.UserID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -122,8 +123,8 @@ func (r *RawClient) GetOrganizationUser(
 
 func (r *RawClient) SearchOrganizations(
 	ctx context.Context,
-	tenantId string,
-	organizationId string,
+	tenantID string,
+	organizationID string,
 	request *path.SearchOrganizationsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*path.Organization], error) {
@@ -135,8 +136,8 @@ func (r *RawClient) SearchOrganizations(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/organizations/%v/search",
-		tenantId,
-		organizationId,
+		tenantID,
+		organizationID,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {

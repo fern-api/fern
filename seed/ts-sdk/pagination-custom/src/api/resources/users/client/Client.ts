@@ -22,20 +22,22 @@ export class UsersClient {
     }
 
     /**
-     * @param {SeedPagination.ListUsernamesRequestCustom} request
+     * @param {SeedPagination.ListWithCustomPagerRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.users.listUsernamesCustom({
+     *     await client.users.listWithCustomPager({
+     *         limit: 1,
      *         starting_after: "starting_after"
      *     })
      */
-    public async listUsernamesCustom(
-        request: SeedPagination.ListUsernamesRequestCustom = {},
+    public async listWithCustomPager(
+        request: SeedPagination.ListWithCustomPagerRequest = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.MyPager<string, SeedPagination.UsernameCursor>> {
-        const { starting_after: startingAfter } = request;
+    ): Promise<core.MyPager<string, SeedPagination.UsersListResponse>> {
+        const { limit, starting_after: startingAfter } = request;
         const _queryParams: Record<string, unknown> = {
+            limit,
             starting_after: startingAfter,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -55,7 +57,7 @@ export class UsersClient {
             logging: this._options.logging,
         };
         const _sendRequest = async (request: core.Fetcher.Args) => {
-            const _response = await core.fetcher<SeedPagination.UsernameCursor>(request);
+            const _response = await core.fetcher<SeedPagination.UsersListResponse>(request);
             if (_response.ok) {
                 return _response;
             }
@@ -68,7 +70,7 @@ export class UsersClient {
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
         };
-        return core.createMyPager<string, SeedPagination.UsernameCursor>({
+        return core.createMyPager<string, SeedPagination.UsersListResponse>({
             sendRequest: _sendRequest,
             initialHttpRequest: _request,
             clientOptions: this._options,

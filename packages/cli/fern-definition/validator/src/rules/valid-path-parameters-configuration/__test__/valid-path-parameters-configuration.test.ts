@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { ValidPathParametersConfigurationRule } from "../valid-path-parameters-configuration";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { ValidPathParametersConfigurationRule } from "../valid-path-parameters-configuration.js";
 
 describe("valid-path-parameters-configuration", () => {
     it("simple", async () => {
@@ -19,6 +19,7 @@ describe("valid-path-parameters-configuration", () => {
                 message: "path-parameters cannot be defined in both endpoint and request.",
                 nodePath: ["service", "endpoints", "conflict"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "valid-path-parameters-configuration",
                 severity: "fatal"
             }
         ]);

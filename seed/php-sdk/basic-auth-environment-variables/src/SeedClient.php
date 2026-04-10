@@ -3,7 +3,7 @@
 namespace Seed;
 
 use Seed\BasicAuth\BasicAuthClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Exception;
 
@@ -32,7 +32,7 @@ class SeedClient
 
     /**
      * @param ?string $username The username to use for authentication.
-     * @param ?string $accessToken The username to use for authentication.
+     * @param ?string $accessToken The accessToken to use for authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -54,6 +54,7 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
+        $defaultHeaders['Authorization'] = "Basic " . base64_encode($username . ":" . $accessToken);
 
         $this->options = $options ?? [];
 

@@ -56,7 +56,7 @@ client.Payment.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Payment.Delete(PaymentId) -> error</code></summary>
+<details><summary><code>client.Payment.Delete(PaymentID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -88,7 +88,7 @@ client.Payment.Delete(
 <dl>
 <dd>
 
-**paymentId:** `string` 
+**paymentID:** `string` 
     
 </dd>
 </dl>
@@ -99,3 +99,4 @@ client.Payment.Delete(
 </dd>
 </dl>
 </details>
+

@@ -10,15 +10,15 @@ import (
 )
 
 var (
-	getOrganizationUserRequestFieldTenantId       = big.NewInt(1 << 0)
-	getOrganizationUserRequestFieldOrganizationId = big.NewInt(1 << 1)
-	getOrganizationUserRequestFieldUserId         = big.NewInt(1 << 2)
+	getOrganizationUserRequestFieldTenantID       = big.NewInt(1 << 0)
+	getOrganizationUserRequestFieldOrganizationID = big.NewInt(1 << 1)
+	getOrganizationUserRequestFieldUserID         = big.NewInt(1 << 2)
 )
 
 type GetOrganizationUserRequest struct {
-	TenantId       string `json:"-" url:"-"`
-	OrganizationId string `json:"-" url:"-"`
-	UserId         string `json:"-" url:"-"`
+	TenantID       string `json:"-" url:"-"`
+	OrganizationID string `json:"-" url:"-"`
+	UserID         string `json:"-" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -31,25 +31,25 @@ func (g *GetOrganizationUserRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetTenantId sets the TenantId field and marks it as non-optional;
+// SetTenantID sets the TenantID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetOrganizationUserRequest) SetTenantId(tenantId string) {
-	g.TenantId = tenantId
-	g.require(getOrganizationUserRequestFieldTenantId)
+func (g *GetOrganizationUserRequest) SetTenantID(tenantID string) {
+	g.TenantID = tenantID
+	g.require(getOrganizationUserRequestFieldTenantID)
 }
 
-// SetOrganizationId sets the OrganizationId field and marks it as non-optional;
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetOrganizationUserRequest) SetOrganizationId(organizationId string) {
-	g.OrganizationId = organizationId
-	g.require(getOrganizationUserRequestFieldOrganizationId)
+func (g *GetOrganizationUserRequest) SetOrganizationID(organizationID string) {
+	g.OrganizationID = organizationID
+	g.require(getOrganizationUserRequestFieldOrganizationID)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetOrganizationUserRequest) SetUserId(userId string) {
-	g.UserId = userId
-	g.require(getOrganizationUserRequestFieldUserId)
+func (g *GetOrganizationUserRequest) SetUserID(userID string) {
+	g.UserID = userID
+	g.require(getOrganizationUserRequestFieldUserID)
 }
 
 var (
@@ -108,6 +108,9 @@ func (o *Organization) GetTags() []string {
 }
 
 func (o *Organization) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
@@ -160,6 +163,9 @@ func (o *Organization) MarshalJSON() ([]byte, error) {
 }
 
 func (o *Organization) String() string {
+	if o == nil {
+		return "<nil>"
+	}
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value

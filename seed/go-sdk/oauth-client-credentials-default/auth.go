@@ -10,12 +10,12 @@ import (
 )
 
 var (
-	getTokenRequestFieldClientId     = big.NewInt(1 << 0)
+	getTokenRequestFieldClientID     = big.NewInt(1 << 0)
 	getTokenRequestFieldClientSecret = big.NewInt(1 << 1)
 )
 
 type GetTokenRequest struct {
-	ClientId     string `json:"client_id" url:"-"`
+	ClientID     string `json:"client_id" url:"-"`
 	ClientSecret string `json:"client_secret" url:"-"`
 	grantType    string
 
@@ -34,11 +34,11 @@ func (g *GetTokenRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTokenRequest) SetClientId(clientId string) {
-	g.ClientId = clientId
-	g.require(getTokenRequestFieldClientId)
+func (g *GetTokenRequest) SetClientID(clientID string) {
+	g.ClientID = clientID
+	g.require(getTokenRequestFieldClientID)
 }
 
 // SetClientSecret sets the ClientSecret field and marks it as non-optional;
@@ -104,6 +104,9 @@ func (t *TokenResponse) GetExpiresIn() int {
 }
 
 func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -156,6 +159,9 @@ func (t *TokenResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TokenResponse) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value

@@ -1,4 +1,7 @@
-import { FernFilepath, TypeId } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type TypeId = FernIr.TypeId;
+type FernFilepath = FernIr.FernFilepath;
 
 export type TRelativeFilePath = string & {
     __RelativeFilePath: void;

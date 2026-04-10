@@ -1,1 +1,1 @@
-export { addGenerateCommand } from "./command";
+export { addGenerateCommand } from "./command.js";

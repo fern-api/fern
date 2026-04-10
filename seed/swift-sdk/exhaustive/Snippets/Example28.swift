@@ -7,10 +7,15 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.params.getWithPathAndQuery(
-        param: "param",
-        query: "query"
-    )
+    _ = try await client.endpoints.object.getAndReturnWithRequiredNestedObject(request: ObjectWithRequiredNestedObject(
+        requiredString: "hello",
+        requiredObject: NestedObjectWithRequiredField(
+            string: "nested",
+            nestedObject: ObjectWithOptionalField(
+
+            )
+        )
+    ))
 }
 
 try await main()

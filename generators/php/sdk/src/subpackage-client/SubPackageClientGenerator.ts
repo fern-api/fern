@@ -1,29 +1,31 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
-
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace SubClientGenerator {
     interface Args {
         context: SdkGeneratorContext;
-        subpackage: Subpackage;
-        serviceId?: ServiceId;
-        service?: HttpService;
+        subpackage: FernIr.Subpackage;
+        serviceId?: FernIr.ServiceId;
+        service?: FernIr.HttpService;
     }
 }
 
 export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+    private readonly case: CaseConverter;
     private classReference: php.ClassReference;
-    private subpackage: Subpackage;
-    private serviceId: ServiceId | undefined;
-    private service: HttpService | undefined;
+    private subpackage: FernIr.Subpackage;
+    private serviceId: FernIr.ServiceId | undefined;
+    private service: FernIr.HttpService | undefined;
 
     constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
         super(context);
+        this.case = context.case;
         this.classReference = this.context.getSubpackageClassReference(subpackage);
         this.subpackage = subpackage;
         this.serviceId = serviceId;
@@ -32,7 +34,10 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
 
     public doGenerate(): PhpFile {
         const class_ = php.class_({
-            ...this.classReference
+            ...this.classReference,
+            interfaceReferences: this.context.customConfig.generateClientInterfaces
+                ? [this.context.getSubpackageInterfaceClassReference(this.subpackage)]
+                : undefined
         });
 
         const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
@@ -74,6 +79,22 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
             }
         }
 
+        if (this.context.customConfig.generateClientInterfaces) {
+            for (const subpackage of subpackages) {
+                class_.addMethod(
+                    php.method({
+                        name: this.context.getSubpackageGetterName(subpackage),
+                        access: "public",
+                        parameters: [],
+                        return_: php.Type.reference(this.context.getSubpackageInterfaceClassReference(subpackage)),
+                        body: php.codeblock((writer) => {
+                            writer.writeTextStatement(`return $this->${this.case.camelSafe(subpackage.name)}`);
+                        })
+                    })
+                );
+            }
+        }
+
         return new PhpFile({
             clazz: class_,
             directory: this.context.getLocationForSubpackage(this.subpackage).directory,
@@ -82,7 +103,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
         });
     }
 
-    private getConstructorMethod({ subpackages }: { subpackages: Subpackage[] }): php.Class.Constructor {
+    private getConstructorMethod({ subpackages }: { subpackages: FernIr.Subpackage[] }): php.Class.Constructor {
         const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
 
         const parameters: php.Parameter[] = [
@@ -132,7 +153,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                 }
 
                 for (const subpackage of subpackages) {
-                    writer.write(`$this->${subpackage.name.camelCase.safeName} = `);
+                    writer.write(`$this->${this.case.camelSafe(subpackage.name)} = `);
 
                     const subClientArgs: php.AstNode[] = [
                         php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)
@@ -155,7 +176,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
         };
     }
 
-    private getSubpackages(): Subpackage[] {
+    private getSubpackages(): FernIr.Subpackage[] {
         return this.subpackage.subpackages
             .map((subpackageId) => {
                 return this.context.getSubpackageOrThrow(subpackageId);

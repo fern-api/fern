@@ -1,2 +1,0 @@
-// service_dummy
-"/generate"

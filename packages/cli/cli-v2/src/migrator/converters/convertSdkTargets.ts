@@ -1,7 +1,7 @@
 import type { schemas } from "@fern-api/config";
 import type { generatorsYml } from "@fern-api/configuration";
-import type { MigratorWarning } from "../types";
-import { convertGitOutput } from "./convertGitOutput";
+import type { MigratorWarning } from "../types/index.js";
+import { convertGitOutput } from "./convertGitOutput.js";
 
 /**
  * Raw output configuration that supports both old (location discriminant)
@@ -40,7 +40,9 @@ export interface RawGithubConfig {
  * Raw generator invocation that uses RawOutputConfig instead of the strict schema.
  */
 export interface RawGeneratorInvocation
-    extends Omit<Partial<generatorsYml.GeneratorInvocationSchema>, "output" | "github"> {
+    extends Omit<Partial<generatorsYml.BaseGeneratorInvocationSchema>, "output" | "github"> {
+    name?: string;
+    image?: generatorsYml.GeneratorImageObjectSchema;
     output?: RawOutputConfig;
     github?: RawGithubConfig;
 }
@@ -166,11 +168,12 @@ interface ConvertGeneratorResult {
 function convertGeneratorToTarget(options: ConvertGeneratorOptions): ConvertGeneratorResult | undefined {
     const { generator, groupName, languageCounts, apiName, warnings } = options;
 
-    const language = getLanguageFromGeneratorName(generator.name);
+    const generatorName = "image" in generator ? generator.image.name : generator.name;
+    const language = getLanguageFromGeneratorName(generatorName);
     if (language == null) {
         warnings.push({
             type: "unsupported",
-            message: `Unknown generator: ${generator.name}`,
+            message: `Unknown generator: ${generatorName}`,
             suggestion: "Manually add this generator to your fern.yml"
         });
         return undefined;
@@ -185,6 +188,14 @@ function convertGeneratorToTarget(options: ConvertGeneratorOptions): ConvertGene
     const target: schemas.SdkTargetSchema = {
         output: {}
     };
+
+    // If the generator uses a custom image with registry, set the image field
+    if ("image" in generator) {
+        target.image = {
+            name: generator.image.name,
+            registry: generator.image.registry
+        };
+    }
 
     target.lang = language;
     if (apiName != null) {
@@ -397,18 +408,67 @@ function convertOutputConfig(
     return { output, publish };
 }
 
-function convertReadme(readme: generatorsYml.ReadmeSchema): schemas.ReadmeSchema | undefined {
-    if (readme.defaultEndpoint != null) {
-        const endpoint = readme.defaultEndpoint;
-        if (typeof endpoint === "string") {
-            return { defaultEndpoint: endpoint };
-        }
-        // If it's an object with method/path, convert to "METHOD /path" format
-        if (typeof endpoint === "object" && "method" in endpoint && "path" in endpoint) {
-            return { defaultEndpoint: `${endpoint.method} ${endpoint.path}` };
-        }
+function convertReadmeEndpoint(endpoint: generatorsYml.ReadmeEndpointSchema): schemas.ReadmeEndpointSchema {
+    if (typeof endpoint === "string") {
+        return endpoint;
     }
-    return undefined;
+    return {
+        method: endpoint.method,
+        path: endpoint.path,
+        ...(endpoint.stream != null ? { stream: endpoint.stream } : {})
+    };
+}
+
+function convertReadme(readme: generatorsYml.ReadmeSchema): schemas.ReadmeSchema | undefined {
+    const result: schemas.ReadmeSchema = {};
+    let hasFields = false;
+
+    if (readme.bannerLink != null) {
+        result.bannerLink = readme.bannerLink;
+        hasFields = true;
+    }
+    if (readme.introduction != null) {
+        result.introduction = readme.introduction;
+        hasFields = true;
+    }
+    if (readme.apiReferenceLink != null) {
+        result.apiReferenceLink = readme.apiReferenceLink;
+        hasFields = true;
+    }
+    if (readme.apiName != null) {
+        result.apiName = readme.apiName;
+        hasFields = true;
+    }
+    if (readme.disabledSections != null) {
+        result.disabledSections = readme.disabledSections;
+        hasFields = true;
+    }
+    if (readme.defaultEndpoint != null) {
+        result.defaultEndpoint = convertReadmeEndpoint(readme.defaultEndpoint);
+        hasFields = true;
+    }
+    if (readme.features != null) {
+        const features: Record<string, schemas.ReadmeEndpointSchema[]> = {};
+        for (const [key, endpoints] of Object.entries(readme.features)) {
+            features[key] = endpoints.map(convertReadmeEndpoint);
+        }
+        result.features = features;
+        hasFields = true;
+    }
+    if (readme.customSections != null) {
+        result.customSections = readme.customSections.map((section) => ({
+            title: section.title,
+            language: section.language as schemas.SdkTargetLanguageSchema | undefined,
+            content: section.content
+        }));
+        hasFields = true;
+    }
+    if (readme.exampleStyle != null) {
+        result.exampleStyle = readme.exampleStyle as schemas.ExampleStyleSchema;
+        hasFields = true;
+    }
+
+    return hasFields ? result : undefined;
 }
 
 export interface ConvertSdkTargetsFromRawOptions {
@@ -485,21 +545,22 @@ interface ConvertRawGeneratorOptions {
 function convertRawGeneratorToTarget(options: ConvertRawGeneratorOptions): ConvertGeneratorResult | undefined {
     const { generator, groupName, languageCounts, apiName, warnings } = options;
 
-    if (generator.name == null) {
+    const generatorName = generator.name ?? generator.image?.name;
+    if (generatorName == null) {
         warnings.push({
             type: "conflict",
-            message: "Generator missing 'name' field"
+            message: "Generator missing 'name' or 'image.name' field"
         });
         return undefined;
     }
 
     // Determine language from generator name (Docker image)
-    const language = getLanguageFromGeneratorName(generator.name);
+    const language = getLanguageFromGeneratorName(generatorName);
 
     if (language == null) {
         warnings.push({
             type: "unsupported",
-            message: `Unknown generator: ${generator.name}`,
+            message: `Unknown generator: ${generatorName}`,
             suggestion: "Manually add this generator to your fern.yml"
         });
         return undefined;
@@ -515,6 +576,14 @@ function convertRawGeneratorToTarget(options: ConvertRawGeneratorOptions): Conve
     const target: schemas.SdkTargetSchema = {
         output: {}
     };
+
+    // If the generator uses a custom image with registry, set the image field
+    if (generator.image != null) {
+        target.image = {
+            name: generator.image.name,
+            registry: generator.image.registry
+        };
+    }
 
     target.lang = language;
     if (apiName != null) {
@@ -789,13 +858,53 @@ function convertRawOutputConfig(
 function convertRawReadme(readme: RawReadmeConfig): schemas.ReadmeSchema | undefined {
     const endpoint = readme.defaultEndpoint ?? readme["default-endpoint"];
 
-    if (endpoint != null) {
-        if (typeof endpoint === "string") {
-            return { defaultEndpoint: endpoint };
-        }
-        if (typeof endpoint === "object" && "method" in endpoint && "path" in endpoint) {
-            return { defaultEndpoint: `${endpoint.method} ${endpoint.path}` };
-        }
+    const result: schemas.ReadmeSchema = {};
+    let hasFields = false;
+
+    if (readme.bannerLink != null) {
+        result.bannerLink = readme.bannerLink;
+        hasFields = true;
     }
-    return undefined;
+    if (readme.introduction != null) {
+        result.introduction = readme.introduction;
+        hasFields = true;
+    }
+    if (readme.apiReferenceLink != null) {
+        result.apiReferenceLink = readme.apiReferenceLink;
+        hasFields = true;
+    }
+    if (readme.apiName != null) {
+        result.apiName = readme.apiName;
+        hasFields = true;
+    }
+    if (readme.disabledSections != null) {
+        result.disabledSections = readme.disabledSections;
+        hasFields = true;
+    }
+    if (endpoint != null) {
+        result.defaultEndpoint = convertReadmeEndpoint(endpoint);
+        hasFields = true;
+    }
+    if (readme.features != null) {
+        const features: Record<string, schemas.ReadmeEndpointSchema[]> = {};
+        for (const [key, endpoints] of Object.entries(readme.features)) {
+            features[key] = endpoints.map(convertReadmeEndpoint);
+        }
+        result.features = features;
+        hasFields = true;
+    }
+    if (readme.customSections != null) {
+        result.customSections = readme.customSections.map((section) => ({
+            title: section.title,
+            language: section.language as schemas.SdkTargetLanguageSchema | undefined,
+            content: section.content
+        }));
+        hasFields = true;
+    }
+    if (readme.exampleStyle != null) {
+        result.exampleStyle = readme.exampleStyle as schemas.ExampleStyleSchema;
+        hasFields = true;
+    }
+
+    return hasFields ? result : undefined;
 }

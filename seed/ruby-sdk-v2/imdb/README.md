@@ -28,12 +28,12 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new(token: '<token>');
+client = Seed::Client.new(token: "<token>")
 
 client.imdb.create_movie(
-  title: 'title',
+  title: "title",
   rating: 1.1
-);
+)
 ```
 
 ## Environments

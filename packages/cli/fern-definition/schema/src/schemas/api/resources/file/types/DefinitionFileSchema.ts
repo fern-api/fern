@@ -8,5 +8,10 @@ export interface DefinitionFileSchema extends FernDefinition.WithDocsSchema {
     service?: FernDefinition.HttpServiceSchema;
     errors?: Record<string, FernDefinition.ErrorDeclarationSchema>;
     webhooks?: Record<string, FernDefinition.WebhookSchema>;
+    /**
+     * Default webhook signature verification configuration.
+     * Applied to all webhooks in this file that do not declare their own signature.
+     */
+    "webhook-signature"?: FernDefinition.WebhookSignatureSchema;
     channel?: FernDefinition.WebSocketChannelSchema;
 }

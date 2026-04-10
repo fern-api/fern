@@ -7,7 +7,7 @@ import chalk from "chalk";
 import { YAMLException } from "js-yaml";
 import { ZodIssue, ZodIssueCode } from "zod";
 
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result";
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result.js";
 
 function decodeJsonPointerSegment(segment: string): string {
     return segment.replace(/~1/g, "/").replace(/~0/g, "~");
@@ -40,7 +40,10 @@ function handleWorkspaceParserFailureForFile({
     switch (failure.type) {
         case WorkspaceLoaderFailureType.MISCONFIGURED_DIRECTORY:
             logger.error(
-                "Misconfigured fern directory: please see the docs at https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder"
+                "No API definition found. Expected one of the following:\n" +
+                    "  - An api section in generators.yml pointing to your API spec(s)\n" +
+                    "  - A definition/ directory with Fern Definition files\n" +
+                    "For more information, see https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder"
             );
             break;
         case WorkspaceLoaderFailureType.FILE_READ:

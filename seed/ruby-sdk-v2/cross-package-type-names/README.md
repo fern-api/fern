@@ -28,13 +28,13 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
 client.foo.find(
-  optional_string: 'optionalString',
-  public_property: 'publicProperty',
+  optional_string: "optionalString",
+  public_property: "publicProperty",
   private_property: 1
-);
+)
 ```
 
 ## Environments

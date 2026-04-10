@@ -14,28 +14,14 @@ describe("PutClient", () => {
                 { category: "API_ERROR", code: "INTERNAL_SERVER_ERROR", detail: "detail", field: "field" },
             ],
         };
+
         server.mockEndpoint().put("/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.endpoints.put.add({
             id: "id",
         });
         expect(response).toEqual({
-            body: {
-                errors: [
-                    {
-                        category: "API_ERROR",
-                        code: "INTERNAL_SERVER_ERROR",
-                        detail: "detail",
-                        field: "field",
-                    },
-                    {
-                        category: "API_ERROR",
-                        code: "INTERNAL_SERVER_ERROR",
-                        detail: "detail",
-                        field: "field",
-                    },
-                ],
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

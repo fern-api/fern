@@ -1,10 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { java } from "..";
-import { ClassReference } from "./ClassReference";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { ArraysClassReference, OptionalClassReference, Type } from "./Type";
+import { java } from "../index.js";
+import { ClassReference } from "./ClassReference.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { ArraysClassReference, OptionalClassReference, Type } from "./Type.js";
 
 type InternalTypeLiteral =
     | BigInteger

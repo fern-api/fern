@@ -4,7 +4,7 @@ namespace SeedPagination;
 
 public partial class UsersClient : IUsersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal UsersClient(RawClient client)
     {
@@ -12,17 +12,18 @@ public partial class UsersClient : IUsersClient
     }
 
     /// <example><code>
-    /// await client.Users.ListUsernamesCustomAsync(
-    ///     new ListUsernamesRequestCustom { StartingAfter = "starting_after" }
+    /// await client.Users.ListWithCustomPagerAsync(
+    ///     new ListWithCustomPagerRequest { Limit = 1, StartingAfter = "starting_after" }
     /// );
     /// </code></example>
-    public async Task<SeedPaginationPager<string>> ListUsernamesCustomAsync(
-        ListUsernamesRequestCustom request,
+    public async Task<SeedPaginationPager<string>> ListWithCustomPagerAsync(
+        ListWithCustomPagerRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1)
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 2)
+            .Add("limit", request.Limit)
             .Add("starting_after", request.StartingAfter)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
@@ -35,9 +36,9 @@ public partial class UsersClient : IUsersClient
         var httpRequest = await _client.CreateHttpRequestAsync(
             new JsonRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/users",
+                QueryString = _queryString,
                 Headers = _headers,
                 Options = options,
             }
@@ -56,7 +57,9 @@ public partial class UsersClient : IUsersClient
             }
 
             {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                var responseBody = await response
+                    .Raw.Content.ReadAsStringAsync(cancellationToken)
+                    .ConfigureAwait(false);
                 throw new SeedPaginationApiException(
                     $"Error with status code {response.StatusCode}",
                     response.StatusCode,

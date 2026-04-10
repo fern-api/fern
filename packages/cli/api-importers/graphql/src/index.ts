@@ -1,2 +1,2 @@
-export type { GraphQLConverterResult } from "./GraphQLConverter";
-export { GraphQLConverter } from "./GraphQLConverter";
+export type { GraphQLConverterResult } from "./GraphQLConverter.js";
+export { GraphQLConverter } from "./GraphQLConverter.js";

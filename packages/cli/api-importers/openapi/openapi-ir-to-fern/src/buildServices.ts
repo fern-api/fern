@@ -1,9 +1,9 @@
 import { FernOpenapiIr } from "@fern-api/openapi-ir";
-import { buildEndpoint } from "./buildEndpoint";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { State } from "./State";
-import { convertToSourceSchema } from "./utils/convertToSourceSchema";
-import { getEndpointLocation } from "./utils/getEndpointLocation";
+import { buildEndpoint } from "./buildEndpoint.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { State } from "./State.js";
+import { convertToSourceSchema } from "./utils/convertToSourceSchema.js";
+import { getEndpointLocation } from "./utils/getEndpointLocation.js";
 
 export interface ConvertedServicesResponse {
     schemaIdsToExclude: string[];

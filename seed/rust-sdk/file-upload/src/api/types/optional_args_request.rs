@@ -11,23 +11,57 @@ pub struct OptionalArgsRequest {
 }
 impl OptionalArgsRequest {
     pub fn to_multipart(self) -> reqwest::multipart::Form {
-    let mut form = reqwest::multipart::Form::new();
+        let mut form = reqwest::multipart::Form::new();
 
-    if let Some(ref file_data) = self.image_file {
-        form = form.part(
-            "image_file",
-            reqwest::multipart::Part::bytes(file_data.clone())
-                .file_name("image_file")
-                .mime_str("application/octet-stream").unwrap()
-        );
-    }
-
-    if let Some(ref value) = self.request {
-        if let Ok(json_str) = serde_json::to_string(value) {
-            form = form.text("request", json_str);
+        if let Some(ref file_data) = self.image_file {
+            form = form.part(
+                "image_file",
+                reqwest::multipart::Part::bytes(file_data.clone())
+                    .file_name("image_file")
+                    .mime_str("application/octet-stream")
+                    .unwrap(),
+            );
         }
+
+        if let Some(ref value) = self.request {
+            if let Ok(json_str) = serde_json::to_string(value) {
+                form = form.text("request", json_str);
+            }
+        }
+
+        form
+    }
+}
+
+impl OptionalArgsRequest {
+    pub fn builder() -> OptionalArgsRequestBuilder {
+        <OptionalArgsRequestBuilder as Default>::default()
+    }
+}
+
+#[derive(Clone, PartialEq, Default, Debug)]
+#[non_exhaustive]
+pub struct OptionalArgsRequestBuilder {
+    image_file: Option<Vec<u8>>,
+    request: Option<serde_json::Value>,
+}
+
+impl OptionalArgsRequestBuilder {
+    pub fn image_file(mut self, value: Vec<u8>) -> Self {
+        self.image_file = Some(value);
+        self
     }
 
-    form
-}
+    pub fn request(mut self, value: serde_json::Value) -> Self {
+        self.request = Some(value);
+        self
+    }
+
+    /// Consumes the builder and constructs a [`OptionalArgsRequest`].
+    pub fn build(self) -> Result<OptionalArgsRequest, BuildError> {
+        Ok(OptionalArgsRequest {
+            image_file: self.image_file,
+            request: self.request,
+        })
+    }
 }

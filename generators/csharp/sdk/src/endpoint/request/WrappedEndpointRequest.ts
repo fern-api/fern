@@ -1,23 +1,25 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 
-import {
-    HttpEndpoint,
-    QueryParameter,
-    SdkRequest,
-    SdkRequestWrapper,
-    ServiceId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type HttpEndpoint = FernIr.HttpEndpoint;
+type QueryParameter = FernIr.QueryParameter;
+type SdkRequest = FernIr.SdkRequest;
+type SdkRequestWrapper = FernIr.SdkRequestWrapper;
+type ServiceId = FernIr.ServiceId;
+type TypeReference = FernIr.TypeReference;
+
 import { fail } from "assert";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RawClient } from "../http/RawClient";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from "./EndpointRequest";
+} from "./EndpointRequest.js";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {
@@ -40,7 +42,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getParameterType(): ast.Type {
-        return this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
+        return this.context.getRequestWrapperReference(this.serviceId, this.wrapper);
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
@@ -58,7 +60,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return {
             code: this.csharp.codeblock((writer) => {
                 writer.write(
-                    `var ${queryStringVar} = new ${this.namespaces.core}.QueryStringBuilder.Builder(capacity: ${this.endpoint.queryParameters.length})`
+                    `var ${queryStringVar} = new ${this.namespaces.qualifiedCore}.QueryStringBuilder.Builder(capacity: ${this.endpoint.queryParameters.length})`
                 );
                 writer.indent();
                 for (const query of this.endpoint.queryParameters) {
@@ -81,7 +83,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
      * The builder automatically handles null values, so no conditional checks are needed.
      */
     private writeQueryParameterBuilderCallChained(writer: Writer, query: QueryParameter): void {
-        const baseReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
+        const baseReference = `${this.getParameterName()}.${this.case.pascalSafe(query.name)}`;
 
         // When experimental explicit nullable/optional is enabled, Optional<T> types need special handling
         // since QueryStringBuilder doesn't know how to serialize Optional<T> objects directly
@@ -97,9 +99,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const isComplexType = this.isComplexType(query.valueType);
 
         if (isComplexType) {
-            writer.write(`.AddDeepObject("${query.name.wireValue}", ${queryParameterReference})`);
+            writer.write(`.AddDeepObject("${getWireValue(query.name)}", ${queryParameterReference})`);
         } else {
-            writer.write(`.Add("${query.name.wireValue}", ${queryParameterReference})`);
+            writer.write(`.Add("${getWireValue(query.name)}", ${queryParameterReference})`);
         }
     }
 
@@ -184,7 +186,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             code: this.csharp.codeblock((writer) => {
                 // Start with HeadersBuilder.Builder instance
                 writer.write(
-                    `var ${this.names.variables.headers} = await new ${this.namespaces.core}.HeadersBuilder.Builder()`
+                    `var ${this.names.variables.headers} = await new ${this.namespaces.qualifiedCore}.HeadersBuilder.Builder()`
                 );
                 writer.indent();
 
@@ -192,8 +194,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 // The Add method handles null values and serialization automatically
                 for (const header of headers) {
                     writer.writeLine();
-                    const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
-                    writer.write(`.Add("${header.name.wireValue}", ${headerReference})`);
+                    const headerReference = `${this.getParameterName()}.${this.case.pascalSafe(header.name)}`;
+                    writer.write(`.Add("${getWireValue(header.name)}", ${headerReference})`);
                 }
 
                 // Add client-level headers (from root client constructor)
@@ -259,7 +261,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return this.endpoint.requestBody._visit({
             reference: () => {
                 return {
-                    requestBodyReference: `${this.getParameterName()}.${this.wrapper.bodyKey.pascalCase.safeName}`
+                    requestBodyReference: `${this.getParameterName()}.${this.case.pascalSafe(this.wrapper.bodyKey)}`
                 };
             },
             inlinedRequestBody: () => {
@@ -270,7 +272,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             fileUpload: () => undefined,
             bytes: () => {
                 return {
-                    requestBodyReference: `${this.getParameterName()}.${this.wrapper.bodyKey.pascalCase.safeName}`
+                    requestBodyReference: `${this.getParameterName()}.${this.case.pascalSafe(this.wrapper.bodyKey)}`
                 };
             },
             _other: () => undefined

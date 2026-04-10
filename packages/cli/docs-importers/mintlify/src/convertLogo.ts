@@ -3,7 +3,7 @@ import { stripLeadingSlash } from "@fern-api/core-utils";
 import { FernDocsBuilder } from "@fern-api/docs-importer-commons";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { MintJsonSchema } from "./mintlify";
+import { MintJsonSchema } from "./mintlify.js";
 
 const LOGO_DEFAULT_HEIGHT = 28; // mintlify's default height (1.75rem);
 

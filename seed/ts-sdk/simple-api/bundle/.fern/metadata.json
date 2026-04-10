@@ -1,12 +1,13 @@
 {
     "cliVersion": "DUMMY",
     "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "latest",
+    "generatorVersion": "local",
     "generatorConfig": {
         "bundle": true,
         "extraDependencies": {
             "lodash-es": "^4.17.21"
         }
     },
+    "originGitCommit": "DUMMY",
     "sdkVersion": "0.0.1"
 }

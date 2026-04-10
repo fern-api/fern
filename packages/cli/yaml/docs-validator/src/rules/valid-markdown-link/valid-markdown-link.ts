@@ -1,4 +1,6 @@
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { noop } from "@fern-api/core-utils";
+import { replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
 import { convertIrToApiDefinition, DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
@@ -8,12 +10,10 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { randomUUID } from "crypto";
 import path from "path";
-
-import { SourceResolverImpl } from "../../../../../cli-source-resolver/src/SourceResolverImpl";
-import { Rule, RuleViolation } from "../../Rule";
-import { checkIfPathnameExists } from "./check-if-pathname-exists";
-import { collectPathnamesToCheck, PathnameToCheck } from "./collect-pathnames";
-import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from "./url-utils";
+import { Rule, RuleViolation } from "../../Rule.js";
+import { checkIfPathnameExists } from "./check-if-pathname-exists.js";
+import { collectPathnamesToCheck, PathnameToCheck } from "./collect-pathnames.js";
+import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from "./url-utils.js";
 
 const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
 
@@ -76,6 +76,13 @@ export const ValidMarkdownLinks: Rule = {
             absoluteFilePathsToSlugs.set(absoluteFilePath, slugs);
         });
 
+        // Collect version and product slugs for context-aware absolute link resolution
+        const versionSlugs = collector.getVersionNodes().map((v) => v.slug);
+        const productSlugs = collector
+            .getProductNodes()
+            .filter(FernNavigation.isInternalProductNode)
+            .map((p) => p.slug);
+
         const specialDocPages = ["/llms-full.txt", "/llms.txt"];
 
         for (const specialPage of specialDocPages) {
@@ -95,8 +102,15 @@ export const ValidMarkdownLinks: Rule = {
                     return [];
                 }
 
+                const { markdown: resolvedContent } = await replaceReferencedMarkdown({
+                    markdown: content,
+                    absolutePathToFernFolder: workspace.absoluteFilePath,
+                    absolutePathToMarkdownFile: absoluteFilepath,
+                    context: NOOP_CONTEXT
+                });
+
                 // Find all matches in the Markdown text
-                const { pathnamesToCheck, violations } = collectPathnamesToCheck(content, {
+                const { pathnamesToCheck, violations } = collectPathnamesToCheck(resolvedContent, {
                     absoluteFilepath,
                     instanceUrls
                 });
@@ -111,7 +125,9 @@ export const ValidMarkdownLinks: Rule = {
                             pageSlugs: visitableSlugs,
                             absoluteFilePathsToSlugs,
                             redirects: workspace.config.redirects,
-                            baseUrl
+                            baseUrl,
+                            versionSlugs,
+                            productSlugs
                         });
 
                         if (exists === true) {
@@ -163,55 +179,60 @@ export const ValidMarkdownLinks: Rule = {
                     convertIrToApiDefinition({ ir, apiDefinitionId: randomUUID(), context: NOOP_CONTEXT })
                 );
 
+                const uniqueDescriptions = collectUniqueDescriptions(api);
                 const violations: RuleViolation[] = [];
+                const uniquePathnames = new Map<string, PathnameToCheck>();
 
-                for (const endpoint of endpoints) {
-                    const descriptions = await collectDescriptions(ApiDefinition.prune(api, endpoint));
-
-                    for (const description of descriptions) {
-                        const { pathnamesToCheck, violations: descriptionViolations } = collectPathnamesToCheck(
-                            description,
-                            { instanceUrls }
-                        );
-
-                        violations.push(...descriptionViolations);
-
-                        const pathToCheckViolations = await Promise.all(
-                            pathnamesToCheck.map(async (pathnameToCheck) => {
-                                // TODO: we don't know where the endpoint is defined (which file it's in) so this doesn't always work
-                                const exists = await checkIfPathnameExists({
-                                    pathname: pathnameToCheck.pathname,
-                                    markdown: pathnameToCheck.markdown,
-                                    workspaceAbsoluteFilePath: workspace.absoluteFilePath,
-                                    pageSlugs: visitableSlugs,
-                                    absoluteFilePathsToSlugs,
-                                    redirects: workspace.config.redirects,
-                                    baseUrl
-                                });
-
-                                if (exists === true) {
-                                    return [];
-                                }
-
-                                return exists.map((brokenPathname) => {
-                                    const [message, relFilePath] = createLinkViolationMessage({
-                                        pathnameToCheck,
-                                        targetPathname: brokenPathname,
-                                        absoluteFilepathToWorkspace: workspace.absoluteFilePath
-                                    });
-                                    return {
-                                        name: ValidMarkdownLinks.name,
-                                        severity: "error" as const,
-                                        message,
-                                        relFilepath: relFilePath
-                                    };
-                                });
-                            })
-                        );
-
-                        violations.push(...pathToCheckViolations.flat());
+                // Parse all unique descriptions to find link pathnames, then deduplicate pathnames
+                for (const description of uniqueDescriptions) {
+                    const { pathnamesToCheck, violations: descriptionViolations } = collectPathnamesToCheck(
+                        description,
+                        { instanceUrls }
+                    );
+                    violations.push(...descriptionViolations);
+                    for (const p of pathnamesToCheck) {
+                        if (!uniquePathnames.has(p.pathname)) {
+                            uniquePathnames.set(p.pathname, p);
+                        }
                     }
                 }
+
+                // Batch-check all unique pathnames
+                const pathToCheckViolations = await Promise.all(
+                    [...uniquePathnames.values()].map(async (pathnameToCheck) => {
+                        const exists = await checkIfPathnameExists({
+                            pathname: pathnameToCheck.pathname,
+                            markdown: pathnameToCheck.markdown,
+                            workspaceAbsoluteFilePath: workspace.absoluteFilePath,
+                            pageSlugs: visitableSlugs,
+                            absoluteFilePathsToSlugs,
+                            redirects: workspace.config.redirects,
+                            baseUrl,
+                            versionSlugs,
+                            productSlugs
+                        });
+
+                        if (exists === true) {
+                            return [];
+                        }
+
+                        return exists.map((brokenPathname) => {
+                            const [message, relFilePath] = createLinkViolationMessage({
+                                pathnameToCheck,
+                                targetPathname: brokenPathname,
+                                absoluteFilepathToWorkspace: workspace.absoluteFilePath
+                            });
+                            return {
+                                name: ValidMarkdownLinks.name,
+                                severity: "error" as const,
+                                message,
+                                relFilepath: relFilePath
+                            };
+                        });
+                    })
+                );
+
+                violations.push(...pathToCheckViolations.flat());
 
                 return violations;
             }
@@ -250,14 +271,11 @@ function toLatest(apiDefinition: APIV1Read.ApiDefinition) {
     return latest;
 }
 
-async function collectDescriptions(apiDefinition: ApiDefinition.ApiDefinition): Promise<string[]> {
-    const descriptions: string[] = [];
+function collectUniqueDescriptions(apiDefinition: ApiDefinition.ApiDefinition) {
+    const set = new Set<string>();
     ApiDefinition.Transformer.descriptions((description) => {
-        if (typeof description === "string") {
-            descriptions.push(description);
-        }
-
+        set.add(description);
         return description;
     }).apiDefinition(apiDefinition);
-    return descriptions;
+    return set;
 }

@@ -1,24 +1,26 @@
-import { ErrorDiscriminationStrategy, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
-import { GeneratedEndpointErrorUnion, GeneratedUnion, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedEndpointErrorUnion, GeneratedUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
 
-import { ParsedSingleUnionTypeForError } from "./error/ParsedSingleUnionTypeForError";
-import { UnknownErrorSingleUnionType } from "./error/UnknownErrorSingleUnionType";
-import { UnknownErrorSingleUnionTypeGenerator } from "./error/UnknownErrorSingleUnionTypeGenerator";
+import { ParsedSingleUnionTypeForError } from "./error/ParsedSingleUnionTypeForError.js";
+import { UnknownErrorSingleUnionType } from "./error/UnknownErrorSingleUnionType.js";
+import { UnknownErrorSingleUnionTypeGenerator } from "./error/UnknownErrorSingleUnionTypeGenerator.js";
 
 export declare namespace GeneratedEndpointErrorUnionImpl {
     export interface Init {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         errorResolver: ErrorResolver;
-        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
         retainOriginalCasing: boolean;
         enableInlineTypes: boolean;
         generateReadWriteOnlyTypes: boolean;
+        caseConverter: CaseConverter;
     }
 }
 
@@ -26,8 +28,8 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
     private static ERROR_INTERFACE_NAME = "Error";
     private static STATUS_CODE_DISCRIMINANT = "statusCode";
 
-    private endpoint: HttpEndpoint;
-    private errorUnion: GeneratedUnionImpl<SdkContext>;
+    private endpoint: FernIr.HttpEndpoint;
+    private errorUnion: GeneratedUnionImpl<FileContext>;
 
     constructor({
         packageId,
@@ -38,17 +40,19 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
         noOptionalProperties,
         retainOriginalCasing,
         enableInlineTypes,
-        generateReadWriteOnlyTypes
+        generateReadWriteOnlyTypes,
+        caseConverter
     }: GeneratedEndpointErrorUnionImpl.Init) {
         this.endpoint = endpoint;
 
         const discriminant = this.getErrorUnionDiscriminant({
             errorDiscriminationStrategy,
-            retainOriginalCasing
+            retainOriginalCasing,
+            caseConverter
         });
         const unknownErrorSingleUnionTypeGenerator = new UnknownErrorSingleUnionTypeGenerator({ discriminant });
         const includeUtilsOnUnionMembers = includeSerdeLayer;
-        this.errorUnion = new GeneratedUnionImpl<SdkContext>({
+        this.errorUnion = new GeneratedUnionImpl<FileContext>({
             shape: undefined,
             typeName: GeneratedEndpointErrorUnionImpl.ERROR_INTERFACE_NAME,
             includeUtilsOnUnionMembers,
@@ -65,7 +69,8 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
                         noOptionalProperties,
                         retainOriginalCasing,
                         enableInlineTypes,
-                        generateReadWriteOnlyTypes
+                        generateReadWriteOnlyTypes,
+                        caseConverter
                     })
             ),
             getReferenceToUnion: (context) =>
@@ -85,20 +90,23 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
             enableInlineTypes,
             // generate separate root types for errors in union
             inline: false,
-            generateReadWriteOnlyTypes
+            generateReadWriteOnlyTypes,
+            caseConverter
         });
     }
 
     private getErrorUnionDiscriminant({
         errorDiscriminationStrategy,
-        retainOriginalCasing
+        retainOriginalCasing,
+        caseConverter
     }: {
-        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
         retainOriginalCasing: boolean;
+        caseConverter: CaseConverter;
     }): string {
-        return ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
+        return FernIr.ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
             property: ({ discriminant }) =>
-                retainOriginalCasing ? discriminant.name.originalName : discriminant.name.camelCase.unsafeName,
+                retainOriginalCasing ? getWireValue(discriminant) : caseConverter.camelUnsafe(discriminant),
             statusCode: () => GeneratedEndpointErrorUnionImpl.STATUS_CODE_DISCRIMINANT,
             _other: () => {
                 throw new Error("Unknown error discrimination strategy: " + errorDiscriminationStrategy.type);
@@ -106,11 +114,11 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
         });
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         context.sourceFile.addStatements(this.errorUnion.generateStatements(context));
     }
 
-    public getErrorUnion(): GeneratedUnion<SdkContext> {
+    public getErrorUnion(): GeneratedUnion<FileContext> {
         return this.errorUnion;
     }
 }

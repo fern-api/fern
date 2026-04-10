@@ -1,9 +1,11 @@
 imports:
   ai: ./ai.yml
   auth: ./fernDefinition/auth.yml
+  automation: ./automation.yml
   file: ./fernDefinition/file.yml
   environments: ./fernDefinition/environments.yml
   group: ./group.yml
+  replay: ./replay.yml
   reviewers: ./reviewers.yml
 types:
   GeneratorsConfigurationSchema:
@@ -36,12 +38,23 @@ types:
         type: optional<map<string, group.GeneratorGroupSchema>>
       reviewers:
         type: optional<reviewers.ReviewersSchema>
+      replay:
+        type: optional<replay.ReplayConfigSchema>
+        docs: |
+          Configuration for SDK customization replay.
+          Automatically preserves user customizations across SDK regenerations.
       ai: optional<ai.AIServicesSchema>
       autorelease:
         type: optional<boolean>
         docs: |
           If true, automatically release SDKs when changes are detected.
           Can be overridden at the individual generator level.
+      automation:
+        type: optional<automation.AutomationSchema>
+        docs: |
+          Controls which automation features (GitHub Actions workflows) are enabled.
+          Can be overridden at the group or generator level.
+          All features default to true when not specified.
       openapi:
         type: optional<GeneratorsOpenAPISchema>
         availability: deprecated
@@ -253,6 +266,15 @@ types:
       - v1
       - v2
 
+  OverridesSchema:
+    discriminated: false
+    docs: |
+      Paths to override files. Can be a single path or an array of paths.
+      When multiple paths are provided, overrides are applied sequentially in order.
+    union:
+      - string
+      - list<string>
+
   APIDefinitionWithOverridesSchema:
     properties:
       path: APIDefinitionPathSchema
@@ -260,8 +282,8 @@ types:
         type: optional<string>
         docs: The URL of the API definition origin, from which the file should be polled.
       overrides:
-        type: optional<string>
-        docs: Path to the OpenAPI or AsyncAPI overrides
+        type: optional<OverridesSchema>
+        docs: Paths to the OpenAPI or AsyncAPI overrides. Can be a single path or an array of paths applied sequentially.
       audiences:
         type: optional<list<string>>
         docs: Audiences that you would like to filter to
@@ -276,8 +298,8 @@ types:
         type: string
         docs: The path to the `.proto` directory root (e.g. `proto`).
       overrides:
-        type: optional<string>
-        docs: Path to the overrides configuration
+        type: optional<OverridesSchema>
+        docs: Paths to the overrides configuration. Can be a single path or an array of paths applied sequentially.
       local-generation:
         type: optional<boolean>
         docs: Whether to compile the `.proto` files locally. By default, we generate remotely.
@@ -394,6 +416,32 @@ types:
           If false, throw hard errors when schema collisions are detected.
           Defaults to false.
         default: false
+      infer-forward-compatible:
+        type: optional<boolean>
+        docs: |
+          If true, infer forward-compatible enums from oneOf [enum, string] or anyOf [enum, string] patterns. Defaults to false.
+        default: false
+      infer-default-environment:
+        type: optional<boolean>
+        docs: Whether to automatically infer the default environment from the first server. Defaults to true. When false, SDK users must explicitly provide a base URL.
+        default: true
+      coerce-consts-to:
+        type: optional<CoerceConstsTo>
+        docs: |
+          Controls how `const` values in OpenAPI specs are represented.
+          - `literals`: Convert const values directly to literals with defaults.
+          - `enums`: Convert const values to single-element enums; blocks transitive coercion via `coerce-enums-to-literals`.
+          - `enums-coerceable-to-literals`: Convert const values to single-element enums, but allow `coerce-enums-to-literals` to coerce them transitively.
+          Defaults to `enums-coerceable-to-literals`.
+        default: enums-coerceable-to-literals
+
+  CoerceConstsTo:
+    docs: Controls how const values in OpenAPI specs are represented.
+    enum:
+      - literals
+      - enums
+      - name: enumsCoerceableToLiterals
+        value: enums-coerceable-to-literals
 
   OpenAPISettingsSchema:
     extends:
@@ -517,7 +565,7 @@ types:
     properties:
       openapi: string
       origin: optional<string>
-      overrides: optional<string>
+      overrides: optional<OverridesSchema>
       overlays: optional<string>
       namespace: optional<string>
       settings: optional<OpenAPISettingsSchema>
@@ -525,7 +573,7 @@ types:
   OpenRPCSpecSchema:
     properties:
       openrpc: string
-      overrides: optional<string>
+      overrides: optional<OverridesSchema>
       namespace: optional<string>
 
   AsyncAPISettingsSchema:
@@ -540,7 +588,7 @@ types:
     properties:
       asyncapi: string
       origin: optional<string>
-      overrides: optional<string>
+      overrides: optional<OverridesSchema>
       namespace: optional<string>
       settings: optional<AsyncAPISettingsSchema>
 
@@ -565,11 +613,27 @@ types:
       graphql: string
       origin: optional<string>
       overrides: optional<string>
-      resource: optional<string>
+      name: optional<string>
 
   ProtobufSpecSchema:
     properties:
       proto: ProtobufDefinitionSchema
+
+  GeneratorImageObjectSchema:
+    audiences:
+      - generators-yml
+    docs: |
+      Explicit Docker image configuration with a custom container registry.
+    properties:
+      name:
+        type: string
+        docs: |
+          The Docker image name (e.g., `fernapi/fern-typescript-sdk`).
+      registry:
+        type: string
+        docs: |
+          The container registry URL to pull the image from during local generation.
+          Example: `ghcr.io/myorg` or `123456789.dkr.ecr.us-east-1.amazonaws.com`
 
   Language:
     enum:

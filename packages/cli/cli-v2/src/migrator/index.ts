@@ -1,3 +1,3 @@
-export type { MigratorConfig } from "./Migrator";
-export { Migrator } from "./Migrator";
-export type { MigratorResult, MigratorWarning, MigratorWarningType } from "./types";
+export type { MigratorConfig } from "./Migrator.js";
+export { Migrator } from "./Migrator.js";
+export type { MigratorResult, MigratorWarning, MigratorWarningType } from "./types/index.js";

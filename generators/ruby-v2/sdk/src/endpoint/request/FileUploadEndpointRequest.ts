@@ -1,22 +1,23 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { ruby } from "@fern-api/ruby-ast";
-import { FileUploadBodyProperty, FileUploadRequest, HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RawClient } from "../http/RawClient";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from "./EndpointRequest";
+} from "./EndpointRequest.js";
 
 export class FileUploadEndpointRequest extends EndpointRequest {
-    private fileUploadRequest: FileUploadRequest;
+    private fileUploadRequest: FernIr.FileUploadRequest;
 
     public constructor(
         context: SdkGeneratorContext,
-        sdkRequest: SdkRequest,
-        endpoint: HttpEndpoint,
-        fileUploadRequest: FileUploadRequest
+        sdkRequest: FernIr.SdkRequest,
+        endpoint: FernIr.HttpEndpoint,
+        fileUploadRequest: FernIr.FileUploadRequest
     ) {
         super(context, sdkRequest, endpoint);
         this.fileUploadRequest = fileUploadRequest;
@@ -40,7 +41,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
             writer.writeLine();
             for (const property of this.fileUploadRequest.properties) {
                 if (property.type === "file") {
-                    const snakeCaseName = property.value.key.name.snakeCase.safeName;
+                    const snakeCaseName = this.case.snakeSafe(property.value.key);
                     writer.writeNode(
                         ruby.ifElse({
                             if: {
@@ -50,7 +51,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                                 thenBody: [
                                     ruby.codeblock((writer) => {
                                         writer.writeLine(
-                                            `body.add_part(params[:${snakeCaseName}].to_form_data_part(name: "${property.value.key.wireValue}"))`
+                                            `body.add_part(params[:${snakeCaseName}].to_form_data_part(name: "${getWireValue(property.value.key)}"))`
                                         );
                                     })
                                 ]
@@ -58,7 +59,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                         })
                     );
                 } else {
-                    const snakeCaseName = property.name.name.snakeCase.safeName;
+                    const snakeCaseName = this.case.snakeSafe(property.name);
                     writer.writeNode(
                         ruby.ifElse({
                             if: {
@@ -70,7 +71,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                                         const keywordArguments = [
                                             ruby.keywordArgument({
                                                 name: "name",
-                                                value: ruby.TypeLiteral.string(property.name.wireValue)
+                                                value: ruby.TypeLiteral.string(getWireValue(property.name))
                                             }),
                                             ruby.keywordArgument({
                                                 name: "value",
@@ -110,8 +111,8 @@ export class FileUploadEndpointRequest extends EndpointRequest {
         };
     }
 
-    private getFormDataPartForNonFileProperty(property: FileUploadBodyProperty): ruby.CodeBlock | undefined {
-        const snakeCaseName = property.name.name.snakeCase.safeName;
+    private getFormDataPartForNonFileProperty(property: FernIr.FileUploadBodyProperty): ruby.CodeBlock | undefined {
+        const snakeCaseName = this.case.snakeSafe(property.name);
         switch (property.style) {
             case "json":
                 return ruby.codeblock((writer) => {

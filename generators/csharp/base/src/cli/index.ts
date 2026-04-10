@@ -1,2 +1,2 @@
-export { GeneratorContext } from "../context/GeneratorContext";
-export { AbstractCsharpGeneratorCli } from "./AbstractCsharpGeneratorCli";
+export { GeneratorContext } from "../context/GeneratorContext.js";
+export { AbstractCsharpGeneratorCli } from "./AbstractCsharpGeneratorCli.js";

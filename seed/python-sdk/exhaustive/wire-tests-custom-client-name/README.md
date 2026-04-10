@@ -12,6 +12,7 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Usage](#usage)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
+- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Access Raw Response Data](#access-raw-response-data)
   - [Retries](#retries)
@@ -37,11 +38,15 @@ Instantiate and use the client with the following:
 from seed import Exhaustive
 
 client = Exhaustive(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.endpoints.container.get_and_return_list_of_primitives(
-    request=["string", "string"],
+    request=[
+        "string",
+        "string"
+    ],
 )
 ```
 
@@ -55,14 +60,17 @@ import asyncio
 from seed import AsyncExhaustive
 
 client = AsyncExhaustive(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
     await client.endpoints.container.get_and_return_list_of_primitives(
-        request=["string", "string"],
+        request=[
+            "string",
+            "string"
+        ],
     )
 
 
@@ -84,6 +92,33 @@ except ApiError as e:
     print(e.body)
 ```
 
+## Pagination
+
+Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
+
+```python
+from seed import Exhaustive
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.pagination.list_items(
+    cursor="cursor",
+    limit=1,
+)
+```
+
+```python
+# You can also iterate through pages and access the typed response per page
+pager = client.endpoints.pagination.list_items(...)
+for page in pager.iter_pages():
+    print(page.response)  # access the typed response for each page
+    for item in page:
+        print(item)
+```
+
 ## Advanced
 
 ### Access Raw Response Data
@@ -94,12 +129,8 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import Exhaustive
 
-client = Exhaustive(
-    ...,
-)
-response = client.endpoints.container.with_raw_response.get_and_return_list_of_primitives(
-    ...
-)
+client = Exhaustive(...)
+response = client.endpoints.container.with_raw_response.get_and_return_list_of_primitives(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -130,14 +161,9 @@ client.endpoints.container.get_and_return_list_of_primitives(..., request_option
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import Exhaustive
 
-client = Exhaustive(
-    ...,
-    timeout=20.0,
-)
-
+client = Exhaustive(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.endpoints.container.get_and_return_list_of_primitives(..., request_options={

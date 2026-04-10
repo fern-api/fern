@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="lib/SeedApi/SeedSimpleApi/SeedSimpleApi.csproj" />
   <Project Path="test/SeedApi.Test/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj" />
+  <Project Path="lib/SeedApi/SeedSimpleApi/SeedSimpleApi.csproj" />
 </Solution>

@@ -16,7 +16,7 @@ export const ProblemInfo: core.serialization.ObjectSchema<serializers.ProblemInf
         problemDescription: ProblemDescription,
         problemName: core.serialization.string(),
         problemVersion: core.serialization.number(),
-        files: core.serialization.record(Language, ProblemFiles.optional()),
+        files: core.serialization.partialRecord(Language, ProblemFiles.optional()),
         inputParams: core.serialization.list(VariableTypeAndName),
         outputType: core.serialization.lazy(() => serializers.VariableType),
         testcases: core.serialization.list(TestCaseWithExpectedResult),

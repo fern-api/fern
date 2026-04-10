@@ -1,6 +1,11 @@
-import { HttpEndpoint, TypeReference } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { getRequestBodyProperties } from "./requestBodyUtils";
+import { getWireValue } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type HttpEndpoint = FernIr.HttpEndpoint;
+type TypeReference = FernIr.TypeReference;
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { getRequestBodyProperties } from "./requestBodyUtils.js";
 
 export interface InferredAuthCredential {
     /**
@@ -53,15 +58,15 @@ export function collectInferredAuthCredentials(
             continue;
         }
 
-        const camelName = header.name.name.camelCase.unsafeName;
+        const camelName = context.case.camelUnsafe(header.name);
         const typeRef = context.csharpTypeMapper.convert({
             reference: header.valueType
         });
 
         credentials.push({
             camelName,
-            pascalName: header.name.name.pascalCase.safeName,
-            wireValue: header.name.wireValue,
+            pascalName: context.case.pascalSafe(header.name),
+            wireValue: getWireValue(header.name),
             typeReference: header.valueType,
             docs: header.docs,
             isFromHeader: true,
@@ -72,7 +77,7 @@ export function collectInferredAuthCredentials(
     }
 
     for (const prop of getRequestBodyProperties(context, tokenEndpoint.requestBody)) {
-        const camelName = prop.name.name.camelCase.unsafeName;
+        const camelName = context.case.camelUnsafe(prop.name);
 
         if (seenNames.has(camelName)) {
             continue;
@@ -84,8 +89,8 @@ export function collectInferredAuthCredentials(
 
         credentials.push({
             camelName,
-            pascalName: prop.name.name.pascalCase.safeName,
-            wireValue: prop.name.wireValue,
+            pascalName: context.case.pascalSafe(prop.name),
+            wireValue: getWireValue(prop.name),
             typeReference: prop.valueType,
             docs: prop.docs,
             isFromHeader: false,

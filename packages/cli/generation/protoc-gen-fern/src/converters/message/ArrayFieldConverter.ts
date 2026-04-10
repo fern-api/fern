@@ -3,9 +3,9 @@ import { FieldDescriptorProto, FieldDescriptorProto_Label } from "@bufbuild/prot
 import { ContainerType, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
 
-import { ProtofileConverterContext } from "../ProtofileConverterContext";
-import { EnumOrMessageConverter } from "./EnumOrMessageConverter";
-import { FieldConverter } from "./FieldConverter";
+import { ProtofileConverterContext } from "../ProtofileConverterContext.js";
+import { EnumOrMessageConverter } from "./EnumOrMessageConverter.js";
+import { FieldConverter } from "./FieldConverter.js";
 
 export declare namespace ArrayFieldConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {

@@ -3,7 +3,7 @@ export {
     type RustDependencySpec,
     RustDependencyType,
     type TomlSections
-} from "./RustDependencyManager";
-export { RustFile } from "./RustFile";
-export { RustFilenameRegistry } from "./RustFilenameRegistry";
-export { RustProject } from "./RustProject";
+} from "./RustDependencyManager.js";
+export { RustFile } from "./RustFile.js";
+export { RustFilenameRegistry } from "./RustFilenameRegistry.js";
+export { RustProject } from "./RustProject.js";

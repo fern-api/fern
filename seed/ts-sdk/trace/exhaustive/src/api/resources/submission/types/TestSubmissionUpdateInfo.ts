@@ -39,6 +39,6 @@ export namespace TestSubmissionUpdateInfo {
     }
 
     export interface _Unknown {
-        type: void;
+        type: string;
     }
 }

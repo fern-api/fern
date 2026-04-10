@@ -1,4 +1,4 @@
-import { CliContext } from "../cli-context/CliContext";
+import { CliContext } from "../cli-context/CliContext.js";
 
 // Create a test-specific context that doesn't exit
 export class MockCliContext extends CliContext {

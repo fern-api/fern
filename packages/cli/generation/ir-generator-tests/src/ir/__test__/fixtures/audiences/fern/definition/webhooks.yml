@@ -5,6 +5,21 @@ webhooks:
     display-name: User Added
     method: POST
     payload: User
+    signature:
+      type: hmac
+      header: x-webhook-signature
+      algorithm: sha256
+      encoding: hex
+      signature-prefix: "sha256="
+      payload-format:
+        components:
+          - timestamp
+          - body
+        delimiter: "."
+      timestamp:
+        header: x-webhook-timestamp
+        format: unix-seconds
+        tolerance: 300
 
   userDeleted:
     display-name: User Added

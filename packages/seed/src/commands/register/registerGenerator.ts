@@ -3,9 +3,9 @@ import { TaskContext } from "@fern-api/task-context";
 
 import { FernRegistryClient as FdrClient, FernRegistry } from "@fern-fern/generators-sdk";
 
-import { GeneratorType, ScriptCommands } from "../../config/api";
-import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
+import { GeneratorType, ScriptCommands } from "../../config/api/index.js";
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
+import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases.js";
 
 /**
  * Extracts all commands from a ScriptCommands union type as a flat array.

@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from "openapi-types";
 import { describe, expect, it } from "vitest";
-import { ReferenceCollector } from "../reference-collector";
+import { ReferenceCollector } from "../reference-collector.js";
 
 describe("ReferenceCollector", () => {
     it("should collect schema references from responses", () => {

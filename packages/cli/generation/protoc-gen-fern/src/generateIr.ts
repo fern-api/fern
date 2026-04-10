@@ -7,11 +7,11 @@ import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
 
-import { Logger } from "./commons/logging";
-import { ProtofileConverter } from "./converters/ProtofileConverter";
-import { ProtofileConverterContext } from "./converters/ProtofileConverterContext";
-import { createGlobalCommentsStore } from "./converters/utils/CreateGlobalCommentsStore";
-import { Options } from "./parseOptions";
+import { Logger } from "./commons/logging.js";
+import { ProtofileConverter } from "./converters/ProtofileConverter.js";
+import { ProtofileConverterContext } from "./converters/ProtofileConverterContext.js";
+import { createGlobalCommentsStore } from "./converters/utils/CreateGlobalCommentsStore.js";
+import { Options } from "./parseOptions.js";
 
 export function generateIr({ req, options }: { req: CodeGeneratorRequest; options: Options }): FileInfo {
     let mergedIr: IntermediateRepresentation | undefined;

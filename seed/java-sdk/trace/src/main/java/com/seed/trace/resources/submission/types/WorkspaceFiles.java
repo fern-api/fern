@@ -83,6 +83,10 @@ public final class WorkspaceFiles {
     public interface _FinalStage {
         WorkspaceFiles build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage readOnlyFiles(List<FileInfo> readOnlyFiles);
 
         _FinalStage addReadOnlyFiles(FileInfo readOnlyFiles);
@@ -142,6 +146,18 @@ public final class WorkspaceFiles {
         @java.lang.Override
         public WorkspaceFiles build() {
             return new WorkspaceFiles(mainFile, readOnlyFiles, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

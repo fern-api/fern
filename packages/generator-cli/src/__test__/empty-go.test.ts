@@ -1,5 +1,5 @@
-import { default as CONFIG } from "./fixtures/empty-go/readme";
-import { testGenerateReadme } from "./testGenerateReadme";
+import { default as CONFIG } from "./fixtures/empty-go/readme.js";
+import { testGenerateReadme } from "./testGenerateReadme.js";
 
 describe("empty-go", () => {
     testGenerateReadme({

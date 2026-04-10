@@ -22,5 +22,6 @@ export interface WebhookWithExample
      */
     multipartFormData: FernOpenapiIr.MultipartFormDataWebhookPayloadWithExample | undefined;
     response: FernOpenapiIr.ResponseWithExample | undefined;
+    signatureVerification: FernOpenapiIr.WebhookSignatureVerification | undefined;
     examples: FernOpenapiIr.WebhookExampleCall[];
 }

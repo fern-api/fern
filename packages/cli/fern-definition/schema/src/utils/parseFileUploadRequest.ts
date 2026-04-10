@@ -6,11 +6,11 @@ import {
     HttpInlineRequestBodySchema,
     HttpRequestSchema,
     ObjectPropertySchema
-} from "../schemas";
-import { isFileInGeneric } from "./generics/isFileInGeneric";
-import { parseGenericNested } from "./generics/parseGenericNested";
-import { isInlineRequestBody } from "./isInlineRequestBody";
-import { parseRawFileType } from "./parseRawFileType";
+} from "../schemas/index.js";
+import { isFileInGeneric } from "./generics/isFileInGeneric.js";
+import { parseGenericNested } from "./generics/parseGenericNested.js";
+import { isInlineRequestBody } from "./isInlineRequestBody.js";
+import { parseRawFileType } from "./parseRawFileType.js";
 
 export interface RawFileUploadRequest {
     name: string;

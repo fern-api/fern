@@ -129,5 +129,15 @@ public final class ListUsersTopLevelBodyCursorPaginationRequest {
         public ListUsersTopLevelBodyCursorPaginationRequest build() {
             return new ListUsersTopLevelBodyCursorPaginationRequest(cursor, filter, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }

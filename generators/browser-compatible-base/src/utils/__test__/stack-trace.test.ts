@@ -1,4 +1,4 @@
-import { at, StackTraces, stacktrace } from "../stacktrace";
+import { at, StackTraces, stacktrace } from "../stacktrace.js";
 
 describe("stacktrace", () => {
     describe("stacktrace()", () => {

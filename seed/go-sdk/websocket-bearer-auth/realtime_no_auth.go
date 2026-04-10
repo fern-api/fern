@@ -31,6 +31,9 @@ func (n *NoAuthReceiveEvent) GetResponse() string {
 }
 
 func (n *NoAuthReceiveEvent) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -76,6 +79,9 @@ func (n *NoAuthReceiveEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NoAuthReceiveEvent) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -109,6 +115,9 @@ func (n *NoAuthSendEvent) GetText() string {
 }
 
 func (n *NoAuthSendEvent) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -154,6 +163,9 @@ func (n *NoAuthSendEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NoAuthSendEvent) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value

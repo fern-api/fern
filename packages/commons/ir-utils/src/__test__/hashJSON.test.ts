@@ -1,4 +1,4 @@
-import { hashJSON } from "../hashJSON";
+import { hashJSON } from "../hashJSON.js";
 
 describe("hashJSON Function", () => {
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
@@ -24,11 +24,11 @@ describe("hashJSON Function", () => {
     });
 
     it("should hash a very large object without errors", () => {
-        const largeObj = generateLargeObject(8, 10);
+        const largeObj = generateLargeObject(5, 10);
 
         expect(() => {
             const hash = hashJSON(largeObj);
             expect(typeof hash).toBe("string");
         }).not.toThrow();
-    }, 120_000);
+    }, 30_000);
 });

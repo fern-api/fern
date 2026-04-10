@@ -17,7 +17,7 @@ public class Example8 {
 
         client.endpoints()
                 .contentType()
-                .postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder()
+                .postJsonPatchContentType(ObjectWithOptionalField.builder()
                         .string("string")
                         .integer(1)
                         .long_(1000000L)

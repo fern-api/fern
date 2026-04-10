@@ -2,13 +2,12 @@ import { cloneRepository } from "@fern-api/github";
 import { template } from "es-toolkit/compat";
 import { camelCase, upperFirst } from "es-toolkit/string";
 import type fs from "fs";
-
-import { FernGeneratorCli } from "../configuration/sdk";
-import type { ReadmeFeature } from "../configuration/sdk/api";
-import { StreamWriter, StringWriter, type Writer } from "../utils/Writer";
-import { Block } from "./Block";
-import { BlockMerger } from "./BlockMerger";
-import type { ReadmeParser } from "./ReadmeParser";
+import type { ReadmeFeature } from "../configuration/sdk/api/index.js";
+import { FernGeneratorCli } from "../configuration/sdk/index.js";
+import { StreamWriter, StringWriter, type Writer } from "../utils/Writer.js";
+import { Block } from "./Block.js";
+import { BlockMerger } from "./BlockMerger.js";
+import type { ReadmeParser } from "./ReadmeParser.js";
 
 export class ReadmeGenerator {
     private ADVANCED_FEATURE_ID = "ADVANCED";
@@ -43,17 +42,28 @@ export class ReadmeGenerator {
     }
 
     public async generateReadme({ output }: { output: fs.WriteStream | NodeJS.Process["stdout"] }): Promise<void> {
+        const writer = new StreamWriter(output);
+        await this.writeReadmeContent({ writer });
+        await writer.end();
+    }
+
+    public async generateReadmeToString(): Promise<string> {
+        const writer = new StringWriter();
+        await this.writeReadmeContent({ writer });
+        await writer.end();
+        return writer.toString();
+    }
+
+    private async writeReadmeContent({ writer }: { writer: Writer }): Promise<void> {
         const blocks = await this.generateBlocks();
         const mergedBlocks = await this.mergeBlocks({ blocks });
 
-        const writer = new StreamWriter(output);
         await this.writeHeader({ writer });
         await this.writeTableOfContents({ writer, blocks: mergedBlocks });
         await this.writeBlocks({
             writer,
             blocks: mergedBlocks
         });
-        await writer.end();
     }
 
     private async generateBlocks(): Promise<Block[]> {
@@ -579,7 +589,7 @@ export class ReadmeGenerator {
         await writer.writeLine();
         await writer.writeLine("```groovy");
         await writer.writeLine("dependencies {");
-        await writer.writeLine(`  implementation '${maven.group}:${maven.artifact}'`);
+        await writer.writeLine(`  implementation '${maven.group}:${maven.artifact}:${maven.version}'`);
         await writer.writeLine("}");
         await writer.writeLine("```");
         await writer.writeLine();

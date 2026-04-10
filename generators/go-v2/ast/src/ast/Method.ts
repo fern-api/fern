@@ -1,10 +1,10 @@
-import { Comment } from "./Comment";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { GoTypeReference } from "./GoTypeReference";
-import { Parameter } from "./Parameter";
-import { Type } from "./Type";
-import { writeArguments } from "./utils/writeArguments";
+import { Comment } from "./Comment.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { GoTypeReference } from "./GoTypeReference.js";
+import { Parameter } from "./Parameter.js";
+import { Type } from "./Type.js";
+import { writeArguments } from "./utils/writeArguments.js";
 
 export declare namespace Method {
     interface Args {

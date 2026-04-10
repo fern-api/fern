@@ -12,7 +12,6 @@ public class Example12 {
 
         client.endpoints()
                 .httpMethods()
-                .testPut(
-                        "id", ObjectWithRequiredField.builder().string("string").build());
+                .testPost(ObjectWithRequiredField.builder().string("string").build());
     }
 }

@@ -1,10 +1,12 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import jwksClient from "jwks-rsa";
 
-import { FernUserToken } from "../FernToken";
+import { FernUserToken } from "../FernToken.js";
 
+const auth0Domain = process.env.AUTH0_DOMAIN ?? "fern-prod.us.auth0.com";
+const protocol = auth0Domain.startsWith("localhost") ? "http" : "https";
 const client = jwksClient({
-    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
+    jwksUri: `${protocol}://${auth0Domain}/.well-known/jwks.json`
 });
 
 /**

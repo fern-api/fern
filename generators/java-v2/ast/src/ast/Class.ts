@@ -1,7 +1,7 @@
-import { Access } from "./Access";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { Method } from "./Method";
+import { Access } from "./Access.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { Method } from "./Method.js";
 
 export declare namespace Class {
     interface Args {

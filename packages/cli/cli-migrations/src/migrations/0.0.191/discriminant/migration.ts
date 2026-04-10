@@ -1,8 +1,8 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { readFile, writeFile } from "fs/promises";
 
-import { Migration } from "../../../types/Migration";
-import { getAllYamlFiles } from "./getAllYamlFiles";
+import { Migration } from "../../../types/Migration.js";
+import { getAllYamlFiles } from "./getAllYamlFiles.js";
 
 export const migration: Migration = {
     name: "discriminant",

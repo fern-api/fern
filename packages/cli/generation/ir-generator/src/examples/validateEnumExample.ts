@@ -1,7 +1,7 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
-import { ExampleViolation } from "./exampleViolation";
-import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample";
+import { ExampleViolation } from "./exampleViolation.js";
+import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample.js";
 
 export function validateEnumExample({
     rawEnum,

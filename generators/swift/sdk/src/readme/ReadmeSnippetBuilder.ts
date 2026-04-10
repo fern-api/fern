@@ -3,8 +3,8 @@ import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly REQUEST_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId = "REQUEST_TYPES";
@@ -13,9 +13,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         "ADDITIONAL_QUERY_STRING_PARAMETERS";
     private static readonly CUSTOM_NETWORKING_CLIENT_FEATURE_ID: FernGeneratorCli.FeatureId =
         "CUSTOM_NETWORKING_CLIENT";
+    private static readonly ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkGeneratorContext;
-    private readonly endpointsById: Record<string, HttpEndpoint>;
+    private readonly endpointsById: Record<string, FernIr.HttpEndpoint>;
     private readonly endpointSnippetsById: Record<string, FernGeneratorExec.Endpoint>;
 
     public constructor({
@@ -33,8 +34,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         );
     }
 
-    private buildEndpoints(): Record<EndpointId, HttpEndpoint> {
-        const endpoints: Record<EndpointId, HttpEndpoint> = {};
+    private buildEndpoints(): Record<FernIr.EndpointId, FernIr.HttpEndpoint> {
+        const endpoints: Record<FernIr.EndpointId, FernIr.HttpEndpoint> = {};
         for (const service of Object.values(this.context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 endpoints[endpoint.id] = endpoint;
@@ -43,7 +44,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return endpoints;
     }
 
-    public override getDefaultEndpointId(): EndpointId {
+    public override getDefaultEndpointId(): FernIr.EndpointId {
         return this.context.ir.readmeConfig?.defaultEndpoint ?? super.getDefaultEndpointId();
     }
 
@@ -57,6 +58,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             this.buildAdditionalQueryStringParametersSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutsSnippets();
         snippets[ReadmeSnippetBuilder.CUSTOM_NETWORKING_CLIENT_FEATURE_ID] = this.buildCustomNetworkingClientSnippets();
+        if (this.context.ir.environments != null) {
+            snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsSnippets();
+        }
         return snippets;
     }
 
@@ -315,11 +319,60 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return [content];
     }
 
+    private buildEnvironmentsSnippets(): string[] {
+        const envConfig = this.context.ir.environments;
+        if (envConfig == null) {
+            return [];
+        }
+
+        const defaultEnvName = this.getDefaultEnvironmentName(envConfig);
+        if (defaultEnvName == null) {
+            return [];
+        }
+
+        const moduleSymbol = this.context.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        const rootClientSymbol = this.context.project.nameRegistry.getRootClientSymbolOrThrow();
+
+        const content = SwiftFile.getRawContents([
+            swift.Statement.import(moduleSymbol.name),
+            swift.LineBreak.single(),
+            swift.Statement.constantDeclaration({
+                unsafeName: "client",
+                value: swift.Expression.structInitialization({
+                    unsafeName: rootClientSymbol.name,
+                    arguments_: [
+                        swift.functionArgument({ value: swift.Expression.rawValue("...") }),
+                        swift.functionArgument({
+                            label: "environment",
+                            value: swift.Expression.rawValue(`.${defaultEnvName}`)
+                        })
+                    ],
+                    multiline: true
+                })
+            })
+        ]);
+        return [content];
+    }
+
+    private getDefaultEnvironmentName(envConfig: FernIr.EnvironmentsConfig): string | undefined {
+        const defaultEnvId = envConfig.defaultEnvironment;
+        const envs = envConfig.environments.environments;
+
+        if (defaultEnvId != null) {
+            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+            if (defaultEnv != null) {
+                return this.context.caseConverter.camelUnsafe(defaultEnv.name);
+            }
+        }
+        const firstName = envs[0]?.name;
+        return firstName != null ? this.context.caseConverter.camelUnsafe(firstName) : undefined;
+    }
+
     private getUsageSnippetForEndpoint(endpointId: string) {
         return this.endpointSnippetsById[endpointId]?.snippet;
     }
 
-    private getEndpointIdsForFeature(featureId: FeatureId): EndpointId[] {
+    private getEndpointIdsForFeature(featureId: FernIr.FeatureId): FernIr.EndpointId[] {
         const endpointIds = this.context.ir.readmeConfig?.features?.[this.getFeatureKey(featureId)];
         if (endpointIds == null) {
             return [this.getDefaultEndpointId()];

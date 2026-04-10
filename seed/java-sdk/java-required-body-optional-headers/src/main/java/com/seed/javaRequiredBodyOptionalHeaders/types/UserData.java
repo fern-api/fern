@@ -96,6 +96,10 @@ public final class UserData {
     public interface _FinalStage {
         UserData build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>User's age</p>
          */
@@ -162,6 +166,18 @@ public final class UserData {
         @java.lang.Override
         public UserData build() {
             return new UserData(name, email, age, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

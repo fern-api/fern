@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="/Sources/Resources/Nullable/NullableClient_.swift">getUsers</a>(usernames: String?, avatar: String?, activated: Bool?, tags: Nullable<String>?, extra: Nullable<Bool>?, requestOptions: RequestOptions?) -> [User]</code></summary>
+<details><summary><code>client.nullable.<a href="/Sources/Resources/Nullable/NullableClient_.swift">getUsers</a>(usernames: String?, avatar: String?, activated: Bool?, tags: Nullable&lt;String&gt;?, extra: Nullable&lt;Bool&gt;?, requestOptions: RequestOptions?) -> [User]</code></summary>
 <dl>
 <dd>
 
@@ -122,11 +122,7 @@ private func main() async throws {
             updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             avatar: .value("avatar"),
             activated: .value(true),
-            status: Status.active(
-                .init(
-
-                )
-            ),
+            status: Status.active,
             values: [
                 "values": .value("values")
             ]

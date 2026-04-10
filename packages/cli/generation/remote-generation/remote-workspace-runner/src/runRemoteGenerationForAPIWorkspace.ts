@@ -1,6 +1,8 @@
+import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import {
     AbstractAPIWorkspace,
@@ -9,8 +11,9 @@ import {
 
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
-import { downloadSnippetsForTask } from "./downloadSnippetsForTask";
-import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
+import { downloadSnippetsForTask } from "./downloadSnippetsForTask.js";
+import { resolveAutoDiscoveredFernignorePath } from "./resolveAutoDiscoveredFernignorePath.js";
+import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator.js";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
     snippetsProducedBy: generatorsYml.GeneratorInvocation[];
@@ -29,7 +32,13 @@ export async function runRemoteGenerationForAPIWorkspace({
     absolutePathToPreview,
     mode,
     fernignorePath,
-    dynamicIrOnly
+    skipFernignore,
+    dynamicIrOnly,
+    validateWorkspace,
+    retryRateLimited,
+    requireEnvVars,
+    automationMode,
+    autoMerge
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -43,7 +52,13 @@ export async function runRemoteGenerationForAPIWorkspace({
     absolutePathToPreview: AbsoluteFilePath | undefined;
     mode: "pull-request" | undefined;
     fernignorePath: string | undefined;
+    skipFernignore?: boolean;
     dynamicIrOnly: boolean;
+    validateWorkspace?: boolean;
+    retryRateLimited: boolean;
+    requireEnvVars: boolean;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -63,6 +78,27 @@ export async function runRemoteGenerationForAPIWorkspace({
                     settings,
                     generatorInvocation.apiOverride?.specs
                 );
+
+                if (validateWorkspace) {
+                    await validateAPIWorkspaceAndLogIssues({
+                        workspace: fernWorkspace,
+                        context,
+                        logWarnings: false,
+                        ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
+                    });
+                }
+
+                // When --skip-fernignore is set, skip auto-discovery and use no fernignore path.
+                // The skipFernignore flag is passed downstream to upload an empty .fernignore.
+                // Otherwise, auto-discover .fernignore from the generator's local output directory
+                // if not explicitly provided via --fernignore.
+                const effectiveFernignorePath = skipFernignore
+                    ? undefined
+                    : (fernignorePath ??
+                      (await resolveAutoDiscoveredFernignorePath({
+                          generatorInvocation,
+                          context: interactiveTaskContext
+                      })));
 
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
                     projectConfig,
@@ -100,8 +136,13 @@ export async function runRemoteGenerationForAPIWorkspace({
                     readme: generatorInvocation.readme,
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     absolutePathToPreview,
-                    fernignorePath,
-                    dynamicIrOnly
+                    fernignorePath: effectiveFernignorePath,
+                    skipFernignore,
+                    dynamicIrOnly,
+                    retryRateLimited,
+                    requireEnvVars,
+                    automationMode,
+                    autoMerge
                 });
                 if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                     snippetsProducedBy.push(generatorInvocation);

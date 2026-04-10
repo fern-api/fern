@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -106,7 +106,7 @@ public record WorkspaceSubmissionStatus
     public object AsStopped() =>
         IsStopped
             ? Value!
-            : throw new System.Exception("WorkspaceSubmissionStatus.Type is not 'stopped'");
+            : throw new global::System.Exception("WorkspaceSubmissionStatus.Type is not 'stopped'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ErrorInfo"/> if <see cref="Type"/> is 'errored', otherwise throws an exception.
@@ -115,7 +115,7 @@ public record WorkspaceSubmissionStatus
     public SeedTrace.ErrorInfo AsErrored() =>
         IsErrored
             ? (SeedTrace.ErrorInfo)Value!
-            : throw new System.Exception("WorkspaceSubmissionStatus.Type is not 'errored'");
+            : throw new global::System.Exception("WorkspaceSubmissionStatus.Type is not 'errored'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.RunningSubmissionState"/> if <see cref="Type"/> is 'running', otherwise throws an exception.
@@ -124,7 +124,7 @@ public record WorkspaceSubmissionStatus
     public SeedTrace.RunningSubmissionState AsRunning() =>
         IsRunning
             ? (SeedTrace.RunningSubmissionState)Value!
-            : throw new System.Exception("WorkspaceSubmissionStatus.Type is not 'running'");
+            : throw new global::System.Exception("WorkspaceSubmissionStatus.Type is not 'running'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceRunDetails"/> if <see cref="Type"/> is 'ran', otherwise throws an exception.
@@ -133,7 +133,7 @@ public record WorkspaceSubmissionStatus
     public SeedTrace.WorkspaceRunDetails AsRan() =>
         IsRan
             ? (SeedTrace.WorkspaceRunDetails)Value!
-            : throw new System.Exception("WorkspaceSubmissionStatus.Type is not 'ran'");
+            : throw new global::System.Exception("WorkspaceSubmissionStatus.Type is not 'ran'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceRunDetails"/> if <see cref="Type"/> is 'traced', otherwise throws an exception.
@@ -142,7 +142,7 @@ public record WorkspaceSubmissionStatus
     public SeedTrace.WorkspaceRunDetails AsTraced() =>
         IsTraced
             ? (SeedTrace.WorkspaceRunDetails)Value!
-            : throw new System.Exception("WorkspaceSubmissionStatus.Type is not 'traced'");
+            : throw new global::System.Exception("WorkspaceSubmissionStatus.Type is not 'traced'");
 
     public T Match<T>(
         Func<object, T> onStopped,
@@ -287,12 +287,12 @@ public record WorkspaceSubmissionStatus
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<WorkspaceSubmissionStatus>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(WorkspaceSubmissionStatus).IsAssignableFrom(typeToConvert);
 
         public override WorkspaceSubmissionStatus Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -317,24 +317,28 @@ public record WorkspaceSubmissionStatus
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
                 "stopped" => new { },
                 "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo?>(options)
-                ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
                 "running" => json.GetProperty("value")
                     .Deserialize<SeedTrace.RunningSubmissionState?>(options)
-                ?? throw new JsonException(
+                    ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.RunningSubmissionState"
                     ),
-                "ran" => json.Deserialize<SeedTrace.WorkspaceRunDetails?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.WorkspaceRunDetails"
-                    ),
-                "traced" => json.Deserialize<SeedTrace.WorkspaceRunDetails?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.WorkspaceRunDetails"
-                    ),
+                "ran" => jsonWithoutDiscriminator.Deserialize<SeedTrace.WorkspaceRunDetails?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.WorkspaceRunDetails"),
+                "traced" => jsonWithoutDiscriminator.Deserialize<SeedTrace.WorkspaceRunDetails?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.WorkspaceRunDetails"),
                 _ => json.Deserialize<object?>(options),
             };
             return new WorkspaceSubmissionStatus(discriminator, value);
@@ -364,6 +368,27 @@ public record WorkspaceSubmissionStatus
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override WorkspaceSubmissionStatus ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new WorkspaceSubmissionStatus(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            WorkspaceSubmissionStatus value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

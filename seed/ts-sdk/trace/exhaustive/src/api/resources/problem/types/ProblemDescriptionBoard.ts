@@ -25,6 +25,6 @@ export namespace ProblemDescriptionBoard {
     }
 
     export interface _Unknown {
-        type: void;
+        type: string;
     }
 }

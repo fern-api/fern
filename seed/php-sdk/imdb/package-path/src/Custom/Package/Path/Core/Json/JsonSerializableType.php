@@ -50,7 +50,7 @@ abstract class JsonSerializableType implements \JsonSerializable
         $reflectionClass = new \ReflectionClass($this);
         foreach ($reflectionClass->getProperties() as $property) {
             $jsonKey = self::getJsonKey($property);
-            if ($jsonKey == null) {
+            if ($jsonKey === null) {
                 continue;
             }
             $value = $property->getValue($this);
@@ -105,6 +105,7 @@ abstract class JsonSerializableType implements \JsonSerializable
         if (!is_array($decodedJson)) {
             throw new JsonException("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
+        /** @var array<string, mixed> $decodedJson */
         return self::jsonDeserialize($decodedJson);
     }
 
@@ -169,7 +170,9 @@ abstract class JsonSerializableType implements \JsonSerializable
             // Handle object
             $type = $property->getType();
             if (is_array($value) && $type instanceof ReflectionNamedType && !$type->isBuiltin()) {
-                $value = JsonDeserializer::deserializeObject($value, $type->getName());
+                /** @var array<string, mixed> $arrayValue */
+                $arrayValue = $value;
+                $value = JsonDeserializer::deserializeObject($arrayValue, $type->getName());
             }
 
             $args[$property->getName()] = $value;
@@ -178,7 +181,7 @@ abstract class JsonSerializableType implements \JsonSerializable
         // Fill in any missing properties with defaults
         foreach ($properties as $property) {
             if (!isset($args[$property->getName()])) {
-                $args[$property->getName()] = $property->getDefaultValue() ?? null;
+                $args[$property->getName()] = $property->hasDefaultValue() ? $property->getDefaultValue() : null;
             }
         }
 

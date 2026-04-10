@@ -1,19 +1,18 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-
-import { ModelCustomConfigSchema } from "../ModelCustomConfig";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
-    private readonly typeDeclaration: TypeDeclaration;
+    private readonly typeDeclaration: FernIr.TypeDeclaration;
     private readonly classReference: php.ClassReference;
     constructor(
         context: ModelGeneratorContext,
-        typeDeclaration: TypeDeclaration,
-        private readonly objectDeclaration: ObjectTypeDeclaration
+        typeDeclaration: FernIr.TypeDeclaration,
+        private readonly objectDeclaration: FernIr.ObjectTypeDeclaration
     ) {
         super(context);
         this.typeDeclaration = typeDeclaration;
@@ -39,10 +38,10 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
         for (const property of this.objectDeclaration.properties) {
             const field = this.toField({ property });
             if (includeGetter) {
-                clazz.addMethod(this.context.getGetterMethod({ name: property.name.name, field }));
+                clazz.addMethod(this.context.getGetterMethod({ name: property.name, field }));
             }
             if (includeSetter) {
-                clazz.addMethod(this.context.getSetterMethod({ name: property.name.name, field }));
+                clazz.addMethod(this.context.getSetterMethod({ name: property.name, field }));
             }
             clazz.addField(field);
         }
@@ -55,11 +54,11 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
         });
     }
 
-    private toField({ property, inherited }: { property: ObjectProperty; inherited?: boolean }): php.Field {
+    private toField({ property, inherited }: { property: FernIr.ObjectProperty; inherited?: boolean }): php.Field {
         const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
         return php.field({
             type: convertedType,
-            name: this.context.getPropertyName(property.name.name),
+            name: this.context.getPropertyName(property.name),
             access: this.context.getPropertyAccess(),
             docs: property.docs,
             attributes: this.context.phpAttributeMapper.convert({

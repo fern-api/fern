@@ -19,6 +19,7 @@ describe("InlineUsersClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -27,31 +28,7 @@ describe("InlineUsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            hasNextPage: true,
-            page: {
-                page: 1,
-                next: {
-                    page: 1,
-                    starting_after: "starting_after",
-                },
-                per_page: 1,
-                total_page: 1,
-            },
-            total_count: 1,
-            data: {
-                users: [
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                ],
-            },
-        };
+        const expected = rawResponseBody;
         const page = await client.inlineUsers.inlineUsers.listWithCursorPagination({
             page: 1,
             per_page: 1,
@@ -78,6 +55,7 @@ describe("InlineUsersClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint({ once: false })
             .post("/inline-users")
@@ -86,21 +64,7 @@ describe("InlineUsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            next: "next",
-            data: {
-                users: [
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                ],
-            },
-        };
+        const expected = rawResponseBody;
         const page = await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination({
             cursor: "cursor",
         });
@@ -126,6 +90,7 @@ describe("InlineUsersClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint({ once: false })
             .post("/inline-users")
@@ -135,31 +100,7 @@ describe("InlineUsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            hasNextPage: true,
-            page: {
-                page: 1,
-                next: {
-                    page: 1,
-                    starting_after: "starting_after",
-                },
-                per_page: 1,
-                total_page: 1,
-            },
-            total_count: 1,
-            data: {
-                users: [
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                ],
-            },
-        };
+        const expected = rawResponseBody;
         const page = await client.inlineUsers.inlineUsers.listWithBodyCursorPagination({
             pagination: {
                 cursor: "cursor",
@@ -187,6 +128,7 @@ describe("InlineUsersClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -195,31 +137,7 @@ describe("InlineUsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            hasNextPage: true,
-            page: {
-                page: 1,
-                next: {
-                    page: 1,
-                    starting_after: "starting_after",
-                },
-                per_page: 1,
-                total_page: 1,
-            },
-            total_count: 1,
-            data: {
-                users: [
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                ],
-            },
-        };
+        const expected = rawResponseBody;
         const page = await client.inlineUsers.inlineUsers.listWithOffsetPagination({
             page: 1,
             per_page: 1,
@@ -248,6 +166,7 @@ describe("InlineUsersClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -256,31 +175,7 @@ describe("InlineUsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            hasNextPage: true,
-            page: {
-                page: 1,
-                next: {
-                    page: 1,
-                    starting_after: "starting_after",
-                },
-                per_page: 1,
-                total_page: 1,
-            },
-            total_count: 1,
-            data: {
-                users: [
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                ],
-            },
-        };
+        const expected = rawResponseBody;
         const page = await client.inlineUsers.inlineUsers.listWithDoubleOffsetPagination({
             page: 1.1,
             per_page: 1.1,
@@ -309,6 +204,7 @@ describe("InlineUsersClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint({ once: false })
             .post("/inline-users")
@@ -318,31 +214,7 @@ describe("InlineUsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            hasNextPage: true,
-            page: {
-                page: 1,
-                next: {
-                    page: 1,
-                    starting_after: "starting_after",
-                },
-                per_page: 1,
-                total_page: 1,
-            },
-            total_count: 1,
-            data: {
-                users: [
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                ],
-            },
-        };
+        const expected = rawResponseBody;
         const page = await client.inlineUsers.inlineUsers.listWithBodyOffsetPagination({
             pagination: {
                 page: 1,
@@ -370,6 +242,7 @@ describe("InlineUsersClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -378,31 +251,7 @@ describe("InlineUsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            hasNextPage: true,
-            page: {
-                page: 1,
-                next: {
-                    page: 1,
-                    starting_after: "starting_after",
-                },
-                per_page: 1,
-                total_page: 1,
-            },
-            total_count: 1,
-            data: {
-                users: [
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                ],
-            },
-        };
+        const expected = rawResponseBody;
         const page = await client.inlineUsers.inlineUsers.listWithOffsetStepPagination({
             page: 1,
             limit: 1,
@@ -430,6 +279,7 @@ describe("InlineUsersClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -438,31 +288,7 @@ describe("InlineUsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            hasNextPage: true,
-            page: {
-                page: 1,
-                next: {
-                    page: 1,
-                    starting_after: "starting_after",
-                },
-                per_page: 1,
-                total_page: 1,
-            },
-            total_count: 1,
-            data: {
-                users: [
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                ],
-            },
-        };
+        const expected = rawResponseBody;
         const page = await client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextPage({
             page: 1,
             limit: 1,
@@ -489,6 +315,7 @@ describe("InlineUsersClient", () => {
             },
             next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -497,22 +324,7 @@ describe("InlineUsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            total_count: 1,
-            data: {
-                users: [
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                ],
-            },
-            next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        };
+        const expected = rawResponseBody;
         const page = await client.inlineUsers.inlineUsers.listWithExtendedResults({
             cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         });
@@ -537,6 +349,7 @@ describe("InlineUsersClient", () => {
             },
             next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -545,22 +358,7 @@ describe("InlineUsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            total_count: 1,
-            data: {
-                users: [
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                    {
-                        name: "name",
-                        id: 1,
-                    },
-                ],
-            },
-            next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        };
+        const expected = rawResponseBody;
         const page = await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData({
             cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         });
@@ -576,6 +374,7 @@ describe("InlineUsersClient", () => {
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { cursor: { after: "after", data: ["data", "data"] } };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -584,12 +383,7 @@ describe("InlineUsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            cursor: {
-                after: "after",
-                data: ["data", "data"],
-            },
-        };
+        const expected = rawResponseBody;
         const page = await client.inlineUsers.inlineUsers.listUsernames({
             starting_after: "starting_after",
         });
@@ -605,6 +399,7 @@ describe("InlineUsersClient", () => {
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { results: ["results", "results"] };
+
         server
             .mockEndpoint({ once: false })
             .get("/inline-users")
@@ -613,9 +408,7 @@ describe("InlineUsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
-            results: ["results", "results"],
-        };
+        const expected = rawResponseBody;
         const page = await client.inlineUsers.inlineUsers.listWithGlobalConfig({
             offset: 1,
         });

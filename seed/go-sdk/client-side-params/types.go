@@ -12,14 +12,14 @@ import (
 
 // Represents a client application
 var (
-	clientFieldClientId                = big.NewInt(1 << 0)
+	clientFieldClientID                = big.NewInt(1 << 0)
 	clientFieldTenant                  = big.NewInt(1 << 1)
 	clientFieldName                    = big.NewInt(1 << 2)
 	clientFieldDescription             = big.NewInt(1 << 3)
 	clientFieldGlobal                  = big.NewInt(1 << 4)
 	clientFieldClientSecret            = big.NewInt(1 << 5)
 	clientFieldAppType                 = big.NewInt(1 << 6)
-	clientFieldLogoUri                 = big.NewInt(1 << 7)
+	clientFieldLogoURI                 = big.NewInt(1 << 7)
 	clientFieldIsFirstParty            = big.NewInt(1 << 8)
 	clientFieldOidcConformant          = big.NewInt(1 << 9)
 	clientFieldCallbacks               = big.NewInt(1 << 10)
@@ -29,8 +29,8 @@ var (
 	clientFieldJwtConfiguration        = big.NewInt(1 << 14)
 	clientFieldSigningKeys             = big.NewInt(1 << 15)
 	clientFieldEncryptionKey           = big.NewInt(1 << 16)
-	clientFieldSso                     = big.NewInt(1 << 17)
-	clientFieldSsoDisabled             = big.NewInt(1 << 18)
+	clientFieldSSO                     = big.NewInt(1 << 17)
+	clientFieldSSODisabled             = big.NewInt(1 << 18)
 	clientFieldCrossOriginAuth         = big.NewInt(1 << 19)
 	clientFieldCrossOriginLoc          = big.NewInt(1 << 20)
 	clientFieldCustomLoginPageOn       = big.NewInt(1 << 21)
@@ -46,7 +46,7 @@ var (
 
 type Client struct {
 	// The unique client identifier
-	ClientId string `json:"client_id" url:"client_id"`
+	ClientID string `json:"client_id" url:"client_id"`
 	// The tenant name
 	Tenant *string `json:"tenant,omitempty" url:"tenant,omitempty"`
 	// Name of the client
@@ -60,7 +60,7 @@ type Client struct {
 	// The type of application (spa, native, regular_web, non_interactive)
 	AppType *string `json:"app_type,omitempty" url:"app_type,omitempty"`
 	// URL of the client logo
-	LogoUri *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
+	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
 	// Whether this client is a first party client
 	IsFirstParty *bool `json:"is_first_party,omitempty" url:"is_first_party,omitempty"`
 	// Whether this client conforms to OIDC specifications
@@ -74,15 +74,15 @@ type Client struct {
 	// Allowed grant types
 	GrantTypes []string `json:"grant_types,omitempty" url:"grant_types,omitempty"`
 	// JWT configuration for the client
-	JwtConfiguration map[string]interface{} `json:"jwt_configuration,omitempty" url:"jwt_configuration,omitempty"`
+	JwtConfiguration map[string]any `json:"jwt_configuration,omitempty" url:"jwt_configuration,omitempty"`
 	// Client signing keys
-	SigningKeys []map[string]interface{} `json:"signing_keys,omitempty" url:"signing_keys,omitempty"`
+	SigningKeys []map[string]any `json:"signing_keys,omitempty" url:"signing_keys,omitempty"`
 	// Encryption key
-	EncryptionKey map[string]interface{} `json:"encryption_key,omitempty" url:"encryption_key,omitempty"`
+	EncryptionKey map[string]any `json:"encryption_key,omitempty" url:"encryption_key,omitempty"`
 	// Whether SSO is enabled
-	Sso *bool `json:"sso,omitempty" url:"sso,omitempty"`
+	SSO *bool `json:"sso,omitempty" url:"sso,omitempty"`
 	// Whether SSO is disabled
-	SsoDisabled *bool `json:"sso_disabled,omitempty" url:"sso_disabled,omitempty"`
+	SSODisabled *bool `json:"sso_disabled,omitempty" url:"sso_disabled,omitempty"`
 	// Whether to use cross-origin authentication
 	CrossOriginAuth *bool `json:"cross_origin_auth,omitempty" url:"cross_origin_auth,omitempty"`
 	// URL for cross-origin authentication
@@ -98,13 +98,13 @@ type Client struct {
 	// Whether this is a Heroku application
 	IsHerokuApp *bool `json:"is_heroku_app,omitempty" url:"is_heroku_app,omitempty"`
 	// Addons enabled for this client
-	Addons map[string]interface{} `json:"addons,omitempty" url:"addons,omitempty"`
+	Addons map[string]any `json:"addons,omitempty" url:"addons,omitempty"`
 	// Requested authentication method for the token endpoint
 	TokenEndpointAuthMethod *string `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
 	// Metadata associated with the client
-	ClientMetadata map[string]interface{} `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
+	ClientMetadata map[string]any `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
 	// Mobile app settings
-	Mobile map[string]interface{} `json:"mobile,omitempty" url:"mobile,omitempty"`
+	Mobile map[string]any `json:"mobile,omitempty" url:"mobile,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -113,11 +113,11 @@ type Client struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *Client) GetClientId() string {
+func (c *Client) GetClientID() string {
 	if c == nil {
 		return ""
 	}
-	return c.ClientId
+	return c.ClientID
 }
 
 func (c *Client) GetTenant() *string {
@@ -162,11 +162,11 @@ func (c *Client) GetAppType() *string {
 	return c.AppType
 }
 
-func (c *Client) GetLogoUri() *string {
+func (c *Client) GetLogoURI() *string {
 	if c == nil {
 		return nil
 	}
-	return c.LogoUri
+	return c.LogoURI
 }
 
 func (c *Client) GetIsFirstParty() *bool {
@@ -211,39 +211,39 @@ func (c *Client) GetGrantTypes() []string {
 	return c.GrantTypes
 }
 
-func (c *Client) GetJwtConfiguration() map[string]interface{} {
+func (c *Client) GetJwtConfiguration() map[string]any {
 	if c == nil {
 		return nil
 	}
 	return c.JwtConfiguration
 }
 
-func (c *Client) GetSigningKeys() []map[string]interface{} {
+func (c *Client) GetSigningKeys() []map[string]any {
 	if c == nil {
 		return nil
 	}
 	return c.SigningKeys
 }
 
-func (c *Client) GetEncryptionKey() map[string]interface{} {
+func (c *Client) GetEncryptionKey() map[string]any {
 	if c == nil {
 		return nil
 	}
 	return c.EncryptionKey
 }
 
-func (c *Client) GetSso() *bool {
+func (c *Client) GetSSO() *bool {
 	if c == nil {
 		return nil
 	}
-	return c.Sso
+	return c.SSO
 }
 
-func (c *Client) GetSsoDisabled() *bool {
+func (c *Client) GetSSODisabled() *bool {
 	if c == nil {
 		return nil
 	}
-	return c.SsoDisabled
+	return c.SSODisabled
 }
 
 func (c *Client) GetCrossOriginAuth() *bool {
@@ -295,7 +295,7 @@ func (c *Client) GetIsHerokuApp() *bool {
 	return c.IsHerokuApp
 }
 
-func (c *Client) GetAddons() map[string]interface{} {
+func (c *Client) GetAddons() map[string]any {
 	if c == nil {
 		return nil
 	}
@@ -309,14 +309,14 @@ func (c *Client) GetTokenEndpointAuthMethod() *string {
 	return c.TokenEndpointAuthMethod
 }
 
-func (c *Client) GetClientMetadata() map[string]interface{} {
+func (c *Client) GetClientMetadata() map[string]any {
 	if c == nil {
 		return nil
 	}
 	return c.ClientMetadata
 }
 
-func (c *Client) GetMobile() map[string]interface{} {
+func (c *Client) GetMobile() map[string]any {
 	if c == nil {
 		return nil
 	}
@@ -324,6 +324,9 @@ func (c *Client) GetMobile() map[string]interface{} {
 }
 
 func (c *Client) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -334,11 +337,11 @@ func (c *Client) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *Client) SetClientId(clientId string) {
-	c.ClientId = clientId
-	c.require(clientFieldClientId)
+func (c *Client) SetClientID(clientID string) {
+	c.ClientID = clientID
+	c.require(clientFieldClientID)
 }
 
 // SetTenant sets the Tenant field and marks it as non-optional;
@@ -383,11 +386,11 @@ func (c *Client) SetAppType(appType *string) {
 	c.require(clientFieldAppType)
 }
 
-// SetLogoUri sets the LogoUri field and marks it as non-optional;
+// SetLogoURI sets the LogoURI field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *Client) SetLogoUri(logoUri *string) {
-	c.LogoUri = logoUri
-	c.require(clientFieldLogoUri)
+func (c *Client) SetLogoURI(logoURI *string) {
+	c.LogoURI = logoURI
+	c.require(clientFieldLogoURI)
 }
 
 // SetIsFirstParty sets the IsFirstParty field and marks it as non-optional;
@@ -434,37 +437,37 @@ func (c *Client) SetGrantTypes(grantTypes []string) {
 
 // SetJwtConfiguration sets the JwtConfiguration field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *Client) SetJwtConfiguration(jwtConfiguration map[string]interface{}) {
+func (c *Client) SetJwtConfiguration(jwtConfiguration map[string]any) {
 	c.JwtConfiguration = jwtConfiguration
 	c.require(clientFieldJwtConfiguration)
 }
 
 // SetSigningKeys sets the SigningKeys field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *Client) SetSigningKeys(signingKeys []map[string]interface{}) {
+func (c *Client) SetSigningKeys(signingKeys []map[string]any) {
 	c.SigningKeys = signingKeys
 	c.require(clientFieldSigningKeys)
 }
 
 // SetEncryptionKey sets the EncryptionKey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *Client) SetEncryptionKey(encryptionKey map[string]interface{}) {
+func (c *Client) SetEncryptionKey(encryptionKey map[string]any) {
 	c.EncryptionKey = encryptionKey
 	c.require(clientFieldEncryptionKey)
 }
 
-// SetSso sets the Sso field and marks it as non-optional;
+// SetSSO sets the SSO field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *Client) SetSso(sso *bool) {
-	c.Sso = sso
-	c.require(clientFieldSso)
+func (c *Client) SetSSO(sso *bool) {
+	c.SSO = sso
+	c.require(clientFieldSSO)
 }
 
-// SetSsoDisabled sets the SsoDisabled field and marks it as non-optional;
+// SetSSODisabled sets the SSODisabled field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *Client) SetSsoDisabled(ssoDisabled *bool) {
-	c.SsoDisabled = ssoDisabled
-	c.require(clientFieldSsoDisabled)
+func (c *Client) SetSSODisabled(ssoDisabled *bool) {
+	c.SSODisabled = ssoDisabled
+	c.require(clientFieldSSODisabled)
 }
 
 // SetCrossOriginAuth sets the CrossOriginAuth field and marks it as non-optional;
@@ -518,7 +521,7 @@ func (c *Client) SetIsHerokuApp(isHerokuApp *bool) {
 
 // SetAddons sets the Addons field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *Client) SetAddons(addons map[string]interface{}) {
+func (c *Client) SetAddons(addons map[string]any) {
 	c.Addons = addons
 	c.require(clientFieldAddons)
 }
@@ -532,14 +535,14 @@ func (c *Client) SetTokenEndpointAuthMethod(tokenEndpointAuthMethod *string) {
 
 // SetClientMetadata sets the ClientMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *Client) SetClientMetadata(clientMetadata map[string]interface{}) {
+func (c *Client) SetClientMetadata(clientMetadata map[string]any) {
 	c.ClientMetadata = clientMetadata
 	c.require(clientFieldClientMetadata)
 }
 
 // SetMobile sets the Mobile field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *Client) SetMobile(mobile map[string]interface{}) {
+func (c *Client) SetMobile(mobile map[string]any) {
 	c.Mobile = mobile
 	c.require(clientFieldMobile)
 }
@@ -572,6 +575,9 @@ func (c *Client) MarshalJSON() ([]byte, error) {
 }
 
 func (c *Client) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -585,7 +591,7 @@ func (c *Client) String() string {
 
 // Represents an identity provider connection
 var (
-	connectionFieldId                 = big.NewInt(1 << 0)
+	connectionFieldID                 = big.NewInt(1 << 0)
 	connectionFieldName               = big.NewInt(1 << 1)
 	connectionFieldDisplayName        = big.NewInt(1 << 2)
 	connectionFieldStrategy           = big.NewInt(1 << 3)
@@ -598,7 +604,7 @@ var (
 
 type Connection struct {
 	// Connection identifier
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// Connection name
 	Name string `json:"name" url:"name"`
 	// Display name for the connection
@@ -606,7 +612,7 @@ type Connection struct {
 	// The identity provider identifier (auth0, google-oauth2, facebook, etc.)
 	Strategy string `json:"strategy" url:"strategy"`
 	// Connection-specific configuration options
-	Options map[string]interface{} `json:"options,omitempty" url:"options,omitempty"`
+	Options map[string]any `json:"options,omitempty" url:"options,omitempty"`
 	// List of client IDs that can use this connection
 	EnabledClients []string `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
 	// Applicable realms for enterprise connections
@@ -614,7 +620,7 @@ type Connection struct {
 	// Whether this is a domain connection
 	IsDomainConnection *bool `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	// Additional metadata
-	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Metadata map[string]any `json:"metadata,omitempty" url:"metadata,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -623,11 +629,11 @@ type Connection struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *Connection) GetId() string {
+func (c *Connection) GetID() string {
 	if c == nil {
 		return ""
 	}
-	return c.Id
+	return c.ID
 }
 
 func (c *Connection) GetName() string {
@@ -651,7 +657,7 @@ func (c *Connection) GetStrategy() string {
 	return c.Strategy
 }
 
-func (c *Connection) GetOptions() map[string]interface{} {
+func (c *Connection) GetOptions() map[string]any {
 	if c == nil {
 		return nil
 	}
@@ -679,7 +685,7 @@ func (c *Connection) GetIsDomainConnection() *bool {
 	return c.IsDomainConnection
 }
 
-func (c *Connection) GetMetadata() map[string]interface{} {
+func (c *Connection) GetMetadata() map[string]any {
 	if c == nil {
 		return nil
 	}
@@ -687,6 +693,9 @@ func (c *Connection) GetMetadata() map[string]interface{} {
 }
 
 func (c *Connection) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -697,11 +706,11 @@ func (c *Connection) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *Connection) SetId(id string) {
-	c.Id = id
-	c.require(connectionFieldId)
+func (c *Connection) SetID(id string) {
+	c.ID = id
+	c.require(connectionFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -727,7 +736,7 @@ func (c *Connection) SetStrategy(strategy string) {
 
 // SetOptions sets the Options field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *Connection) SetOptions(options map[string]interface{}) {
+func (c *Connection) SetOptions(options map[string]any) {
 	c.Options = options
 	c.require(connectionFieldOptions)
 }
@@ -755,7 +764,7 @@ func (c *Connection) SetIsDomainConnection(isDomainConnection *bool) {
 
 // SetMetadata sets the Metadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *Connection) SetMetadata(metadata map[string]interface{}) {
+func (c *Connection) SetMetadata(metadata map[string]any) {
 	c.Metadata = metadata
 	c.require(connectionFieldMetadata)
 }
@@ -788,6 +797,9 @@ func (c *Connection) MarshalJSON() ([]byte, error) {
 }
 
 func (c *Connection) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -812,15 +824,15 @@ var (
 )
 
 type CreateUserRequest struct {
-	Email         string                 `json:"email" url:"email"`
-	EmailVerified *bool                  `json:"email_verified,omitempty" url:"email_verified,omitempty"`
-	Username      *string                `json:"username,omitempty" url:"username,omitempty"`
-	Password      *string                `json:"password,omitempty" url:"password,omitempty"`
-	PhoneNumber   *string                `json:"phone_number,omitempty" url:"phone_number,omitempty"`
-	PhoneVerified *bool                  `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
-	UserMetadata  map[string]interface{} `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
-	AppMetadata   map[string]interface{} `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
-	Connection    string                 `json:"connection" url:"connection"`
+	Email         string         `json:"email" url:"email"`
+	EmailVerified *bool          `json:"email_verified,omitempty" url:"email_verified,omitempty"`
+	Username      *string        `json:"username,omitempty" url:"username,omitempty"`
+	Password      *string        `json:"password,omitempty" url:"password,omitempty"`
+	PhoneNumber   *string        `json:"phone_number,omitempty" url:"phone_number,omitempty"`
+	PhoneVerified *bool          `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
+	UserMetadata  map[string]any `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
+	AppMetadata   map[string]any `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
+	Connection    string         `json:"connection" url:"connection"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -871,14 +883,14 @@ func (c *CreateUserRequest) GetPhoneVerified() *bool {
 	return c.PhoneVerified
 }
 
-func (c *CreateUserRequest) GetUserMetadata() map[string]interface{} {
+func (c *CreateUserRequest) GetUserMetadata() map[string]any {
 	if c == nil {
 		return nil
 	}
 	return c.UserMetadata
 }
 
-func (c *CreateUserRequest) GetAppMetadata() map[string]interface{} {
+func (c *CreateUserRequest) GetAppMetadata() map[string]any {
 	if c == nil {
 		return nil
 	}
@@ -893,6 +905,9 @@ func (c *CreateUserRequest) GetConnection() string {
 }
 
 func (c *CreateUserRequest) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -947,14 +962,14 @@ func (c *CreateUserRequest) SetPhoneVerified(phoneVerified *bool) {
 
 // SetUserMetadata sets the UserMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserRequest) SetUserMetadata(userMetadata map[string]interface{}) {
+func (c *CreateUserRequest) SetUserMetadata(userMetadata map[string]any) {
 	c.UserMetadata = userMetadata
 	c.require(createUserRequestFieldUserMetadata)
 }
 
 // SetAppMetadata sets the AppMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserRequest) SetAppMetadata(appMetadata map[string]interface{}) {
+func (c *CreateUserRequest) SetAppMetadata(appMetadata map[string]any) {
 	c.AppMetadata = appMetadata
 	c.require(createUserRequestFieldAppMetadata)
 }
@@ -994,6 +1009,9 @@ func (c *CreateUserRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateUserRequest) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1007,7 +1025,7 @@ func (c *CreateUserRequest) String() string {
 
 var (
 	identityFieldConnection  = big.NewInt(1 << 0)
-	identityFieldUserId      = big.NewInt(1 << 1)
+	identityFieldUserID      = big.NewInt(1 << 1)
 	identityFieldProvider    = big.NewInt(1 << 2)
 	identityFieldIsSocial    = big.NewInt(1 << 3)
 	identityFieldAccessToken = big.NewInt(1 << 4)
@@ -1016,7 +1034,7 @@ var (
 
 type Identity struct {
 	Connection  string  `json:"connection" url:"connection"`
-	UserId      string  `json:"user_id" url:"user_id"`
+	UserID      string  `json:"user_id" url:"user_id"`
 	Provider    string  `json:"provider" url:"provider"`
 	IsSocial    bool    `json:"is_social" url:"is_social"`
 	AccessToken *string `json:"access_token,omitempty" url:"access_token,omitempty"`
@@ -1036,11 +1054,11 @@ func (i *Identity) GetConnection() string {
 	return i.Connection
 }
 
-func (i *Identity) GetUserId() string {
+func (i *Identity) GetUserID() string {
 	if i == nil {
 		return ""
 	}
-	return i.UserId
+	return i.UserID
 }
 
 func (i *Identity) GetProvider() string {
@@ -1072,6 +1090,9 @@ func (i *Identity) GetExpiresIn() *int {
 }
 
 func (i *Identity) GetExtraProperties() map[string]interface{} {
+	if i == nil {
+		return nil
+	}
 	return i.extraProperties
 }
 
@@ -1089,11 +1110,11 @@ func (i *Identity) SetConnection(connection string) {
 	i.require(identityFieldConnection)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (i *Identity) SetUserId(userId string) {
-	i.UserId = userId
-	i.require(identityFieldUserId)
+func (i *Identity) SetUserID(userID string) {
+	i.UserID = userID
+	i.require(identityFieldUserID)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -1152,6 +1173,9 @@ func (i *Identity) MarshalJSON() ([]byte, error) {
 }
 
 func (i *Identity) String() string {
+	if i == nil {
+		return "<nil>"
+	}
 	if len(i.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
 			return value
@@ -1227,6 +1251,9 @@ func (p *PaginatedClientResponse) GetClients() []*Client {
 }
 
 func (p *PaginatedClientResponse) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -1300,6 +1327,9 @@ func (p *PaginatedClientResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PaginatedClientResponse) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value
@@ -1370,6 +1400,9 @@ func (p *PaginatedUserResponse) GetTotal() *int {
 }
 
 func (p *PaginatedUserResponse) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -1443,6 +1476,9 @@ func (p *PaginatedUserResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PaginatedUserResponse) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value
@@ -1455,7 +1491,7 @@ func (p *PaginatedUserResponse) String() string {
 }
 
 var (
-	resourceFieldId          = big.NewInt(1 << 0)
+	resourceFieldID          = big.NewInt(1 << 0)
 	resourceFieldName        = big.NewInt(1 << 1)
 	resourceFieldDescription = big.NewInt(1 << 2)
 	resourceFieldCreatedAt   = big.NewInt(1 << 3)
@@ -1464,12 +1500,12 @@ var (
 )
 
 type Resource struct {
-	Id          string                 `json:"id" url:"id"`
-	Name        string                 `json:"name" url:"name"`
-	Description *string                `json:"description,omitempty" url:"description,omitempty"`
-	CreatedAt   time.Time              `json:"created_at" url:"created_at"`
-	UpdatedAt   time.Time              `json:"updated_at" url:"updated_at"`
-	Metadata    map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
+	ID          string         `json:"id" url:"id"`
+	Name        string         `json:"name" url:"name"`
+	Description *string        `json:"description,omitempty" url:"description,omitempty"`
+	CreatedAt   time.Time      `json:"created_at" url:"created_at"`
+	UpdatedAt   time.Time      `json:"updated_at" url:"updated_at"`
+	Metadata    map[string]any `json:"metadata,omitempty" url:"metadata,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1478,11 +1514,11 @@ type Resource struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *Resource) GetId() string {
+func (r *Resource) GetID() string {
 	if r == nil {
 		return ""
 	}
-	return r.Id
+	return r.ID
 }
 
 func (r *Resource) GetName() string {
@@ -1513,7 +1549,7 @@ func (r *Resource) GetUpdatedAt() time.Time {
 	return r.UpdatedAt
 }
 
-func (r *Resource) GetMetadata() map[string]interface{} {
+func (r *Resource) GetMetadata() map[string]any {
 	if r == nil {
 		return nil
 	}
@@ -1521,6 +1557,9 @@ func (r *Resource) GetMetadata() map[string]interface{} {
 }
 
 func (r *Resource) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -1531,11 +1570,11 @@ func (r *Resource) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *Resource) SetId(id string) {
-	r.Id = id
-	r.require(resourceFieldId)
+func (r *Resource) SetID(id string) {
+	r.ID = id
+	r.require(resourceFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1568,7 +1607,7 @@ func (r *Resource) SetUpdatedAt(updatedAt time.Time) {
 
 // SetMetadata sets the Metadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *Resource) SetMetadata(metadata map[string]interface{}) {
+func (r *Resource) SetMetadata(metadata map[string]any) {
 	r.Metadata = metadata
 	r.require(resourceFieldMetadata)
 }
@@ -1613,6 +1652,9 @@ func (r *Resource) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Resource) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -1664,6 +1706,9 @@ func (s *SearchResponse) GetNextOffset() *int {
 }
 
 func (s *SearchResponse) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -1723,6 +1768,9 @@ func (s *SearchResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SearchResponse) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -1747,15 +1795,15 @@ var (
 )
 
 type UpdateUserRequest struct {
-	Email         *string                `json:"email,omitempty" url:"email,omitempty"`
-	EmailVerified *bool                  `json:"email_verified,omitempty" url:"email_verified,omitempty"`
-	Username      *string                `json:"username,omitempty" url:"username,omitempty"`
-	PhoneNumber   *string                `json:"phone_number,omitempty" url:"phone_number,omitempty"`
-	PhoneVerified *bool                  `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
-	UserMetadata  map[string]interface{} `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
-	AppMetadata   map[string]interface{} `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
-	Password      *string                `json:"password,omitempty" url:"password,omitempty"`
-	Blocked       *bool                  `json:"blocked,omitempty" url:"blocked,omitempty"`
+	Email         *string        `json:"email,omitempty" url:"email,omitempty"`
+	EmailVerified *bool          `json:"email_verified,omitempty" url:"email_verified,omitempty"`
+	Username      *string        `json:"username,omitempty" url:"username,omitempty"`
+	PhoneNumber   *string        `json:"phone_number,omitempty" url:"phone_number,omitempty"`
+	PhoneVerified *bool          `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
+	UserMetadata  map[string]any `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
+	AppMetadata   map[string]any `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
+	Password      *string        `json:"password,omitempty" url:"password,omitempty"`
+	Blocked       *bool          `json:"blocked,omitempty" url:"blocked,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1799,14 +1847,14 @@ func (u *UpdateUserRequest) GetPhoneVerified() *bool {
 	return u.PhoneVerified
 }
 
-func (u *UpdateUserRequest) GetUserMetadata() map[string]interface{} {
+func (u *UpdateUserRequest) GetUserMetadata() map[string]any {
 	if u == nil {
 		return nil
 	}
 	return u.UserMetadata
 }
 
-func (u *UpdateUserRequest) GetAppMetadata() map[string]interface{} {
+func (u *UpdateUserRequest) GetAppMetadata() map[string]any {
 	if u == nil {
 		return nil
 	}
@@ -1828,6 +1876,9 @@ func (u *UpdateUserRequest) GetBlocked() *bool {
 }
 
 func (u *UpdateUserRequest) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1875,14 +1926,14 @@ func (u *UpdateUserRequest) SetPhoneVerified(phoneVerified *bool) {
 
 // SetUserMetadata sets the UserMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserRequest) SetUserMetadata(userMetadata map[string]interface{}) {
+func (u *UpdateUserRequest) SetUserMetadata(userMetadata map[string]any) {
 	u.UserMetadata = userMetadata
 	u.require(updateUserRequestFieldUserMetadata)
 }
 
 // SetAppMetadata sets the AppMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserRequest) SetAppMetadata(appMetadata map[string]interface{}) {
+func (u *UpdateUserRequest) SetAppMetadata(appMetadata map[string]any) {
 	u.AppMetadata = appMetadata
 	u.require(updateUserRequestFieldAppMetadata)
 }
@@ -1929,6 +1980,9 @@ func (u *UpdateUserRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateUserRequest) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1942,7 +1996,7 @@ func (u *UpdateUserRequest) String() string {
 
 // User object similar to Auth0 users
 var (
-	userFieldUserId        = big.NewInt(1 << 0)
+	userFieldUserID        = big.NewInt(1 << 0)
 	userFieldEmail         = big.NewInt(1 << 1)
 	userFieldEmailVerified = big.NewInt(1 << 2)
 	userFieldUsername      = big.NewInt(1 << 3)
@@ -1957,7 +2011,7 @@ var (
 	userFieldName          = big.NewInt(1 << 12)
 	userFieldNickname      = big.NewInt(1 << 13)
 	userFieldMultifactor   = big.NewInt(1 << 14)
-	userFieldLastIp        = big.NewInt(1 << 15)
+	userFieldLastIP        = big.NewInt(1 << 15)
 	userFieldLastLogin     = big.NewInt(1 << 16)
 	userFieldLoginsCount   = big.NewInt(1 << 17)
 	userFieldBlocked       = big.NewInt(1 << 18)
@@ -1966,27 +2020,27 @@ var (
 )
 
 type User struct {
-	UserId        string                 `json:"user_id" url:"user_id"`
-	Email         string                 `json:"email" url:"email"`
-	EmailVerified bool                   `json:"email_verified" url:"email_verified"`
-	Username      *string                `json:"username,omitempty" url:"username,omitempty"`
-	PhoneNumber   *string                `json:"phone_number,omitempty" url:"phone_number,omitempty"`
-	PhoneVerified *bool                  `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
-	CreatedAt     time.Time              `json:"created_at" url:"created_at"`
-	UpdatedAt     time.Time              `json:"updated_at" url:"updated_at"`
-	Identities    []*Identity            `json:"identities,omitempty" url:"identities,omitempty"`
-	AppMetadata   map[string]interface{} `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
-	UserMetadata  map[string]interface{} `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
-	Picture       *string                `json:"picture,omitempty" url:"picture,omitempty"`
-	Name          *string                `json:"name,omitempty" url:"name,omitempty"`
-	Nickname      *string                `json:"nickname,omitempty" url:"nickname,omitempty"`
-	Multifactor   []string               `json:"multifactor,omitempty" url:"multifactor,omitempty"`
-	LastIp        *string                `json:"last_ip,omitempty" url:"last_ip,omitempty"`
-	LastLogin     *time.Time             `json:"last_login,omitempty" url:"last_login,omitempty"`
-	LoginsCount   *int                   `json:"logins_count,omitempty" url:"logins_count,omitempty"`
-	Blocked       *bool                  `json:"blocked,omitempty" url:"blocked,omitempty"`
-	GivenName     *string                `json:"given_name,omitempty" url:"given_name,omitempty"`
-	FamilyName    *string                `json:"family_name,omitempty" url:"family_name,omitempty"`
+	UserID        string         `json:"user_id" url:"user_id"`
+	Email         string         `json:"email" url:"email"`
+	EmailVerified bool           `json:"email_verified" url:"email_verified"`
+	Username      *string        `json:"username,omitempty" url:"username,omitempty"`
+	PhoneNumber   *string        `json:"phone_number,omitempty" url:"phone_number,omitempty"`
+	PhoneVerified *bool          `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
+	CreatedAt     time.Time      `json:"created_at" url:"created_at"`
+	UpdatedAt     time.Time      `json:"updated_at" url:"updated_at"`
+	Identities    []*Identity    `json:"identities,omitempty" url:"identities,omitempty"`
+	AppMetadata   map[string]any `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
+	UserMetadata  map[string]any `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
+	Picture       *string        `json:"picture,omitempty" url:"picture,omitempty"`
+	Name          *string        `json:"name,omitempty" url:"name,omitempty"`
+	Nickname      *string        `json:"nickname,omitempty" url:"nickname,omitempty"`
+	Multifactor   []string       `json:"multifactor,omitempty" url:"multifactor,omitempty"`
+	LastIP        *string        `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastLogin     *time.Time     `json:"last_login,omitempty" url:"last_login,omitempty"`
+	LoginsCount   *int           `json:"logins_count,omitempty" url:"logins_count,omitempty"`
+	Blocked       *bool          `json:"blocked,omitempty" url:"blocked,omitempty"`
+	GivenName     *string        `json:"given_name,omitempty" url:"given_name,omitempty"`
+	FamilyName    *string        `json:"family_name,omitempty" url:"family_name,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1995,11 +2049,11 @@ type User struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *User) GetUserId() string {
+func (u *User) GetUserID() string {
 	if u == nil {
 		return ""
 	}
-	return u.UserId
+	return u.UserID
 }
 
 func (u *User) GetEmail() string {
@@ -2058,14 +2112,14 @@ func (u *User) GetIdentities() []*Identity {
 	return u.Identities
 }
 
-func (u *User) GetAppMetadata() map[string]interface{} {
+func (u *User) GetAppMetadata() map[string]any {
 	if u == nil {
 		return nil
 	}
 	return u.AppMetadata
 }
 
-func (u *User) GetUserMetadata() map[string]interface{} {
+func (u *User) GetUserMetadata() map[string]any {
 	if u == nil {
 		return nil
 	}
@@ -2100,11 +2154,11 @@ func (u *User) GetMultifactor() []string {
 	return u.Multifactor
 }
 
-func (u *User) GetLastIp() *string {
+func (u *User) GetLastIP() *string {
 	if u == nil {
 		return nil
 	}
-	return u.LastIp
+	return u.LastIP
 }
 
 func (u *User) GetLastLogin() *time.Time {
@@ -2143,6 +2197,9 @@ func (u *User) GetFamilyName() *string {
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -2153,11 +2210,11 @@ func (u *User) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetUserId(userId string) {
-	u.UserId = userId
-	u.require(userFieldUserId)
+func (u *User) SetUserID(userID string) {
+	u.UserID = userID
+	u.require(userFieldUserID)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -2218,14 +2275,14 @@ func (u *User) SetIdentities(identities []*Identity) {
 
 // SetAppMetadata sets the AppMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetAppMetadata(appMetadata map[string]interface{}) {
+func (u *User) SetAppMetadata(appMetadata map[string]any) {
 	u.AppMetadata = appMetadata
 	u.require(userFieldAppMetadata)
 }
 
 // SetUserMetadata sets the UserMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetUserMetadata(userMetadata map[string]interface{}) {
+func (u *User) SetUserMetadata(userMetadata map[string]any) {
 	u.UserMetadata = userMetadata
 	u.require(userFieldUserMetadata)
 }
@@ -2258,11 +2315,11 @@ func (u *User) SetMultifactor(multifactor []string) {
 	u.require(userFieldMultifactor)
 }
 
-// SetLastIp sets the LastIp field and marks it as non-optional;
+// SetLastIP sets the LastIP field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetLastIp(lastIp *string) {
-	u.LastIp = lastIp
-	u.require(userFieldLastIp)
+func (u *User) SetLastIP(lastIP *string) {
+	u.LastIP = lastIP
+	u.require(userFieldLastIP)
 }
 
 // SetLastLogin sets the LastLogin field and marks it as non-optional;
@@ -2344,6 +2401,9 @@ func (u *User) MarshalJSON() ([]byte, error) {
 }
 
 func (u *User) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

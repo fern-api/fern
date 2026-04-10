@@ -28,12 +28,12 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
 client.get_foo(
-  required_baz: 'required_baz',
-  required_nullable_baz: 'required_nullable_baz'
-);
+  required_baz: "required_baz",
+  required_nullable_baz: "required_nullable_baz"
+)
 ```
 
 ## Environments

@@ -4,6 +4,7 @@ import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 import { Availability } from "./Availability.js";
+import { CollapsedValue } from "./CollapsedValue.js";
 import { WithFeatureFlags } from "./WithFeatureFlags.js";
 import { WithPermissions } from "./WithPermissions.js";
 
@@ -15,7 +16,12 @@ export const SectionConfiguration: core.serialization.ObjectSchema<
         section: core.serialization.string(),
         path: core.serialization.string().optional(),
         contents: core.serialization.list(core.serialization.lazy(() => serializers.NavigationItem)),
-        collapsed: core.serialization.boolean().optional(),
+        collapsed: CollapsedValue.optional(),
+        collapsible: core.serialization.boolean().optional(),
+        collapsedByDefault: core.serialization.property(
+            "collapsed-by-default",
+            core.serialization.boolean().optional(),
+        ),
         slug: core.serialization.string().optional(),
         icon: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
@@ -30,7 +36,9 @@ export declare namespace SectionConfiguration {
         section: string;
         path?: string | null;
         contents: serializers.NavigationItem.Raw[];
-        collapsed?: boolean | null;
+        collapsed?: CollapsedValue.Raw | null;
+        collapsible?: boolean | null;
+        "collapsed-by-default"?: boolean | null;
         slug?: string | null;
         icon?: string | null;
         hidden?: boolean | null;

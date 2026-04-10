@@ -23,27 +23,26 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
-    "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck",
+    "clean": "rm -rf ./lib",
+    "compile": "tsc",
+    "compile:debug": "tsc --sourceMap",
+    "depcheck": "knip --config ../../knip.json --no-config-hints",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/dynamic-ir-sdk": "^62.3.0",
+    "@fern-api/dynamic-ir-sdk": "65.5.0",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "^0.0.1167"
+    "@fern-fern/generator-exec-sdk": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

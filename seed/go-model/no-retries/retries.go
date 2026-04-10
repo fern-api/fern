@@ -5,22 +5,23 @@ package noretries
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/no-retries/fern/internal"
 )
 
 type User struct {
-	Id   string `json:"id" url:"id"`
+	ID   string `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (u *User) GetId() string {
+func (u *User) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetName() string {

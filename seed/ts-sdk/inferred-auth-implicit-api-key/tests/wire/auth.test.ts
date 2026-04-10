@@ -21,6 +21,7 @@ describe("AuthClient", () => {
             expires_in: 1,
             scope: "scope",
         };
+
         server
             .mockEndpoint()
             .post("/token")
@@ -33,11 +34,6 @@ describe("AuthClient", () => {
         const response = await client.auth.getToken({
             "X-Api-Key": "api_key",
         });
-        expect(response).toEqual({
-            access_token: "access_token",
-            token_type: "token_type",
-            expires_in: 1,
-            scope: "scope",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

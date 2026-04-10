@@ -4,8 +4,8 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { validateSchema } from "../commons/validateSchema";
-import { DependenciesConfigurationSchema } from "./schemas/DependenciesConfigurationSchema";
+import { validateSchema } from "../commons/validateSchema.js";
+import { DependenciesConfigurationSchema } from "./schemas/DependenciesConfigurationSchema.js";
 
 export async function loadRawDependenciesConfiguration({
     absolutePathToWorkspace,

@@ -106,6 +106,10 @@ public final class DoublyLinkedListNodeValue {
     public interface _FinalStage {
         DoublyLinkedListNodeValue build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage next(Optional<String> next);
 
         _FinalStage next(String next);
@@ -182,6 +186,18 @@ public final class DoublyLinkedListNodeValue {
         @java.lang.Override
         public DoublyLinkedListNodeValue build() {
             return new DoublyLinkedListNodeValue(nodeId, val, next, prev, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

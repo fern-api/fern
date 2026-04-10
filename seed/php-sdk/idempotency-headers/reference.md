@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>$client-&gt;payment-&gt;create($request) -> string</code></summary>
+<details><summary><code>$client-&gt;payment-&gt;create($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -94,3 +94,4 @@ $client->payment->delete(
 </dd>
 </dl>
 </details>
+

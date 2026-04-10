@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { EscapedString } from "../../commons/types/EscapedString.js";
 import { ExampleDatetime } from "./ExampleDatetime.js";
+import { ExampleDatetimeRfc2822 } from "./ExampleDatetimeRfc2822.js";
 
 export const ExamplePrimitive: core.serialization.Schema<serializers.ExamplePrimitive.Raw, FernIr.ExamplePrimitive> =
     core.serialization
@@ -37,6 +38,7 @@ export const ExamplePrimitive: core.serialization.Schema<serializers.ExamplePrim
                 date: core.serialization.string(),
             }),
             datetime: ExampleDatetime,
+            datetimeRfc2822: ExampleDatetimeRfc2822,
             uuid: core.serialization.object({
                 uuid: core.serialization.string(),
             }),
@@ -70,6 +72,8 @@ export const ExamplePrimitive: core.serialization.Schema<serializers.ExamplePrim
                         return FernIr.ExamplePrimitive.date(value.date);
                     case "datetime":
                         return FernIr.ExamplePrimitive.datetime(value);
+                    case "datetimeRfc2822":
+                        return FernIr.ExamplePrimitive.datetimeRfc2822(value);
                     case "uuid":
                         return FernIr.ExamplePrimitive.uuid(value.uuid);
                     case "base64":
@@ -95,6 +99,7 @@ export declare namespace ExamplePrimitive {
         | ExamplePrimitive.String
         | ExamplePrimitive.Date
         | ExamplePrimitive.Datetime
+        | ExamplePrimitive.DatetimeRfc2822
         | ExamplePrimitive.Uuid
         | ExamplePrimitive.Base64
         | ExamplePrimitive.BigInteger;
@@ -146,6 +151,10 @@ export declare namespace ExamplePrimitive {
 
     export interface Datetime extends ExampleDatetime.Raw {
         type: "datetime";
+    }
+
+    export interface DatetimeRfc2822 extends ExampleDatetimeRfc2822.Raw {
+        type: "datetimeRfc2822";
     }
 
     export interface Uuid {

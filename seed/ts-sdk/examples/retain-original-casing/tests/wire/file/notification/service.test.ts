@@ -14,6 +14,7 @@ describe("ServiceClient", () => {
             exceptionMessage: "This component is unavailable!",
             exceptionStacktrace: "<logs>",
         };
+
         server
             .mockEndpoint()
             .get("/file/notification/notification-hsy129x")
@@ -23,11 +24,6 @@ describe("ServiceClient", () => {
             .build();
 
         const response = await client.file.notification.service.getException("notification-hsy129x");
-        expect(response).toEqual({
-            type: "generic",
-            exceptionType: "Unavailable",
-            exceptionMessage: "This component is unavailable!",
-            exceptionStacktrace: "<logs>",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

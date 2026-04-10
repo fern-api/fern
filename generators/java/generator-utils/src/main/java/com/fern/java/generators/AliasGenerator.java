@@ -241,6 +241,7 @@ public final class AliasGenerator extends AbstractTypeGenerator {
             case STRING:
             case UUID:
             case DATE_TIME:
+            case DATE_TIME_RFC_2822:
                 return CodeBlock.builder().addStatement("return of(value)").build();
             case DOUBLE:
                 return CodeBlock.builder()
@@ -308,6 +309,11 @@ public final class AliasGenerator extends AbstractTypeGenerator {
 
         @Override
         public CodeBlock visitDateTime() {
+            return CodeBlock.of("return $L.$L()", VALUE_FIELD_NAME, "toString");
+        }
+
+        @Override
+        public CodeBlock visitDateTimeRfc2822() {
             return CodeBlock.of("return $L.$L()", VALUE_FIELD_NAME, "toString");
         }
 
@@ -383,6 +389,11 @@ public final class AliasGenerator extends AbstractTypeGenerator {
 
         @Override
         public CodeBlock visitDateTime() {
+            return CodeBlock.of("return $L.hashCode()", VALUE_FIELD_NAME);
+        }
+
+        @Override
+        public CodeBlock visitDateTimeRfc2822() {
             return CodeBlock.of("return $L.hashCode()", VALUE_FIELD_NAME);
         }
 

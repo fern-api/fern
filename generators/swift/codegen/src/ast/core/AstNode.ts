@@ -1,6 +1,6 @@
 import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator";
 
-import { Writer } from "./Writer";
+import { Writer } from "./Writer.js";
 
 export abstract class AstNode extends AbstractAstNode {
     public toString(): string {

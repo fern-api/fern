@@ -282,13 +282,9 @@ export class ServiceClient {
      *             nodes: [{
      *                     name: "name",
      *                     nodes: [{
-     *                             name: "name",
-     *                             nodes: [],
-     *                             trees: []
+     *                             name: "name"
      *                         }, {
-     *                             name: "name",
-     *                             nodes: [],
-     *                             trees: []
+     *                             name: "name"
      *                         }],
      *                     trees: [{
      *                             nodes: []
@@ -298,13 +294,9 @@ export class ServiceClient {
      *                 }, {
      *                     name: "name",
      *                     nodes: [{
-     *                             name: "name",
-     *                             nodes: [],
-     *                             trees: []
+     *                             name: "name"
      *                         }, {
-     *                             name: "name",
-     *                             nodes: [],
-     *                             trees: []
+     *                             name: "name"
      *                         }],
      *                     trees: [{
      *                             nodes: []
@@ -353,13 +345,9 @@ export class ServiceClient {
      *                             contents: "contents"
      *                         }],
      *                     directories: [{
-     *                             name: "name",
-     *                             files: [],
-     *                             directories: []
+     *                             name: "name"
      *                         }, {
-     *                             name: "name",
-     *                             files: [],
-     *                             directories: []
+     *                             name: "name"
      *                         }]
      *                 }, {
      *                     name: "name",
@@ -371,13 +359,9 @@ export class ServiceClient {
      *                             contents: "contents"
      *                         }],
      *                     directories: [{
-     *                             name: "name",
-     *                             files: [],
-     *                             directories: []
+     *                             name: "name"
      *                         }, {
-     *                             name: "name",
-     *                             files: [],
-     *                             directories: []
+     *                             name: "name"
      *                         }]
      *                 }]
      *         },

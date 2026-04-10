@@ -1,4 +1,4 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedPackageYml.Core;
 
 namespace SeedPackageYml;
@@ -49,7 +49,6 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format("/{0}/", ValueConvert.ToPathParameterString(id)),
                     Body = request,
@@ -61,7 +60,9 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -87,7 +88,9 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPackageYmlApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

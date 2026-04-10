@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { appendFileSync, mkdirSync, writeFileSync } from "fs";
 
@@ -6,15 +6,12 @@ import { appendFileSync, mkdirSync, writeFileSync } from "fs";
  * Writes logs to a file for later inspection.
  */
 export class LogFileWriter {
-    public readonly logFilePath: AbsoluteFilePath;
+    public readonly absoluteFilePath: AbsoluteFilePath;
     private initialized = false;
 
-    constructor({ cwd }: { cwd: AbsoluteFilePath }) {
+    constructor(logsDirectory: AbsoluteFilePath) {
         const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-
-        // TODO: Replace this with a local cache directory (e.g. `~/.cache/fern/v1/logs/...`).
-        const logsDir = join(cwd, RelativeFilePath.of(".fern/logs"));
-        this.logFilePath = join(logsDir, RelativeFilePath.of(`${timestamp}.log`));
+        this.absoluteFilePath = join(logsDirectory, RelativeFilePath.of(`${timestamp}.log`));
     }
 
     /**
@@ -24,14 +21,14 @@ export class LogFileWriter {
         this.ensureInitialized();
         const timestamp = new Date().toISOString();
         const line = `[${timestamp}] [${level.toUpperCase().padEnd(5)}] [${taskName}] ${message}\n`;
-        appendFileSync(this.logFilePath, line);
+        appendFileSync(this.absoluteFilePath, line);
     }
 
     /**
-     * Returns true if any logs have been written.
+     * Returns true if the log file is empty.
      */
-    public hasLogs(): boolean {
-        return this.initialized;
+    public empty(): boolean {
+        return !this.initialized;
     }
 
     private ensureInitialized(): void {
@@ -39,9 +36,8 @@ export class LogFileWriter {
             return;
         }
         // Create the logs directory and file.
-        const logsDir = join(this.logFilePath, RelativeFilePath.of(".."));
-        mkdirSync(logsDir, { recursive: true });
-        writeFileSync(this.logFilePath, `Fern Debug Log - ${new Date().toISOString()}\n${"=".repeat(60)}\n\n`);
+        mkdirSync(dirname(this.absoluteFilePath), { recursive: true });
+        writeFileSync(this.absoluteFilePath, `Fern Debug Log - ${new Date().toISOString()}\n${"=".repeat(60)}\n\n`);
         this.initialized = true;
     }
 }

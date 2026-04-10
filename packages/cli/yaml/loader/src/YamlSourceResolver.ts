@@ -7,7 +7,7 @@ import {
     SourcedNumber,
     SourcedString
 } from "@fern-api/source";
-import type { YamlDocument, YamlPath } from "./YamlDocument";
+import type { YamlDocument, YamlPath } from "./YamlDocument.js";
 
 export class YamlSourceResolver {
     constructor(private readonly document: YamlDocument) {}

@@ -11,6 +11,8 @@ import com.seed.exhaustive.endpoints.types.GetWithMultipleQuery;
 import com.seed.exhaustive.endpoints.types.GetWithPathAndQuery;
 import com.seed.exhaustive.endpoints.types.GetWithQuery;
 import com.seed.exhaustive.endpoints.types.ModifyResourceAtInlinedPath;
+import com.seed.exhaustive.types.types.ObjectWithRequiredField;
+import java.io.InputStream;
 
 public class ParamsClient {
     protected final ClientOptions clientOptions;
@@ -157,5 +159,61 @@ public class ParamsClient {
         return this.rawClient
                 .modifyWithInlinePath(param, request, requestOptions)
                 .body();
+    }
+
+    /**
+     * POST bytes with path param returning object
+     */
+    public ObjectWithRequiredField uploadWithPath(String param, InputStream request) {
+        return this.rawClient.uploadWithPath(param, request).body();
+    }
+
+    /**
+     * POST bytes with path param returning object
+     */
+    public ObjectWithRequiredField uploadWithPath(String param, InputStream request, RequestOptions requestOptions) {
+        return this.rawClient.uploadWithPath(param, request, requestOptions).body();
+    }
+
+    /**
+     * POST bytes with path param returning object
+     */
+    public ObjectWithRequiredField uploadWithPath(String param, byte[] request) {
+        return this.rawClient.uploadWithPath(param, request).body();
+    }
+
+    /**
+     * POST bytes with path param returning object
+     */
+    public ObjectWithRequiredField uploadWithPath(String param, byte[] request, RequestOptions requestOptions) {
+        return this.rawClient.uploadWithPath(param, request, requestOptions).body();
+    }
+
+    /**
+     * GET with boolean path param
+     */
+    public String getWithBooleanPath(boolean param) {
+        return this.rawClient.getWithBooleanPath(param).body();
+    }
+
+    /**
+     * GET with boolean path param
+     */
+    public String getWithBooleanPath(boolean param, RequestOptions requestOptions) {
+        return this.rawClient.getWithBooleanPath(param, requestOptions).body();
+    }
+
+    /**
+     * GET with path param that can throw errors
+     */
+    public String getWithPathAndErrors(String param) {
+        return this.rawClient.getWithPathAndErrors(param).body();
+    }
+
+    /**
+     * GET with path param that can throw errors
+     */
+    public String getWithPathAndErrors(String param, RequestOptions requestOptions) {
+        return this.rawClient.getWithPathAndErrors(param, requestOptions).body();
     }
 }

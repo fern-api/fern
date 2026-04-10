@@ -10,6 +10,7 @@ The Seed PHP library provides convenient access to the Seed APIs from PHP.
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Custom Client](#custom-client)
@@ -52,6 +53,45 @@ $client->getToken(
 
 ```
 
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```php
+This API uses multiple base URLs for different services. The SDK defaults to the `RegionalApiServer` environment.
+
+Available environments:
+- `Environments::RegionalApiServer()`
+
+Each environment provides multiple base URLs:
+  - `base`: The base base URL
+  - `auth`: The auth base URL
+
+To use a different environment, pass it to the client constructor:
+
+```php
+use Seed\SeedClient;
+use Seed\Environments;
+
+$client = new SeedClient(
+    token: '<YOUR_TOKEN>',
+    environment: Environments::Staging()
+);
+```
+
+You can also create a custom environment with your own URLs:
+
+```php
+$client = new SeedClient(
+    token: '<YOUR_TOKEN>',
+    environment: Environments::custom(
+        base: 'https://your-base-url.com',
+    auth: 'https://your-auth-url.com'
+    )
+);
+```
+```
+
 ## Exception Handling
 
 When the API returns a non-success status code (4xx or 5xx response), an exception will be thrown.
@@ -74,32 +114,30 @@ try {
 
 ### Custom Client
 
-This SDK is built to work with any HTTP client that implements Guzzle's `ClientInterface`.
-By default, if no client is provided, the SDK will use Guzzle's default HTTP client.
+This SDK is built to work with any HTTP client that implements the [PSR-18](https://www.php-fig.org/psr/psr-18/) `ClientInterface`.
+By default, if no client is provided, the SDK will use `php-http/discovery` to find an installed HTTP client.
 However, you can pass your own client that adheres to `ClientInterface`:
 
 ```php
 use Seed\SeedClient;
 
-// Create a custom Guzzle client with specific configuration.
+// Pass any PSR-18 compatible HTTP client implementation.
+// For example, using Guzzle:
 $customClient = new \GuzzleHttp\Client([
     'timeout' => 5.0,
 ]);
 
-// Pass the custom client when creating an instance of the class.
 $client = new SeedClient(options: [
     'client' => $customClient
 ]);
 
-// You can also utilize the same technique to leverage advanced customizations to the client such as adding middleware
-$handlerStack = \GuzzleHttp\HandlerStack::create();
-$handlerStack->push(MyCustomMiddleware::create());
-$customClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
-
-// Pass the custom client when creating an instance of the class.
-$client = new SeedClient(options: [
-    'client' => $customClient
-]);
+// Or using Symfony HttpClient:
+// $customClient = (new \Symfony\Component\HttpClient\Psr18Client())
+//     ->withOptions(['timeout' => 5.0]);
+//
+// $client = new SeedClient(options: [
+//     'client' => $customClient
+// ]);
 ```
 
 ### Retries
@@ -133,7 +171,7 @@ The SDK defaults to a 30 second timeout. Use the `timeout` option to configure t
 $response = $client->getToken(
     ...,
     options: [
-        'timeout' => 3.0 // Override timeout to 3 seconds
+        'timeout' => 3.0 // Override timeout at the request level
     ]
 );
 ```

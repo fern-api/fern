@@ -4,11 +4,12 @@ package imdb
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/go-content-type/fern"
 	core "github.com/go-content-type/fern/core"
 	internal "github.com/go-content-type/fern/internal"
 	option "github.com/go-content-type/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

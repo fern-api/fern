@@ -1,25 +1,26 @@
-import { ExampleEndpointCall } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Fetcher, GetReferenceOpts } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 export interface GeneratedEndpointRequest {
-    getBuildRequestStatements: (context: SdkContext) => ts.Statement[];
-    getRequestParameter(context: SdkContext): ts.TypeNode | undefined;
-    getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure & { docs?: string }>[];
+    getBuildRequestStatements: (context: FileContext) => ts.Statement[];
+    getBuildHeaderStatements: (context: FileContext) => ts.Statement[];
+    getRequestParameter(context: FileContext): ts.TypeNode | undefined;
+    getEndpointParameters(context: FileContext): OptionalKind<ParameterDeclarationStructure & { docs?: string }>[];
     getFetcherRequestArgs: (
-        context: SdkContext
+        context: FileContext
     ) => Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType">;
-    getReferenceToRequestBody: (context: SdkContext) => ts.Expression | undefined;
-    getReferenceToPathParameter: (pathParameterKey: string, context: SdkContext) => ts.Expression;
-    getReferenceToQueryParameter: (queryParameterKey: string, context: SdkContext) => ts.Expression;
+    getReferenceToRequestBody: (context: FileContext) => ts.Expression | undefined;
+    getReferenceToPathParameter: (pathParameterKey: string, context: FileContext) => ts.Expression;
+    getReferenceToQueryParameter: (queryParameterKey: string, context: FileContext) => ts.Expression;
     getExampleEndpointImports({
         context,
         example,
         opts
     }: {
-        context: SdkContext;
-        example: ExampleEndpointCall;
+        context: FileContext;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Statement[];
     getExampleEndpointParameters({
@@ -27,8 +28,8 @@ export interface GeneratedEndpointRequest {
         example,
         opts
     }: {
-        context: SdkContext;
-        example: ExampleEndpointCall;
+        context: FileContext;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression[] | undefined;
 }

@@ -30,15 +30,20 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/bytes-upload/fern/client"
+    bytes "bytes"
     context "context"
+
+    client "github.com/bytes-upload/fern/client"
 )
 
 func do() {
     client := client.NewClient()
+    request := bytes.NewReader(
+        []byte(""),
+    )
     client.Service.Upload(
         context.TODO(),
-        nil,
+        request,
     )
 }
 ```

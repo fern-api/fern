@@ -9,7 +9,11 @@
           "Shape": {
             "availability": undefined,
             "base-properties": {},
-            "discriminant": "type",
+            "default-variant": undefined,
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -65,7 +69,9 @@
       },
       "rawContents": "types:
   Shape:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties: {}
     union:
       triangle: Triangle

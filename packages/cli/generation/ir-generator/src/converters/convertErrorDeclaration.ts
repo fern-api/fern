@@ -2,11 +2,11 @@ import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { ErrorDeclaration, FernIr } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../FernFileContext";
-import { ExampleResolver } from "../resolvers/ExampleResolver";
-import { TypeResolver } from "../resolvers/TypeResolver";
-import { parseErrorName } from "../utils/parseErrorName";
-import { convertTypeReferenceExample } from "./type-declarations/convertExampleType";
+import { FernFileContext } from "../FernFileContext.js";
+import { ExampleResolver } from "../resolvers/ExampleResolver.js";
+import { TypeResolver } from "../resolvers/TypeResolver.js";
+import { parseErrorName } from "../utils/parseErrorName.js";
+import { convertTypeReferenceExample } from "./type-declarations/convertExampleType.js";
 
 export function convertErrorDeclaration({
     errorName,

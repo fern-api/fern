@@ -1,25 +1,7 @@
 {
   "apiDisplayName": undefined,
   "apiDocs": undefined,
-  "apiName": {
-    "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
-    },
-    "originalName": "",
-    "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
-    },
-    "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
-    },
-    "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
-    },
-  },
+  "apiName": "",
   "apiPlayground": undefined,
   "apiVersion": undefined,
   "audiences": undefined,
@@ -29,29 +11,9 @@
     "schemes": [],
   },
   "basePath": undefined,
+  "casingsConfig": undefined,
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
-        },
-        "originalName": "errorInstanceId",
-        "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
-        },
-        "screamingSnakeCase": {
-          "safeName": "ERROR_INSTANCE_ID",
-          "unsafeName": "ERROR_INSTANCE_ID",
-        },
-        "snakeCase": {
-          "safeName": "error_instance_id",
-          "unsafeName": "error_instance_id",
-        },
-      },
-      "wireValue": "errorInstanceId",
-    },
+    "errorInstanceIdKey": "errorInstanceId",
   },
   "dynamic": undefined,
   "environments": {
@@ -60,28 +22,11 @@
       "_visit": [Function],
       "environments": [
         {
+          "audiences": undefined,
           "defaultUrl": undefined,
           "docs": undefined,
           "id": "production",
-          "name": {
-            "camelCase": {
-              "safeName": "production",
-              "unsafeName": "production",
-            },
-            "originalName": "production",
-            "pascalCase": {
-              "safeName": "Production",
-              "unsafeName": "Production",
-            },
-            "screamingSnakeCase": {
-              "safeName": "PRODUCTION",
-              "unsafeName": "PRODUCTION",
-            },
-            "snakeCase": {
-              "safeName": "production",
-              "unsafeName": "production",
-            },
-          },
+          "name": "production",
           "url": "wss://events.plantstore.dev",
           "urlTemplate": undefined,
           "urlVariables": undefined,
@@ -147,67 +92,13 @@
       "errors": [],
       "fernFilepath": {
         "allParts": [
-          {
-            "camelCase": {
-              "safeName": "plantOrders",
-              "unsafeName": "plantOrders",
-            },
-            "originalName": "plantOrders",
-            "pascalCase": {
-              "safeName": "PlantOrders",
-              "unsafeName": "PlantOrders",
-            },
-            "screamingSnakeCase": {
-              "safeName": "PLANT_ORDERS",
-              "unsafeName": "PLANT_ORDERS",
-            },
-            "snakeCase": {
-              "safeName": "plant_orders",
-              "unsafeName": "plant_orders",
-            },
-          },
+          "plantOrders",
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "plantOrders",
-            "unsafeName": "plantOrders",
-          },
-          "originalName": "plantOrders",
-          "pascalCase": {
-            "safeName": "PlantOrders",
-            "unsafeName": "PlantOrders",
-          },
-          "screamingSnakeCase": {
-            "safeName": "PLANT_ORDERS",
-            "unsafeName": "PLANT_ORDERS",
-          },
-          "snakeCase": {
-            "safeName": "plant_orders",
-            "unsafeName": "plant_orders",
-          },
-        },
+        "file": "plantOrders",
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
-      "name": {
-        "camelCase": {
-          "safeName": "plantOrders",
-          "unsafeName": "plantOrders",
-        },
-        "originalName": "plantOrders",
-        "pascalCase": {
-          "safeName": "PlantOrders",
-          "unsafeName": "PlantOrders",
-        },
-        "screamingSnakeCase": {
-          "safeName": "PLANT_ORDERS",
-          "unsafeName": "PLANT_ORDERS",
-        },
-        "snakeCase": {
-          "safeName": "plant_orders",
-          "unsafeName": "plant_orders",
-        },
-      },
+      "name": "plantOrders",
       "navigationConfig": undefined,
       "service": undefined,
       "subpackages": [],
@@ -221,67 +112,13 @@
       "errors": [],
       "fernFilepath": {
         "allParts": [
-          {
-            "camelCase": {
-              "safeName": "plantUpdates",
-              "unsafeName": "plantUpdates",
-            },
-            "originalName": "plantUpdates",
-            "pascalCase": {
-              "safeName": "PlantUpdates",
-              "unsafeName": "PlantUpdates",
-            },
-            "screamingSnakeCase": {
-              "safeName": "PLANT_UPDATES",
-              "unsafeName": "PLANT_UPDATES",
-            },
-            "snakeCase": {
-              "safeName": "plant_updates",
-              "unsafeName": "plant_updates",
-            },
-          },
+          "plantUpdates",
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "plantUpdates",
-            "unsafeName": "plantUpdates",
-          },
-          "originalName": "plantUpdates",
-          "pascalCase": {
-            "safeName": "PlantUpdates",
-            "unsafeName": "PlantUpdates",
-          },
-          "screamingSnakeCase": {
-            "safeName": "PLANT_UPDATES",
-            "unsafeName": "PLANT_UPDATES",
-          },
-          "snakeCase": {
-            "safeName": "plant_updates",
-            "unsafeName": "plant_updates",
-          },
-        },
+        "file": "plantUpdates",
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
-      "name": {
-        "camelCase": {
-          "safeName": "plantUpdates",
-          "unsafeName": "plantUpdates",
-        },
-        "originalName": "plantUpdates",
-        "pascalCase": {
-          "safeName": "PlantUpdates",
-          "unsafeName": "PlantUpdates",
-        },
-        "screamingSnakeCase": {
-          "safeName": "PLANT_UPDATES",
-          "unsafeName": "PLANT_UPDATES",
-        },
-        "snakeCase": {
-          "safeName": "plant_updates",
-          "unsafeName": "plant_updates",
-        },
-      },
+      "name": "plantUpdates",
       "navigationConfig": undefined,
       "service": undefined,
       "subpackages": [],
@@ -304,140 +141,39 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "channelsPlantOrdersSubscribeStatus",
-            "unsafeName": "channelsPlantOrdersSubscribeStatus",
-          },
-          "originalName": "ChannelsPlantOrdersSubscribeStatus",
-          "pascalCase": {
-            "safeName": "ChannelsPlantOrdersSubscribeStatus",
-            "unsafeName": "ChannelsPlantOrdersSubscribeStatus",
-          },
-          "screamingSnakeCase": {
-            "safeName": "CHANNELS_PLANT_ORDERS_SUBSCRIBE_STATUS",
-            "unsafeName": "CHANNELS_PLANT_ORDERS_SUBSCRIBE_STATUS",
-          },
-          "snakeCase": {
-            "safeName": "channels_plant_orders_subscribe_status",
-            "unsafeName": "channels_plant_orders_subscribe_status",
-          },
-        },
+        "name": "ChannelsPlantOrdersSubscribeStatus",
         "typeId": "ChannelsPlantOrdersSubscribeStatus",
       },
       "referencedTypes": Set {},
       "shape": {
         "_visit": [Function],
         "default": undefined,
+        "forwardCompatible": undefined,
         "type": "enum",
         "values": [
           {
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "placed",
-                  "unsafeName": "placed",
-                },
-                "originalName": "placed",
-                "pascalCase": {
-                  "safeName": "Placed",
-                  "unsafeName": "Placed",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "PLACED",
-                  "unsafeName": "PLACED",
-                },
-                "snakeCase": {
-                  "safeName": "placed",
-                  "unsafeName": "placed",
-                },
-              },
-              "wireValue": "placed",
-            },
+            "name": "placed",
           },
           {
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "processing",
-                  "unsafeName": "processing",
-                },
-                "originalName": "processing",
-                "pascalCase": {
-                  "safeName": "Processing",
-                  "unsafeName": "Processing",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "PROCESSING",
-                  "unsafeName": "PROCESSING",
-                },
-                "snakeCase": {
-                  "safeName": "processing",
-                  "unsafeName": "processing",
-                },
-              },
-              "wireValue": "processing",
-            },
+            "name": "processing",
           },
           {
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "shipped",
-                  "unsafeName": "shipped",
-                },
-                "originalName": "shipped",
-                "pascalCase": {
-                  "safeName": "Shipped",
-                  "unsafeName": "Shipped",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "SHIPPED",
-                  "unsafeName": "SHIPPED",
-                },
-                "snakeCase": {
-                  "safeName": "shipped",
-                  "unsafeName": "shipped",
-                },
-              },
-              "wireValue": "shipped",
-            },
+            "name": "shipped",
           },
           {
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "delivered",
-                  "unsafeName": "delivered",
-                },
-                "originalName": "delivered",
-                "pascalCase": {
-                  "safeName": "Delivered",
-                  "unsafeName": "Delivered",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "DELIVERED",
-                  "unsafeName": "DELIVERED",
-                },
-                "snakeCase": {
-                  "safeName": "delivered",
-                  "unsafeName": "delivered",
-                },
-              },
-              "wireValue": "delivered",
-            },
+            "name": "delivered",
           },
         ],
       },
@@ -446,6 +182,58 @@
       "v2Examples": {
         "autogeneratedExamples": {
           "ChannelsPlantOrdersSubscribeStatus_example_autogenerated": "placed",
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "ChannelsPlantUpdatesSubscribeEncoding": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": "ChannelsPlantUpdatesSubscribeEncoding",
+        "typeId": "ChannelsPlantUpdatesSubscribeEncoding",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "default": undefined,
+        "forwardCompatible": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": "utf-8",
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": "utf-16",
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": "ascii",
+          },
+        ],
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "ChannelsPlantUpdatesSubscribeEncoding_example_autogenerated": "utf-8",
         },
         "userSpecifiedExamples": {},
       },
@@ -463,25 +251,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "plantOrdersSubscribe",
-            "unsafeName": "plantOrdersSubscribe",
-          },
-          "originalName": "PlantOrdersSubscribe",
-          "pascalCase": {
-            "safeName": "PlantOrdersSubscribe",
-            "unsafeName": "PlantOrdersSubscribe",
-          },
-          "screamingSnakeCase": {
-            "safeName": "PLANT_ORDERS_SUBSCRIBE",
-            "unsafeName": "PLANT_ORDERS_SUBSCRIBE",
-          },
-          "snakeCase": {
-            "safeName": "plant_orders_subscribe",
-            "unsafeName": "plant_orders_subscribe",
-          },
-        },
+        "name": "PlantOrdersSubscribe",
         "typeId": "PlantOrdersSubscribe",
       },
       "referencedTypes": Set {
@@ -496,28 +266,7 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "orderId",
-                  "unsafeName": "orderId",
-                },
-                "originalName": "orderId",
-                "pascalCase": {
-                  "safeName": "OrderId",
-                  "unsafeName": "OrderId",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ORDER_ID",
-                  "unsafeName": "ORDER_ID",
-                },
-                "snakeCase": {
-                  "safeName": "order_id",
-                  "unsafeName": "order_id",
-                },
-              },
-              "wireValue": "orderId",
-            },
+            "name": "orderId",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -556,28 +305,7 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "status",
-                  "unsafeName": "status",
-                },
-                "originalName": "status",
-                "pascalCase": {
-                  "safeName": "Status",
-                  "unsafeName": "Status",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "STATUS",
-                  "unsafeName": "STATUS",
-                },
-                "snakeCase": {
-                  "safeName": "status",
-                  "unsafeName": "status",
-                },
-              },
-              "wireValue": "status",
-            },
+            "name": "status",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -599,25 +327,7 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": {
-                    "camelCase": {
-                      "safeName": "channelsPlantOrdersSubscribeStatus",
-                      "unsafeName": "channelsPlantOrdersSubscribeStatus",
-                    },
-                    "originalName": "ChannelsPlantOrdersSubscribeStatus",
-                    "pascalCase": {
-                      "safeName": "ChannelsPlantOrdersSubscribeStatus",
-                      "unsafeName": "ChannelsPlantOrdersSubscribeStatus",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "CHANNELS_PLANT_ORDERS_SUBSCRIBE_STATUS",
-                      "unsafeName": "CHANNELS_PLANT_ORDERS_SUBSCRIBE_STATUS",
-                    },
-                    "snakeCase": {
-                      "safeName": "channels_plant_orders_subscribe_status",
-                      "unsafeName": "channels_plant_orders_subscribe_status",
-                    },
-                  },
+                  "name": "ChannelsPlantOrdersSubscribeStatus",
                   "type": "named",
                   "typeId": "ChannelsPlantOrdersSubscribeStatus",
                 },
@@ -629,28 +339,7 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "timestamp",
-                  "unsafeName": "timestamp",
-                },
-                "originalName": "timestamp",
-                "pascalCase": {
-                  "safeName": "Timestamp",
-                  "unsafeName": "Timestamp",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "TIMESTAMP",
-                  "unsafeName": "TIMESTAMP",
-                },
-                "snakeCase": {
-                  "safeName": "timestamp",
-                  "unsafeName": "timestamp",
-                },
-              },
-              "wireValue": "timestamp",
-            },
+            "name": "timestamp",
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -690,6 +379,115 @@
         "userSpecifiedExamples": {},
       },
     },
+    "PlantUpdatesSubscribe": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": "PlantUpdatesSubscribe",
+        "typeId": "PlantUpdatesSubscribe",
+      },
+      "referencedTypes": Set {
+        "ChannelsPlantUpdatesSubscribeEncoding",
+      },
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": "encoding",
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ChannelsPlantUpdatesSubscribeEncoding_example_autogenerated": "utf-8",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": "ChannelsPlantUpdatesSubscribeEncoding",
+                  "type": "named",
+                  "typeId": "ChannelsPlantUpdatesSubscribeEncoding",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": "data",
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ChannelsPlantUpdatesSubscribeData_example_autogenerated": "string",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "PlantUpdatesSubscribe_example_autogenerated": {},
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
   },
   "variables": [],
   "webhookGroups": {},
@@ -698,6 +496,7 @@
       "auth": false,
       "availability": undefined,
       "baseUrl": "production",
+      "connectMethodName": undefined,
       "displayName": undefined,
       "docs": "Receive order status notifications",
       "examples": [
@@ -720,28 +519,7 @@
                     "extraProperties": undefined,
                     "properties": [
                       {
-                        "name": {
-                          "name": {
-                            "camelCase": {
-                              "safeName": "orderId",
-                              "unsafeName": "orderId",
-                            },
-                            "originalName": "orderId",
-                            "pascalCase": {
-                              "safeName": "OrderId",
-                              "unsafeName": "OrderId",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "ORDER_ID",
-                              "unsafeName": "ORDER_ID",
-                            },
-                            "snakeCase": {
-                              "safeName": "order_id",
-                              "unsafeName": "order_id",
-                            },
-                          },
-                          "wireValue": "orderId",
-                        },
+                        "name": "orderId",
                         "originalTypeDeclaration": {
                           "displayName": undefined,
                           "fernFilepath": {
@@ -749,25 +527,7 @@
                             "file": undefined,
                             "packagePath": [],
                           },
-                          "name": {
-                            "camelCase": {
-                              "safeName": "plantOrdersSubscribe",
-                              "unsafeName": "plantOrdersSubscribe",
-                            },
-                            "originalName": "PlantOrdersSubscribe",
-                            "pascalCase": {
-                              "safeName": "PlantOrdersSubscribe",
-                              "unsafeName": "PlantOrdersSubscribe",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "PLANT_ORDERS_SUBSCRIBE",
-                              "unsafeName": "PLANT_ORDERS_SUBSCRIBE",
-                            },
-                            "snakeCase": {
-                              "safeName": "plant_orders_subscribe",
-                              "unsafeName": "plant_orders_subscribe",
-                            },
-                          },
+                          "name": "PlantOrdersSubscribe",
                           "typeId": "PlantOrdersSubscribe",
                         },
                         "propertyAccess": undefined,
@@ -804,28 +564,7 @@
                         },
                       },
                       {
-                        "name": {
-                          "name": {
-                            "camelCase": {
-                              "safeName": "status",
-                              "unsafeName": "status",
-                            },
-                            "originalName": "status",
-                            "pascalCase": {
-                              "safeName": "Status",
-                              "unsafeName": "Status",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "STATUS",
-                              "unsafeName": "STATUS",
-                            },
-                            "snakeCase": {
-                              "safeName": "status",
-                              "unsafeName": "status",
-                            },
-                          },
-                          "wireValue": "status",
-                        },
+                        "name": "status",
                         "originalTypeDeclaration": {
                           "displayName": undefined,
                           "fernFilepath": {
@@ -833,25 +572,7 @@
                             "file": undefined,
                             "packagePath": [],
                           },
-                          "name": {
-                            "camelCase": {
-                              "safeName": "plantOrdersSubscribe",
-                              "unsafeName": "plantOrdersSubscribe",
-                            },
-                            "originalName": "PlantOrdersSubscribe",
-                            "pascalCase": {
-                              "safeName": "PlantOrdersSubscribe",
-                              "unsafeName": "PlantOrdersSubscribe",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "PLANT_ORDERS_SUBSCRIBE",
-                              "unsafeName": "PLANT_ORDERS_SUBSCRIBE",
-                            },
-                            "snakeCase": {
-                              "safeName": "plant_orders_subscribe",
-                              "unsafeName": "plant_orders_subscribe",
-                            },
-                          },
+                          "name": "PlantOrdersSubscribe",
                           "typeId": "PlantOrdersSubscribe",
                         },
                         "propertyAccess": undefined,
@@ -873,25 +594,7 @@
                                   "packagePath": [],
                                 },
                                 "inline": false,
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "channelsPlantOrdersSubscribeStatus",
-                                    "unsafeName": "channelsPlantOrdersSubscribeStatus",
-                                  },
-                                  "originalName": "ChannelsPlantOrdersSubscribeStatus",
-                                  "pascalCase": {
-                                    "safeName": "ChannelsPlantOrdersSubscribeStatus",
-                                    "unsafeName": "ChannelsPlantOrdersSubscribeStatus",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "CHANNELS_PLANT_ORDERS_SUBSCRIBE_STATUS",
-                                    "unsafeName": "CHANNELS_PLANT_ORDERS_SUBSCRIBE_STATUS",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "channels_plant_orders_subscribe_status",
-                                    "unsafeName": "channels_plant_orders_subscribe_status",
-                                  },
-                                },
+                                "name": "ChannelsPlantOrdersSubscribeStatus",
                                 "type": "named",
                                 "typeId": "ChannelsPlantOrdersSubscribeStatus",
                               },
@@ -901,28 +604,7 @@
                         },
                       },
                       {
-                        "name": {
-                          "name": {
-                            "camelCase": {
-                              "safeName": "timestamp",
-                              "unsafeName": "timestamp",
-                            },
-                            "originalName": "timestamp",
-                            "pascalCase": {
-                              "safeName": "Timestamp",
-                              "unsafeName": "Timestamp",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "TIMESTAMP",
-                              "unsafeName": "TIMESTAMP",
-                            },
-                            "snakeCase": {
-                              "safeName": "timestamp",
-                              "unsafeName": "timestamp",
-                            },
-                          },
-                          "wireValue": "timestamp",
-                        },
+                        "name": "timestamp",
                         "originalTypeDeclaration": {
                           "displayName": undefined,
                           "fernFilepath": {
@@ -930,25 +612,7 @@
                             "file": undefined,
                             "packagePath": [],
                           },
-                          "name": {
-                            "camelCase": {
-                              "safeName": "plantOrdersSubscribe",
-                              "unsafeName": "plantOrdersSubscribe",
-                            },
-                            "originalName": "PlantOrdersSubscribe",
-                            "pascalCase": {
-                              "safeName": "PlantOrdersSubscribe",
-                              "unsafeName": "PlantOrdersSubscribe",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "PLANT_ORDERS_SUBSCRIBE",
-                              "unsafeName": "PLANT_ORDERS_SUBSCRIBE",
-                            },
-                            "snakeCase": {
-                              "safeName": "plant_orders_subscribe",
-                              "unsafeName": "plant_orders_subscribe",
-                            },
-                          },
+                          "name": "PlantOrdersSubscribe",
                           "typeId": "PlantOrdersSubscribe",
                         },
                         "propertyAccess": undefined,
@@ -987,25 +651,7 @@
                       "file": undefined,
                       "packagePath": [],
                     },
-                    "name": {
-                      "camelCase": {
-                        "safeName": "plantOrdersSubscribe",
-                        "unsafeName": "plantOrdersSubscribe",
-                      },
-                      "originalName": "PlantOrdersSubscribe",
-                      "pascalCase": {
-                        "safeName": "PlantOrdersSubscribe",
-                        "unsafeName": "PlantOrdersSubscribe",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "PLANT_ORDERS_SUBSCRIBE",
-                        "unsafeName": "PLANT_ORDERS_SUBSCRIBE",
-                      },
-                      "snakeCase": {
-                        "safeName": "plant_orders_subscribe",
-                        "unsafeName": "plant_orders_subscribe",
-                      },
-                    },
+                    "name": "PlantOrdersSubscribe",
                     "typeId": "PlantOrdersSubscribe",
                   },
                 },
@@ -1036,25 +682,7 @@
                 "packagePath": [],
               },
               "inline": false,
-              "name": {
-                "camelCase": {
-                  "safeName": "plantOrdersSubscribe",
-                  "unsafeName": "plantOrdersSubscribe",
-                },
-                "originalName": "PlantOrdersSubscribe",
-                "pascalCase": {
-                  "safeName": "PlantOrdersSubscribe",
-                  "unsafeName": "PlantOrdersSubscribe",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "PLANT_ORDERS_SUBSCRIBE",
-                  "unsafeName": "PLANT_ORDERS_SUBSCRIBE",
-                },
-                "snakeCase": {
-                  "safeName": "plant_orders_subscribe",
-                  "unsafeName": "plant_orders_subscribe",
-                },
-              },
+              "name": "PlantOrdersSubscribe",
               "type": "named",
               "typeId": "PlantOrdersSubscribe",
             },
@@ -1068,25 +696,7 @@
           "type": "subscribe",
         },
       ],
-      "name": {
-        "camelCase": {
-          "safeName": "plantOrders",
-          "unsafeName": "plantOrders",
-        },
-        "originalName": "plantOrders",
-        "pascalCase": {
-          "safeName": "PlantOrders",
-          "unsafeName": "PlantOrders",
-        },
-        "screamingSnakeCase": {
-          "safeName": "PLANT_ORDERS",
-          "unsafeName": "PLANT_ORDERS",
-        },
-        "snakeCase": {
-          "safeName": "plant_orders",
-          "unsafeName": "plant_orders",
-        },
-      },
+      "name": "plantOrders",
       "path": {
         "head": "/plant/orders",
         "parts": [],
@@ -1102,13 +712,131 @@
       "auth": false,
       "availability": undefined,
       "baseUrl": "production",
+      "connectMethodName": undefined,
       "displayName": undefined,
       "docs": "Receive real-time plant inventory updates",
       "examples": [
         {
           "docs": undefined,
           "headers": [],
-          "messages": [],
+          "messages": [
+            {
+              "body": {
+                "_visit": [Function],
+                "jsonExample": {
+                  "data": undefined,
+                  "encoding": undefined,
+                },
+                "shape": {
+                  "_visit": [Function],
+                  "shape": {
+                    "_visit": [Function],
+                    "extraProperties": undefined,
+                    "properties": [
+                      {
+                        "name": "encoding",
+                        "originalTypeDeclaration": {
+                          "displayName": undefined,
+                          "fernFilepath": {
+                            "allParts": [],
+                            "file": undefined,
+                            "packagePath": [],
+                          },
+                          "name": "PlantUpdatesSubscribe",
+                          "typeId": "PlantUpdatesSubscribe",
+                        },
+                        "propertyAccess": undefined,
+                        "value": {
+                          "jsonExample": undefined,
+                          "shape": {
+                            "_visit": [Function],
+                            "container": {
+                              "_visit": [Function],
+                              "optional": undefined,
+                              "type": "optional",
+                              "valueType": {
+                                "_visit": [Function],
+                                "default": undefined,
+                                "displayName": undefined,
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "file": undefined,
+                                  "packagePath": [],
+                                },
+                                "inline": false,
+                                "name": "ChannelsPlantUpdatesSubscribeEncoding",
+                                "type": "named",
+                                "typeId": "ChannelsPlantUpdatesSubscribeEncoding",
+                              },
+                            },
+                            "type": "container",
+                          },
+                        },
+                      },
+                      {
+                        "name": "data",
+                        "originalTypeDeclaration": {
+                          "displayName": undefined,
+                          "fernFilepath": {
+                            "allParts": [],
+                            "file": undefined,
+                            "packagePath": [],
+                          },
+                          "name": "PlantUpdatesSubscribe",
+                          "typeId": "PlantUpdatesSubscribe",
+                        },
+                        "propertyAccess": undefined,
+                        "value": {
+                          "jsonExample": undefined,
+                          "shape": {
+                            "_visit": [Function],
+                            "container": {
+                              "_visit": [Function],
+                              "optional": undefined,
+                              "type": "optional",
+                              "valueType": {
+                                "_visit": [Function],
+                                "primitive": {
+                                  "v1": "STRING",
+                                  "v2": {
+                                    "_visit": [Function],
+                                    "default": undefined,
+                                    "type": "string",
+                                    "validation": {
+                                      "format": undefined,
+                                      "maxLength": undefined,
+                                      "minLength": undefined,
+                                      "pattern": undefined,
+                                    },
+                                  },
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "container",
+                          },
+                        },
+                      },
+                    ],
+                    "type": "object",
+                  },
+                  "type": "named",
+                  "typeName": {
+                    "displayName": undefined,
+                    "fernFilepath": {
+                      "allParts": [],
+                      "file": undefined,
+                      "packagePath": [],
+                    },
+                    "name": "PlantUpdatesSubscribe",
+                    "typeId": "PlantUpdatesSubscribe",
+                  },
+                },
+                "type": "reference",
+              },
+              "type": "subscribe",
+            },
+          ],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
@@ -1116,26 +844,36 @@
         },
       ],
       "headers": [],
-      "messages": [],
-      "name": {
-        "camelCase": {
-          "safeName": "plantUpdates",
-          "unsafeName": "plantUpdates",
+      "messages": [
+        {
+          "availability": undefined,
+          "body": {
+            "_visit": [Function],
+            "bodyType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": "PlantUpdatesSubscribe",
+              "type": "named",
+              "typeId": "PlantUpdatesSubscribe",
+            },
+            "docs": undefined,
+            "type": "reference",
+          },
+          "displayName": "subscribe",
+          "docs": undefined,
+          "methodName": undefined,
+          "origin": "server",
+          "type": "subscribe",
         },
-        "originalName": "plantUpdates",
-        "pascalCase": {
-          "safeName": "PlantUpdates",
-          "unsafeName": "PlantUpdates",
-        },
-        "screamingSnakeCase": {
-          "safeName": "PLANT_UPDATES",
-          "unsafeName": "PLANT_UPDATES",
-        },
-        "snakeCase": {
-          "safeName": "plant_updates",
-          "unsafeName": "plant_updates",
-        },
-      },
+      ],
+      "name": "plantUpdates",
       "path": {
         "head": "/plant/updates",
         "parts": [],

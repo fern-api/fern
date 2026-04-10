@@ -9,7 +9,13 @@ if typing.TYPE_CHECKING:
     from .animal import Animal
     from .cat import Cat
     from .dog import Dog
-_dynamic_imports: typing.Dict[str, str] = {"Animal": ".animal", "Cat": ".cat", "Dog": ".dog"}
+    from .mixed_type import MixedType
+_dynamic_imports: typing.Dict[str, str] = {
+    "Animal": ".animal",
+    "Cat": ".cat",
+    "Dog": ".dog",
+    "MixedType": ".mixed_type",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -33,4 +39,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["Animal", "Cat", "Dog"]
+__all__ = ["Animal", "Cat", "Dog", "MixedType"]

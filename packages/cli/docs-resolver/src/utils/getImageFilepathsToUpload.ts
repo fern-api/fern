@@ -62,6 +62,13 @@ export async function collectFilesFromDocsConfig({
         filepaths.add(parsedDocsConfig.metadata["twitter:image"].value);
     }
 
+    if (
+        parsedDocsConfig.metadata?.["og:background-image"] != null &&
+        parsedDocsConfig.metadata["og:background-image"].type === "filepath"
+    ) {
+        filepaths.add(parsedDocsConfig.metadata["og:background-image"].value);
+    }
+
     /* typography */
     if (parsedDocsConfig.typography?.bodyFont != null) {
         parsedDocsConfig.typography.bodyFont.variants.forEach((variant) => {
@@ -144,6 +151,18 @@ export async function collectFilesFromDocsConfig({
         parsedDocsConfig.js.files.forEach((file) => {
             filepaths.add(file.absolutePath);
         });
+    }
+
+    if (parsedDocsConfig.context7File != null) {
+        filepaths.add(parsedDocsConfig.context7File);
+    }
+
+    if (parsedDocsConfig.llmsTxtFile != null) {
+        filepaths.add(parsedDocsConfig.llmsTxtFile);
+    }
+
+    if (parsedDocsConfig.llmsFullTxtFile != null) {
+        filepaths.add(parsedDocsConfig.llmsFullTxtFile);
     }
 
     /* custom page action icons */
@@ -327,9 +346,6 @@ async function collectIconsFromNavigationItem({
                     filepaths
                 });
             }
-            break;
-        case "pythonDocsSection":
-            // Python docs sections don't have icons in the minimal first iteration
             break;
     }
 }

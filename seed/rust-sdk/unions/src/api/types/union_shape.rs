@@ -3,27 +3,38 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum Shape {
-        #[serde(rename = "circle")]
-        Circle {
-            #[serde(flatten)]
-            data: Circle,
-            id: String,
-        },
+    #[serde(rename = "circle")]
+    #[non_exhaustive]
+    Circle {
+        #[serde(default)]
+        #[serde(with = "crate::core::number_serializers")]
+        radius: f64,
+        id: String,
+    },
 
-        #[serde(rename = "square")]
-        Square {
-            #[serde(flatten)]
-            data: Square,
-            id: String,
-        },
+    #[serde(rename = "square")]
+    #[non_exhaustive]
+    Square {
+        #[serde(default)]
+        #[serde(with = "crate::core::number_serializers")]
+        length: f64,
+        id: String,
+    },
 }
 
 impl Shape {
-    pub fn get_id(&self) -> &String {
-        match self {
-                    Self::Circle { id, .. } => id,
-                    Self::Square { id, .. } => id,
-                }
+    pub fn circle(radius: f64, id: String) -> Self {
+        Self::Circle { radius, id }
     }
 
+    pub fn square(length: f64, id: String) -> Self {
+        Self::Square { length, id }
+    }
+
+    pub fn get_id(&self) -> &str {
+        match self {
+            Self::Circle { id, .. } => id,
+            Self::Square { id, .. } => id,
+        }
+    }
 }

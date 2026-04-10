@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { NoUndefinedErrorReferenceRule } from "../no-undefined-error-reference";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { NoUndefinedErrorReferenceRule } from "../no-undefined-error-reference.js";
 
 describe("no-undefined-error-reference", () => {
     it("simple", async () => {
@@ -15,18 +15,21 @@ describe("no-undefined-error-reference", () => {
         });
         expect(violations).toEqual([
             {
+                name: "no-undefined-error-reference",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("api.yml"),
                 nodePath: ["errors", "MadeUpError"],
                 message: "Error is not defined."
             },
             {
+                name: "no-undefined-error-reference",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
                 nodePath: ["service", "endpoints", "referenceNonExistentError", "errors", "NonExistentError"],
                 message: "Error is not defined."
             },
             {
+                name: "no-undefined-error-reference",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
                 nodePath: [

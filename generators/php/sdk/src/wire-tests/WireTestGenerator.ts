@@ -1,19 +1,13 @@
-import { File } from "@fern-api/base-generator";
+import { CaseConverter, File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { php } from "@fern-api/php-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/php-dynamic-snippets";
-import {
-    dynamic,
-    HttpEndpoint,
-    HttpService,
-    InferredAuthScheme,
-    IntermediateRepresentation
-} from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
-import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
+import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 /**
  * Generates WireMock-based integration tests for PHP SDK.
@@ -25,15 +19,17 @@ import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
  */
 export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
-    private dynamicIr: dynamic.DynamicIntermediateRepresentation;
+    private readonly case: CaseConverter;
+    private dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private wireMockConfigContent: Record<string, WireMockMapping>;
     private readonly dynamicSnippetsGenerator: DynamicSnippetsGenerator;
 
-    constructor({ context, ir }: { context: SdkGeneratorContext; ir: IntermediateRepresentation }) {
+    constructor({ context, ir }: { context: SdkGeneratorContext; ir: FernIr.IntermediateRepresentation }) {
         this.context = context;
+        this.case = context.case;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without dynamic IR");
+            throw new Error("Cannot generate wire tests without FernIr.dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.wireMockConfigContent = this.getWireMockConfigContent();
@@ -70,12 +66,12 @@ export class WireTestGenerator {
 
     private async generateServiceTestFile(
         serviceName: string,
-        endpoints: HttpEndpoint[]
+        endpoints: FernIr.HttpEndpoint[]
     ): Promise<{ filename: string; directory: RelativeFilePath; contents: string } | undefined> {
         const endpointTestCases: Array<{
-            endpoint: HttpEndpoint;
-            example: dynamic.EndpointExample;
-            service: HttpService;
+            endpoint: FernIr.HttpEndpoint;
+            example: FernIr.dynamic.EndpointExample;
+            service: FernIr.HttpService;
             exampleIndex: number;
         }> = [];
 
@@ -134,6 +130,7 @@ export class WireTestGenerator {
             parameters: [],
             body: php.codeblock((writer) => {
                 writer.writeTextStatement("parent::setUp()");
+                writer.writeTextStatement("$wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080'");
 
                 // Build auth parameters
                 const authParams = this.buildAuthParamsForTest();
@@ -180,7 +177,7 @@ export class WireTestGenerator {
                                     name: "Environments"
                                 })
                             );
-                            writer.write(`::custom(${envValues.map((value) => `'${value}'`).join(", ")}),`);
+                            writer.write(`::custom(${envValues.map(() => "$wiremockUrl").join(", ")}),`);
                             if (authParams.length === 0) {
                                 writer.write("\n");
                                 writer.dedent();
@@ -196,7 +193,7 @@ export class WireTestGenerator {
                     }
                     writer.writeLine("options: [");
                     writer.indent();
-                    writer.writeLine("'baseUrl' => 'http://localhost:8080',");
+                    writer.writeLine("'baseUrl' => $wiremockUrl,");
                     writer.dedent();
                     writer.write("]");
                     if (authParams.length === 0) {
@@ -215,9 +212,9 @@ export class WireTestGenerator {
     private async buildTestFileContent(
         testClassName: string,
         testCases: Array<{
-            endpoint: HttpEndpoint;
-            example: dynamic.EndpointExample;
-            service: HttpService;
+            endpoint: FernIr.HttpEndpoint;
+            example: FernIr.dynamic.EndpointExample;
+            service: FernIr.HttpService;
             exampleIndex: number;
         }>
     ): Promise<php.Class> {
@@ -267,9 +264,9 @@ export class WireTestGenerator {
         service,
         exampleIndex
     }: {
-        endpoint: HttpEndpoint;
-        example: dynamic.EndpointExample;
-        service: HttpService;
+        endpoint: FernIr.HttpEndpoint;
+        example: FernIr.dynamic.EndpointExample;
+        service: FernIr.HttpService;
         exampleIndex: number;
     }): Promise<php.Method | undefined> {
         try {
@@ -278,7 +275,7 @@ export class WireTestGenerator {
             const queryParamsCode = this.buildQueryParamsCode(endpoint);
             const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
 
-            // Generate the API call using dynamic snippets generator
+            // Generate the API call using FernIr.dynamic snippets generator
             // Skip client instantiation since we instantiate it once in setUp()
             const snippetRequest = convertDynamicEndpointSnippetRequest({
                 ...example,
@@ -293,6 +290,8 @@ export class WireTestGenerator {
                 skipClientInstantiation: true
             });
 
+            const isPaginated = endpoint.pagination != null && this.context.config.generatePaginatedClients === true;
+
             return php.method({
                 name: testName,
                 access: "public",
@@ -301,8 +300,17 @@ export class WireTestGenerator {
                     // $testId = '...';
                     writer.writeStatement(`$testId = '${testId}'`);
 
-                    // API call from dynamic snippet AST
-                    writer.writeNode(snippetAst as php.AstNode);
+                    if (isPaginated) {
+                        writer.write("$response = ");
+                        writer.writeNode(snippetAst);
+                        writer.writeLine("foreach ($response as $item) {");
+                        writer.indent();
+                        writer.writeLine("break;");
+                        writer.dedent();
+                        writer.writeLine("}");
+                    } else {
+                        writer.writeNode(snippetAst);
+                    }
 
                     // $this->verifyRequestCount(...);
                     writer.writeStatement(`$this->verifyRequestCount(
@@ -320,15 +328,19 @@ export class WireTestGenerator {
         }
     }
 
-    private getTestMethodName(endpoint: HttpEndpoint): string {
+    private getTestMethodName(endpoint: FernIr.HttpEndpoint): string {
         // Convert endpoint name to camelCase test method name
-        const endpointName = endpoint.name.camelCase.safeName;
+        const endpointName = this.case.camelSafe(endpoint.name);
         return `test${endpointName.charAt(0).toUpperCase()}${endpointName.slice(1)}`;
     }
 
-    private buildDeterministicTestId(service: HttpService, endpoint: HttpEndpoint, exampleIndex: number): string {
-        const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-        const endpointName = endpoint.name.snakeCase.safeName;
+    private buildDeterministicTestId(
+        service: FernIr.HttpService,
+        endpoint: FernIr.HttpEndpoint,
+        exampleIndex: number
+    ): string {
+        const servicePathParts = service.name.fernFilepath.allParts.map((part) => this.case.snakeSafe(part));
+        const endpointName = this.case.snakeSafe(endpoint.name);
 
         const segments: string[] = [];
         if (servicePathParts.length > 0) {
@@ -375,7 +387,7 @@ export class WireTestGenerator {
         return JSON.stringify(value);
     }
 
-    private buildQueryParamsCode(endpoint: HttpEndpoint): string {
+    private buildQueryParamsCode(endpoint: FernIr.HttpEndpoint): string {
         const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
         if (!dynamicEndpoint?.examples?.[0]?.queryParameters) {
             return "null";
@@ -411,7 +423,7 @@ export class WireTestGenerator {
         return out;
     }
 
-    private buildBasePath(endpoint: HttpEndpoint): string {
+    private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
         let basePath = endpoint.fullPath.head;
         for (const part of endpoint.fullPath.parts || []) {
             basePath += `{${part.pathParameter}}${part.tail}`;
@@ -433,8 +445,8 @@ export class WireTestGenerator {
         return basePath;
     }
 
-    private groupEndpointsByService(): Map<string, HttpEndpoint[]> {
-        const endpointsByService = new Map<string, HttpEndpoint[]>();
+    private groupEndpointsByService(): Map<string, FernIr.HttpEndpoint[]> {
+        const endpointsByService = new Map<string, FernIr.HttpEndpoint[]>();
 
         for (const service of Object.values(this.context.ir.services)) {
             const serviceName = this.getFormattedServiceName(service);
@@ -448,8 +460,8 @@ export class WireTestGenerator {
         return endpointsByService;
     }
 
-    private getFormattedServiceName(service: HttpService): string {
-        return service.name.fernFilepath.allParts.map((part) => part.camelCase.unsafeName).join("_");
+    private getFormattedServiceName(service: FernIr.HttpService): string {
+        return service.name.fernFilepath.allParts.map((part) => this.case.camelUnsafe(part)).join("_");
     }
 
     private isMultiUrlEnvironment(): boolean {
@@ -477,12 +489,16 @@ export class WireTestGenerator {
                 bearer: () => {
                     authParams.push("token: 'test-token'");
                 },
-                basic: () => {
-                    authParams.push("username: 'test-user'");
-                    authParams.push("password: 'test-password'");
+                basic: (basicScheme) => {
+                    if (!basicScheme.usernameOmit) {
+                        authParams.push("username: 'test-username'");
+                    }
+                    if (!basicScheme.passwordOmit) {
+                        authParams.push("password: 'test-password'");
+                    }
                 },
                 header: (header) => {
-                    const paramName = header.name.name.camelCase.safeName;
+                    const paramName = this.case.camelSafe(header.name);
                     authParams.push(`${paramName}: 'test-${paramName}'`);
                 },
                 oauth: () => {
@@ -511,7 +527,7 @@ export class WireTestGenerator {
         return authParams.map((param) => `${param},\n    `).join("");
     }
 
-    private addInferredAuthParams(scheme: InferredAuthScheme, authParams: string[]): void {
+    private addInferredAuthParams(scheme: FernIr.InferredAuthScheme, authParams: string[]): void {
         // Extract parameters from the token endpoint's request body and headers
         // This mirrors the logic in RootClientGenerator.getParametersForInferredAuth()
         const tokenEndpointRef = scheme.tokenEndpoint.endpoint;
@@ -532,7 +548,7 @@ export class WireTestGenerator {
                 for (const property of requestBody.properties) {
                     const literal = this.context.maybeLiteral(property.valueType);
                     if (literal == null) {
-                        const paramName = this.context.getParameterName(property.name.name);
+                        const paramName = this.context.getParameterName(property.name);
                         authParams.push(`${paramName}: 'test-${paramName}'`);
                     }
                 }
@@ -542,7 +558,7 @@ export class WireTestGenerator {
             for (const header of endpoint.headers) {
                 const literal = this.context.maybeLiteral(header.valueType);
                 if (literal == null) {
-                    const paramName = this.context.getParameterName(header.name.name);
+                    const paramName = this.context.getParameterName(header.name);
                     authParams.push(`${paramName}: 'test-${paramName}'`);
                 }
             }

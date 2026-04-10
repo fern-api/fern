@@ -5,12 +5,13 @@ package service
 import (
 	context "context"
 	fmt "fmt"
+	io "io"
+	http "net/http"
+
 	fern "github.com/file-upload/fern"
 	core "github.com/file-upload/fern/core"
 	internal "github.com/file-upload/fern/internal"
 	option "github.com/file-upload/fern/option"
-	io "io"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -69,8 +70,10 @@ func (r *RawClient) Post(
 			return nil, err
 		}
 	}
-	if err := writer.WriteFile("maybe_file", maybeFile); err != nil {
-		return nil, err
+	if maybeFile != nil {
+		if err := writer.WriteFile("maybe_file", maybeFile); err != nil {
+			return nil, err
+		}
 	}
 	for _, f := range maybeFileList {
 		if err := writer.WriteFile("maybe_file_list", f); err != nil {
@@ -102,8 +105,8 @@ func (r *RawClient) Post(
 			return nil, err
 		}
 	}
-	if request.OptionalId != nil {
-		if err := writer.WriteField("optional_id", *request.OptionalId); err != nil {
+	if request.OptionalID != nil {
+		if err := writer.WriteField("optional_id", *request.OptionalID); err != nil {
 			return nil, err
 		}
 	}
@@ -459,8 +462,10 @@ func (r *RawClient) WithFormEncodedContainers(
 			return nil, err
 		}
 	}
-	if err := writer.WriteFile("maybe_file", maybeFile); err != nil {
-		return nil, err
+	if maybeFile != nil {
+		if err := writer.WriteFile("maybe_file", maybeFile); err != nil {
+			return nil, err
+		}
 	}
 	for _, f := range maybeFileList {
 		if err := writer.WriteFile("maybe_file_list", f); err != nil {
@@ -492,8 +497,8 @@ func (r *RawClient) WithFormEncodedContainers(
 			return nil, err
 		}
 	}
-	if request.OptionalId != nil {
-		if err := writer.WriteField("optional_id", *request.OptionalId); err != nil {
+	if request.OptionalID != nil {
+		if err := writer.WriteField("optional_id", *request.OptionalID); err != nil {
 			return nil, err
 		}
 	}
@@ -561,8 +566,10 @@ func (r *RawClient) OptionalArgs(
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
-	if err := writer.WriteFile("image_file", imageFile, internal.WithDefaultContentType("image/jpeg")); err != nil {
-		return nil, err
+	if imageFile != nil {
+		if err := writer.WriteFile("image_file", imageFile, internal.WithDefaultContentType("image/jpeg")); err != nil {
+			return nil, err
+		}
 	}
 	if request.Request != nil {
 		if err := writer.WriteJSON("request", request.Request, internal.WithDefaultContentType("application/json; charset=utf-8")); err != nil {
@@ -622,6 +629,62 @@ func (r *RawClient) WithInlineType(
 	}
 	if err := writer.WriteJSON("request", request.Request); err != nil {
 		return nil, err
+	}
+	if err := writer.Close(); err != nil {
+		return nil, err
+	}
+	headers.Set("Content-Type", writer.ContentType())
+
+	var response string
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         writer.Buffer(),
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[string]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) WithJSONProperty(
+	ctx context.Context,
+	file io.Reader,
+	request *fern.WithJSONPropertyRequest,
+	opts ...option.RequestOption,
+) (*core.Response[string], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/with-json-property"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	writer := internal.NewMultipartWriter()
+	if err := writer.WriteFile("file", file); err != nil {
+		return nil, err
+	}
+	if request.JSON != nil {
+		if err := writer.WriteJSON("json", request.JSON); err != nil {
+			return nil, err
+		}
 	}
 	if err := writer.Close(); err != nil {
 		return nil, err

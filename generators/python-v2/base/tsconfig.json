@@ -1,25 +1,8 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../browser-compatible-base"
-    },
-    {
-      "path": "../ast"
-    },
-    {
-      "path": "../../../packages/commons/logging-execa"
-    },
-    {
-      "path": "../../../packages/commons/fs-utils"
-    },
-    {
-      "path": "../../../packages/commons/core-utils"
-    },
-    {
-      "path": "../../base"
-    }
-  ]
+  "compilerOptions": {
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": ["./src/**/*"]
 }

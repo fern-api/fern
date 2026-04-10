@@ -128,6 +128,10 @@ public final class SendRequest {
     public interface _FinalStage {
         SendRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage maybeContext(Optional<String> maybeContext);
 
         _FinalStage maybeContext(String maybeContext);
@@ -194,6 +198,18 @@ public final class SendRequest {
         @java.lang.Override
         public SendRequest build() {
             return new SendRequest(query, context, maybeContext, containerObject, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

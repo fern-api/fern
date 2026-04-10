@@ -1,5 +1,4 @@
 using SeedExhaustive;
-using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
@@ -13,10 +12,13 @@ public class Example25
             }
         );
 
-        await client.Endpoints.Params.GetWithQueryAsync(
-            new GetWithQuery {
-                Query = "query",
-                Number = 1
+        await client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownTypeAsync(
+            new Dictionary<string, object>(){
+                ["string"] = new Dictionary<string, object>()
+                {
+                    ["key"] = "value",
+                }
+                ,
             }
         );
     }

@@ -1,5 +1,5 @@
-import { VersionMigrations } from "../../types/VersionMigrations";
-import RemoveInlineErrorDeclarationsMigration from "./remove-inline-error-declarations";
+import { VersionMigrations } from "../../types/VersionMigrations.js";
+import RemoveInlineErrorDeclarationsMigration from "./remove-inline-error-declarations/index.js";
 
 const versionMigrations: VersionMigrations = {
     version: "0.0.210",

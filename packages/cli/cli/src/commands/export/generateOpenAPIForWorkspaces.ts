@@ -5,8 +5,8 @@ import { Project } from "@fern-api/project-loader";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { CliContext } from "../../cli-context/CliContext";
-import { convertIrToOpenApi } from "./convertIrToOpenApi";
+import { CliContext } from "../../cli-context/CliContext.js";
+import { convertIrToOpenApi } from "./convertIrToOpenApi.js";
 
 export async function generateOpenAPIForWorkspaces({
     project,

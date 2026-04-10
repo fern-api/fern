@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/unions-with-local-date/fern"
     client "github.com/unions-with-local-date/fern/client"
     option "github.com/unions-with-local-date/fern/option"
-    fern "github.com/unions-with-local-date/fern"
-    context "context"
 )
 
 func do() {
@@ -17,7 +18,7 @@ func do() {
         Circle: &fern.Circle{
             Radius: 1.1,
         },
-        Id: "id",
+        ID: "id",
     }
     client.Union.Update(
         context.TODO(),

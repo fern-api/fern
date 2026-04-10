@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { EndpointMatcher } from "../endpoint-matcher";
+import { EndpointMatcher } from "../endpoint-matcher.js";
 
 describe("EndpointMatcher", () => {
     it("should match exact paths", () => {

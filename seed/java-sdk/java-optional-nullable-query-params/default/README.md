@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:java-optional-nullable-query-params'
+  implementation 'com.fern:java-optional-nullable-query-params:0.0.1'
 }
 ```
 
@@ -104,7 +104,7 @@ For PATCH requests, the SDK uses `OptionalNullable<T>` to handle three-state nul
 - **PRESENT**: Field has a non-null value
 
 ```java
-import com.seed.api.core.OptionalNullable;
+import com.seed.javaOptionalNullableQueryParams.core.OptionalNullable;
 
 UpdateRequest request = UpdateRequest.builder()
     .fieldName(OptionalNullable.absent())    // Skip field
@@ -245,7 +245,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SearchHttpResponse response = client.withRawResponse().search(...);
+SeedJavaOptionalNullableQueryParamsHttpResponse response = client.withRawResponse().search(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

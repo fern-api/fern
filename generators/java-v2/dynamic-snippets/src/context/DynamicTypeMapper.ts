@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { java } from "@fern-api/java-ast";
 
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 export declare namespace DynamicTypeMapper {
     interface Args {
@@ -112,6 +112,7 @@ export class DynamicTypeMapper {
             case "DATE":
                 return java.Type.date();
             case "DATE_TIME":
+            case "DATE_TIME_RFC_2822":
                 return java.Type.dateTime();
             case "UUID":
                 return java.Type.uuid();

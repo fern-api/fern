@@ -3,8 +3,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { AstNode, ts } from "@fern-api/typescript-ast";
 
-import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { FilePropertyInfo } from "./context/FilePropertyMapper";
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
+import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
 
 const CLIENT_VAR_NAME = "client";
 const MAIN_FUNCTION_NAME = "main";
@@ -348,7 +348,8 @@ export class EndpointSnippetGenerator {
     }): ts.ObjectField[] {
         const fields: ts.ObjectField[] = [];
         for (const header of headers) {
-            const field = this.getConstructorHeaderArg({ header, value: values.value });
+            const value = values[header.name.wireValue];
+            const field = this.getConstructorHeaderArg({ header, value });
             if (field != null) {
                 fields.push(field);
             }

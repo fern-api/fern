@@ -1,0 +1,35 @@
+instances: []
+
+navigation:
+  - api: GraphQL API with Ambiguous Operations
+    layout:
+      # These should work - unique operations
+      - operation: QUERY admin.getSystemStatus
+        title: "System Status"
+
+      - operation: QUERY user.getProfile
+        title: "User Profile"
+
+      # These should work - properly namespaced (disambiguated by resource)
+      - operation: QUERY admin.getInfo
+        title: "Admin Information"
+
+      - operation: QUERY user.getInfo
+        title: "User Information"
+
+      - operation: MUTATION admin.createRecord
+        title: "Create Admin Record"
+
+      - operation: MUTATION user.createRecord
+        title: "Create User Record"
+
+      - operation: SUBSCRIPTION user.userUpdates
+        title: "Real-time User Updates"
+
+      # These should FAIL with ambiguity error - multiple operations named "getInfo"
+      - operation: QUERY getInfo
+        title: "Ambiguous Get Info"
+
+      # This should FAIL with ambiguity error - multiple operations named "createRecord"
+      - operation: MUTATION createRecord
+        title: "Ambiguous Create Record"

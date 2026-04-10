@@ -1,8 +1,8 @@
 import { RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
 import { ContainerType, TypeReference } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../FernFileContext";
-import { parseTypeName } from "./parseTypeName";
+import { FernFileContext } from "../FernFileContext.js";
+import { parseTypeName } from "./parseTypeName.js";
 
 export declare namespace parseInlineType {
     export interface Args {

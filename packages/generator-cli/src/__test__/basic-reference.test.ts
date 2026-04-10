@@ -1,5 +1,5 @@
-import { default as CONFIG } from "./fixtures/basic-reference/reference";
-import { testGenerateReference } from "./testGenerateReference";
+import { default as CONFIG } from "./fixtures/basic-reference/reference.js";
+import { testGenerateReference } from "./testGenerateReference.js";
 
 describe("basic-reference", () => {
     testGenerateReference({

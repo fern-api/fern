@@ -4,7 +4,7 @@ import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 import { visit } from "unist-util-visit";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 export const ValidMarkdownFileReferences: Rule = {
     name: "valid-markdown-file-references",

@@ -1,0 +1,32 @@
+asyncapi: 2.6.0
+info:
+  title: Test x-fern-sdk-method-name extension for AsyncAPI v2
+  version: 1.0.0
+
+servers:
+  production:
+    url: wss://api.example.com
+    protocol: wss
+
+channels:
+  /v1/realtime:
+    publish:
+      x-fern-sdk-method-name: send
+      operationId: sendEvent
+      message:
+        payload:
+          type: object
+          properties:
+            content:
+              type: string
+    subscribe:
+      x-fern-sdk-method-name: receive
+      operationId: receiveEvent
+      message:
+        payload:
+          type: object
+          properties:
+            content:
+              type: string
+            timestamp:
+              type: string

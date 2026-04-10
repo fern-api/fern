@@ -1,6 +1,6 @@
 import { getRequestBody } from "@fern-api/fern-definition-schema";
 
-import { Rule } from "../../Rule";
+import { Rule } from "../../Rule.js";
 
 export const NoGetRequestBodyRule: Rule = {
     name: "no-get-request-body",

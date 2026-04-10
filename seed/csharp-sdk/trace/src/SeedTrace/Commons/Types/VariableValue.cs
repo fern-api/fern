@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -190,7 +190,7 @@ public record VariableValue
     public int AsIntegerValue() =>
         IsIntegerValue
             ? (int)Value!
-            : throw new System.Exception("VariableValue.Type is not 'integerValue'");
+            : throw new global::System.Exception("VariableValue.Type is not 'integerValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'booleanValue', otherwise throws an exception.
@@ -199,7 +199,7 @@ public record VariableValue
     public bool AsBooleanValue() =>
         IsBooleanValue
             ? (bool)Value!
-            : throw new System.Exception("VariableValue.Type is not 'booleanValue'");
+            : throw new global::System.Exception("VariableValue.Type is not 'booleanValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="double"/> if <see cref="Type"/> is 'doubleValue', otherwise throws an exception.
@@ -208,7 +208,7 @@ public record VariableValue
     public double AsDoubleValue() =>
         IsDoubleValue
             ? (double)Value!
-            : throw new System.Exception("VariableValue.Type is not 'doubleValue'");
+            : throw new global::System.Exception("VariableValue.Type is not 'doubleValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'stringValue', otherwise throws an exception.
@@ -217,7 +217,7 @@ public record VariableValue
     public string AsStringValue() =>
         IsStringValue
             ? (string)Value!
-            : throw new System.Exception("VariableValue.Type is not 'stringValue'");
+            : throw new global::System.Exception("VariableValue.Type is not 'stringValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'charValue', otherwise throws an exception.
@@ -226,7 +226,7 @@ public record VariableValue
     public string AsCharValue() =>
         IsCharValue
             ? (string)Value!
-            : throw new System.Exception("VariableValue.Type is not 'charValue'");
+            : throw new global::System.Exception("VariableValue.Type is not 'charValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.MapValue"/> if <see cref="Type"/> is 'mapValue', otherwise throws an exception.
@@ -235,7 +235,7 @@ public record VariableValue
     public SeedTrace.MapValue AsMapValue() =>
         IsMapValue
             ? (SeedTrace.MapValue)Value!
-            : throw new System.Exception("VariableValue.Type is not 'mapValue'");
+            : throw new global::System.Exception("VariableValue.Type is not 'mapValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="IEnumerable<VariableValue>"/> if <see cref="Type"/> is 'listValue', otherwise throws an exception.
@@ -244,7 +244,7 @@ public record VariableValue
     public IEnumerable<VariableValue> AsListValue() =>
         IsListValue
             ? (IEnumerable<VariableValue>)Value!
-            : throw new System.Exception("VariableValue.Type is not 'listValue'");
+            : throw new global::System.Exception("VariableValue.Type is not 'listValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.BinaryTreeValue"/> if <see cref="Type"/> is 'binaryTreeValue', otherwise throws an exception.
@@ -253,7 +253,7 @@ public record VariableValue
     public SeedTrace.BinaryTreeValue AsBinaryTreeValue() =>
         IsBinaryTreeValue
             ? (SeedTrace.BinaryTreeValue)Value!
-            : throw new System.Exception("VariableValue.Type is not 'binaryTreeValue'");
+            : throw new global::System.Exception("VariableValue.Type is not 'binaryTreeValue'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.SinglyLinkedListValue"/> if <see cref="Type"/> is 'singlyLinkedListValue', otherwise throws an exception.
@@ -262,7 +262,9 @@ public record VariableValue
     public SeedTrace.SinglyLinkedListValue AsSinglyLinkedListValue() =>
         IsSinglyLinkedListValue
             ? (SeedTrace.SinglyLinkedListValue)Value!
-            : throw new System.Exception("VariableValue.Type is not 'singlyLinkedListValue'");
+            : throw new global::System.Exception(
+                "VariableValue.Type is not 'singlyLinkedListValue'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.DoublyLinkedListValue"/> if <see cref="Type"/> is 'doublyLinkedListValue', otherwise throws an exception.
@@ -271,14 +273,18 @@ public record VariableValue
     public SeedTrace.DoublyLinkedListValue AsDoublyLinkedListValue() =>
         IsDoublyLinkedListValue
             ? (SeedTrace.DoublyLinkedListValue)Value!
-            : throw new System.Exception("VariableValue.Type is not 'doublyLinkedListValue'");
+            : throw new global::System.Exception(
+                "VariableValue.Type is not 'doublyLinkedListValue'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'nullValue', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'nullValue'.</exception>
     public object AsNullValue() =>
-        IsNullValue ? Value! : throw new System.Exception("VariableValue.Type is not 'nullValue'");
+        IsNullValue
+            ? Value!
+            : throw new global::System.Exception("VariableValue.Type is not 'nullValue'");
 
     public T Match<T>(
         Func<int, T> onIntegerValue,
@@ -550,12 +556,12 @@ public record VariableValue
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<VariableValue>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(VariableValue).IsAssignableFrom(typeToConvert);
 
         public override VariableValue Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -580,34 +586,41 @@ public record VariableValue
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
                 "integerValue" => json.GetProperty("value").Deserialize<int>(options),
                 "booleanValue" => json.GetProperty("value").Deserialize<bool>(options),
                 "doubleValue" => json.GetProperty("value").Deserialize<double>(options),
                 "stringValue" => json.GetProperty("value").Deserialize<string?>(options)
-                ?? throw new JsonException("Failed to deserialize string"),
+                    ?? throw new JsonException("Failed to deserialize string"),
                 "charValue" => json.GetProperty("value").Deserialize<string?>(options)
-                ?? throw new JsonException("Failed to deserialize string"),
-                "mapValue" => json.Deserialize<SeedTrace.MapValue?>(options)
+                    ?? throw new JsonException("Failed to deserialize string"),
+                "mapValue" => jsonWithoutDiscriminator.Deserialize<SeedTrace.MapValue?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.MapValue"),
                 "listValue" => json.GetProperty("value")
                     .Deserialize<IEnumerable<VariableValue>?>(options)
-                ?? throw new JsonException("Failed to deserialize IEnumerable<VariableValue>"),
-                "binaryTreeValue" => json.Deserialize<SeedTrace.BinaryTreeValue?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.BinaryTreeValue"),
-                "singlyLinkedListValue" => json.Deserialize<SeedTrace.SinglyLinkedListValue?>(
-                    options
-                )
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.SinglyLinkedListValue"
-                    ),
-                "doublyLinkedListValue" => json.Deserialize<SeedTrace.DoublyLinkedListValue?>(
-                    options
-                )
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.DoublyLinkedListValue"
-                    ),
+                    ?? throw new JsonException("Failed to deserialize IEnumerable<VariableValue>"),
+                "binaryTreeValue" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.BinaryTreeValue?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.BinaryTreeValue"
+                        ),
+                "singlyLinkedListValue" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.SinglyLinkedListValue?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.SinglyLinkedListValue"
+                        ),
+                "doublyLinkedListValue" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.DoublyLinkedListValue?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.DoublyLinkedListValue"
+                        ),
                 "nullValue" => new { },
                 _ => json.Deserialize<object?>(options),
             };
@@ -656,6 +669,27 @@ public record VariableValue
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override VariableValue ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new VariableValue(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            VariableValue value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

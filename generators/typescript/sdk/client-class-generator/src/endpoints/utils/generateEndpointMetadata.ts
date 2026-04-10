@@ -1,15 +1,15 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
+import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
 
 export function generateEndpointMetadata({
     httpEndpoint,
     context
 }: {
     httpEndpoint: FernIr.HttpEndpoint;
-    context: SdkContext;
+    context: FileContext;
 }): ts.Statement[] {
     /**
      * metadata should look like this:

@@ -1,13 +1,14 @@
-import { Class } from "./Class";
-import { Comment } from "./Comment";
-import { AstNode } from "./core/AstNode";
-import { ImportedName, ModulePath } from "./core/types";
-import { createPythonClassName } from "./core/utils";
-import { Writer } from "./core/Writer";
-import { Field } from "./Field";
-import { Method } from "./Method";
-import { Reference } from "./Reference";
-import { StarImport } from "./StarImport";
+import { Class } from "./Class.js";
+import { Comment } from "./Comment.js";
+import { AstNode } from "./core/AstNode.js";
+import { ImportedName, ModulePath } from "./core/types.js";
+import { createPythonClassName } from "./core/utils.js";
+import { Writer } from "./core/Writer.js";
+import { Field } from "./Field.js";
+import { Method } from "./Method.js";
+import { ModuleImport } from "./ModuleImport.js";
+import { Reference } from "./Reference.js";
+import { StarImport } from "./StarImport.js";
 
 interface UniqueReferenceValue {
     modulePath: ModulePath;
@@ -114,8 +115,8 @@ export class PythonFile extends AstNode {
             ({ references }) => references
         );
         importedReferences.forEach((reference) => {
-            // Skip star imports since we should never override their import alias
-            if (reference instanceof StarImport) {
+            // Skip star imports and module imports since we should never override their import alias
+            if (reference instanceof StarImport || reference instanceof ModuleImport) {
                 return;
             }
 
@@ -230,6 +231,13 @@ export class PythonFile extends AstNode {
 
             // Check to see if the reference is defined in this same file and if so, skip its import
             if (this.isDefinedInFile(refModulePath)) {
+                continue;
+            }
+
+            // Handle module-level imports (e.g., `import datetime`)
+            if (references.some((ref) => ref instanceof ModuleImport)) {
+                writer.write(`import ${fullyQualifiedPath}`);
+                writer.newLine();
                 continue;
             }
 

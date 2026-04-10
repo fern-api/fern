@@ -1,4 +1,5 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { AbstractRubyGeneratorCli } from "@fern-api/ruby-base";
@@ -6,19 +7,19 @@ import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
 import { generateModels } from "@fern-api/ruby-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
-import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
-import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
-import { InferredAuthProviderGenerator } from "./inferred-auth/InferredAuthProviderGenerator";
-import { buildReference } from "./reference/buildReference";
-import { RootClientGenerator } from "./root-client/RootClientGenerator";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
-import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
-import { convertIr } from "./utils/convertIr";
-import { WireTestGenerator } from "./wire-tests";
-import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator.js";
+import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator.js";
+import { InferredAuthProviderGenerator } from "./inferred-auth/InferredAuthProviderGenerator.js";
+import { buildReference } from "./reference/buildReference.js";
+import { RootClientGenerator } from "./root-client/RootClientGenerator.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator.js";
+import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "./utils/convertIr.js";
+import { WireTestGenerator } from "./wire-tests/index.js";
+import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator.js";
 
 export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -27,7 +28,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: SdkCustomConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
@@ -117,44 +118,48 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 });
                 context.logger.debug("Generated readme!");
             } catch (e) {
-                context.logger.error("Failed to generate README.md");
-                if (e instanceof Error) {
-                    context.logger.debug(e.message);
-                    context.logger.debug(e.stack ?? "");
-                }
+                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
         }
 
         try {
             await this.generateReference({ context });
         } catch (error) {
-            context.logger.warn("Failed to generate reference.md, this is OK.");
-            if (error instanceof Error) {
-                context.logger.warn((error as Error)?.message);
-                context.logger.warn((error as Error)?.stack ?? "");
-            }
+            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
         }
 
         await this.generateWireTestFiles(context);
 
         await context.project.persist();
 
+        // Clear nix/devbox Ruby environment variables that may conflict with the
+        // project's bundled gems (e.g. RUBYLIB and GEM_PATH pointing to Ruby 3.4
+        // paths while running Ruby 3.3).
+        const rubyEnv = {
+            ...process.env,
+            RUBYLIB: undefined,
+            GEM_PATH: undefined,
+            GEM_HOME: undefined
+        };
+
+        await loggingExeca(context.logger, "bundle", ["install"], {
+            cwd: context.project.absolutePathToOutputDirectory,
+            doNotPipeOutput: true,
+            env: rubyEnv
+        });
+
         try {
-            await loggingExeca(context.logger, "rubocop", ["-A"], {
+            await loggingExeca(context.logger, "bundle", ["exec", "rubocop", "-A"], {
                 cwd: context.project.absolutePathToOutputDirectory,
-                doNotPipeOutput: true
+                doNotPipeOutput: true,
+                env: rubyEnv
             });
         } catch (_) {
             // It's okay if rubocop fails to run.
         }
-
-        await loggingExeca(context.logger, "bundle", ["install"], {
-            cwd: context.project.absolutePathToOutputDirectory,
-            doNotPipeOutput: true
-        });
     }
 
-    private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
+    private generateRequests(context: SdkGeneratorContext, service: FernIr.HttpService, serviceId: string) {
         service.endpoints.forEach((endpoint) => {
             if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
                 const wrappedRequestGenerator = new WrappedRequestGenerator({

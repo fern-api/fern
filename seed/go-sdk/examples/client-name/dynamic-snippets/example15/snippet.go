@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/examples/fern"
     client "github.com/examples/fern/client"
     option "github.com/examples/fern/option"
-    fern "github.com/examples/fern"
-    context "context"
 )
 
 func do() {
@@ -17,7 +18,7 @@ func do() {
         ),
     )
     request := &fern.Movie{
-        Id: "movie-c06a4ad7",
+        ID: "movie-c06a4ad7",
         Prequel: fern.String(
             "movie-cv9b914f",
         ),
@@ -31,11 +32,11 @@ func do() {
                 "Florence Pugh",
                 "Willem Dafoe",
             },
-            "releaseDate": "2023-12-08",
             "ratings": map[string]any{
-                "rottenTomatoes": 97,
                 "imdb": 7.6,
+                "rottenTomatoes": 97,
             },
+            "releaseDate": "2023-12-08",
         },
         Revenue: int64(1000000),
     }

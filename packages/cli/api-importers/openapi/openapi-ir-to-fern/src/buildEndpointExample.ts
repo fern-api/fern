@@ -8,8 +8,8 @@ import {
     PrimitiveExample
 } from "@fern-api/openapi-ir";
 
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { convertEndpointResponseExample, convertFullExample } from "./utils/convertFullExample";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { convertEndpointResponseExample, convertFullExample } from "./utils/convertFullExample.js";
 
 export function buildEndpointExample({
     endpointExample,

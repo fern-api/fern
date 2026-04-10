@@ -1,19 +1,18 @@
-import { Package, Subpackage } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace ClientGeneratorContext {
     interface Args {
-        packageOrSubpackage: Package | Subpackage;
+        packageOrSubpackage: FernIr.Package | FernIr.Subpackage;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class ClientGeneratorContext {
-    private readonly packageOrSubpackage: Package | Subpackage;
+    private readonly packageOrSubpackage: FernIr.Package | FernIr.Subpackage;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
 
-    public readonly subClients: { fieldName: string; clientName: string }[];
+    public readonly subClients: { fieldName: string; clientName: string; serviceId: string | undefined }[];
     public readonly httpClient: { fieldName: string; clientName: string };
 
     public constructor({ packageOrSubpackage, sdkGeneratorContext }: ClientGeneratorContext.Args) {
@@ -23,16 +22,17 @@ export class ClientGeneratorContext {
         this.httpClient = this.getHttpClient();
     }
 
-    private getSubClients(): { fieldName: string; clientName: string }[] {
+    private getSubClients(): { fieldName: string; clientName: string; serviceId: string | undefined }[] {
         return this.sdkGeneratorContext
             .getSubpackagesOrThrow(this.packageOrSubpackage)
             .filter(([, subpackage]) => subpackage.service != null || subpackage.hasEndpointsInTree)
             .map(([, subpackage]) => {
                 const clientName = this.sdkGeneratorContext.getUniqueClientNameForSubpackage(subpackage);
-                const fieldName = subpackage.name.snakeCase.safeName;
+                const fieldName = this.sdkGeneratorContext.case.snakeSafe(subpackage.name);
                 return {
                     fieldName,
-                    clientName
+                    clientName,
+                    serviceId: subpackage.service ?? undefined
                 };
             });
     }

@@ -61,6 +61,15 @@ export interface AnalyzeCommitDiffRequest {
 
 export interface AnalyzeCommitDiffResponse {
   message: string
+  changelog_entry: string
   version_bump: VersionBump
+  version_bump_reason: string
+  
+}
+
+export interface ConsolidateChangelogResponse {
+  consolidated_changelog: string
+  pr_description: string
+  version_bump_reason: string
   
 }

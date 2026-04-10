@@ -4,11 +4,12 @@ package auth
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/any-auth/fern"
 	core "github.com/any-auth/fern/core"
 	internal "github.com/any-auth/fern/internal"
 	option "github.com/any-auth/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

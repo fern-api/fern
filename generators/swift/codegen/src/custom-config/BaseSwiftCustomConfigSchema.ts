@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
 
 export const BaseSwiftCustomConfigSchema = z.object({
     moduleName: z.string().optional(),
@@ -7,7 +7,8 @@ export const BaseSwiftCustomConfigSchema = z.object({
     environmentEnumName: z.string().optional(),
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
     enableWireTests: z.boolean().optional(),
-    nullableAsOptional: z.boolean().optional()
+    nullableAsOptional: z.boolean().optional(),
+    maxRetries: z.number().int().min(0).optional()
 });
 
 export type BaseSwiftCustomConfigSchema = z.infer<typeof BaseSwiftCustomConfigSchema>;

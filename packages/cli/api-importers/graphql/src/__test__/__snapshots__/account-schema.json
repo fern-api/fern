@@ -1,0 +1,4511 @@
+{
+  "graphqlOperations": {
+    "query_account": {
+      "id": "query_account",
+      "operationType": "QUERY",
+      "name": "account",
+      "description": "An account.",
+      "returnType": {
+        "type": "id",
+        "value": "Account"
+      }
+    },
+    "query_node": {
+      "id": "query_node",
+      "operationType": "QUERY",
+      "name": "node",
+      "description": "Fetches an object given its ID.",
+      "arguments": [
+        {
+          "name": "id",
+          "description": "The ID of the object.",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "Node"
+        }
+      }
+    },
+    "query_nodes": {
+      "id": "query_nodes",
+      "operationType": "QUERY",
+      "name": "nodes",
+      "description": "Fetches objects given their IDs.",
+      "arguments": [
+        {
+          "name": "ids",
+          "description": "The IDs of the objects.",
+          "type": {
+            "type": "list",
+            "itemType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "list",
+        "itemType": {
+          "type": "optional",
+          "itemType": {
+            "type": "id",
+            "value": "Node"
+          }
+        }
+      }
+    },
+    "query_system": {
+      "id": "query_system",
+      "operationType": "QUERY",
+      "name": "system",
+      "description": "System settings.",
+      "returnType": {
+        "type": "id",
+        "value": "System"
+      }
+    },
+    "mutation_addUserToAccount": {
+      "id": "mutation_addUserToAccount",
+      "operationType": "MUTATION",
+      "name": "addUserToAccount",
+      "description": "Adds a user to an account.",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "id",
+            "value": "AddUserToAccountInput"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "AddUserToAccountResult"
+        }
+      }
+    },
+    "mutation_removeUserFromAccount": {
+      "id": "mutation_removeUserFromAccount",
+      "operationType": "MUTATION",
+      "name": "removeUserFromAccount",
+      "description": "Removes a user from an account and all associated entities.",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "id",
+            "value": "RemoveUserFromAccountInput"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "RemoveUserFromAccountResult"
+        }
+      }
+    },
+    "mutation_createCheckout": {
+      "id": "mutation_createCheckout",
+      "operationType": "MUTATION",
+      "name": "createCheckout",
+      "description": "Creates a Checkout for a Merchant.",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "id",
+            "value": "CreateCheckoutInput"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "CreateCheckoutResult"
+        }
+      }
+    },
+    "mutation_cancelSubscription": {
+      "id": "mutation_cancelSubscription",
+      "operationType": "MUTATION",
+      "name": "cancelSubscription",
+      "description": "Cancels a Subscription for a Merchant.",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "id",
+            "value": "CancelSubscriptionInput"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "CancelSubscriptionResult"
+        }
+      }
+    },
+    "mutation_createUserWithPassword": {
+      "id": "mutation_createUserWithPassword",
+      "operationType": "MUTATION",
+      "name": "createUserWithPassword",
+      "description": "Creates a user with password.",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "id",
+            "value": "CreateUserWithPasswordInput"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "CreateUserWithPasswordResult"
+        }
+      }
+    },
+    "mutation_createUser": {
+      "id": "mutation_createUser",
+      "operationType": "MUTATION",
+      "name": "createUser",
+      "description": "Creates a user.",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "id",
+            "value": "CreateUserInput"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "CreateUserResult"
+        }
+      }
+    },
+    "mutation_addUserToStore": {
+      "id": "mutation_addUserToStore",
+      "operationType": "MUTATION",
+      "name": "addUserToStore",
+      "description": "Adds a user to a store.",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "id",
+            "value": "AddUserToStoreInput"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "AddUserToStoreResult"
+        }
+      }
+    },
+    "mutation_removeUserFromStore": {
+      "id": "mutation_removeUserFromStore",
+      "operationType": "MUTATION",
+      "name": "removeUserFromStore",
+      "description": "Removes user from a store.",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "id",
+            "value": "RemoveUserFromStoreInput"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "RemoveUserFromStoreResult"
+        }
+      }
+    },
+    "mutation_createEventSource": {
+      "id": "mutation_createEventSource",
+      "operationType": "MUTATION",
+      "name": "createEventSource",
+      "description": "Creates an Amazon EventSource.",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "id",
+            "value": "CreateEventSourceInput"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "CreateEventSourceResult"
+        }
+      }
+    },
+    "mutation_deleteEventSource": {
+      "id": "mutation_deleteEventSource",
+      "operationType": "MUTATION",
+      "name": "deleteEventSource",
+      "description": "Deletes an Amazon EventSource.",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "id",
+            "value": "DeleteEventSourceInput"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "DeleteEventSourceResult"
+        }
+      }
+    },
+    "mutation_addUsersToUserGroups": {
+      "id": "mutation_addUsersToUserGroups",
+      "operationType": "MUTATION",
+      "name": "addUsersToUserGroups",
+      "description": "Adds users to user groups.",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "id",
+            "value": "AddUsersToUserGroupsInput"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "AddUsersToUserGroupsResult"
+        }
+      }
+    },
+    "mutation_removeUsersFromUserGroup": {
+      "id": "mutation_removeUsersFromUserGroup",
+      "operationType": "MUTATION",
+      "name": "removeUsersFromUserGroup",
+      "description": "Removes users from a user group.",
+      "arguments": [
+        {
+          "name": "input",
+          "type": {
+            "type": "id",
+            "value": "RemoveUsersFromUserGroupInput"
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "RemoveUsersFromUserGroupResult"
+        }
+      }
+    }
+  },
+  "types": {
+    "Account": {
+      "name": "Account",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "accountInfo",
+            "valueType": {
+              "type": "id",
+              "value": "AccountInfo"
+            },
+            "description": "Provides account details."
+          },
+          {
+            "key": "apps",
+            "valueType": {
+              "type": "id",
+              "value": "AppsConnection"
+            },
+            "description": "Apps owned by the account."
+          },
+          {
+            "key": "checkout",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Checkout"
+              }
+            },
+            "description": "Allows for billing a Merchant for Products on a one-time or recurring basis."
+          },
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the object."
+          },
+          {
+            "key": "status",
+            "valueType": {
+              "type": "id",
+              "value": "Status"
+            },
+            "description": "Represents the status of an asynchronous operation's response."
+          },
+          {
+            "key": "stores",
+            "valueType": {
+              "type": "id",
+              "value": "StoreConnection"
+            },
+            "description": "The stores related to an account."
+          },
+          {
+            "key": "subscriptions",
+            "valueType": {
+              "type": "id",
+              "value": "SubscriptionConnection"
+            },
+            "description": "Subscriptions belonging to the account."
+          },
+          {
+            "key": "userGroups",
+            "valueType": {
+              "type": "id",
+              "value": "UserGroupConnection"
+            },
+            "description": "User groups belonging to the account."
+          },
+          {
+            "key": "users",
+            "valueType": {
+              "type": "id",
+              "value": "UserConnection"
+            },
+            "description": "Users belonging to the account."
+          }
+        ]
+      },
+      "description": "An account."
+    },
+    "AccountInfo": {
+      "name": "AccountInfo",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The name of an account."
+          }
+        ]
+      },
+      "description": "Account details."
+    },
+    "AccountMutations": {
+      "name": "AccountMutations",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "addUserToAccount",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "AddUserToAccountResult"
+              }
+            },
+            "description": "Adds a user to an account."
+          },
+          {
+            "key": "removeUserFromAccount",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "RemoveUserFromAccountResult"
+              }
+            },
+            "description": "Removes a user from an account and all associated entities."
+          }
+        ]
+      },
+      "description": "Account mutations."
+    },
+    "AddUserToAccountInput": {
+      "name": "AddUserToAccountInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "email",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The email of the user to be added to the account."
+          }
+        ]
+      }
+    },
+    "AddUserToAccountResult": {
+      "name": "AddUserToAccountResult",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "account",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Account"
+              }
+            },
+            "description": "An account the user was added to."
+          }
+        ]
+      }
+    },
+    "AddUserToStoreInput": {
+      "name": "AddUserToStoreInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "storeId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The store the user is to be added."
+          },
+          {
+            "key": "user",
+            "valueType": {
+              "type": "id",
+              "value": "UserIdentifierInput"
+            },
+            "description": "The user to be added to the store."
+          }
+        ]
+      }
+    },
+    "AddUserToStoreResult": {
+      "name": "AddUserToStoreResult",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "storeId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the object."
+          }
+        ]
+      }
+    },
+    "AddUsersToUserGroupsInput": {
+      "name": "AddUsersToUserGroupsInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "userIds",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The ID of the users."
+          },
+          {
+            "key": "userGroupIds",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The ID of the user groups where the users are to be added."
+          }
+        ]
+      }
+    },
+    "AddUsersToUserGroupsResult": {
+      "name": "AddUsersToUserGroupsResult",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "pollingId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID used to poll the results for the async request."
+          }
+        ]
+      }
+    },
+    "App": {
+      "name": "App",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the object."
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The app name."
+          },
+          {
+            "key": "eventSources",
+            "valueType": {
+              "type": "id",
+              "value": "AwsEventSourcesConnection"
+            },
+            "description": "Amazon EventSources."
+          }
+        ]
+      },
+      "description": "An application."
+    },
+    "AppMutations": {
+      "name": "AppMutations",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "createEventSource",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CreateEventSourceResult"
+              }
+            },
+            "description": "Creates an Amazon EventSource."
+          },
+          {
+            "key": "deleteEventSource",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "DeleteEventSourceResult"
+              }
+            },
+            "description": "Deletes an Amazon EventSource."
+          }
+        ]
+      },
+      "description": "App mutations."
+    },
+    "AppsConnection": {
+      "name": "AppsConnection",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "pageInfo",
+            "valueType": {
+              "type": "id",
+              "value": "PageInfo"
+            },
+            "description": "Information to aid in pagination."
+          },
+          {
+            "key": "edges",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "AppsEdge"
+                  }
+                }
+              }
+            },
+            "description": "A list of edges."
+          }
+        ]
+      },
+      "description": "A connection to a list of items."
+    },
+    "AppsEdge": {
+      "name": "AppsEdge",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "node",
+            "valueType": {
+              "type": "id",
+              "value": "App"
+            },
+            "description": "The item at the end of the edge."
+          },
+          {
+            "key": "cursor",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "A cursor for use in pagination."
+          }
+        ]
+      },
+      "description": "An edge in a connection."
+    },
+    "AwsEventSource": {
+      "name": "AwsEventSource",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of an object."
+          },
+          {
+            "key": "awsAccount",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "An Amazon EventSource account ID."
+          },
+          {
+            "key": "eventSourceName",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "An event source name."
+          },
+          {
+            "key": "eventSourceRegion",
+            "valueType": {
+              "type": "id",
+              "value": "AwsRegion"
+            },
+            "description": "The region of an event source."
+          },
+          {
+            "key": "arn",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "An Amazon EventSource resource name."
+          },
+          {
+            "key": "webhooksCount",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "Long",
+                "description": "The `Long` scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1."
+              }
+            },
+            "description": "Number of webhooks attached to an Amazon EventSource."
+          }
+        ]
+      },
+      "description": "An Amazon EventSource."
+    },
+    "AwsEventSourcesConnection": {
+      "name": "AwsEventSourcesConnection",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "pageInfo",
+            "valueType": {
+              "type": "id",
+              "value": "PageInfo"
+            },
+            "description": "Information to aid in pagination."
+          },
+          {
+            "key": "edges",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "AwsEventSourcesEdge"
+                  }
+                }
+              }
+            },
+            "description": "A list of edges."
+          }
+        ]
+      },
+      "description": "A connection to a list of items."
+    },
+    "AwsEventSourcesEdge": {
+      "name": "AwsEventSourcesEdge",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "node",
+            "valueType": {
+              "type": "id",
+              "value": "AwsEventSource"
+            },
+            "description": "The item at the end of the edge."
+          },
+          {
+            "key": "cursor",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "A cursor for use in pagination."
+          }
+        ]
+      },
+      "description": "An edge in a connection."
+    },
+    "AwsRegion": {
+      "name": "AwsRegion",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "AF_SOUTH_1",
+            "description": "af-south-1"
+          },
+          {
+            "value": "AP_EAST_1",
+            "description": "ap-east-1"
+          },
+          {
+            "value": "AP_NORTHEAST_1",
+            "description": "ap-northeast-1"
+          },
+          {
+            "value": "AP_NORTHEAST_2",
+            "description": "ap-northeast-2"
+          },
+          {
+            "value": "AP_NORTHEAST_3",
+            "description": "ap-northeast-3"
+          },
+          {
+            "value": "AP_SOUTHEAST_1",
+            "description": "ap-southeast-1"
+          },
+          {
+            "value": "AP_SOUTHEAST_2",
+            "description": "ap-southeast-2"
+          },
+          {
+            "value": "AP_SOUTHEAST_3",
+            "description": "ap-southeast-3"
+          },
+          {
+            "value": "AP_SOUTHEAST_4",
+            "description": "ap-southeast-4"
+          },
+          {
+            "value": "AP_SOUTH_1",
+            "description": "ap-south-1"
+          },
+          {
+            "value": "AP_SOUTH_2",
+            "description": "ap-south-2"
+          },
+          {
+            "value": "CA_CENTRAL_1",
+            "description": "ca-central-1"
+          },
+          {
+            "value": "EU_CENTRAL_1",
+            "description": "eu-central-1"
+          },
+          {
+            "value": "EU_CENTRAL_2",
+            "description": "eu-central-2"
+          },
+          {
+            "value": "EU_NORTH_1",
+            "description": "eu-north-1"
+          },
+          {
+            "value": "EU_SOUTH_1",
+            "description": "eu-south-1"
+          },
+          {
+            "value": "EU_SOUTH_2",
+            "description": "eu-south-2"
+          },
+          {
+            "value": "EU_WEST_1",
+            "description": "eu-west-1"
+          },
+          {
+            "value": "EU_WEST_2",
+            "description": "eu-west-2"
+          },
+          {
+            "value": "EU_WEST_3",
+            "description": "eu-west-3"
+          },
+          {
+            "value": "IL_CENTRAL_1",
+            "description": "il-central-1"
+          },
+          {
+            "value": "ME_CENTRAL_1",
+            "description": "me-central-1"
+          },
+          {
+            "value": "SA_EAST_1",
+            "description": "sa-east-1"
+          },
+          {
+            "value": "US_EAST_1",
+            "description": "us-east-1"
+          },
+          {
+            "value": "US_EAST_2",
+            "description": "us-east-2"
+          },
+          {
+            "value": "US_WEST_1",
+            "description": "us-west-1"
+          },
+          {
+            "value": "US_WEST_2",
+            "description": "us-west-2"
+          }
+        ]
+      },
+      "description": "The Amazon EventSource region."
+    },
+    "CancelSubscriptionInput": {
+      "name": "CancelSubscriptionInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the Subscription."
+          }
+        ]
+      }
+    },
+    "CancelSubscriptionResult": {
+      "name": "CancelSubscriptionResult",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "subscriptionId",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The ID of the Subscription."
+          },
+          {
+            "key": "cancelledAt",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "scalar",
+                  "name": "DateTime",
+                  "description": "ISO-8601 formatted date in UTC"
+                }
+              }
+            },
+            "description": "The date the subscription will be cancelled."
+          }
+        ]
+      }
+    },
+    "Checkout": {
+      "name": "Checkout",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the object."
+          },
+          {
+            "key": "accountId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The merchant's account UUID."
+          },
+          {
+            "key": "checkoutUrl",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The URL for redirecting the merchant to the BigCommerce hosted checkout page."
+          },
+          {
+            "key": "items",
+            "valueType": {
+              "type": "id",
+              "value": "CheckoutItemConnection"
+            },
+            "description": "The item(s) associated with the checkout."
+          },
+          {
+            "key": "status",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CheckoutStatus"
+              }
+            },
+            "description": "The current status of the checkout."
+          }
+        ]
+      },
+      "description": "A container for all information needed to charge a Merchant for products on a one-time or recurring basis."
+    },
+    "CheckoutItem": {
+      "name": "CheckoutItem",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "description",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "A description of this line item."
+          },
+          {
+            "key": "pricingPlan",
+            "valueType": {
+              "type": "id",
+              "value": "CheckoutItemPricingPlan"
+            },
+            "description": "The pricing plan denoting how to bill the Merchant for this Product."
+          },
+          {
+            "key": "product",
+            "valueType": {
+              "type": "id",
+              "value": "CheckoutItemProduct"
+            },
+            "description": "The product the Merchant will be entitled to after the Checkout is complete."
+          },
+          {
+            "key": "redirectUrl",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The URL used to redirect the Merchant after completing the Checkout."
+          },
+          {
+            "key": "scope",
+            "valueType": {
+              "type": "id",
+              "value": "CheckoutItemScope"
+            },
+            "description": "The scope for this Line Item (e.g. store, account)."
+          },
+          {
+            "key": "status",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CheckoutItemStatus"
+              }
+            },
+            "description": "The status of this line item."
+          },
+          {
+            "key": "subscriptionId",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "If available, the ID of the Subscription associated with this Line Item."
+          }
+        ]
+      },
+      "description": "Individual line items describing one-time or recurring charges to be billed to the Merchant upon completing the Checkout."
+    },
+    "CheckoutItemConnection": {
+      "name": "CheckoutItemConnection",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "pageInfo",
+            "valueType": {
+              "type": "id",
+              "value": "PageInfo"
+            },
+            "description": "Information to aid in pagination."
+          },
+          {
+            "key": "edges",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "CheckoutItemEdge"
+                  }
+                }
+              }
+            },
+            "description": "A list of edges."
+          }
+        ]
+      },
+      "description": "A connection to a list of items."
+    },
+    "CheckoutItemEdge": {
+      "name": "CheckoutItemEdge",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "node",
+            "valueType": {
+              "type": "id",
+              "value": "CheckoutItem"
+            },
+            "description": "The item at the end of the edge."
+          },
+          {
+            "key": "cursor",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "A cursor for use in pagination."
+          }
+        ]
+      },
+      "description": "An edge in a connection."
+    },
+    "CheckoutItemInput": {
+      "name": "CheckoutItemInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "description",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "A description the line item."
+          },
+          {
+            "key": "pricingPlan",
+            "valueType": {
+              "type": "id",
+              "value": "PricingPlanInput"
+            },
+            "description": "How to bill the Merchant for this Product."
+          },
+          {
+            "key": "product",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CheckoutItemProductInput"
+              }
+            },
+            "description": "The product the Merchant will be entitled to after the Checkout is complete."
+          },
+          {
+            "key": "redirectUrl",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "URL used to redirect the Merchant after successfully completing the Checkout."
+          },
+          {
+            "key": "scope",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CheckoutItemScopeInput"
+              }
+            },
+            "description": "The scope for this line item (e.g. store, account)."
+          },
+          {
+            "key": "subscriptionId",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "When left blank, a new subscription will be created upon successful completion of the Checkout. To create a Checkout for updating an existing subscription, include the subscription ID of the existing subscription, which will be updated upon successful completion of the Checkout."
+          }
+        ]
+      },
+      "description": "Input needed to create a CheckoutItem."
+    },
+    "CheckoutItemPricingInterval": {
+      "name": "CheckoutItemPricingInterval",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ANNUAL",
+            "description": "Charge the Merchant on a recurring basis each year on their Account's billing day."
+          },
+          {
+            "value": "MONTH",
+            "description": "Charge the Merchant on a recurring basis each month on their Account's billing day."
+          },
+          {
+            "value": "ONCE",
+            "description": "Charge the Merchant only one time, immediately."
+          },
+          {
+            "value": "QUARTER",
+            "description": "Charge the Merchant on a recurring basis each quarter on their Account's billing day."
+          },
+          {
+            "value": "SEMIANNUAL",
+            "description": "Charge the Merchant on a recurring basis every six months on their Account's billing day."
+          }
+        ]
+      },
+      "description": "The billing interval representing how often to charge the Merchant for this product."
+    },
+    "CheckoutItemPricingPlan": {
+      "name": "CheckoutItemPricingPlan",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "interval",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CheckoutItemPricingInterval"
+              }
+            },
+            "description": "The billing interval for the subscription."
+          },
+          {
+            "key": "price",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Money"
+              }
+            },
+            "description": "The amount to charge for each interval."
+          },
+          {
+            "key": "trialDays",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            },
+            "description": "Number of days to delay billing to offer a free trial period."
+          }
+        ]
+      },
+      "description": "The container for all pricing information."
+    },
+    "CheckoutItemProduct": {
+      "name": "CheckoutItemProduct",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The unique ID of the product."
+          },
+          {
+            "key": "productLevel",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "A description of the product level, if applicable (e.g. app tier for an application)."
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CheckoutItemProductType"
+              }
+            },
+            "description": "The type of product (e.g. APPLICATION)."
+          }
+        ]
+      },
+      "description": "The product the Merchant is purchasing."
+    },
+    "CheckoutItemProductInput": {
+      "name": "CheckoutItemProductInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Product's unique identifier."
+          },
+          {
+            "key": "productLevel",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "A description of the product level, if applicable. (e.g. app tier for an application)."
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CheckoutItemProductType"
+              }
+            },
+            "description": "The type of this product (e.g. APPLICATION)."
+          }
+        ]
+      },
+      "description": "The input information needed to set the CheckoutItemProduct on a CheckoutItem."
+    },
+    "CheckoutItemProductType": {
+      "name": "CheckoutItemProductType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "APPLICATION",
+            "description": "Type for applications available in the BigCommerce App Marketplace."
+          }
+        ]
+      },
+      "description": "The type of product."
+    },
+    "CheckoutItemScope": {
+      "name": "CheckoutItemScope",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The unique ID of the scope."
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CheckoutItemScopeType"
+              }
+            },
+            "description": "Where to scope access for this item (e.g. STORE)."
+          }
+        ]
+      },
+      "description": "The scope to which the purchase should be limited."
+    },
+    "CheckoutItemScopeInput": {
+      "name": "CheckoutItemScopeInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Scope's unique identifier."
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CheckoutItemScopeType"
+              }
+            },
+            "description": "Scope of access for the associated product (e.g. STORE)."
+          }
+        ]
+      },
+      "description": "The input information needed to set the CheckoutItemScope on a CheckoutItem."
+    },
+    "CheckoutItemScopeType": {
+      "name": "CheckoutItemScopeType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "STORE",
+            "description": "Limits access for the purchased product to a particular Store."
+          }
+        ]
+      },
+      "description": "The scope of access to be granted upon successful completion of the Checkout."
+    },
+    "CheckoutItemStatus": {
+      "name": "CheckoutItemStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "COMPLETE",
+            "description": "The Merchant has been invoiced and any necessary provisioning or Subscription updates have been completed."
+          },
+          {
+            "value": "PENDING",
+            "description": "This CheckoutItem has been created, but has not yet been accepted by the Merchant."
+          },
+          {
+            "value": "PROCESSING",
+            "description": "This CheckoutItem has been approved by the Merchant and BigCommerce is in the process of handling any provisioning or Subscription updates (if necessary)."
+          }
+        ]
+      },
+      "description": "The current status of the Checkout Item."
+    },
+    "CheckoutMutations": {
+      "name": "CheckoutMutations",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "createCheckout",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CreateCheckoutResult"
+              }
+            },
+            "description": "Creates a Checkout for a Merchant."
+          }
+        ]
+      },
+      "description": "Checkout mutations."
+    },
+    "CheckoutStatus": {
+      "name": "CheckoutStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "COMPLETE",
+            "description": "The Merchant has been invoiced and any necessary provisioning or Subscription updates have been completed."
+          },
+          {
+            "value": "PENDING",
+            "description": "This Checkout has been created, but has not yet been accepted by the Merchant."
+          },
+          {
+            "value": "PROCESSING",
+            "description": "This Checkout has been approved by the Merchant and BigCommerce is in the process of handling any provisioning or Subscription updates (if necessary)."
+          }
+        ]
+      },
+      "description": "The current status of the Checkout."
+    },
+    "CollectionInfo": {
+      "name": "CollectionInfo",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "totalItems",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "scalar",
+                  "name": "Long",
+                  "description": "The `Long` scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1."
+                }
+              }
+            },
+            "description": "The total number of items in the collection."
+          }
+        ]
+      },
+      "description": "Collection details."
+    },
+    "CreateCheckoutInput": {
+      "name": "CreateCheckoutInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "accountId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "Merchant's account UUID."
+          },
+          {
+            "key": "items",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "CheckoutItemInput"
+              }
+            },
+            "description": "Product and billing details used to create a Checkout for the Merchant."
+          }
+        ]
+      }
+    },
+    "CreateCheckoutResult": {
+      "name": "CreateCheckoutResult",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "checkout",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Checkout"
+              }
+            },
+            "description": "The Checkout that is created as a result of mutation."
+          }
+        ]
+      }
+    },
+    "CreateEventSourceInput": {
+      "name": "CreateEventSourceInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "appId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of an app."
+          },
+          {
+            "key": "awsAccount",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "An Amazon EventSource account ID."
+          },
+          {
+            "key": "eventSourceName",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "An event source name."
+          },
+          {
+            "key": "eventSourceRegion",
+            "valueType": {
+              "type": "id",
+              "value": "AwsRegion"
+            },
+            "description": "The region of an event source."
+          }
+        ]
+      }
+    },
+    "CreateEventSourceResult": {
+      "name": "CreateEventSourceResult",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "eventSource",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "AwsEventSource"
+              }
+            },
+            "description": "The Amazon EventSource created as a result of mutation."
+          }
+        ]
+      }
+    },
+    "CreateUserInput": {
+      "name": "CreateUserInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "email",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The email of the user to be added to the account."
+          },
+          {
+            "key": "firstName",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The first name of the user to be added to the account."
+          },
+          {
+            "key": "lastName",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The last name of the user to be added to the account."
+          },
+          {
+            "key": "locale",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The locale of the user to be added to the account."
+          }
+        ]
+      }
+    },
+    "CreateUserResult": {
+      "name": "CreateUserResult",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "user",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "User"
+              }
+            },
+            "description": "Created user."
+          }
+        ]
+      }
+    },
+    "CreateUserWithPasswordInput": {
+      "name": "CreateUserWithPasswordInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "email",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The email of the user to be added to the account."
+          },
+          {
+            "key": "firstName",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The first name of the user to be added to the account."
+          },
+          {
+            "key": "lastName",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The last name of the user to be added to the account."
+          },
+          {
+            "key": "locale",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The locale of the user to be added to the account."
+          },
+          {
+            "key": "password",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The password of the user to be added to the account."
+          },
+          {
+            "key": "passwordConfirmation",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "Enter password again to confirm."
+          }
+        ]
+      }
+    },
+    "CreateUserWithPasswordResult": {
+      "name": "CreateUserWithPasswordResult",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "user",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "User"
+              }
+            },
+            "description": "Created user."
+          }
+        ]
+      }
+    },
+    "CurrencyCode": {
+      "name": "CurrencyCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "AED"
+          },
+          {
+            "value": "AFN"
+          },
+          {
+            "value": "ALL"
+          },
+          {
+            "value": "AMD"
+          },
+          {
+            "value": "ANG"
+          },
+          {
+            "value": "AOA"
+          },
+          {
+            "value": "ARS"
+          },
+          {
+            "value": "AUD"
+          },
+          {
+            "value": "AWG"
+          },
+          {
+            "value": "AZN"
+          },
+          {
+            "value": "BAM"
+          },
+          {
+            "value": "BBD"
+          },
+          {
+            "value": "BDT"
+          },
+          {
+            "value": "BGN"
+          },
+          {
+            "value": "BHD"
+          },
+          {
+            "value": "BIF"
+          },
+          {
+            "value": "BMD"
+          },
+          {
+            "value": "BND"
+          },
+          {
+            "value": "BOB"
+          },
+          {
+            "value": "BOV"
+          },
+          {
+            "value": "BRL"
+          },
+          {
+            "value": "BSD"
+          },
+          {
+            "value": "BTN"
+          },
+          {
+            "value": "BWP"
+          },
+          {
+            "value": "BYN"
+          },
+          {
+            "value": "BYR"
+          },
+          {
+            "value": "BZD"
+          },
+          {
+            "value": "CAD"
+          },
+          {
+            "value": "CDF"
+          },
+          {
+            "value": "CHE"
+          },
+          {
+            "value": "CHF"
+          },
+          {
+            "value": "CHW"
+          },
+          {
+            "value": "CLF"
+          },
+          {
+            "value": "CLP"
+          },
+          {
+            "value": "CNY"
+          },
+          {
+            "value": "COP"
+          },
+          {
+            "value": "COU"
+          },
+          {
+            "value": "CRC"
+          },
+          {
+            "value": "CUC"
+          },
+          {
+            "value": "CUP"
+          },
+          {
+            "value": "CVE"
+          },
+          {
+            "value": "CZK"
+          },
+          {
+            "value": "DJF"
+          },
+          {
+            "value": "DKK"
+          },
+          {
+            "value": "DOP"
+          },
+          {
+            "value": "DZD"
+          },
+          {
+            "value": "EGP"
+          },
+          {
+            "value": "ERN"
+          },
+          {
+            "value": "ETB"
+          },
+          {
+            "value": "EUR"
+          },
+          {
+            "value": "FJD"
+          },
+          {
+            "value": "FKP"
+          },
+          {
+            "value": "GBP"
+          },
+          {
+            "value": "GEL"
+          },
+          {
+            "value": "GHS"
+          },
+          {
+            "value": "GIP"
+          },
+          {
+            "value": "GMD"
+          },
+          {
+            "value": "GNF"
+          },
+          {
+            "value": "GTQ"
+          },
+          {
+            "value": "GYD"
+          },
+          {
+            "value": "HKD"
+          },
+          {
+            "value": "HNL"
+          },
+          {
+            "value": "HRK"
+          },
+          {
+            "value": "HTG"
+          },
+          {
+            "value": "HUF"
+          },
+          {
+            "value": "IDR"
+          },
+          {
+            "value": "ILS"
+          },
+          {
+            "value": "INR"
+          },
+          {
+            "value": "IQD"
+          },
+          {
+            "value": "IRR"
+          },
+          {
+            "value": "ISK"
+          },
+          {
+            "value": "JMD"
+          },
+          {
+            "value": "JOD"
+          },
+          {
+            "value": "JPY"
+          },
+          {
+            "value": "KES"
+          },
+          {
+            "value": "KGS"
+          },
+          {
+            "value": "KHR"
+          },
+          {
+            "value": "KMF"
+          },
+          {
+            "value": "KPW"
+          },
+          {
+            "value": "KRW"
+          },
+          {
+            "value": "KWD"
+          },
+          {
+            "value": "KYD"
+          },
+          {
+            "value": "KZT"
+          },
+          {
+            "value": "LAK"
+          },
+          {
+            "value": "LBP"
+          },
+          {
+            "value": "LKR"
+          },
+          {
+            "value": "LRD"
+          },
+          {
+            "value": "LSL"
+          },
+          {
+            "value": "LYD"
+          },
+          {
+            "value": "MAD"
+          },
+          {
+            "value": "MDL"
+          },
+          {
+            "value": "MGA"
+          },
+          {
+            "value": "MKD"
+          },
+          {
+            "value": "MMK"
+          },
+          {
+            "value": "MNT"
+          },
+          {
+            "value": "MOP"
+          },
+          {
+            "value": "MRO"
+          },
+          {
+            "value": "MRU"
+          },
+          {
+            "value": "MUR"
+          },
+          {
+            "value": "MVR"
+          },
+          {
+            "value": "MWK"
+          },
+          {
+            "value": "MXN"
+          },
+          {
+            "value": "MYR"
+          },
+          {
+            "value": "MZN"
+          },
+          {
+            "value": "NAD"
+          },
+          {
+            "value": "NGN"
+          },
+          {
+            "value": "NIO"
+          },
+          {
+            "value": "NOK"
+          },
+          {
+            "value": "NPR"
+          },
+          {
+            "value": "NZD"
+          },
+          {
+            "value": "OMR"
+          },
+          {
+            "value": "PAB"
+          },
+          {
+            "value": "PEN"
+          },
+          {
+            "value": "PGK"
+          },
+          {
+            "value": "PHP"
+          },
+          {
+            "value": "PKR"
+          },
+          {
+            "value": "PLN"
+          },
+          {
+            "value": "PYG"
+          },
+          {
+            "value": "QAR"
+          },
+          {
+            "value": "RON"
+          },
+          {
+            "value": "RSD"
+          },
+          {
+            "value": "RUB"
+          },
+          {
+            "value": "RWF"
+          },
+          {
+            "value": "SAR"
+          },
+          {
+            "value": "SBD"
+          },
+          {
+            "value": "SCR"
+          },
+          {
+            "value": "SDG"
+          },
+          {
+            "value": "SEK"
+          },
+          {
+            "value": "SGD"
+          },
+          {
+            "value": "SHP"
+          },
+          {
+            "value": "SLL"
+          },
+          {
+            "value": "SOS"
+          },
+          {
+            "value": "SRD"
+          },
+          {
+            "value": "SSP"
+          },
+          {
+            "value": "STD"
+          },
+          {
+            "value": "STN"
+          },
+          {
+            "value": "SVC"
+          },
+          {
+            "value": "SYP"
+          },
+          {
+            "value": "SZL"
+          },
+          {
+            "value": "THB"
+          },
+          {
+            "value": "TJS"
+          },
+          {
+            "value": "TMT"
+          },
+          {
+            "value": "TND"
+          },
+          {
+            "value": "TOP"
+          },
+          {
+            "value": "TRY"
+          },
+          {
+            "value": "TTD"
+          },
+          {
+            "value": "TWD"
+          },
+          {
+            "value": "TZS"
+          },
+          {
+            "value": "UAH"
+          },
+          {
+            "value": "UGX"
+          },
+          {
+            "value": "USD"
+          },
+          {
+            "value": "USN"
+          },
+          {
+            "value": "UYI"
+          },
+          {
+            "value": "UYU"
+          },
+          {
+            "value": "UZS"
+          },
+          {
+            "value": "VEF"
+          },
+          {
+            "value": "VES"
+          },
+          {
+            "value": "VND"
+          },
+          {
+            "value": "VUV"
+          },
+          {
+            "value": "WST"
+          },
+          {
+            "value": "XAF"
+          },
+          {
+            "value": "XAG"
+          },
+          {
+            "value": "XAU"
+          },
+          {
+            "value": "XBA"
+          },
+          {
+            "value": "XBB"
+          },
+          {
+            "value": "XBC"
+          },
+          {
+            "value": "XBD"
+          },
+          {
+            "value": "XCD"
+          },
+          {
+            "value": "XDR"
+          },
+          {
+            "value": "XOF"
+          },
+          {
+            "value": "XPD"
+          },
+          {
+            "value": "XPF"
+          },
+          {
+            "value": "XPT"
+          },
+          {
+            "value": "XSU"
+          },
+          {
+            "value": "XTS"
+          },
+          {
+            "value": "XUA"
+          },
+          {
+            "value": "XXX"
+          },
+          {
+            "value": "YER"
+          },
+          {
+            "value": "ZAR"
+          },
+          {
+            "value": "ZMW"
+          },
+          {
+            "value": "ZWL"
+          }
+        ]
+      },
+      "description": "Currency Code."
+    },
+    "DeleteEventSourceInput": {
+      "name": "DeleteEventSourceInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "appId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of an app."
+          },
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the object."
+          }
+        ]
+      }
+    },
+    "DeleteEventSourceResult": {
+      "name": "DeleteEventSourceResult",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "deletedEventSourceId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the object."
+          },
+          {
+            "key": "affectedWebhooksIds",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The IDs of affected webhooks by event source delete mutation. Their status is automatically changed to disabled."
+          }
+        ]
+      }
+    },
+    "Money": {
+      "name": "Money",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "currencyCode",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "Currency code of the current money."
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "BigDecimal",
+                "description": "The `BigDecimal` scalar type represents signed fractional values with arbitrary precision."
+              }
+            },
+            "description": "The amount of money."
+          }
+        ]
+      },
+      "description": "A money object - includes currency code and a money amount."
+    },
+    "MoneyInput": {
+      "name": "MoneyInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "currencyCode",
+            "valueType": {
+              "type": "id",
+              "value": "CurrencyCode"
+            },
+            "description": "The ISO 4217 currency code."
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "BigDecimal",
+                "description": "The `BigDecimal` scalar type represents signed fractional values with arbitrary precision."
+              }
+            },
+            "description": "The monetary amount. Must be a positive decimal number. For example, 10.10 with a currency code of USD represents $10.10."
+          }
+        ]
+      },
+      "description": "Input to create a Money object."
+    },
+    "Node": {
+      "name": "Node",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "Checkout",
+            "displayName": "Checkout",
+            "type": {
+              "type": "id",
+              "value": "Checkout"
+            },
+            "description": "A container for all information needed to charge a Merchant for products on a one-time or recurring basis."
+          },
+          {
+            "typeName": "Subscription",
+            "displayName": "Subscription",
+            "type": {
+              "type": "id",
+              "value": "Subscription"
+            },
+            "description": "A one-time or recurring charge for a Product created as a result of a Merchant completing a Checkout."
+          }
+        ]
+      },
+      "description": "An object with an ID."
+    },
+    "PageInfo": {
+      "name": "PageInfo",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "hasNextPage",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            },
+            "description": "When paginating forwards, are there more items?"
+          },
+          {
+            "key": "hasPreviousPage",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            },
+            "description": "When paginating backwards, are there more items?"
+          },
+          {
+            "key": "startCursor",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "When paginating backwards, the cursor to continue."
+          },
+          {
+            "key": "endCursor",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "When paginating forwards, the cursor to continue."
+          }
+        ]
+      },
+      "description": "Information about pagination in a connection."
+    },
+    "PricingPlanInput": {
+      "name": "PricingPlanInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "interval",
+            "valueType": {
+              "type": "id",
+              "value": "CheckoutItemPricingInterval"
+            },
+            "description": "The billing interval for this line item (e.g. ONCE, MONTH, etc)."
+          },
+          {
+            "key": "price",
+            "valueType": {
+              "type": "id",
+              "value": "MoneyInput"
+            },
+            "description": "The price to charge the merchant per billing interval."
+          },
+          {
+            "key": "trialDays",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            },
+            "description": "The number of days to delay billing and allow for a free trial."
+          }
+        ]
+      },
+      "description": "The inputs needed to set the PricingPlan when creating a CheckoutItem."
+    },
+    "RemoveUserFromAccountInput": {
+      "name": "RemoveUserFromAccountInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "email",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The email of the user to be removed from the account."
+          },
+          {
+            "key": "userId",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The id of the user to be removed."
+          }
+        ]
+      },
+      "description": "Input needed to remove a user from an account."
+    },
+    "RemoveUserFromAccountResult": {
+      "name": "RemoveUserFromAccountResult",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "accountId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the object."
+          },
+          {
+            "key": "userId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the object."
+          }
+        ]
+      }
+    },
+    "RemoveUserFromStoreInput": {
+      "name": "RemoveUserFromStoreInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "storeId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The store from which user is to be removed."
+          },
+          {
+            "key": "userId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The user to be removed."
+          }
+        ]
+      }
+    },
+    "RemoveUserFromStoreResult": {
+      "name": "RemoveUserFromStoreResult",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "storeId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The store from which the user is removed from."
+          },
+          {
+            "key": "user",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "User"
+              }
+            },
+            "description": "Removed user."
+          }
+        ]
+      }
+    },
+    "RemoveUsersFromUserGroupInput": {
+      "name": "RemoveUsersFromUserGroupInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "userIds",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The ID of the users."
+          },
+          {
+            "key": "userGroupId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the user group."
+          }
+        ]
+      }
+    },
+    "RemoveUsersFromUserGroupResult": {
+      "name": "RemoveUsersFromUserGroupResult",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "users",
+            "valueType": {
+              "type": "id",
+              "value": "UserConnection"
+            },
+            "description": "The users removed from the user group."
+          },
+          {
+            "key": "pollingId",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The ID used to poll the results for the async request."
+          }
+        ]
+      }
+    },
+    "Status": {
+      "name": "Status",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "addUsersToUserGroups",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "StoreStatus"
+              }
+            },
+            "description": "Get the status for a store for add users to user groups operation."
+          }
+        ]
+      },
+      "description": "Represents the status of an asynchronous operation's response."
+    },
+    "Store": {
+      "name": "Store",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the object."
+          },
+          {
+            "key": "apps",
+            "valueType": {
+              "type": "id",
+              "value": "AppsConnection"
+            },
+            "description": "The list of store apps."
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The store name for the store."
+          },
+          {
+            "key": "storeHash",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The store hash for the store."
+          },
+          {
+            "key": "users",
+            "valueType": {
+              "type": "id",
+              "value": "StoreUserConnection"
+            },
+            "description": "Users belonging to the store."
+          }
+        ]
+      },
+      "description": "A store related to an account."
+    },
+    "StoreConnection": {
+      "name": "StoreConnection",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "pageInfo",
+            "valueType": {
+              "type": "id",
+              "value": "PageInfo"
+            },
+            "description": "Information to aid in pagination."
+          },
+          {
+            "key": "edges",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "StoreEdge"
+                  }
+                }
+              }
+            },
+            "description": "A list of edges."
+          }
+        ]
+      },
+      "description": "A connection to a list of items."
+    },
+    "StoreEdge": {
+      "name": "StoreEdge",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "node",
+            "valueType": {
+              "type": "id",
+              "value": "Store"
+            },
+            "description": "The item at the end of the edge."
+          },
+          {
+            "key": "cursor",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "A cursor for use in pagination."
+          }
+        ]
+      },
+      "description": "An edge in a connection."
+    },
+    "StoreFilterInput": {
+      "name": "StoreFilterInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "ids",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "description": "The ID of the stores."
+          },
+          {
+            "key": "storeHashes",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "description": "The store hashes."
+          }
+        ]
+      },
+      "description": "The input needed to filter stores."
+    },
+    "StoreStatus": {
+      "name": "StoreStatus",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "store",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The store hash."
+          },
+          {
+            "key": "status",
+            "valueType": {
+              "type": "id",
+              "value": "StoreStatusEnum"
+            },
+            "description": "The status of the store."
+          }
+        ]
+      },
+      "description": "The status of the store."
+    },
+    "StoreStatusEnum": {
+      "name": "StoreStatusEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ACCEPTED",
+            "description": "The operation is in progress and not yet completed."
+          },
+          {
+            "value": "FAILED",
+            "description": "The operation was a failure."
+          },
+          {
+            "value": "SUCCESS",
+            "description": "The operation was a success."
+          }
+        ]
+      },
+      "description": "Represents the status of an asynchronous operation for a store."
+    },
+    "StoreUser": {
+      "name": "StoreUser",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the object."
+          },
+          {
+            "key": "apps",
+            "valueType": {
+              "type": "id",
+              "value": "AppsConnection"
+            },
+            "description": "Apps accessible by the user on the store."
+          },
+          {
+            "key": "email",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The email for the user."
+          },
+          {
+            "key": "firstName",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "First name."
+          },
+          {
+            "key": "lastLoginAt",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "scalar",
+                  "name": "DateTime",
+                  "description": "ISO-8601 formatted date in UTC"
+                }
+              }
+            },
+            "description": "When the user last logged in."
+          },
+          {
+            "key": "lastName",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "Last name."
+          },
+          {
+            "key": "locale",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "User preferred locale."
+          },
+          {
+            "key": "permissions",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The permissions for the user on the store."
+          },
+          {
+            "key": "status",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "StoreUserStatus"
+              }
+            },
+            "description": "Current status of the user for the store."
+          },
+          {
+            "key": "updatedAt",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "scalar",
+                  "name": "DateTime",
+                  "description": "ISO-8601 formatted date in UTC"
+                }
+              }
+            },
+            "description": "When was the user last updated."
+          }
+        ]
+      },
+      "description": "A user belonging to a store."
+    },
+    "StoreUserConnection": {
+      "name": "StoreUserConnection",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "pageInfo",
+            "valueType": {
+              "type": "id",
+              "value": "PageInfo"
+            },
+            "description": "Information to aid in pagination."
+          },
+          {
+            "key": "edges",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "StoreUserEdge"
+                  }
+                }
+              }
+            },
+            "description": "A list of edges."
+          },
+          {
+            "key": "collectionInfo",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CollectionInfo"
+              }
+            },
+            "description": "Collection details."
+          }
+        ]
+      },
+      "description": "A connection to a list of items."
+    },
+    "StoreUserEdge": {
+      "name": "StoreUserEdge",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "node",
+            "valueType": {
+              "type": "id",
+              "value": "StoreUser"
+            },
+            "description": "The item at the end of the edge."
+          },
+          {
+            "key": "cursor",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "A cursor for use in pagination."
+          }
+        ]
+      },
+      "description": "An edge in a connection."
+    },
+    "StoreUserStatus": {
+      "name": "StoreUserStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ACTIVE",
+            "description": "The user is active."
+          },
+          {
+            "value": "INACTIVE",
+            "description": "The user is inactive."
+          }
+        ]
+      },
+      "description": "The status of the user on the store."
+    },
+    "Subscription": {
+      "name": "Subscription",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the object."
+          },
+          {
+            "key": "accountId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "ID of the account associated with the subscription."
+          },
+          {
+            "key": "activationDate",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "DateTime",
+                "description": "ISO-8601 formatted date in UTC"
+              }
+            },
+            "description": "The date when the Subscription becomes active, ending any trial period, and billing the Merchant for the first time."
+          },
+          {
+            "key": "billingInterval",
+            "valueType": {
+              "type": "id",
+              "value": "SubscriptionBillingInterval"
+            },
+            "description": "The frequency of charges for the Merchant."
+          },
+          {
+            "key": "createdAt",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "DateTime",
+                "description": "ISO-8601 formatted date in UTC"
+              }
+            },
+            "description": "The date the subscription was created."
+          },
+          {
+            "key": "currentPeriodEnd",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "scalar",
+                  "name": "DateTime",
+                  "description": "ISO-8601 formatted date in UTC"
+                }
+              }
+            },
+            "description": "The end of the current billing interval for the Merchant."
+          },
+          {
+            "key": "pricePerInterval",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Money"
+              }
+            },
+            "description": "The price the Merchant pays each billing interval."
+          },
+          {
+            "key": "product",
+            "valueType": {
+              "type": "id",
+              "value": "SubscriptionProduct"
+            },
+            "description": "The product the Merchant is entitled to with this Subscription."
+          },
+          {
+            "key": "status",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "SubscriptionStatus"
+              }
+            },
+            "description": "The status of this subscription."
+          },
+          {
+            "key": "scope",
+            "valueType": {
+              "type": "id",
+              "value": "SubscriptionScope"
+            },
+            "description": "The scope of the subscription."
+          },
+          {
+            "key": "updatedAt",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "DateTime",
+                "description": "ISO-8601 formatted date in UTC"
+              }
+            },
+            "description": "The date the subscription was last updated."
+          }
+        ]
+      },
+      "description": "A one-time or recurring charge for a Product created as a result of a Merchant completing a Checkout."
+    },
+    "SubscriptionBillingInterval": {
+      "name": "SubscriptionBillingInterval",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ANNUAL",
+            "description": "The Merchant will be billed on a recurring basis each year on their Account's billing day."
+          },
+          {
+            "value": "MONTH",
+            "description": "The Merchant will be billed on a recurring basis each month on their Account's billing day."
+          },
+          {
+            "value": "NONE",
+            "description": "The Merchant was billed one time, at creation, and will not charge on a recurring basis."
+          },
+          {
+            "value": "ONCE",
+            "description": "The Merchant will be billed only once."
+          },
+          {
+            "value": "QUARTER",
+            "description": "The Merchant will be billed on a recurring basis each quarter on their Account's billing day."
+          },
+          {
+            "value": "SEMIANNUAL",
+            "description": "The Merchant will be billed on a recurring basis every six months on their Account's billing day."
+          }
+        ]
+      },
+      "description": "The frequency of charges for a Merchant."
+    },
+    "SubscriptionConnection": {
+      "name": "SubscriptionConnection",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "pageInfo",
+            "valueType": {
+              "type": "id",
+              "value": "PageInfo"
+            },
+            "description": "Information to aid in pagination."
+          },
+          {
+            "key": "edges",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "SubscriptionEdge"
+                  }
+                }
+              }
+            },
+            "description": "A list of subscription edges."
+          }
+        ]
+      },
+      "description": "A connection to a list of subscriptions."
+    },
+    "SubscriptionEdge": {
+      "name": "SubscriptionEdge",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "node",
+            "valueType": {
+              "type": "id",
+              "value": "Subscription"
+            },
+            "description": "The item at the end of the edge."
+          },
+          {
+            "key": "cursor",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "A cursor for use in pagination."
+          }
+        ]
+      },
+      "description": "An edge in a connection."
+    },
+    "SubscriptionFiltersInput": {
+      "name": "SubscriptionFiltersInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "ids",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "description": "A list of subscription IDs for filtering the query."
+          },
+          {
+            "key": "productId",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "A product ID for filtering the query."
+          },
+          {
+            "key": "productType",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "SubscriptionProductType"
+              }
+            },
+            "description": "A product type for filtering the query."
+          },
+          {
+            "key": "scopeId",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "A scope ID for filtering the query."
+          },
+          {
+            "key": "scopeType",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "SubscriptionScopeType"
+              }
+            },
+            "description": "A scope type for filtering the query."
+          },
+          {
+            "key": "status",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "SubscriptionStatus"
+              }
+            },
+            "description": "A status for filtering the query."
+          },
+          {
+            "key": "updatedAfter",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "scalar",
+                  "name": "DateTime",
+                  "description": "ISO-8601 formatted date in UTC"
+                }
+              }
+            },
+            "description": "A date for filtering the query."
+          }
+        ]
+      }
+    },
+    "SubscriptionMutations": {
+      "name": "SubscriptionMutations",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "cancelSubscription",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CancelSubscriptionResult"
+              }
+            },
+            "description": "Cancels a Subscription for a Merchant."
+          }
+        ]
+      },
+      "description": "Subscription mutations."
+    },
+    "SubscriptionProduct": {
+      "name": "SubscriptionProduct",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The unique ID of the product."
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "SubscriptionProductType"
+              }
+            },
+            "description": "The type of product (e.g. APP)."
+          },
+          {
+            "key": "productLevel",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "A description of the product level, if applicable (e.g. app tier for an application)."
+          }
+        ]
+      },
+      "description": "The product the Merchant is entitled to with this Subscription."
+    },
+    "SubscriptionProductType": {
+      "name": "SubscriptionProductType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "APPLICATION",
+            "description": "Type for applications available in the BigCommerce App Marketplace."
+          },
+          {
+            "value": "NONE",
+            "description": "This product type is not supported"
+          }
+        ]
+      },
+      "description": "The product the Merchant purchased."
+    },
+    "SubscriptionScope": {
+      "name": "SubscriptionScope",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The unique ID of the scope."
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "SubscriptionScopeType"
+              }
+            },
+            "description": "The type of scope (e.g. STORE)."
+          }
+        ]
+      },
+      "description": "The scope of the subscription."
+    },
+    "SubscriptionScopeType": {
+      "name": "SubscriptionScopeType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "STORE",
+            "description": "The subscription is scoped to a store."
+          }
+        ]
+      },
+      "description": "The type of scope of the subscription."
+    },
+    "SubscriptionStatus": {
+      "name": "SubscriptionStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ACTIVE",
+            "description": "The Subscription is active and will continue billing the Merchant according to its pricing plan."
+          },
+          {
+            "value": "CANCELLED",
+            "description": "The Subscription has been cancelled and is no longer billing the Merchant."
+          },
+          {
+            "value": "SUSPENDED",
+            "description": "The Subscription has been suspended. The Merchant is no longer being billing according to the pricing plan. However, this Subscription may be reactivated."
+          }
+        ]
+      },
+      "description": "The current status of the Subscription."
+    },
+    "System": {
+      "name": "System",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "time",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "scalar",
+                "name": "Long",
+                "description": "The `Long` scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1."
+              }
+            },
+            "description": "The current time."
+          }
+        ]
+      },
+      "description": "System settings."
+    },
+    "TargetByUserGroup": {
+      "name": "TargetByUserGroup",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the object."
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "TargetType"
+              }
+            },
+            "description": "The type of the target."
+          }
+        ]
+      },
+      "description": "A target belonging to a user group."
+    },
+    "TargetConnection": {
+      "name": "TargetConnection",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "pageInfo",
+            "valueType": {
+              "type": "id",
+              "value": "PageInfo"
+            },
+            "description": "Information to aid in pagination."
+          },
+          {
+            "key": "edges",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TargetEdge"
+                  }
+                }
+              }
+            },
+            "description": "A list of edges."
+          },
+          {
+            "key": "collectionInfo",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CollectionInfo"
+              }
+            },
+            "description": "Collection details."
+          }
+        ]
+      },
+      "description": "A connection to a list of targets."
+    },
+    "TargetEdge": {
+      "name": "TargetEdge",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "node",
+            "valueType": {
+              "type": "id",
+              "value": "TargetByUserGroup"
+            },
+            "description": "The item at the end of the edge."
+          },
+          {
+            "key": "cursor",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "A cursor for use in pagination."
+          }
+        ]
+      },
+      "description": "An edge in a connection."
+    },
+    "TargetType": {
+      "name": "TargetType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ACCOUNT",
+            "description": "Target is an account."
+          },
+          {
+            "value": "NONE",
+            "description": "No identifiable target."
+          },
+          {
+            "value": "STORE",
+            "description": "Target is a store."
+          }
+        ]
+      },
+      "description": "The type of target."
+    },
+    "User": {
+      "name": "User",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the object."
+          },
+          {
+            "key": "email",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The email for the user."
+          },
+          {
+            "key": "firstName",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "First name."
+          },
+          {
+            "key": "lastName",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "Last name."
+          },
+          {
+            "key": "locale",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "User preferred locale."
+          },
+          {
+            "key": "userGroups",
+            "valueType": {
+              "type": "id",
+              "value": "UserGroupByUserConnection"
+            },
+            "description": "User groups the user belongs to."
+          }
+        ]
+      },
+      "description": "A user belonging to an account."
+    },
+    "UserConnection": {
+      "name": "UserConnection",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "pageInfo",
+            "valueType": {
+              "type": "id",
+              "value": "PageInfo"
+            },
+            "description": "Information to aid in pagination."
+          },
+          {
+            "key": "edges",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UserEdge"
+                  }
+                }
+              }
+            },
+            "description": "A list of edges."
+          }
+        ]
+      },
+      "description": "A connection to a list of items."
+    },
+    "UserEdge": {
+      "name": "UserEdge",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "node",
+            "valueType": {
+              "type": "id",
+              "value": "User"
+            },
+            "description": "The item at the end of the edge."
+          },
+          {
+            "key": "cursor",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "A cursor for use in pagination."
+          }
+        ]
+      },
+      "description": "An edge in a connection."
+    },
+    "UserGroup": {
+      "name": "UserGroup",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the object."
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The name of the user group."
+          },
+          {
+            "key": "description",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The description of the user group."
+          },
+          {
+            "key": "users",
+            "valueType": {
+              "type": "id",
+              "value": "UserConnection"
+            },
+            "description": "The users belonging to a user group."
+          },
+          {
+            "key": "targets",
+            "valueType": {
+              "type": "id",
+              "value": "TargetConnection"
+            },
+            "description": "The targets belonging to a user group."
+          }
+        ]
+      },
+      "description": "A user group belonging to an account."
+    },
+    "UserGroupByUser": {
+      "name": "UserGroupByUser",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The ID of the object."
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The name of the user group."
+          },
+          {
+            "key": "description",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The description of the user group."
+          }
+        ]
+      },
+      "description": "A user group belonging to a user."
+    },
+    "UserGroupByUserConnection": {
+      "name": "UserGroupByUserConnection",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "pageInfo",
+            "valueType": {
+              "type": "id",
+              "value": "PageInfo"
+            },
+            "description": "Information to aid in pagination."
+          },
+          {
+            "key": "edges",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UserGroupByUserEdge"
+                  }
+                }
+              }
+            },
+            "description": "A list of edges."
+          },
+          {
+            "key": "collectionInfo",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CollectionInfo"
+              }
+            },
+            "description": "Collection details."
+          }
+        ]
+      },
+      "description": "A connection to a list of items."
+    },
+    "UserGroupByUserEdge": {
+      "name": "UserGroupByUserEdge",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "node",
+            "valueType": {
+              "type": "id",
+              "value": "UserGroupByUser"
+            },
+            "description": "The item at the end of the edge."
+          },
+          {
+            "key": "cursor",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "A cursor for use in pagination."
+          }
+        ]
+      },
+      "description": "An edge in a connection."
+    },
+    "UserGroupConnection": {
+      "name": "UserGroupConnection",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "pageInfo",
+            "valueType": {
+              "type": "id",
+              "value": "PageInfo"
+            },
+            "description": "Information to aid in pagination."
+          },
+          {
+            "key": "edges",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UserGroupEdge"
+                  }
+                }
+              }
+            },
+            "description": "A list of edges."
+          },
+          {
+            "key": "collectionInfo",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CollectionInfo"
+              }
+            },
+            "description": "Collection details."
+          }
+        ]
+      },
+      "description": "A connection to a list of items."
+    },
+    "UserGroupEdge": {
+      "name": "UserGroupEdge",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "node",
+            "valueType": {
+              "type": "id",
+              "value": "UserGroup"
+            },
+            "description": "The item at the end of the edge."
+          },
+          {
+            "key": "cursor",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "A cursor for use in pagination."
+          }
+        ]
+      },
+      "description": "An edge in a connection."
+    },
+    "UserGroupMutations": {
+      "name": "UserGroupMutations",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "addUsersToUserGroups",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "AddUsersToUserGroupsResult"
+              }
+            },
+            "description": "Adds users to user groups."
+          },
+          {
+            "key": "removeUsersFromUserGroup",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "RemoveUsersFromUserGroupResult"
+              }
+            },
+            "description": "Removes users from a user group."
+          }
+        ]
+      },
+      "description": "User Group mutations."
+    },
+    "UserIdentifierInput": {
+      "name": "UserIdentifierInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "email",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The email of the user to be added to the store."
+          },
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The ID of the user to be added."
+          }
+        ]
+      },
+      "description": "The user to add to the store."
+    },
+    "UserMutations": {
+      "name": "UserMutations",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "createUserWithPassword",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CreateUserWithPasswordResult"
+              }
+            },
+            "description": "Creates a user with password."
+          },
+          {
+            "key": "createUser",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CreateUserResult"
+              }
+            },
+            "description": "Creates a user."
+          },
+          {
+            "key": "addUserToStore",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "AddUserToStoreResult"
+              }
+            },
+            "description": "Adds a user to a store."
+          },
+          {
+            "key": "removeUserFromStore",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "RemoveUserFromStoreResult"
+              }
+            },
+            "description": "Removes user from a store."
+          }
+        ]
+      },
+      "description": "User mutations."
+    }
+  }
+}

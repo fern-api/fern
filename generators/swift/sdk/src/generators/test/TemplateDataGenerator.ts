@@ -2,9 +2,9 @@ import { assertDefined, assertNever } from "@fern-api/core-utils";
 import { TestTemplateFileId } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator, EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
-import { dynamic, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpointSnippetRequest";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpointSnippetRequest.js";
 
 export declare namespace TemplateDataGenerator {
     interface Args {
@@ -14,7 +14,7 @@ export declare namespace TemplateDataGenerator {
 
 export class TemplateDataGenerator {
     private readonly context: SdkGeneratorContext;
-    private readonly dynamicIr: dynamic.DynamicIntermediateRepresentation;
+    private readonly dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private readonly dynamicSnippetsGenerator: DynamicSnippetsGenerator;
     private readonly endpointSnippetGenerator: EndpointSnippetGenerator;
 
@@ -41,6 +41,8 @@ export class TemplateDataGenerator {
                 return this.generateTemplateDataForClientError();
             case "HTTPClient":
                 return this.generateTemplateDataForHTTPClient();
+            case "ClientConfig":
+                return this.generateTemplateDataForClientConfig();
             default:
                 assertNever(templateId);
         }
@@ -57,6 +59,12 @@ export class TemplateDataGenerator {
         const errorEnumSymbol = this.context.project.nameRegistry.getErrorEnumSymbolOrThrow();
         return {
             errorEnumName: errorEnumSymbol.name
+        };
+    }
+
+    private generateTemplateDataForClientConfig() {
+        return {
+            defaultMaxRetries: this.context.customConfig.maxRetries ?? 2
         };
     }
 
@@ -97,9 +105,12 @@ export class TemplateDataGenerator {
         if (!sampleEndpoint || !clientDeclaration || !endpointCallExpression) {
             return null;
         }
+        const defaultMaxRetries = this.context.customConfig.maxRetries ?? 2;
         const { dynamicEndpoint, dynamicEndpointExample } = sampleEndpoint;
         return {
             moduleName: moduleSymbol.name,
+            defaultMaxRetries,
+            maxRetriesExhaustedStubResponses: this.generateMaxRetriesExhaustedStubResponses(defaultMaxRetries),
             clientDeclaration: clientDeclaration.toStringWithIndentation(3),
             endpointCall: swift.Statement.discardAssignment(endpointCallExpression).toStringWithIndentation(4),
             endpointCall400BadRequest:
@@ -163,6 +174,17 @@ export class TemplateDataGenerator {
                 })
             ).toStringWithIndentation(4)
         };
+    }
+
+    private generateMaxRetriesExhaustedStubResponses(defaultMaxRetries: number): string {
+        const stubLine = '            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),';
+        // Need defaultMaxRetries + 2 stub responses so that there are more responses than
+        // the client will consume (1 initial + defaultMaxRetries retries = defaultMaxRetries + 1 requests).
+        const lines: string[] = [];
+        for (let i = 0; i < defaultMaxRetries + 2; i++) {
+            lines.push(stubLine);
+        }
+        return lines.join("\n");
     }
 
     private generateTemplateDataForHTTPStub() {
@@ -252,7 +274,7 @@ export class TemplateDataGenerator {
         return undefined;
     }
 
-    private getDynamicEndpointForEndpoint(endpoint: HttpEndpoint) {
+    private getDynamicEndpointForEndpoint(endpoint: FernIr.HttpEndpoint) {
         const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
         assertDefined(dynamicEndpoint, "Dynamic endpoint is required to generate wire tests.");
         return dynamicEndpoint;

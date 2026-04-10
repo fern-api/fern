@@ -3,8 +3,8 @@ import { TypeReference } from "@fern-api/ir-sdk";
 import { AbstractConverterContext, Spec } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { EnumOrMessageConverter } from "./message/EnumOrMessageConverter";
-import { CommentNode, PathStarterValues } from "./utils/CreateGlobalCommentsStore";
+import { EnumOrMessageConverter } from "./message/EnumOrMessageConverter.js";
+import { CommentNode, PathStarterValues } from "./utils/CreateGlobalCommentsStore.js";
 
 export declare namespace ProtofileConverterContext {
     export interface Args extends Spec.Args<FileDescriptorProto> {

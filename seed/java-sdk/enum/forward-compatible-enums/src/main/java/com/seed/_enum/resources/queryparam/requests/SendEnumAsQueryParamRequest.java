@@ -5,9 +5,9 @@ package com.seed._enum.resources.queryparam.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -46,22 +46,22 @@ public final class SendEnumAsQueryParamRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("operand")
+    @JsonIgnore
     public Operand getOperand() {
         return operand;
     }
 
-    @JsonProperty("maybeOperand")
+    @JsonIgnore
     public Optional<Operand> getMaybeOperand() {
         return maybeOperand;
     }
 
-    @JsonProperty("operandOrColor")
+    @JsonIgnore
     public ColorOrOperand getOperandOrColor() {
         return operandOrColor;
     }
 
-    @JsonProperty("maybeOperandOrColor")
+    @JsonIgnore
     public Optional<ColorOrOperand> getMaybeOperandOrColor() {
         return maybeOperandOrColor;
     }
@@ -110,6 +110,10 @@ public final class SendEnumAsQueryParamRequest {
 
     public interface _FinalStage {
         SendEnumAsQueryParamRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage maybeOperand(Optional<Operand> maybeOperand);
 
@@ -188,6 +192,18 @@ public final class SendEnumAsQueryParamRequest {
         public SendEnumAsQueryParamRequest build() {
             return new SendEnumAsQueryParamRequest(
                     operand, maybeOperand, operandOrColor, maybeOperandOrColor, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

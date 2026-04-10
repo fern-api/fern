@@ -4,7 +4,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { loadDocsWorkspace } from "@fern-api/workspace-loader";
 import { readFile } from "fs/promises";
 import matter from "gray-matter";
-import { DocsDefinitionResolver } from "../DocsDefinitionResolver";
+import { DocsDefinitionResolver } from "../DocsDefinitionResolver.js";
 
 const context = createMockTaskContext();
 

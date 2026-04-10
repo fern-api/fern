@@ -1,65 +1,64 @@
 import { fail } from "node:assert";
-import { AbstractFormatter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
+import { AbstractFormatter, CaseConverter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
 import { AsIsFiles, GeneratorContext } from "@fern-api/csharp-base";
 import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 
 import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import {
-    DeclaredErrorName,
-    EndpointId,
-    ExampleEndpointCall,
-    FernFilepath,
-    HttpEndpoint,
-    HttpService,
-    InferredAuthScheme,
-    IntermediateRepresentation,
-    Name,
-    NameAndWireValue,
-    OAuthScheme,
-    SdkRequestWrapper,
-    ServiceId,
-    Subpackage,
-    SubpackageId,
-    TypeId,
-    WellKnownProtobufType
-} from "@fern-fern/ir-sdk/api";
-import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent";
-import { EndpointGenerator } from "./endpoint/EndpointGenerator";
-import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator";
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent.js";
+import { EndpointGenerator } from "./endpoint/EndpointGenerator.js";
+import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator.js";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 
 export class SdkGeneratorContext extends GeneratorContext {
-    public readonly formatter: AbstractFormatter;
     public readonly nopFormatter: AbstractFormatter;
     public readonly endpointGenerator: EndpointGenerator;
     public readonly generatorAgent: CsharpGeneratorAgent;
     public readonly snippetGenerator: EndpointSnippetsGenerator;
+
+    /**
+     * Lazily initializes the CsharpFormatter on first access.
+     * The formatter resolves the csharpier tool path and is only needed
+     * during code formatting, not during context construction.
+     */
+    public get formatter(): AbstractFormatter {
+        if (this._formatter === undefined) {
+            this._formatter = new CsharpFormatter();
+        }
+        return this._formatter;
+    }
+
     public constructor(
-        ir: IntermediateRepresentation,
+        ir: FernIr.IntermediateRepresentation,
         config: FernGeneratorExec.config.GeneratorConfig,
         customConfig: CsharpConfigSchema,
         generatorNotificationService: GeneratorNotificationService
     ) {
+        const caseConverter = new CaseConverter({
+            generationLanguage: "csharp",
+            keywords: ir.casingsConfig?.keywords,
+            smartCasing: ir.casingsConfig?.smartCasing ?? true
+        });
         super(
             ir,
             config,
             customConfig,
             generatorNotificationService,
-            new Generation(ir, ir.apiName.pascalCase.unsafeName, customConfig, config, {
+            new Generation(ir, caseConverter.pascalUnsafe(ir.apiName), customConfig, config, {
                 makeRelativeFilePath: (path: string) => RelativeFilePath.of(path),
                 makeAbsoluteFilePath: (path: string) => AbsoluteFilePath.of(path),
-                getNamespaceForTypeId: (typeId: TypeId) => this.getNamespaceForTypeId(typeId),
-                getDirectoryForTypeId: (typeId: TypeId) => this.getDirectoryForTypeId(typeId),
+                getNamespaceForTypeId: (typeId: FernIr.TypeId) => this.getNamespaceForTypeId(typeId),
+                getDirectoryForTypeId: (typeId: FernIr.TypeId) => this.getDirectoryForTypeId(typeId),
                 getCoreAsIsFiles: () => this.getCoreAsIsFiles(),
                 getCoreTestAsIsFiles: () => this.getCoreTestAsIsFiles(),
                 getPublicCoreAsIsFiles: () => this.getPublicCoreAsIsFiles(),
                 getAsyncCoreAsIsFiles: () => this.getAsyncCoreAsIsFiles(),
-                getChildNamespaceSegments: (fernFilepath: FernFilepath) => this.getChildNamespaceSegments(fernFilepath)
+                getChildNamespaceSegments: (fernFilepath: FernIr.FernFilepath) =>
+                    this.getChildNamespaceSegments(fernFilepath)
             })
         );
-        this.formatter = new CsharpFormatter();
         this.nopFormatter = new NopFormatter();
         this.endpointGenerator = new EndpointGenerator({ context: this });
         this.generatorAgent = new CsharpGeneratorAgent({
@@ -81,7 +80,7 @@ export class SdkGeneratorContext extends GeneratorContext {
         return this.Primitive.object.asOptional();
     }
 
-    public getSubpackage(subpackageId: SubpackageId): Subpackage | undefined {
+    public getSubpackage(subpackageId: FernIr.SubpackageId): FernIr.Subpackage | undefined {
         return this.ir.subpackages[subpackageId];
     }
 
@@ -93,32 +92,32 @@ export class SdkGeneratorContext extends GeneratorContext {
      * @param typeId The type id of the type declaration
      * @returns
      */
-    public getDirectoryForTypeId(typeId: TypeId): RelativeFilePath {
+    public getDirectoryForTypeId(typeId: FernIr.TypeId): RelativeFilePath {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return RelativeFilePath.of(
             [
-                ...typeDeclaration.name.fernFilepath.allParts.map((path: Name) => path.pascalCase.safeName),
+                ...typeDeclaration.name.fernFilepath.allParts.map((path) => this.case.pascalSafe(path)),
                 this.constants.folders.types
             ].join("/")
         );
     }
 
-    public getDirectoryForError(declaredErrorName: DeclaredErrorName): RelativeFilePath {
+    public getDirectoryForError(declaredErrorName: FernIr.DeclaredErrorName): RelativeFilePath {
         return RelativeFilePath.of(
             [
-                ...declaredErrorName.fernFilepath.allParts.map((path) => path.pascalCase.safeName),
+                ...declaredErrorName.fernFilepath.allParts.map((path) => this.case.pascalSafe(path)),
                 this.constants.folders.exceptions
             ].join("/")
         );
     }
 
-    public getNamespaceForTypeId(typeId: TypeId): string {
+    public getNamespaceForTypeId(typeId: FernIr.TypeId): string {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return this.getNamespaceFromFernFilepath(typeDeclaration.name.fernFilepath);
     }
 
-    public getAccessFromRootClient(fernFilepath: FernFilepath): string {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+    public getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
+        const clientAccessParts = fernFilepath.allParts.map((part) => this.case.pascalSafe(part));
         return clientAccessParts.length > 0
             ? `${this.names.variables.client}.${clientAccessParts.join(".")}`
             : this.names.variables.client;
@@ -128,8 +127,8 @@ export class SdkGeneratorContext extends GeneratorContext {
         endpoint,
         wrapper
     }: {
-        endpoint: HttpEndpoint;
-        wrapper: SdkRequestWrapper;
+        endpoint: FernIr.HttpEndpoint;
+        wrapper: FernIr.SdkRequestWrapper;
     }): boolean {
         const inlinePathParameters = this.settings.shouldInlinePathParameters;
         const wrapperShouldIncludePathParameters = wrapper.includePathParameters ?? false;
@@ -149,7 +148,6 @@ export class SdkGeneratorContext extends GeneratorContext {
         // JSON stuff
         files.push(
             ...[
-                AsIsFiles.Json.CollectionItemSerializer,
                 AsIsFiles.Json.DateOnlyConverter,
                 AsIsFiles.Json.DateTimeSerializer,
                 AsIsFiles.Json.JsonAccessAttribute,
@@ -160,8 +158,9 @@ export class SdkGeneratorContext extends GeneratorContext {
             ]
         );
 
-        // When use-undiscriminated-unions is false, include OneOfSerializer for OneOf type serialization
+        // When use-undiscriminated-unions is false, include OneOf serialization support
         if (!this.generation.settings.shouldGenerateUndiscriminatedUnions) {
+            files.push(AsIsFiles.Json.CollectionItemSerializer);
             files.push(AsIsFiles.Json.OneOfSerializer);
         }
 
@@ -176,6 +175,7 @@ export class SdkGeneratorContext extends GeneratorContext {
                 AsIsFiles.Headers,
                 AsIsFiles.HeadersBuilder,
                 AsIsFiles.HeaderValue,
+                AsIsFiles.HttpContentExtensions,
                 AsIsFiles.HttpMethodExtensions,
                 AsIsFiles.IIsRetryableContent,
                 AsIsFiles.JsonRequest,
@@ -187,9 +187,7 @@ export class SdkGeneratorContext extends GeneratorContext {
                 AsIsFiles.RawClient,
                 AsIsFiles.RawResponse,
                 AsIsFiles.ResponseHeaders,
-                AsIsFiles.StreamRequest,
-                AsIsFiles.WithRawResponse,
-                AsIsFiles.WithRawResponseTask
+                AsIsFiles.StreamRequest
             ]
         );
 
@@ -210,11 +208,10 @@ export class SdkGeneratorContext extends GeneratorContext {
         if (this.settings.isForwardCompatibleEnumsEnabled) {
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
-            files.push(AsIsFiles.Json.StringEnumSerializer);
-        } else {
-            files.push(AsIsFiles.Json.EnumSerializer);
         }
-        const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
+        const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(
+            FernIr.WellKnownProtobufType.any()
+        );
         if (resolvedProtoAnyType != null) {
             files.push(AsIsFiles.ProtoAnyMapper);
         }
@@ -242,13 +239,11 @@ export class SdkGeneratorContext extends GeneratorContext {
             files.push(AsIsFiles.Test.RawClientTests.IdempotentHeadersTests);
         }
         files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
-        if (this.settings.isForwardCompatibleEnumsEnabled) {
-            files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
-        } else {
-            files.push(AsIsFiles.Test.Json.EnumSerializerTests);
-        }
         if (this.hasPagination()) {
             AsIsFiles.Test.Pagination.forEach((file) => files.push(file));
+        }
+        if (this.hasWebSocketEndpoints) {
+            Object.values(AsIsFiles.Test.WebSockets).forEach((file) => files.push(file));
         }
 
         return files;
@@ -299,7 +294,7 @@ export class SdkGeneratorContext extends GeneratorContext {
         return files;
     }
 
-    public getExampleEndpointCallIfExists(endpoint: HttpEndpoint): ExampleEndpointCall | undefined {
+    public getExampleEndpointCallIfExists(endpoint: FernIr.HttpEndpoint): FernIr.ExampleEndpointCall | undefined {
         if (endpoint.userSpecifiedExamples.length > 0) {
             const exampleEndpointCall = endpoint.userSpecifiedExamples[0]?.example;
             if (exampleEndpointCall != null) {
@@ -316,28 +311,28 @@ export class SdkGeneratorContext extends GeneratorContext {
         return exampleEndpointCall;
     }
 
-    public getDirectoryForSubpackage(subpackage: Subpackage): string {
+    public getDirectoryForSubpackage(subpackage: FernIr.Subpackage): string {
         return this.getDirectoryForFernFilepath(subpackage.fernFilepath);
     }
 
-    public getDirectoryForServiceId(serviceId: ServiceId): string {
+    public getDirectoryForServiceId(serviceId: FernIr.ServiceId): string {
         const service = this.getHttpService(serviceId) ?? fail(`Service with id ${serviceId} not found`);
         return this.getDirectoryForFernFilepath(service.name.fernFilepath);
     }
 
-    public getDirectoryForFernFilepath(fernFilepath: FernFilepath): string {
-        return RelativeFilePath.of([...fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"));
+    public getDirectoryForFernFilepath(fernFilepath: FernIr.FernFilepath): string {
+        return RelativeFilePath.of([...fernFilepath.allParts.map((path) => this.case.pascalSafe(path))].join("/"));
     }
 
-    public getEndpointMethodName(endpoint: HttpEndpoint): string {
-        return `${endpoint.name.pascalCase.safeName}Async`;
+    public getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
+        return `${this.case.pascalSafe(endpoint.name)}Async`;
     }
 
-    public endpointUsesGrpcTransport(service: HttpService, endpoint: HttpEndpoint): boolean {
+    public endpointUsesGrpcTransport(service: FernIr.HttpService, endpoint: FernIr.HttpEndpoint): boolean {
         return service.transport?.type === "grpc" && endpoint.transport?.type !== "http";
     }
 
-    public getOauth(): OAuthScheme | undefined {
+    public getOauth(): FernIr.OAuthScheme | undefined {
         if (
             this.ir.auth.schemes[0] != null &&
             this.ir.auth.schemes[0].type === "oauth" &&
@@ -348,7 +343,7 @@ export class SdkGeneratorContext extends GeneratorContext {
         return undefined;
     }
 
-    public getInferredAuth(): InferredAuthScheme | undefined {
+    public getInferredAuth(): FernIr.InferredAuthScheme | undefined {
         for (const scheme of this.ir.auth.schemes) {
             if (scheme.type === "inferred") {
                 return scheme;
@@ -357,7 +352,7 @@ export class SdkGeneratorContext extends GeneratorContext {
         return undefined;
     }
 
-    public resolveEndpoint(service: HttpService, endpointId: EndpointId): HttpEndpoint {
+    public resolveEndpoint(service: FernIr.HttpService, endpointId: FernIr.EndpointId): FernIr.HttpEndpoint {
         const httpEndpoint = service.endpoints.find((endpoint) => endpoint.id === endpointId);
         if (httpEndpoint == null) {
             throw new Error(`Failed to find token endpoint ${endpointId}`);
@@ -369,20 +364,20 @@ export class SdkGeneratorContext extends GeneratorContext {
         return this.ir.selfHosted ?? false;
     }
 
-    public getNameForField(name: NameAndWireValue): string {
-        return name.name.pascalCase.safeName;
+    public getNameForField(name: FernIr.NameAndWireValue): string {
+        return this.case.pascalSafe(name.name);
     }
 
     /**
      * Gets all the subpackages from a given list of subpackage ids
      * If the subpackage has no endpoints, but it has children with endpoints, then skip this one and give me the children
      *
-     * This has the net effect of eliminating empty levels that shoulnd't be in the SDK.
+     * This has the net effect of eliminating empty levels that shouldn't be in the SDK.
      *
      * @param subpackageIds - The list of subpackage ids to get.
      * @returns The list of subpackages that have endpoints or children with endpoints.
      */
-    public getSubpackages(subpackageIds: string[]): Subpackage[] {
+    public getSubpackages(subpackageIds: string[]): FernIr.Subpackage[] {
         // get the actual subpackage objects
         const subpackages = subpackageIds
             .map((subpackageId) => this.getSubpackage(subpackageId))
@@ -396,7 +391,7 @@ export class SdkGeneratorContext extends GeneratorContext {
      * @param subpackage - The subpackage to check.
      * @returns True if the subpackage has a service, false otherwise.
      */
-    public subPackageHasEndpoints(subpackage?: Subpackage): boolean {
+    public subPackageHasEndpoints(subpackage?: FernIr.Subpackage): boolean {
         if (subpackage == null) {
             return false;
         }
@@ -413,7 +408,7 @@ export class SdkGeneratorContext extends GeneratorContext {
      * @param subpackage
      * @returns
      */
-    public subPackageHasWebsocketEndpoints(subpackage?: Subpackage): boolean {
+    public subPackageHasWebsocketEndpoints(subpackage?: FernIr.Subpackage): boolean {
         return this.settings.enableWebsockets && subpackage != null && !!subpackage.websocket?.length;
     }
 
@@ -432,7 +427,7 @@ export class SdkGeneratorContext extends GeneratorContext {
      *
      * There may be other cases that this method does not handle (GRPC, etc?)
      */
-    public subPackageHasEndpointsRecursively(subpackage?: Subpackage): boolean {
+    public subPackageHasEndpointsRecursively(subpackage?: FernIr.Subpackage): boolean {
         return (
             subpackage != null &&
             (subpackage.hasEndpointsInTree ||
@@ -459,7 +454,7 @@ export class SdkGeneratorContext extends GeneratorContext {
      * The method will return false if WebSockets are disabled, regardless of whether
      * the subpackage actually contains WebSocket endpoint definitions.
      */
-    public subPackageHasWebsocketEndpointsRecursively(subpackage?: Subpackage): boolean {
+    public subPackageHasWebsocketEndpointsRecursively(subpackage?: FernIr.Subpackage): boolean {
         return (
             subpackage != null &&
             this.settings.enableWebsockets &&
@@ -481,8 +476,8 @@ export class SdkGeneratorContext extends GeneratorContext {
         return this.#doesIrHaveCustomPagination;
     }
 
-    getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
+    getChildNamespaceSegments(fernFilepath: FernIr.FernFilepath): string[] {
         const segmentNames = this.settings.explicitNamespaces ? fernFilepath.allParts : fernFilepath.packagePath;
-        return segmentNames.map((segmentName) => segmentName.pascalCase.safeName);
+        return segmentNames.map((segmentName) => this.case.pascalSafe(segmentName));
     }
 }

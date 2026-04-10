@@ -1,10 +1,10 @@
 import { ExampleEndpointCall } from "@fern-api/ir-sdk";
 import { Request } from "express";
-import { bodyEqual } from "./bodyEqual";
-import { EqualResponse } from "./EqualRequestResponse";
-import { headersEqual } from "./headersEqual";
-import { pathParametersEqual } from "./pathParametersEqual";
-import { queryParametersEqual } from "./queryParametersEqual";
+import { bodyEqual } from "./bodyEqual.js";
+import { EqualResponse } from "./EqualRequestResponse.js";
+import { headersEqual } from "./headersEqual.js";
+import { pathParametersEqual } from "./pathParametersEqual.js";
+import { queryParametersEqual } from "./queryParametersEqual.js";
 
 export declare namespace requestEqual {
     interface Args {

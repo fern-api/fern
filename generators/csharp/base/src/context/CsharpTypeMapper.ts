@@ -1,17 +1,17 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    ContainerType,
-    DeclaredTypeName,
-    Literal,
-    NamedType,
-    PrimitiveType,
-    PrimitiveTypeV1,
-    TypeDeclaration,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import { GeneratorContext } from "./GeneratorContext";
+
+type ContainerType = FernIr.ContainerType;
+type DeclaredTypeName = FernIr.DeclaredTypeName;
+type Literal = FernIr.Literal;
+type NamedType = FernIr.NamedType;
+type PrimitiveType = FernIr.PrimitiveType;
+type PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
+type TypeDeclaration = FernIr.TypeDeclaration;
+type TypeReference = FernIr.TypeReference;
+
+import { GeneratorContext } from "./GeneratorContext.js";
 
 export declare namespace CsharpTypeMapper {
     interface Args {
@@ -59,7 +59,8 @@ export class CsharpTypeMapper extends WithGeneration {
                 return property.isOptional ? this.Types.FileParameter.asOptional() : this.Types.FileParameter;
             }
             case "fileArray": {
-                return property.isOptional ? this.Types.FileParameter.asOptional() : this.Types.FileParameter;
+                const listType = this.Collection.list(this.Types.FileParameter);
+                return property.isOptional ? listType.asOptional() : listType;
             }
             default:
                 assertNever(property);
@@ -169,7 +170,7 @@ export class CsharpTypeMapper extends WithGeneration {
     }
 
     private convertPrimitive({ primitive }: { primitive: PrimitiveType }): ast.Type {
-        return PrimitiveTypeV1._visit<ast.Type>(primitive.v1, {
+        return FernIr.PrimitiveTypeV1._visit<ast.Type>(primitive.v1, {
             integer: () => this.Primitive.integer,
             long: () => this.Primitive.long,
             uint: () => this.Primitive.uint,
@@ -182,8 +183,14 @@ export class CsharpTypeMapper extends WithGeneration {
             dateTime: () => this.Value.dateTime,
             uuid: () => this.Primitive.string,
             // https://learn.microsoft.com/en-us/dotnet/api/system.convert.tobase64string?view=net-8.0
-            base64: () => this.Primitive.string,
+            //
+            // TODO: The protoc-gen-openapi plugin represents bytes as base64 properties. For this to
+            // be correct, we need a bytes primitive type in the IR. For now, this is only an issue in
+            // rare cases, where the SDK requires both gRPC and REST endpoints with base64 and byte[]
+            // properties.
+            base64: () => (this.context.hasGrpcEndpoints() ? this.Value.binary : this.Primitive.string),
             bigInteger: () => this.Primitive.string,
+            dateTimeRfc2822: () => this.Value.dateTime,
             _other: () => this.Primitive.object
         });
     }
@@ -204,6 +211,9 @@ export class CsharpTypeMapper extends WithGeneration {
                 return this.Primitive.object;
             }
             return objectClassReference;
+        }
+        if (this.context.protobufResolver.isExternalProtobufType(named.typeId)) {
+            return this.context.protobufResolver.getExternalProtobufClassReference(named.typeId);
         }
 
         const typeDeclaration = this.model.dereferenceType(named.typeId).typeDeclaration;

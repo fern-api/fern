@@ -1,11 +1,12 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-rust-sdk",
-  "generatorVersion": "latest",
+  "generatorVersion": "local",
   "generatorConfig": {
     "environmentEnumName": "CustomApiEnvironment",
     "crateName": "environment_test_sdk",
     "crateVersion": "0.2.0"
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

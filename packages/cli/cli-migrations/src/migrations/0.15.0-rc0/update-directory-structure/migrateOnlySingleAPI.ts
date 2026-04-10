@@ -6,7 +6,7 @@ import {
     convertLegacyGeneratorsConfiguration,
     getAbsolutePathToGeneratorsConfiguration,
     loadRawGeneratorsConfiguration
-} from "./generators-configuration";
+} from "./generators-configuration/index.js";
 
 /**
  * fern/  <------ path to fern directory

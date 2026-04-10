@@ -58,6 +58,30 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         return ClassName.get(getCorePackage(), "RetryInterceptor");
     }
 
+    public ClassName getLogLevelClassName() {
+        return ClassName.get(getCorePackage(), "LogLevel");
+    }
+
+    public ClassName getILoggerClassName() {
+        return ClassName.get(getCorePackage(), "ILogger");
+    }
+
+    public ClassName getConsoleLoggerClassName() {
+        return ClassName.get(getCorePackage(), "ConsoleLogger");
+    }
+
+    public ClassName getLogConfigClassName() {
+        return ClassName.get(getCorePackage(), "LogConfig");
+    }
+
+    public ClassName getLoggerClassName() {
+        return ClassName.get(getCorePackage(), "Logger");
+    }
+
+    public ClassName getLoggingInterceptorClassName() {
+        return ClassName.get(getCorePackage(), "LoggingInterceptor");
+    }
+
     public ClassName getResponseBodyInputStreamClassName() {
         return ClassName.get(getCorePackage(), "ResponseBodyInputStream");
     }

@@ -1,4 +1,4 @@
-import { HttpEndpointSchema } from "../schemas";
+import { HttpEndpointSchema } from "../schemas/index.js";
 
 export function isSseStreamResponseSchema(endpoint: HttpEndpointSchema): boolean {
     return (

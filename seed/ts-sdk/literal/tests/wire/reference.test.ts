@@ -15,6 +15,7 @@ describe("ReferenceClient", () => {
             containerObject: { nestedObjects: [{ literal1: "literal1", literal2: "literal2", strProp: "strProp" }] },
         };
         const rawResponseBody = { message: "The weather is sunny", status: 200, success: true };
+
         server
             .mockEndpoint()
             .post("/reference")
@@ -39,10 +40,6 @@ describe("ReferenceClient", () => {
                 ],
             },
         });
-        expect(response).toEqual({
-            message: "The weather is sunny",
-            status: 200,
-            success: true,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

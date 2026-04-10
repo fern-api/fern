@@ -1,12 +1,13 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "latest",
+  "generatorVersion": "local",
   "generatorConfig": {
     "pydantic_config": {
       "version": "v2",
       "wrapped_aliases": true
     }
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

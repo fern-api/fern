@@ -1,5 +1,5 @@
 displayName: TypeScript SDK
-irVersion: v63
+irVersion: v66
 image: fernapi/fern-typescript-sdk
 imageAliases: [fernapi/fern-typescript-node-sdk]
 changelogLocation: ../../generators/typescript/sdk/versions.yml
@@ -35,6 +35,9 @@ defaultOutputMode: github
 customFixtureConfig:
   customConfig: {}
 fixtures:
+  webhooks:
+    - outputFolder: no-custom-config
+      customConfig: null
   imdb:
     - outputFolder: no-custom-config
       customConfig: null
@@ -44,6 +47,7 @@ fixtures:
     - outputFolder: branded-string-aliases
       customConfig:
         useBrandedStringAliases: true
+        maxRetries: 5
   streaming:
     - outputFolder: no-custom-config
       customConfig: null
@@ -140,6 +144,12 @@ fixtures:
       customConfig:
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
+  unions:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: serde-layer
+      customConfig:
+        noSerdeLayer: false
   undiscriminated-unions:
     - outputFolder: no-custom-config
       customConfig: null
@@ -332,11 +342,11 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
-        shouldGenerateWebsocketClients: true
+        generateWebSocketClients: true
     - outputFolder: no-serde
       customConfig:
         noSerdeLayer: true
-        shouldGenerateWebsocketClients: true
+        generateWebSocketClients: true
   property-access:
     - outputFolder: no-custom-config
       customConfig: null
@@ -346,11 +356,11 @@ fixtures:
   websocket-bearer-auth:
     - outputFolder: websockets
       customConfig:
-        shouldGenerateWebsocketClients: true
+        generateWebSocketClients: true
   websocket-inferred-auth:
     - outputFolder: websockets
       customConfig:
-        shouldGenerateWebsocketClients: true
+        generateWebSocketClients: true
   any-auth:
     - outputFolder: no-custom-config
       customConfig: null
@@ -438,6 +448,19 @@ fixtures:
     - outputFolder: allow-custom-fetcher
       customConfig:
         allowCustomFetcher: true
+    - outputFolder: naming
+      customConfig:
+        naming:
+          namespace: acme
+          client: AcmeSdkClient
+          error: AcmeApiError
+          timeoutError: AcmeRequestTimeoutError
+          environment: AcmeApiEnvironment
+          environmentUrls: AcmeApiEnvironmentUrls
+          version: AcmeApiVersion
+    - outputFolder: naming-shorthand
+      customConfig:
+        naming: acme
   enum:
     - outputFolder: no-custom-config
       customConfig: null
@@ -461,10 +484,26 @@ fixtures:
     - outputFolder: .
       customConfig:
         customPagerName: "MyPager"
+  cross-package-type-names:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: serde-layer
+      customConfig:
+        noSerdeLayer: false
+  query-param-name-conflict:
+    - outputFolder: .
+      customConfig:
+        noSerdeLayer: true
+        enableInlineTypes: true
+        resolveQueryParameterNameConflicts: true
   ts-extra-properties:
     - outputFolder: .
       customConfig:
         noSerdeLayer: false
+  server-sent-events-openapi:
+    - outputFolder: no-custom-config
+      customConfig: null
+
 scripts:
   - image: fernapi/ts-seed
     commands:
@@ -511,16 +550,12 @@ scripts:
             if grep -q '"test":' package.json; then corepack yarn test; fi
           fi
 allowedFailures:
-  - enum:no-custom-config
-  - enum:forward-compatible-enums
+  - cross-package-type-names:serde-layer
   - enum:forward-compatible-enums-with-serde
-  - enum:serde
-  - error-property:no-custom-config
-  - error-property:union-utils
-  - errors
+  - exhaustive:never-throw-errors
+  - exhaustive:multiple-exports
   - oauth-client-credentials-custom
   - package-yml
-  - server-url-templating
-  - trace:no-custom-config
-  - trace:serde
   - inferred-auth-implicit-reference
+  - unions:serde-layer
+  - server-sent-events-openapi:no-custom-config # tmp  - wire test generation is failing

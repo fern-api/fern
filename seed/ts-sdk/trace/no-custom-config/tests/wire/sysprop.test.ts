@@ -29,6 +29,7 @@ describe("SyspropClient", () => {
         });
 
         const rawResponseBody = { JAVA: 1 };
+
         server
             .mockEndpoint()
             .get("/sysprop/num-warm-instances")
@@ -38,8 +39,6 @@ describe("SyspropClient", () => {
             .build();
 
         const response = await client.sysprop.getNumWarmInstances();
-        expect(response).toEqual({
-            JAVA: 1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

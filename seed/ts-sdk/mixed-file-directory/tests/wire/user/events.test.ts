@@ -12,20 +12,12 @@ describe("EventsClient", () => {
             { id: "id", name: "name" },
             { id: "id", name: "name" },
         ];
+
         server.mockEndpoint().get("/users/events/").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.events.listEvents({
             limit: 1,
         });
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-            },
-            {
-                id: "id",
-                name: "name",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 });

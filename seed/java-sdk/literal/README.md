@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:literal'
+  implementation 'com.fern:literal:0.0.1'
 }
 ```
 
@@ -201,7 +201,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SendHttpResponse response = client.headers().withRawResponse().send(...);
+SeedLiteralHttpResponse response = client.headers().withRawResponse().send(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

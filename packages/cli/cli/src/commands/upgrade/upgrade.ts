@@ -12,8 +12,8 @@ import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import { produce } from "immer";
 
-import { CliContext } from "../../cli-context/CliContext";
-import { RerunCliError, rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
+import { CliContext } from "../../cli-context/CliContext.js";
+import { RerunCliError, rerunFernCliAtVersion } from "../../rerunFernCliAtVersion.js";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 
@@ -342,6 +342,13 @@ export async function upgrade({
                 fromVersion,
                 isLocalDev
             });
+
+            // If config version is "latest" or "*", the CLI is already running at the
+            // intended version so there are no migrations to run.
+            if (projectConfig.version === "latest" || projectConfig.version === "*") {
+                cliContext.logger.info("No upgrade available.");
+                return;
+            }
 
             // If config version differs from CLI version, run migrations to bring it up to date
             // Also run migrations if we detect a faulty upgrade (even if versions match)

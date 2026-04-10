@@ -1,4 +1,4 @@
-irVersion: v62
+irVersion: v66
 displayName: Rust SDK
 image: fernapi/fern-rust-sdk
 changelogLocation: ../../generators/rust/sdk/versions.yml
@@ -41,7 +41,7 @@ customFixtureConfig:
     packageVersion: "0.1.0"
 
 fixtures:
-  simple:
+  simple-api:
     - customConfig: null
       outputFolder: basic
     - customConfig:
@@ -53,6 +53,7 @@ fixtures:
   imdb:
     - customConfig:
         clientName: ImdbClient
+        maxRetries: 5
       outputFolder: imdb
     - customConfig:
         crateName: custom_imdb_sdk
@@ -133,6 +134,18 @@ fixtures:
         packageName: sse_events
         packageVersion: "0.1.0"
       outputFolder: with-wire-tests
+  websocket:
+    - customConfig:
+        enableWebsockets: true
+      outputFolder: .
+  websocket-bearer-auth:
+    - customConfig:
+        enableWebsockets: true
+      outputFolder: .
+  websocket-inferred-auth:
+    - customConfig:
+        enableWebsockets: true
+      outputFolder: .
   license:
     - customConfig: null
       outputFolder: basic
@@ -146,3 +159,5 @@ fixtures:
         packageLicense: "Apache-2.0"
         packageLicenseFile: "LICENSE.md"
       outputFolder: both-license-options
+allowedFailures:
+  - server-sent-events-openapi

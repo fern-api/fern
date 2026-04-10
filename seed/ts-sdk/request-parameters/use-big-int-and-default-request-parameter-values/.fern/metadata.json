@@ -1,11 +1,12 @@
 {
     "cliVersion": "DUMMY",
     "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "latest",
+    "generatorVersion": "local",
     "generatorConfig": {
         "useDefaultRequestParameterValues": true,
         "useBigInt": true,
         "testFramework": "jest"
     },
+    "originGitCommit": "DUMMY",
     "sdkVersion": "0.0.1"
 }

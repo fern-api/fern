@@ -1,11 +1,11 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedExamples.Core;
 
 namespace SeedExamples;
 
 public partial class ServiceClient : IServiceClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ServiceClient(RawClient client)
     {
@@ -28,7 +28,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format("/movie/{0}", ValueConvert.ToPathParameterString(movieId)),
                     Headers = _headers,
@@ -39,7 +38,9 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<Movie>(responseBody)!;
@@ -65,7 +66,9 @@ public partial class ServiceClient : IServiceClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -90,7 +93,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/movie",
                     Body = request,
@@ -102,7 +104,9 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -128,7 +132,9 @@ public partial class ServiceClient : IServiceClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -159,7 +165,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/metadata",
                     QueryString = _queryString,
@@ -171,7 +176,9 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<Metadata>(responseBody)!;
@@ -197,7 +204,9 @@ public partial class ServiceClient : IServiceClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -222,7 +231,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/big-entity",
                     Body = request,
@@ -234,7 +242,9 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<Response>(responseBody)!;
@@ -260,7 +270,9 @@ public partial class ServiceClient : IServiceClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -411,14 +423,14 @@ public partial class ServiceClient : IServiceClient
     ///                         new Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                             Nodes = null,
+    ///                             Trees = null,
     ///                         },
     ///                         new Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                             Nodes = null,
+    ///                             Trees = null,
     ///                         },
     ///                     },
     ///                     Trees = new List&lt;Tree&gt;()
@@ -435,14 +447,14 @@ public partial class ServiceClient : IServiceClient
     ///                         new Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                             Nodes = null,
+    ///                             Trees = null,
     ///                         },
     ///                         new Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                             Nodes = null,
+    ///                             Trees = null,
     ///                         },
     ///                     },
     ///                     Trees = new List&lt;Tree&gt;()
@@ -515,14 +527,14 @@ public partial class ServiceClient : IServiceClient
     ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
-    ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
+    ///                             Files = null,
+    ///                             Directories = null,
     ///                         },
     ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
-    ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
+    ///                             Files = null,
+    ///                             Directories = null,
     ///                         },
     ///                     },
     ///                 },
@@ -539,14 +551,14 @@ public partial class ServiceClient : IServiceClient
     ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
-    ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
+    ///                             Files = null,
+    ///                             Directories = null,
     ///                         },
     ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
-    ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
+    ///                             Files = null,
+    ///                             Directories = null,
     ///                         },
     ///                     },
     ///                 },
@@ -591,7 +603,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/refresh-token",
                     Body = request,
@@ -606,7 +617,9 @@ public partial class ServiceClient : IServiceClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

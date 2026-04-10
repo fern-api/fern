@@ -306,6 +306,12 @@ types:
         value:
           name: example2
 
+  # Test case for map with optional value type (exercises record serialization fix)
+  TypeWithOptionalMap:
+    properties:
+      key: string
+      columnValues: map<string, optional<string>>
+
   # Test cases for unions with identical underlying types
   UnionWithSameStringTypes:
     union:

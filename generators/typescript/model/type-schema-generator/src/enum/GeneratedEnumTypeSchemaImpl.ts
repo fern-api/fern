@@ -1,19 +1,20 @@
-import { EnumTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { getWireValue } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { BaseContext, GeneratedEnumTypeSchema } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
-import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
+import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema.js";
 
 export class GeneratedEnumTypeSchemaImpl<Context extends BaseContext>
-    extends AbstractGeneratedTypeSchema<EnumTypeDeclaration, Context>
+    extends AbstractGeneratedTypeSchema<FernIr.EnumTypeDeclaration, Context>
     implements GeneratedEnumTypeSchema<Context>
 {
     public readonly type = "enum";
 
     protected override buildSchema(context: Context): Zurg.Schema {
-        return context.coreUtilities.zurg.enum(this.shape.values.map((value) => value.name.wireValue));
+        return context.coreUtilities.zurg.enum(this.shape.values.map((value) => getWireValue(value.name)));
     }
 
     protected override generateRawTypeDeclaration(_context: Context, module: ModuleDeclaration): void {
@@ -22,7 +23,7 @@ export class GeneratedEnumTypeSchemaImpl<Context extends BaseContext>
             type: getTextOfTsNode(
                 ts.factory.createUnionTypeNode(
                     this.shape.values.map((value) =>
-                        ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
+                        ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(getWireValue(value.name)))
                     )
                 )
             ),

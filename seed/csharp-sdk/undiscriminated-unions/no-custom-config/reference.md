@@ -288,3 +288,4 @@ await client.Union.TestCamelCasePropertiesAsync(
 </dd>
 </dl>
 </details>
+

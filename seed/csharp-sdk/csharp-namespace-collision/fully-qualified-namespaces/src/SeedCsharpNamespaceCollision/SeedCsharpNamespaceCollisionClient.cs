@@ -1,5 +1,6 @@
 using System.Text.Json;
 using SeedCsharpNamespaceCollision.Core;
+using SeedCsharpNamespaceCollision.ScimConfiguration;
 using SeedCsharpNamespaceCollision.System;
 
 namespace SeedCsharpNamespaceCollision;
@@ -28,8 +29,11 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
             }
         }
         _client = new RawClient(clientOptions);
+        ScimConfiguration = new ScimConfigurationClient(_client);
         System = new SystemClient(_client);
     }
+
+    public IScimConfigurationClient ScimConfiguration { get; }
 
     public ISystemClient System { get; }
 
@@ -49,7 +53,6 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
@@ -61,7 +64,9 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<User>(responseBody)!;
@@ -87,7 +92,9 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedCsharpNamespaceCollisionApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -112,7 +119,6 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
@@ -124,7 +130,9 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<Task>(responseBody)!;
@@ -150,7 +158,9 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedCsharpNamespaceCollisionApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

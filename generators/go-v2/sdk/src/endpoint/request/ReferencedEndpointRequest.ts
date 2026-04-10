@@ -1,19 +1,18 @@
 import { go } from "@fern-api/go-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { HttpEndpoint, HttpService, SdkRequest, TypeReference } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { EndpointRequest } from "./EndpointRequest";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { EndpointRequest } from "./EndpointRequest.js";
 
 export class ReferencedEndpointRequest extends EndpointRequest {
-    private requestBodyShape: TypeReference;
+    private requestBodyShape: FernIr.TypeReference;
 
     public constructor(
         context: SdkGeneratorContext,
-        sdkRequest: SdkRequest,
-        service: HttpService,
-        endpoint: HttpEndpoint,
-        requestBodyShape: TypeReference
+        sdkRequest: FernIr.SdkRequest,
+        service: FernIr.HttpService,
+        endpoint: FernIr.HttpEndpoint,
+        requestBodyShape: FernIr.TypeReference
     ) {
         super(context, sdkRequest, service, endpoint);
         this.requestBodyShape = requestBodyShape;

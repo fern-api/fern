@@ -1,1 +1,1 @@
-export * as endpointUtils from "./utils";
+export * as endpointUtils from "./utils/index.js";

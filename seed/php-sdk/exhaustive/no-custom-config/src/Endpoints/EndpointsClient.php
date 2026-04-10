@@ -7,12 +7,13 @@ use Seed\Endpoints\ContentType\ContentTypeClient;
 use Seed\Endpoints\Enum\EnumClient;
 use Seed\Endpoints\HttpMethods\HttpMethodsClient;
 use Seed\Endpoints\Object\ObjectClient;
+use Seed\Endpoints\Pagination\PaginationClient;
 use Seed\Endpoints\Params\ParamsClient;
 use Seed\Endpoints\Primitive\PrimitiveClient;
 use Seed\Endpoints\Put\PutClient;
 use Seed\Endpoints\Union\UnionClient;
 use Seed\Endpoints\Urls\UrlsClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class EndpointsClient
@@ -41,6 +42,11 @@ class EndpointsClient
      * @var ObjectClient $object
      */
     public ObjectClient $object;
+
+    /**
+     * @var PaginationClient $pagination
+     */
+    public PaginationClient $pagination;
 
     /**
      * @var ParamsClient $params
@@ -104,6 +110,7 @@ class EndpointsClient
         $this->enum = new EnumClient($this->client, $this->options);
         $this->httpMethods = new HttpMethodsClient($this->client, $this->options);
         $this->object = new ObjectClient($this->client, $this->options);
+        $this->pagination = new PaginationClient($this->client, $this->options);
         $this->params = new ParamsClient($this->client, $this->options);
         $this->primitive = new PrimitiveClient($this->client, $this->options);
         $this->put = new PutClient($this->client, $this->options);

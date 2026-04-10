@@ -14,6 +14,7 @@ async fn main() {
             &ListUsersTopLevelBodyCursorPaginationRequest {
                 cursor: Some("initial_cursor".to_string()),
                 filter: Some("active".to_string()),
+                ..Default::default()
             },
             None,
         )

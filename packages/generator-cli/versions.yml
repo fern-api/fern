@@ -1,6 +1,185 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Upgrade @fern-api/replay to 0.10.2 (pinned).
+      type: chore
+  createdAt: "2026-04-10"
+  version: 0.9.5
+
+- changelogEntry:
+    - summary: |
+        Upgrade @fern-api/replay to 0.10.1.
+      type: chore
+  createdAt: "2026-04-09"
+  version: 0.9.4
+
+- changelogEntry:
+    - summary: |
+        Add .gitattributes with linguist-generated markers for replay lockfile. Sync .fernignore entries with fern-replay to include .fern/replay.yml and .gitattributes.
+      type: fix
+  createdAt: "2026-04-07"
+  version: 0.9.3
+
+- changelogEntry:
+    - summary: |
+        Re-publish to include Go SDK after upgrading fern-go-sdk from 0.22.0 to 1.33.2.
+      type: chore
+  createdAt: "2026-04-07"
+  version: 0.9.2
+
+- changelogEntry:
+    - summary: |
+        Upgrade @fern-api/replay to 0.9.1.
+      type: chore
+  createdAt: "2026-04-06"
+  version: 0.9.1
+
+- changelogEntry:
+    - summary: |
+        Internal CLI improvements and dependency updates.
+      type: feat
+  createdAt: "2026-04-06"
+  version: 0.9.0
+
+- changelogEntry:
+    - summary: |
+        Make GitHub token optional for replay init. Public repos no longer require a token.
+      type: fix
+  createdAt: "2026-04-06"
+  version: 0.8.1
+
+- changelogEntry:
+    - summary: |
+        Upgrade replay to 0.8.0 with support for detecting git revert commits and cancelling matching patches.
+      type: feat
+  createdAt: "2026-03-30"
+  version: 0.8.0
+
+- changelogEntry:
+    - summary: |
+        Update generator-cli to trigger new publish after changing to oidc auth for publish action.
+      type: chore
+  createdAt: "2026-03-25"
+  version: 0.6.14
+
+- changelogEntry:
+    - summary: |
+        Fix publish by bundling @fern-api/core-utils into the API build and
+        filtering workspace protocol dependencies from the dist package.json.
+      type: fix
+  createdAt: "2026-03-25"
+  version: 0.6.13
+
+- changelogEntry:
+    - summary: |
+        Include version number in the Gradle installation snippet for Java SDKs
+        in generated README.md files. Previously only the Maven snippet included
+        the version.
+      type: fix
+  createdAt: "2026-03-25"
+  version: 0.6.12
+
+- changelogEntry:
+    - summary: |
+        Clean PRs with local conflict resolution. Replay PRs are now always
+        linear from HEAD with clean code (no conflict markers committed).
+        When customizations conflict with new generated code, the PR body
+        includes instructions to run locally.
+      type: feat
+  createdAt: "2026-03-02"
+  version: 0.6.11
+
+- changelogEntry:
+    - summary: |
+        Disable commit signing and skip hooks for the internal git commit in
+        replay-init to avoid triggering prompts (e.g. Touch ID on macOS,
+        1Password SSH agent).
+      type: fix
+  createdAt: "2026-02-28"
+  version: 0.6.10
+
+- changelogEntry:
+    - summary: |
+        Remove redundant conflict resolution comment from Replay PRs. The per-file
+        guidance was duplicating information already present in the PR description.
+      type: fix
+  createdAt: "2026-02-26"
+  version: 0.6.9
+
+- changelogEntry:
+    - summary: |
+        Fix non-fast-forward push error when updating an existing fern-bot PR from a shallow clone.
+      type: fix
+  createdAt: "2026-02-26"
+  version: 0.6.8
+
+- changelogEntry:
+    - summary: |
+        `pipeline run --config` now accepts inline JSON, "-" for stdin,
+        or a file path. Result JSON is written to stdout.
+      type: feat
+  createdAt: "2026-02-26"
+  version: 0.6.7
+
+- changelogEntry:
+    - summary: |
+        Handle shallow git clones in the pipeline. Add `git fetch --unshallow`
+        at the start of GithubStep to ensure full history is available for
+        replay operations, and use `--force` instead of `--force-with-lease`
+        for fern-bot branch pushes to avoid stale ref failures.
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.6
+
+- changelogEntry:
+    - summary: |
+        Ensure commits are signed by fern-bot and remove specific customization counts from Replay PR descriptions in favor of generic messaging.
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.5
+
+- changelogEntry:
+    - summary: |
+        Update @fern-api/fern-replay to 0.6.1 which published as ESM and CJS.
+        As a result, the generator-cli can also be ESM and CJS.
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.4
+
+- changelogEntry:
+    - summary: |
+        Publish package from dist directory with a generated package.json. Bundle all dependencies for the CLI binary, and keep published dependencies external for the JS API.
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.3
+
+- changelogEntry:
+    - summary: |
+        Use pnpm publish to properly resolve workspace directives when publishing to npm.
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.2
+
+- changelogEntry:
+    - summary: |
+        Bump @octokit/rest to ^22.0.1 to pull in @octokit/request@10.0.7, which fixes CVE-2025-25290 (ReDoS vulnerability).
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.1
+
+- changelogEntry:
+    - summary: |
+        Add Replay step to post-generation pipeline. Introduces the PostGenerationPipeline
+        with ReplayStep that runs after SDK generation for self-hosted GitHub repos. Replay
+        preserves user customizations across SDK regenerations by detecting patches via
+        `.fern/replay.lock`, applying them with 3-way merge, and creating PRs with conflict
+        resolution guidance when needed.
+      type: feat
+  createdAt: "2026-02-25"
+  version: 0.6.0
+
+- changelogEntry:
+    - summary: |
         Regenerate generator-cli types with latest version of the TypeScript SDK generator.
       type: internal
   createdAt: "2026-01-29"

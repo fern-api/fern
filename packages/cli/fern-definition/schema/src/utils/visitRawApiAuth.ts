@@ -1,5 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AnyAuthSchemesSchema, ApiAuthSchema, AuthSchemeReferenceSchema, EndpointSecuritySchema } from "../schemas";
+import {
+    AnyAuthSchemesSchema,
+    ApiAuthSchema,
+    AuthSchemeReferenceSchema,
+    EndpointSecuritySchema
+} from "../schemas/index.js";
 
 export interface RawApiAuthVisitor<R> {
     single: (authScheme: AuthSchemeReferenceSchema | string) => R;

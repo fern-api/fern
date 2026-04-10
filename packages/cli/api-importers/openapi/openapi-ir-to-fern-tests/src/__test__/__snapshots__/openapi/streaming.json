@@ -91,6 +91,7 @@
               "response-stream": {
                 "docs": "",
                 "format": "json",
+                "terminator": undefined,
                 "type": "StreamUser",
               },
               "source": {
@@ -183,6 +184,7 @@
               "response-stream": {
                 "docs": "",
                 "format": "json",
+                "terminator": undefined,
                 "type": "StreamUser2",
               },
               "source": {
@@ -274,6 +276,7 @@
               "response-stream": {
                 "docs": "",
                 "format": "json",
+                "terminator": undefined,
                 "type": "UserV3StreamResponse",
               },
               "source": {

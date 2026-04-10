@@ -1,10 +1,11 @@
-import { ApiVersionScheme, HttpHeader } from "@fern-fern/ir-sdk/api";
+import { getWireValue } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedVersion, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedVersion } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export class GeneratedVersionImpl implements GeneratedVersion {
-    private apiVersion: ApiVersionScheme;
+    private apiVersion: FernIr.ApiVersionScheme;
     private versionEnumName: string;
     private firstEnumValue: string;
 
@@ -13,7 +14,7 @@ export class GeneratedVersionImpl implements GeneratedVersion {
         versionEnumName,
         firstEnumValue
     }: {
-        apiVersion: ApiVersionScheme;
+        apiVersion: FernIr.ApiVersionScheme;
         versionEnumName: string;
         firstEnumValue: string;
     }) {
@@ -22,9 +23,9 @@ export class GeneratedVersionImpl implements GeneratedVersion {
         this.firstEnumValue = firstEnumValue;
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         context.sourceFile.addTypeAlias({
-            docs: [`The version of the API, sent as the ${this.apiVersion.header.name.wireValue} header.`],
+            docs: [`The version of the API, sent as the ${getWireValue(this.apiVersion.header.name)} header.`],
             name: this.versionEnumName,
             isExported: true,
             type: this.getEnumValueUnion()
@@ -32,9 +33,10 @@ export class GeneratedVersionImpl implements GeneratedVersion {
     }
 
     public getEnumValueUnion(): string {
-        const enumValues = this.apiVersion.value.values.map((version) =>
-            ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(version.name.wireValue))
-        );
+        const enumValues = this.apiVersion.value.values.map((version) => {
+            const wireValue = getWireValue(version.name);
+            return ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(wireValue));
+        });
         return getTextOfTsNode(ts.factory.createUnionTypeNode(enumValues));
     }
 
@@ -50,10 +52,11 @@ export class GeneratedVersionImpl implements GeneratedVersion {
         if (this.apiVersion.value.default == null) {
             return undefined;
         }
-        return this.apiVersion.value.default.name.wireValue;
+        const defaultName = this.apiVersion.value.default.name;
+        return getWireValue(defaultName);
     }
 
-    public getHeader(): HttpHeader {
+    public getHeader(): FernIr.HttpHeader {
         return this.apiVersion.header;
     }
 }

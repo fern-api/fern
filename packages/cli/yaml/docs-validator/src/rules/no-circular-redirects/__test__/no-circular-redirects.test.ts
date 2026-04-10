@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { detectCircularRedirects } from "../no-circular-redirects";
+import { detectCircularRedirects } from "../no-circular-redirects.js";
 
 describe("detectCircularRedirects", () => {
     it("should return no violations for valid redirects", () => {

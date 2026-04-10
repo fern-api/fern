@@ -1,12 +1,14 @@
 import { AbsoluteFilePath, join, moveFolder, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
-
-import { getAbsolutePathToGeneratorsConfiguration, loadRawGeneratorsConfiguration } from "./generators-configuration";
 import {
     convertLegacyGeneratorsConfiguration,
     PathModificationStrategy
-} from "./generators-configuration/convertLegacyGeneratorsConfiguration";
+} from "./generators-configuration/convertLegacyGeneratorsConfiguration.js";
+import {
+    getAbsolutePathToGeneratorsConfiguration,
+    loadRawGeneratorsConfiguration
+} from "./generators-configuration/index.js";
 
 const APIS_DIRECTORY = "apis";
 

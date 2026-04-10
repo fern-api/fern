@@ -1,16 +1,17 @@
 import type { FernToken } from "@fern-api/auth";
+import { schemas } from "@fern-api/config";
 import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
-import type { AiConfig } from "../../ai/config/AiConfig";
-import type { ApiDefinition } from "../../api/config/ApiDefinition";
-import type { Context } from "../../context/Context";
-import { CliError } from "../../errors/CliError";
-import type { Task } from "../../ui/Task";
-import type { Target } from "../config/Target";
-import { LegacyGenerationRunner } from "./LegacyGenerationRunner";
-import { LegacyRemoteGenerationRunner } from "./LegacyRemoteGenerationRunner";
-
+import type { AiConfig } from "../../ai/config/AiConfig.js";
+import type { ApiDefinition } from "../../api/config/ApiDefinition.js";
+import type { Context } from "../../context/Context.js";
+import { CliError } from "../../errors/CliError.js";
+import type { Task } from "../../ui/Task.js";
+import type { Target } from "../config/Target.js";
+import { LegacyLocalGenerationRunner } from "./LegacyLocalGenerationRunner.js";
+import { LegacyRemoteGenerationRunner } from "./LegacyRemoteGenerationRunner.js";
 /**
  * Orchestrates SDK generation for a single target.
  *
@@ -76,6 +77,12 @@ export namespace GeneratorPipeline {
 
         /** Path to .fernignore file */
         fernignorePath?: string;
+
+        /** Ignore the .fernignore file and upload an empty one */
+        skipFernignore?: boolean;
+
+        /** Require all referenced environment variables to be defined */
+        requireEnvVars?: boolean;
     }
 
     export interface Result {
@@ -107,12 +114,20 @@ export class GeneratorPipeline {
      */
     public async run(args: GeneratorPipeline.RunArgs): Promise<GeneratorPipeline.Result> {
         try {
-            if (args.runtime === "local") {
+            if (this.isLocalGeneration(args)) {
                 return await this.runLocalGeneration(args);
+            }
+            // Custom image registries are only supported with local generation
+            if (args.target.registry != null) {
+                throw new CliError({
+                    message:
+                        `Custom image configurations are only supported with local generation (--local). ` +
+                        `Target "${args.target.name}" uses a custom image registry.`
+                });
             }
             return await this.runRemoteGeneration(args);
         } catch (error) {
-            const message = error instanceof Error ? error.message : String(error);
+            const message = extractErrorMessage(error);
             return {
                 success: false,
                 target: args.target,
@@ -122,7 +137,7 @@ export class GeneratorPipeline {
     }
 
     private async runLocalGeneration(args: GeneratorPipeline.RunArgs): Promise<GeneratorPipeline.Result> {
-        const generationRunner = new LegacyGenerationRunner({
+        const generationRunner = new LegacyLocalGenerationRunner({
             context: this.context,
             cliVersion: this.cliVersion
         });
@@ -137,7 +152,10 @@ export class GeneratorPipeline {
             keepContainer: args.keepContainer,
             preview: args.preview,
             outputPath: args.outputPath,
-            containerEngine: args.containerEngine
+            containerEngine: args.containerEngine,
+            token: args.token,
+            skipFernignore: args.skipFernignore,
+            requireEnvVars: args.requireEnvVars
         });
         if (!result.success) {
             return {
@@ -173,7 +191,9 @@ export class GeneratorPipeline {
             shouldLogS3Url: args.shouldLogS3Url,
             preview: args.preview,
             outputPath: args.outputPath,
-            fernignorePath: args.fernignorePath
+            fernignorePath: args.fernignorePath,
+            skipFernignore: args.skipFernignore,
+            requireEnvVars: args.requireEnvVars
         });
         if (!result.success) {
             return {
@@ -187,5 +207,12 @@ export class GeneratorPipeline {
             target: args.target,
             output: result.output
         };
+    }
+
+    private isLocalGeneration(args: GeneratorPipeline.RunArgs): boolean {
+        return (
+            args.runtime === "local" ||
+            (args.target.output.git != null && schemas.isGitOutputSelfHosted(args.target.output.git))
+        );
     }
 }

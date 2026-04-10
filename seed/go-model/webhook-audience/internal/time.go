@@ -2,6 +2,7 @@ package internal
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -124,14 +125,41 @@ func (d *DateTime) MarshalJSON() ([]byte, error) {
 func (d *DateTime) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
+		// If the value is not a string, check if it is a number (unix epoch seconds).
+		var epoch int64
+		if numErr := json.Unmarshal(data, &epoch); numErr == nil {
+			t := time.Unix(epoch, 0).UTC()
+			*d = DateTime{t: &t}
+			return nil
+		}
 		return err
 	}
 
-	parsedTime, err := time.Parse(time.RFC3339, raw)
-	if err != nil {
-		return err
+	// Try RFC3339Nano first (superset of RFC3339, supports fractional seconds).
+	parsedTime, err := time.Parse(time.RFC3339Nano, raw)
+	if err == nil {
+		*d = DateTime{t: &parsedTime}
+		return nil
 	}
+	rfc3339NanoErr := err
 
-	*d = DateTime{t: &parsedTime}
-	return nil
+	// Fall back to ISO 8601 without timezone (assume UTC).
+	parsedTime, err = time.Parse("2006-01-02T15:04:05", raw)
+	if err == nil {
+		parsedTime = parsedTime.UTC()
+		*d = DateTime{t: &parsedTime}
+		return nil
+	}
+	iso8601Err := err
+
+	// Fall back to date-only format.
+	parsedTime, err = time.Parse("2006-01-02", raw)
+	if err == nil {
+		parsedTime = parsedTime.UTC()
+		*d = DateTime{t: &parsedTime}
+		return nil
+	}
+	dateOnlyErr := err
+
+	return fmt.Errorf("unable to parse datetime string %q: tried RFC3339Nano (%v), ISO8601 (%v), date-only (%v)", raw, rfc3339NanoErr, iso8601Err, dateOnlyErr)
 }

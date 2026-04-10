@@ -10,7 +10,7 @@ import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-
 import { cp, mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { FernDocsBuilder, FernDocsNavigationBuilder } from "./FernDocsBuilder";
+import { FernDocsBuilder, FernDocsNavigationBuilder } from "./FernDocsBuilder.js";
 
 interface MarkdownPage {
     frontmatter: CjsFdrSdk.docs.latest.Frontmatter;

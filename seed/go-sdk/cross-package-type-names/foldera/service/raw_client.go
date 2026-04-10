@@ -4,11 +4,12 @@ package service
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/cross-package-type-names/fern/core"
 	foldera "github.com/cross-package-type-names/fern/foldera"
 	internal "github.com/cross-package-type-names/fern/internal"
 	option "github.com/cross-package-type-names/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

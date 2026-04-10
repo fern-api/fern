@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    sse "github.com/fern-api/sse-go"
     client "github.com/fern-api/sse-go/client"
     option "github.com/fern-api/sse-go/option"
-    sse "github.com/fern-api/sse-go"
-    context "context"
 )
 
 func do() {
@@ -14,7 +15,7 @@ func do() {
         ),
     )
     request := &sse.StreamCompletionRequest{
-        Query: "query",
+        Query: "foo",
     }
     client.Completions.Stream(
         context.TODO(),

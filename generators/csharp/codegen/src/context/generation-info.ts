@@ -1,22 +1,35 @@
 export type Namespace = string;
 
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { FernFilepath, IntermediateRepresentation, TypeId } from "@fern-fern/ir-sdk/api";
-import { join } from "path";
-import { is, text } from "..";
-import * as ast from "../ast";
-import { ClassReference } from "../ast/types/ClassReference";
-import { Type } from "../ast/types/IType";
-import { Collection, Primitive, Value } from "../ast/types/Type";
-import { CSharp } from "../csharp";
-import { type CsharpConfigSchema } from "../custom-config";
-import { lazy } from "../utils/lazy";
-import { camelCase, upperFirst } from "../utils/text";
+import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { MinimalGeneratorConfig, Support, TAbsoluteFilePath, TRelativeFilePath } from "./common";
-import { Extern } from "./extern";
-import { ModelNavigator } from "./model-navigator";
-import { NameRegistry } from "./name-registry";
+type IntermediateRepresentation = FernIr.IntermediateRepresentation;
+type TypeId = FernIr.TypeId;
+type FernFilepath = FernIr.FernFilepath;
+
+/**
+ * Browser-compatible path join for C# project paths.
+ * Joins path segments with "/" separator, filtering empty segments.
+ */
+function join(...segments: string[]): string {
+    return segments.filter(Boolean).join("/");
+}
+
+import { CaseConverter } from "@fern-api/base-generator";
+import * as ast from "../ast/index.js";
+import { ClassReference } from "../ast/types/ClassReference.js";
+import { Type } from "../ast/types/IType.js";
+import { Collection, Primitive, Value } from "../ast/types/Type.js";
+import { CSharp } from "../csharp.js";
+import { type CsharpConfigSchema } from "../custom-config/index.js";
+import { is, text } from "../index.js";
+import { lazy } from "../utils/lazy.js";
+import { camelCase, upperFirst } from "../utils/text.js";
+
+import { MinimalGeneratorConfig, Support, TAbsoluteFilePath, TRelativeFilePath } from "./common.js";
+import { Extern } from "./extern.js";
+import { ModelNavigator } from "./model-navigator.js";
+import { NameRegistry } from "./name-registry.js";
 
 /**
  * Central configuration and code generation context for C# SDK generation.
@@ -61,7 +74,7 @@ export class Generation {
     constructor(
         public readonly intermediateRepresentation:
             | IntermediateRepresentation
-            | FernIr.dynamic.DynamicIntermediateRepresentation,
+            | DynamicFernIr.dynamic.DynamicIntermediateRepresentation,
         private readonly apiName: string,
         private readonly customConfig: CsharpConfigSchema,
         private readonly generatorConfig: MinimalGeneratorConfig,
@@ -77,6 +90,16 @@ export class Generation {
             getChildNamespaceSegments: (fernFilepath: FernFilepath) => []
         }
     ) {
+        // Initialize the CaseConverter from IR config
+        const irConfig = is.IR.IntermediateRepresentation(intermediateRepresentation)
+            ? intermediateRepresentation.casingsConfig
+            : undefined;
+        this.case = new CaseConverter({
+            generationLanguage: "csharp",
+            keywords: irConfig?.keywords,
+            smartCasing: irConfig?.smartCasing ?? true
+        });
+
         // Initialize the model navigator to traverse and query the IR
         this.model = new ModelNavigator(intermediateRepresentation, this);
 
@@ -85,11 +108,11 @@ export class Generation {
             : ({} as IntermediateRepresentation);
         this.dir = is.DynamicIR.DynamicIntermediateRepresentation(intermediateRepresentation)
             ? intermediateRepresentation
-            : ({} as FernIr.dynamic.DynamicIntermediateRepresentation);
+            : ({} as DynamicFernIr.dynamic.DynamicIntermediateRepresentation);
     }
 
     public readonly ir: IntermediateRepresentation;
-    public readonly dir: FernIr.dynamic.DynamicIntermediateRepresentation;
+    public readonly dir: DynamicFernIr.dynamic.DynamicIntermediateRepresentation;
 
     /**
      * Utility for generating C# AST nodes and type references.
@@ -108,6 +131,12 @@ export class Generation {
      * Provides access to types, endpoints, errors, and other IR elements.
      */
     public readonly model: ModelNavigator;
+
+    /**
+     * CaseConverter for converting names to C# casing conventions.
+     * Constructed from the IR's casingsConfig for proper keyword handling.
+     */
+    public readonly case: CaseConverter;
 
     /**
      * Manager for external dependencies and imports.
@@ -144,12 +173,17 @@ export class Generation {
         useDotnetFormat: () => this.customConfig["experimental-dotnet-format"] ?? false,
         /** When true, enables WebSocket support in the generated SDK. Default: false. */
         enableWebsockets: () => this.customConfig["experimental-enable-websockets"] ?? false,
-        /** When true, generates readonly constants instead of static properties. Default: false. */
+        /** @deprecated Use `generateLiterals` instead. When true, generates readonly constants instead of static properties. Default: false. */
         enableReadonlyConstants: () => this.customConfig["experimental-readonly-constants"] ?? false,
+        /** When true, generates literal struct types for literal properties. If `experimental-readonly-constants` is also set, this takes precedence. Default: false. */
+        generateLiterals: () =>
+            this.customConfig["generate-literals"] ?? this.customConfig["experimental-readonly-constants"] ?? false,
         /** When true, uses explicit nullable/optional attributes and Optional<T?> wrapper for better null handling. Default: false. */
         enableExplicitNullableOptional: () => this.customConfig["experimental-explicit-nullable-optional"] ?? false,
         /** When true, generates Defaults nested class and WithDefaults() method for request records with default values. Default: false. */
         useDefaultRequestParameterValues: () => this.customConfig["use-default-request-parameter-values"] ?? false,
+        /** When true, redacts the response body in deserialization error exceptions and adds a custom ToString override to the base API exception. Default: false. */
+        redactResponseBodyOnError: () => this.customConfig["redact-response-body-on-error"] ?? false,
         /** Temporary mapping of websocket environment configurations. Default: {}. */
         temporaryWebsocketEnvironments: () => this.customConfig["temporary-websocket-environments"] ?? {},
         /** Custom name for the base API exception class. Default: "" (auto-generated). */
@@ -195,10 +229,18 @@ export class Generation {
             this.customConfig["root-client-class-access"] == "internal" ? ast.Access.Internal : ast.Access.Public,
         /** Additional NuGet package dependencies to include in the generated project. Default: {}. */
         extraDependencies: () => this.customConfig["extra-dependencies"] ?? {},
+        /** When true, omits Fern platform headers (X-Fern-Language, SDK name/version, User-Agent) from generated SDK requests. Default: false. */
+        omitFernHeaders: () => this.customConfig["omit-fern-headers"] ?? false,
+        /** When true, moves auth params and IR headers into ClientOptions so the constructor takes only named arguments. Default: false. */
+        unifiedClientOptions: () => this.customConfig["unified-client-options"] ?? false,
         /** When true, uses PascalCase for environment names (e.g., "Production" instead of "production"). Default: true. */
         pascalCaseEnvironments: () => this.customConfig["pascal-case-environments"] ?? true,
+        /** Solution file format: "sln" generates both .sln and .slnx, "slnx" (default) generates only .slnx. */
+        slnFormat: () => this.customConfig["sln-format"] ?? "slnx",
         /** When true, requires explicit namespace declarations instead of using file-scoped namespaces. Default: false. */
         explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true,
+        /** Override the default max retries for the SDK client. Default: 2. */
+        maxRetries: () => this.customConfig.maxRetries,
         /**
          * Output path configuration for generated files.
          * Returns normalized paths for library, test, solution, and other files.
@@ -307,6 +349,10 @@ export class Generation {
         root: (): string => this.settings.namespace,
         /** Internal Core namespace for SDK implementation details and utilities ({root}.Core). */
         core: (): string => `${this.namespaces.root}.Core`,
+        /** Pre-qualified root namespace with global:: prefix when the root segment has a type-namespace conflict. */
+        qualifiedRoot: (): string => this.qualifyNamespace(this.namespaces.root),
+        /** Pre-qualified Core namespace with global:: prefix when the root segment has a type-namespace conflict. */
+        qualifiedCore: (): string => this.qualifyNamespace(this.namespaces.core),
         /** Test namespace for all test-related code, canonicalized to avoid conflicts ({root}.Test). */
         test: (): string => this.registry.canonicalizeNamespace(`${this.namespaces.root}.Test`),
         /** Test utilities namespace for helper methods and fixtures ({root}.Test.Utils). */
@@ -430,7 +476,6 @@ export class Generation {
      * - `ExceptionInterceptor`, `ExceptionHandler`: Exception processing
      *
      * ### Serialization:
-     * - `EnumSerializer`, `StringEnumSerializer`: Enum serialization
      * - `DateTimeSerializer`: DateTime handling
      * - `JsonUtils`: JSON utilities
      * - `OneOfSerializer`: Union type serialization
@@ -476,7 +521,7 @@ export class Generation {
      * the NameRegistry to ensure correct imports in generated code.
      */
     public readonly Types = lazy({
-        Arbitrary: (name: string) => new Primitive.AribitraryType(name, this),
+        Arbitrary: (name: string) => new Primitive.ArbitraryType(name, this),
         HttpMethodExtensions: () =>
             this.csharp.classReference({
                 namespace: this.namespaces.core,
@@ -609,12 +654,6 @@ export class Generation {
         Constants: () =>
             this.csharp.classReference({
                 origin: this.model.staticExplicit("Constants"),
-                namespace: this.namespaces.core
-            }),
-        /** JSON serializer for enum types */
-        EnumSerializer: () =>
-            this.csharp.classReference({
-                origin: this.model.staticExplicit("EnumSerializer"),
                 namespace: this.namespaces.core
             }),
         /** JSON serializer for DateTime types */
@@ -788,17 +827,12 @@ export class Generation {
                 origin: this.model.staticExplicit("Closed"),
                 namespace: this.namespaces.webSocketsCore
             }),
-        /**
-         * JSON serializer for string-based enum types.
-         * @param enumClassReference - The enum type to serialize
-         */
-        StringEnumSerializer: (enumClassReference: ast.Type | ast.ClassReference): ast.ClassReference => {
-            return this.csharp.classReference({
-                origin: this.model.staticExplicit("StringEnumSerializer"),
-                namespace: this.namespaces.core,
-                generics: [enumClassReference]
-            });
-        },
+        /** Reconnection info for WebSocket connections */
+        ReconnectionInfo: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("ReconnectionInfo"),
+                namespace: this.namespaces.webSocketsCore
+            }),
         /**
          * Custom pagination class for iterating over paged results.
          * @param itemType - The type of items in each page
@@ -1146,7 +1180,7 @@ export class Generation {
     /** One-time initializers that are called before any generator actually starts to generate code. */
     public readonly initializers = lazy({
         implicitNamespaces: () => {
-            // add all the implict namespaces
+            // add all the implicit namespaces
             for (const namespace of this.namespaces.implicit) {
                 this.registry.addImplicitNamespace(namespace);
             }
@@ -1179,5 +1213,18 @@ export class Generation {
     /** Provides access to WireMock.Net testing/mocking library types */
     public get WireMock() {
         return this.extern.WireMock;
+    }
+
+    /**
+     * Returns a namespace string with a `global::` prefix if the first segment
+     * has a type-namespace conflict (e.g., class "Candid" shadowing namespace "Candid.Net").
+     * Use this when writing raw namespace strings in string interpolations to avoid CS0426.
+     */
+    public qualifyNamespace(ns: string): string {
+        const firstSegment = ns.split(".")[0];
+        if (firstSegment && this.registry.hasTypeNamespaceConflict(firstSegment)) {
+            return `global::${ns}`;
+        }
+        return ns;
     }
 }

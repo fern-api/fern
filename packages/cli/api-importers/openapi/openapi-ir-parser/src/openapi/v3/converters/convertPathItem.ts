@@ -1,11 +1,11 @@
 import { HttpMethod } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../getExtension";
-import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
-import { FernOpenAPIExtension } from "../extensions/fernExtensions";
-import { PathItemContext } from "./contexts";
-import { ConvertedOperation, ConvertedWebhookOperation, convertOperation } from "./operation/convertOperation";
+import { getExtension } from "../../../getExtension.js";
+import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext.js";
+import { FernOpenAPIExtension } from "../extensions/fernExtensions.js";
+import { PathItemContext } from "./contexts.js";
+import { ConvertedOperation, ConvertedWebhookOperation, convertOperation } from "./operation/convertOperation.js";
 
 export function convertPathItem(
     path: string,

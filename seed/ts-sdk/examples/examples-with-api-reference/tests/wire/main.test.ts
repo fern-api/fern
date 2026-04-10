@@ -9,6 +9,7 @@ describe("SeedExamplesClient", () => {
         const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "Hello world!\\n\\nwith\\n\\tnewlines";
         const rawResponseBody = "Hello world!\\n\\nwith\\n\\tnewlines";
+
         server
             .mockEndpoint()
             .post("/")
@@ -19,7 +20,7 @@ describe("SeedExamplesClient", () => {
             .build();
 
         const response = await client.echo("Hello world!\\n\\nwith\\n\\tnewlines");
-        expect(response).toEqual("Hello world!\\n\\nwith\\n\\tnewlines");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("createType", async () => {
@@ -27,6 +28,7 @@ describe("SeedExamplesClient", () => {
         const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "primitive";
         const rawResponseBody = { type: "primitive", value: "value", label: "label" };
+
         server
             .mockEndpoint()
             .post("")
@@ -37,10 +39,6 @@ describe("SeedExamplesClient", () => {
             .build();
 
         const response = await client.createType("primitive");
-        expect(response).toEqual({
-            type: "primitive",
-            value: "value",
-            label: "label",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

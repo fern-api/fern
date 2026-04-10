@@ -6,8 +6,34 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import StreamedCompletion
-_dynamic_imports: typing.Dict[str, str] = {"StreamedCompletion": ".types"}
+    from .types import (
+        CompletionEvent,
+        ErrorEvent,
+        EventEvent,
+        StreamEvent,
+        StreamEventContextProtocol,
+        StreamEventContextProtocol_Completion,
+        StreamEventContextProtocol_Error,
+        StreamEventContextProtocol_Event,
+        StreamEvent_Completion,
+        StreamEvent_Error,
+        StreamedCompletion,
+    )
+    from .errors import BadRequestError
+_dynamic_imports: typing.Dict[str, str] = {
+    "BadRequestError": ".errors",
+    "CompletionEvent": ".types",
+    "ErrorEvent": ".types",
+    "EventEvent": ".types",
+    "StreamEvent": ".types",
+    "StreamEventContextProtocol": ".types",
+    "StreamEventContextProtocol_Completion": ".types",
+    "StreamEventContextProtocol_Error": ".types",
+    "StreamEventContextProtocol_Event": ".types",
+    "StreamEvent_Completion": ".types",
+    "StreamEvent_Error": ".types",
+    "StreamedCompletion": ".types",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +57,17 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["StreamedCompletion"]
+__all__ = [
+    "BadRequestError",
+    "CompletionEvent",
+    "ErrorEvent",
+    "EventEvent",
+    "StreamEvent",
+    "StreamEventContextProtocol",
+    "StreamEventContextProtocol_Completion",
+    "StreamEventContextProtocol_Error",
+    "StreamEventContextProtocol_Event",
+    "StreamEvent_Completion",
+    "StreamEvent_Error",
+    "StreamedCompletion",
+]

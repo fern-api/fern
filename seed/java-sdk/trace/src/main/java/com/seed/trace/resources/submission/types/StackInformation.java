@@ -81,6 +81,10 @@ public final class StackInformation {
     public interface _FinalStage {
         StackInformation build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage topStackFrame(Optional<StackFrame> topStackFrame);
 
         _FinalStage topStackFrame(StackFrame topStackFrame);
@@ -127,6 +131,18 @@ public final class StackInformation {
         @java.lang.Override
         public StackInformation build() {
             return new StackInformation(numStackFrames, topStackFrame, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

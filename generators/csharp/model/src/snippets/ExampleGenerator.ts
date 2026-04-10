@@ -1,17 +1,18 @@
 import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
-import {
-    ExampleContainer,
-    ExampleNamedType,
-    ExampleObjectType,
-    ExamplePrimitive,
-    ExampleTypeReference,
-    ExampleUndiscriminatedUnionType,
-    ExampleUnionType
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ExampleContainer = FernIr.ExampleContainer;
+type ExampleNamedType = FernIr.ExampleNamedType;
+type ExampleObjectType = FernIr.ExampleObjectType;
+type ExamplePrimitive = FernIr.ExamplePrimitive;
+type ExampleTypeReference = FernIr.ExampleTypeReference;
+type ExampleUndiscriminatedUnionType = FernIr.ExampleUndiscriminatedUnionType;
+type ExampleUnionType = FernIr.ExampleUnionType;
+
 import { fail } from "assert";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ObjectGenerator } from "../object/ObjectGenerator";
-import { UnionGenerator } from "../union/UnionGenerator";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { ObjectGenerator } from "../object/ObjectGenerator.js";
+import { UnionGenerator } from "../union/UnionGenerator.js";
 
 export class ExampleGenerator extends WithGeneration {
     constructor(private readonly context: ModelGeneratorContext) {
@@ -251,6 +252,7 @@ export class ExampleGenerator extends WithGeneration {
             uuid: (p) => this.csharp.InstantiatedPrimitive.uuid(p),
             base64: (p) => this.csharp.InstantiatedPrimitive.string(p),
             bigInteger: (p) => this.csharp.InstantiatedPrimitive.string(p),
+            datetimeRfc2822: (example) => this.csharp.InstantiatedPrimitive.dateTime(example.datetime, parseDatetimes),
             _other: (value) => {
                 throw new Error(`Unknown example type reference: ${value.type}`);
             }

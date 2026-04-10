@@ -1,15 +1,8 @@
-import {
-    ContainerType,
-    DeclaredTypeName,
-    Literal,
-    ResolvedTypeReference,
-    ShapeType,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getSchemaOptions } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
-import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
+import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter.js";
 
 export declare namespace TypeReferenceToStringExpressionConverter {
     export interface Init extends AbstractTypeReferenceConverter.Init {}
@@ -55,7 +48,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
     }
 
     protected override named(
-        typeName: DeclaredTypeName,
+        typeName: FernIr.DeclaredTypeName,
         params: ConvertTypeReferenceParams
     ): (reference: ts.Expression) => ts.Expression {
         const resolvedType = this.context.type.resolveTypeName(typeName);
@@ -73,10 +66,10 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                         })
                     });
 
-                const getStringify = (resolvedType: ResolvedTypeReference): ts.Expression =>
-                    ResolvedTypeReference._visit<ts.Expression>(resolvedType, {
+                const getStringify = (resolvedType: FernIr.ResolvedTypeReference): ts.Expression =>
+                    FernIr.ResolvedTypeReference._visit<ts.Expression>(resolvedType, {
                         container: (containerType) =>
-                            ContainerType._visit(containerType, {
+                            FernIr.ContainerType._visit(containerType, {
                                 list: () => this.jsonStringify(mapExpression),
                                 optional: (optional) => getStringify(this.context.type.resolveTypeReference(optional)),
                                 nullable: (nullable) => getStringify(this.context.type.resolveTypeReference(nullable)),
@@ -89,15 +82,15 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                                     return this.jsonStringify(mapExpression);
                                 },
                                 _other: () => {
-                                    throw new Error("Unknown ContainerType: " + containerType.type);
+                                    throw new Error("Unknown FernIr.ContainerType: " + containerType.type);
                                 }
                             }),
                         primitive: () => mapExpression,
                         named: ({ shape }) => {
-                            if (shape === ShapeType.Enum) {
+                            if (shape === FernIr.ShapeType.Enum) {
                                 return mapExpression;
                             }
-                            if (shape === ShapeType.UndiscriminatedUnion) {
+                            if (shape === FernIr.ShapeType.UndiscriminatedUnion) {
                                 return this.jsonStringifyIfNotStringNoRecompute(mapExpression);
                             }
                             return this.jsonStringify(mapExpression);
@@ -111,9 +104,9 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
             };
         }
 
-        return ResolvedTypeReference._visit<(reference: ts.Expression) => ts.Expression>(resolvedType, {
+        return FernIr.ResolvedTypeReference._visit<(reference: ts.Expression) => ts.Expression>(resolvedType, {
             container: (containerType) =>
-                ContainerType._visit(containerType, {
+                FernIr.ContainerType._visit(containerType, {
                     list: this.list.bind(this),
                     nullable: (nullableType) => this.nullable(nullableType, params),
                     optional: (optionalType) => this.optional(optionalType, params),
@@ -126,10 +119,10 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                 }),
             primitive: (type) => this.primitive(type, params),
             named: ({ shape }) => {
-                if (shape === ShapeType.Enum) {
+                if (shape === FernIr.ShapeType.Enum) {
                     return (reference) => reference;
                 }
-                if (shape === ShapeType.UndiscriminatedUnion) {
+                if (shape === FernIr.ShapeType.UndiscriminatedUnion) {
                     return this.jsonStringifyIfNotString.bind(this);
                 }
                 return this.jsonStringify.bind(this);
@@ -172,14 +165,14 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
     }
 
     protected override nullable(
-        itemType: TypeReference,
+        itemType: FernIr.TypeReference,
         params: ConvertTypeReferenceParams
     ): (reference: ts.Expression) => ts.Expression {
         return (reference) => this.convert({ ...params, typeReference: itemType, nullable: true })(reference);
     }
 
     protected override optional(
-        itemType: TypeReference,
+        itemType: FernIr.TypeReference,
         params: ConvertTypeReferenceParams
     ): (reference: ts.Expression) => ts.Expression {
         return (reference) => this.convert({ ...params, typeReference: itemType, optional: true })(reference);
@@ -198,10 +191,10 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
     }
 
     protected override literal(
-        literal: Literal,
+        literal: FernIr.Literal,
         params: ConvertTypeReferenceParams
     ): (reference: ts.Expression) => ts.Expression {
-        return Literal._visit(literal, {
+        return FernIr.Literal._visit(literal, {
             string: () => (reference: ts.Expression) => reference,
             boolean: () => (reference: ts.Expression) => this.nullSafeCall("toString", params)(reference),
             _other: () => {

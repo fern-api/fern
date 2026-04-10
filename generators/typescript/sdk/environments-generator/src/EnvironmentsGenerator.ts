@@ -1,16 +1,18 @@
-import { Environments, EnvironmentsConfig } from "@fern-fern/ir-sdk/api";
+import { CaseConverter } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GeneratedEnvironments } from "@fern-typescript/contexts";
 
-import { EmptyGeneratedEnvironmentsImpl } from "./EmptyGeneratedEnvironmentsImpl";
-import { GeneratedMultipleUrlsEnvironmentsImpl } from "./GeneratedMultipleUrlsEnvironmentsImpl";
-import { GeneratedSingleUrlEnvironmentsImpl } from "./GeneratedSingleUrlEnvironmentsImpl";
+import { EmptyGeneratedEnvironmentsImpl } from "./EmptyGeneratedEnvironmentsImpl.js";
+import { GeneratedMultipleUrlsEnvironmentsImpl } from "./GeneratedMultipleUrlsEnvironmentsImpl.js";
+import { GeneratedSingleUrlEnvironmentsImpl } from "./GeneratedSingleUrlEnvironmentsImpl.js";
 
 export declare namespace EnvironmentsGenerator {
     export namespace generateEnvironments {
         export interface Args {
-            environmentsConfig: EnvironmentsConfig | undefined;
+            environmentsConfig: FernIr.EnvironmentsConfig | undefined;
             environmentEnumName: string;
             environmentUrlsTypeName: string;
+            caseConverter: CaseConverter;
         }
     }
 }
@@ -19,7 +21,8 @@ export class EnvironmentsGenerator {
     public generateEnvironments({
         environmentEnumName,
         environmentUrlsTypeName,
-        environmentsConfig
+        environmentsConfig,
+        caseConverter
     }: EnvironmentsGenerator.generateEnvironments.Args): GeneratedEnvironments {
         if (
             environmentsConfig == null ||
@@ -38,7 +41,7 @@ export class EnvironmentsGenerator {
         ) {
             return new EmptyGeneratedEnvironmentsImpl();
         }
-        return Environments._visit<GeneratedEnvironments>(environmentsConfig.environments, {
+        return FernIr.Environments._visit<GeneratedEnvironments>(environmentsConfig.environments, {
             singleBaseUrl: (singleBaseUrlEnvironments) =>
                 new GeneratedSingleUrlEnvironmentsImpl({
                     environments: singleBaseUrlEnvironments,
@@ -50,7 +53,8 @@ export class EnvironmentsGenerator {
                     environments: multipleBaseUrlEnvironments,
                     environmentEnumName,
                     environmentUrlsTypeName,
-                    defaultEnvironmentId: environmentsConfig.defaultEnvironment ?? undefined
+                    defaultEnvironmentId: environmentsConfig.defaultEnvironment ?? undefined,
+                    caseConverter
                 }),
             _other: () => {
                 throw new Error("Unknown environments: " + environmentsConfig.environments.type);

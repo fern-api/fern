@@ -1,49 +1,61 @@
 const MAX_DEPTH = 64;
 
+/**
+ * Produces a deterministic hash of a JSON-serializable value.
+ * Keys of objects are sorted to ensure consistent ordering.
+ *
+ * Uses an optimized variant of FNV-1a with direct numeric accumulation.
+ * No intermediate canonical string is built, keeping memory pressure
+ * minimal even for large object graphs.
+ */
 export function hashJSON(obj: unknown): string {
     let hash = 0x811c9dc5;
 
+    function feedChar(char: number): void {
+        hash ^= char;
+        hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+        hash >>>= 0;
+    }
+
+    function feedString(str: string): void {
+        for (let i = 0, len = str.length; i < len; i++) {
+            feedChar(str.charCodeAt(i));
+        }
+    }
+
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    function traverse(value: any, currentDepth: number) {
+    function traverse(value: any, currentDepth: number): void {
         if (typeof value === "object" && value != null) {
             if (currentDepth > MAX_DEPTH) {
-                updateHash("[MaxDepthExceeded]");
+                feedString("[MaxDepthExceeded]");
                 return;
             }
 
             if (Array.isArray(value)) {
-                updateHash("[");
+                feedChar(91); // '['
                 for (let i = 0; i < value.length; i++) {
                     if (i > 0) {
-                        updateHash(",");
+                        feedChar(44); // ','
                     }
                     traverse(value[i], currentDepth + 1);
                 }
-                updateHash("]");
+                feedChar(93); // ']'
             } else {
-                updateHash("{");
+                feedChar(123); // '{'
                 const keys = Object.keys(value).sort();
-                keys.forEach((key, index) => {
-                    if (index > 0) {
-                        updateHash(",");
+                const klen = keys.length;
+                for (let i = 0; i < klen; i++) {
+                    if (i > 0) {
+                        feedChar(44); // ','
                     }
-                    updateHash(key);
-                    updateHash(":");
-                    traverse(value[key], currentDepth + 1);
-                });
-                updateHash("}");
+                    feedString(keys[i] ?? "");
+                    feedChar(58); // ':'
+                    traverse(value[keys[i] ?? ""], currentDepth + 1);
+                }
+                feedChar(125); // '}'
             }
         } else {
-            updateHash(String(value));
-        }
-    }
-
-    function updateHash(str: string) {
-        for (let i = 0; i < str.length; i++) {
-            const char = str.charCodeAt(i);
-            hash ^= char;
-            hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
-            hash >>>= 0;
+            feedString(String(value));
         }
     }
 

@@ -45,7 +45,7 @@ export class EmptyRealtimeSocket {
     }
 
     /** The current state of the connection; this is one of the readyState constants. */
-    get readyState(): number {
+    get readyState(): core.ReconnectingWebSocket.ReadyState {
         return this.socket.readyState;
     }
 
@@ -92,7 +92,7 @@ export class EmptyRealtimeSocket {
 
     /** Returns a promise that resolves when the websocket is open. */
     public async waitForOpen(): Promise<core.ReconnectingWebSocket> {
-        if (this.socket.readyState === core.ReconnectingWebSocket.OPEN) {
+        if (this.socket.readyState === core.ReconnectingWebSocket.ReadyState.OPEN) {
             return this.socket;
         }
 
@@ -108,7 +108,7 @@ export class EmptyRealtimeSocket {
     }
 
     /** Send a binary payload to the websocket. */
-    protected sendBinary(payload: ArrayBufferLike | Blob | ArrayBufferView): void {
+    protected sendBinary(payload: ArrayBuffer | Blob | ArrayBufferView): void {
         this.socket.send(payload);
     }
 

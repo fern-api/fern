@@ -1,6 +1,6 @@
-export { EndpointMatcher } from "./endpoint-matcher";
-export { OpenAPIPruner } from "./pruner";
-export { ReferenceCollector } from "./reference-collector";
+export { EndpointMatcher } from "./endpoint-matcher.js";
+export { OpenAPIPruner } from "./pruner.js";
+export { ReferenceCollector } from "./reference-collector.js";
 export type {
     ComponentReference,
     EndpointSelector,
@@ -9,4 +9,4 @@ export type {
     PruneResult,
     PruneStatistics,
     SchemaReference
-} from "./types";
+} from "./types.js";

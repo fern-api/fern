@@ -120,6 +120,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -583,6 +584,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -934,6 +936,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -968,6 +971,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1455,6 +1459,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1489,6 +1494,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1861,6 +1867,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1907,6 +1914,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1932,6 +1940,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1957,6 +1966,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -3110,11 +3120,13 @@
       "generatedRequestName": "SessionsEventsRequest",
       "response": {
         "description": "OK",
+        "terminator": "[DONE]",
         "fullExamples": [],
         "schema": {
           "value": {
             "description": "Each oneOf object in the array represents one possible Server Sent Events (SSE) message, serialized as UTF-8 text according to the SSE specification.",
             "discriminantProperty": "event",
+            "discriminatorContext": "data",
             "generatedName": "SessionsEventsResponse",
             "title": "Server Sent Events",
             "schemas": {
@@ -3133,9 +3145,7 @@
                     },
                     "audiences": [],
                     "conflict": {},
-                    "generatedName": "sessionsEventsResponseStatusData",
-                    "readonly": false,
-                    "writeonly": false
+                    "generatedName": "sessionsEventsResponseStatusData"
                   },
                   {
                     "key": "id",
@@ -3208,9 +3218,7 @@
                     },
                     "audiences": [],
                     "conflict": {},
-                    "generatedName": "sessionsEventsResponseErrorData",
-                    "readonly": false,
-                    "writeonly": false
+                    "generatedName": "sessionsEventsResponseErrorData"
                   },
                   {
                     "key": "id",
@@ -3504,6 +3512,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -3527,6 +3536,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -3551,6 +3561,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -4803,6 +4814,7 @@
             "key": "data",
             "schema": {
               "generatedName": "ErrorEnvelopeData",
+              "groupName": [],
               "type": "unknown"
             },
             "audiences": []
@@ -4838,6 +4850,7 @@
             "key": "meta",
             "schema": {
               "generatedName": "ErrorEnvelopeMeta",
+              "groupName": [],
               "type": "unknown"
             },
             "audiences": []
@@ -5036,9 +5049,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -5078,9 +5089,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -5168,9 +5177,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -5236,9 +5243,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -5453,9 +5458,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -5559,9 +5562,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -5693,9 +5694,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -5735,9 +5734,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -6082,9 +6079,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -6124,9 +6119,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -6290,9 +6283,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -6321,9 +6312,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -6363,9 +6352,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -6464,9 +6451,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -6810,9 +6795,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -6905,9 +6888,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7007,9 +6988,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7075,9 +7054,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7117,9 +7094,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7174,9 +7149,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7232,9 +7205,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7274,9 +7245,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7579,9 +7548,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7621,9 +7588,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},

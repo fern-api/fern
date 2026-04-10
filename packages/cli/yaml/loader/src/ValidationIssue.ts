@@ -12,19 +12,24 @@ export class ValidationIssue {
     public readonly location: SourceLocation;
     /** The path to the value in the YAML document (e.g., ["cli", "version"]) */
     public readonly yamlPath?: ReadonlyArray<string | number>;
+    /** The suggestion to remediate the issue, if any */
+    public readonly suggestion?: string;
 
     constructor({
         message,
         location,
-        yamlPath
+        yamlPath,
+        suggestion
     }: {
         message: string;
         location: SourceLocation;
         yamlPath?: ReadonlyArray<string | number>;
+        suggestion?: string;
     }) {
         this.message = message;
         this.location = location;
         this.yamlPath = yamlPath;
+        this.suggestion = suggestion;
     }
 
     /**
@@ -36,6 +41,16 @@ export class ValidationIssue {
      * ```
      */
     public toString(): string {
-        return `${this.location}: ${this.message}`;
+        if (this.suggestion == null) {
+            return `${this.location}: ${this.message}`;
+        }
+        return `${this.location}: ${this.message}\n${this.indentBlock(this.suggestion)}`;
+    }
+
+    private indentBlock(text: string, indent: string = "  "): string {
+        return text
+            .split("\n")
+            .map((line) => (line.length > 0 ? `${indent}${line}` : line))
+            .join("\n");
     }
 }

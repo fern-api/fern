@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { FERN_REPO_PACKAGE_NAME } from "./constants";
+import { FERN_REPO_PACKAGE_NAME } from "./constants.js";
 
 export type CheckResult = CheckResultSuccess | CheckResultFailure;
 export interface CheckResultSuccess {

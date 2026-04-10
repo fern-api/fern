@@ -5,22 +5,23 @@ package streaming
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/streaming-parameter/fern/internal"
 )
 
 type RegularResponse struct {
-	Id   string  `json:"id" url:"id"`
+	ID   string  `json:"id" url:"id"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (r *RegularResponse) GetId() string {
+func (r *RegularResponse) GetID() string {
 	if r == nil {
 		return ""
 	}
-	return r.Id
+	return r.ID
 }
 
 func (r *RegularResponse) GetName() *string {
@@ -68,18 +69,18 @@ func (r *RegularResponse) String() string {
 }
 
 type StreamResponse struct {
-	Id   string  `json:"id" url:"id"`
+	ID   string  `json:"id" url:"id"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (s *StreamResponse) GetId() string {
+func (s *StreamResponse) GetID() string {
 	if s == nil {
 		return ""
 	}
-	return s.Id
+	return s.ID
 }
 
 func (s *StreamResponse) GetName() *string {

@@ -1,5 +1,5 @@
-import { Writer } from "@fern-api/java-ast/src/ast";
-import { WireTestExample } from "../extractors/TestDataExtractor";
+import { Writer } from "@fern-api/java-ast";
+import { WireTestExample } from "../extractors/TestDataExtractor.js";
 
 /**
  * Validator for HTTP headers in wire tests.

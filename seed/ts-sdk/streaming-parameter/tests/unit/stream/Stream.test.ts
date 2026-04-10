@@ -151,6 +151,221 @@ describe("Stream", () => {
         });
     });
 
+    describe("SSE event-level discrimination (inject discriminator)", () => {
+        it("should inject event type as discriminator into JSON data", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\ndata: {"content": "hello"}\n\nevent: completion\ndata: {"content": "world"}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([
+                { type: "completion", content: "hello" },
+                { type: "completion", content: "world" },
+            ]);
+        });
+
+        it("should inject different event types for mixed events", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\ndata: {"content": "hi"}\n\nevent: error\ndata: {"message": "fail"}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "event" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([
+                { event: "completion", content: "hi" },
+                { event: "error", message: "fail" },
+            ]);
+        });
+
+        it("should not inject if data already contains discriminator key", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\ndata: {"type": "existing", "content": "hello"}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ type: "existing", content: "hello" }]);
+        });
+
+        it("should not false-positive when discriminator key appears inside a value", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\ndata: {"description": "type: foo", "content": "hello"}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ type: "completion", description: "type: foo", content: "hello" }]);
+        });
+
+        it("should not inject if no event field is present", async () => {
+            const mockStream = createReadableStream(['data: {"content": "hello"}\n\n']);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ content: "hello" }]);
+        });
+
+        it("should handle empty JSON object", async () => {
+            const mockStream = createReadableStream(["event: heartbeat\ndata: {}\n\n"]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ type: "heartbeat" }]);
+        });
+
+        it("should stop at stream terminator", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\ndata: {"content": "hi"}\n\nevent: done\ndata: [DONE]\n\nevent: completion\ndata: {"content": "bye"}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type", streamTerminator: "[DONE]" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ type: "completion", content: "hi" }]);
+        });
+
+        it("should concatenate multiline data fields", async () => {
+            const mockStream = createReadableStream(['event: completion\ndata: {"delta":\ndata: "hello"}\n\n']);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ type: "completion", delta: "hello" }]);
+        });
+
+        it("should handle events split across chunks", async () => {
+            const mockStream = createReadableStream(["event: comple", 'tion\ndata: {"con', 'tent": "hi"}\n\n']);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ type: "completion", content: "hi" }]);
+        });
+
+        it("should handle last event without trailing blank line", async () => {
+            const mockStream = createReadableStream(['event: completion\ndata: {"content": "hi"}\n']);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ type: "completion", content: "hi" }]);
+        });
+
+        it("should handle CRLF line endings", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\r\ndata: {"content": "hi"}\r\n\r\nevent: completion\r\ndata: {"content": "world"}\r\n\r\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([
+                { type: "completion", content: "hi" },
+                { type: "completion", content: "world" },
+            ]);
+        });
+
+        it("should inject empty string discriminator when event field is present but empty", async () => {
+            const mockStream = createReadableStream(['event: \ndata: {"content": "hello"}\n\n']);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ type: "", content: "hello" }]);
+        });
+    });
+
     describe("encoding and decoding", () => {
         it("should decode UTF-8 text using TextDecoder", async () => {
             const encoder = new TextEncoder();

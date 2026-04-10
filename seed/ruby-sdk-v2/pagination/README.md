@@ -29,20 +29,20 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new(token: '<token>');
+client = Seed::Client.new(token: "<token>")
 
 client.complex.search(
-  index: 'index',
+  index: "index",
   pagination: {
     per_page: 1,
-    starting_after: 'starting_after'
+    starting_after: "starting_after"
   },
   query: {
-    field: 'field',
-    operator: '=',
-    value: 'value'
+    field: "field",
+    operator: "=",
+    value: "value"
   }
-);
+)
 ```
 
 ## Environments

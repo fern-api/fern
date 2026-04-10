@@ -1,4 +1,4 @@
-import type { AiProvider } from "./AiProvider";
+import type { AiProvider } from "./AiProvider.js";
 
 /**
  * AI configuration for Fern features (e.g. example generation).

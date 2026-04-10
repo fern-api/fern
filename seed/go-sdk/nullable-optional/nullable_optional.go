@@ -228,8 +228,8 @@ var (
 	addressFieldState      = big.NewInt(1 << 2)
 	addressFieldZipCode    = big.NewInt(1 << 3)
 	addressFieldCountry    = big.NewInt(1 << 4)
-	addressFieldBuildingId = big.NewInt(1 << 5)
-	addressFieldTenantId   = big.NewInt(1 << 6)
+	addressFieldBuildingID = big.NewInt(1 << 5)
+	addressFieldTenantID   = big.NewInt(1 << 6)
 )
 
 type Address struct {
@@ -238,8 +238,8 @@ type Address struct {
 	State      *string        `json:"state,omitempty" url:"state,omitempty"`
 	ZipCode    string         `json:"zipCode" url:"zipCode"`
 	Country    *string        `json:"country,omitempty" url:"country,omitempty"`
-	BuildingId NullableUserId `json:"buildingId,omitempty" url:"buildingId,omitempty"`
-	TenantId   OptionalUserId `json:"tenantId,omitempty" url:"tenantId,omitempty"`
+	BuildingID NullableUserID `json:"buildingId,omitempty" url:"buildingId,omitempty"`
+	TenantID   OptionalUserID `json:"tenantId,omitempty" url:"tenantId,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -283,21 +283,24 @@ func (a *Address) GetCountry() *string {
 	return a.Country
 }
 
-func (a *Address) GetBuildingId() NullableUserId {
+func (a *Address) GetBuildingID() NullableUserID {
 	if a == nil {
 		return nil
 	}
-	return a.BuildingId
+	return a.BuildingID
 }
 
-func (a *Address) GetTenantId() OptionalUserId {
+func (a *Address) GetTenantID() OptionalUserID {
 	if a == nil {
 		return nil
 	}
-	return a.TenantId
+	return a.TenantID
 }
 
 func (a *Address) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
 	return a.extraProperties
 }
 
@@ -343,18 +346,18 @@ func (a *Address) SetCountry(country *string) {
 	a.require(addressFieldCountry)
 }
 
-// SetBuildingId sets the BuildingId field and marks it as non-optional;
+// SetBuildingID sets the BuildingID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *Address) SetBuildingId(buildingId NullableUserId) {
-	a.BuildingId = buildingId
-	a.require(addressFieldBuildingId)
+func (a *Address) SetBuildingID(buildingID NullableUserID) {
+	a.BuildingID = buildingID
+	a.require(addressFieldBuildingID)
 }
 
-// SetTenantId sets the TenantId field and marks it as non-optional;
+// SetTenantID sets the TenantID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *Address) SetTenantId(tenantId OptionalUserId) {
-	a.TenantId = tenantId
-	a.require(addressFieldTenantId)
+func (a *Address) SetTenantID(tenantID OptionalUserID) {
+	a.TenantID = tenantID
+	a.require(addressFieldTenantID)
 }
 
 func (a *Address) UnmarshalJSON(data []byte) error {
@@ -385,6 +388,9 @@ func (a *Address) MarshalJSON() ([]byte, error) {
 }
 
 func (a *Address) String() string {
+	if a == nil {
+		return "<nil>"
+	}
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
@@ -398,7 +404,7 @@ func (a *Address) String() string {
 
 // Test object with nullable enums, unions, and arrays
 var (
-	complexProfileFieldId                           = big.NewInt(1 << 0)
+	complexProfileFieldID                           = big.NewInt(1 << 0)
 	complexProfileFieldNullableRole                 = big.NewInt(1 << 1)
 	complexProfileFieldOptionalRole                 = big.NewInt(1 << 2)
 	complexProfileFieldOptionalNullableRole         = big.NewInt(1 << 3)
@@ -420,7 +426,7 @@ var (
 )
 
 type ComplexProfile struct {
-	Id                           string                `json:"id" url:"id"`
+	ID                           string                `json:"id" url:"id"`
 	NullableRole                 *UserRole             `json:"nullableRole,omitempty" url:"nullableRole,omitempty"`
 	OptionalRole                 *UserRole             `json:"optionalRole,omitempty" url:"optionalRole,omitempty"`
 	OptionalNullableRole         *UserRole             `json:"optionalNullableRole,omitempty" url:"optionalNullableRole,omitempty"`
@@ -447,11 +453,11 @@ type ComplexProfile struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *ComplexProfile) GetId() string {
+func (c *ComplexProfile) GetID() string {
 	if c == nil {
 		return ""
 	}
-	return c.Id
+	return c.ID
 }
 
 func (c *ComplexProfile) GetNullableRole() *UserRole {
@@ -581,6 +587,9 @@ func (c *ComplexProfile) GetOptionalMapOfEnums() map[string]UserRole {
 }
 
 func (c *ComplexProfile) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -591,11 +600,11 @@ func (c *ComplexProfile) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ComplexProfile) SetId(id string) {
-	c.Id = id
-	c.require(complexProfileFieldId)
+func (c *ComplexProfile) SetID(id string) {
+	c.ID = id
+	c.require(complexProfileFieldID)
 }
 
 // SetNullableRole sets the NullableRole field and marks it as non-optional;
@@ -752,6 +761,9 @@ func (c *ComplexProfile) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ComplexProfile) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -812,6 +824,9 @@ func (c *CreateUserRequest) GetAddress() *Address {
 }
 
 func (c *CreateUserRequest) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -878,6 +893,9 @@ func (c *CreateUserRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateUserRequest) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1011,6 +1029,9 @@ func (d *DeserializationTestRequest) GetOptionalObject() *Organization {
 }
 
 func (d *DeserializationTestRequest) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -1133,6 +1154,9 @@ func (d *DeserializationTestRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DeserializationTestRequest) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -1194,6 +1218,9 @@ func (d *DeserializationTestResponse) GetPresentFieldsCount() int {
 }
 
 func (d *DeserializationTestResponse) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -1268,6 +1295,9 @@ func (d *DeserializationTestResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DeserializationTestResponse) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -1280,7 +1310,7 @@ func (d *DeserializationTestResponse) String() string {
 }
 
 var (
-	documentFieldId      = big.NewInt(1 << 0)
+	documentFieldID      = big.NewInt(1 << 0)
 	documentFieldTitle   = big.NewInt(1 << 1)
 	documentFieldContent = big.NewInt(1 << 2)
 	documentFieldAuthor  = big.NewInt(1 << 3)
@@ -1288,7 +1318,7 @@ var (
 )
 
 type Document struct {
-	Id      string   `json:"id" url:"id"`
+	ID      string   `json:"id" url:"id"`
 	Title   string   `json:"title" url:"title"`
 	Content string   `json:"content" url:"content"`
 	Author  *string  `json:"author,omitempty" url:"author,omitempty"`
@@ -1301,11 +1331,11 @@ type Document struct {
 	rawJSON         json.RawMessage
 }
 
-func (d *Document) GetId() string {
+func (d *Document) GetID() string {
 	if d == nil {
 		return ""
 	}
-	return d.Id
+	return d.ID
 }
 
 func (d *Document) GetTitle() string {
@@ -1337,6 +1367,9 @@ func (d *Document) GetTags() []string {
 }
 
 func (d *Document) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -1347,11 +1380,11 @@ func (d *Document) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *Document) SetId(id string) {
-	d.Id = id
-	d.require(documentFieldId)
+func (d *Document) SetID(id string) {
+	d.ID = id
+	d.require(documentFieldID)
 }
 
 // SetTitle sets the Title field and marks it as non-optional;
@@ -1410,6 +1443,9 @@ func (d *Document) MarshalJSON() ([]byte, error) {
 }
 
 func (d *Document) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -1424,13 +1460,13 @@ func (d *Document) String() string {
 var (
 	emailNotificationFieldEmailAddress = big.NewInt(1 << 0)
 	emailNotificationFieldSubject      = big.NewInt(1 << 1)
-	emailNotificationFieldHtmlContent  = big.NewInt(1 << 2)
+	emailNotificationFieldHTMLContent  = big.NewInt(1 << 2)
 )
 
 type EmailNotification struct {
 	EmailAddress string  `json:"emailAddress" url:"emailAddress"`
 	Subject      string  `json:"subject" url:"subject"`
-	HtmlContent  *string `json:"htmlContent,omitempty" url:"htmlContent,omitempty"`
+	HTMLContent  *string `json:"htmlContent,omitempty" url:"htmlContent,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1453,14 +1489,17 @@ func (e *EmailNotification) GetSubject() string {
 	return e.Subject
 }
 
-func (e *EmailNotification) GetHtmlContent() *string {
+func (e *EmailNotification) GetHTMLContent() *string {
 	if e == nil {
 		return nil
 	}
-	return e.HtmlContent
+	return e.HTMLContent
 }
 
 func (e *EmailNotification) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -1485,11 +1524,11 @@ func (e *EmailNotification) SetSubject(subject string) {
 	e.require(emailNotificationFieldSubject)
 }
 
-// SetHtmlContent sets the HtmlContent field and marks it as non-optional;
+// SetHTMLContent sets the HTMLContent field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailNotification) SetHtmlContent(htmlContent *string) {
-	e.HtmlContent = htmlContent
-	e.require(emailNotificationFieldHtmlContent)
+func (e *EmailNotification) SetHTMLContent(htmlContent *string) {
+	e.HTMLContent = htmlContent
+	e.require(emailNotificationFieldHTMLContent)
 }
 
 func (e *EmailNotification) UnmarshalJSON(data []byte) error {
@@ -1520,6 +1559,9 @@ func (e *EmailNotification) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EmailNotification) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -1674,20 +1716,20 @@ func (n *NotificationMethod) validate() error {
 }
 
 // An alias for a nullable user ID
-type NullableUserId = *string
+type NullableUserID = *string
 
 // An alias for an optional user ID
-type OptionalUserId = *string
+type OptionalUserID = *string
 
 var (
-	organizationFieldId            = big.NewInt(1 << 0)
+	organizationFieldID            = big.NewInt(1 << 0)
 	organizationFieldName          = big.NewInt(1 << 1)
 	organizationFieldDomain        = big.NewInt(1 << 2)
 	organizationFieldEmployeeCount = big.NewInt(1 << 3)
 )
 
 type Organization struct {
-	Id            string  `json:"id" url:"id"`
+	ID            string  `json:"id" url:"id"`
 	Name          string  `json:"name" url:"name"`
 	Domain        *string `json:"domain,omitempty" url:"domain,omitempty"`
 	EmployeeCount *int    `json:"employeeCount,omitempty" url:"employeeCount,omitempty"`
@@ -1699,11 +1741,11 @@ type Organization struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *Organization) GetId() string {
+func (o *Organization) GetID() string {
 	if o == nil {
 		return ""
 	}
-	return o.Id
+	return o.ID
 }
 
 func (o *Organization) GetName() string {
@@ -1728,6 +1770,9 @@ func (o *Organization) GetEmployeeCount() *int {
 }
 
 func (o *Organization) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
@@ -1738,11 +1783,11 @@ func (o *Organization) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *Organization) SetId(id string) {
-	o.Id = id
-	o.require(organizationFieldId)
+func (o *Organization) SetID(id string) {
+	o.ID = id
+	o.require(organizationFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1794,6 +1839,9 @@ func (o *Organization) MarshalJSON() ([]byte, error) {
 }
 
 func (o *Organization) String() string {
+	if o == nil {
+		return "<nil>"
+	}
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value
@@ -1854,6 +1902,9 @@ func (p *PushNotification) GetBadge() *int {
 }
 
 func (p *PushNotification) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -1920,6 +1971,9 @@ func (p *PushNotification) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PushNotification) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value
@@ -2113,6 +2167,9 @@ func (s *SmsNotification) GetShortCode() *string {
 }
 
 func (s *SmsNotification) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -2172,6 +2229,9 @@ func (s *SmsNotification) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SmsNotification) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -2233,6 +2293,9 @@ func (u *UpdateUserRequest) GetAddress() *Address {
 }
 
 func (u *UpdateUserRequest) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -2299,6 +2362,9 @@ func (u *UpdateUserRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateUserRequest) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -2312,7 +2378,7 @@ func (u *UpdateUserRequest) String() string {
 
 // Test object with nullable and optional fields
 var (
-	userProfileFieldId                     = big.NewInt(1 << 0)
+	userProfileFieldID                     = big.NewInt(1 << 0)
 	userProfileFieldUsername               = big.NewInt(1 << 1)
 	userProfileFieldNullableString         = big.NewInt(1 << 2)
 	userProfileFieldNullableInteger        = big.NewInt(1 << 3)
@@ -2333,7 +2399,7 @@ var (
 )
 
 type UserProfile struct {
-	Id                     string            `json:"id" url:"id"`
+	ID                     string            `json:"id" url:"id"`
 	Username               string            `json:"username" url:"username"`
 	NullableString         *string           `json:"nullableString,omitempty" url:"nullableString,omitempty"`
 	NullableInteger        *int              `json:"nullableInteger,omitempty" url:"nullableInteger,omitempty"`
@@ -2359,11 +2425,11 @@ type UserProfile struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UserProfile) GetId() string {
+func (u *UserProfile) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *UserProfile) GetUsername() string {
@@ -2486,6 +2552,9 @@ func (u *UserProfile) GetOptionalNullableObject() *Address {
 }
 
 func (u *UserProfile) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -2496,11 +2565,11 @@ func (u *UserProfile) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserProfile) SetId(id string) {
-	u.Id = id
-	u.require(userProfileFieldId)
+func (u *UserProfile) SetID(id string) {
+	u.ID = id
+	u.require(userProfileFieldID)
 }
 
 // SetUsername sets the Username field and marks it as non-optional;
@@ -2662,6 +2731,9 @@ func (u *UserProfile) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserProfile) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -2674,7 +2746,7 @@ func (u *UserProfile) String() string {
 }
 
 var (
-	userResponseFieldId        = big.NewInt(1 << 0)
+	userResponseFieldID        = big.NewInt(1 << 0)
 	userResponseFieldUsername  = big.NewInt(1 << 1)
 	userResponseFieldEmail     = big.NewInt(1 << 2)
 	userResponseFieldPhone     = big.NewInt(1 << 3)
@@ -2684,7 +2756,7 @@ var (
 )
 
 type UserResponse struct {
-	Id        string     `json:"id" url:"id"`
+	ID        string     `json:"id" url:"id"`
 	Username  string     `json:"username" url:"username"`
 	Email     *string    `json:"email,omitempty" url:"email,omitempty"`
 	Phone     *string    `json:"phone,omitempty" url:"phone,omitempty"`
@@ -2699,11 +2771,11 @@ type UserResponse struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UserResponse) GetId() string {
+func (u *UserResponse) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *UserResponse) GetUsername() string {
@@ -2749,6 +2821,9 @@ func (u *UserResponse) GetAddress() *Address {
 }
 
 func (u *UserResponse) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -2759,11 +2834,11 @@ func (u *UserResponse) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponse) SetId(id string) {
-	u.Id = id
-	u.require(userResponseFieldId)
+func (u *UserResponse) SetID(id string) {
+	u.ID = id
+	u.require(userResponseFieldID)
 }
 
 // SetUsername sets the Username field and marks it as non-optional;
@@ -2848,6 +2923,9 @@ func (u *UserResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserResponse) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

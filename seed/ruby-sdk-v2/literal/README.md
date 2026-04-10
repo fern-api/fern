@@ -28,13 +28,13 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
 client.headers.send_(
-  endpoint_version: '02-12-2024',
+  endpoint_version: "02-12-2024",
   async: true,
-  query: 'What is the weather today'
-);
+  query: "What is the weather today"
+)
 ```
 
 ## Environments

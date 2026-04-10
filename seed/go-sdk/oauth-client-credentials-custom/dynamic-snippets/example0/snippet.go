@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/oauth-client-credentials-custom/fern"
     client "github.com/oauth-client-credentials-custom/fern/client"
     option "github.com/oauth-client-credentials-custom/fern/option"
-    fern "github.com/oauth-client-credentials-custom/fern"
-    context "context"
 )
 
 func do() {
@@ -21,7 +22,7 @@ func do() {
         Cid: "cid",
         Csr: "csr",
         Scp: "scp",
-        EntityId: "entity_id",
+        EntityID: "entity_id",
         Scope: fern.String(
             "scope",
         ),

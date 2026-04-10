@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
@@ -64,7 +64,9 @@ public record AssertCorrectnessCheck
     public SeedTrace.V2.V3.DeepEqualityCorrectnessCheck AsDeepEquality() =>
         IsDeepEquality
             ? (SeedTrace.V2.V3.DeepEqualityCorrectnessCheck)Value!
-            : throw new System.Exception("AssertCorrectnessCheck.Type is not 'deepEquality'");
+            : throw new global::System.Exception(
+                "AssertCorrectnessCheck.Type is not 'deepEquality'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
@@ -73,7 +75,7 @@ public record AssertCorrectnessCheck
     public SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult AsCustom() =>
         IsCustom
             ? (SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult)Value!
-            : throw new System.Exception("AssertCorrectnessCheck.Type is not 'custom'");
+            : throw new global::System.Exception("AssertCorrectnessCheck.Type is not 'custom'");
 
     public T Match<T>(
         Func<SeedTrace.V2.V3.DeepEqualityCorrectnessCheck, T> onDeepEquality,
@@ -149,12 +151,12 @@ public record AssertCorrectnessCheck
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<AssertCorrectnessCheck>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(AssertCorrectnessCheck).IsAssignableFrom(typeToConvert);
 
         public override AssertCorrectnessCheck Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -179,16 +181,23 @@ public record AssertCorrectnessCheck
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "deepEquality" => json.Deserialize<SeedTrace.V2.V3.DeepEqualityCorrectnessCheck?>(
-                    options
-                )
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.V3.DeepEqualityCorrectnessCheck"
-                    ),
+                "deepEquality" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.V2.V3.DeepEqualityCorrectnessCheck?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.V2.V3.DeepEqualityCorrectnessCheck"
+                        ),
                 "custom" =>
-                    json.Deserialize<SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult?>(
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.V2.V3.VoidFunctionDefinitionThatTakesActualResult?>(
                         options
                     )
                         ?? throw new JsonException(
@@ -214,6 +223,27 @@ public record AssertCorrectnessCheck
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override AssertCorrectnessCheck ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new AssertCorrectnessCheck(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            AssertCorrectnessCheck value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

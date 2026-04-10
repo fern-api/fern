@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.Endpoints.Params;
 
 namespace Usage;
 
@@ -12,8 +13,11 @@ public class Example37
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnDateAsync(
-            DateOnly.Parse("2023-01-15")
+        await client.Endpoints.Params.GetWithPathAndQueryAsync(
+            "param",
+            new GetWithPathAndQuery {
+                Query = "query"
+            }
         );
     }
 

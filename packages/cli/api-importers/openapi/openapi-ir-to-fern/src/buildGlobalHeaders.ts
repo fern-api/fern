@@ -3,13 +3,13 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { GlobalHeader } from "@fern-api/openapi-ir";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { camelCase } from "lodash-es";
-import { buildHeader } from "./buildHeader";
-import { buildTypeReference } from "./buildTypeReference";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
-import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
-import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";
+import { buildHeader } from "./buildHeader.js";
+import { buildTypeReference } from "./buildTypeReference.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema.js";
+import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup.js";
+import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference.js";
+import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional.js";
 
 class HeaderWithCount {
     public readonly schema: RawSchemas.HttpHeaderSchema;
@@ -27,7 +27,7 @@ class HeaderWithCount {
 /* 75% of endpoints must have header present, for it to be considered a global header*/
 const GLOBAL_HEADER_PERCENTAGE_THRESHOLD = 0.75;
 
-const HEADERS_TO_IGNORE = new Set(...["authorization"]);
+const HEADERS_TO_IGNORE = new Set(["authorization"]);
 
 export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
     if (context.globalHeaderOverrides != null) {
@@ -45,9 +45,16 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
     );
 
     for (const [headerName, header] of Object.entries(predefinedGlobalHeaders)) {
-        let schema: RawSchemas.HttpHeaderSchema = "optional<string>";
+        const isOptional = header.optional === true;
+        const defaultType = isOptional ? "optional<string>" : "string";
+        let schema: RawSchemas.HttpHeaderSchema = defaultType;
 
-        if (header.name == null && header.env == null && typeof header.schema === "string") {
+        if (
+            header.name == null &&
+            header.env == null &&
+            header.clientDefault == null &&
+            typeof header.schema === "string"
+        ) {
             schema = header.schema;
         } else if (header != null) {
             const groupName = header.schema ? getGroupNameForSchema(header.schema) : undefined;
@@ -68,9 +75,12 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                                   namespace,
                                   declarationDepth: 0
                               })
-                          ) ?? "optional<string>")
-                        : "optional<string>"
+                          ) ?? defaultType)
+                        : defaultType
             };
+            if (typeof header.clientDefault === "string" || typeof header.clientDefault === "boolean") {
+                schema.default = header.clientDefault;
+            }
         }
         context.builder.addGlobalHeader({
             name: headerName,

@@ -5,7 +5,7 @@ import chalk from "chalk";
 import IS_CI from "is-ci";
 import ora, { Ora } from "ora";
 
-import { Log } from "./Log";
+import { Log } from "./Log.js";
 
 interface Task {
     printInteractiveTasks: ({ spinner }: { spinner: string }) => string;
@@ -15,7 +15,7 @@ export class TtyAwareLogger {
     private tasks: Task[] = [];
     private lastPaint = "";
     private spinner = ora({ spinner: "dots11" });
-    private interval: NodeJS.Timer | undefined;
+    private interval: ReturnType<typeof setInterval> | undefined;
 
     constructor(
         private readonly stdout: NodeJS.WriteStream,

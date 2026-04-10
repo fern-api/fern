@@ -1,5 +1,5 @@
 import { OpenAPIV3 } from "openapi-types";
-import { EndpointSelector, HttpMethod } from "./types";
+import { EndpointSelector, HttpMethod } from "./types.js";
 
 export class EndpointMatcher {
     constructor(private selectors: EndpointSelector[]) {}

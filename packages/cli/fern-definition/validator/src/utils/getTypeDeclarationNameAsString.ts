@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { TypeDeclarationName } from "../ast";
+import { TypeDeclarationName } from "../ast/index.js";
 
 export function getTypeDeclarationNameAsString(typeName: TypeDeclarationName): string {
     if (!typeName.isInlined) {

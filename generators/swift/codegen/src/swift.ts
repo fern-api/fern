@@ -13,7 +13,7 @@ import {
     Method,
     Property,
     Struct
-} from "./ast";
+} from "./ast/index.js";
 
 export function class_(args: Class.Args): Class {
     return new Class(args);
@@ -71,5 +71,5 @@ export function struct(args: Struct.Args): Struct {
     return new Struct(args);
 }
 
-export * from "./ast";
-export * from "./symbol";
+export * from "./ast/index.js";
+export * from "./symbol/index.js";

@@ -1,4 +1,4 @@
-import { Task } from "../../ui/Task";
+import { Task } from "../../ui/Task.js";
 
 /**
  * Creates a mock Task for testing.

@@ -103,6 +103,16 @@
         }
       ]
     },
+    "replay": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/replay.ReplayConfigSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "ai": {
       "oneOf": [
         {
@@ -117,6 +127,16 @@
       "oneOf": [
         {
           "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "automation": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/automation.AutomationSchema"
         },
         {
           "type": "null"
@@ -754,6 +774,19 @@
     "generators.APIDefinitionPathSchema": {
       "type": "string"
     },
+    "generators.OverridesSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
     "generators.UnionSettingsSchema": {
       "type": "string",
       "enum": [
@@ -926,7 +959,7 @@
         "overrides": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/generators.OverridesSchema"
             },
             {
               "type": "null"
@@ -981,7 +1014,7 @@
         "overrides": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/generators.OverridesSchema"
             },
             {
               "type": "null"
@@ -1738,6 +1771,14 @@
         }
       ]
     },
+    "generators.CoerceConstsTo": {
+      "type": "string",
+      "enum": [
+        "literals",
+        "enums",
+        "enums-coerceable-to-literals"
+      ]
+    },
     "generators.FormParameterEncoding": {
       "type": "string",
       "enum": [
@@ -1957,6 +1998,36 @@
             }
           ]
         },
+        "infer-forward-compatible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-default-environment": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-consts-to": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.CoerceConstsTo"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "only-include-referenced-schemas": {
           "oneOf": [
             {
@@ -2149,7 +2220,7 @@
         "overrides": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/generators.OverridesSchema"
             },
             {
               "type": "null"
@@ -2305,6 +2376,36 @@
             }
           ]
         },
+        "infer-forward-compatible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-default-environment": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-consts-to": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.CoerceConstsTo"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "message-naming": {
           "oneOf": [
             {
@@ -2337,7 +2438,7 @@
         "overrides": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/generators.OverridesSchema"
             },
             {
               "type": "null"
@@ -2391,7 +2492,7 @@
         "overrides": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/generators.OverridesSchema"
             },
             {
               "type": "null"
@@ -2440,7 +2541,7 @@
             }
           ]
         },
-        "resource": {
+        "name": {
           "oneOf": [
             {
               "type": "string"
@@ -2777,6 +2878,36 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-forward-compatible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-default-environment": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-consts-to": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.CoerceConstsTo"
             },
             {
               "type": "null"
@@ -3922,6 +4053,19 @@
             }
           ]
         },
+        "headers": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fernDefinition.service.HttpHeaderSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "settings": {
           "oneOf": [
             {
@@ -3945,12 +4089,55 @@
       },
       "additionalProperties": false
     },
-    "group.GeneratorInvocationSchema": {
+    "automation.AutomationSchema": {
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string"
+        "generate": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
+        "upgrade": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preview": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verify": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "group.DefaultGeneratorInvocationSchema": {
+      "type": "object",
+      "properties": {
         "version": {
           "type": "string"
         },
@@ -4083,13 +4270,208 @@
               "type": "null"
             }
           ]
+        },
+        "automation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/automation.AutomationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "generators.GeneratorImageObjectSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "registry": {
+          "type": "string"
         }
       },
       "required": [
         "name",
-        "version"
+        "registry"
       ],
       "additionalProperties": false
+    },
+    "group.CustomGeneratorInvocationSchema": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "output": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/group.GeneratorOutputSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "github": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/group.GithubConfigurationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "config": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "metadata": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/group.GeneratorPublishMetadataSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "keywords": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snippets": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/group.GeneratorSnippetsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ir-version": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "smart-casing": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "api": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/group.GeneratorAPISettingsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disable-examples": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "publish-metadata": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/group.GeneratorPublishMetadataSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "autorelease": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "automation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/automation.AutomationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "image": {
+          "$ref": "#/definitions/generators.GeneratorImageObjectSchema"
+        }
+      },
+      "required": [
+        "version",
+        "image"
+      ],
+      "additionalProperties": false
+    },
+    "group.GeneratorInvocationSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/group.DefaultGeneratorInvocationSchema"
+        },
+        {
+          "$ref": "#/definitions/group.CustomGeneratorInvocationSchema"
+        }
+      ]
     },
     "group.GeneratorGroupSchema": {
       "type": "object",
@@ -4132,10 +4514,32 @@
               "type": "null"
             }
           ]
+        },
+        "automation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/automation.AutomationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
         "generators"
+      ],
+      "additionalProperties": false
+    },
+    "replay.ReplayConfigSchema": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enabled"
       ],
       "additionalProperties": false
     },

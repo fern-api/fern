@@ -44,7 +44,7 @@
               "type": "string",
             },
           },
-          "url": "production",
+          "url": undefined,
         },
         "types": {
           "UsersUserIdMessagesPublish": {
@@ -72,7 +72,6 @@
       },
       "rawContents": "channel:
   path: /users/{id}/messages
-  url: production
   auth: false
   path-parameters:
     id:

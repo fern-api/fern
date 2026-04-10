@@ -51,4 +51,64 @@ export interface ColorsConfiguration {
      *   light: white/70%
      */
     cardBackground?: FernDocsConfig.ColorConfig;
+    /**
+     * Override for accent scale step 1. This is the lightest accent color, typically used for subtle backgrounds.
+     * By default, this is automatically calculated from the accent-primary color.
+     */
+    accent1?: FernDocsConfig.ColorConfig;
+    /**
+     * Override for accent scale step 2. A very light accent color for backgrounds.
+     * By default, this is automatically calculated from the accent-primary color.
+     */
+    accent2?: FernDocsConfig.ColorConfig;
+    /**
+     * Override for accent scale step 3. A light accent color for UI element backgrounds.
+     * By default, this is automatically calculated from the accent-primary color.
+     */
+    accent3?: FernDocsConfig.ColorConfig;
+    /**
+     * Override for accent scale step 4. Used for hovered UI element backgrounds.
+     * By default, this is automatically calculated from the accent-primary color.
+     */
+    accent4?: FernDocsConfig.ColorConfig;
+    /**
+     * Override for accent scale step 5. Used for active/selected UI element backgrounds.
+     * By default, this is automatically calculated from the accent-primary color.
+     */
+    accent5?: FernDocsConfig.ColorConfig;
+    /**
+     * Override for accent scale step 6. Used for subtle borders and separators.
+     * By default, this is automatically calculated from the accent-primary color.
+     */
+    accent6?: FernDocsConfig.ColorConfig;
+    /**
+     * Override for accent scale step 7. Used for UI element borders and focus rings.
+     * By default, this is automatically calculated from the accent-primary color.
+     */
+    accent7?: FernDocsConfig.ColorConfig;
+    /**
+     * Override for accent scale step 8. Used for hovered UI element borders.
+     * By default, this is automatically calculated from the accent-primary color.
+     */
+    accent8?: FernDocsConfig.ColorConfig;
+    /**
+     * Override for accent scale step 9. The solid accent color, used for solid backgrounds like buttons.
+     * By default, this is automatically calculated from the accent-primary color.
+     */
+    accent9?: FernDocsConfig.ColorConfig;
+    /**
+     * Override for accent scale step 10. Used for hovered solid backgrounds.
+     * By default, this is automatically calculated from the accent-primary color.
+     */
+    accent10?: FernDocsConfig.ColorConfig;
+    /**
+     * Override for accent scale step 11. Used for low-contrast text.
+     * By default, this is automatically calculated from the accent-primary color.
+     */
+    accent11?: FernDocsConfig.ColorConfig;
+    /**
+     * Override for accent scale step 12. The darkest accent color, used for high-contrast text.
+     * By default, this is automatically calculated from the accent-primary color.
+     */
+    accent12?: FernDocsConfig.ColorConfig;
 }

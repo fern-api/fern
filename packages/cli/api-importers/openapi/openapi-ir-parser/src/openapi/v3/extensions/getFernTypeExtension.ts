@@ -9,8 +9,8 @@ import {
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../getExtension";
-import { FernOpenAPIExtension } from "./fernExtensions";
+import { getExtension } from "../../../getExtension.js";
+import { FernOpenAPIExtension } from "./fernExtensions.js";
 
 export function getFernTypeExtension({
     nameOverride,
@@ -235,6 +235,19 @@ export function getSchemaFromFernType({
                                 minLength: undefined,
                                 example: undefined,
                                 format: undefined
+                            })
+                        });
+                    case "DATE_TIME_RFC_2822":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            title,
+                            description,
+                            availability,
+                            namespace,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.datetimeRfc2822({
+                                example: undefined
                             })
                         });
                     default:

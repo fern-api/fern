@@ -1,4 +1,15 @@
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { type CaseConverter, getOriginalName, type NameInput } from "@fern-api/base-generator";
+
+export interface EndpointPathInput {
+    fullPath: {
+        head: string;
+        parts: ReadonlyArray<{ pathParameter: string; tail: string }>;
+    };
+    allPathParameters: ReadonlyArray<{
+        name: NameInput;
+        docs: string | undefined;
+    }>;
+}
 
 type PathPart =
     | {
@@ -15,17 +26,19 @@ export type ParseEndpointPathResult = {
     pathParts: PathPart[];
 };
 
-export function parseEndpointPath(endpoint: HttpEndpoint): ParseEndpointPathResult {
+export function parseEndpointPath(endpoint: EndpointPathInput, caseConverter: CaseConverter): ParseEndpointPathResult {
     const pathParts: PathPart[] = [];
 
     const pathParameterInfosByOriginalName = Object.fromEntries(
-        endpoint.allPathParameters.map((pathParam) => [
-            pathParam.name.originalName,
-            {
-                unsafeNameCamelCase: pathParam.name.camelCase.unsafeName,
-                docs: pathParam.docs
-            }
-        ])
+        endpoint.allPathParameters.map((pathParam) => {
+            return [
+                getOriginalName(pathParam.name),
+                {
+                    unsafeNameCamelCase: caseConverter.camelUnsafe(pathParam.name),
+                    docs: pathParam.docs
+                }
+            ];
+        })
     );
 
     if (endpoint.fullPath.head != null) {

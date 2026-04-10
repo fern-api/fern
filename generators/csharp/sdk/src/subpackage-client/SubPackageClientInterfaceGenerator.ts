@@ -1,8 +1,14 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ServiceId = FernIr.ServiceId;
+type HttpService = FernIr.HttpService;
+type Subpackage = FernIr.Subpackage;
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
 
 export declare namespace SubPackageClientInterfaceGenerator {
     interface Args {
@@ -38,7 +44,7 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
         for (const childSubpackage of this.getSubpackages()) {
             if (this.context.subPackageHasEndpointsRecursively(childSubpackage)) {
                 interface_.addField({
-                    name: childSubpackage.name.pascalCase.safeName,
+                    name: this.case.pascalSafe(childSubpackage.name),
                     enclosingType: interface_,
                     access: ast.Access.Public,
                     get: true,
@@ -51,12 +57,14 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
             this.generateEndpointSignatures(interface_);
         }
 
+        this.generateWebsocketInterfaceFactories(interface_);
+
         return new CSharpFile({
             clazz: interface_,
             directory: RelativeFilePath.of(this.context.getDirectoryForSubpackage(this.subpackage)),
-            allNamespaceSegments: this.registry.allNamespacesOf(this.interfaceReference.namespace),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.namespaces.root,
+            namespace: this.interfaceReference.namespace,
             generation: this.generation
         });
     }
@@ -70,11 +78,32 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
         if (!serviceId) {
             throw new Error("Internal error; ServiceId is not defined");
         }
+        const grpcClientInfo = this.context.getGrpcClientInfoForServiceId(serviceId);
         for (const endpoint of service.endpoints) {
             this.context.endpointGenerator.generateInterfaceSignature(interface_, {
                 serviceId,
-                endpoint
+                endpoint,
+                grpcClientInfo
             });
+        }
+    }
+
+    private generateWebsocketInterfaceFactories(interface_: ast.Interface) {
+        if (this.settings.enableWebsockets) {
+            for (const subpackage of this.getSubpackages()) {
+                if (subpackage.websocket != null) {
+                    const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
+                    if (websocketChannel != null) {
+                        WebSocketClientGenerator.createWebSocketApiInterfaceFactories(
+                            interface_,
+                            subpackage,
+                            this.context,
+                            this.interfaceReference.namespace,
+                            websocketChannel
+                        );
+                    }
+                }
+            }
         }
     }
 

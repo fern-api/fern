@@ -1,7 +1,7 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "latest",
+  "generatorVersion": "local",
   "generatorConfig": {
     "pyproject_python_version": "^3.8.1",
     "extra_dev_dependencies": {
@@ -14,5 +14,6 @@
     },
     "pyproject_toml": "[tool.covcheck.group.unit.coverage]\nbranch = 26.0\nline = 62.0\n\n[tool.covcheck.group.service.coverage]\nbranch = 30.0\nline = 67.0\n"
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

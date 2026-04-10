@@ -1,8 +1,8 @@
 import { ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import chalk from "chalk";
 
-import { Rule, RuleViolation } from "../../Rule";
-import { getAllEnvironmentUrlIds } from "../../utils/getAllEnvironmentUriIds";
+import { Rule, RuleViolation } from "../../Rule.js";
+import { getAllEnvironmentUrlIds } from "../../utils/getAllEnvironmentUriIds.js";
 
 export const ValidServiceUrlsRule: Rule = {
     name: "valid-service-urls",

@@ -4,11 +4,12 @@ package auth
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/inferred-auth-implicit-api-key/fern"
 	core "github.com/inferred-auth-implicit-api-key/fern/core"
 	internal "github.com/inferred-auth-implicit-api-key/fern/internal"
 	option "github.com/inferred-auth-implicit-api-key/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -46,7 +47,7 @@ func (r *RawClient) GetToken(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("X-Api-Key", request.ApiKey)
+	headers.Add("X-Api-Key", request.APIKey)
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,

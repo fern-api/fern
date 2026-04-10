@@ -67,6 +67,8 @@ export async function buildCli(config) {
         tsupOverrides = {}
     } = config;
 
+    const version = process.argv[2] || packageJson.version;
+
     // Build with tsup
     await tsup.build({
         entry: { cli: "src/main.ts" },
@@ -77,13 +79,12 @@ export async function buildCli(config) {
         clean: true,
         env: {
             ...env,
-            CLI_VERSION: process.argv[2] || packageJson.version
+            CLI_VERSION: version
         },
         ...tsupOverrides
     });
 
-    // Change to output directory
-    process.chdir(path.join(__dirname, outDir));
+    const outDirAbs = path.join(__dirname, outDir);
 
     // Collect runtime dependencies
     const dependencies = {};
@@ -112,13 +113,8 @@ export async function buildCli(config) {
         ...packageJsonOverrides
     };
 
-    await writeFile("package.json", JSON.stringify(outputPackageJson, undefined, 2));
+    await writeFile(path.join(outDirAbs, "package.json"), JSON.stringify(outputPackageJson, undefined, 2));
 
     // Run npm pkg fix to format and fix the package.json
-    await execAsync("npm pkg fix");
-
-    // Install runtime dependencies if any
-    if (Object.keys(dependencies).length > 0) {
-        await execAsync("pnpm install --ignore-workspace");
-    }
+    await execAsync("npm pkg fix", { cwd: outDirAbs });
 }

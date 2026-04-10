@@ -136,7 +136,10 @@
               "Base",
             ],
             "inline": undefined,
-            "properties": {},
+            "properties": {
+              "typeA": "optional<string>",
+              "typeB": "optional<double>",
+            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -197,6 +200,37 @@
               "openapi": "../openapi.yml",
             },
           },
+          "Item": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ItemList": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "results": "optional<list<Item>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ItemListExplicitType": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "results": "optional<list<Item>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "Level1": {
             "docs": undefined,
             "inline": undefined,
@@ -246,10 +280,24 @@
               "double",
             ],
           },
+          "PaginatedList": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "results": "optional<list<unknown>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "Pet": {
             "availability": undefined,
             "base-properties": {},
-            "discriminant": "petType",
+            "default-variant": undefined,
+            "discriminant": {
+              "context": "data",
+              "value": "petType",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -290,6 +338,53 @@
             "properties": {
               "data": "optional<string>",
               "success": "optional<boolean>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "RuleConfig": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "executionContext": "optional<RuleExecutionContext>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "RuleExecutionContext": {
+            "enum": [
+              "prod",
+              "staging",
+              "dev",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "SendTransacSms": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "content": {
+                "docs": "Content of the message",
+                "type": "optional<string>",
+              },
+              "recipient": {
+                "docs": "Mobile number to send SMS with the country code",
+                "type": "string",
+              },
+              "sender": {
+                "docs": "Name of the sender",
+                "type": "string",
+              },
+              "templateId": {
+                "docs": "Template ID to send SMS",
+                "type": "optional<integer>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -408,7 +503,9 @@ types:
     source:
       openapi: ../openapi.yml
   Pet:
-    discriminant: petType
+    discriminant:
+      value: petType
+      context: data
     base-properties: {}
     union:
       dog: Dog
@@ -458,9 +555,61 @@ types:
     source:
       openapi: ../openapi.yml
   Complex:
-    properties: {}
+    properties:
+      typeA: optional<string>
+      typeB: optional<double>
     extends:
       - Base
+    source:
+      openapi: ../openapi.yml
+  SendTransacSms:
+    properties:
+      recipient:
+        type: string
+        docs: Mobile number to send SMS with the country code
+      sender:
+        type: string
+        docs: Name of the sender
+      templateId:
+        type: optional<integer>
+        docs: Template ID to send SMS
+      content:
+        type: optional<string>
+        docs: Content of the message
+    source:
+      openapi: ../openapi.yml
+  RuleExecutionContext:
+    enum:
+      - prod
+      - staging
+      - dev
+    source:
+      openapi: ../openapi.yml
+  RuleConfig:
+    properties:
+      name: optional<string>
+      executionContext: optional<RuleExecutionContext>
+    source:
+      openapi: ../openapi.yml
+  PaginatedList:
+    properties:
+      results: optional<list<unknown>>
+    source:
+      openapi: ../openapi.yml
+  Item:
+    properties:
+      id: optional<string>
+      name: optional<string>
+    source:
+      openapi: ../openapi.yml
+  ItemList:
+    properties:
+      results: optional<list<Item>>
+    source:
+      openapi: ../openapi.yml
+  ItemListExplicitType:
+    properties:
+      results: optional<list<Item>>
     source:
       openapi: ../openapi.yml
 ",

@@ -613,6 +613,7 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "petType",
+          "discriminatorContext": "data",
           "generatedName": "Pet",
           "schemas": {
             "dog": {
@@ -871,9 +872,403 @@
             "type": "reference"
           }
         ],
-        "properties": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "complexTypeA",
+            "key": "typeA",
+            "schema": {
+              "generatedName": "ComplexTypeA",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ComplexTypeA",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "complexTypeB",
+            "key": "typeB",
+            "schema": {
+              "generatedName": "ComplexTypeB",
+              "value": {
+                "schema": {
+                  "type": "double"
+                },
+                "generatedName": "ComplexTypeB",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
         "allOfPropertyConflicts": [],
         "generatedName": "Complex",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "SendTransacSms": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "sendTransacSmsRecipient",
+            "key": "recipient",
+            "schema": {
+              "description": "Mobile number to send SMS with the country code",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "SendTransacSmsRecipient",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "sendTransacSmsSender",
+            "key": "sender",
+            "schema": {
+              "description": "Name of the sender",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "SendTransacSmsSender",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "sendTransacSmsTemplateId",
+            "key": "templateId",
+            "schema": {
+              "generatedName": "",
+              "value": {
+                "description": "Template ID to send SMS",
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "SendTransacSmsTemplateId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "sendTransacSmsContent",
+            "key": "content",
+            "schema": {
+              "generatedName": "",
+              "value": {
+                "description": "Content of the message",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "SendTransacSmsContent",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "SendTransacSms",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "RuleExecutionContext": {
+        "generatedName": "RuleExecutionContext",
+        "values": [
+          {
+            "generatedName": "prod",
+            "value": "prod",
+            "casing": {}
+          },
+          {
+            "generatedName": "staging",
+            "value": "staging",
+            "casing": {}
+          },
+          {
+            "generatedName": "dev",
+            "value": "dev",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "RuleConfig": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "ruleConfigName",
+            "key": "name",
+            "schema": {
+              "generatedName": "RuleConfigName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "RuleConfigName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "ruleConfigExecutionContext",
+            "key": "executionContext",
+            "schema": {
+              "generatedName": "RuleConfigExecutionContext",
+              "value": {
+                "generatedName": "RuleConfigExecutionContext",
+                "schema": "RuleExecutionContext",
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "RuleConfig",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "PaginatedList": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "paginatedListResults",
+            "key": "results",
+            "schema": {
+              "generatedName": "PaginatedListResults",
+              "value": {
+                "value": {
+                  "generatedName": "PaginatedListResultsItem",
+                  "groupName": [],
+                  "type": "unknown"
+                },
+                "generatedName": "PaginatedListResults",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "PaginatedList",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Item": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "itemId",
+            "key": "id",
+            "schema": {
+              "generatedName": "ItemId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ItemId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "itemName",
+            "key": "name",
+            "schema": {
+              "generatedName": "ItemName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ItemName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Item",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ItemList": {
+        "allOf": [
+          {
+            "generatedName": "PaginatedList",
+            "schema": "PaginatedList",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {
+              "PaginatedList": {
+                "differentSchema": true
+              }
+            },
+            "generatedName": "itemListResults",
+            "key": "results",
+            "schema": {
+              "generatedName": "ItemListResults",
+              "value": {
+                "value": {
+                  "generatedName": "ItemListResultsItem",
+                  "schema": "Item",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "ItemListResults",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ItemList",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ItemListExplicitType": {
+        "allOf": [
+          {
+            "generatedName": "PaginatedList",
+            "schema": "PaginatedList",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {
+              "PaginatedList": {
+                "differentSchema": true
+              }
+            },
+            "generatedName": "itemListExplicitTypeResults",
+            "key": "results",
+            "schema": {
+              "generatedName": "ItemListExplicitTypeResults",
+              "value": {
+                "value": {
+                  "generatedName": "ItemListExplicitTypeResultsItem",
+                  "schema": "Item",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "ItemListExplicitTypeResults",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ItemListExplicitType",
         "groupName": [],
         "additionalProperties": false,
         "source": {

@@ -1,4 +1,4 @@
-import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Zurg } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/contexts";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";
@@ -6,14 +6,14 @@ import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 export declare namespace RawSamePropertiesAsObjectSingleUnionType {
     export interface Init extends AbstractRawSingleUnionType.Init {
-        extended: DeclaredTypeName;
+        extended: FernIr.DeclaredTypeName;
     }
 }
 
 export class RawSamePropertiesAsObjectSingleUnionType<
     Context extends ModelContext
 > extends AbstractRawSingleUnionType<Context> {
-    private extended: DeclaredTypeName;
+    private extended: FernIr.DeclaredTypeName;
 
     constructor({ extended, ...superInit }: RawSamePropertiesAsObjectSingleUnionType.Init) {
         super(superInit);

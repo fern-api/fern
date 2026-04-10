@@ -1,12 +1,11 @@
-import { TtyAwareLogger } from "@fern-api/cli-logger";
 import { assertNever } from "@fern-api/core-utils";
 import chalk from "chalk";
-import { Context } from "../context/Context";
-import { formatMultilineText } from "./format";
-import type { Task } from "./Task";
-import type { TaskLog } from "./TaskLog";
-import type { TaskStage, TaskStageDefinition } from "./TaskStage";
-import type { TaskStatus } from "./TaskStatus";
+import { Context } from "../context/Context.js";
+import { formatMultilineText } from "./format.js";
+import type { Task } from "./Task.js";
+import type { TaskLog } from "./TaskLog.js";
+import type { TaskStage, TaskStageDefinition } from "./TaskStage.js";
+import type { TaskStatus } from "./TaskStatus.js";
 
 export declare namespace TaskGroup {
     export interface Config {
@@ -33,7 +32,6 @@ export class TaskGroup {
     private static readonly URL_PATTERN = /https?:\/\/[^\s]+/;
 
     private readonly context: Context;
-    private readonly ttyAwareLogger: TtyAwareLogger;
     private readonly stream: NodeJS.WriteStream;
     private readonly tasks: Record<string, Task> = {};
     private readonly taskOrder: string[] = [];
@@ -43,7 +41,6 @@ export class TaskGroup {
 
     constructor(config: TaskGroup.Config) {
         this.context = config.context;
-        this.ttyAwareLogger = this.context.getTtyAwareLogger();
         this.stream = config.stream ?? process.stderr;
     }
 
@@ -69,7 +66,7 @@ export class TaskGroup {
         // Write header before registering to avoid paint/freeze issues.
         // If we register first, takeOverTerminal() would freeze the initial paint.
         if (header != null) {
-            await this.ttyAwareLogger.takeOverTerminal(() => {
+            await this.context.ttyAwareLogger.takeOverTerminal(() => {
                 this.stream.write("\n");
                 this.stream.write(`${chalk.cyan("◆")} ${chalk.bold(header.title)}\n`);
                 if (header.subtitle != null) {
@@ -224,7 +221,7 @@ export class TaskGroup {
             }
         }
 
-        this.ttyAwareLogger.finish();
+        this.context.ttyAwareLogger.finish();
 
         let successCount = 0;
         let failedCount = 0;
@@ -245,10 +242,7 @@ export class TaskGroup {
             this.stream.write(`${chalk.red("✕")} ${errorMessage} ${chalk.dim(`in ${duration}`)}\n`);
         }
 
-        const logFilePath = this.context.getLogFilePath();
-        if (logFilePath != null) {
-            this.stream.write(`\n${chalk.dim(`Logs written to: ${logFilePath}`)}\n`);
-        }
+        this.context.printLogFilePath(this.stream);
 
         this.stream.write("\n");
 
@@ -334,7 +328,12 @@ export class TaskGroup {
                     line += logLines;
                 }
                 if (stage.error != null) {
-                    line += `\n        ${chalk.red(stage.error)}`;
+                    line += formatMultilineText({
+                        text: stage.error,
+                        colorFn: chalk.red.bind(chalk),
+                        baseIndent: 8,
+                        continuationIndent: 10
+                    });
                 }
             }
 
@@ -504,6 +503,6 @@ export class TaskGroup {
             return;
         }
         this.isRegistered = true;
-        this.ttyAwareLogger.registerTask(this);
+        this.context.ttyAwareLogger.registerTask(this);
     }
 }

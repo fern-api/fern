@@ -8,6 +8,7 @@ from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.datetime_utils import serialize_datetime
 from .core.http_response import AsyncHttpResponse, HttpResponse
+from .core.parse_error import ParsingError
 from .core.pydantic_utilities import parse_obj_as
 from .core.request_options import RequestOptions
 from .core.serialization import convert_and_respect_annotation_metadata
@@ -16,6 +17,7 @@ from .types.search_request_neighbor import SearchRequestNeighbor
 from .types.search_request_neighbor_required import SearchRequestNeighborRequired
 from .types.search_response import SearchResponse
 from .types.user import User
+from pydantic import ValidationError
 
 
 class RawSeedApi:
@@ -40,6 +42,8 @@ class RawSeedApi:
         optional_user: typing.Optional[User] = None,
         exclude_user: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
         filter: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        optional_tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         neighbor: typing.Optional[SearchRequestNeighbor] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SearchResponse]:
@@ -75,6 +79,12 @@ class RawSeedApi:
         exclude_user : typing.Optional[typing.Union[User, typing.Sequence[User]]]
 
         filter : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of tags. Serialized as a comma-separated list.
+
+        optional_tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Optional list of tags. Serialized as a comma-separated list.
 
         neighbor : typing.Optional[SearchRequestNeighbor]
 
@@ -112,6 +122,10 @@ class RawSeedApi:
                     object_=exclude_user, annotation=User, direction="write"
                 ),
                 "filter": filter,
+                "tags": ",".join(map(str, tags)) if isinstance(tags, (list, tuple, set)) else tags,
+                "optionalTags": ",".join(map(str, optional_tags))
+                if isinstance(optional_tags, (list, tuple, set))
+                else optional_tags,
                 "neighbor": convert_and_respect_annotation_metadata(
                     object_=neighbor, annotation=SearchRequestNeighbor, direction="write"
                 ),
@@ -134,6 +148,10 @@ class RawSeedApi:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -159,6 +177,8 @@ class AsyncRawSeedApi:
         optional_user: typing.Optional[User] = None,
         exclude_user: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
         filter: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        optional_tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         neighbor: typing.Optional[SearchRequestNeighbor] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SearchResponse]:
@@ -194,6 +214,12 @@ class AsyncRawSeedApi:
         exclude_user : typing.Optional[typing.Union[User, typing.Sequence[User]]]
 
         filter : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of tags. Serialized as a comma-separated list.
+
+        optional_tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Optional list of tags. Serialized as a comma-separated list.
 
         neighbor : typing.Optional[SearchRequestNeighbor]
 
@@ -231,6 +257,10 @@ class AsyncRawSeedApi:
                     object_=exclude_user, annotation=User, direction="write"
                 ),
                 "filter": filter,
+                "tags": ",".join(map(str, tags)) if isinstance(tags, (list, tuple, set)) else tags,
+                "optionalTags": ",".join(map(str, optional_tags))
+                if isinstance(optional_tags, (list, tuple, set))
+                else optional_tags,
                 "neighbor": convert_and_respect_annotation_metadata(
                     object_=neighbor, annotation=SearchRequestNeighbor, direction="write"
                 ),
@@ -253,4 +283,8 @@ class AsyncRawSeedApi:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

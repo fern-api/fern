@@ -272,6 +272,11 @@ public class TypeReferenceUtils {
         }
 
         @Override
+        public String visitDateTimeRfc2822() {
+            return "DateTimeRfc2822";
+        }
+
+        @Override
         public String visitDate() {
             return "Date";
         }
@@ -451,6 +456,11 @@ public class TypeReferenceUtils {
                     }
 
                     @Override
+                    public Boolean visitDateTimeRfc2822() {
+                        return false;
+                    }
+
+                    @Override
                     public Boolean visitUuid() {
                         return false;
                     }
@@ -526,6 +536,11 @@ public class TypeReferenceUtils {
 
                     @Override
                     public Boolean visitDateTime() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitDateTimeRfc2822() {
                         return false;
                     }
 

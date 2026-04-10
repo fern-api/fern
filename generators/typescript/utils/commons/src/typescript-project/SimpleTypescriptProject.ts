@@ -3,9 +3,9 @@ import { produce, WritableDraft } from "immer";
 import { IPackageJson, IPeerDependenciesMeta } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 
-import { DependencyType } from "../dependency-manager/DependencyManager";
-import { mergeExtraConfigs } from "./mergeExtraConfigs";
-import { TypescriptProject } from "./TypescriptProject";
+import { DependencyType } from "../dependency-manager/DependencyManager.js";
+import { mergeExtraConfigs } from "./mergeExtraConfigs.js";
+import { TypescriptProject } from "./TypescriptProject.js";
 
 export declare namespace SimpleTypescriptProject {
     export interface Init extends TypescriptProject.Init {
@@ -80,7 +80,6 @@ export class SimpleTypescriptProject extends TypescriptProject {
             declaration: true,
             outDir: SimpleTypescriptProject.DIST_DIRECTORY,
             rootDir: this.packagePath,
-            baseUrl: this.packagePath,
             isolatedModules: true,
             isolatedDeclarations: true
         };
@@ -228,7 +227,6 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 types: defaultTypesExport,
                 exports: {
                     ".": {
-                        types: defaultTypesExport,
                         import: {
                             types: mjsTypesFile,
                             default: mjsFile
@@ -250,13 +248,11 @@ export class SimpleTypescriptProject extends TypescriptProject {
                         const cjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/${fileName}.d.ts`;
                         const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/${fileName}.mjs`;
                         const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/${fileName}.d.mts`;
-                        const defaultTypesExport = this.outputEsm ? mjsTypesFile : cjsTypesFile;
                         const defaultExport = this.outputEsm ? mjsFile : cjsFile;
 
                         return {
                             ...acc,
                             [`./${exportKey}`]: {
-                                types: defaultTypesExport,
                                 import: {
                                     types: mjsTypesFile,
                                     default: mjsFile
@@ -324,7 +320,8 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 fs: false,
                 os: false,
                 path: false,
-                stream: false
+                stream: false,
+                crypto: false
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any;
 
@@ -332,7 +329,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 draft["packageManager"] = "yarn@1.22.22";
             }
             if (this.packageManager === "pnpm") {
-                draft["packageManager"] = "pnpm@10.20.0";
+                draft["packageManager"] = "pnpm@10.33.0";
             }
             draft["engines"] = {
                 node: ">=18.0.0"

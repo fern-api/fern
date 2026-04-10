@@ -1,15 +1,15 @@
 import { assertNever } from "@fern-api/core-utils";
-import { type Generation } from "../../context/generation-info";
-import { is } from "../../utils/type-guards";
-import { MemberNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
-import { Access } from "../language/Access";
-import { Annotation } from "../language/Annotation";
-import { CodeBlock } from "../language/CodeBlock";
-import { Parameter } from "../language/Parameter";
-import { XmlDocBlock } from "../language/XmlDocBlock";
-import { ClassReference } from "./ClassReference";
-import { Type } from "./IType";
+import { type Generation } from "../../context/generation-info.js";
+import { is } from "../../utils/type-guards.js";
+import { MemberNode } from "../core/AstNode.js";
+import { Writer } from "../core/Writer.js";
+import { Access } from "../language/Access.js";
+import { Annotation } from "../language/Annotation.js";
+import { CodeBlock } from "../language/CodeBlock.js";
+import { Parameter } from "../language/Parameter.js";
+import { XmlDocBlock } from "../language/XmlDocBlock.js";
+import { ClassReference } from "./ClassReference.js";
+import { Type } from "./IType.js";
 
 export enum MethodType {
     INSTANCE,

@@ -1,1 +1,1 @@
-export { addLoginCommand } from "./command";
+export { addLoginCommand } from "./command.js";

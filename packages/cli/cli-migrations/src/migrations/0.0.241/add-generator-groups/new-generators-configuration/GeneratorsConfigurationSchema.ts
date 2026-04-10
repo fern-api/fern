@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { GeneratorGroupSchema } from "./GeneratorGroupSchema";
+import { GeneratorGroupSchema } from "./GeneratorGroupSchema.js";
 
 export const GeneratorsConfigurationSchema = z.strictObject({
     "default-group": z.optional(z.string()),

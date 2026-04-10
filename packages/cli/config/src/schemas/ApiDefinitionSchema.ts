@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-import { ApiSpecSchema } from "./ApiSpecSchema";
-import { AuthSchemesSchema } from "./AuthSchemesSchema";
-import { EnvironmentSchema } from "./EnvironmentSchema";
-import { HeaderSchema } from "./HeaderSchema";
+import { ApiSpecSchema } from "./ApiSpecSchema.js";
+import { AuthSchemesSchema } from "./AuthSchemesSchema.js";
+import { EnvironmentSchema } from "./EnvironmentSchema.js";
+import { HeaderSchema } from "./HeaderSchema.js";
 
 /**
  * An API definition contains one or more specs that together define a single API.

@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "userId",
+    "email",
+    "createdAt"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

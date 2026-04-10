@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "fs/promises";
 
-import { Migration } from "../../../types/Migration";
-import { getAllRootApiYamlFiles } from "./getAllRootApiYamlFiles";
+import { Migration } from "../../../types/Migration.js";
+import { getAllRootApiYamlFiles } from "./getAllRootApiYamlFiles.js";
 
 export const migration: Migration = {
     name: "add-error-discriminant",

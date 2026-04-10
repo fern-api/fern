@@ -32,6 +32,9 @@ func (b *Bar) GetName() string {
 }
 
 func (b *Bar) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
 	return b.extraProperties
 }
 
@@ -77,6 +80,9 @@ func (b *Bar) MarshalJSON() ([]byte, error) {
 }
 
 func (b *Bar) String() string {
+	if b == nil {
+		return "<nil>"
+	}
 	if len(b.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
 			return value
@@ -112,6 +118,9 @@ func (f *FirstItemType) GetName() string {
 }
 
 func (f *FirstItemType) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -164,6 +173,9 @@ func (f *FirstItemType) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FirstItemType) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -197,6 +209,9 @@ func (f *Foo) GetName() string {
 }
 
 func (f *Foo) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -242,6 +257,9 @@ func (f *Foo) MarshalJSON() ([]byte, error) {
 }
 
 func (f *Foo) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -284,6 +302,9 @@ func (f *FooExtended) GetAge() int {
 }
 
 func (f *FooExtended) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -336,6 +357,9 @@ func (f *FooExtended) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FooExtended) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -371,6 +395,9 @@ func (s *SecondItemType) GetTitle() string {
 }
 
 func (s *SecondItemType) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -423,6 +450,9 @@ func (s *SecondItemType) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SecondItemType) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -432,6 +462,106 @@ func (s *SecondItemType) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
+}
+
+var (
+	typeWithOptionalMapFieldKey          = big.NewInt(1 << 0)
+	typeWithOptionalMapFieldColumnValues = big.NewInt(1 << 1)
+)
+
+type TypeWithOptionalMap struct {
+	Key          string             `json:"key" url:"key"`
+	ColumnValues map[string]*string `json:"columnValues,omitempty" url:"columnValues,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *TypeWithOptionalMap) GetKey() string {
+	if t == nil {
+		return ""
+	}
+	return t.Key
+}
+
+func (t *TypeWithOptionalMap) GetColumnValues() map[string]*string {
+	if t == nil {
+		return nil
+	}
+	return t.ColumnValues
+}
+
+func (t *TypeWithOptionalMap) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TypeWithOptionalMap) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetKey sets the Key field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TypeWithOptionalMap) SetKey(key string) {
+	t.Key = key
+	t.require(typeWithOptionalMapFieldKey)
+}
+
+// SetColumnValues sets the ColumnValues field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TypeWithOptionalMap) SetColumnValues(columnValues map[string]*string) {
+	t.ColumnValues = columnValues
+	t.require(typeWithOptionalMapFieldColumnValues)
+}
+
+func (t *TypeWithOptionalMap) UnmarshalJSON(data []byte) error {
+	type unmarshaler TypeWithOptionalMap
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TypeWithOptionalMap(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TypeWithOptionalMap) MarshalJSON() ([]byte, error) {
+	type embed TypeWithOptionalMap
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (t *TypeWithOptionalMap) String() string {
+	if t == nil {
+		return "<nil>"
+	}
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 // This is a simple union.
@@ -582,7 +712,7 @@ func (u *Union) validate() error {
 
 type UnionWithBaseProperties struct {
 	Type        string
-	Id          string
+	ID          string
 	Integer     int
 	FieldString string
 	Foo         *Foo
@@ -607,11 +737,11 @@ func (u *UnionWithBaseProperties) GetType() string {
 	return u.Type
 }
 
-func (u *UnionWithBaseProperties) GetId() string {
+func (u *UnionWithBaseProperties) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *UnionWithBaseProperties) GetInteger() int {
@@ -638,13 +768,13 @@ func (u *UnionWithBaseProperties) GetFoo() *Foo {
 func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
-		Id   string `json:"id"`
+		ID   string `json:"id"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
 	u.Type = unmarshaler.Type
-	u.Id = unmarshaler.Id
+	u.ID = unmarshaler.ID
 	if unmarshaler.Type == "" {
 		return fmt.Errorf("%T did not include discriminant type", u)
 	}
@@ -685,22 +815,22 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 	case "integer":
 		var marshaler = struct {
 			Type    string `json:"type"`
-			Id      string `json:"id"`
+			ID      string `json:"id"`
 			Integer int    `json:"value"`
 		}{
 			Type:    "integer",
-			Id:      u.Id,
+			ID:      u.ID,
 			Integer: u.Integer,
 		}
 		return json.Marshal(marshaler)
 	case "string":
 		var marshaler = struct {
 			Type        string `json:"type"`
-			Id          string `json:"id"`
+			ID          string `json:"id"`
 			FieldString string `json:"value"`
 		}{
 			Type:        "string",
-			Id:          u.Id,
+			ID:          u.ID,
 			FieldString: u.FieldString,
 		}
 		return json.Marshal(marshaler)

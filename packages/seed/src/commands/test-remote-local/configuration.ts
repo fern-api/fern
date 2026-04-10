@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import type { Logger } from "@fern-api/logger";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -23,9 +24,8 @@ import {
     SEED_REMOTE_LOCAL_OUTPUT_DIR,
     TestFixture,
     TS_SDK_PACKAGE_NAME
-} from "./constants";
-import type { RemoteLocalSeedConfig, RemoteVsLocalTestCase } from "./types";
-
+} from "./constants.js";
+import type { RemoteLocalSeedConfig, RemoteVsLocalTestCase } from "./types.js";
 export async function writeGeneratorsYml(
     fernDirectory: string,
     localConfig: unknown,
@@ -99,7 +99,7 @@ export async function loadCustomConfig(
             logger.debug(`No seed.yml found at ${seedYmlPath}, using defaults`);
             return baseConfig;
         }
-        logger.warn(`Error loading seed.yml: ${error instanceof Error ? error.message : String(error)}`);
+        logger.warn(`Error loading seed.yml: ${extractErrorMessage(error)}`);
         return baseConfig;
     }
 }

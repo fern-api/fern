@@ -1,7 +1,7 @@
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
-import { type NpmPackage } from "../NpmPackage";
-import { PublishInfo } from "../PublishInfo";
+import { type NpmPackage } from "../NpmPackage.js";
+import { PublishInfo } from "../PublishInfo.js";
 
 export interface constructNpmPackageArgs {
     packageName?: string;

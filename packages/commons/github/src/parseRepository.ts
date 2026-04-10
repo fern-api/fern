@@ -1,5 +1,5 @@
-import { DEFAULT_REMOTE } from "./constants";
-import type { RepositoryReference } from "./RepositoryReference";
+import { DEFAULT_REMOTE } from "./constants.js";
+import type { RepositoryReference } from "./RepositoryReference.js";
 
 /**
  * Parses the repository into a RepositoryReference.
@@ -27,7 +27,7 @@ export function parseRepository(githubRepository: string): RepositoryReference {
         // Format: github.com/owner/repo
         [remote, owner, repo] = parts;
     } else {
-        throw new Error(`Failed to parse GitHub repostiory ${githubRepository}`);
+        throw new Error(`Failed to parse GitHub repository ${githubRepository}`);
     }
 
     return newRepositoryReference({ remote, owner, repo });

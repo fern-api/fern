@@ -5,6 +5,7 @@ package com.seed.crossPackageTypeNames.resources.foo.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -39,7 +40,7 @@ public final class FindRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("optionalString")
+    @JsonIgnore
     public Optional<String> getOptionalString() {
         return optionalString;
     }
@@ -140,6 +141,16 @@ public final class FindRequest {
 
         public FindRequest build() {
             return new FindRequest(optionalString, publicProperty, privateProperty, additionalProperties);
+        }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -30,14 +30,15 @@ Instantiate and use the client with the following:
 package example
 
 import (
+    context "context"
+
     client "github.com/bearer-token-environment-variable/fern/client"
     option "github.com/bearer-token-environment-variable/fern/option"
-    context "context"
 )
 
 func do() {
     client := client.NewClient(
-        option.WithApiKey(
+        option.WithAPIKey(
             "<token>",
         ),
     )

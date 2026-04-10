@@ -1,4 +1,4 @@
-using System.Globalization;
+using global::System.Globalization;
 using NUnit.Framework;
 using SeedExhaustive.Test.Unit.MockServer;
 using SeedExhaustive.Types.Object;
@@ -6,6 +6,7 @@ using SeedExhaustive.Types.Object;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.ContentType;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class PostJsonPatchContentTypeTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

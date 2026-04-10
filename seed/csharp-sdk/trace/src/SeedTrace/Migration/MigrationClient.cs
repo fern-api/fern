@@ -1,11 +1,11 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedTrace.Core;
 
 namespace SeedTrace;
 
 public partial class MigrationClient : IMigrationClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal MigrationClient(RawClient client)
     {
@@ -29,7 +29,6 @@ public partial class MigrationClient : IMigrationClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/migration-info/all",
                     Headers = _headers,
@@ -40,7 +39,9 @@ public partial class MigrationClient : IMigrationClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<IEnumerable<Migration>>(responseBody)!;
@@ -66,7 +67,9 @@ public partial class MigrationClient : IMigrationClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

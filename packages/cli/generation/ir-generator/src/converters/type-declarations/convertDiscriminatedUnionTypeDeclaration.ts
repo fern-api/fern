@@ -1,15 +1,21 @@
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
-import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from "@fern-api/ir-sdk";
+import {
+    SingleUnionType,
+    SingleUnionTypeProperties,
+    Type,
+    TypeReference,
+    UnionDiscriminatorContext
+} from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext";
-import { ResolvedType } from "../../resolvers/ResolvedType";
-import { TypeResolver } from "../../resolvers/TypeResolver";
-import { getAvailability } from "../../utils/getAvailability";
-import { getDisplayName } from "../../utils/getDisplayName";
-import { getDocs } from "../../utils/getDocs";
-import { parseTypeName } from "../../utils/parseTypeName";
-import { convertDeclaration } from "../convertDeclaration";
-import { getExtensionsAsList, getPropertyAccess, getPropertyName } from "./convertObjectTypeDeclaration";
+import { FernFileContext } from "../../FernFileContext.js";
+import { ResolvedType } from "../../resolvers/ResolvedType.js";
+import { TypeResolver } from "../../resolvers/TypeResolver.js";
+import { getAvailability } from "../../utils/getAvailability.js";
+import { getDisplayName } from "../../utils/getDisplayName.js";
+import { getDocs } from "../../utils/getDocs.js";
+import { parseTypeName } from "../../utils/parseTypeName.js";
+import { convertDeclaration } from "../convertDeclaration.js";
+import { getExtensionsAsList, getPropertyAccess, getPropertyName } from "./convertObjectTypeDeclaration.js";
 
 const DEFAULT_UNION_VALUE_PROPERTY_VALUE = "value";
 
@@ -23,6 +29,56 @@ export function convertDiscriminatedUnionTypeDeclaration({
     typeResolver: TypeResolver;
 }): Type {
     const discriminant = getUnionDiscriminant(union);
+    const defaultVariantKey = union["default-variant"];
+    const unionTypes = Object.entries(union.union).map(([unionKey, rawSingleUnionType]): SingleUnionType => {
+        const rawType: string | undefined =
+            typeof rawSingleUnionType === "string"
+                ? rawSingleUnionType
+                : typeof rawSingleUnionType.type === "string"
+                  ? rawSingleUnionType.type
+                  : undefined;
+
+        const discriminantValue = file.casingsGenerator.generateNameAndWireValue({
+            wireValue: unionKey,
+            name: getSingleUnionTypeName({ unionKey, rawSingleUnionType }).name
+        });
+
+        const docs = getDocs(rawSingleUnionType);
+
+        if (rawType == null) {
+            return {
+                discriminantValue,
+                docs,
+                shape: SingleUnionTypeProperties.noProperties(),
+                displayName: undefined,
+                availability: undefined
+            };
+        }
+
+        const parsedValueType = file.parseTypeReference(rawType);
+
+        return {
+            discriminantValue,
+            shape: getSingleUnionTypeProperties({
+                rawSingleUnionType,
+                rawValueType: rawType,
+                parsedValueType,
+                file,
+                typeResolver
+            }),
+            docs: getDocs(rawSingleUnionType),
+            displayName: getDisplayName(rawSingleUnionType),
+            availability: getAvailability(rawSingleUnionType)
+        };
+    });
+    const defaultUnionType =
+        defaultVariantKey != null
+            ? unionTypes.find((ut) => {
+                  const wireValue =
+                      typeof ut.discriminantValue === "string" ? ut.discriminantValue : ut.discriminantValue.wireValue;
+                  return wireValue === defaultVariantKey;
+              })
+            : undefined;
     return Type.union({
         discriminant: file.casingsGenerator.generateNameAndWireValue({
             wireValue: discriminant,
@@ -45,47 +101,9 @@ export function convertDiscriminatedUnionTypeDeclaration({
                       }
                   }))
                 : [],
-        types: Object.entries(union.union).map(([unionKey, rawSingleUnionType]): SingleUnionType => {
-            const rawType: string | undefined =
-                typeof rawSingleUnionType === "string"
-                    ? rawSingleUnionType
-                    : typeof rawSingleUnionType.type === "string"
-                      ? rawSingleUnionType.type
-                      : undefined;
-
-            const discriminantValue = file.casingsGenerator.generateNameAndWireValue({
-                wireValue: unionKey,
-                name: getSingleUnionTypeName({ unionKey, rawSingleUnionType }).name
-            });
-
-            const docs = getDocs(rawSingleUnionType);
-
-            if (rawType == null) {
-                return {
-                    discriminantValue,
-                    docs,
-                    shape: SingleUnionTypeProperties.noProperties(),
-                    displayName: undefined,
-                    availability: undefined
-                };
-            }
-
-            const parsedValueType = file.parseTypeReference(rawType);
-
-            return {
-                discriminantValue,
-                shape: getSingleUnionTypeProperties({
-                    rawSingleUnionType,
-                    rawValueType: rawType,
-                    parsedValueType,
-                    file,
-                    typeResolver
-                }),
-                docs: getDocs(rawSingleUnionType),
-                displayName: getDisplayName(rawSingleUnionType),
-                availability: getAvailability(rawSingleUnionType)
-            };
-        })
+        types: unionTypes,
+        default: defaultUnionType,
+        discriminatorContext: getDiscriminatorContext({ union })
     });
 }
 
@@ -227,4 +245,10 @@ function unwrapNullableAndOptional(resolvedType: ResolvedType): ResolvedType {
         }
     }
     return resolvedType;
+}
+
+function getDiscriminatorContext({ union }: { union: RawSchemas.DiscriminatedUnionSchema }): UnionDiscriminatorContext {
+    const discriminantContext = typeof union.discriminant === "object" && union.discriminant?.context;
+
+    return discriminantContext === "protocol" ? UnionDiscriminatorContext.Protocol : UnionDiscriminatorContext.Data;
 }

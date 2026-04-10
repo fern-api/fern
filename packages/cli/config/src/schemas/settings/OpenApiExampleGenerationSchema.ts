@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { ExampleGenerationSchema } from "./ExampleGenerationSchema";
+import { ExampleGenerationSchema } from "./ExampleGenerationSchema.js";
 
 /**
  * Schema for fine-tuning example generation in OpenAPI specs.

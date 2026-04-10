@@ -17,8 +17,11 @@
         }
       ],
       "returnType": {
-        "type": "id",
-        "value": "User"
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "User"
+        }
       }
     },
     "query_users": {
@@ -30,16 +33,22 @@
         {
           "name": "filter",
           "type": {
-            "type": "id",
-            "value": "UserFilter"
+            "type": "optional",
+            "itemType": {
+              "type": "id",
+              "value": "UserFilter"
+            }
           }
         },
         {
           "name": "limit",
           "type": {
-            "type": "primitive",
-            "value": {
-              "type": "integer"
+            "type": "optional",
+            "itemType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           },
           "defaultValue": 10
@@ -47,9 +56,12 @@
         {
           "name": "offset",
           "type": {
-            "type": "primitive",
-            "value": {
-              "type": "integer"
+            "type": "optional",
+            "itemType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           },
           "defaultValue": 0
@@ -80,8 +92,11 @@
         }
       ],
       "returnType": {
-        "type": "id",
-        "value": "Post"
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "Post"
+        }
       }
     },
     "query_posts": {
@@ -93,16 +108,22 @@
         {
           "name": "status",
           "type": {
-            "type": "id",
-            "value": "PostStatus"
+            "type": "optional",
+            "itemType": {
+              "type": "id",
+              "value": "PostStatus"
+            }
           }
         },
         {
           "name": "limit",
           "type": {
-            "type": "primitive",
-            "value": {
-              "type": "integer"
+            "type": "optional",
+            "itemType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           },
           "defaultValue": 10
@@ -177,32 +198,44 @@
         {
           "name": "name",
           "type": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
+            "type": "optional",
+            "itemType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           }
         },
         {
           "name": "email",
           "type": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
+            "type": "optional",
+            "itemType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           }
         },
         {
           "name": "role",
           "type": {
-            "type": "id",
-            "value": "UserRole"
+            "type": "optional",
+            "itemType": {
+              "type": "id",
+              "value": "UserRole"
+            }
           }
         }
       ],
       "returnType": {
-        "type": "id",
-        "value": "User"
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "User"
+        }
       }
     },
     "mutation_deleteUser": {
@@ -271,8 +304,11 @@
         }
       ],
       "returnType": {
-        "type": "id",
-        "value": "Post"
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "Post"
+        }
       }
     },
     "subscription_userCreated": {
@@ -294,9 +330,12 @@
         {
           "name": "authorId",
           "type": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
+            "type": "optional",
+            "itemType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           }
         }
@@ -370,11 +409,14 @@
           {
             "key": "email",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "Email",
-                "description": "A valid email address"
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "scalar",
+                  "name": "Email",
+                  "description": "A valid email address"
+                }
               }
             },
             "description": "The user's email address"
@@ -382,9 +424,12 @@
           {
             "key": "age",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "integer"
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
               }
             },
             "description": "The user's age"
@@ -392,11 +437,14 @@
           {
             "key": "balance",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "Decimal",
-                "description": "A decimal number for precise calculations"
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "scalar",
+                  "name": "Decimal",
+                  "description": "A decimal number for precise calculations"
+                }
               }
             },
             "description": "The user's account balance"
@@ -445,11 +493,14 @@
           {
             "key": "birthDate",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "Date",
-                "description": "A date string in ISO 8601 format (YYYY-MM-DD)"
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "scalar",
+                  "name": "Date",
+                  "description": "A date string in ISO 8601 format (YYYY-MM-DD)"
+                }
               }
             },
             "description": "The user's date of birth"
@@ -457,11 +508,14 @@
           {
             "key": "profileUrl",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "URL",
-                "description": "A valid URL string"
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "scalar",
+                  "name": "URL",
+                  "description": "A valid URL string"
+                }
               }
             },
             "description": "The user's profile URL"
@@ -469,11 +523,14 @@
           {
             "key": "metadata",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "JSON",
-                "description": "Arbitrary JSON data"
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "scalar",
+                  "name": "JSON",
+                  "description": "Arbitrary JSON data"
+                }
               }
             },
             "description": "Additional metadata as JSON"
@@ -537,11 +594,14 @@
           {
             "key": "tags",
             "valueType": {
-              "type": "list",
+              "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -550,11 +610,14 @@
           {
             "key": "publishedAt",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "DateTime",
-                "description": "A date-time string in ISO 8601 format"
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "scalar",
+                  "name": "DateTime",
+                  "description": "A date-time string in ISO 8601 format"
+                }
               }
             },
             "description": "When the post was published"
@@ -562,11 +625,14 @@
           {
             "key": "viewCount",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "BigInt",
-                "description": "A large integer value"
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "scalar",
+                  "name": "BigInt",
+                  "description": "A large integer value"
+                }
               }
             },
             "description": "The number of views"
@@ -670,8 +736,11 @@
           {
             "key": "role",
             "valueType": {
-              "type": "id",
-              "value": "UserRole"
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "UserRole"
+              }
             },
             "description": "The user's role"
           }
@@ -718,11 +787,14 @@
           {
             "key": "tags",
             "valueType": {
-              "type": "list",
+              "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -741,17 +813,23 @@
           {
             "key": "role",
             "valueType": {
-              "type": "id",
-              "value": "UserRole"
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "UserRole"
+              }
             },
             "description": "Filter by role"
           },
           {
             "key": "isActive",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "boolean"
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
               }
             },
             "description": "Filter by active status"

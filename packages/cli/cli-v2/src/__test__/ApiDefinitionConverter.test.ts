@@ -4,14 +4,14 @@ import { mkdir, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { isAsyncApiSpec } from "../api/config/AsyncApiSpec";
-import { isConjureSpec } from "../api/config/ConjureSpec";
-import { ApiDefinitionConverter, DEFAULT_API_NAME } from "../api/config/converter/ApiDefinitionConverter";
-import { isFernSpec } from "../api/config/FernSpec";
-import { isOpenApiSpec } from "../api/config/OpenApiSpec";
-import { isOpenRpcSpec } from "../api/config/OpenRpcSpec";
-import { isProtobufSpec } from "../api/config/ProtobufSpec";
-import { loadFernYml } from "../config/fern-yml/loadFernYml";
+import { isAsyncApiSpec } from "../api/config/AsyncApiSpec.js";
+import { isConjureSpec } from "../api/config/ConjureSpec.js";
+import { ApiDefinitionConverter, DEFAULT_API_NAME } from "../api/config/converter/ApiDefinitionConverter.js";
+import { isFernSpec } from "../api/config/FernSpec.js";
+import { isOpenApiSpec } from "../api/config/OpenApiSpec.js";
+import { isOpenRpcSpec } from "../api/config/OpenRpcSpec.js";
+import { isProtobufSpec } from "../api/config/ProtobufSpec.js";
+import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
 
 describe("ApiDefinitionConverter", () => {
     let testDir: AbsoluteFilePath;

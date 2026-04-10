@@ -28,43 +28,43 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
 client.search(
   limit: 1,
-  id: 'id',
-  date: '2023-01-15',
-  deadline: '2024-01-15T09:30:00Z',
-  bytes: 'bytes',
+  id: "id",
+  date: "2023-01-15",
+  deadline: "2024-01-15T09:30:00Z",
+  bytes: "bytes",
   user: {
-    name: 'name',
-    tags: ['tags', 'tags']
+    name: "name",
+    tags: %w[tags tags]
   },
-  optional_deadline: '2024-01-15T09:30:00Z',
+  optional_deadline: "2024-01-15T09:30:00Z",
   key_value: {
-    keyValue: 'keyValue'
+    keyValue: "keyValue"
   },
-  optional_string: 'optionalString',
+  optional_string: "optionalString",
   nested_user: {
-    name: 'name',
+    name: "name",
     user: {
-      name: 'name',
-      tags: ['tags', 'tags']
+      name: "name",
+      tags: %w[tags tags]
     }
   },
   optional_user: {
-    name: 'name',
-    tags: ['tags', 'tags']
+    name: "name",
+    tags: %w[tags tags]
   },
   neighbor: {
-    name: 'name',
-    tags: ['tags', 'tags']
+    name: "name",
+    tags: %w[tags tags]
   },
   neighbor_required: {
-    name: 'name',
-    tags: ['tags', 'tags']
+    name: "name",
+    tags: %w[tags tags]
   }
-);
+)
 ```
 
 ## Environments

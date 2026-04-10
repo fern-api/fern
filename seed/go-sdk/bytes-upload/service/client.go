@@ -4,10 +4,12 @@ package service
 
 import (
 	context "context"
+	io "io"
+
+	fern "github.com/bytes-upload/fern"
 	core "github.com/bytes-upload/fern/core"
 	internal "github.com/bytes-upload/fern/internal"
 	option "github.com/bytes-upload/fern/option"
-	io "io"
 )
 
 type Client struct {
@@ -38,6 +40,22 @@ func (c *Client) Upload(
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Upload(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *Client) UploadWithQueryParams(
+	ctx context.Context,
+	request *fern.UploadWithQueryParamsRequest,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.UploadWithQueryParams(
 		ctx,
 		request,
 		opts...,

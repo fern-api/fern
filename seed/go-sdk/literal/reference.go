@@ -31,6 +31,9 @@ func (c *ContainerObject) GetNestedObjects() []*NestedObjectWithLiterals {
 }
 
 func (c *ContainerObject) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -76,6 +79,9 @@ func (c *ContainerObject) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ContainerObject) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -119,6 +125,9 @@ func (n *NestedObjectWithLiterals) Literal2() string {
 }
 
 func (n *NestedObjectWithLiterals) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -182,6 +191,9 @@ func (n *NestedObjectWithLiterals) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NestedObjectWithLiterals) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -243,6 +255,9 @@ func (s *SendRequest) Ending() string {
 }
 
 func (s *SendRequest) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -334,6 +349,9 @@ func (s *SendRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SendRequest) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value

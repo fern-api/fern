@@ -1,6 +1,4 @@
 import type fs from "fs";
-
-import type { FernGeneratorCli } from "../configuration/sdk";
 import type {
     EndpointReference,
     LinkedText,
@@ -8,8 +6,9 @@ import type {
     ReferenceSection,
     RelativeLocation,
     RootPackageReferenceSection
-} from "../configuration/sdk/api";
-import { StreamWriter, StringWriter, type Writer } from "../utils/Writer";
+} from "../configuration/sdk/api/index.js";
+import type { FernGeneratorCli } from "../configuration/sdk/index.js";
+import { StreamWriter, StringWriter, type Writer } from "../utils/Writer.js";
 
 export class ReferenceGenerator {
     private referenceConfig: FernGeneratorCli.ReferenceConfig;
@@ -24,6 +23,18 @@ export class ReferenceGenerator {
 
     public async generate({ output }: { output: fs.WriteStream | NodeJS.Process["stdout"] }): Promise<void> {
         const writer = new StreamWriter(output);
+        await this.writeReferenceContent({ writer });
+        await writer.end();
+    }
+
+    public async generateToString(): Promise<string> {
+        const writer = new StringWriter();
+        await this.writeReferenceContent({ writer });
+        await writer.end();
+        return writer.toString();
+    }
+
+    private async writeReferenceContent({ writer }: { writer: Writer }): Promise<void> {
         await writer.writeLine("# Reference");
 
         if (this.referenceConfig.rootSection != null) {
@@ -35,7 +46,6 @@ export class ReferenceGenerator {
         for (const section of this.referenceConfig.sections) {
             await this.writeSection({ section, writer });
         }
-        await writer.end();
     }
 
     private async writeRootSection({

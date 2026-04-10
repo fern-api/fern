@@ -1,22 +1,17 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    ExampleSingleUnionTypeProperties,
-    ExampleTypeShape,
-    SingleUnionTypeProperty,
-    UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, getPropertyKey } from "@fern-typescript/commons";
 import { BaseContext, GeneratedUnion, GeneratedUnionType } from "@fern-typescript/contexts";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
 import { ModuleDeclarationStructure, StatementStructures, ts, WriterFunction } from "ts-morph";
-import { AbstractGeneratedType } from "../AbstractGeneratedType";
-import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion";
-import { UnknownSingleUnionType } from "./UnknownSingleUnionType";
-import { UnknownSingleUnionTypeGenerator } from "./UnknownSingleUnionTypeGenerator";
+import { AbstractGeneratedType } from "../AbstractGeneratedType.js";
+import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion.js";
+import { UnknownSingleUnionType } from "./UnknownSingleUnionType.js";
+import { UnknownSingleUnionTypeGenerator } from "./UnknownSingleUnionTypeGenerator.js";
 
 export declare namespace GeneratedUnionTypeImpl {
     export interface Init<Context extends BaseContext>
-        extends AbstractGeneratedType.Init<UnionTypeDeclaration, Context> {
+        extends AbstractGeneratedType.Init<FernIr.UnionTypeDeclaration, Context> {
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
         inline: boolean;
@@ -24,7 +19,7 @@ export declare namespace GeneratedUnionTypeImpl {
 }
 
 export class GeneratedUnionTypeImpl<Context extends BaseContext>
-    extends AbstractGeneratedType<UnionTypeDeclaration, Context>
+    extends AbstractGeneratedType<FernIr.UnionTypeDeclaration, Context>
     implements GeneratedUnionType<Context>
 {
     public readonly type = "union";
@@ -51,7 +46,8 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
                     retainOriginalCasing: this.retainOriginalCasing,
                     noOptionalProperties: this.noOptionalProperties,
                     enableInlineTypes: this.enableInlineTypes,
-                    generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes
+                    generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
+                    caseConverter: this.case
                 })
         );
 
@@ -65,8 +61,8 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
             getReferenceToUnion: this.getReferenceToSelf.bind(this),
             getDocs: (context: Context) => this.getDocs({ context }),
             discriminant: this.includeSerdeLayer
-                ? this.shape.discriminant.name.camelCase.unsafeName
-                : this.shape.discriminant.wireValue,
+                ? this.case.camelUnsafe(this.shape.discriminant)
+                : getWireValue(this.shape.discriminant),
             parsedSingleUnionTypes,
             unknownSingleUnionType: new UnknownSingleUnionType({
                 singleUnionType: unknownSingleUnionTypeGenerator,
@@ -78,7 +74,8 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
             noOptionalProperties: this.noOptionalProperties,
             inline: this.inline,
             enableInlineTypes: this.enableInlineTypes,
-            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes
+            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
+            caseConverter: this.case
         });
     }
 
@@ -104,22 +101,23 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
         return this.generatedUnion;
     }
 
-    public getSinglePropertyKey(singleProperty: SingleUnionTypeProperty): string {
+    public getSinglePropertyKey(singleProperty: FernIr.SingleUnionTypeProperty): string {
         return ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
             includeSerdeLayer: this.includeSerdeLayer,
-            retainOriginalCasing: this.retainOriginalCasing
+            retainOriginalCasing: this.retainOriginalCasing,
+            caseConverter: this.case
         });
     }
 
-    private getPropertyKeyFromPropertyName(propertyName: FernIr.NameAndWireValue): string {
+    private getPropertyKeyFromPropertyName(propertyName: FernIr.NameAndWireValueOrString): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return propertyName.name.camelCase.unsafeName;
+            return this.case.camelUnsafe(propertyName);
         } else {
-            return propertyName.wireValue;
+            return getWireValue(propertyName);
         }
     }
 
-    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: FernIr.ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
         if (example.type !== "union") {
             throw new Error("Example is not for an union");
         }
@@ -142,58 +140,64 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
             })
         );
         nonDiscriminantProperties.push(
-            ...ExampleSingleUnionTypeProperties._visit<ts.ObjectLiteralElementLike[]>(example.singleUnionType.shape, {
-                singleProperty: (property) => {
-                    const unionMember = this.shape.types.find(
-                        (member) =>
-                            member.discriminantValue.wireValue ===
-                            example.singleUnionType.wireDiscriminantValue.wireValue
-                    );
-                    if (unionMember == null || unionMember.shape.propertiesType !== "singleProperty") {
-                        throw new Error("Cannot generate union example because union member is not singleProperty.");
-                    }
-                    return [
-                        ts.factory.createPropertyAssignment(
-                            getPropertyKey(
-                                ParsedSingleUnionTypeForUnion.getSinglePropertyKey(unionMember.shape, {
-                                    includeSerdeLayer: this.includeSerdeLayer,
-                                    retainOriginalCasing: this.retainOriginalCasing
-                                })
-                            ),
-                            context.type.getGeneratedExample(property).build(context, opts)
-                        )
-                    ];
-                },
-                samePropertiesAsObject: (exampleNamedType) => {
-                    const generatedType = context.type.getGeneratedTypeById(exampleNamedType.typeId);
-                    if (generatedType.type !== "object") {
-                        throw new Error(
-                            `Cannot generate union example because ${exampleNamedType.typeId} is not an object`
+            ...FernIr.ExampleSingleUnionTypeProperties._visit<ts.ObjectLiteralElementLike[]>(
+                example.singleUnionType.shape,
+                {
+                    singleProperty: (property) => {
+                        const unionMember = this.shape.types.find(
+                            (member) =>
+                                getWireValue(member.discriminantValue) ===
+                                getWireValue(example.singleUnionType.wireDiscriminantValue)
                         );
+                        if (unionMember == null || unionMember.shape.propertiesType !== "singleProperty") {
+                            throw new Error(
+                                "Cannot generate union example because union member is not singleProperty."
+                            );
+                        }
+                        return [
+                            ts.factory.createPropertyAssignment(
+                                getPropertyKey(
+                                    ParsedSingleUnionTypeForUnion.getSinglePropertyKey(unionMember.shape, {
+                                        includeSerdeLayer: this.includeSerdeLayer,
+                                        retainOriginalCasing: this.retainOriginalCasing,
+                                        caseConverter: this.case
+                                    })
+                                ),
+                                context.type.getGeneratedExample(property).build(context, opts)
+                            )
+                        ];
+                    },
+                    samePropertiesAsObject: (exampleNamedType) => {
+                        const generatedType = context.type.getGeneratedTypeById(exampleNamedType.typeId);
+                        if (generatedType.type !== "object") {
+                            throw new Error(
+                                `Cannot generate union example because ${exampleNamedType.typeId} is not an object`
+                            );
+                        }
+                        return generatedType.buildExampleProperties(
+                            FernIr.ExampleTypeShape.object(exampleNamedType.object),
+                            context,
+                            opts
+                        );
+                    },
+                    noProperties: () => [],
+                    _other: () => {
+                        throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.type);
                     }
-                    return generatedType.buildExampleProperties(
-                        ExampleTypeShape.object(exampleNamedType.object),
-                        context,
-                        opts
-                    );
-                },
-                noProperties: () => [],
-                _other: () => {
-                    throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.type);
                 }
-            })
+            )
         );
 
         return this.generatedUnion.build({
-            discriminantValueToBuild: example.singleUnionType.wireDiscriminantValue.wireValue,
-            builderArgument: ExampleSingleUnionTypeProperties._visit<ts.Expression | undefined>(
+            discriminantValueToBuild: getWireValue(example.singleUnionType.wireDiscriminantValue),
+            builderArgument: FernIr.ExampleSingleUnionTypeProperties._visit<ts.Expression | undefined>(
                 example.singleUnionType.shape,
                 {
                     singleProperty: (property) => context.type.getGeneratedExample(property).build(context, opts),
                     samePropertiesAsObject: (exampleNamedType) =>
                         context.type
                             .getGeneratedTypeById(exampleNamedType.typeId)
-                            .buildExample(ExampleTypeShape.object(exampleNamedType.object), context, opts),
+                            .buildExample(FernIr.ExampleTypeShape.object(exampleNamedType.object), context, opts),
                     noProperties: () => undefined,
                     _other: () => {
                         throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.type);

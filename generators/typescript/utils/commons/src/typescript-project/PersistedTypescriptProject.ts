@@ -2,10 +2,11 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { PublishInfo } from "@fern-api/typescript-base";
+import { execFile } from "child_process";
 import decompress from "decompress";
-import { cp, readdir, rm } from "fs/promises";
+import { cp, readdir, rm, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
-import urlJoin from "url-join";
+import { promisify } from "util";
 
 export declare namespace PersistedTypescriptProject {
     export interface Init {
@@ -16,6 +17,10 @@ export declare namespace PersistedTypescriptProject {
         buildCommand: string[];
         formatCommand: string[];
         checkFixCommand: string[];
+        /** Package specifiers needed for check:fix (e.g. ["@biomejs/biome@2.4.3"]) */
+        checkFixPackages: string[];
+        /** Binary names that must be on PATH for check:fix (e.g. ["biome"]) */
+        checkFixToolBinaries: string[];
         runScripts: boolean;
         packageManager: "pnpm" | "yarn";
     }
@@ -30,6 +35,8 @@ export class PersistedTypescriptProject {
     private buildCommand: string[];
     private formatCommand: string[];
     private checkFixCommand: string[];
+    private checkFixPackages: string[];
+    private checkFixToolBinaries: string[];
 
     private runScripts;
 
@@ -41,6 +48,8 @@ export class PersistedTypescriptProject {
         buildCommand,
         formatCommand,
         checkFixCommand,
+        checkFixPackages,
+        checkFixToolBinaries,
         runScripts,
         packageManager
     }: PersistedTypescriptProject.Init) {
@@ -51,6 +60,8 @@ export class PersistedTypescriptProject {
         this.buildCommand = buildCommand;
         this.formatCommand = formatCommand;
         this.checkFixCommand = checkFixCommand;
+        this.checkFixPackages = checkFixPackages;
+        this.checkFixToolBinaries = checkFixToolBinaries;
         this.runScripts = runScripts;
         this.packageManager = packageManager;
     }
@@ -79,8 +90,9 @@ export class PersistedTypescriptProject {
 
         try {
             logger.debug("Running npm pkg fix to normalize package.json");
+            const startTime = Date.now();
             await npm(["pkg", "fix"]);
-            logger.debug("Successfully ran npm pkg fix");
+            logger.debug(`[TIMING] fixPackageJson took ${Date.now() - startTime}ms`);
         } catch (e) {
             logger.warn(`Failed to run npm pkg fix: ${e}`);
         }
@@ -96,6 +108,7 @@ export class PersistedTypescriptProject {
             logger
         });
 
+        const startTime = Date.now();
         await (this.packageManager === "yarn"
             ? pm(["install", "--mode=update-lockfile", "--ignore-scripts", "--prefer-offline"], {
                   env: {
@@ -109,6 +122,7 @@ export class PersistedTypescriptProject {
                       PNPM_FROZEN_LOCKFILE: "false"
                   }
               }));
+        logger.debug(`[TIMING] generateLockfile took ${Date.now() - startTime}ms`);
     }
 
     public async installDependencies(logger: Logger): Promise<void> {
@@ -121,6 +135,7 @@ export class PersistedTypescriptProject {
             logger
         });
 
+        const startTime = Date.now();
         await (this.packageManager === "yarn"
             ? pm(["install", "--ignore-scripts", "--prefer-offline"], {
                   env: {
@@ -134,6 +149,62 @@ export class PersistedTypescriptProject {
                       PNPM_FROZEN_LOCKFILE: "false"
                   }
               }));
+        logger.debug(`[TIMING] installDependencies took ${Date.now() - startTime}ms`);
+    }
+
+    /**
+     * Returns true when every tool binary needed by check:fix is already
+     * available on the system PATH (e.g. globally installed in Docker).
+     * When true, callers can skip installing packages entirely.
+     */
+    public async areCheckFixToolsAvailable(logger: Logger): Promise<boolean> {
+        if (this.checkFixToolBinaries.length === 0) {
+            return true;
+        }
+        const execFileAsync = promisify(execFile);
+        for (const binary of this.checkFixToolBinaries) {
+            try {
+                await execFileAsync("which", [binary]);
+            } catch {
+                logger.debug(`Tool '${binary}' not found on PATH, will install check:fix packages`);
+                return false;
+            }
+        }
+        logger.debug("All check:fix tools available on PATH, skipping install");
+        return true;
+    }
+
+    /**
+     * Installs only the packages required by checkFix (formatter / linter)
+     * instead of the full dependency tree. This is significantly faster for
+     * output modes that only need formatting/linting but not a full build.
+     */
+    public async installCheckFixDependencies(logger: Logger): Promise<void> {
+        if (!this.runScripts) {
+            return;
+        }
+        if (this.checkFixPackages.length === 0) {
+            return;
+        }
+
+        const pm = createLoggingExecutable(this.packageManager, {
+            cwd: this.directory,
+            logger
+        });
+
+        const startTime = Date.now();
+        await (this.packageManager === "yarn"
+            ? pm(["add", "--dev", "--ignore-scripts", "--prefer-offline", ...this.checkFixPackages], {
+                  env: {
+                      YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+                  }
+              })
+            : pm(["add", "--save-dev", "--ignore-scripts", "--prefer-offline", ...this.checkFixPackages], {
+                  env: {
+                      PNPM_FROZEN_LOCKFILE: "false"
+                  }
+              }));
+        logger.debug(`[TIMING] installCheckFixDependencies took ${Date.now() - startTime}ms`);
     }
 
     public async format(logger: Logger): Promise<void> {
@@ -143,11 +214,27 @@ export class PersistedTypescriptProject {
 
         const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
-            logger
+            logger,
+            doNotPipeOutput: true
         });
         try {
-            await pm(this.formatCommand);
+            const startTime = Date.now();
+            const result = await pm(this.formatCommand);
+            await this.writeToolOutputToLogFile({
+                step: "format",
+                stdout: result.stdout,
+                stderr: result.stderr,
+                logger
+            });
+            logger.debug(`[TIMING] format took ${Date.now() - startTime}ms`);
         } catch (e) {
+            const error = e as { stdout?: string; stderr?: string };
+            await this.writeToolOutputToLogFile({
+                step: "format",
+                stdout: error.stdout ?? "",
+                stderr: error.stderr ?? "",
+                logger
+            });
             logger.error(`Failed to format the generated project: ${e}`);
         }
     }
@@ -160,11 +247,27 @@ export class PersistedTypescriptProject {
         const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
             logger,
-            reject: false
+            reject: false,
+            doNotPipeOutput: true
         });
         try {
-            await pm(this.checkFixCommand);
+            const startTime = Date.now();
+            const result = await pm(this.checkFixCommand);
+            await this.writeToolOutputToLogFile({
+                step: "checkFix",
+                stdout: result.stdout,
+                stderr: result.stderr,
+                logger
+            });
+            logger.debug(`[TIMING] checkFix took ${Date.now() - startTime}ms`);
         } catch (e) {
+            const error = e as { stdout?: string; stderr?: string };
+            await this.writeToolOutputToLogFile({
+                step: "checkFix",
+                stdout: error.stdout ?? "",
+                stderr: error.stderr ?? "",
+                logger
+            });
             logger.error(`Failed to format the generated project: ${e}`);
         }
     }
@@ -178,7 +281,9 @@ export class PersistedTypescriptProject {
             cwd: this.directory,
             logger
         });
+        const startTime = Date.now();
         await pm(this.buildCommand);
+        logger.debug(`[TIMING] build took ${Date.now() - startTime}ms`);
     }
 
     public async copyProjectTo({
@@ -286,7 +391,29 @@ export class PersistedTypescriptProject {
         unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
-        await this.zipDirectoryContents(join(this.directory, this.distDirectory), {
+        // Stage dist contents and root documentation files into a temp directory
+        // so the output zip includes them alongside the compiled cjs/esm output.
+        const stagingDir = AbsoluteFilePath.of((await tmp.dir()).path);
+        const distDir = join(this.directory, this.distDirectory);
+        const distItems = await readdir(distDir);
+        for (const item of distItems) {
+            await cp(join(distDir, RelativeFilePath.of(item)), join(stagingDir, RelativeFilePath.of(item)), {
+                recursive: true
+            });
+        }
+
+        const ROOT_FILES_TO_INCLUDE = ["README.md", "reference.md", "CONTRIBUTING.md"];
+        for (const filename of ROOT_FILES_TO_INCLUDE) {
+            const src = join(this.directory, RelativeFilePath.of(filename));
+            try {
+                await cp(src, join(stagingDir, RelativeFilePath.of(filename)));
+            } catch (e) {
+                // File may not exist (e.g. whitelabel skips CONTRIBUTING.md)
+                logger.debug(`Skipping ${filename}: ${e}`);
+            }
+        }
+
+        await this.zipDirectoryContents(stagingDir, {
             logger,
             destinationPath,
             zipFilename,
@@ -329,12 +456,14 @@ export class PersistedTypescriptProject {
         logger,
         publishInfo,
         dryRun,
-        shouldTolerateRepublish
+        shouldTolerateRepublish,
+        version
     }: {
         logger: Logger;
         publishInfo: PublishInfo;
         dryRun: boolean;
         shouldTolerateRepublish: boolean;
+        version?: string;
     }): Promise<void> {
         const npm = createLoggingExecutable("npm", {
             cwd: this.directory,
@@ -342,22 +471,30 @@ export class PersistedTypescriptProject {
         });
 
         const parsedRegistryUrl = new URL(publishInfo.registryUrl);
-        const registryUrlWithoutProtocol = urlJoin(parsedRegistryUrl.hostname, parsedRegistryUrl.pathname);
+        const registryUrlWithoutProtocol = `${parsedRegistryUrl.host}${parsedRegistryUrl.pathname}`;
 
         await npm(["config", "set", `//${registryUrlWithoutProtocol}:_authToken`, publishInfo.token], {
             secrets: [registryUrlWithoutProtocol, publishInfo.token]
         });
 
         const publishCommand = ["publish", "--registry", publishInfo.registryUrl];
+
+        // npm 10.9+ requires --tag when publishing prerelease versions (e.g. 0.0.1-preview.123)
+        if (version != null && version.includes("-")) {
+            publishCommand.push("--tag", "preview");
+        }
+
         if (dryRun) {
             publishCommand.push("--dry-run");
         }
         if (shouldTolerateRepublish) {
             publishCommand.push("--tolerate-republish");
         }
+        const startTime = Date.now();
         await npm(publishCommand, {
             secrets: [publishInfo.registryUrl]
         });
+        logger.debug(`[TIMING] publish took ${Date.now() - startTime}ms`);
     }
 
     public async deleteGitIgnoredFiles(logger: Logger): Promise<void> {
@@ -366,19 +503,53 @@ export class PersistedTypescriptProject {
             logger
         });
         await git(["init"]);
+        // Disable auto-gc so that no background pack processes run during
+        // the subsequent add/commit/clean, which would race with the rm(.git) below.
+        await git(["config", "gc.auto", "0"]);
         await git(["add", "."]);
         await git([
             "-c",
-            "user.name='fern'",
+            "user.name=fern",
             "-c",
-            "user.email='hey@buildwithfern.com'",
+            "user.email=hey@buildwithfern.com",
+            "-c",
+            "commit.gpgsign=false",
             "commit",
+            "--no-verify",
             "-m",
-            '"Initial commit"'
+            "Initial commit"
         ]);
         await git(["clean", "-fdx"]);
 
-        await rm(join(this.directory, RelativeFilePath.of(".git")), { recursive: true });
+        await rm(join(this.directory, RelativeFilePath.of(".git")), {
+            recursive: true,
+            force: true,
+            maxRetries: 3,
+            retryDelay: 100
+        });
+    }
+
+    private async writeToolOutputToLogFile({
+        step,
+        stdout,
+        stderr,
+        logger
+    }: {
+        step: string;
+        stdout: string;
+        stderr: string;
+        logger: Logger;
+    }): Promise<void> {
+        const logFilePath = `/tmp/fern-${step}.log`;
+        const content = [stdout, stderr].filter(Boolean).join("\n");
+        if (content.length > 0) {
+            try {
+                await writeFile(logFilePath, content);
+                logger.debug(`${step} output written to ${logFilePath}`);
+            } catch (error) {
+                logger.debug(`Failed to write ${step} output to ${logFilePath}: ${error}`);
+            }
+        }
     }
 
     public async writeArbitraryFiles(run: (pathToProject: AbsoluteFilePath) => Promise<void>): Promise<void> {

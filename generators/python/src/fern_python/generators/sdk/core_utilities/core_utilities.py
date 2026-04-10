@@ -25,7 +25,8 @@ class CoreUtilities:
 
     def __init__(
         self,
-        has_paginated_endpoints: bool,
+        has_standard_paginated_endpoints: bool,
+        has_custom_paginated_endpoints: bool,
         project_module_path: AST.ModulePath,
         custom_config: SDKCustomConfig,
     ) -> None:
@@ -35,7 +36,8 @@ class CoreUtilities:
         self._module_path_unnamed = tuple(part.module_name for part in self.filepath[:-1])  # type: ignore
         self._allow_skipping_validation = custom_config.pydantic_config.skip_validation
         self._use_typeddict_requests = custom_config.pydantic_config.use_typeddict_requests
-        self._has_paginated_endpoints = has_paginated_endpoints
+        self._has_standard_paginated_endpoints = has_standard_paginated_endpoints
+        self._has_custom_paginated_endpoints = has_custom_paginated_endpoints
         self._version = custom_config.pydantic_config.version
         self._project_module_path = project_module_path
         self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
@@ -44,8 +46,18 @@ class CoreUtilities:
         self._custom_pager_base_name = self._sanitize_pager_name(custom_config.custom_pager_name or "CustomPager")
         self._use_str_enums = custom_config.pydantic_config.use_str_enums
         self._import_paths = custom_config.import_paths
+        self._datetime_milliseconds = custom_config.datetime_milliseconds
+        self._default_max_retries = custom_config.default_max_retries
 
     def copy_to_project(self, *, project: Project) -> None:
+        datetime_replacements = (
+            {
+                "v.isoformat().replace": 'v.isoformat(timespec="milliseconds").replace',
+                "return v.isoformat()\n": 'return v.isoformat(timespec="milliseconds")\n',
+            }
+            if self._datetime_milliseconds
+            else None
+        )
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="datetime_utils.py",
@@ -53,7 +65,10 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="datetime_utils"),
             ),
-            exports={"serialize_datetime"} if not self._exclude_types_from_init_exports else set(),
+            exports={"serialize_datetime", "parse_rfc2822_datetime", "Rfc2822DateTime"}
+            if not self._exclude_types_from_init_exports
+            else set(),
+            string_replacements=datetime_replacements,
         )
         # Only copy enum.py when generating actual enum classes (not string literals)
         if not self._use_str_enums:
@@ -77,12 +92,21 @@ class CoreUtilities:
         )
         self._copy_file_to_project(
             project=project,
+            relative_filepath_on_disk="parse_error.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="parse_error"),
+            ),
+            exports={"ParsingError"} if not self._exclude_types_from_init_exports else set(),
+        )
+        self._copy_file_to_project(
+            project=project,
             relative_filepath_on_disk="jsonable_encoder.py",
             filepath_in_project=Filepath(
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="jsonable_encoder"),
             ),
-            exports={"jsonable_encoder"} if not self._exclude_types_from_init_exports else set(),
+            exports={"jsonable_encoder", "encode_path_param"} if not self._exclude_types_from_init_exports else set(),
         )
         self._copy_file_to_project(
             project=project,
@@ -120,6 +144,17 @@ class CoreUtilities:
                 "File",
                 "with_content_type",
             },
+        )
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="logging.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="logging"),
+            ),
+            exports={"Logger", "LogConfig", "LogLevel", "ConsoleLogger", "ILogger", "create_logger"}
+            if not self._exclude_types_from_init_exports
+            else set(),
         )
         self._copy_file_to_project(
             project=project,
@@ -215,7 +250,7 @@ class CoreUtilities:
             else set(),
         )
 
-        if self._has_paginated_endpoints:
+        if self._has_standard_paginated_endpoints:
             self._copy_file_to_project(
                 project=project,
                 relative_filepath_on_disk="pagination.py",
@@ -225,7 +260,8 @@ class CoreUtilities:
                 ),
                 exports={"SyncPager", "AsyncPager"} if not self._exclude_types_from_init_exports else set(),
             )
-            # Copy custom pagination file (for user customization)
+
+        if self._has_custom_paginated_endpoints:
             self._copy_file_to_project(
                 project=project,
                 relative_filepath_on_disk="custom_pagination.py",
@@ -266,6 +302,17 @@ class CoreUtilities:
                 ),
                 exports={"EventType", "EventEmitterMixin"} if not self._exclude_types_from_init_exports else set(),
             )
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="websocket_compat.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="websocket_compat"),
+                ),
+                exports={"InvalidWebSocketStatus", "get_status_code"}
+                if not self._exclude_types_from_init_exports
+                else set(),
+            )
 
         # Copy the entire http_sse folder
         self._copy_http_sse_folder_to_project(project=project)
@@ -281,6 +328,23 @@ class CoreUtilities:
         else:
             project.add_dependency(PYDANTIC_DEPENDENCY)
 
+    @staticmethod
+    def _resolve_core_utilities_path(relative_filepath: str) -> str:
+        """Resolve the core utilities source directory.
+
+        Supports FERN_CORE_UTILITIES_PATH env var with colon-separated paths
+        for local execution where sdk/ and shared/ are separate directories.
+        """
+        env_paths = os.environ.get("FERN_CORE_UTILITIES_PATH")
+        if env_paths is not None:
+            for source in env_paths.split(":"):
+                if os.path.exists(os.path.join(source, relative_filepath)):
+                    return source
+            return env_paths.split(":")[0]
+        if "PYTEST_CURRENT_TEST" in os.environ:
+            return os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
+        return "/assets/core_utilities"
+
     def _copy_file_to_project(
         self,
         *,
@@ -290,11 +354,7 @@ class CoreUtilities:
         exports: Set[str],
         string_replacements: Optional[dict[str, str]] = None,
     ) -> None:
-        source = (
-            os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
-            if "PYTEST_CURRENT_TEST" in os.environ
-            else "/assets/core_utilities"
-        )
+        source = self._resolve_core_utilities_path(relative_filepath_on_disk)
         SourceFileFactory.add_source_file_from_disk(
             project=project,
             path_on_disk=os.path.join(source, relative_filepath_on_disk),
@@ -305,11 +365,7 @@ class CoreUtilities:
 
     def _copy_http_sse_folder_to_project(self, *, project: Project) -> None:
         """Copy the http_sse folder using the same approach as individual file copying"""
-        source = (
-            os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
-            if "PYTEST_CURRENT_TEST" in os.environ
-            else "/assets/core_utilities"
-        )
+        source = self._resolve_core_utilities_path("http_sse")
         folder_path_on_disk = os.path.join(source, "http_sse")
 
         # Define exports for each file
@@ -364,6 +420,15 @@ class CoreUtilities:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(module=module, named_import="ApiError"),
+        )
+
+    def get_reference_to_parsing_error(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "parse_error"),
+                named_import="ParsingError",
+            ),
         )
 
     def get_oauth_token_provider(self) -> AST.ClassReference:
@@ -462,6 +527,33 @@ class CoreUtilities:
 
         return AST.CodeWriter(code_writer=_write)
 
+    def instantiate_parsing_error(
+        self,
+        *,
+        headers: Optional[AST.Expression],
+        status_code: Optional[AST.Expression],
+        body: Optional[AST.Expression],
+    ) -> AST.AstNode:
+        def _write(writer: AST.NodeWriter) -> None:
+            writer.write_node(AST.Expression(self.get_reference_to_parsing_error()))
+            writer.write("(")
+            if status_code is not None:
+                writer.write("status_code=")
+                writer.write_node(status_code)
+                writer.write(", ")
+            if headers is not None:
+                writer.write("headers=dict(")
+                writer.write_node(headers)
+                writer.write("), ")
+            if body is not None:
+                writer.write("body=")
+                writer.write_node(body)
+                writer.write(", ")
+            writer.write("cause=e")
+            writer.write_line(")")
+
+        return AST.CodeWriter(code_writer=_write)
+
     def get_reference_to_client_wrapper(self, *, is_async: bool) -> AST.ClassReference:
         if is_async:
             return AST.ClassReference(
@@ -530,6 +622,20 @@ class CoreUtilities:
             )
         )
 
+    def encode_path_param(self, obj: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "jsonable_encoder"),
+                        named_import="encode_path_param",
+                    ),
+                ),
+                args=[obj],
+            )
+        )
+
     def serialize_datetime(self, datetime: AST.Expression) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(
@@ -540,6 +646,18 @@ class CoreUtilities:
                     ),
                 ),
                 args=[datetime],
+            )
+        )
+
+    def get_rfc2822_datetime_type_hint(self) -> AST.TypeHint:
+        """Return a type hint referencing Rfc2822DateTime from datetime_utils (V1/V2 compatible)."""
+        return AST.TypeHint(
+            AST.ClassReference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "datetime_utils"),
+                    named_import="Rfc2822DateTime",
+                ),
             )
         )
 
@@ -594,6 +712,7 @@ class CoreUtilities:
         base_timeout: AST.Expression,
         is_async: bool,
         async_base_headers: Optional[AST.Expression] = None,
+        logging_config: Optional[AST.Expression] = None,
     ) -> AST.Expression:
         func_args = [
             ("httpx_client", base_client),
@@ -602,8 +721,12 @@ class CoreUtilities:
         ]
         if base_url is not None:
             func_args.append(("base_url", base_url))
+        if self._default_max_retries != 2:
+            func_args.append(("base_max_retries", AST.Expression(str(self._default_max_retries))))
         if is_async and async_base_headers is not None:
             func_args.append(("async_base_headers", async_base_headers))
+        if logging_config is not None:
+            func_args.append(("logging_config", logging_config))
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=AST.Reference(
@@ -647,6 +770,9 @@ class CoreUtilities:
             if self._allow_skipping_validation
             else self.get_universal_base_model()
         )
+
+    def get_construct_or_parse_ref(self) -> AST.Reference:
+        return self.get_construct_type() if self._allow_skipping_validation else self.get_parse_obj_as()
 
     def get_construct_type(self) -> AST.Reference:
         return AST.Reference(
@@ -902,6 +1028,42 @@ class CoreUtilities:
         """Sanitize the pager name to be a valid Python identifier in PascalCase."""
         return pascal_case(name)
 
+    def get_reference_to_invalid_websocket_status(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "websocket_compat"),
+                named_import="InvalidWebSocketStatus",
+            ),
+        )
+
+    def get_reference_to_get_status_code(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "websocket_compat"),
+                named_import="get_status_code",
+            ),
+        )
+
     def get_import_paths(self) -> Optional[list[str]]:
         """Get the list of import paths for auto-loading user-defined files."""
         return self._import_paths
+
+    def get_reference_to_log_config(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "logging"),
+                named_import="LogConfig",
+            ),
+        )
+
+    def get_reference_to_logger(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "logging"),
+                named_import="Logger",
+            ),
+        )

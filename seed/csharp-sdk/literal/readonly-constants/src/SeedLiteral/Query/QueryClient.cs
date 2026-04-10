@@ -1,11 +1,11 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
 public partial class QueryClient : IQueryClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal QueryClient(RawClient client)
     {
@@ -40,7 +40,6 @@ public partial class QueryClient : IQueryClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "query",
                     QueryString = _queryString,
@@ -52,7 +51,9 @@ public partial class QueryClient : IQueryClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<SendResponse>(responseBody)!;
@@ -78,7 +79,9 @@ public partial class QueryClient : IQueryClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedLiteralApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

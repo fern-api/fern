@@ -1,4 +1,5 @@
 using global::System.Net.Http;
+using global::System.Text.Json;
 using SystemTask = global::System.Threading.Tasks.Task;
 using WireMock.Server;
 using WireMockRequest = WireMock.RequestBuilders.Request;
@@ -25,7 +26,7 @@ public class RetriesTests
         _baseUrl = _server.Url ?? "";
         _httpClient = new HttpClient { BaseAddress = new Uri(_baseUrl) };
         _rawClient = new RawClient(
-            new ClientOptions { HttpClient = _httpClient, MaxRetries = MaxRetries }
+            new ClientOptions { HttpClient = _httpClient, MaxRetries = MaxRetries<%= clientOptionsRequiredDefaults %> }
         )
         {
             BaseRetryDelay = 0,
@@ -144,7 +145,7 @@ public class RetriesTests
             .WillSetStateTo("Server Error")
             .RespondWith(WireMockResponse.Create().WithStatusCode(429).WithBody("Failure"));
 
-        var request = new <%= namespaces.core %>.MultipartFormRequest{
+        var request = new <%= namespaces.qualifiedCore %>.MultipartFormRequest{
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
             Path = "/test",
@@ -184,12 +185,12 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new <%= context.namespaces.core %>.MultipartFormRequest{
-            BaseUrl = _baseUrl,
-            Method = HttpMethod.Post,
-            Path = "/test",
-        };
-        request.AddJsonPart("object", new {});
+                var request = new <%= context.namespaces.qualifiedCore %>.MultipartFormRequest{
+                    BaseUrl = _baseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/test",
+                };
+                request.AddJsonPart("object", new {});
 
         var response = await _rawClient.SendRequestAsync(request);
         Assert.That(response.StatusCode, Is.EqualTo(200));
@@ -316,6 +317,84 @@ public class RetriesTests
             Assert.That(content, Is.EqualTo("Success"));
             Assert.That(_server.LogEntries, Has.Count.EqualTo(2));
         });
+    }
+
+    [Test]
+    public async SystemTask SendRequestAsync_ShouldPreserveJsonBody_OnRetry()
+    {
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
+            .InScenario("RetryWithBody")
+            .WillSetStateTo("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(500));
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
+            .InScenario("RetryWithBody")
+            .WhenStateIs("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+
+        var request = new JsonRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Post,
+            Path = "/test",
+            Body = new { key = "value" },
+        };
+
+        var response = await _rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(content, Is.EqualTo("Success"));
+            Assert.That(_server.LogEntries, Has.Count.EqualTo(2));
+
+            // Verify the retried request preserved the JSON body (compare parsed to ignore formatting differences)
+            var retriedEntry = _server.LogEntries.ElementAt(1);
+            using var actualJson = JsonDocument.Parse(retriedEntry.RequestMessage.Body!);
+            Assert.That(actualJson.RootElement.GetProperty("key").GetString(), Is.EqualTo("value"));
+        }
+    }
+
+    [Test]
+    public async SystemTask SendRequestAsync_ShouldPreserveMultipartBody_OnRetry()
+    {
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
+            .InScenario("RetryMultipart")
+            .WillSetStateTo("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(500));
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
+            .InScenario("RetryMultipart")
+            .WhenStateIs("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+
+                var request = new <%= context.namespaces.qualifiedCore %>.MultipartFormRequest
+                {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Post,
+            Path = "/test",
+        };
+        request.AddJsonPart("object", new { key = "value" });
+
+        var response = await _rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(content, Is.EqualTo("Success"));
+            Assert.That(_server.LogEntries, Has.Count.EqualTo(2));
+
+            // Verify the retried request preserved the multipart body (check key/value presence to ignore formatting differences)
+            var retriedEntry = _server.LogEntries.ElementAt(1);
+            Assert.That(retriedEntry.RequestMessage.Body, Does.Contain("\"key\""));
+            Assert.That(retriedEntry.RequestMessage.Body, Does.Contain("\"value\""));
+        }
     }
 
     [TearDown]

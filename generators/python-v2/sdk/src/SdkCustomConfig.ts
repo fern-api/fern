@@ -46,14 +46,31 @@ const WireTestsConfigSchema = z.object({
     exclusions: z.array(z.string()).optional()
 });
 
+/**
+ * Schema for custom README sections.
+ */
+const CustomReadmeSectionSchema = z.object({
+    title: z.string(),
+    content: z.string()
+});
+
 export const SdkCustomConfigSchema = z.object({
     /** @deprecated Use `wire_tests.enabled` instead */
     enable_wire_tests: z.boolean().optional(),
     package_path: relativePathSchema.optional(),
+    package_name: z.string().optional(),
     client: ClientConfigSchema.optional(),
     client_class_name: z.string().optional(),
     inline_request_params: z.boolean().optional(),
-    wire_tests: WireTestsConfigSchema.optional()
+    wire_tests: WireTestsConfigSchema.optional(),
+    custom_readme_sections: z.array(CustomReadmeSectionSchema).optional(),
+    /**
+     * When true, datetime values are serialized with millisecond precision
+     * (e.g., "2008-01-02T00:00:00.000Z" instead of "2008-01-02T00:00:00Z").
+     * This also affects WireMock stubs and wire test verification code to ensure
+     * all three components (SDK, stubs, tests) use the same datetime format.
+     */
+    datetime_milliseconds: z.boolean().optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

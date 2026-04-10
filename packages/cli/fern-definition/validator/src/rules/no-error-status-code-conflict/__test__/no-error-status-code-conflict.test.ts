@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { NoErrorStatusCodeConflictRule } from "../no-error-status-code-conflict";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { NoErrorStatusCodeConflictRule } from "../no-error-status-code-conflict.js";
 
 describe("no-duplicate-declarations", () => {
     it("simple", async () => {
@@ -15,12 +15,14 @@ describe("no-duplicate-declarations", () => {
         });
         expect(violations).toEqual([
             {
+                name: "no-error-status-code-conflict",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["service", "endpoints", "get"],
                 message: "Multiple errors have status-code 401: D, D"
             },
             {
+                name: "no-error-status-code-conflict",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["service", "endpoints", "update"],

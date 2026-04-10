@@ -5,6 +5,8 @@ types:
       - CursorPaginationSchema
       - OffsetPaginationSchema
       - CustomPaginationSchema
+      - UriPaginationSchema
+      - PathPaginationSchema
 
   CursorPaginationSchema:
     properties:
@@ -46,3 +48,21 @@ types:
           The response property is used to determine the results response type
           generated in the endpoint.
         type: string
+
+  UriPaginationSchema:
+    properties:
+      next_uri:
+        type: string
+        docs: The path to the response property for the next URI.
+      results:
+        type: string
+        docs: The path to the response property for the page elements.
+
+  PathPaginationSchema:
+    properties:
+      next_path:
+        type: string
+        docs: The path to the response property for the next path.
+      results:
+        type: string
+        docs: The path to the response property for the page elements.

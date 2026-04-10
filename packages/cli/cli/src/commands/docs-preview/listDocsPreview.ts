@@ -3,7 +3,7 @@ import { createFdrService } from "@fern-api/core";
 import { askToLogin } from "@fern-api/login";
 import chalk from "chalk";
 
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 interface PreviewDeployment {
     url: string;
@@ -41,7 +41,25 @@ export async function listDocsPreview({
         });
 
         if (!listResponse.ok) {
-            return context.failAndThrow("Failed to fetch docs URLs", listResponse.error);
+            switch (listResponse.error.error) {
+                case "UnauthorizedError":
+                    return context.failAndThrow(
+                        "Unauthorized to list preview deployments. Please run 'fern login' to refresh your credentials, or set the FERN_TOKEN environment variable."
+                    );
+                default: {
+                    const errorContent =
+                        listResponse.error.content != null &&
+                        typeof listResponse.error.content === "object" &&
+                        "body" in listResponse.error.content
+                            ? listResponse.error.content.body
+                            : listResponse.error.content;
+                    context.logger.debug(`Error fetching preview deployments: ${JSON.stringify(errorContent)}`);
+                    return context.failAndThrow(
+                        "Failed to fetch preview deployments. Please ensure you are logged in with 'fern login' or have FERN_TOKEN set, then try again.",
+                        listResponse.error
+                    );
+                }
+            }
         }
 
         // Preview URLs match the pattern: {org}-preview-{hash}.docs.buildwithfern.com

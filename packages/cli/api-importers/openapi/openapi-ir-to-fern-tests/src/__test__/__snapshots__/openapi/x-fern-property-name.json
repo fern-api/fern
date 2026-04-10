@@ -48,7 +48,9 @@
           "TestIdentity": {
             "availability": undefined,
             "base-properties": {},
+            "default-variant": undefined,
             "discriminant": {
+              "context": "data",
               "name": "type",
               "value": "@type",
             },
@@ -65,7 +67,9 @@
           "UnionWithDiscriminant": {
             "availability": undefined,
             "base-properties": {},
+            "default-variant": undefined,
             "discriminant": {
+              "context": "data",
               "name": "type",
               "value": "@type",
             },
@@ -115,6 +119,7 @@
     discriminant:
       name: type
       value: '@type'
+      context: data
     base-properties: {}
     docs: A union type with a discriminant property.
     union:
@@ -136,6 +141,7 @@
     discriminant:
       name: type
       value: '@type'
+      context: data
     base-properties: {}
     docs: Test description
     union:

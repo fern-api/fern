@@ -10,6 +10,7 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -35,14 +36,26 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="<token>",
+)
+
+client.echo(
+    request="Hello world!\\n\\nwith\\n\\tnewlines",
+)
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```python
+from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
-    token="YOUR_TOKEN",
     environment=SeedExhaustiveEnvironment.PRODUCTION,
-)
-client.echo(
-    request="Hello world!\\n\\nwith\\n\\tnewlines",
 )
 ```
 
@@ -54,11 +67,9 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 import asyncio
 
 from seed import AsyncSeedExhaustive
-from seed.environment import SeedExhaustiveEnvironment
 
 client = AsyncSeedExhaustive(
-    token="YOUR_TOKEN",
-    environment=SeedExhaustiveEnvironment.PRODUCTION,
+    token="<token>",
 )
 
 
@@ -96,9 +107,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedExhaustive
 
-client = SeedExhaustive(
-    ...,
-)
+client = SeedExhaustive(...)
 response = client.with_raw_response.echo(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -130,14 +139,9 @@ client.echo(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedExhaustive
 
-client = SeedExhaustive(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedExhaustive(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.echo(..., request_options={

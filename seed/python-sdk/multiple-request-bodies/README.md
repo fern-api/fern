@@ -10,6 +10,7 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -37,9 +38,23 @@ Instantiate and use the client with the following:
 from seed import SeedApi
 
 client = SeedApi(
-    token="YOUR_TOKEN",
+    token="<token>",
 )
+
 client.upload_json_document()
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```python
+from seed import SeedApi
+from seed.environment import SeedApiEnvironment
+
+client = SeedApi(
+    environment=SeedApiEnvironment.DEFAULT,
+)
 ```
 
 ## Async Client
@@ -52,7 +67,7 @@ import asyncio
 from seed import AsyncSeedApi
 
 client = AsyncSeedApi(
-    token="YOUR_TOKEN",
+    token="<token>",
 )
 
 
@@ -88,9 +103,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedApi
 
-client = SeedApi(
-    ...,
-)
+client = SeedApi(...)
 response = client.with_raw_response.upload_json_document(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -122,14 +135,9 @@ client.upload_json_document(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedApi
 
-client = SeedApi(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.upload_json_document(..., request_options={

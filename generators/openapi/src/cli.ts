@@ -1,4 +1,4 @@
-import { writeOpenApi } from "./writeOpenApi";
+import { writeOpenApi } from "./writeOpenApi.js";
 
 const pathToJson = process.argv[process.argv.length - 1];
 if (pathToJson == null) {

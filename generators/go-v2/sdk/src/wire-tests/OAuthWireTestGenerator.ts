@@ -1,8 +1,14 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
-import { HttpEndpoint, HttpService, OAuthScheme, RequestProperty, TypeReference } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import {
+    getClientAccessPath,
+    getOAuthClientCredentialsScheme,
+    getRequestPropertyFieldName,
+    isRequestPropertyOptional
+} from "../authUtils.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 /**
  * Information about the OAuth service structure extracted from the IR.
@@ -25,9 +31,9 @@ interface OAuthServiceInfo {
     /** The service ID for the OAuth token endpoint */
     serviceId: string;
     /** The token endpoint */
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
     /** The service containing the token endpoint */
-    service: HttpService;
+    service: FernIr.HttpService;
 }
 
 /**
@@ -83,7 +89,7 @@ export class OAuthWireTestGenerator {
     /**
      * Extracts OAuth service information from the IR scheme.
      */
-    private extractOAuthServiceInfo(oauthScheme: OAuthScheme): OAuthServiceInfo | undefined {
+    private extractOAuthServiceInfo(oauthScheme: FernIr.OAuthScheme): OAuthServiceInfo | undefined {
         if (oauthScheme.configuration?.type !== "clientCredentials") {
             return undefined;
         }
@@ -104,7 +110,7 @@ export class OAuthWireTestGenerator {
         }
 
         // Extract client accessor path from fernFilepath (e.g., "OAuth2" or "Auth")
-        const clientAccessPath = this.getClientAccessPath(service);
+        const clientAccessPath = getClientAccessPath(service, this.context.caseConverter);
 
         // Use context.getMethodName for consistent method naming
         const methodName = this.context.getMethodName(endpoint.name);
@@ -115,10 +121,10 @@ export class OAuthWireTestGenerator {
             return undefined;
         }
 
-        const clientIdFieldName = this.getRequestPropertyFieldName(requestProperties.clientId);
-        const clientSecretFieldName = this.getRequestPropertyFieldName(requestProperties.clientSecret);
-        const clientIdIsOptional = this.isRequestPropertyOptional(requestProperties.clientId);
-        const clientSecretIsOptional = this.isRequestPropertyOptional(requestProperties.clientSecret);
+        const clientIdFieldName = getRequestPropertyFieldName(this.context, requestProperties.clientId);
+        const clientSecretFieldName = getRequestPropertyFieldName(this.context, requestProperties.clientSecret);
+        const clientIdIsOptional = isRequestPropertyOptional(requestProperties.clientId);
+        const clientSecretIsOptional = isRequestPropertyOptional(requestProperties.clientSecret);
 
         // Get package directory using canonical file location helper
         const fileLocation = this.context.getClientFileLocation({
@@ -139,65 +145,6 @@ export class OAuthWireTestGenerator {
             endpoint,
             service
         };
-    }
-
-    /**
-     * Gets the client accessor path for a service (e.g., "OAuth2" from fernFilepath).
-     */
-    private getClientAccessPath(service: HttpService): string {
-        const parts = service.name.fernFilepath.allParts.map((part) => part.pascalCase.unsafeName);
-        return parts.join(".");
-    }
-
-    /**
-     * Gets the field name for a request property using the context helper.
-     * This matches the pattern used in ClientGenerator.getRequestPropertyFieldName.
-     */
-    private getRequestPropertyFieldName(requestProperty: RequestProperty): string {
-        // The property can be either "query" or "body" type
-        // Both have a name field that contains the Name object
-        if (requestProperty.property.type === "body" && requestProperty.property.name != null) {
-            return this.context.getFieldName(requestProperty.property.name.name);
-        }
-        if (requestProperty.property.type === "query" && requestProperty.property.name != null) {
-            return this.context.getFieldName(requestProperty.property.name.name);
-        }
-        // Fallback to default names if we can't extract from IR
-        return "ClientId";
-    }
-
-    /**
-     * Checks if a request property is optional (pointer type).
-     * This matches the pattern used in ClientGenerator.isRequestPropertyOptional.
-     */
-    private isRequestPropertyOptional(requestProperty: RequestProperty): boolean {
-        return this.isTypeReferenceOptional(this.getRequestPropertyValueType(requestProperty));
-    }
-
-    /**
-     * Gets the value type from a request property.
-     */
-    private getRequestPropertyValueType(requestProperty: RequestProperty): TypeReference | undefined {
-        if (requestProperty.property.type === "body") {
-            return requestProperty.property.valueType;
-        }
-        if (requestProperty.property.type === "query") {
-            return requestProperty.property.valueType;
-        }
-        return undefined;
-    }
-
-    /**
-     * Checks if a type reference is optional.
-     */
-    private isTypeReferenceOptional(typeRef: TypeReference | undefined): boolean {
-        if (typeRef == null) {
-            return false;
-        }
-        if (typeRef.type === "container") {
-            return typeRef.container.type === "optional";
-        }
-        return false;
     }
 
     private generateOAuthTestFile(serviceInfo: OAuthServiceInfo): go.CodeBlock {
@@ -435,15 +382,7 @@ export class OAuthWireTestGenerator {
         writer.writeLine("}");
     }
 
-    private getOAuthClientCredentialsScheme(): OAuthScheme | undefined {
-        if (this.context.ir.auth == null) {
-            return undefined;
-        }
-        for (const scheme of this.context.ir.auth.schemes) {
-            if (scheme.type === "oauth" && scheme.configuration?.type === "clientCredentials") {
-                return scheme;
-            }
-        }
-        return undefined;
+    private getOAuthClientCredentialsScheme(): FernIr.OAuthScheme | undefined {
+        return getOAuthClientCredentialsScheme(this.context.ir);
     }
 }

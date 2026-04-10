@@ -1,14 +1,13 @@
 import { Arguments, NamedArgument } from "@fern-api/base-generator";
 import { php } from "@fern-api/php-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace RawClient {
     export interface SendRequestArgs {
         /** The endpoint for the endpoint */
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         /** The reference to the client variable */
         clientReference: string;
         /** The base URL used for the request */
@@ -130,7 +129,7 @@ export class RawClient {
         endpoint,
         pathParameterReferences
     }: {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         pathParameterReferences: Record<string, string>;
     }): string {
         let path = endpoint.fullPath.head;

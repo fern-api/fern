@@ -26,7 +26,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
-          path: "/sysprop/num-warm-instances/#{params[:language]}/#{params[:num_warm_instances]}",
+          path: "/sysprop/num-warm-instances/#{URI.encode_uri_component(params[:language].to_s)}/#{URI.encode_uri_component(params[:num_warm_instances].to_s)}",
           request_options: request_options
         )
         begin

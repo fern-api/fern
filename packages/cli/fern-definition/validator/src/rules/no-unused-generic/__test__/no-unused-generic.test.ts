@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { NoUnusedGenericRule } from "../no-unused-generic";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { NoUnusedGenericRule } from "../no-unused-generic.js";
 
 describe("no-unused-generic", () => {
     it("simple", async () => {
@@ -19,12 +19,14 @@ describe("no-unused-generic", () => {
                 message: 'Generic "AnotherGenericUnusedType<T>" is declared but never used.',
                 nodePath: ["types", "AnotherGenericUnusedType<T>"],
                 relativeFilepath: RelativeFilePath.of("1.yml"),
+                name: "no-unused-generic",
                 severity: "fatal"
             },
             {
                 message: 'Generic "GenericUnusedType<T>" is declared but never used.',
                 nodePath: ["types", "GenericUnusedType<T>"],
                 relativeFilepath: RelativeFilePath.of("2.yml"),
+                name: "no-unused-generic",
                 severity: "fatal"
             }
         ]);

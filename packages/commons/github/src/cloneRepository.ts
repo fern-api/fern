@@ -1,9 +1,9 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { execSync } from "child_process";
-import simpleGit from "simple-git";
+import { simpleGit } from "simple-git";
 import tmp from "tmp-promise";
-
-import { ClonedRepository } from "./ClonedRepository";
-import { parseRepository } from "./parseRepository";
+import { ClonedRepository } from "./ClonedRepository.js";
+import { parseRepository } from "./parseRepository.js";
 
 /**
  * Sanitizes a clone URL by redacting any embedded tokens/credentials.
@@ -108,7 +108,7 @@ export async function cloneRepository({
         await git.clone(cloneUrl, ".");
     } catch (error) {
         const elapsed = Date.now() - startTime;
-        const errorMessage = error instanceof Error ? error.message : String(error);
+        const errorMessage = extractErrorMessage(error);
 
         // Git binary not found
         if (errorMessage.includes("ENOENT") || errorMessage.includes("spawn git")) {

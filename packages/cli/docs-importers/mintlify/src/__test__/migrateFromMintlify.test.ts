@@ -4,7 +4,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { mkdir, rm } from "fs/promises";
 import path from "path";
 
-import { runMintlifyMigration } from "../runMintlifyMigration";
+import { runMintlifyMigration } from "../runMintlifyMigration.js";
 
 const FIXTURES_PATH = AbsoluteFilePath.of(path.join(__dirname, "fixtures"));
 const OUTPUTS_PATH = AbsoluteFilePath.of(path.join(__dirname, "outputs"));

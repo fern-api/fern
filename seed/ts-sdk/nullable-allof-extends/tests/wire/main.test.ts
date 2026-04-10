@@ -9,12 +9,11 @@ describe("SeedApiClient", () => {
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { normalField: "normalField" };
+
         server.mockEndpoint().get("/test").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.getTest();
-        expect(response).toEqual({
-            normalField: "normalField",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("createTest", async () => {
@@ -22,6 +21,7 @@ describe("SeedApiClient", () => {
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {};
         const rawResponseBody = { normalField: "normalField" };
+
         server
             .mockEndpoint()
             .post("/test")
@@ -32,8 +32,6 @@ describe("SeedApiClient", () => {
             .build();
 
         const response = await client.createTest({});
-        expect(response).toEqual({
-            normalField: "normalField",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

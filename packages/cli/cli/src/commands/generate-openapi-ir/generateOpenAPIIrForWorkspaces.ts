@@ -6,7 +6,7 @@ import { parse } from "@fern-api/openapi-ir-parser";
 import { Project } from "@fern-api/project-loader";
 import path from "path";
 
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 export async function generateOpenAPIIrForWorkspaces({
     project,

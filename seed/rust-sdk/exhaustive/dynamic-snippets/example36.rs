@@ -10,9 +10,12 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .primitive
-        .get_and_return_datetime(
-            &DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+        .params
+        .get_with_allow_multiple_query(
+            &GetWithAllowMultipleQueryQueryRequest {
+                query: vec!["query".to_string()],
+                number: vec![1],
+            },
             None,
         )
         .await;

@@ -4,10 +4,11 @@ package service
 
 import (
 	context "context"
+	io "io"
+
 	core "github.com/go-bytes-request/fern/core"
 	internal "github.com/go-bytes-request/fern/internal"
 	option "github.com/go-bytes-request/fern/option"
-	io "io"
 )
 
 type Client struct {

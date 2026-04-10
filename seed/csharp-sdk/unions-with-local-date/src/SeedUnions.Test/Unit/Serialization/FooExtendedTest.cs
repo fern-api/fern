@@ -1,11 +1,12 @@
-using System.Text.Json;
 using NUnit.Framework;
 using SeedUnions;
 using SeedUnions.Core;
+using SeedUnions.Test.Utils;
 
 namespace SeedUnions.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class FooExtendedTest
 {
     [NUnit.Framework.Test]
@@ -25,16 +26,13 @@ public class FooExtendedTest
     [NUnit.Framework.Test]
     public void TestSerialization_1()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "name": "example1",
               "age": 5
             }
             """;
-        var actualObj = new FooExtended { Name = "example1", Age = 5 };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<FooExtended>(inputJson);
     }
 
     [NUnit.Framework.Test]
@@ -54,15 +52,12 @@ public class FooExtendedTest
     [NUnit.Framework.Test]
     public void TestSerialization_2()
     {
-        var expectedJson = """
+        var inputJson = """
             {
               "name": "example2",
               "age": 10
             }
             """;
-        var actualObj = new FooExtended { Name = "example2", Age = 10 };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
-        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+        JsonAssert.Roundtrips<FooExtended>(inputJson);
     }
 }

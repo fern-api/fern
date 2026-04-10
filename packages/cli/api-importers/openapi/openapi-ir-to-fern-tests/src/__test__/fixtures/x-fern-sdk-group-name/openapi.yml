@@ -15,6 +15,20 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
+  /v1/_internal/pets:
+    get:
+      description: This endpoint uses underscore-prefixed group name
+      x-fern-sdk-group-name: ["v1", "_internal", "pets"]
+      x-fern-sdk-method-name: list
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Pet"
 
 components:
   schemas:
@@ -26,6 +40,13 @@ components:
       # Test nested group names
       x-fern-sdk-group-name: ["ids", "person"]
       type: string
+    Pet:
+      # Test underscore-prefixed group name on schema
+      x-fern-sdk-group-name: ["_internal"]
+      type: object
+      properties:
+        name:
+          type: string
     User:
       description: This user object should be in user.yml
       x-fern-sdk-group-name: user

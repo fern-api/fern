@@ -3,8 +3,8 @@ import { LazyFernWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 
-import { ValidationViolation } from "../../ValidationViolation";
-import { validateFernWorkspace } from "../../validateFernWorkspace";
+import { ValidationViolation } from "../../ValidationViolation.js";
+import { validateFernWorkspace } from "../../validateFernWorkspace.js";
 
 interface Fixture {
     name: string;

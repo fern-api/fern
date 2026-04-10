@@ -14,9 +14,9 @@ import {
     StreamingResponse
 } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext";
-import { TypeResolver } from "../../resolvers/TypeResolver";
-import { getObjectPropertyFromResolvedType } from "./getObjectPropertyFromResolvedType";
+import { FernFileContext } from "../../FernFileContext.js";
+import { TypeResolver } from "../../resolvers/TypeResolver.js";
+import { getObjectPropertyFromResolvedType } from "./getObjectPropertyFromResolvedType.js";
 
 export function convertHttpResponse({
     endpoint,

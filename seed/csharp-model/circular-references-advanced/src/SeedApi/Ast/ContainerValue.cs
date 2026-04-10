@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedApi.Core;
 
 namespace SeedApi;
@@ -64,7 +64,7 @@ public record ContainerValue
     public IEnumerable<FieldValue> AsList() =>
         IsList
             ? (IEnumerable<FieldValue>)Value!
-            : throw new System.Exception("ContainerValue.Type is not 'list'");
+            : throw new global::System.Exception("ContainerValue.Type is not 'list'");
 
     /// <summary>
     /// Returns the value as a <see cref="FieldValue?"/> if <see cref="Type"/> is 'optional', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record ContainerValue
     public FieldValue? AsOptional() =>
         IsOptional
             ? (FieldValue?)Value!
-            : throw new System.Exception("ContainerValue.Type is not 'optional'");
+            : throw new global::System.Exception("ContainerValue.Type is not 'optional'");
 
     public T Match<T>(
         Func<IEnumerable<FieldValue>, T> onList,
@@ -146,12 +146,12 @@ public record ContainerValue
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ContainerValue>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(ContainerValue).IsAssignableFrom(typeToConvert);
 
         public override ContainerValue Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -179,7 +179,7 @@ public record ContainerValue
             var value = discriminator switch
             {
                 "list" => json.GetProperty("value").Deserialize<IEnumerable<FieldValue>?>(options)
-                ?? throw new JsonException("Failed to deserialize IEnumerable<FieldValue>"),
+                    ?? throw new JsonException("Failed to deserialize IEnumerable<FieldValue>"),
                 "optional" => json.GetProperty("value").Deserialize<FieldValue?>(options),
                 _ => json.Deserialize<object?>(options),
             };
@@ -207,6 +207,27 @@ public record ContainerValue
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override ContainerValue ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new ContainerValue(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            ContainerValue value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

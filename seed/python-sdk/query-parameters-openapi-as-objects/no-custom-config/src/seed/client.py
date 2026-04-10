@@ -5,6 +5,7 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.logging import LogConfig, Logger
 from .core.request_options import RequestOptions
 from .raw_client import AsyncRawSeedApi, RawSeedApi
 from .types.nested_user import NestedUser
@@ -35,6 +36,9 @@ class SeedApi:
     httpx_client : typing.Optional[httpx.Client]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    logging : typing.Optional[typing.Union[LogConfig, Logger]]
+        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+
     Examples
     --------
     from seed import SeedApi
@@ -52,6 +56,7 @@ class SeedApi:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -65,6 +70,7 @@ class SeedApi:
             if follow_redirects is not None
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            logging=logging,
         )
         self._raw_client = RawSeedApi(client_wrapper=self._client_wrapper)
 
@@ -97,6 +103,8 @@ class SeedApi:
         optional_user: typing.Optional[User] = None,
         exclude_user: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
         filter: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        optional_tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         neighbor: typing.Optional[SearchRequestNeighbor] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SearchResponse:
@@ -132,6 +140,12 @@ class SeedApi:
         exclude_user : typing.Optional[typing.Union[User, typing.Sequence[User]]]
 
         filter : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of tags. Serialized as a comma-separated list.
+
+        optional_tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Optional list of tags. Serialized as a comma-separated list.
 
         neighbor : typing.Optional[SearchRequestNeighbor]
 
@@ -191,6 +205,8 @@ class SeedApi:
                 tags=["tags", "tags"],
             ),
             filter="filter",
+            tags="tags",
+            optional_tags="optionalTags",
             neighbor=User(
                 name="name",
                 tags=["tags", "tags"],
@@ -217,10 +233,30 @@ class SeedApi:
             optional_user=optional_user,
             exclude_user=exclude_user,
             filter=filter,
+            tags=tags,
+            optional_tags=optional_tags,
             neighbor=neighbor,
             request_options=request_options,
         )
         return _response.data
+
+
+def _make_default_async_client(
+    timeout: typing.Optional[float],
+    follow_redirects: typing.Optional[bool],
+) -> httpx.AsyncClient:
+    try:
+        import httpx_aiohttp  # type: ignore[import-not-found]
+    except ImportError:
+        pass
+    else:
+        if follow_redirects is not None:
+            return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout, follow_redirects=follow_redirects)
+        return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout)
+
+    if follow_redirects is not None:
+        return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects)
+    return httpx.AsyncClient(timeout=timeout)
 
 
 class AsyncSeedApi:
@@ -244,6 +280,9 @@ class AsyncSeedApi:
     httpx_client : typing.Optional[httpx.AsyncClient]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    logging : typing.Optional[typing.Union[LogConfig, Logger]]
+        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+
     Examples
     --------
     from seed import AsyncSeedApi
@@ -261,6 +300,7 @@ class AsyncSeedApi:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -270,10 +310,9 @@ class AsyncSeedApi:
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
-            if follow_redirects is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout),
+            else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
             timeout=_defaulted_timeout,
+            logging=logging,
         )
         self._raw_client = AsyncRawSeedApi(client_wrapper=self._client_wrapper)
 
@@ -306,6 +345,8 @@ class AsyncSeedApi:
         optional_user: typing.Optional[User] = None,
         exclude_user: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
         filter: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        optional_tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         neighbor: typing.Optional[SearchRequestNeighbor] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SearchResponse:
@@ -341,6 +382,12 @@ class AsyncSeedApi:
         exclude_user : typing.Optional[typing.Union[User, typing.Sequence[User]]]
 
         filter : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of tags. Serialized as a comma-separated list.
+
+        optional_tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Optional list of tags. Serialized as a comma-separated list.
 
         neighbor : typing.Optional[SearchRequestNeighbor]
 
@@ -404,6 +451,8 @@ class AsyncSeedApi:
                     tags=["tags", "tags"],
                 ),
                 filter="filter",
+                tags="tags",
+                optional_tags="optionalTags",
                 neighbor=User(
                     name="name",
                     tags=["tags", "tags"],
@@ -433,6 +482,8 @@ class AsyncSeedApi:
             optional_user=optional_user,
             exclude_user=exclude_user,
             filter=filter,
+            tags=tags,
+            optional_tags=optional_tags,
             neighbor=neighbor,
             request_options=request_options,
         )

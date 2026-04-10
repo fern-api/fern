@@ -1,5 +1,5 @@
-import { ObjectSchema } from "../schemas";
-import { visitRawTypeDeclaration } from "../utils/visitRawTypeDeclaration";
+import { ObjectSchema } from "../schemas/index.js";
+import { visitRawTypeDeclaration } from "../utils/visitRawTypeDeclaration.js";
 
 describe("visitRawTypeDeclaration", () => {
     it("extends with no properties", () => {

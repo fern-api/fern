@@ -1,8 +1,8 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import { EndpointSampleCode } from "../../commons/EndpointSampleCode";
-import { SdkContext } from "../SdkContext";
+import { EndpointSampleCode } from "../../commons/EndpointSampleCode.js";
+import { FileContext } from "../file-context/FileContext.js";
 
 export namespace GeneratedEndpointImplementation {
     export interface EndpointSignature {
@@ -12,17 +12,17 @@ export namespace GeneratedEndpointImplementation {
 }
 
 export interface GeneratedEndpointImplementation {
-    endpoint: HttpEndpoint;
-    getStatements: (context: SdkContext) => ts.Statement[];
-    getOverloads: (context: SdkContext) => GeneratedEndpointImplementation.EndpointSignature[];
-    getSignature: (context: SdkContext) => GeneratedEndpointImplementation.EndpointSignature;
-    getDocs: (context: SdkContext) => string | undefined;
+    endpoint: FernIr.HttpEndpoint;
+    getStatements: (context: FileContext) => ts.Statement[];
+    getOverloads: (context: FileContext) => GeneratedEndpointImplementation.EndpointSignature[];
+    getSignature: (context: FileContext) => GeneratedEndpointImplementation.EndpointSignature;
+    getDocs: (context: FileContext) => string | undefined;
     getExample: (args: {
-        context: SdkContext;
-        example: ExampleEndpointCall;
+        context: FileContext;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
         clientReference: ts.Identifier;
     }) => EndpointSampleCode | undefined;
-    maybeLeverageInvocation: (args: { invocation: ts.Expression; context: SdkContext }) => ts.Node[] | undefined;
-    isPaginated: (context: SdkContext) => boolean;
+    maybeLeverageInvocation: (args: { invocation: ts.Expression; context: FileContext }) => ts.Node[] | undefined;
+    isPaginated: (context: FileContext) => boolean;
 }

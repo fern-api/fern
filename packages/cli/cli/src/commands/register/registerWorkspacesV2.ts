@@ -5,7 +5,7 @@ import { Project } from "@fern-api/project-loader";
 import { AIExampleEnhancerConfig, registerApi } from "@fern-api/register";
 import chalk from "chalk";
 
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 export async function registerWorkspacesV2({
     project,

@@ -2,8 +2,8 @@ import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
 
-import { runFernCli } from "../../utils/runFernCli";
-import { init } from "../init/init";
+import { runFernCli } from "../../utils/runFernCli.js";
+import { init } from "../init/init.js";
 
 const FERNIGNORE_FILECONTENTS = `
 fern.js
@@ -28,11 +28,9 @@ Practice schema-first API design with Fern
 
 describe("fern generate --local", () => {
     // eslint-disable-next-line jest/expect-expect
-    it("Keep files listed in .fernignore from unmodified", async () => {
-        const pathOfDirectory = await init();
-        await runFernCli(["generate", "--local", "--keepDocker"], {
-            cwd: pathOfDirectory
-        });
+    it.concurrent("Keep files listed in .fernignore from unmodified", async ({ signal }) => {
+        const pathOfDirectory = await init({ signal });
+        await runFernCli(["generate", "--local", "--keepDocker"], { cwd: pathOfDirectory, signal });
 
         // write custom files and override
         const absolutePathToLocalOutput = join(pathOfDirectory, RelativeFilePath.of("sdks/typescript"));
@@ -46,23 +44,19 @@ describe("fern generate --local", () => {
         const absolutePathToDummyText = join(absolutePathToLocalOutput, RelativeFilePath.of(DUMMY_TXT_FILENAME));
         await writeFile(absolutePathToDummyText, DUMMY_TXT_FILECONTENTS);
 
-        await runFernCli(["generate", "--local", "--keepDocker"], {
-            cwd: pathOfDirectory
-        });
+        await runFernCli(["generate", "--local", "--keepDocker"], { cwd: pathOfDirectory, signal });
 
         await expectPathExists(absolutePathToFernignore);
         await expectPathExists(absolutePathToFernJs);
         await expectPathDoesNotExist(absolutePathToDummyText);
 
         // rerun and make sure no issues if there are no changes
-        await runFernCli(["generate", "--local", "--keepDocker"], {
-            cwd: pathOfDirectory
-        });
+        await runFernCli(["generate", "--local", "--keepDocker"], { cwd: pathOfDirectory, signal });
     }, 360_000);
 
     // eslint-disable-next-line jest/expect-expect
-    it("Prevent initial generation of files listed in .fernignore", async () => {
-        const pathOfDirectory = await init();
+    it.concurrent("Prevent initial generation of files listed in .fernignore", async ({ signal }) => {
+        const pathOfDirectory = await init({ signal });
 
         // Create output directory with .fernignore BEFORE first generation
         const absolutePathToLocalOutput = join(pathOfDirectory, RelativeFilePath.of("sdks/typescript"));
@@ -73,9 +67,7 @@ describe("fern generate --local", () => {
         await writeFile(absolutePathToFernignore, FERNIGNORE_PREVENT_INITIAL_GENERATION_FILECONTENTS);
 
         // Run first generation - excluded files should NOT be created
-        await runFernCli(["generate", "--local", "--keepDocker"], {
-            cwd: pathOfDirectory
-        });
+        await runFernCli(["generate", "--local", "--keepDocker"], { cwd: pathOfDirectory, signal });
 
         // Verify .fernignore still exists
         await expectPathExists(absolutePathToFernignore);
@@ -89,9 +81,7 @@ describe("fern generate --local", () => {
         await expectPathDoesNotExist(absolutePathToCore);
 
         // Run generation again to ensure it's stable
-        await runFernCli(["generate", "--local", "--keepDocker"], {
-            cwd: pathOfDirectory
-        });
+        await runFernCli(["generate", "--local", "--keepDocker"], { cwd: pathOfDirectory, signal });
 
         // Files should still not exist
         await expectPathDoesNotExist(absolutePathToClientTs);

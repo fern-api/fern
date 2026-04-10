@@ -1,0 +1,122 @@
+openapi: 3.1.0
+info:
+  title: Readonly Schema References API
+  description: Test schema reference resolution when respect-readonly-schemas causes schema renaming
+  version: 1.0.0
+
+paths:
+  /config:
+    post:
+      summary: Create configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConfigCreateRequest"
+      responses:
+        "200":
+          description: Configuration created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConfigResponse"
+
+  /config/{configId}:
+    get:
+      summary: Get configuration
+      parameters:
+        - name: configId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Configuration retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConfigResponse"
+
+components:
+  schemas:
+    # Schema with readonly properties that will be renamed to IdpProvisioningConfigRead
+    IdpProvisioningConfig:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether provisioning is enabled
+        mappings:
+          type: array
+          items:
+            $ref: "#/components/schemas/AttributeMapping"
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: When the config was created
+        lastModified:
+          type: string
+          format: date-time
+          readOnly: true
+          description: When the config was last modified
+        syncStatus:
+          type: string
+          enum: [active, pending, failed]
+          readOnly: true
+          description: Current sync status
+
+    # Schema that references the renamed schema
+    ConfigResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Configuration ID
+        provisioning:
+          $ref: "#/components/schemas/IdpProvisioningConfig"
+          description: Provisioning configuration
+        metadata:
+          $ref: "#/components/schemas/ConfigMetadata"
+
+    # Request schema for creation (no readonly properties)
+    ConfigCreateRequest:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether provisioning is enabled
+        mappings:
+          type: array
+          items:
+            $ref: "#/components/schemas/AttributeMapping"
+
+    # Supporting schemas
+    AttributeMapping:
+      type: object
+      properties:
+        source:
+          type: string
+          description: Source attribute name
+        target:
+          type: string
+          description: Target attribute name
+        required:
+          type: boolean
+          default: false
+
+    ConfigMetadata:
+      type: object
+      properties:
+        version:
+          type: integer
+          readOnly: true
+        owner:
+          type: string
+          readOnly: true
+        tags:
+          type: array
+          items:
+            type: string

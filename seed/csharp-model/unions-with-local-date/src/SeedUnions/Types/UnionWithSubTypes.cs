@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -64,7 +64,7 @@ public record UnionWithSubTypes
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new System.Exception("UnionWithSubTypes.Type is not 'foo'");
+            : throw new global::System.Exception("UnionWithSubTypes.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.FooExtended"/> if <see cref="Type"/> is 'fooExtended', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record UnionWithSubTypes
     public SeedUnions.FooExtended AsFooExtended() =>
         IsFooExtended
             ? (SeedUnions.FooExtended)Value!
-            : throw new System.Exception("UnionWithSubTypes.Type is not 'fooExtended'");
+            : throw new global::System.Exception("UnionWithSubTypes.Type is not 'fooExtended'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
@@ -147,12 +147,12 @@ public record UnionWithSubTypes
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithSubTypes>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithSubTypes).IsAssignableFrom(typeToConvert);
 
         public override UnionWithSubTypes Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -177,12 +177,19 @@ public record UnionWithSubTypes
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "foo" => json.Deserialize<SeedUnions.Foo?>(options)
+                "foo" => jsonWithoutDiscriminator.Deserialize<SeedUnions.Foo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
-                "fooExtended" => json.Deserialize<SeedUnions.FooExtended?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.FooExtended"),
+                "fooExtended" => jsonWithoutDiscriminator.Deserialize<SeedUnions.FooExtended?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedUnions.FooExtended"),
                 _ => json.Deserialize<object?>(options),
             };
             return new UnionWithSubTypes(discriminator, value);
@@ -203,6 +210,27 @@ public record UnionWithSubTypes
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override UnionWithSubTypes ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new UnionWithSubTypes(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            UnionWithSubTypes value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

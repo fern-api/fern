@@ -1,14 +1,13 @@
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
 import { createVenusService } from "@fern-api/core";
-import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import type { Argv } from "yargs";
 
-import { TaskContextAdapter } from "../../../context/adapter/TaskContextAdapter";
-import type { Context } from "../../../context/Context";
-import type { GlobalArgs } from "../../../context/GlobalArgs";
-import { CliError } from "../../../errors/CliError";
-import { Icons } from "../../../ui/format";
-import { command } from "../../_internal/command";
+import { TaskContextAdapter } from "../../../context/adapter/TaskContextAdapter.js";
+import type { Context } from "../../../context/Context.js";
+import type { GlobalArgs } from "../../../context/GlobalArgs.js";
+import { CliError } from "../../../errors/CliError.js";
+import { Icons } from "../../../ui/format.js";
+import { command } from "../../_internal/command.js";
 
 export declare namespace TokenCommand {
     export interface Args extends GlobalArgs {
@@ -32,7 +31,7 @@ export class TokenCommand {
 
         const venus = createVenusService({ token: token.value });
         const response = await venus.registry.generateRegistryTokens({
-            organizationId: FernVenusApi.OrganizationId(orgId)
+            organizationId: orgId
         });
         if (response.ok) {
             // Output raw token (no newline for piping compatibility).
@@ -47,6 +46,12 @@ export class TokenCommand {
             },
             unauthorizedError: () => {
                 process.stderr.write(`${Icons.error} You do not have access to organization "${orgId}".\n`);
+                throw CliError.exit();
+            },
+            missingOrgPermissionsError: () => {
+                process.stderr.write(
+                    `${Icons.error} You do not have the required permissions in organization "${orgId}".\n`
+                );
                 throw CliError.exit();
             },
             _other: () => {

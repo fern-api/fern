@@ -2,9 +2,9 @@ import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import semver from "semver";
 
-import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
-import { parseCliReleasesFile } from "../../utils/convertVersionsFileToReleases";
-import { getNewCliVersion, VersionFilePair } from "../../utils/versionUtilities";
+import { loadCliWorkspace } from "../../loadGeneratorWorkspaces.js";
+import { parseCliReleasesFile } from "../../utils/convertVersionsFileToReleases.js";
+import { getNewCliVersion, VersionFilePair } from "../../utils/versionUtilities.js";
 
 export async function getLatestCli({
     context,

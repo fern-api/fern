@@ -37,6 +37,7 @@ describe("ObjectClient", () => {
             map: { "1": "map" },
             bigint: "1000000",
         };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-with-optional-field")
@@ -64,23 +65,7 @@ describe("ObjectClient", () => {
             bigint: "1000000",
         });
         expect(response).toEqual({
-            body: {
-                string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: "2024-01-15T09:30:00Z",
-                date: "2023-01-15",
-                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                base64: "SGVsbG8gd29ybGQh",
-                list: ["list", "list"],
-                set: ["set"],
-                map: {
-                    1: "map",
-                },
-                bigint: "1000000",
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -92,6 +77,7 @@ describe("ObjectClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: "string" };
         const rawResponseBody = { string: "string" };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-with-required-field")
@@ -105,9 +91,7 @@ describe("ObjectClient", () => {
             string: "string",
         });
         expect(response).toEqual({
-            body: {
-                string: "string",
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -119,6 +103,7 @@ describe("ObjectClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { map: { map: { map: "map" } } };
         const rawResponseBody = { map: { map: { map: "map" } } };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-with-map-of-map")
@@ -136,13 +121,7 @@ describe("ObjectClient", () => {
             },
         });
         expect(response).toEqual({
-            body: {
-                map: {
-                    map: {
-                        map: "map",
-                    },
-                },
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -188,6 +167,7 @@ describe("ObjectClient", () => {
                 bigint: "1000000",
             },
         };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-nested-with-optional-field")
@@ -218,26 +198,7 @@ describe("ObjectClient", () => {
             },
         });
         expect(response).toEqual({
-            body: {
-                string: "string",
-                NestedObject: {
-                    string: "string",
-                    integer: 1,
-                    long: 1000000,
-                    double: 1.1,
-                    bool: true,
-                    datetime: "2024-01-15T09:30:00Z",
-                    date: "2023-01-15",
-                    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    base64: "SGVsbG8gd29ybGQh",
-                    list: ["list", "list"],
-                    set: ["set"],
-                    map: {
-                        1: "map",
-                    },
-                    bigint: "1000000",
-                },
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -283,6 +244,7 @@ describe("ObjectClient", () => {
                 bigint: "1000000",
             },
         };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-nested-with-required-field/string")
@@ -313,26 +275,7 @@ describe("ObjectClient", () => {
             },
         });
         expect(response).toEqual({
-            body: {
-                string: "string",
-                NestedObject: {
-                    string: "string",
-                    integer: 1,
-                    long: 1000000,
-                    double: 1.1,
-                    bool: true,
-                    datetime: "2024-01-15T09:30:00Z",
-                    date: "2023-01-15",
-                    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    base64: "SGVsbG8gd29ybGQh",
-                    list: ["list", "list"],
-                    set: ["set"],
-                    map: {
-                        1: "map",
-                    },
-                    bigint: "1000000",
-                },
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -398,6 +341,7 @@ describe("ObjectClient", () => {
                 bigint: "1000000",
             },
         };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-nested-with-required-field-list")
@@ -450,26 +394,160 @@ describe("ObjectClient", () => {
             },
         ]);
         expect(response).toEqual({
-            body: {
-                string: "string",
-                NestedObject: {
-                    string: "string",
-                    integer: 1,
-                    long: 1000000,
-                    double: 1.1,
-                    bool: true,
-                    datetime: "2024-01-15T09:30:00Z",
-                    date: "2023-01-15",
-                    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    base64: "SGVsbG8gd29ybGQh",
-                    list: ["list", "list"],
-                    set: ["set"],
-                    map: {
-                        1: "map",
-                    },
-                    bigint: "1000000",
-                },
+            body: rawResponseBody,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
+    });
+
+    test("getAndReturnWithUnknownField", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { unknown: { $ref: "https://example.com/schema" } };
+        const rawResponseBody = { unknown: { $ref: "https://example.com/schema" } };
+
+        server
+            .mockEndpoint()
+            .post("/object/get-and-return-with-unknown-field")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.object.getAndReturnWithUnknownField({
+            unknown: {
+                $ref: "https://example.com/schema",
             },
+        });
+        expect(response).toEqual({
+            body: rawResponseBody,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
+    });
+
+    test("getAndReturnWithDocumentedUnknownType", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { documentedUnknownType: { key: "value" } };
+        const rawResponseBody = { documentedUnknownType: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .post("/object/get-and-return-with-documented-unknown-type")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.object.getAndReturnWithDocumentedUnknownType({
+            documentedUnknownType: {
+                key: "value",
+            },
+        });
+        expect(response).toEqual({
+            body: rawResponseBody,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
+    });
+
+    test("getAndReturnMapOfDocumentedUnknownType", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { string: { key: "value" } };
+        const rawResponseBody = { string: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .post("/object/get-and-return-map-of-documented-unknown-type")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType({
+            string: {
+                key: "value",
+            },
+        });
+        expect(response).toEqual({
+            body: rawResponseBody,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
+    });
+
+    test("getAndReturnWithMixedRequiredAndOptionalFields", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = {
+            requiredString: "hello",
+            requiredInteger: 0,
+            optionalString: "world",
+            requiredLong: 0,
+        };
+        const rawResponseBody = {
+            requiredString: "hello",
+            requiredInteger: 0,
+            optionalString: "world",
+            requiredLong: 0,
+        };
+
+        server
+            .mockEndpoint()
+            .post("/object/get-and-return-with-mixed-required-and-optional-fields")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields({
+            requiredString: "hello",
+            requiredInteger: 0,
+            optionalString: "world",
+            requiredLong: 0,
+        });
+        expect(response).toEqual({
+            body: rawResponseBody,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
+    });
+
+    test("getAndReturnWithRequiredNestedObject", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { requiredString: "hello", requiredObject: { string: "nested", NestedObject: {} } };
+        const rawResponseBody = { requiredString: "hello", requiredObject: { string: "nested", NestedObject: {} } };
+
+        server
+            .mockEndpoint()
+            .post("/object/get-and-return-with-required-nested-object")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.object.getAndReturnWithRequiredNestedObject({
+            requiredString: "hello",
+            requiredObject: {
+                string: "nested",
+                NestedObject: {},
+            },
+        });
+        expect(response).toEqual({
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -481,6 +559,7 @@ describe("ObjectClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { datetimeLikeString: "2023-08-31T14:15:22Z", actualDatetime: "2023-08-31T14:15:22Z" };
         const rawResponseBody = { datetimeLikeString: "2023-08-31T14:15:22Z", actualDatetime: "2023-08-31T14:15:22Z" };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-with-datetime-like-string")
@@ -495,10 +574,7 @@ describe("ObjectClient", () => {
             actualDatetime: "2023-08-31T14:15:22Z",
         });
         expect(response).toEqual({
-            body: {
-                datetimeLikeString: "2023-08-31T14:15:22Z",
-                actualDatetime: "2023-08-31T14:15:22Z",
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

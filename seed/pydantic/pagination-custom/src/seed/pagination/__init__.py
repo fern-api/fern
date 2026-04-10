@@ -2,7 +2,7 @@
 
 # isort: skip_file
 
-from .username_cursor import UsernameCursor
-from .username_page import UsernamePage
+from .link import Link
+from .users_list_response import UsersListResponse
 
-__all__ = ["UsernameCursor", "UsernamePage"]
+__all__ = ["Link", "UsersListResponse"]

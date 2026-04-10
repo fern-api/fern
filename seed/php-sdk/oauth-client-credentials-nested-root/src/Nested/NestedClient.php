@@ -3,7 +3,7 @@
 namespace Seed\Nested;
 
 use Seed\Nested\Api\ApiClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class NestedClient

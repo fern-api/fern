@@ -1,11 +1,11 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedApi.Core;
 
 namespace SeedApi;
 
 public partial class TestGroupClient : ITestGroupClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal TestGroupClient(RawClient client)
     {
@@ -33,7 +33,6 @@ public partial class TestGroupClient : ITestGroupClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
                         "optional-request-body/{0}",
@@ -50,7 +49,9 @@ public partial class TestGroupClient : ITestGroupClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<object>(responseBody)!;
@@ -76,7 +77,9 @@ public partial class TestGroupClient : ITestGroupClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 switch (response.StatusCode)

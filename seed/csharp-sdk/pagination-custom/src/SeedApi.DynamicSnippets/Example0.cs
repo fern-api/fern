@@ -12,8 +12,9 @@ public class Example0
             }
         );
 
-        await client.Users.ListUsernamesCustomAsync(
-            new ListUsernamesRequestCustom {
+        await client.Users.ListWithCustomPagerAsync(
+            new ListWithCustomPagerRequest {
+                Limit = 1,
                 StartingAfter = "starting_after"
             }
         );

@@ -1,6 +1,6 @@
 import type { schemas } from "@fern-api/config";
 
-import type { ApiSpec } from "./ApiSpec";
+import type { ApiSpec } from "./ApiSpec.js";
 
 /**
  * A logical API definition composed of one or more API specifications.

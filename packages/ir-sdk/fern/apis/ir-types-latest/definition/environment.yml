@@ -21,8 +21,9 @@ types:
     extends: commons.WithDocs
     properties:
       id: EnvironmentId
-      name: commons.Name
+      name: commons.NameOrString
       url: EnvironmentUrl
+      audiences: optional<list<string>>
       defaultUrl:
         type: optional<string>
         docs: |
@@ -45,7 +46,7 @@ types:
       id:
         type: string
         docs: The unique identifier for this variable (matches the placeholder in the URL template).
-      name: commons.Name
+      name: commons.NameOrString
       default:
         type: optional<string>
         docs: The default value for this variable.
@@ -60,8 +61,9 @@ types:
     extends: commons.WithDocs
     properties:
       id: EnvironmentId
-      name: commons.Name
+      name: commons.NameOrString
       urls: map<EnvironmentBaseUrlId, EnvironmentUrl>
+      audiences: optional<list<string>>
       defaultUrls:
         type: optional<map<EnvironmentBaseUrlId, string>>
         docs: |
@@ -80,4 +82,4 @@ types:
   EnvironmentBaseUrlWithId:
     properties:
       id: EnvironmentBaseUrlId
-      name: commons.Name
+      name: commons.NameOrString

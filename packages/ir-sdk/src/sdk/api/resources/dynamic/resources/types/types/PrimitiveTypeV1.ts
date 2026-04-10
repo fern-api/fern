@@ -13,6 +13,7 @@ const PrimitiveTypeV1Values = {
     String: "STRING",
     Date: "DATE",
     DateTime: "DATE_TIME",
+    DateTimeRfc2822: "DATE_TIME_RFC_2822",
     Uuid: "UUID",
     Base64: "BASE_64",
     BigInteger: "BIG_INTEGER",
@@ -44,6 +45,8 @@ export const PrimitiveTypeV1: typeof PrimitiveTypeV1Values & {
                 return visitor.date();
             case PrimitiveTypeV1.DateTime:
                 return visitor.dateTime();
+            case PrimitiveTypeV1.DateTimeRfc2822:
+                return visitor.dateTimeRfc2822();
             case PrimitiveTypeV1.Uuid:
                 return visitor.uuid();
             case PrimitiveTypeV1.Base64:
@@ -68,6 +71,7 @@ export namespace PrimitiveTypeV1 {
         string: () => R;
         date: () => R;
         dateTime: () => R;
+        dateTimeRfc2822: () => R;
         uuid: () => R;
         base64: () => R;
         bigInteger: () => R;

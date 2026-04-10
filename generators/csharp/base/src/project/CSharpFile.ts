@@ -1,7 +1,10 @@
-import { File } from "@fern-api/base-generator";
+import { CaseConverter, File } from "@fern-api/base-generator";
 import { ast, Generation } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernFilepath } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type FernFilepath = FernIr.FernFilepath;
+
 import path from "path";
 
 export type Namespace = string;
@@ -26,6 +29,13 @@ export declare namespace CSharpFile {
 }
 
 export class CSharpFile extends File {
+    private clazz: ast.Class | ast.Enum | ast.Interface;
+    private allNamespaceSegments: Set<string>;
+    private allTypeClassReferences: Map<string, Set<Namespace>>;
+    private generation: Generation;
+    private fileHeader: string | undefined;
+    private resolved: boolean = false;
+
     constructor({
         clazz,
         directory,
@@ -34,24 +44,47 @@ export class CSharpFile extends File {
         generation,
         fileHeader
     }: CSharpFile.Args) {
-        let fileContents = clazz.toString({
-            namespace: clazz.namespace,
-            allNamespaceSegments,
-            allTypeClassReferences,
-            generation
-        });
-        if (fileHeader) {
-            fileContents = `${fileHeader}\n\n${fileContents}`;
-        }
+        super(`${clazz.name}.cs`, directory, "");
+        this.clazz = clazz;
+        this.allNamespaceSegments = allNamespaceSegments;
+        this.allTypeClassReferences = allTypeClassReferences;
+        this.generation = generation;
+        this.fileHeader = fileHeader;
+    }
 
-        super(`${clazz.name}.cs`, directory, fileContents);
+    /**
+     * Lazily resolves the AST to string, caching the result for subsequent calls.
+     */
+    private resolveFileContents(): void {
+        if (this.resolved) {
+            return;
+        }
+        let fileContents = this.clazz.toString({
+            namespace: this.clazz.namespace,
+            allNamespaceSegments: this.allNamespaceSegments,
+            allTypeClassReferences: this.allTypeClassReferences,
+            generation: this.generation
+        });
+        if (this.fileHeader) {
+            fileContents = `${this.fileHeader}\n\n${fileContents}`;
+        }
+        this.fileContents = fileContents;
+        this.resolved = true;
+    }
+
+    public override async write(directoryPrefix: AbsoluteFilePath): Promise<void> {
+        this.resolveFileContents();
+        await super.write(directoryPrefix);
     }
 
     public async tryWrite(directoryPrefix: AbsoluteFilePath): Promise<void> {
         await this.write(directoryPrefix);
     }
 
-    public static getFilePathFromFernFilePath(fernFilePath: FernFilepath): RelativeFilePath {
-        return RelativeFilePath.of(path.join(...fernFilePath.allParts.map((part) => part.pascalCase.safeName)));
+    public static getFilePathFromFernFilePath(
+        fernFilePath: FernFilepath,
+        caseConverter: CaseConverter
+    ): RelativeFilePath {
+        return RelativeFilePath.of(path.join(...fernFilePath.allParts.map((part) => caseConverter.pascalSafe(part))));
     }
 }

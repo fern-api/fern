@@ -1,10 +1,11 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "latest",
+  "generatorVersion": "local",
   "generatorConfig": {
     "exclude_types_from_init_exports": true,
     "use_typeddict_requests": true
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

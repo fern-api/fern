@@ -1,1 +1,1 @@
-export { ValidOpenApiExamples } from "./valid-openapi-examples";
+export { ValidOpenApiExamples } from "./valid-openapi-examples.js";

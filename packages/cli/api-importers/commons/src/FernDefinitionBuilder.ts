@@ -3,7 +3,7 @@ import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@
 import { AbsoluteFilePath, basename, dirname, join, RelativeFilePath, relative } from "@fern-api/path-utils";
 import { camelCase, isEqual } from "lodash-es";
 
-import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory";
+import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory.js";
 
 const BASE_MULTI_URL_ENVIRONMENT_NAME = "Production";
 

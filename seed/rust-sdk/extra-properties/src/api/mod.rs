@@ -11,6 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{UserClient, ExtraPropertiesClient};
-pub use types::{*};
-
+pub use resources::{ExtraPropertiesClient, UserClient};
+pub use types::*;

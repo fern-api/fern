@@ -4,6 +4,7 @@ package simple
 
 import (
 	context "context"
+
 	fern "github.com/errors/fern"
 	core "github.com/errors/fern/core"
 	internal "github.com/errors/fern/internal"

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { BaseApiSettingsSchema } from "./BaseApiSettingsSchema";
-import { MessageNamingVersionSchema } from "./MessageNamingVersionSchema";
+import { BaseApiSettingsSchema } from "./BaseApiSettingsSchema.js";
+import { MessageNamingVersionSchema } from "./MessageNamingVersionSchema.js";
 
 /**
  * AsyncAPI-specific settings that extend the base API settings.

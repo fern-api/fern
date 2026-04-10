@@ -4,8 +4,9 @@ import type * as FernIr from "../../../index.js";
 
 export interface MultipleBaseUrlsEnvironment extends FernIr.WithDocs {
     id: FernIr.EnvironmentId;
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
     urls: Record<FernIr.EnvironmentBaseUrlId, FernIr.EnvironmentUrl>;
+    audiences: string[] | undefined;
     /**
      * A map of default URLs to use when no variables are provided for each base URL.
      * If present and no variables are passed, use these URLs instead of the templates.

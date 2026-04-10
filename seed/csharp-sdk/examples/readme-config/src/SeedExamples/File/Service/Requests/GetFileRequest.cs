@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using global::System.Text.Json.Serialization;
 using SeedExamples.Core;
 
 namespace SeedExamples.File_;

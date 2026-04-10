@@ -9,6 +9,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = ["string", "string"];
         const rawResponseBody = ["string", "string"];
+
         server
             .mockEndpoint()
             .post("/container/list-of-primitives")
@@ -20,7 +21,7 @@ describe("ContainerClient", () => {
 
         const response = await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"]);
         expect(response).toEqual({
-            body: ["string", "string"],
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -32,6 +33,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = [{ string: "string" }, { string: "string" }];
         const rawResponseBody = [{ string: "string" }, { string: "string" }];
+
         server
             .mockEndpoint()
             .post("/container/list-of-objects")
@@ -50,14 +52,7 @@ describe("ContainerClient", () => {
             },
         ]);
         expect(response).toEqual({
-            body: [
-                {
-                    string: "string",
-                },
-                {
-                    string: "string",
-                },
-            ],
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -69,6 +64,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = ["string"];
         const rawResponseBody = ["string"];
+
         server
             .mockEndpoint()
             .post("/container/set-of-primitives")
@@ -80,7 +76,7 @@ describe("ContainerClient", () => {
 
         const response = await client.endpoints.container.getAndReturnSetOfPrimitives(["string"]);
         expect(response).toEqual({
-            body: ["string"],
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -92,6 +88,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = [{ string: "string" }];
         const rawResponseBody = [{ string: "string" }];
+
         server
             .mockEndpoint()
             .post("/container/set-of-objects")
@@ -107,11 +104,7 @@ describe("ContainerClient", () => {
             },
         ]);
         expect(response).toEqual({
-            body: [
-                {
-                    string: "string",
-                },
-            ],
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -123,6 +116,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: "string" };
         const rawResponseBody = { string: "string" };
+
         server
             .mockEndpoint()
             .post("/container/map-prim-to-prim")
@@ -136,9 +130,7 @@ describe("ContainerClient", () => {
             string: "string",
         });
         expect(response).toEqual({
-            body: {
-                string: "string",
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -150,6 +142,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: { string: "string" } };
         const rawResponseBody = { string: { string: "string" } };
+
         server
             .mockEndpoint()
             .post("/container/map-prim-to-object")
@@ -165,11 +158,33 @@ describe("ContainerClient", () => {
             },
         });
         expect(response).toEqual({
-            body: {
-                string: {
-                    string: "string",
-                },
-            },
+            body: rawResponseBody,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
+    });
+
+    test("getAndReturnMapOfPrimToUndiscriminatedUnion", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { string: 1.1 };
+        const rawResponseBody = { string: 1.1 };
+
+        server
+            .mockEndpoint()
+            .post("/container/map-prim-to-union")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
+            string: 1.1,
+        });
+        expect(response).toEqual({
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -181,6 +196,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: "string" };
         const rawResponseBody = { string: "string" };
+
         server
             .mockEndpoint()
             .post("/container/opt-objects")
@@ -194,9 +210,7 @@ describe("ContainerClient", () => {
             string: "string",
         });
         expect(response).toEqual({
-            body: {
-                string: "string",
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

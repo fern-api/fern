@@ -1,10 +1,13 @@
 /* eslint-disable no-useless-escape */
 
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { CsharpConfigSchema } from "../..";
-import { Generation } from "../../context/generation-info";
-import { String_ } from "../code/String_";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type IntermediateRepresentation = FernIr.IntermediateRepresentation;
+
+import { Generation } from "../../context/generation-info.js";
+import { CsharpConfigSchema } from "../../index.js";
+import { String_ } from "../code/String_.js";
 
 const generation = new Generation(
     {} as unknown as IntermediateRepresentation,

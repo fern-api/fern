@@ -1,7 +1,7 @@
 import { DynamicSnippetsTestRunner } from "@fern-api/browser-compatible-base-generator";
 
-import { buildDynamicSnippetsGenerator } from "./utils/buildDynamicSnippetsGenerator";
-import { buildGeneratorConfig } from "./utils/buildGeneratorConfig";
+import { buildDynamicSnippetsGenerator } from "./utils/buildDynamicSnippetsGenerator.js";
+import { buildGeneratorConfig } from "./utils/buildGeneratorConfig.js";
 
 describe("snippets (default)", () => {
     const runner = new DynamicSnippetsTestRunner();

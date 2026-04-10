@@ -1,11 +1,14 @@
 require "seed"
 
-client = Seed::Client.new(
-  token: '<token>',
-  base_url: 'https://api.fern.com'
-);
+client = Seed::MyClient.new(
+  token: "<token>",
+  base_url: "https://api.fern.com"
+)
 
-client.endpoints.params.get_with_path_and_query(
-  param: 'param',
-  query: 'query'
-);
+client.endpoints.object.get_and_return_with_required_nested_object(
+  required_string: "hello",
+  required_object: {
+    string: "nested",
+    nested_object: {}
+  }
+)

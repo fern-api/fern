@@ -164,8 +164,8 @@ func (j *JustFileWithQueryParamsRequest) MarshalJSON() ([]byte, error) {
 }
 
 type OptionalArgsRequest struct {
-	ImageFile io.Reader   `json:"-" url:"-"`
-	Request   interface{} `json:"request,omitempty" url:"-"`
+	ImageFile io.Reader `json:"-" url:"-"`
+	Request   any       `json:"request,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -188,9 +188,9 @@ type MyRequest struct {
 	MaybeInteger          *int                    `json:"maybe_integer,omitempty" url:"-"`
 	OptionalListOfStrings []string                `json:"optional_list_of_strings,omitempty" url:"-"`
 	ListOfObjects         []*MyObject             `json:"list_of_objects" url:"-"`
-	OptionalMetadata      interface{}             `json:"optional_metadata,omitempty" url:"-"`
+	OptionalMetadata      any                     `json:"optional_metadata,omitempty" url:"-"`
 	OptionalObjectType    *ObjectType             `json:"optional_object_type,omitempty" url:"-"`
-	OptionalId            *Id                     `json:"optional_id,omitempty" url:"-"`
+	OptionalID            *ID                     `json:"optional_id,omitempty" url:"-"`
 	AliasObject           MyAliasObject           `json:"alias_object" url:"-"`
 	ListOfAliasObject     []MyAliasObject         `json:"list_of_alias_object" url:"-"`
 	AliasListOfObject     MyCollectionAliasObject `json:"alias_list_of_object" url:"-"`
@@ -206,7 +206,7 @@ func (m *MyRequest) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
-type Id = string
+type ID = string
 
 type ModelType = string
 
@@ -236,6 +236,9 @@ func (m *MyInlineType) GetBar() string {
 }
 
 func (m *MyInlineType) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -281,6 +284,9 @@ func (m *MyInlineType) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MyInlineType) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -314,6 +320,9 @@ func (m *MyObject) GetFoo() string {
 }
 
 func (m *MyObject) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -359,6 +368,9 @@ func (m *MyObject) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MyObject) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -401,6 +413,9 @@ func (m *MyObjectWithOptional) GetOptionalProp() *string {
 }
 
 func (m *MyObjectWithOptional) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -453,6 +468,9 @@ func (m *MyObjectWithOptional) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MyObjectWithOptional) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -538,9 +556,9 @@ type MyOtherRequest struct {
 	MaybeInteger               *int                    `json:"maybe_integer,omitempty" url:"-"`
 	OptionalListOfStrings      []string                `json:"optional_list_of_strings,omitempty" url:"-"`
 	ListOfObjects              []*MyObject             `json:"list_of_objects" url:"-"`
-	OptionalMetadata           interface{}             `json:"optional_metadata,omitempty" url:"-"`
+	OptionalMetadata           any                     `json:"optional_metadata,omitempty" url:"-"`
 	OptionalObjectType         *ObjectType             `json:"optional_object_type,omitempty" url:"-"`
-	OptionalId                 *Id                     `json:"optional_id,omitempty" url:"-"`
+	OptionalID                 *ID                     `json:"optional_id,omitempty" url:"-"`
 	ListOfObjectsWithOptionals []*MyObjectWithOptional `json:"list_of_objects_with_optionals" url:"-"`
 	AliasObject                MyAliasObject           `json:"alias_object" url:"-"`
 	ListOfAliasObject          []MyAliasObject         `json:"list_of_alias_object" url:"-"`
@@ -586,6 +604,21 @@ func (i *InlineTypeRequest) require(field *big.Int) {
 		i.explicitFields = big.NewInt(0)
 	}
 	i.explicitFields.Or(i.explicitFields, field)
+}
+
+type WithJSONPropertyRequest struct {
+	File io.Reader `json:"-" url:"-"`
+	JSON *MyObject `json:"json,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (w *WithJSONPropertyRequest) require(field *big.Int) {
+	if w.explicitFields == nil {
+		w.explicitFields = big.NewInt(0)
+	}
+	w.explicitFields.Or(w.explicitFields, field)
 }
 
 type LiteralEnumRequest struct {

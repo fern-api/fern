@@ -1,16 +1,12 @@
-import {
-    DeclaredErrorName,
-    DeclaredTypeName,
-    ErrorDeclaration,
-    IntermediateRepresentation,
-    TypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 
-import { convertServices } from "./converters/servicesConverter";
-import { convertType } from "./converters/typeConverter";
-import { constructEndpointSecurity, constructSecuritySchemes } from "./security";
-import { Mode } from "./writeOpenApi";
+import { convertServices } from "./converters/servicesConverter.js";
+import { convertType } from "./converters/typeConverter.js";
+import { constructEndpointSecurity, constructSecuritySchemes } from "./security.js";
+import { convertAvailabilityStatus } from "./utils/convertAvailability.js";
+import { Mode } from "./writeOpenApi.js";
 
 export function convertToOpenApi({
     apiName,
@@ -18,29 +14,41 @@ export function convertToOpenApi({
     mode
 }: {
     apiName: string;
-    ir: IntermediateRepresentation;
+    ir: FernIr.IntermediateRepresentation;
     mode: Mode;
 }): OpenAPIV3.Document | undefined {
+    const caseConverter = new CaseConverter({
+        generationLanguage: undefined,
+        keywords: undefined,
+        smartCasing: ir.casingsConfig?.smartCasing ?? true
+    });
     const schemas: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> = {};
 
-    const typesByName: Record<string, TypeDeclaration> = {};
+    const typesByName: Record<string, FernIr.TypeDeclaration> = {};
     Object.values(ir.types).forEach((typeDeclaration) => {
         // convert type to open api schema
         const convertedType = convertType(typeDeclaration, ir);
-        schemas[convertedType.schemaName] = {
+        const schema: Record<string, unknown> = {
             title: convertedType.schemaName,
             ...convertedType.openApiSchema
         };
+        if (typeDeclaration.availability != null) {
+            const availabilityValue = convertAvailabilityStatus(typeDeclaration.availability.status);
+            if (availabilityValue != null) {
+                schema["x-fern-availability"] = availabilityValue;
+            }
+        }
+        schemas[convertedType.schemaName] = schema as OpenAPIV3.SchemaObject;
         // populates typesByName map
         typesByName[getDeclaredTypeNameKey(typeDeclaration.name)] = typeDeclaration;
     });
 
-    const errorsByName: Record<string, ErrorDeclaration> = {};
+    const errorsByName: Record<string, FernIr.ErrorDeclaration> = {};
     Object.values(ir.errors).forEach((errorDeclaration) => {
         errorsByName[getErrorTypeNameKey(errorDeclaration.name)] = errorDeclaration;
     });
 
-    const security = constructEndpointSecurity(ir.auth);
+    const security = constructEndpointSecurity(ir.auth, caseConverter);
 
     const paths = convertServices({
         ir,
@@ -50,7 +58,8 @@ export function convertToOpenApi({
         errorDiscriminationStrategy: ir.errorDiscriminationStrategy,
         security,
         environments: ir.environments ?? undefined,
-        mode
+        mode,
+        caseConverter
     });
 
     const info: OpenAPIV3.InfoObject = {
@@ -67,7 +76,7 @@ export function convertToOpenApi({
         paths,
         components: {
             schemas,
-            securitySchemes: constructSecuritySchemes(ir.auth)
+            securitySchemes: constructSecuritySchemes(ir.auth, caseConverter)
         }
     };
 
@@ -77,8 +86,8 @@ export function convertToOpenApi({
                 url: environment.url,
                 description:
                     environment.docs != null
-                        ? `${environment.name.originalName} (${environment.docs})`
-                        : environment.name.originalName
+                        ? `${getOriginalName(environment.name)} (${environment.docs})`
+                        : getOriginalName(environment.name)
             };
         });
     }
@@ -86,16 +95,16 @@ export function convertToOpenApi({
     return openAPISpec;
 }
 
-export function getDeclaredTypeNameKey(declaredTypeName: DeclaredTypeName): string {
+export function getDeclaredTypeNameKey(declaredTypeName: FernIr.DeclaredTypeName): string {
     return [
-        ...declaredTypeName.fernFilepath.allParts.map((part) => part.originalName),
-        declaredTypeName.name.originalName
+        ...declaredTypeName.fernFilepath.allParts.map((part) => getOriginalName(part)),
+        getOriginalName(declaredTypeName.name)
     ].join("-");
 }
 
-export function getErrorTypeNameKey(declaredErrorName: DeclaredErrorName): string {
+export function getErrorTypeNameKey(declaredErrorName: FernIr.DeclaredErrorName): string {
     return [
-        ...declaredErrorName.fernFilepath.allParts.map((part) => part.originalName),
-        declaredErrorName.name.originalName
+        ...declaredErrorName.fernFilepath.allParts.map((part) => getOriginalName(part)),
+        getOriginalName(declaredErrorName.name)
     ].join("-");
 }

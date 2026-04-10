@@ -85,6 +85,10 @@ public final class UpdatePlaylistRequest {
     public interface _FinalStage {
         UpdatePlaylistRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>The problems that make up the playlist.</p>
          */
@@ -158,6 +162,18 @@ public final class UpdatePlaylistRequest {
         @java.lang.Override
         public UpdatePlaylistRequest build() {
             return new UpdatePlaylistRequest(name, problems, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -1,10 +1,5 @@
-import {
-    ExampleTypeShape,
-    ObjectProperty,
-    ObjectPropertyAccess,
-    ObjectTypeDeclaration,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { getWireValue } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     GetReferenceOpts,
     generateInlinePropertiesModule,
@@ -25,7 +20,7 @@ import {
     ts,
     WriterFunction
 } from "ts-morph";
-import { AbstractGeneratedType } from "../AbstractGeneratedType";
+import { AbstractGeneratedType } from "../AbstractGeneratedType.js";
 
 interface Property {
     name: string;
@@ -34,18 +29,18 @@ interface Property {
     responseType: ts.TypeNode | undefined;
     hasQuestionToken: boolean;
     docs: string | undefined;
-    irProperty: ObjectProperty | undefined;
+    irProperty: FernIr.ObjectProperty | undefined;
     isReadonly: boolean;
     isWriteonly: boolean;
 }
 
 export class GeneratedObjectTypeImpl<Context extends BaseContext>
-    extends AbstractGeneratedType<ObjectTypeDeclaration, Context>
+    extends AbstractGeneratedType<FernIr.ObjectTypeDeclaration, Context>
     implements GeneratedObjectType<Context>
 {
-    private readonly allObjectProperties: ObjectProperty[];
+    private readonly allObjectProperties: FernIr.ObjectProperty[];
     public readonly type = "object";
-    constructor(init: AbstractGeneratedType.Init<ObjectTypeDeclaration, Context>) {
+    constructor(init: AbstractGeneratedType.Init<FernIr.ObjectTypeDeclaration, Context>) {
         super(init);
         this.allObjectProperties = [...this.shape.properties, ...(this.shape.extendedProperties ?? [])];
     }
@@ -318,31 +313,31 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         return interfaceNode;
     }
 
-    private getTypeForObjectProperty(context: Context, property: ObjectProperty): TypeReferenceNode {
+    private getTypeForObjectProperty(context: Context, property: FernIr.ObjectProperty): TypeReferenceNode {
         return context.type.getReferenceToInlinePropertyType(
             property.valueType,
             this.typeName,
-            property.name.name.pascalCase.safeName
+            this.case.pascalSafe(property.name)
         );
     }
 
     public getPropertyKey({ propertyWireKey }: { propertyWireKey: string }): string {
-        const property = this.allObjectProperties.find((property) => property.name.wireValue === propertyWireKey);
+        const property = this.allObjectProperties.find((property) => getWireValue(property.name) === propertyWireKey);
         if (property == null) {
             throw new Error("Property does not exist: " + propertyWireKey);
         }
         return this.getPropertyKeyFromProperty(property);
     }
 
-    private getPropertyKeyFromProperty(property: ObjectProperty): string {
+    private getPropertyKeyFromProperty(property: FernIr.ObjectProperty): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return property.name.name.camelCase.unsafeName;
+            return this.case.camelUnsafe(property.name);
         } else {
-            return property.name.wireValue;
+            return getWireValue(property.name);
         }
     }
 
-    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: FernIr.ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
         if (example.type !== "object") {
             throw new Error("Example is not for an object");
         }
@@ -351,7 +346,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     }
 
     public buildExampleProperties(
-        example: ExampleTypeShape,
+        example: FernIr.ExampleTypeShape,
         context: Context,
         opts: GetReferenceOpts
     ): ts.ObjectLiteralElementLike[] {
@@ -368,10 +363,10 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                     if (typeof property.propertyAccess === "undefined") {
                         return true;
                     }
-                    if (filterOutReadonlyProps && property.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+                    if (filterOutReadonlyProps && property.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                         return false;
                     }
-                    if (filterOutWriteonlyProps && property.propertyAccess === ObjectPropertyAccess.WriteOnly) {
+                    if (filterOutWriteonlyProps && property.propertyAccess === FernIr.ObjectPropertyAccess.WriteOnly) {
                         return false;
                     }
                     return true;
@@ -381,7 +376,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                     if (originalTypeForProperty.type === "union") {
                         const propertyKey = originalTypeForProperty.getSinglePropertyKey({
                             name: property.name,
-                            type: TypeReference.named({
+                            type: FernIr.TypeReference.named({
                                 ...property.originalTypeDeclaration,
                                 default: undefined,
                                 inline: undefined
@@ -398,7 +393,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                     }
                     try {
                         const key = originalTypeForProperty.getPropertyKey({
-                            propertyWireKey: property.name.wireValue
+                            propertyWireKey: getWireValue(property.name)
                         });
                         const value = context.type.getGeneratedExample(property.value).build(context, opts);
                         if (!this.noOptionalProperties && isExpressionUndefined(value)) {
@@ -407,7 +402,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                         return ts.factory.createPropertyAssignment(getPropertyKey(key), value);
                     } catch (e) {
                         context.logger.debug(
-                            `Failed to get property key for property with wire value '${property.name.wireValue}' in object example. ` +
+                            `Failed to get property key for property with wire value '${getWireValue(property.name)}' in object example. ` +
                                 `This may indicate a mismatch between the example and the type definition.`
                         );
                         return undefined;
@@ -420,7 +415,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                     if (isExpressionUndefined(value)) {
                         return undefined;
                     }
-                    return ts.factory.createPropertyAssignment(getPropertyKey(property.name.wireValue), value);
+                    return ts.factory.createPropertyAssignment(getPropertyKey(getWireValue(property.name)), value);
                 })
                 .filter((property) => typeof property !== "undefined")
         ];
@@ -429,12 +424,12 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     public getAllPropertiesIncludingExtensions(
         context: Context,
         { forceCamelCase }: { forceCamelCase?: boolean } = { forceCamelCase: false }
-    ): { propertyKey: string; wireKey: string; type: TypeReference }[] {
+    ): { propertyKey: string; wireKey: string; type: FernIr.TypeReference }[] {
         return [
             ...this.shape.properties.map((property) => ({
-                wireKey: property.name.wireValue,
+                wireKey: getWireValue(property.name),
                 propertyKey: forceCamelCase
-                    ? property.name.name.camelCase.safeName
+                    ? this.case.camelSafe(property.name)
                     : this.getPropertyKeyFromProperty(property),
                 type: property.valueType
             })),
@@ -610,7 +605,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         }
         return generateInlinePropertiesModule({
             properties: this.shape.properties.map((prop) => ({
-                propertyName: prop.name.name.pascalCase.safeName,
+                propertyName: this.case.pascalSafe(prop.name),
                 typeReference: prop.valueType
             })),
             generateStatements: (typeName, typeNameOverride) =>

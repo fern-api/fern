@@ -109,6 +109,10 @@ public final class SendEnumAsHeaderRequest {
     public interface _FinalStage {
         SendEnumAsHeaderRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage maybeOperand(Optional<Operand> maybeOperand);
 
         _FinalStage maybeOperand(Operand maybeOperand);
@@ -182,6 +186,18 @@ public final class SendEnumAsHeaderRequest {
         public SendEnumAsHeaderRequest build() {
             return new SendEnumAsHeaderRequest(
                     operand, maybeOperand, operandOrColor, maybeOperandOrColor, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

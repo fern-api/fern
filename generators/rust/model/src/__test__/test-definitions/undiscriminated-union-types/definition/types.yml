@@ -59,3 +59,22 @@ types:
       error: string
       code: integer
       details: optional<list<string>>
+
+  # Undiscriminated union with a single-enum-property member.
+  # The EventPayload struct has one field whose type is an enum.
+  # It must NOT get #[serde(transparent)] because that would serialize
+  # as just the enum string instead of {"type":"text.done"}.
+  EventMessage:
+    union:
+      payload: EventPayload
+      raw: string
+
+  EventPayload:
+    properties:
+      type: EventType
+
+  EventType:
+    enum:
+      - text.delta
+      - text.done
+      - error

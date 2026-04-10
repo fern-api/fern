@@ -21,12 +21,23 @@ export interface GeneratorsConfigurationSchema {
     aliases?: Record<string, string[]>;
     groups?: Record<string, GeneratorsYml.GeneratorGroupSchema>;
     reviewers?: GeneratorsYml.ReviewersSchema;
+    /**
+     * Configuration for SDK customization replay.
+     * Automatically preserves user customizations across SDK regenerations.
+     */
+    replay?: GeneratorsYml.ReplayConfigSchema;
     ai?: GeneratorsYml.AiServicesSchema;
     /**
      * If true, automatically release SDKs when changes are detected.
      * Can be overridden at the individual generator level.
      */
     autorelease?: boolean;
+    /**
+     * Controls which automation features (GitHub Actions workflows) are enabled.
+     * Can be overridden at the group or generator level.
+     * All features default to true when not specified.
+     */
+    automation?: GeneratorsYml.AutomationSchema;
     /** Deprecated, use the `api` key instead */
     openapi?: GeneratorsYml.GeneratorsOpenApiSchema;
     /** Deprecated, use the `api` key instead */

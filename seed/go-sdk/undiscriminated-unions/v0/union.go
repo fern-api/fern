@@ -57,12 +57,12 @@ func (p *PaymentRequest) MarshalJSON() ([]byte, error) {
 
 var (
 	convertTokenFieldMethod  = big.NewInt(1 << 0)
-	convertTokenFieldTokenId = big.NewInt(1 << 1)
+	convertTokenFieldTokenID = big.NewInt(1 << 1)
 )
 
 type ConvertToken struct {
 	Method  string `json:"method" url:"method"`
-	TokenId string `json:"tokenId" url:"tokenId"`
+	TokenID string `json:"tokenId" url:"tokenId"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -78,14 +78,17 @@ func (c *ConvertToken) GetMethod() string {
 	return c.Method
 }
 
-func (c *ConvertToken) GetTokenId() string {
+func (c *ConvertToken) GetTokenID() string {
 	if c == nil {
 		return ""
 	}
-	return c.TokenId
+	return c.TokenID
 }
 
 func (c *ConvertToken) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -103,11 +106,11 @@ func (c *ConvertToken) SetMethod(method string) {
 	c.require(convertTokenFieldMethod)
 }
 
-// SetTokenId sets the TokenId field and marks it as non-optional;
+// SetTokenID sets the TokenID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConvertToken) SetTokenId(tokenId string) {
-	c.TokenId = tokenId
-	c.require(convertTokenFieldTokenId)
+func (c *ConvertToken) SetTokenID(tokenID string) {
+	c.TokenID = tokenID
+	c.require(convertTokenFieldTokenID)
 }
 
 func (c *ConvertToken) UnmarshalJSON(data []byte) error {
@@ -138,6 +141,9 @@ func (c *ConvertToken) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConvertToken) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -492,8 +498,8 @@ var (
 )
 
 type NamedMetadata struct {
-	Name  string                 `json:"name" url:"name"`
-	Value map[string]interface{} `json:"value,omitempty" url:"value,omitempty"`
+	Name  string         `json:"name" url:"name"`
+	Value map[string]any `json:"value,omitempty" url:"value,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -509,7 +515,7 @@ func (n *NamedMetadata) GetName() string {
 	return n.Name
 }
 
-func (n *NamedMetadata) GetValue() map[string]interface{} {
+func (n *NamedMetadata) GetValue() map[string]any {
 	if n == nil {
 		return nil
 	}
@@ -517,6 +523,9 @@ func (n *NamedMetadata) GetValue() map[string]interface{} {
 }
 
 func (n *NamedMetadata) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -536,7 +545,7 @@ func (n *NamedMetadata) SetName(name string) {
 
 // SetValue sets the Value field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (n *NamedMetadata) SetValue(value map[string]interface{}) {
+func (n *NamedMetadata) SetValue(value map[string]any) {
 	n.Value = value
 	n.require(namedMetadataFieldValue)
 }
@@ -569,6 +578,9 @@ func (n *NamedMetadata) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NamedMetadata) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -893,7 +905,7 @@ func (n *NestedUnionRoot) Accept(visitor NestedUnionRootVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", n)
 }
 
-type OptionalMetadata = map[string]interface{}
+type OptionalMetadata = map[string]any
 
 // Tests that nested properties with camelCase wire names are properly
 // converted from snake_case Ruby keys when passed as Hash values.
@@ -989,6 +1001,9 @@ func (r *Request) GetUnion() *MetadataUnion {
 }
 
 func (r *Request) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -1034,6 +1049,9 @@ func (r *Request) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Request) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -1076,6 +1094,9 @@ func (t *TokenizeCard) GetCardNumber() string {
 }
 
 func (t *TokenizeCard) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -1128,6 +1149,9 @@ func (t *TokenizeCard) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TokenizeCard) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value
@@ -1161,6 +1185,9 @@ func (t *TypeWithOptionalUnion) GetMyUnion() *MyUnion {
 }
 
 func (t *TypeWithOptionalUnion) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -1206,6 +1233,9 @@ func (t *TypeWithOptionalUnion) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TypeWithOptionalUnion) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value
@@ -1579,7 +1609,7 @@ func (u *UnionWithReservedNames) Accept(visitor UnionWithReservedNamesVisitor) e
 // causing CS0557 compiler error.
 type UnionWithTypeAliases struct {
 	String string
-	UserId UserId
+	UserID UserID
 	Name   Name
 
 	typ string
@@ -1589,8 +1619,8 @@ func NewUnionWithTypeAliasesFromString(value string) *UnionWithTypeAliases {
 	return &UnionWithTypeAliases{typ: "String", String: value}
 }
 
-func NewUnionWithTypeAliasesFromUserId(value UserId) *UnionWithTypeAliases {
-	return &UnionWithTypeAliases{typ: "UserId", UserId: value}
+func NewUnionWithTypeAliasesFromUserID(value UserID) *UnionWithTypeAliases {
+	return &UnionWithTypeAliases{typ: "UserID", UserID: value}
 }
 
 func NewUnionWithTypeAliasesFromName(value Name) *UnionWithTypeAliases {
@@ -1604,11 +1634,11 @@ func (u *UnionWithTypeAliases) GetString() string {
 	return u.String
 }
 
-func (u *UnionWithTypeAliases) GetUserId() UserId {
+func (u *UnionWithTypeAliases) GetUserID() UserID {
 	if u == nil {
 		return ""
 	}
-	return u.UserId
+	return u.UserID
 }
 
 func (u *UnionWithTypeAliases) GetName() Name {
@@ -1625,10 +1655,10 @@ func (u *UnionWithTypeAliases) UnmarshalJSON(data []byte) error {
 		u.String = valueString
 		return nil
 	}
-	var valueUserId UserId
-	if err := json.Unmarshal(data, &valueUserId); err == nil {
-		u.typ = "UserId"
-		u.UserId = valueUserId
+	var valueUserID UserID
+	if err := json.Unmarshal(data, &valueUserID); err == nil {
+		u.typ = "UserID"
+		u.UserID = valueUserID
 		return nil
 	}
 	var valueName Name
@@ -1644,8 +1674,8 @@ func (u UnionWithTypeAliases) MarshalJSON() ([]byte, error) {
 	if u.typ == "String" || u.String != "" {
 		return json.Marshal(u.String)
 	}
-	if u.typ == "UserId" || u.UserId != "" {
-		return json.Marshal(u.UserId)
+	if u.typ == "UserID" || u.UserID != "" {
+		return json.Marshal(u.UserID)
 	}
 	if u.typ == "Name" || u.Name != "" {
 		return json.Marshal(u.Name)
@@ -1655,7 +1685,7 @@ func (u UnionWithTypeAliases) MarshalJSON() ([]byte, error) {
 
 type UnionWithTypeAliasesVisitor interface {
 	VisitString(string) error
-	VisitUserId(UserId) error
+	VisitUserID(UserID) error
 	VisitName(Name) error
 }
 
@@ -1663,8 +1693,8 @@ func (u *UnionWithTypeAliases) Accept(visitor UnionWithTypeAliasesVisitor) error
 	if u.typ == "String" || u.String != "" {
 		return visitor.VisitString(u.String)
 	}
-	if u.typ == "UserId" || u.UserId != "" {
-		return visitor.VisitUserId(u.UserId)
+	if u.typ == "UserID" || u.UserID != "" {
+		return visitor.VisitUserID(u.UserID)
 	}
 	if u.typ == "Name" || u.Name != "" {
 		return visitor.VisitName(u.Name)
@@ -1673,4 +1703,4 @@ func (u *UnionWithTypeAliases) Accept(visitor UnionWithTypeAliasesVisitor) error
 }
 
 // A user identifier (alias for string)
-type UserId = string
+type UserID = string

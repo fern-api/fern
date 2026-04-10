@@ -49,12 +49,43 @@ class CompletionsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         response = client.completions.stream(
-            query="query",
+            query="foo",
         )
         for chunk in response:
             yield chunk
         """
         with self._raw_client.stream(query=query, request_options=request_options) as r:
+            yield from r.data
+
+    def stream_without_terminator(
+        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[StreamedCompletion]:
+        """
+        Parameters
+        ----------
+        query : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[StreamedCompletion]
+
+        Examples
+        --------
+        from seed import SeedServerSentEvents
+
+        client = SeedServerSentEvents(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.completions.stream_without_terminator(
+            query="query",
+        )
+        for chunk in response:
+            yield chunk
+        """
+        with self._raw_client.stream_without_terminator(query=query, request_options=request_options) as r:
             yield from r.data
 
 
@@ -101,7 +132,7 @@ class AsyncCompletionsClient:
 
         async def main() -> None:
             response = await client.completions.stream(
-                query="query",
+                query="foo",
             )
             async for chunk in response:
                 yield chunk
@@ -110,5 +141,45 @@ class AsyncCompletionsClient:
         asyncio.run(main())
         """
         async with self._raw_client.stream(query=query, request_options=request_options) as r:
+            async for _chunk in r.data:
+                yield _chunk
+
+    async def stream_without_terminator(
+        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[StreamedCompletion]:
+        """
+        Parameters
+        ----------
+        query : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[StreamedCompletion]
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedServerSentEvents
+
+        client = AsyncSeedServerSentEvents(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.completions.stream_without_terminator(
+                query="query",
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.stream_without_terminator(query=query, request_options=request_options) as r:
             async for _chunk in r.data:
                 yield _chunk

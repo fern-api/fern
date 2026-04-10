@@ -2,10 +2,10 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Header } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { camelCase } from "lodash-es";
-import { buildTypeReference } from "./buildTypeReference";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { convertAvailability } from "./utils/convertAvailability";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { buildTypeReference } from "./buildTypeReference.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { convertAvailability } from "./utils/convertAvailability.js";
+import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference.js";
 
 export function buildHeader({
     header,
@@ -33,7 +33,8 @@ export function buildHeader({
         header.description == null &&
         header.name === headerVariableName &&
         header.env == null &&
-        header.availability == null
+        header.availability == null &&
+        header.clientDefault == null
     ) {
         return headerType;
     }
@@ -51,6 +52,9 @@ export function buildHeader({
     }
     if (header.availability != null) {
         headerSchema.availability = convertAvailability(header.availability);
+    }
+    if (header.clientDefault != null) {
+        headerSchema.default = header.clientDefault;
     }
 
     return headerSchema;

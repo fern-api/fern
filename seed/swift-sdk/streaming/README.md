@@ -5,6 +5,21 @@
 
 The Seed Swift library provides convenient access to the Seed APIs from Swift.
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Errors](#errors)
+- [Request Types](#request-types)
+- [Advanced](#advanced)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Timeouts](#timeouts)
+  - [Custom Networking Client](#custom-networking-client)
+- [Contributing](#contributing)
+
 ## Requirements
 
 This SDK requires:
@@ -39,7 +54,10 @@ import Streaming
 private func main() async throws {
     let client = StreamingClient()
 
-    _ = try await client.dummy.generateStream(request: .init(numEvents: 1))
+    _ = try await client.dummy.generateStream(request: .init(
+        stream: true,
+        numEvents: 1
+    ))
 }
 
 try await main()

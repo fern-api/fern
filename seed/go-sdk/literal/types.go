@@ -45,6 +45,9 @@ func (s *SendResponse) Success() bool {
 }
 
 func (s *SendResponse) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -108,6 +111,9 @@ func (s *SendResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SendResponse) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value

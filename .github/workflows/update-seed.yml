@@ -21,9 +21,7 @@ on:
           - php
           - swift
           - rust
-          - ruby
           - openapi
-          - postman
       commit-on-failure:
         description: 'Commit successful seed changes even if some seed runs fail'
         required: false
@@ -51,7 +49,12 @@ permissions:
   contents: write
 
 env:
+  DO_NOT_TRACK: "1"
   DOCKER_BUILDKIT: 1
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
 
 jobs:
   setup:
@@ -138,7 +141,7 @@ jobs:
     timeout-minutes: 5
     strategy:
       matrix:
-        generator-name: [seed, ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
+        generator-name: [seed, ruby-v2, openapi, python, java, typescript, go, csharp, php, swift, rust]
         include:
           - files: |
               packages/seed/
@@ -147,11 +150,6 @@ jobs:
               test-definitions/
               test-definitions-openapi/
             generator-name: seed
-          - files: |
-              generators/ruby/
-              seed/ruby-sdk/
-              seed/ruby-model/
-            generator-name: ruby
           - files: |
               generators/ruby-v2/
               seed/ruby-sdk-v2/
@@ -166,31 +164,23 @@ jobs:
               seed/pydantic/
               seed/pydantic-v2/
               seed/python-sdk/
-              seed/fastapi/
             generator-name: python
-          - files: |
-              generators/postman/
-              seed/postman/
-            generator-name: postman
           - files: |
               generators/java/
               generators/java-v2/
               seed/java-sdk/
               seed/java-model/
-              seed/java-spring/
             generator-name: java
           - files: |
               generators/typescript/
               generators/typescript-v2/
               seed/ts-sdk/
-              seed/ts-express/
             generator-name: typescript
           - files: |
               generators/go/
               generators/go-v2/
               seed/go-sdk/
               seed/go-model/
-              seed/go-fiber/
             generator-name: go
           - files: |
               generators/csharp/
@@ -213,11 +203,9 @@ jobs:
             generator-name: rust
     outputs:
       seed: ${{ steps.set-output.outputs.seed-changes }}
-      ruby: ${{ steps.set-output.outputs.ruby-changes }}
       ruby-v2: ${{ steps.set-output.outputs.ruby-v2-changes }}
       openapi: ${{ steps.set-output.outputs.openapi-changes }}
       python: ${{ steps.set-output.outputs.python-changes }}
-      postman: ${{ steps.set-output.outputs.postman-changes }}
       java: ${{ steps.set-output.outputs.java-changes }}
       typescript: ${{ steps.set-output.outputs.typescript-changes }}
       go: ${{ steps.set-output.outputs.go-changes }}
@@ -228,36 +216,44 @@ jobs:
 
     steps:
       - name: Checkout Files
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          # Get sufficient history to check for changes
-          fetch-depth: 0
           sparse-checkout: |
             ${{ matrix.files }}
             .github/
+          fetch-tags: false
 
       - name: Setup Base SHA
         id: setup-base-sha
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           BASE_SHA=""
 
-          # For workflow_dispatch events that aren't on main, find the last commit from the main branch and compare against that
-          # For workflows involving the main branch, compare to the last commit
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" != "refs/heads/main" ]]; then
-            git fetch origin main
-            MERGE_BASE=$(git merge-base HEAD origin/main)
+            # Use GitHub API to get merge base - git merge-base doesn't work with shallow clones
+            CURRENT_SHA=$(git rev-parse HEAD)
+            MAIN_SHA=$(gh api "/repos/${{ github.repository }}/git/ref/heads/main" --jq '.object.sha')
+            MERGE_BASE=$(gh api \
+              "/repos/${{ github.repository }}/compare/${MAIN_SHA}...${CURRENT_SHA}" \
+              --jq '.merge_base_commit.sha')
             echo "Merge base commit: $MERGE_BASE"
-
             BASE_SHA=$MERGE_BASE
-          elif [[ ("${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" == "refs/heads/main") || \
-                  ("${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main") ]]; then            
-            PREVIOUS_MAIN_COMMIT=$(git rev-parse origin/main^)
-            echo "Previous commit on main: $PREVIOUS_MAIN_COMMIT"
-
-            BASE_SHA=$PREVIOUS_MAIN_COMMIT
           else
-            echo "Unexpected event and branch combination. Event: ${{ github.event_name }}, Branch: ${{ github.ref }}"
-            exit 1
+            LAST_SUCCESS_SHA=$(gh api \
+              "/repos/${{ github.repository }}/actions/workflows/update-seed.yml/runs?branch=main&status=success&per_page=1" \
+              --jq '.workflow_runs[0].head_sha // empty' 2>/dev/null || echo "")
+
+            if [[ -n "$LAST_SUCCESS_SHA" ]]; then
+              echo "Last successful run SHA: $LAST_SUCCESS_SHA"
+              BASE_SHA=$LAST_SUCCESS_SHA
+            else
+              # Fetch 2 commits of main to get the previous commit
+              git fetch --no-tags --depth=2 origin main
+              PREVIOUS_SHA=$(git rev-parse origin/main~1)
+              echo "No successful run found, falling back to previous commit: $PREVIOUS_SHA"
+              BASE_SHA=$PREVIOUS_SHA
+            fi
           fi
 
           echo "base_sha=$BASE_SHA" >> $GITHUB_OUTPUT
@@ -275,24 +271,17 @@ jobs:
           echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
 
   get-all-test-matrices:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 10
     needs: [setup]
     outputs:
-      ruby-model: ${{ steps.create-dynamic-matrix.outputs.ruby-model-test-matrix }}
-      ruby-sdk: ${{ steps.create-dynamic-matrix.outputs.ruby-sdk-test-matrix }}
       ruby-sdk-v2: ${{ steps.create-dynamic-matrix.outputs.ruby-sdk-v2-test-matrix }}
       pydantic: ${{ steps.create-dynamic-matrix.outputs.pydantic-test-matrix }}
       python-sdk: ${{ steps.create-dynamic-matrix.outputs.python-sdk-test-matrix }}
-      fastapi: ${{ steps.create-dynamic-matrix.outputs.fastapi-test-matrix }}
       openapi: ${{ steps.create-dynamic-matrix.outputs.openapi-test-matrix }}
-      postman: ${{ steps.create-dynamic-matrix.outputs.postman-test-matrix }}
       java-sdk: ${{ steps.create-dynamic-matrix.outputs.java-sdk-test-matrix }}
       java-model: ${{ steps.create-dynamic-matrix.outputs.java-model-test-matrix }}
-      java-spring: ${{ steps.create-dynamic-matrix.outputs.java-spring-test-matrix }}
       ts-sdk: ${{ steps.create-dynamic-matrix.outputs.ts-sdk-test-matrix }}
-      ts-express: ${{ steps.create-dynamic-matrix.outputs.ts-express-test-matrix }}
-      go-fiber: ${{ steps.create-dynamic-matrix.outputs.go-fiber-test-matrix }}
       go-model: ${{ steps.create-dynamic-matrix.outputs.go-model-test-matrix }}
       go-sdk: ${{ steps.create-dynamic-matrix.outputs.go-sdk-test-matrix }}
       csharp-model: ${{ steps.create-dynamic-matrix.outputs.csharp-model-test-matrix }}
@@ -304,7 +293,7 @@ jobs:
       rust-sdk: ${{ steps.create-dynamic-matrix.outputs.rust-sdk-test-matrix }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
@@ -321,7 +310,7 @@ jobs:
           SELECTED_FIXTURE="${{ needs.setup.outputs.selected-fixture }}"
           
           # List of all generators
-          GENERATORS="ruby-model ruby-sdk ruby-sdk-v2 pydantic python-sdk fastapi openapi postman java-sdk java-model java-spring ts-sdk ts-express go-fiber go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
+          GENERATORS="ruby-sdk-v2 pydantic python-sdk openapi java-sdk java-model ts-sdk go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
           
           # Process each generator and set its output
           for GEN in $GENERATORS; do
@@ -343,73 +332,6 @@ jobs:
             echo "Set output for $GEN: $MATRIX"
           done
 
-  ruby-model-seed-update:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    needs: [changes, setup, get-all-test-matrices]
-    if: >-
-      ${{ 
-        always() && !cancelled() &&
-        (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'ruby') &&
-        (github.event_name == 'workflow_dispatch' || needs.changes.outputs.ruby == 'true' || needs.changes.outputs.seed == 'true') &&
-        needs.get-all-test-matrices.outputs.ruby-model != ''
-      }}
-    strategy:
-      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-model) }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github/actions/
-
-      - name: Update seed
-        uses: ./.github/actions/auto-update-seed
-        with:
-          generator-name: ruby-model
-          generator-path: generators/ruby
-          allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
-          index: ${{ strategy.job-index }}
-          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-
-  ruby-sdk-seed-update:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    needs: [changes, setup, get-all-test-matrices]
-    if: >-
-      ${{ 
-        always() && !cancelled() &&
-        (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'ruby') &&
-        (github.event_name == 'workflow_dispatch' || needs.changes.outputs.ruby == 'true' || needs.changes.outputs.seed == 'true') &&
-        needs.get-all-test-matrices.outputs.ruby-sdk != ''
-      }}
-    strategy:
-      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk) }}
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github/actions/
-
-      - name: Update seed
-        uses: ./.github/actions/auto-update-seed
-        with:
-          generator-name: ruby-sdk
-          generator-path: generators/ruby
-          allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
-          index: ${{ strategy.job-index }}
-          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-
   ruby-sdk-v2-seed-update:
     runs-on: ubuntu-latest
     timeout-minutes: 60
@@ -429,7 +351,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/
@@ -443,6 +365,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   pydantic-seed-update:
     runs-on: ubuntu-latest
@@ -463,7 +387,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/
@@ -477,6 +401,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   python-sdk-seed-update:
     runs-on: Seed
@@ -497,7 +423,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/
@@ -511,40 +437,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-
-  fastapi-seed-update:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    needs: [changes, setup, get-all-test-matrices]
-    if: >-
-      ${{ 
-        always() && !cancelled() &&
-        (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'python') &&
-        (github.event_name == 'workflow_dispatch' || needs.changes.outputs.python == 'true' || needs.changes.outputs.seed == 'true') &&
-        needs.get-all-test-matrices.outputs.fastapi != ''
-      }}
-    strategy:
-      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github/actions/
-
-      - name: Update seed
-        uses: ./.github/actions/auto-update-seed
-        with:
-          generator-name: fastapi
-          generator-path: generators/python
-          allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
-          index: ${{ strategy.job-index }}
-          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   openapi-seed-update:
     runs-on: ubuntu-latest
@@ -565,7 +459,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/
@@ -579,40 +473,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-
-  postman-seed-update:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    needs: [changes, setup, get-all-test-matrices]
-    if: >-
-      ${{ 
-        always() && !cancelled() &&
-        (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'postman') &&
-        (github.event_name == 'workflow_dispatch' || needs.changes.outputs.postman == 'true' || needs.changes.outputs.seed == 'true') &&
-        needs.get-all-test-matrices.outputs.postman != ''
-      }}
-    strategy:
-      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github/actions/
-
-      - name: Update seed
-        uses: ./.github/actions/auto-update-seed
-        with:
-          generator-name: postman
-          generator-path: generators/postman
-          allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
-          index: ${{ strategy.job-index }}
-          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   java-sdk-seed-update:
     runs-on: Seed
@@ -633,7 +495,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/
@@ -647,6 +509,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   java-model-seed-update:
     runs-on: ubuntu-latest
@@ -667,7 +531,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/
@@ -681,40 +545,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-
-  java-spring-seed-update:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    needs: [changes, setup, get-all-test-matrices]
-    if: >-
-      ${{ 
-        always() && !cancelled() &&
-        (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'java') &&
-        (github.event_name == 'workflow_dispatch' || needs.changes.outputs.java == 'true' || needs.changes.outputs.seed == 'true') &&
-        needs.get-all-test-matrices.outputs.java-spring != ''
-      }}
-    strategy:
-      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github/actions/
-
-      - name: Update seed
-        uses: ./.github/actions/auto-update-seed
-        with:
-          generator-name: java-spring
-          generator-path: generators/java generators/java-v2
-          allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
-          index: ${{ strategy.job-index }}
-          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   typescript-sdk-seed-update:
     runs-on: ubuntu-latest
@@ -735,7 +567,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/
@@ -749,74 +581,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-
-  typescript-express-seed-update:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    needs: [changes, setup, get-all-test-matrices]
-    if: >-
-      ${{ 
-        always() && !cancelled() &&
-        (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'typescript') &&
-        (github.event_name == 'workflow_dispatch' || needs.changes.outputs.typescript == 'true' || needs.changes.outputs.seed == 'true') &&
-        needs.get-all-test-matrices.outputs.ts-express != ''
-      }}
-    strategy:
-      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github/actions/
-
-      - name: Update seed
-        uses: ./.github/actions/auto-update-seed
-        with:
-          generator-name: ts-express
-          generator-path: generators/typescript generators/typescript-v2
-          allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
-          index: ${{ strategy.job-index }}
-          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-
-  go-fiber-seed-update:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    needs: [changes, setup, get-all-test-matrices]
-    if: >-
-      ${{ 
-        always() && !cancelled() &&
-        (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'go') &&
-        (github.event_name == 'workflow_dispatch' || needs.changes.outputs.go == 'true' || needs.changes.outputs.seed == 'true') &&
-        needs.get-all-test-matrices.outputs.go-fiber != ''
-      }}
-    strategy:
-      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-fiber) }}
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github/actions/
-
-      - name: Update seed
-        uses: ./.github/actions/auto-update-seed
-        with:
-          generator-name: go-fiber
-          generator-path: generators/go generators/go-v2
-          allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
-          index: ${{ strategy.job-index }}
-          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   go-model-seed-update:
     runs-on: ubuntu-latest
@@ -837,7 +603,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/
@@ -851,6 +617,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   go-sdk-seed-update:
     runs-on: ubuntu-latest
@@ -871,7 +639,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/
@@ -885,6 +653,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   csharp-model-seed-update:
     runs-on: ubuntu-latest
@@ -905,7 +675,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/
@@ -919,6 +689,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   csharp-sdk-seed-update:
     runs-on: ubuntu-latest
@@ -939,7 +711,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/
@@ -953,6 +725,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   php-model-seed-update:
     runs-on: ubuntu-latest
@@ -973,7 +747,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/
@@ -987,6 +761,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   php-sdk-seed-update:
     runs-on: ubuntu-latest
@@ -1007,7 +783,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/
@@ -1021,6 +797,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   swift-sdk-seed-update:
     runs-on: ubuntu-latest
@@ -1041,7 +819,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/
@@ -1055,6 +833,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   rust-model-seed-update:
     runs-on: ubuntu-latest
@@ -1075,7 +855,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/
@@ -1089,6 +869,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   rust-sdk-seed-update:
     runs-on: ubuntu-latest
@@ -1109,7 +891,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/actions/
@@ -1123,6 +905,8 @@ jobs:
           fixtures-to-run: ${{ toJson(matrix.fixtures) }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   # Use always() to ensure this runs even if stages from needs are skipped.
   # By default, block on failures. If commit-on-failure is true, continue even if some seed runs fail.
@@ -1136,20 +920,13 @@ jobs:
       [
         changes,
         setup,
-        ruby-model-seed-update,
-        ruby-sdk-seed-update,
         ruby-sdk-v2-seed-update,
         pydantic-seed-update,
         python-sdk-seed-update,
-        fastapi-seed-update,
         openapi-seed-update,
-        postman-seed-update,
         java-sdk-seed-update,
         java-model-seed-update,
-        java-spring-seed-update,
         typescript-sdk-seed-update,
-        typescript-express-seed-update,
-        go-fiber-seed-update,
         go-model-seed-update,
         go-sdk-seed-update,
         csharp-model-seed-update,
@@ -1174,7 +951,7 @@ jobs:
 
       # Get action file specific to the running branch
       - name: Checkout Action File
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ steps.extract-branch.outputs.branch }}
           sparse-checkout: |
@@ -1226,20 +1003,13 @@ jobs:
       [
         changes,
         setup,
-        ruby-model-seed-update,
-        ruby-sdk-seed-update,
         ruby-sdk-v2-seed-update,
         pydantic-seed-update,
         python-sdk-seed-update,
-        fastapi-seed-update,
         openapi-seed-update,
-        postman-seed-update,
         java-sdk-seed-update,
         java-model-seed-update,
-        java-spring-seed-update,
         typescript-sdk-seed-update,
-        typescript-express-seed-update,
-        go-fiber-seed-update,
         go-model-seed-update,
         go-sdk-seed-update,
         csharp-model-seed-update,
@@ -1256,20 +1026,13 @@ jobs:
       matrix:
         sdk-name:
           [
-            ruby-model,
-            ruby-sdk,
             ruby-sdk-v2,
             pydantic,
             python-sdk,
-            fastapi,
             openapi,
-            postman,
             java-sdk,
             java-model,
-            java-spring,
             ts-sdk,
-            ts-express,
-            go-fiber,
             go-model,
             go-sdk,
             csharp-model,
@@ -1282,33 +1045,19 @@ jobs:
           ]
         include:
           - language-name: ruby
-            sdk-name: ruby-model
-          - language-name: ruby
-            sdk-name: ruby-sdk
-          - language-name: ruby
             sdk-name: ruby-sdk-v2
           - language-name: python
             sdk-name: pydantic
           - language-name: python
             sdk-name: python-sdk
-          - language-name: python
-            sdk-name: fastapi
           - language-name: openapi
             sdk-name: openapi
-          - language-name: postman
-            sdk-name: postman
           - language-name: java
             sdk-name: java-sdk
           - language-name: java
             sdk-name: java-model
-          - language-name: java
-            sdk-name: java-spring
           - language-name: typescript
             sdk-name: ts-sdk
-          - language-name: typescript
-            sdk-name: ts-express
-          - language-name: go
-            sdk-name: go-fiber
           - language-name: go
             sdk-name: go-model
           - language-name: go
@@ -1329,7 +1078,7 @@ jobs:
             sdk-name: rust-sdk
     steps:
       - name: Checkout Action File
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             .github/
@@ -1358,7 +1107,7 @@ jobs:
       - name: Create Pull Request
         if: steps.apply-patches.outputs.has-patches == 'true'
         id: cpr
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
           commit-message: "chore(${{ matrix.language-name }}): update ${{ matrix.sdk-name }} seed"

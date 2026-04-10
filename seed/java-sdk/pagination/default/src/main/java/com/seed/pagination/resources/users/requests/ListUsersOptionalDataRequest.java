@@ -5,9 +5,9 @@ package com.seed.pagination.resources.users.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -32,7 +32,7 @@ public final class ListUsersOptionalDataRequest {
     /**
      * @return Defaults to first page
      */
-    @JsonProperty("page")
+    @JsonIgnore
     public Optional<Integer> getPage() {
         return page;
     }
@@ -96,6 +96,16 @@ public final class ListUsersOptionalDataRequest {
 
         public ListUsersOptionalDataRequest build() {
             return new ListUsersOptionalDataRequest(page, additionalProperties);
+        }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -25,5 +25,7 @@ public static class NUnitExtensions
             .UsingReadOnlyMemoryComparer<double>()
             .UsingJsonElementComparer()
             .UsingOptionalComparer()
-            .UsingAdditionalPropertiesComparer();
+            .UsingObjectDictionaryComparer()
+            .UsingAdditionalPropertiesComparer()
+            .UsingJsonSerializationComparer();
 }

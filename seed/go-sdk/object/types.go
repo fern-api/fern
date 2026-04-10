@@ -12,12 +12,12 @@ import (
 )
 
 var (
-	nameFieldId    = big.NewInt(1 << 0)
+	nameFieldID    = big.NewInt(1 << 0)
 	nameFieldValue = big.NewInt(1 << 1)
 )
 
 type Name struct {
-	Id    string `json:"id" url:"id"`
+	ID    string `json:"id" url:"id"`
 	Value string `json:"value" url:"value"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -27,11 +27,11 @@ type Name struct {
 	rawJSON         json.RawMessage
 }
 
-func (n *Name) GetId() string {
+func (n *Name) GetID() string {
 	if n == nil {
 		return ""
 	}
-	return n.Id
+	return n.ID
 }
 
 func (n *Name) GetValue() string {
@@ -42,6 +42,9 @@ func (n *Name) GetValue() string {
 }
 
 func (n *Name) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -52,11 +55,11 @@ func (n *Name) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (n *Name) SetId(id string) {
-	n.Id = id
-	n.require(nameFieldId)
+func (n *Name) SetID(id string) {
+	n.ID = id
+	n.require(nameFieldID)
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -94,6 +97,9 @@ func (n *Name) MarshalJSON() ([]byte, error) {
 }
 
 func (n *Name) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -147,7 +153,7 @@ type Type struct {
 	Eleven      []float64        `json:"eleven" url:"eleven"`
 	Twelve      map[string]bool  `json:"twelve" url:"twelve"`
 	Thirteen    *int64           `json:"thirteen,omitempty" url:"thirteen,omitempty"`
-	Fourteen    interface{}      `json:"fourteen" url:"fourteen"`
+	Fourteen    any              `json:"fourteen" url:"fourteen"`
 	Fifteen     [][]int          `json:"fifteen" url:"fifteen"`
 	Sixteen     []map[string]int `json:"sixteen" url:"sixteen"`
 	Seventeen   []*uuid.UUID     `json:"seventeen" url:"seventeen"`
@@ -258,7 +264,7 @@ func (t *Type) GetThirteen() *int64 {
 	return t.Thirteen
 }
 
-func (t *Type) GetFourteen() interface{} {
+func (t *Type) GetFourteen() any {
 	if t == nil {
 		return nil
 	}
@@ -340,6 +346,9 @@ func (t *Type) Eighteen() string {
 }
 
 func (t *Type) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -443,7 +452,7 @@ func (t *Type) SetThirteen(thirteen *int64) {
 
 // SetFourteen sets the Fourteen field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *Type) SetFourteen(fourteen interface{}) {
+func (t *Type) SetFourteen(fourteen any) {
 	t.Fourteen = fourteen
 	t.require(typeFieldFourteen)
 }
@@ -573,6 +582,9 @@ func (t *Type) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Type) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value

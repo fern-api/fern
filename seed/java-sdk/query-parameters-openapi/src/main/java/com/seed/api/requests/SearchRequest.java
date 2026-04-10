@@ -5,9 +5,9 @@ package com.seed.api.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -33,6 +33,10 @@ public final class SearchRequest {
     private final Optional<List<User>> excludeUser;
 
     private final Optional<List<String>> filter;
+
+    private final Optional<List<String>> tags;
+
+    private final Optional<List<String>> optionalTags;
 
     private final int limit;
 
@@ -66,6 +70,8 @@ public final class SearchRequest {
             Optional<List<User>> userList,
             Optional<List<User>> excludeUser,
             Optional<List<String>> filter,
+            Optional<List<String>> tags,
+            Optional<List<String>> optionalTags,
             int limit,
             String id,
             String date,
@@ -83,6 +89,8 @@ public final class SearchRequest {
         this.userList = userList;
         this.excludeUser = excludeUser;
         this.filter = filter;
+        this.tags = tags;
+        this.optionalTags = optionalTags;
         this.limit = limit;
         this.id = id;
         this.date = date;
@@ -99,82 +107,98 @@ public final class SearchRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("userList")
+    @JsonIgnore
     public Optional<List<User>> getUserList() {
         return userList;
     }
 
-    @JsonProperty("excludeUser")
+    @JsonIgnore
     public Optional<List<User>> getExcludeUser() {
         return excludeUser;
     }
 
-    @JsonProperty("filter")
+    @JsonIgnore
     public Optional<List<String>> getFilter() {
         return filter;
     }
 
-    @JsonProperty("limit")
+    /**
+     * @return List of tags. Serialized as a comma-separated list.
+     */
+    @JsonIgnore
+    public Optional<List<String>> getTags() {
+        return tags;
+    }
+
+    /**
+     * @return Optional list of tags. Serialized as a comma-separated list.
+     */
+    @JsonIgnore
+    public Optional<List<String>> getOptionalTags() {
+        return optionalTags;
+    }
+
+    @JsonIgnore
     public int getLimit() {
         return limit;
     }
 
-    @JsonProperty("id")
+    @JsonIgnore
     public String getId() {
         return id;
     }
 
-    @JsonProperty("date")
+    @JsonIgnore
     public String getDate() {
         return date;
     }
 
-    @JsonProperty("deadline")
+    @JsonIgnore
     public OffsetDateTime getDeadline() {
         return deadline;
     }
 
-    @JsonProperty("bytes")
+    @JsonIgnore
     public String getBytes() {
         return bytes;
     }
 
-    @JsonProperty("user")
+    @JsonIgnore
     public User getUser() {
         return user;
     }
 
-    @JsonProperty("optionalDeadline")
+    @JsonIgnore
     public Optional<OffsetDateTime> getOptionalDeadline() {
         return optionalDeadline;
     }
 
-    @JsonProperty("keyValue")
+    @JsonIgnore
     public Optional<Map<String, String>> getKeyValue() {
         return keyValue;
     }
 
-    @JsonProperty("optionalString")
+    @JsonIgnore
     public Optional<String> getOptionalString() {
         return optionalString;
     }
 
-    @JsonProperty("nestedUser")
+    @JsonIgnore
     public Optional<NestedUser> getNestedUser() {
         return nestedUser;
     }
 
-    @JsonProperty("optionalUser")
+    @JsonIgnore
     public Optional<User> getOptionalUser() {
         return optionalUser;
     }
 
-    @JsonProperty("neighbor")
+    @JsonIgnore
     public Optional<SearchRequestNeighbor> getNeighbor() {
         return neighbor;
     }
 
-    @JsonProperty("neighborRequired")
+    @JsonIgnore
     public SearchRequestNeighborRequired getNeighborRequired() {
         return neighborRequired;
     }
@@ -194,6 +218,8 @@ public final class SearchRequest {
         return userList.equals(other.userList)
                 && excludeUser.equals(other.excludeUser)
                 && filter.equals(other.filter)
+                && tags.equals(other.tags)
+                && optionalTags.equals(other.optionalTags)
                 && limit == other.limit
                 && id.equals(other.id)
                 && date.equals(other.date)
@@ -215,6 +241,8 @@ public final class SearchRequest {
                 this.userList,
                 this.excludeUser,
                 this.filter,
+                this.tags,
+                this.optionalTags,
                 this.limit,
                 this.id,
                 this.date,
@@ -272,6 +300,10 @@ public final class SearchRequest {
     public interface _FinalStage {
         SearchRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage userList(Optional<List<User>> userList);
 
         _FinalStage userList(List<User> userList);
@@ -289,6 +321,24 @@ public final class SearchRequest {
         _FinalStage filter(List<String> filter);
 
         _FinalStage filter(String filter);
+
+        /**
+         * <p>List of tags. Serialized as a comma-separated list.</p>
+         */
+        _FinalStage tags(Optional<List<String>> tags);
+
+        _FinalStage tags(List<String> tags);
+
+        _FinalStage tags(String tags);
+
+        /**
+         * <p>Optional list of tags. Serialized as a comma-separated list.</p>
+         */
+        _FinalStage optionalTags(Optional<List<String>> optionalTags);
+
+        _FinalStage optionalTags(List<String> optionalTags);
+
+        _FinalStage optionalTags(String optionalTags);
 
         _FinalStage optionalDeadline(Optional<OffsetDateTime> optionalDeadline);
 
@@ -351,6 +401,10 @@ public final class SearchRequest {
 
         private Optional<OffsetDateTime> optionalDeadline = Optional.empty();
 
+        private Optional<List<String>> optionalTags = Optional.empty();
+
+        private Optional<List<String>> tags = Optional.empty();
+
         private Optional<List<String>> filter = Optional.empty();
 
         private Optional<List<User>> excludeUser = Optional.empty();
@@ -367,6 +421,8 @@ public final class SearchRequest {
             userList(other.getUserList());
             excludeUser(other.getExcludeUser());
             filter(other.getFilter());
+            tags(other.getTags());
+            optionalTags(other.getOptionalTags());
             limit(other.getLimit());
             id(other.getId());
             date(other.getDate());
@@ -511,6 +567,58 @@ public final class SearchRequest {
         }
 
         @java.lang.Override
+        public _FinalStage optionalTags(String optionalTags) {
+            this.optionalTags = Optional.of(Collections.singletonList(optionalTags));
+            return this;
+        }
+
+        /**
+         * <p>Optional list of tags. Serialized as a comma-separated list.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage optionalTags(List<String> optionalTags) {
+            this.optionalTags = Optional.ofNullable(optionalTags);
+            return this;
+        }
+
+        /**
+         * <p>Optional list of tags. Serialized as a comma-separated list.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "optionalTags", nulls = Nulls.SKIP)
+        public _FinalStage optionalTags(Optional<List<String>> optionalTags) {
+            this.optionalTags = optionalTags;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage tags(String tags) {
+            this.tags = Optional.of(Collections.singletonList(tags));
+            return this;
+        }
+
+        /**
+         * <p>List of tags. Serialized as a comma-separated list.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage tags(List<String> tags) {
+            this.tags = Optional.ofNullable(tags);
+            return this;
+        }
+
+        /**
+         * <p>List of tags. Serialized as a comma-separated list.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "tags", nulls = Nulls.SKIP)
+        public _FinalStage tags(Optional<List<String>> tags) {
+            this.tags = tags;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage filter(String filter) {
             this.filter = Optional.of(Collections.singletonList(filter));
             return this;
@@ -573,6 +681,8 @@ public final class SearchRequest {
                     userList,
                     excludeUser,
                     filter,
+                    tags,
+                    optionalTags,
                     limit,
                     id,
                     date,
@@ -587,6 +697,18 @@ public final class SearchRequest {
                     neighbor,
                     neighborRequired,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

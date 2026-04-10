@@ -3,8 +3,8 @@ import { writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 
-import type { FernGeneratorCli } from "../configuration/sdk";
-import * as serializers from "../configuration/sdk/serialization";
+import type { FernGeneratorCli } from "../configuration/sdk/index.js";
+import * as serializers from "../configuration/sdk/serialization/index.js";
 
 export function testGenerateReference({
     fixtureName,
@@ -21,7 +21,7 @@ export function testGenerateReference({
 
             const args = [path.join(__dirname, "../../bin/cli"), "generate-reference", "--config", file.path];
             const { stdout } = await execa("node", args);
-            expect(stdout).toMatchFileSnapshot(`__snapshots__/${fixtureName}.md`);
+            await expect(stdout).toMatchFileSnapshot(`__snapshots__/${fixtureName}.md`);
         });
     });
 }

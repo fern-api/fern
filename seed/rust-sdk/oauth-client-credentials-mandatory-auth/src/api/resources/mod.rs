@@ -6,7 +6,7 @@
 //! - **Nested**
 //! - **Simple**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod auth;
 pub mod nested;
@@ -24,10 +24,9 @@ impl OauthClientCredentialsMandatoryAuthClient {
             config: config.clone(),
             auth: AuthClient::new(config.clone())?,
             nested: NestedClient::new(config.clone())?,
-            simple: SimpleClient::new(config.clone())?
+            simple: SimpleClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use auth::AuthClient;

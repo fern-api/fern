@@ -1,5 +1,5 @@
-import type { Locatable } from "./Locatable";
-import type { SourceLocation } from "./SourceLocation";
+import type { Locatable } from "./Locatable.js";
+import type { SourceLocation } from "./SourceLocation.js";
 
 /**
  * The Sourced type wraps any value with source location tracking.

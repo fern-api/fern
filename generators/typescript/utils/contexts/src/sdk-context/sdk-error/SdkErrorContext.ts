@@ -1,10 +1,10 @@
-import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Reference } from "@fern-typescript/commons";
 
-import { GeneratedSdkError } from "./GeneratedSdkError";
+import { GeneratedSdkError } from "./GeneratedSdkError.js";
 
 export interface SdkErrorContext {
-    getReferenceToError: (errorName: DeclaredErrorName) => Reference;
-    getGeneratedSdkError: (errorName: DeclaredErrorName) => GeneratedSdkError | undefined;
-    getErrorDeclaration: (errorName: DeclaredErrorName) => ErrorDeclaration;
+    getReferenceToError: (errorName: FernIr.DeclaredErrorName) => Reference;
+    getGeneratedSdkError: (errorName: FernIr.DeclaredErrorName) => GeneratedSdkError | undefined;
+    getErrorDeclaration: (errorName: FernIr.DeclaredErrorName) => FernIr.ErrorDeclaration;
 }

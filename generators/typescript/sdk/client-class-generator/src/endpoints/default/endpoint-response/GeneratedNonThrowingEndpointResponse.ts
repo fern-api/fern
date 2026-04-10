@@ -1,29 +1,25 @@
-import {
-    ErrorDiscriminationByPropertyStrategy,
-    ErrorDiscriminationStrategy,
-    HttpEndpoint,
-    HttpResponseBody
-} from "@fern-fern/ir-sdk/api";
+import { getWireValue } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
-import { GeneratedEndpointErrorUnion, GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedEndpointErrorUnion, GeneratedSdkEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 
-import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse";
-import { getSuccessReturnType } from "./getSuccessReturnType";
+import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse.js";
+import { getSuccessReturnType } from "./getSuccessReturnType.js";
 
 export declare namespace GeneratedNonThrowingEndpointResponse {
     export interface Init {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         response:
-            | HttpResponseBody.Json
-            | HttpResponseBody.FileDownload
-            | HttpResponseBody.Streaming
-            | HttpResponseBody.Text
-            | HttpResponseBody.Bytes
+            | FernIr.HttpResponseBody.Json
+            | FernIr.HttpResponseBody.FileDownload
+            | FernIr.HttpResponseBody.Streaming
+            | FernIr.HttpResponseBody.Text
+            | FernIr.HttpResponseBody.Bytes
             | undefined;
-        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
         includeSerdeLayer: boolean;
         streamType: "wrapper" | "web";
@@ -35,15 +31,15 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
     private static RESPONSE_VARIABLE_NAME = "_response";
 
     private packageId: PackageId;
-    private endpoint: HttpEndpoint;
+    private endpoint: FernIr.HttpEndpoint;
     private response:
-        | HttpResponseBody.Json
-        | HttpResponseBody.FileDownload
-        | HttpResponseBody.Streaming
-        | HttpResponseBody.Text
-        | HttpResponseBody.Bytes
+        | FernIr.HttpResponseBody.Json
+        | FernIr.HttpResponseBody.FileDownload
+        | FernIr.HttpResponseBody.Streaming
+        | FernIr.HttpResponseBody.Text
+        | FernIr.HttpResponseBody.Bytes
         | undefined;
-    private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+    private errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;
     private includeSerdeLayer: boolean;
     private streamType: "wrapper" | "web";
@@ -81,7 +77,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         return [];
     }
 
-    public getReturnType(context: SdkContext): ts.TypeNode {
+    public getReturnType(context: FileContext): ts.TypeNode {
         return context.coreUtilities.fetcher.APIResponse._getReferenceToType(
             getSuccessReturnType(this.endpoint, this.response, context, {
                 includeContentHeadersOnResponse: false,
@@ -95,11 +91,11 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         );
     }
 
-    public getReturnResponseStatements(context: SdkContext): ts.Statement[] {
+    public getReturnResponseStatements(context: FileContext): ts.Statement[] {
         return [this.getReturnResponseIfOk(context), ...this.getReturnFailedResponse(context)];
     }
 
-    private getReturnResponseIfOk(context: SdkContext): ts.Statement {
+    private getReturnResponseIfOk(context: FileContext): ts.Statement {
         return ts.factory.createIfStatement(
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
@@ -134,7 +130,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         );
     }
 
-    private getOkResponseBody(context: SdkContext): ts.Expression {
+    private getOkResponseBody(context: FileContext): ts.Expression {
         const generatedEndpointTypeSchemas = this.getGeneratedEndpointTypeSchemas(context);
         return generatedEndpointTypeSchemas.deserializeResponse(
             ts.factory.createPropertyAccessExpression(
@@ -145,25 +141,25 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         );
     }
 
-    private getReferenceToError(context: SdkContext): ts.Expression {
+    private getReferenceToError(context: FileContext): ts.Expression {
         return ts.factory.createPropertyAccessExpression(
             ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
             context.coreUtilities.fetcher.APIResponse.FailedResponse.error
         );
     }
 
-    private getReferenceToErrorBody(context: SdkContext): ts.Expression {
+    private getReferenceToErrorBody(context: FileContext): ts.Expression {
         return ts.factory.createPropertyAccessExpression(
             this.getReferenceToError(context),
             context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
         );
     }
 
-    private getReturnFailedResponse(context: SdkContext): ts.Statement[] {
+    private getReturnFailedResponse(context: FileContext): ts.Statement[] {
         return [...this.getReturnResponseForKnownErrors(context), this.getReturnResponseForUnknownError(context)];
     }
 
-    private getReturnValueForOkResponse(context: SdkContext): ts.Expression | undefined {
+    private getReturnValueForOkResponse(context: FileContext): ts.Expression | undefined {
         return context.coreUtilities.fetcher.APIResponse.SuccessfulResponse._build(
             this.endpoint.response?.body != null
                 ? this.getOkResponseBody(context)
@@ -179,7 +175,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         );
     }
 
-    private getReturnResponseForKnownErrors(context: SdkContext): ts.Statement[] {
+    private getReturnResponseForKnownErrors(context: FileContext): ts.Statement[] {
         if (this.endpoint.errors.length === 0) {
             return [];
         }
@@ -203,8 +199,8 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         ];
     }
 
-    private getSwitchStatementForErrors(context: SdkContext) {
-        return ErrorDiscriminationStrategy._visit(this.errorDiscriminationStrategy, {
+    private getSwitchStatementForErrors(context: FileContext) {
+        return FernIr.ErrorDiscriminationStrategy._visit(this.errorDiscriminationStrategy, {
             property: (propertyErrorDiscriminationStrategy) =>
                 this.getSwitchStatementForPropertyDiscriminatedErrors({
                     context,
@@ -212,7 +208,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                 }),
             statusCode: () => this.getSwitchStatementForStatusCodeDiscriminatedErrors(context),
             _other: () => {
-                throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
+                throw new Error("Unknown FernIr.ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
             }
         });
     }
@@ -221,8 +217,8 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         context,
         propertyErrorDiscriminationStrategy
     }: {
-        context: SdkContext;
-        propertyErrorDiscriminationStrategy: ErrorDiscriminationByPropertyStrategy;
+        context: FileContext;
+        propertyErrorDiscriminationStrategy: FernIr.ErrorDiscriminationByPropertyStrategy;
     }) {
         if (this.endpoint.errors.length === 0) {
             throw new Error("Cannot generate switch because there are no errors defined");
@@ -245,13 +241,13 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
             ts.factory.createPropertyAccessChain(
                 ts.factory.createAsExpression(referenceToErrorBody, errorBodyType),
                 ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                propertyErrorDiscriminationStrategy.discriminant.wireValue
+                getWireValue(propertyErrorDiscriminationStrategy.discriminant)
             ),
             ts.factory.createCaseBlock([
                 ...this.endpoint.errors.map((error, index) =>
                     ts.factory.createCaseClause(
                         ts.factory.createStringLiteral(
-                            context.sdkError.getErrorDeclaration(error.error).discriminantValue.wireValue
+                            getWireValue(context.sdkError.getErrorDeclaration(error.error).discriminantValue)
                         ),
                         index < this.endpoint.errors.length - 1
                             ? []
@@ -287,11 +283,11 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         );
     }
 
-    private getGeneratedEndpointTypeSchemas(context: SdkContext): GeneratedSdkEndpointTypeSchemas {
+    private getGeneratedEndpointTypeSchemas(context: FileContext): GeneratedSdkEndpointTypeSchemas {
         return context.sdkEndpointTypeSchemas.getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name);
     }
 
-    private getSwitchStatementForStatusCodeDiscriminatedErrors(context: SdkContext) {
+    private getSwitchStatementForStatusCodeDiscriminatedErrors(context: FileContext) {
         const rawResponseAccessor = ts.factory.createPropertyAccessExpression(
             ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
             context.coreUtilities.fetcher.APIResponse.FailedResponse.rawResponse
@@ -342,7 +338,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         );
     }
 
-    private getReturnResponseForUnknownError(context: SdkContext): ts.Statement {
+    private getReturnResponseForUnknownError(context: FileContext): ts.Statement {
         const referenceToError = this.getReferenceToError(context);
         const rawResponseAccessor = ts.factory.createPropertyAccessExpression(
             ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
@@ -368,7 +364,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         );
     }
 
-    private getGeneratedEndpointErrorUnion(context: SdkContext): GeneratedEndpointErrorUnion {
+    private getGeneratedEndpointErrorUnion(context: FileContext): GeneratedEndpointErrorUnion {
         return context.endpointErrorUnion.getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name);
     }
 }

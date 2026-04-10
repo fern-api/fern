@@ -5,9 +5,9 @@ package com.seed.validation.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.validation.core.ObjectMappers;
@@ -34,17 +34,17 @@ public final class GetRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("decimal")
+    @JsonIgnore
     public double getDecimal() {
         return decimal;
     }
 
-    @JsonProperty("even")
+    @JsonIgnore
     public int getEven() {
         return even;
     }
 
-    @JsonProperty("name")
+    @JsonIgnore
     public String getName() {
         return name;
     }
@@ -94,6 +94,10 @@ public final class GetRequest {
 
     public interface _FinalStage {
         GetRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -141,6 +145,18 @@ public final class GetRequest {
         @java.lang.Override
         public GetRequest build() {
             return new GetRequest(decimal, even, name, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

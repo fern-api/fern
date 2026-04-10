@@ -4,8 +4,9 @@ import type * as FernIr from "../../../index.js";
 
 export interface SingleBaseUrlEnvironment extends FernIr.WithDocs {
     id: FernIr.EnvironmentId;
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
     url: FernIr.EnvironmentUrl;
+    audiences: string[] | undefined;
     /**
      * A separate default URL to use when no variables are provided.
      * If present and no variables are passed, use this URL instead of the template.

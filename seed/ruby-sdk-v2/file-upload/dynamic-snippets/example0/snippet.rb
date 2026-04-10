@@ -1,5 +1,5 @@
 require "seed"
 
-client = Seed::Client.new(base_url: 'https://api.fern.com');
+client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.service.just_file();
+client.service.just_file

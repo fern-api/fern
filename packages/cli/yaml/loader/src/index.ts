@@ -1,7 +1,7 @@
-export { ReferenceResolver } from "./ReferenceResolver";
-export { ValidationIssue } from "./ValidationIssue";
-export { YamlConfigLoader } from "./YamlConfigLoader";
-export type { YamlPath } from "./YamlDocument";
-export { YamlDocument } from "./YamlDocument";
-export { YamlParser } from "./YamlParser";
-export { YamlSourceResolver } from "./YamlSourceResolver";
+export { ReferenceResolver } from "./ReferenceResolver.js";
+export { ValidationIssue } from "./ValidationIssue.js";
+export { YamlConfigLoader } from "./YamlConfigLoader.js";
+export type { YamlPath } from "./YamlDocument.js";
+export { YamlDocument } from "./YamlDocument.js";
+export { YamlParser } from "./YamlParser.js";
+export { YamlSourceResolver } from "./YamlSourceResolver.js";

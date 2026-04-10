@@ -4,10 +4,11 @@ package service
 
 import (
 	context "context"
+	os "os"
+
 	core "github.com/bearer-token-environment-variable/fern/core"
 	internal "github.com/bearer-token-environment-variable/fern/internal"
 	option "github.com/bearer-token-environment-variable/fern/option"
-	os "os"
 )
 
 type Client struct {
@@ -19,8 +20,8 @@ type Client struct {
 }
 
 func NewClient(options *core.RequestOptions) *Client {
-	if options.ApiKey == "" {
-		options.ApiKey = os.Getenv("COURIER_API_KEY")
+	if options.APIKey == "" {
+		options.APIKey = os.Getenv("COURIER_API_KEY")
 	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),

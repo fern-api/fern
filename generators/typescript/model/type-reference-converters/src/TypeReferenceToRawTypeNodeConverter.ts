@@ -1,12 +1,12 @@
-import { TypeReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
-import { ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
-import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter";
+import { ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter.js";
+import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter.js";
 
 export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter {
-    protected override set(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
+    protected override set(itemType: FernIr.TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const itemTypeNode = this.convert({ ...params, typeReference: itemType });
         return this.generateNonOptionalTypeReferenceNode({
             typeNode: ts.factory.createArrayTypeNode(itemTypeNode.typeNode),
@@ -15,7 +15,7 @@ export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceTo
         });
     }
 
-    protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
+    protected override optional(itemType: FernIr.TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const referencedToValueType = this.convert({ ...params, typeReference: itemType });
         return {
             isOptional: true,
@@ -57,7 +57,7 @@ export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceTo
         };
     }
 
-    protected override nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
+    protected override nullable(itemType: FernIr.TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const referencedToValueType = this.convert({ ...params, typeReference: itemType });
         return {
             isOptional: true,
@@ -97,6 +97,34 @@ export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceTo
                   ])
                 : undefined
         };
+    }
+
+    protected override mapWithOptionalValues(
+        map: FernIr.MapType,
+        params: ConvertTypeReferenceParams
+    ): TypeReferenceNode {
+        const valueType = this.convert({ ...params, typeReference: map.valueType });
+        const keyType = this.convert({ ...params, typeReference: map.keyType });
+        const optionalValueTypeNode = valueType.isOptional ? valueType : this.optional(map.valueType, params);
+        return this.generateNonOptionalTypeReferenceNode({
+            typeNode: ts.factory.createTypeReferenceNode("Record", [keyType.typeNode, optionalValueTypeNode.typeNode]),
+            requestTypeNode: this.generateReadWriteOnlyTypes
+                ? keyType.requestTypeNode || optionalValueTypeNode.requestTypeNode
+                    ? ts.factory.createTypeReferenceNode("Record", [
+                          keyType.requestTypeNode ?? keyType.typeNode,
+                          optionalValueTypeNode.requestTypeNode ?? optionalValueTypeNode.typeNode
+                      ])
+                    : undefined
+                : undefined,
+            responseTypeNode: this.generateReadWriteOnlyTypes
+                ? keyType.responseTypeNode || optionalValueTypeNode.responseTypeNode
+                    ? ts.factory.createTypeReferenceNode("Record", [
+                          keyType.responseTypeNode ?? keyType.typeNode,
+                          optionalValueTypeNode.responseTypeNode ?? optionalValueTypeNode.typeNode
+                      ])
+                    : undefined
+                : undefined
+        });
     }
 
     protected override dateTime(): TypeReferenceNode {

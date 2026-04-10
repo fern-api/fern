@@ -1,2 +1,2 @@
-export * from "./CasingsGenerator";
-export * from "./reserved";
+export * from "./CasingsGenerator.js";
+export * from "./reserved.js";

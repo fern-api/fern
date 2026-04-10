@@ -1,4 +1,4 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 
@@ -6,7 +6,7 @@ namespace SeedExhaustive.Endpoints.Put;
 
 public partial class PutClient : IPutClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PutClient(RawClient client)
     {
@@ -29,7 +29,6 @@ public partial class PutClient : IPutClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
                     Path = string.Format("{0}", ValueConvert.ToPathParameterString(request.Id)),
                     Headers = _headers,
@@ -40,7 +39,9 @@ public partial class PutClient : IPutClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<PutResponse>(responseBody)!;
@@ -66,7 +67,9 @@ public partial class PutClient : IPutClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

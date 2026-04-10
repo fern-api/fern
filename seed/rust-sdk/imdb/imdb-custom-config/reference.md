@@ -42,6 +42,7 @@ async fn main() {
             &CreateMovieRequest {
                 title: "title".to_string(),
                 rating: 1.1,
+                ..Default::default()
             },
             None,
         )
@@ -110,3 +111,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

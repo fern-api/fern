@@ -4,6 +4,7 @@ package auth
 
 import (
 	context "context"
+
 	fern "github.com/inferred-auth-implicit-no-expiry/fern"
 	core "github.com/inferred-auth-implicit-no-expiry/fern/core"
 	internal "github.com/inferred-auth-implicit-no-expiry/fern/internal"

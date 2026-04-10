@@ -1,10 +1,10 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
-import { IntermediateRepresentation, Name, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { snakeCase } from "lodash-es";
 
-import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema";
-import { PythonProject } from "../project";
-import { PythonTypeMapper } from "./PythonTypeMapper";
+import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema.js";
+import { PythonProject } from "../project/index.js";
+import { PythonTypeMapper } from "./PythonTypeMapper.js";
 
 export abstract class AbstractPythonGeneratorContext<
     CustomConfig extends BasePythonCustomConfigSchema
@@ -14,7 +14,7 @@ export abstract class AbstractPythonGeneratorContext<
     public readonly project: PythonProject;
 
     public constructor(
-        public readonly ir: IntermediateRepresentation,
+        public readonly ir: FernIr.IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
         public readonly customConfig: CustomConfig,
         public readonly generatorNotificationService: GeneratorNotificationService
@@ -25,7 +25,7 @@ export abstract class AbstractPythonGeneratorContext<
         this.project = new PythonProject({ context: this });
     }
 
-    public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
+    public getTypeDeclarationOrThrow(typeId: FernIr.TypeId): FernIr.TypeDeclaration {
         const typeDeclaration = this.ir.types[typeId];
         if (typeDeclaration == null) {
             throw new Error(`Could not find type declaration for type id: ${typeId}`);
@@ -33,7 +33,7 @@ export abstract class AbstractPythonGeneratorContext<
         return typeDeclaration;
     }
 
-    public isTypeReferenceOptional(typeReference: TypeReference): boolean {
+    public isTypeReferenceOptional(typeReference: FernIr.TypeReference): boolean {
         if (typeReference.type === "container" && typeReference.container.type === "optional") {
             return true;
         }
@@ -46,15 +46,15 @@ export abstract class AbstractPythonGeneratorContext<
         return false;
     }
 
-    public getClassName(name: Name): string {
+    public getClassName(name: FernIr.Name): string {
         return name.pascalCase.safeName;
     }
 
-    public getPascalCaseSafeName(name: Name): string {
+    public getPascalCaseSafeName(name: FernIr.Name): string {
         return name.pascalCase.safeName;
     }
 
-    public getSnakeCaseSafeName(name: Name): string {
+    public getSnakeCaseSafeName(name: FernIr.Name): string {
         return name.snakeCase.safeName;
     }
 

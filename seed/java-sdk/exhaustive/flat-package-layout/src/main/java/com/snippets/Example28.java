@@ -1,7 +1,9 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.endpoints.types.GetWithPathAndQuery;
+import com.seed.exhaustive.types.types.NestedObjectWithRequiredField;
+import com.seed.exhaustive.types.types.ObjectWithOptionalField;
+import com.seed.exhaustive.types.types.ObjectWithRequiredNestedObject;
 
 public class Example28 {
     public static void main(String[] args) {
@@ -11,8 +13,13 @@ public class Example28 {
                 .build();
 
         client.endpoints()
-                .params()
-                .getWithPathAndQuery(
-                        "param", GetWithPathAndQuery.builder().query("query").build());
+                .object()
+                .getAndReturnWithRequiredNestedObject(ObjectWithRequiredNestedObject.builder()
+                        .requiredString("hello")
+                        .requiredObject(NestedObjectWithRequiredField.builder()
+                                .string("nested")
+                                .nestedObject(ObjectWithOptionalField.builder().build())
+                                .build())
+                        .build());
     }
 }

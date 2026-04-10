@@ -1,8 +1,8 @@
 require "seed"
 
 client = Seed::Client.new(
-  token: '<token>',
-  base_url: 'https://api.fern.com'
-);
+  token: "<token>",
+  base_url: "https://api.fern.com"
+)
 
-client.submission.get_execution_session(session_id: 'sessionId');
+client.submission.get_execution_session(session_id: "sessionId")

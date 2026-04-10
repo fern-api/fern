@@ -109,6 +109,8 @@ paths:
               properties:
                 username:
                   type: string
+                  minLength: 2
+                  maxLength: 1024
                   nullable: true
                   description: The user to delete.
 components:
@@ -163,6 +165,7 @@ components:
       required:
         - name
         - id
+        - tags
         - email
         - favorite-number
     Status:
@@ -227,5 +230,6 @@ components:
       required:
         - createdAt
         - updatedAt
+        - avatar
         - status
   securitySchemes: {}

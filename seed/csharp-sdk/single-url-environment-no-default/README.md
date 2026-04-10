@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedSingleUrlEnvironmentNoDefault)](https://nuget.org/packages/SeedSingleUrlEnvironmentNoDefault)
+[![nuget shield](https://img.shields.io/nuget/v/Fernsingle-url-environment-no-default)](https://nuget.org/packages/Fernsingle-url-environment-no-default)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -11,11 +11,14 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
   - [Raw Response](#raw-response)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query Parameters](#additional-query-parameters)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -25,7 +28,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedSingleUrlEnvironmentNoDefault
+dotnet add package Fernsingle-url-environment-no-default
 ```
 
 ## Reference
@@ -41,6 +44,19 @@ using SeedSingleUrlEnvironmentNoDefault;
 
 var client = new SeedSingleUrlEnvironmentNoDefaultClient("TOKEN");
 await client.Dummy.GetDummyAsync();
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```csharp
+using SeedSingleUrlEnvironmentNoDefault;
+
+var client = new SeedSingleUrlEnvironmentNoDefaultClient(new ClientOptions
+{
+    BaseUrl = SeedSingleUrlEnvironmentNoDefaultEnvironment.Production
+});
 ```
 
 ## Exception Handling
@@ -123,6 +139,38 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 
 // For the default behavior, simply await without .WithRawResponse()
 var data = await client.Dummy.GetDummyAsync(...);
+```
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
+
+```csharp
+var response = await client.Dummy.GetDummyAsync(
+    ...,
+    new RequestOptions {
+        AdditionalHeaders = new Dictionary<string, string?>
+        {
+            { "X-Custom-Header", "custom-value" }
+        }
+    }
+);
+```
+
+### Additional Query Parameters
+
+If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
+
+```csharp
+var response = await client.Dummy.GetDummyAsync(
+    ...,
+    new RequestOptions {
+        AdditionalQueryParameters = new Dictionary<string, string>
+        {
+            { "custom_param", "custom-value" }
+        }
+    }
+);
 ```
 
 ## Contributing

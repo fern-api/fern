@@ -7,16 +7,32 @@
     "directory": "packages/generator-cli"
   },
   "type": "commonjs",
-  "main": "dist/api.js",
-  "source": "src/index.ts",
-  "types": "dist/api.d.ts",
+  "exports": {
+    ".": {
+      "development": "./src/api.ts",
+      "source": "./src/api.ts",
+      "types": "./lib/api.d.ts",
+      "default": "./lib/api.js"
+    }
+  },
+  "main": "lib/api.js",
+  "source": "src/api.ts",
+  "types": "lib/api.d.ts",
   "bin": {
     "generator-cli": "bin/cli"
   },
-  "files": ["bin", "dist"],
+  "files": ["bin", "dist", "lib"],
+  "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/replay": "0.10.2",
+    "@octokit/rest": "catalog:",
+    "es-toolkit": "catalog:",
+    "tmp-promise": "catalog:"
+  },
   "scripts": {
-    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
-    "depcheck": "depcheck",
+    "clean": "rm -rf ./lib && rm -rf ./dist",
+    "compile": "tsc --project tsconfig.build.json",
+    "depcheck": "knip --config ../../knip.json --no-config-hints",
     "dist:cli": "node build.mjs",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
     "test:update": "vitest -u --run --passWithNoTests --globals --disable-console-intercept"
@@ -25,18 +41,14 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/github": "workspace:*",
-    "@octokit/rest": "^20.1.2",
     "@types/jest": "^29.5.11",
     "@types/node": "^22.0.0",
     "@types/yargs": "^17.0.32",
-    "depcheck": "^1.4.7",
-    "es-toolkit": "^1.32.0",
-    "esbuild": "^0.25.0",
+    "esbuild": "catalog:",
     "execa": "^9.5.1",
-    "tmp-promise": "^3.0.3",
-    "tsup": "^8.5.0",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
     "yargs": "^17.4.1"
   }
 }

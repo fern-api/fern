@@ -3,10 +3,9 @@ import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { HttpEndpoint, HttpService, ServiceId, TypeReference } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator.js";
 
 export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
     const builder = new ReferenceConfigBuilder();
@@ -15,7 +14,7 @@ export function buildReference({ context }: { context: SdkGeneratorContext }): R
     serviceEntries.forEach(([serviceId, service]) => {
         const section = isRootServiceId({ context, serviceId })
             ? builder.addRootSection()
-            : builder.addSection({ title: getSectionTitle({ service }) });
+            : builder.addSection({ title: getSectionTitle({ context, service }) });
         const endpoints = getEndpointReferencesForService({ context, serviceId, service });
         for (const endpoint of endpoints) {
             section.addEndpoint(endpoint);
@@ -31,8 +30,8 @@ function getEndpointReferencesForService({
     service
 }: {
     context: SdkGeneratorContext;
-    serviceId: ServiceId;
-    service: HttpService;
+    serviceId: FernIr.ServiceId;
+    service: FernIr.HttpService;
 }): FernGeneratorCli.EndpointReference[] {
     return service.endpoints
         .map((endpoint) => {
@@ -66,9 +65,9 @@ function getEndpointReference({
     singleEndpointSnippet
 }: {
     context: SdkGeneratorContext;
-    serviceId: ServiceId;
-    service: HttpService;
-    endpoint: HttpEndpoint;
+    serviceId: FernIr.ServiceId;
+    service: FernIr.HttpService;
+    endpoint: FernIr.HttpEndpoint;
     singleEndpointSnippet: SingleEndpointSnippet;
 }): FernGeneratorCli.EndpointReference {
     const returnValue = getReturnValue({ context, endpoint });
@@ -80,7 +79,7 @@ function getEndpointReference({
                     text: getAccessFromRootClient({ context, service }) + "."
                 },
                 {
-                    text: getEndpointMethodName({ endpoint }),
+                    text: getEndpointMethodName({ context, endpoint }),
                     location: serviceFilepath != null ? { path: serviceFilepath } : undefined
                 },
                 {
@@ -101,8 +100,8 @@ function getServiceFilepath({
     service
 }: {
     context: SdkGeneratorContext;
-    serviceId: ServiceId;
-    service: HttpService;
+    serviceId: FernIr.ServiceId;
+    service: FernIr.HttpService;
 }): string | undefined {
     // For root service, the client file is at lib/<gem_name>/client.rb
     if (isRootServiceId({ context, serviceId })) {
@@ -110,7 +109,7 @@ function getServiceFilepath({
     }
 
     // For subpackage services, the client file is at lib/<gem_name>/<subpackage_path>/client.rb
-    const servicePath = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+    const servicePath = service.name.fernFilepath.allParts.map((part) => context.caseConverter.snakeSafe(part));
     if (servicePath.length > 0) {
         return (
             "/" +
@@ -125,14 +124,26 @@ function getServiceFilepath({
     return undefined;
 }
 
-function getAccessFromRootClient({ context, service }: { context: SdkGeneratorContext; service: HttpService }): string {
+function getAccessFromRootClient({
+    context,
+    service
+}: {
+    context: SdkGeneratorContext;
+    service: FernIr.HttpService;
+}): string {
     const clientVariableName = "client";
-    const servicePath = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+    const servicePath = service.name.fernFilepath.allParts.map((part) => context.caseConverter.snakeSafe(part));
     return servicePath.length > 0 ? `${clientVariableName}.${servicePath.join(".")}` : clientVariableName;
 }
 
-function getEndpointMethodName({ endpoint }: { endpoint: HttpEndpoint }): string {
-    return endpoint.name.snakeCase.safeName;
+function getEndpointMethodName({
+    context,
+    endpoint
+}: {
+    context: SdkGeneratorContext;
+    endpoint: FernIr.HttpEndpoint;
+}): string {
+    return context.caseConverter.snakeSafe(endpoint.name);
 }
 
 function getReferenceEndpointInvocationParameters({
@@ -140,12 +151,12 @@ function getReferenceEndpointInvocationParameters({
     endpoint
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
 }): string {
     const parameters: string[] = [];
 
     endpoint.allPathParameters.forEach((pathParam) => {
-        parameters.push(pathParam.name.snakeCase.safeName);
+        parameters.push(context.caseConverter.snakeSafe(pathParam.name));
     });
 
     if (endpoint.requestBody != null) {
@@ -173,7 +184,7 @@ function getReturnValue({
     endpoint
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
 }): { text: string } | undefined {
     const returnType = context.getReturnTypeForEndpoint(endpoint);
     const returnTypeString = getSimpleTypeName(returnType, context);
@@ -185,7 +196,7 @@ function getRubyTypeString({
     typeReference
 }: {
     context: SdkGeneratorContext;
-    typeReference: TypeReference;
+    typeReference: FernIr.TypeReference;
 }): string {
     const rubyType = context.typeMapper.convert({ reference: typeReference });
     return getSimpleTypeName(rubyType, context);
@@ -211,14 +222,14 @@ function getEndpointParameters({
     endpoint
 }: {
     context: SdkGeneratorContext;
-    serviceId: ServiceId;
-    endpoint: HttpEndpoint;
+    serviceId: FernIr.ServiceId;
+    endpoint: FernIr.HttpEndpoint;
 }): FernGeneratorCli.ParameterReference[] {
     const parameters: FernGeneratorCli.ParameterReference[] = [];
 
     endpoint.allPathParameters.forEach((pathParam) => {
         parameters.push({
-            name: pathParam.name.snakeCase.safeName,
+            name: context.caseConverter.snakeSafe(pathParam.name),
             type: getRubyTypeString({ context, typeReference: pathParam.valueType }),
             description: pathParam.docs,
             required: true
@@ -227,7 +238,7 @@ function getEndpointParameters({
 
     endpoint.queryParameters.forEach((queryParam) => {
         parameters.push({
-            name: queryParam.name.name.snakeCase.safeName,
+            name: context.caseConverter.snakeSafe(queryParam.name),
             type: getRubyTypeString({ context, typeReference: queryParam.valueType }),
             description: queryParam.docs,
             required: !queryParam.allowMultiple
@@ -236,7 +247,7 @@ function getEndpointParameters({
 
     endpoint.headers.forEach((header) => {
         parameters.push({
-            name: header.name.name.snakeCase.safeName,
+            name: context.caseConverter.snakeSafe(header.name),
             type: getRubyTypeString({ context, typeReference: header.valueType }),
             description: header.docs,
             required: true
@@ -246,7 +257,7 @@ function getEndpointParameters({
     if (endpoint.requestBody != null && endpoint.requestBody.type === "inlinedRequestBody") {
         endpoint.requestBody.properties.forEach((property) => {
             parameters.push({
-                name: property.name.name.snakeCase.safeName,
+                name: context.caseConverter.snakeSafe(property.name),
                 type: getRubyTypeString({ context, typeReference: property.valueType }),
                 description: property.docs,
                 required: true
@@ -273,7 +284,13 @@ function getEndpointParameters({
     return parameters;
 }
 
-function getRequestOptionsType({ context, serviceId }: { context: SdkGeneratorContext; serviceId: ServiceId }): string {
+function getRequestOptionsType({
+    context,
+    serviceId
+}: {
+    context: SdkGeneratorContext;
+    serviceId: FernIr.ServiceId;
+}): string {
     // For root service, use the root module's RequestOptions
     if (isRootServiceId({ context, serviceId })) {
         return `${context.getRootModuleName()}::RequestOptions`;
@@ -284,7 +301,7 @@ function getRequestOptionsType({ context, serviceId }: { context: SdkGeneratorCo
         const subpackage = context.getSubpackageForServiceId(serviceId);
         const modulePath = [
             context.getRootModuleName(),
-            ...subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName)
+            ...subpackage.fernFilepath.allParts.map((part) => context.caseConverter.pascalSafe(part))
         ].join("::");
         return `${modulePath}::RequestOptions`;
     } catch {
@@ -293,10 +310,19 @@ function getRequestOptionsType({ context, serviceId }: { context: SdkGeneratorCo
     }
 }
 
-function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext; serviceId: ServiceId }): boolean {
+function isRootServiceId({
+    context,
+    serviceId
+}: {
+    context: SdkGeneratorContext;
+    serviceId: FernIr.ServiceId;
+}): boolean {
     return context.ir.rootPackage.service === serviceId;
 }
 
-function getSectionTitle({ service }: { service: HttpService }): string {
-    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ");
+function getSectionTitle({ context, service }: { context: SdkGeneratorContext; service: FernIr.HttpService }): string {
+    return (
+        service.displayName ??
+        service.name.fernFilepath.allParts.map((part) => context.caseConverter.pascalSafe(part)).join(" ")
+    );
 }

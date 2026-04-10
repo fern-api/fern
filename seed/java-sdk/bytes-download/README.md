@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:bytes-download'
+  implementation 'com.fern:bytes-download:0.0.1'
 }
 ```
 
@@ -195,7 +195,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SimpleHttpResponse response = client.service().withRawResponse().simple(...);
+SeedBytesDownloadHttpResponse response = client.service().withRawResponse().simple(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

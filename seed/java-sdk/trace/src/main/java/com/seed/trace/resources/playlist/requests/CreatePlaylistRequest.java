@@ -5,6 +5,7 @@ package com.seed.trace.resources.playlist.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -42,12 +43,12 @@ public final class CreatePlaylistRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("datetime")
+    @JsonIgnore
     public OffsetDateTime getDatetime() {
         return datetime;
     }
 
-    @JsonProperty("optionalDatetime")
+    @JsonIgnore
     public Optional<OffsetDateTime> getOptionalDatetime() {
         return optionalDatetime;
     }
@@ -100,6 +101,10 @@ public final class CreatePlaylistRequest {
 
     public interface _FinalStage {
         CreatePlaylistRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage optionalDatetime(Optional<OffsetDateTime> optionalDatetime);
 
@@ -157,6 +162,18 @@ public final class CreatePlaylistRequest {
         @java.lang.Override
         public CreatePlaylistRequest build() {
             return new CreatePlaylistRequest(datetime, optionalDatetime, body, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -17,7 +17,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::User::Types::UserId] :user_id
+      # @option params [Seed::User::Types::UserID] :user_id
       #
       # @return [Seed::User::Types::User]
       def get_user(request_options: {}, **params)
@@ -25,7 +25,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/users/#{params[:user_id]}",
+          path: "/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
           request_options: request_options
         )
         begin

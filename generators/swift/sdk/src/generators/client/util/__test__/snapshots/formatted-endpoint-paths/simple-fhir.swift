@@ -1,2 +1,0 @@
-// service_
-"/account/\(accountID)"

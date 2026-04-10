@@ -1,5 +1,5 @@
-import { Visibility } from "../types";
-import { Writer } from "../Writer";
+import { Visibility } from "../types.js";
+import { Writer } from "../Writer.js";
 
 export function writeVisibility(writer: Writer, visibility: Visibility): void {
     switch (visibility.type) {

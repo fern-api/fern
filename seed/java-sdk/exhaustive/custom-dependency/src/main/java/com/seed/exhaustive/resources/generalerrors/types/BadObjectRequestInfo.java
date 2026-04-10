@@ -70,6 +70,10 @@ public final class BadObjectRequestInfo {
 
     public interface _FinalStage {
         BadObjectRequestInfo build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -97,6 +101,18 @@ public final class BadObjectRequestInfo {
         @java.lang.Override
         public BadObjectRequestInfo build() {
             return new BadObjectRequestInfo(message, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

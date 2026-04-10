@@ -1,7 +1,8 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import java.time.OffsetDateTime;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithMultipleQuery;
+import java.util.Arrays;
 
 public class Example36 {
     public static void main(String[] args) {
@@ -11,6 +12,16 @@ public class Example36 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().primitive().getAndReturnDatetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"));
+        client.endpoints().params().getWithAllowMultipleQuery(
+            GetWithMultipleQuery
+                .builder()
+                .query(
+                    Arrays.asList("query")
+                )
+                .number(
+                    Arrays.asList(1)
+                )
+                .build()
+        );
     }
 }

@@ -3,18 +3,15 @@ import { AbsoluteFilePath, listFiles, RelativeFilePath, relative } from "@fern-a
 import { readFile } from "fs/promises";
 
 export async function listFernFiles(root: AbsoluteFilePath, extensionGlob: string): Promise<FernFile[]> {
-    const files: FernFile[] = [];
-
-    for (const absoluteFilepath of await listFiles(root, extensionGlob)) {
-        files.push(
-            await createFernFile({
+    const absoluteFilepaths = await listFiles(root, extensionGlob);
+    return await Promise.all(
+        absoluteFilepaths.map((absoluteFilepath) =>
+            createFernFile({
                 relativeFilepath: relative(root, absoluteFilepath),
                 absoluteFilepath
             })
-        );
-    }
-
-    return files;
+        )
+    );
 }
 
 async function createFernFile({

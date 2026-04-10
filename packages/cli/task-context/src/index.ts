@@ -1,6 +1,6 @@
-export { FernCliError } from "./FernCliError";
-export { LoggableFernCliError } from "./LoggableFernCliError";
-export { createMockTaskContext } from "./MockTaskContext";
+export { FernCliError } from "./FernCliError.js";
+export { LoggableFernCliError } from "./LoggableFernCliError.js";
+export { createMockTaskContext } from "./MockTaskContext.js";
 export {
     type CreateInteractiveTaskParams,
     type Finishable,
@@ -9,4 +9,4 @@ export {
     type Startable,
     type TaskContext,
     TaskResult
-} from "./TaskContext";
+} from "./TaskContext.js";

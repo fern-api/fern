@@ -9,7 +9,11 @@
           "UnionJob": {
             "availability": undefined,
             "base-properties": {},
-            "discriminant": "type",
+            "default-variant": undefined,
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -26,7 +30,9 @@
       },
       "rawContents": "types:
   UnionJob:
-    discriminant: type
+    discriminant:
+      value: type
+      context: data
     base-properties: {}
     union:
       EMBEDDING_GENERATION: unknown

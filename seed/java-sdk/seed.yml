@@ -1,4 +1,4 @@
-irVersion: v63
+irVersion: v66
 displayName: Java SDK
 changelogLocation: ../../generators/java/sdk/versions.yml
 image: fernapi/fern-java-sdk
@@ -69,6 +69,12 @@ fixtures:
       outputFolder: custom-dependency
     - customConfig:
         inline-path-parameters: true
+        custom-plugins:
+          - "com.github.johnrengelman.shadow:8.1.1"
+          - "org.jetbrains.kotlin.jvm:2.1.0"
+      outputFolder: custom-plugins
+    - customConfig:
+        inline-path-parameters: true
         json-include: non-empty
       outputFolder: json-include-non-empty
     - customConfig:
@@ -100,6 +106,9 @@ fixtures:
     #     inline-path-parameters: true
     #     enable-wire-tests: true
     #   outputFolder: wire-tests
+    - customConfig:
+        custom-interceptors: true
+      outputFolder: custom-interceptors
     - customConfig:
         publish-to: central
       outputFolder: publish-to
@@ -153,6 +162,10 @@ fixtures:
     - customConfig:
         package-layout: flat
       outputFolder: flat-package-layout
+    - customConfig:
+        omit-fern-headers: true
+        maxRetries: 5
+      outputFolder: omit-fern-headers
   java-custom-package-prefix:
     - customConfig:
         package-prefix: "com.customprefix"
@@ -161,6 +174,10 @@ fixtures:
     - outputFolder: java-single-property-endpoint
   java-pagination-deep-cursor-path:
     - outputFolder: java-pagination-deep-cursor-path
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
+  pagination-uri-path:
     - customConfig:
         enable-wire-tests: true
       outputFolder: wire-tests
@@ -269,6 +286,9 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: oauth-client-credentials
+    - customConfig:
+        custom-interceptors: true
+      outputFolder: custom-interceptors
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
@@ -294,6 +314,16 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: streaming
+  server-sent-event-examples:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: with-wire-tests
+    - customConfig: null
+      outputFolder: no-custom-config
+  server-sent-events-openapi:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: with-wire-tests
   java-optional-nullable-query-params:
     - customConfig:
         use-default-request-parameter-values: true
@@ -306,6 +336,8 @@ fixtures:
   java-with-property-conflict:
     - outputFolder: default
   java-path-param-key-conflict:
+    - outputFolder: default
+  java-many-properties:
     - outputFolder: default
   java-output-directory:
     # Test with no output-directory config (should use default PROJECT_ROOT)
@@ -329,9 +361,14 @@ fixtures:
       outputFolder: source-root
       skipScripts: true
 scripts:
-  - image: fernapi/java-seed
-    commands:
-      - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava spotlessCheck
+  docker:
+    - image: fernapi/java-seed
+      commands:
+        - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava spotlessCheck
+  local:
+    - commands:
+      - ./gradlew compileJava spotlessCheck
+
 allowedFailures:
   - alias-extends
   - enum:forward-compatible-enums
@@ -348,6 +385,7 @@ allowedFailures:
   - nullable-optional:with-nullable-annotation
   - nullable-optional:collapse-optional-nullable
   - oauth-client-credentials
+  - oauth-client-credentials:custom-interceptors
   - oauth-client-credentials-custom
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables

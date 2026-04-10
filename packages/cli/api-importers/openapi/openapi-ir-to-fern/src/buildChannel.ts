@@ -1,14 +1,14 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { WebsocketChannel } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-import { buildHeader } from "./buildHeader";
-import { buildPathParameter } from "./buildPathParameter";
-import { buildQueryParameter } from "./buildQueryParameter";
-import { buildTypeReference } from "./buildTypeReference";
-import { buildWebsocketSessionExample } from "./buildWebsocketSessionExample";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { generateWebsocketUrlId } from "./utils/generateUrlId";
-import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
+import { buildHeader } from "./buildHeader.js";
+import { buildPathParameter } from "./buildPathParameter.js";
+import { buildQueryParameter } from "./buildQueryParameter.js";
+import { buildTypeReference } from "./buildTypeReference.js";
+import { buildWebsocketSessionExample } from "./buildWebsocketSessionExample.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { generateWebsocketUrlId } from "./utils/generateUrlId.js";
+import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup.js";
 
 export function buildChannel({
     channel,
@@ -21,11 +21,17 @@ export function buildChannel({
     declarationFile: RelativeFilePath;
 }): void {
     const firstServer = channel.servers[0];
+    // Don't set a urlId when it would result in a single-URL environment.
+    // This happens when there are only WebSocket servers (no HTTP servers) and only one
+    // WebSocket server — buildEnvironments creates a single-URL environment in that case,
+    // so a baseUrlId on the channel would be meaningless and can cause generator issues.
+    const hasSingleWebsocketServerOnly = context.ir.servers.length === 0 && context.ir.websocketServers.length <= 1;
     // Generate URL ID based on feature flag:
     // - If groupEnvironmentsByHost is enabled, look up the collision-aware URL ID from the map
     // - Otherwise, use simple server name for backward compatibility
+    // - Skip entirely for single-WebSocket-server-only specs (no multi-URL environment)
     const urlId =
-        firstServer != null
+        firstServer != null && !hasSingleWebsocketServerOnly
             ? context.options.groupEnvironmentsByHost
                 ? (context.getUrlId(firstServer.url) ?? generateWebsocketUrlId(firstServer.name, firstServer.url, true))
                 : firstServer.name
@@ -46,10 +52,12 @@ export function buildChannel({
         }
     }
 
+    const hasAuth = context.authOverrides?.auth != null;
+
     const convertedChannel: RawSchemas.WebSocketChannelSchema = {
         path: convertedPath,
         url: urlId,
-        auth: false
+        auth: hasAuth
     };
 
     if (channel.audiences != null && channel.audiences.length > 0) {
@@ -58,6 +66,10 @@ export function buildChannel({
 
     if (channel.summary != null) {
         convertedChannel["display-name"] = channel.summary;
+    }
+
+    if (channel.connectMethodName != null) {
+        convertedChannel["connect-method-name"] = channel.connectMethodName;
     }
 
     if (channel.description != null) {

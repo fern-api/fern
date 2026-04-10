@@ -64,6 +64,8 @@ type Config struct {
 	UseReaderForBytesRequest     bool
 	GettersPassByValue           bool
 	ExportAllRequestsAtRoot      bool
+	OmitEmptyRequestWrappers     bool
+	OmitFernHeaders              bool
 	Organization                 string
 	CoordinatorURL               string
 	CoordinatorTaskID            string
@@ -235,6 +237,8 @@ func newConfig(configFilename string) (*Config, error) {
 		UseReaderForBytesRequest:     *customConfig.UseReaderForBytesRequest,
 		GettersPassByValue:           *customConfig.GettersPassByValue,
 		ExportAllRequestsAtRoot:      *customConfig.ExportAllRequestsAtRoot,
+		OmitEmptyRequestWrappers:     *customConfig.OmitEmptyRequestWrappers,
+		OmitFernHeaders:              *customConfig.OmitFernHeaders,
 		Organization:                 config.Organization,
 		AlwaysSendRequiredProperties: *customConfig.AlwaysSendRequiredProperties,
 		Whitelabel:                   config.Whitelabel,
@@ -299,6 +303,8 @@ type customConfig struct {
 	UseReaderForBytesRequest     *bool         `json:"useReaderForBytesRequest,omitempty"`
 	GettersPassByValue           *bool         `json:"gettersPassByValue,omitempty"`
 	ExportAllRequestsAtRoot      *bool         `json:"exportAllRequestsAtRoot,omitempty"`
+	OmitEmptyRequestWrappers     *bool         `json:"omitEmptyRequestWrappers,omitempty"`
+	OmitFernHeaders              *bool         `json:"omitFernHeaders,omitempty"`
 	ClientName                   string        `json:"clientName,omitempty"`
 	ClientConstructorName        string        `json:"clientConstructorName,omitempty"`
 	ImportPath                   string        `json:"importPath,omitempty"`
@@ -402,9 +408,13 @@ func moduleConfigFromCustomConfig(customConfig *customConfig, outputMode writer.
 		// The user explicitly specified a module path, so we should use it.
 		modulePath = customConfig.Module.Path
 	}
-	imports := customConfig.Module.Imports
-	if imports == nil {
-		imports = defaultImports
+	// Merge user-specified imports with defaults, allowing user versions to override bundled ones.
+	imports := make(map[string]string)
+	for k, v := range defaultImports {
+		imports[k] = v
+	}
+	for k, v := range customConfig.Module.Imports {
+		imports[k] = v
 	}
 	return &generator.ModuleConfig{
 		Path:    modulePath,
@@ -458,6 +468,12 @@ func applyCustomConfigDefaultsForV1(customConfig *customConfig) *customConfig {
 	}
 	if customConfig.ExportAllRequestsAtRoot == nil {
 		customConfig.ExportAllRequestsAtRoot = gospec.Ptr(false)
+	}
+	if customConfig.OmitEmptyRequestWrappers == nil {
+		customConfig.OmitEmptyRequestWrappers = gospec.Ptr(false)
+	}
+	if customConfig.OmitFernHeaders == nil {
+		customConfig.OmitFernHeaders = gospec.Ptr(false)
 	}
 	if customConfig.UnionVersion == "" {
 		customConfig.UnionVersion = "v1"

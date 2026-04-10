@@ -21,19 +21,11 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
             { id: "id", name: "name" },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithBearer();
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-            },
-            {
-                id: "id",
-                name: "name",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getWithApiKey", async () => {
@@ -52,19 +44,11 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
             { id: "id", name: "name" },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithApiKey();
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-            },
-            {
-                id: "id",
-                name: "name",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getWithOAuth", async () => {
@@ -85,19 +69,11 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
             { id: "id", name: "name" },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithOAuth();
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-            },
-            {
-                id: "id",
-                name: "name",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getWithBasic", async () => {
@@ -116,19 +92,11 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
             { id: "id", name: "name" },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithBasic();
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-            },
-            {
-                id: "id",
-                name: "name",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getWithInferredAuth", async () => {
@@ -149,19 +117,11 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
             { id: "id", name: "name" },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithInferredAuth();
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-            },
-            {
-                id: "id",
-                name: "name",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getWithAnyAuth", async () => {
@@ -183,19 +143,11 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
             { id: "id", name: "name" },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithAnyAuth();
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-            },
-            {
-                id: "id",
-                name: "name",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getWithAllAuth", async () => {
@@ -217,18 +169,10 @@ describe("UserClient", () => {
             { id: "id", name: "name" },
             { id: "id", name: "name" },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getWithAllAuth();
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-            },
-            {
-                id: "id",
-                name: "name",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 });

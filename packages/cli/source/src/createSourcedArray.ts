@@ -1,7 +1,7 @@
-import { LOCATION_PROPERTY } from "./constants";
-import type { SourcedArray } from "./Sourced";
-import type { SourceLocation } from "./SourceLocation";
-import type { SourceNodeWrapper } from "./SourceNodeWrapper";
+import { LOCATION_PROPERTY } from "./constants.js";
+import type { SourcedArray } from "./Sourced.js";
+import type { SourceLocation } from "./SourceLocation.js";
+import type { SourceNodeWrapper } from "./SourceNodeWrapper.js";
 
 /**
  * Creates a sourced proxy for an array that adds $loc and recursively wraps elements.

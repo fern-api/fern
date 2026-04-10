@@ -1,5 +1,5 @@
-import type { Language } from "../Language";
-import { DOCKER_IMAGE_TO_LANGUAGE } from "./constants";
+import type { Language } from "../Language.js";
+import { DOCKER_IMAGE_TO_LANGUAGE } from "./constants.js";
 
 /**
  * Returns the language for a given image reference.

@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
@@ -64,7 +64,7 @@ public record TestCaseImplementationReference
     public string AsTemplateId() =>
         IsTemplateId
             ? (string)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "TestCaseImplementationReference.Type is not 'templateId'"
             );
 
@@ -75,7 +75,7 @@ public record TestCaseImplementationReference
     public SeedTrace.V2.V3.TestCaseImplementation AsImplementation() =>
         IsImplementation
             ? (SeedTrace.V2.V3.TestCaseImplementation)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "TestCaseImplementationReference.Type is not 'implementation'"
             );
 
@@ -154,12 +154,12 @@ public record TestCaseImplementationReference
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<TestCaseImplementationReference>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(TestCaseImplementationReference).IsAssignableFrom(typeToConvert);
 
         public override TestCaseImplementationReference Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -184,16 +184,23 @@ public record TestCaseImplementationReference
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
                 "templateId" => json.GetProperty("value").Deserialize<string?>(options)
-                ?? throw new JsonException("Failed to deserialize string"),
-                "implementation" => json.Deserialize<SeedTrace.V2.V3.TestCaseImplementation?>(
-                    options
-                )
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.V3.TestCaseImplementation"
-                    ),
+                    ?? throw new JsonException("Failed to deserialize string"),
+                "implementation" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.V2.V3.TestCaseImplementation?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.V2.V3.TestCaseImplementation"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new TestCaseImplementationReference(discriminator, value);
@@ -217,6 +224,27 @@ public record TestCaseImplementationReference
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override TestCaseImplementationReference ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new TestCaseImplementationReference(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            TestCaseImplementationReference value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

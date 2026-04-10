@@ -1,37 +1,16 @@
+import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { isNonNullish } from "@fern-api/core-utils";
-import {
-    ContainerType,
-    EnvironmentsConfig,
-    ErrorDeclaration,
-    ErrorDiscriminationByPropertyStrategy,
-    ErrorDiscriminationStrategy,
-    ExampleEndpointCall,
-    ExampleInlinedRequestBodyProperty,
-    FileUploadRequestProperty,
-    HttpEndpoint,
-    HttpHeader,
-    HttpMethod,
-    HttpPath,
-    HttpRequestBody,
-    HttpResponse,
-    HttpService,
-    IntermediateRepresentation,
-    PathParameter,
-    QueryParameter,
-    ResponseError,
-    ResponseErrors,
-    Type,
-    TypeDeclaration,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";
 
-import { getDeclaredTypeNameKey, getErrorTypeNameKey } from "../convertToOpenApi";
-import { Mode } from "../writeOpenApi";
-import { convertObject } from "./convertObject";
-import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter";
+import { getDeclaredTypeNameKey, getErrorTypeNameKey } from "../convertToOpenApi.js";
+import { convertAvailabilityStatus } from "../utils/convertAvailability.js";
+import { Mode } from "../writeOpenApi.js";
+import { convertObject } from "./convertObject.js";
+
+import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter.js";
 
 export function convertServices({
     ir,
@@ -41,16 +20,18 @@ export function convertServices({
     errorDiscriminationStrategy,
     security,
     environments,
-    mode
+    mode,
+    caseConverter
 }: {
-    ir: IntermediateRepresentation;
-    httpServices: HttpService[];
-    typesByName: Record<string, TypeDeclaration>;
-    errorsByName: Record<string, ErrorDeclaration>;
-    errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+    ir: FernIr.IntermediateRepresentation;
+    httpServices: FernIr.HttpService[];
+    typesByName: Record<string, FernIr.TypeDeclaration>;
+    errorsByName: Record<string, FernIr.ErrorDeclaration>;
+    errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
     security: OpenAPIV3.SecurityRequirementObject[];
-    environments: EnvironmentsConfig | undefined;
+    environments: FernIr.EnvironmentsConfig | undefined;
     mode: Mode;
+    caseConverter: CaseConverter;
 }): OpenAPIV3.PathsObject {
     const paths: OpenAPIV3.PathsObject = {};
     httpServices.forEach((httpService) => {
@@ -64,7 +45,8 @@ export function convertServices({
                 errorDiscriminationStrategy,
                 security,
                 environments,
-                mode
+                mode,
+                caseConverter
             });
             const pathsObject = (paths[fullPath] ??= {});
             if (pathsObject[convertedHttpMethod] != null) {
@@ -91,17 +73,19 @@ function convertHttpEndpoint({
     security,
     environments,
     mode,
-    ir
+    ir,
+    caseConverter
 }: {
-    ir: IntermediateRepresentation;
-    httpEndpoint: HttpEndpoint;
-    httpService: HttpService;
-    typesByName: Record<string, TypeDeclaration>;
-    errorsByName: Record<string, ErrorDeclaration>;
-    errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+    ir: FernIr.IntermediateRepresentation;
+    httpEndpoint: FernIr.HttpEndpoint;
+    httpService: FernIr.HttpService;
+    typesByName: Record<string, FernIr.TypeDeclaration>;
+    errorsByName: Record<string, FernIr.ErrorDeclaration>;
+    errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
     security: OpenAPIV3.SecurityRequirementObject[];
-    environments: EnvironmentsConfig | undefined;
+    environments: FernIr.EnvironmentsConfig | undefined;
     mode: Mode;
+    caseConverter: CaseConverter;
 }): ConvertedHttpEndpoint {
     let fullPath = urlJoin(
         ir.basePath != null ? convertHttpPathToString(ir.basePath) : "",
@@ -153,13 +137,13 @@ function convertHttpEndpoint({
     const tag =
         mode === "stoplight"
             ? (httpService.displayName ??
-              httpService.name.fernFilepath.allParts.map((name) => name.originalName).join(" "))
-            : httpService.name.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName).join("");
+              httpService.name.fernFilepath.allParts.map((name) => getOriginalName(name)).join(" "))
+            : httpService.name.fernFilepath.allParts.map((name) => caseConverter.pascalUnsafe(name)).join("");
     const operationObject: OpenAPIV3.OperationObject = {
         description: httpEndpoint.docs ?? undefined,
         operationId: [
-            ...httpService.name.fernFilepath.allParts.map((name) => name.camelCase.unsafeName),
-            httpEndpoint.name.originalName
+            ...httpService.name.fernFilepath.allParts.map((name) => caseConverter.camelUnsafe(name)),
+            getOriginalName(httpEndpoint.name)
         ].join("_"),
         tags: [tag],
         parameters,
@@ -172,6 +156,13 @@ function convertHttpEndpoint({
         }),
         summary: httpEndpoint.displayName ?? undefined
     };
+
+    if (httpEndpoint.availability != null) {
+        const availabilityValue = convertAvailabilityStatus(httpEndpoint.availability.status);
+        if (availabilityValue != null) {
+            (operationObject as unknown as Record<string, unknown>)["x-fern-availability"] = availabilityValue;
+        }
+    }
 
     if (httpEndpoint.baseUrl != null) {
         const baseUrlId = httpEndpoint.baseUrl;
@@ -209,8 +200,8 @@ function convertHttpEndpoint({
     };
 }
 
-function convertHttpMethod(httpMethod: HttpMethod): OpenAPIV3.HttpMethods {
-    return HttpMethod._visit<OpenAPIV3.HttpMethods>(httpMethod, {
+function convertHttpMethod(httpMethod: FernIr.HttpMethod): OpenAPIV3.HttpMethods {
+    return FernIr.HttpMethod._visit<OpenAPIV3.HttpMethods>(httpMethod, {
         get: () => {
             return OpenAPIV3.HttpMethods.GET;
         },
@@ -226,6 +217,9 @@ function convertHttpMethod(httpMethod: HttpMethod): OpenAPIV3.HttpMethods {
         delete: () => {
             return OpenAPIV3.HttpMethods.DELETE;
         },
+        head: () => {
+            return OpenAPIV3.HttpMethods.HEAD;
+        },
         _other: () => {
             throw new Error("Encountered unknown http method: " + httpMethod);
         }
@@ -237,15 +231,15 @@ function convertRequestBody({
     typesByName,
     examples
 }: {
-    httpRequest: HttpRequestBody;
-    typesByName: Record<string, TypeDeclaration>;
-    examples: ExampleEndpointCall[];
+    httpRequest: FernIr.HttpRequestBody;
+    typesByName: Record<string, FernIr.TypeDeclaration>;
+    examples: FernIr.ExampleEndpointCall[];
 }): OpenAPIV3.RequestBodyObject {
     const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
     for (const example of examples) {
         if (example.request != null) {
-            if (example.name && example.name.originalName !== "") {
-                openapiExamples[example.name.originalName] = {
+            if (example.name && getOriginalName(example.name) !== "") {
+                openapiExamples[getOriginalName(example.name)] = {
                     value: example.request.jsonExample
                 };
             } else {
@@ -256,20 +250,25 @@ function convertRequestBody({
         }
     }
 
-    return HttpRequestBody._visit<OpenAPIV3.RequestBodyObject>(httpRequest, {
+    return FernIr.HttpRequestBody._visit<OpenAPIV3.RequestBodyObject>(httpRequest, {
         inlinedRequestBody: (inlinedRequestBody) => {
             const convertedRequest: OpenAPIV3.MediaTypeObject = {
                 schema: convertObject({
                     docs: undefined,
                     properties: inlinedRequestBody.properties.map((property) => {
-                        let exampleProperty: ExampleInlinedRequestBodyProperty | undefined = undefined;
+                        let exampleProperty: FernIr.ExampleInlinedRequestBodyProperty | undefined = undefined;
                         if (examples.length > 0 && examples[0]?.request?.type === "inlinedRequestBody") {
                             exampleProperty = examples[0]?.request.properties.find((example) => {
-                                return example.name.wireValue === property.name.wireValue;
+                                return getWireValue(example.name) === getWireValue(property.name);
                             });
                         }
                         return {
                             docs: property.docs ?? undefined,
+                            availability:
+                                "availability" in property
+                                    ? (property as unknown as { availability: FernIr.Availability | undefined })
+                                          .availability
+                                    : undefined,
                             name: property.name,
                             valueType: property.valueType,
                             example: exampleProperty
@@ -315,21 +314,21 @@ function convertRequestBody({
                             properties: fileUploadRequest.properties.reduce<
                                 Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>
                             >((acc, property) => {
-                                FileUploadRequestProperty._visit(property, {
+                                FernIr.FileUploadRequestProperty._visit(property, {
                                     file: (fileProperty) => {
-                                        acc[fileProperty.key.wireValue] = {
+                                        acc[getWireValue(fileProperty.key)] = {
                                             type: "string",
                                             format: "binary"
                                         };
                                     },
                                     bodyProperty: (bodyProperty) => {
-                                        acc[bodyProperty.name.wireValue] = {
+                                        acc[getWireValue(bodyProperty.name)] = {
                                             description: bodyProperty.docs ?? undefined,
                                             ...convertTypeReference(bodyProperty.valueType)
                                         };
                                     },
                                     _other: () => {
-                                        throw new Error("Unknown FileUploadRequestProperty: " + property.type);
+                                        throw new Error("Unknown FernIr.FileUploadRequestProperty: " + property.type);
                                     }
                                 });
                                 return {
@@ -345,7 +344,7 @@ function convertRequestBody({
             throw new Error("bytes is not supported");
         },
         _other: () => {
-            throw new Error("Unknown HttpRequestBody type: " + httpRequest.type);
+            throw new Error("Unknown FernIr.HttpRequestBody type: " + httpRequest.type);
         }
     });
 }
@@ -357,11 +356,11 @@ function convertResponse({
     errorDiscriminationStrategy,
     examples
 }: {
-    httpResponse: HttpResponse | null | undefined;
-    responseErrors: ResponseErrors;
-    errorsByName: Record<string, ErrorDeclaration>;
-    errorDiscriminationStrategy: ErrorDiscriminationStrategy;
-    examples: ExampleEndpointCall[];
+    httpResponse: FernIr.HttpResponse | null | undefined;
+    responseErrors: FernIr.ResponseErrors;
+    errorsByName: Record<string, FernIr.ErrorDeclaration>;
+    errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
+    examples: FernIr.ExampleEndpointCall[];
 }): Record<string, OpenAPIV3.ResponseObject> {
     const responseByStatusCode: Record<string, OpenAPIV3.ResponseObject> = {};
     if (httpResponse?.body?.type === "json") {
@@ -376,8 +375,8 @@ function convertResponse({
                 example.response.value.type === "body" &&
                 example.response.value.value != null
             ) {
-                if (example.name && example.name.originalName !== "") {
-                    openapiExamples[example.name.originalName] = {
+                if (example.name && getOriginalName(example.name) !== "") {
+                    openapiExamples[getOriginalName(example.name)] = {
                         value: example.response.value.value.jsonExample
                     };
                 } else {
@@ -403,13 +402,13 @@ function convertResponse({
         };
     }
 
-    ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
+    FernIr.ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
         statusCode: () => {
             for (const responseError of responseErrors) {
                 const errorDeclaration = errorsByName[getErrorTypeNameKey(responseError.error)];
                 if (errorDeclaration == null) {
                     throw new Error(
-                        "Encountered undefined error declaration: " + responseError.error.name.originalName
+                        "Encountered undefined error declaration: " + getOriginalName(responseError.error.name)
                     );
                 }
                 const responseForStatusCode: OpenAPIV3.ResponseObject = {
@@ -427,8 +426,8 @@ function convertResponse({
                             example.response.body != null &&
                             isEqual(responseError.error, example.response.error)
                         ) {
-                            if (example.name && example.name.originalName !== "") {
-                                openapiExamples[example.name.originalName] = {
+                            if (example.name && getOriginalName(example.name) !== "") {
+                                openapiExamples[getOriginalName(example.name)] = {
                                     value: example.response.body.jsonExample
                                 };
                             } else {
@@ -476,8 +475,8 @@ function convertResponse({
                     if (example.response.type === "error" && example.response.body != null) {
                         const errorForExample = example.response.error;
                         if (errorInfos.some((errorInfo) => isEqual(errorInfo.errorDeclaration.name, errorForExample))) {
-                            if (example.name && example.name.originalName !== "") {
-                                openapiExamples[example.name.originalName] = {
+                            if (example.name && getOriginalName(example.name) !== "") {
+                                openapiExamples[getOriginalName(example.name)] = {
                                     value: example.response.body.jsonExample
                                 };
                             } else {
@@ -507,7 +506,13 @@ function convertResponse({
     return responseByStatusCode;
 }
 
-function typeIsObject({ type, typesByName }: { type: Type; typesByName: Record<string, TypeDeclaration> }): boolean {
+function typeIsObject({
+    type,
+    typesByName
+}: {
+    type: FernIr.Type;
+    typesByName: Record<string, FernIr.TypeDeclaration>;
+}): boolean {
     if (type.type === "object") {
         return true;
     } else if (type.type === "alias") {
@@ -516,7 +521,10 @@ function typeIsObject({ type, typesByName }: { type: Type; typesByName: Record<s
     return false;
 }
 
-function typeReferenceIsObject(typeReference: TypeReference, typesByName: Record<string, TypeDeclaration>): boolean {
+function typeReferenceIsObject(
+    typeReference: FernIr.TypeReference,
+    typesByName: Record<string, FernIr.TypeDeclaration>
+): boolean {
     if (typeReference.type === "named") {
         const key = getDeclaredTypeNameKey(typeReference);
         const typeDeclaration = typesByName[key];
@@ -533,20 +541,20 @@ function getDiscriminatedErrorInfoOpenApiSchema({
     property
 }: {
     errorInfo: ErrorInfo;
-    property: ErrorDiscriminationByPropertyStrategy;
+    property: FernIr.ErrorDiscriminationByPropertyStrategy;
 }): OpenAPIV3.SchemaObject {
-    const discriminantValue = errorInfo.errorDeclaration.discriminantValue.wireValue;
+    const discriminantValue = getWireValue(errorInfo.errorDeclaration.discriminantValue);
     const description = errorInfo.responseError.docs ?? undefined;
 
     const properties: Record<string, OpenApiComponentSchema> = {
-        [property.discriminant.wireValue]: {
+        [getWireValue(property.discriminant)]: {
             type: "string",
             enum: [discriminantValue]
         }
     };
 
     if (errorInfo.errorDeclaration.type != null) {
-        properties[property.contentProperty.wireValue] = convertTypeReference(errorInfo.errorDeclaration.type);
+        properties[getWireValue(property.contentProperty)] = convertTypeReference(errorInfo.errorDeclaration.type);
     }
 
     return {
@@ -557,22 +565,22 @@ function getDiscriminatedErrorInfoOpenApiSchema({
 }
 
 interface ErrorInfo {
-    responseError: ResponseError;
-    errorDeclaration: ErrorDeclaration;
+    responseError: FernIr.ResponseError;
+    errorDeclaration: FernIr.ErrorDeclaration;
 }
 
 function getErrorInfoByStatusCode({
     responseErrors,
     errorsByName
 }: {
-    responseErrors: ResponseErrors;
-    errorsByName: Record<string, ErrorDeclaration>;
+    responseErrors: FernIr.ResponseErrors;
+    errorsByName: Record<string, FernIr.ErrorDeclaration>;
 }): Record<string, ErrorInfo[]> {
     const errorInfoByStatusCode: Record<string, ErrorInfo[]> = {};
     for (const responseError of responseErrors) {
         const errorDeclaration = errorsByName[getErrorTypeNameKey(responseError.error)];
         if (errorDeclaration == null) {
-            throw new Error("Encountered undefined error declaration: " + responseError.error.name.originalName);
+            throw new Error("Encountered undefined error declaration: " + getOriginalName(responseError.error.name));
         }
         const statusCode = errorDeclaration.statusCode;
         const statusCodeErrorInfo = errorInfoByStatusCode[statusCode];
@@ -589,11 +597,11 @@ function convertPathParameter({
     pathParameter,
     examples
 }: {
-    pathParameter: PathParameter;
-    examples: ExampleEndpointCall[];
+    pathParameter: FernIr.PathParameter;
+    examples: FernIr.ExampleEndpointCall[];
 }): OpenAPIV3.ParameterObject {
     const convertedParameter: OpenAPIV3.ParameterObject = {
-        name: pathParameter.name.originalName,
+        name: getOriginalName(pathParameter.name),
         in: "path",
         description: pathParameter.docs ?? undefined,
         required: true,
@@ -606,10 +614,10 @@ function convertPathParameter({
             ...example.rootPathParameters,
             ...example.servicePathParameters,
             ...example.endpointPathParameters
-        ].find((param) => param.name.originalName === pathParameter.name.originalName);
+        ].find((param) => getOriginalName(param.name) === getOriginalName(pathParameter.name));
         if (pathParameterExample != null) {
-            if (example.name && example.name.originalName !== "") {
-                openapiExamples[example.name.originalName] = {
+            if (example.name && getOriginalName(example.name) !== "") {
+                openapiExamples[getOriginalName(example.name)] = {
                     value: pathParameterExample.value.jsonExample
                 };
             } else {
@@ -635,28 +643,35 @@ function convertQueryParameter({
     typesByName,
     examples
 }: {
-    queryParameter: QueryParameter;
-    typesByName: Record<string, TypeDeclaration>;
-    examples: ExampleEndpointCall[];
+    queryParameter: FernIr.QueryParameter;
+    typesByName: Record<string, FernIr.TypeDeclaration>;
+    examples: FernIr.ExampleEndpointCall[];
 }): OpenAPIV3.ParameterObject {
     const convertedParameter: OpenAPIV3.ParameterObject = {
-        name: queryParameter.name.wireValue,
+        name: getWireValue(queryParameter.name),
         in: "query",
         description: queryParameter.docs ?? undefined,
         required: isTypeReferenceRequired({ typeReference: queryParameter.valueType, typesByName }),
         schema: queryParameter.allowMultiple
-            ? convertTypeReference(TypeReference.container(ContainerType.list(queryParameter.valueType)))
+            ? convertTypeReference(FernIr.TypeReference.container(FernIr.ContainerType.list(queryParameter.valueType)))
             : convertTypeReference(queryParameter.valueType)
     };
+
+    if (queryParameter.availability != null) {
+        const availabilityValue = convertAvailabilityStatus(queryParameter.availability.status);
+        if (availabilityValue != null) {
+            (convertedParameter as unknown as Record<string, unknown>)["x-fern-availability"] = availabilityValue;
+        }
+    }
 
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
     for (const example of examples) {
         const queryParameterExample = example.queryParameters.find(
-            (param) => param.name.wireValue === queryParameter.name.wireValue
+            (param) => getWireValue(param.name) === getWireValue(queryParameter.name)
         );
         if (queryParameterExample != null) {
-            if (example.name && example.name.originalName !== "") {
-                openapiExamples[example.name.originalName] = {
+            if (example.name && getOriginalName(example.name) !== "") {
+                openapiExamples[getOriginalName(example.name)] = {
                     value: queryParameterExample.value.jsonExample
                 };
             } else {
@@ -682,26 +697,33 @@ function convertHeader({
     typesByName,
     examples
 }: {
-    httpHeader: HttpHeader;
-    typesByName: Record<string, TypeDeclaration>;
-    examples: ExampleEndpointCall[];
+    httpHeader: FernIr.HttpHeader;
+    typesByName: Record<string, FernIr.TypeDeclaration>;
+    examples: FernIr.ExampleEndpointCall[];
 }): OpenAPIV3.ParameterObject {
     const convertedParameter: OpenAPIV3.ParameterObject = {
-        name: httpHeader.name.wireValue,
+        name: getWireValue(httpHeader.name),
         in: "header",
         description: httpHeader.docs ?? undefined,
         required: isTypeReferenceRequired({ typeReference: httpHeader.valueType, typesByName }),
         schema: convertTypeReference(httpHeader.valueType)
     };
 
+    if (httpHeader.availability != null) {
+        const availabilityValue = convertAvailabilityStatus(httpHeader.availability.status);
+        if (availabilityValue != null) {
+            (convertedParameter as unknown as Record<string, unknown>)["x-fern-availability"] = availabilityValue;
+        }
+    }
+
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
     for (const example of examples) {
         const headerExample = [...example.serviceHeaders, ...example.endpointHeaders].find(
-            (headerFromExample) => headerFromExample.name.wireValue === httpHeader.name.wireValue
+            (headerFromExample) => getWireValue(headerFromExample.name) === getWireValue(httpHeader.name)
         );
         if (headerExample != null) {
-            if (example.name && example.name.originalName !== "") {
-                openapiExamples[example.name.originalName] = {
+            if (example.name && getOriginalName(example.name) !== "") {
+                openapiExamples[getOriginalName(example.name)] = {
                     value: headerExample.value.jsonExample
                 };
             } else {
@@ -722,7 +744,7 @@ function convertHeader({
     return convertedParameter;
 }
 
-function convertHttpPathToString(httpPath: HttpPath): string {
+function convertHttpPathToString(httpPath: FernIr.HttpPath): string {
     let endpointPath = httpPath.head;
     for (const httpPathPart of httpPath.parts) {
         endpointPath += `{${httpPathPart.pathParameter}}${httpPathPart.tail}`;
@@ -734,8 +756,8 @@ function isTypeReferenceRequired({
     typeReference,
     typesByName
 }: {
-    typeReference: TypeReference;
-    typesByName: Record<string, TypeDeclaration>;
+    typeReference: FernIr.TypeReference;
+    typesByName: Record<string, FernIr.TypeDeclaration>;
 }): boolean {
     if (typeReference.type === "container" && typeReference.container.type === "optional") {
         return false;
@@ -743,7 +765,7 @@ function isTypeReferenceRequired({
         const key = getDeclaredTypeNameKey(typeReference);
         const typeDeclaration = typesByName[key];
         if (typeDeclaration == null) {
-            throw new Error("Encountered non-existent type: " + typeReference.name.originalName);
+            throw new Error("Encountered non-existent type: " + getOriginalName(typeReference.name));
         }
         if (typeDeclaration.shape.type === "alias") {
             return isTypeReferenceRequired({ typeReference: typeDeclaration.shape.aliasOf, typesByName });

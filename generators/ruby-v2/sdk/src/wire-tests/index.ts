@@ -1,2 +1,2 @@
-export { WireTestGenerator } from "./WireTestGenerator";
-export { WireTestSetupGenerator } from "./WireTestSetupGenerator";
+export { WireTestGenerator } from "./WireTestGenerator.js";
+export { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";

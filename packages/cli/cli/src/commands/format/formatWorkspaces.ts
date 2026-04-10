@@ -2,7 +2,7 @@ import { formatWorkspace } from "@fern-api/fern-definition-formatter";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 export async function formatWorkspaces({
     project,

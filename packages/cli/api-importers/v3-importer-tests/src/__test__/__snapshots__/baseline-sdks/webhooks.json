@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "Webhooks",
   "auth": {
     "requirement": "ALL",
@@ -29,25 +11,7 @@
   "types": {
     "type_:Pet": {
       "name": {
-        "name": {
-          "originalName": "Pet",
-          "camelCase": {
-            "unsafeName": "pet",
-            "safeName": "pet"
-          },
-          "snakeCase": {
-            "unsafeName": "pet",
-            "safeName": "pet"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PET",
-            "safeName": "PET"
-          },
-          "pascalCase": {
-            "unsafeName": "Pet",
-            "safeName": "Pet"
-          }
-        },
+        "name": "Pet",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -58,28 +22,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
-              },
-              "wireValue": "id"
-            },
+            "name": "id",
             "valueType": {
               "primitive": {
                 "v1": "LONG",
@@ -95,28 +38,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
-              },
-              "wireValue": "name"
-            },
+            "name": "name",
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -132,28 +54,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "tag",
-                "camelCase": {
-                  "unsafeName": "tag",
-                  "safeName": "tag"
-                },
-                "snakeCase": {
-                  "unsafeName": "tag",
-                  "safeName": "tag"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TAG",
-                  "safeName": "TAG"
-                },
-                "pascalCase": {
-                  "unsafeName": "Tag",
-                  "safeName": "Tag"
-                }
-              },
-              "wireValue": "tag"
-            },
+            "name": "tag",
             "valueType": {
               "container": {
                 "optional": {
@@ -190,28 +91,7 @@
   "errors": {},
   "services": {},
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -229,47 +109,11 @@
       {
         "id": "webhooks_.CreatePet",
         "method": "POST",
-        "name": {
-          "originalName": "CreatePet",
-          "camelCase": {
-            "unsafeName": "createPet",
-            "safeName": "createPet"
-          },
-          "snakeCase": {
-            "unsafeName": "create_pet",
-            "safeName": "create_pet"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "CREATE_PET",
-            "safeName": "CREATE_PET"
-          },
-          "pascalCase": {
-            "unsafeName": "CreatePet",
-            "safeName": "CreatePet"
-          }
-        },
+        "name": "CreatePet",
         "headers": [],
         "payload": {
           "payloadType": {
-            "name": {
-              "originalName": "Pet",
-              "camelCase": {
-                "unsafeName": "pet",
-                "safeName": "pet"
-              },
-              "snakeCase": {
-                "unsafeName": "pet",
-                "safeName": "pet"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "PET",
-                "safeName": "PET"
-              },
-              "pascalCase": {
-                "unsafeName": "Pet",
-                "safeName": "Pet"
-              }
-            },
+            "name": "Pet",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -281,25 +125,7 @@
         },
         "examples": [
           {
-            "name": {
-              "originalName": "Example 1",
-              "camelCase": {
-                "unsafeName": "example1",
-                "safeName": "example1"
-              },
-              "snakeCase": {
-                "unsafeName": "example_1",
-                "safeName": "example_1"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "EXAMPLE_1",
-                "safeName": "EXAMPLE_1"
-              },
-              "pascalCase": {
-                "unsafeName": "Example1",
-                "safeName": "Example1"
-              }
-            },
+            "name": "Example 1",
             "payload": {
               "shape": {
                 "typeName": {
@@ -308,51 +134,12 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "Pet",
-                    "camelCase": {
-                      "unsafeName": "pet",
-                      "safeName": "pet"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "pet",
-                      "safeName": "pet"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PET",
-                      "safeName": "PET"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Pet",
-                      "safeName": "Pet"
-                    }
-                  }
+                  "name": "Pet"
                 },
                 "shape": {
                   "properties": [
                     {
-                      "name": {
-                        "name": {
-                          "originalName": "id",
-                          "camelCase": {
-                            "unsafeName": "id",
-                            "safeName": "id"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "id",
-                            "safeName": "id"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "ID",
-                            "safeName": "ID"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "ID",
-                            "safeName": "ID"
-                          }
-                        },
-                        "wireValue": "id"
-                      },
+                      "name": "id",
                       "value": {
                         "shape": {
                           "primitive": {
@@ -369,50 +156,11 @@
                           "allParts": [],
                           "packagePath": []
                         },
-                        "name": {
-                          "originalName": "Pet",
-                          "camelCase": {
-                            "unsafeName": "pet",
-                            "safeName": "pet"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "pet",
-                            "safeName": "pet"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "PET",
-                            "safeName": "PET"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Pet",
-                            "safeName": "Pet"
-                          }
-                        }
+                        "name": "Pet"
                       }
                     },
                     {
-                      "name": {
-                        "name": {
-                          "originalName": "name",
-                          "camelCase": {
-                            "unsafeName": "name",
-                            "safeName": "name"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "name",
-                            "safeName": "name"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "NAME",
-                            "safeName": "NAME"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Name",
-                            "safeName": "Name"
-                          }
-                        },
-                        "wireValue": "name"
-                      },
+                      "name": "name",
                       "value": {
                         "shape": {
                           "primitive": {
@@ -431,50 +179,11 @@
                           "allParts": [],
                           "packagePath": []
                         },
-                        "name": {
-                          "originalName": "Pet",
-                          "camelCase": {
-                            "unsafeName": "pet",
-                            "safeName": "pet"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "pet",
-                            "safeName": "pet"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "PET",
-                            "safeName": "PET"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Pet",
-                            "safeName": "Pet"
-                          }
-                        }
+                        "name": "Pet"
                       }
                     },
                     {
-                      "name": {
-                        "name": {
-                          "originalName": "tag",
-                          "camelCase": {
-                            "unsafeName": "tag",
-                            "safeName": "tag"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "tag",
-                            "safeName": "tag"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "TAG",
-                            "safeName": "TAG"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Tag",
-                            "safeName": "Tag"
-                          }
-                        },
-                        "wireValue": "tag"
-                      },
+                      "name": "tag",
                       "value": {
                         "shape": {
                           "container": {
@@ -511,25 +220,7 @@
                           "allParts": [],
                           "packagePath": []
                         },
-                        "name": {
-                          "originalName": "Pet",
-                          "camelCase": {
-                            "unsafeName": "pet",
-                            "safeName": "pet"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "pet",
-                            "safeName": "pet"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "PET",
-                            "safeName": "PET"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Pet",
-                            "safeName": "Pet"
-                          }
-                        }
+                        "name": "Pet"
                       }
                     }
                   ],
@@ -541,6 +232,94 @@
                 "id": 123,
                 "name": "Scratch",
                 "tag": "Cat"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "webhooks_.newPet",
+        "method": "POST",
+        "name": "newPet",
+        "headers": [],
+        "payload": {
+          "payloadType": {
+            "name": "Pet",
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            },
+            "typeId": "type_:Pet",
+            "type": "named"
+          },
+          "type": "reference"
+        },
+        "examples": [
+          {
+            "payload": {
+              "shape": {
+                "typeName": {
+                  "typeId": "type_:Pet",
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": "Pet"
+                },
+                "shape": {
+                  "properties": [
+                    {
+                      "name": "id",
+                      "value": {
+                        "shape": {
+                          "primitive": {
+                            "long": 1000000,
+                            "type": "long"
+                          },
+                          "type": "primitive"
+                        },
+                        "jsonExample": 1000000
+                      },
+                      "originalTypeDeclaration": {
+                        "typeId": "type_:Pet",
+                        "fernFilepath": {
+                          "allParts": [],
+                          "packagePath": []
+                        },
+                        "name": "Pet"
+                      }
+                    },
+                    {
+                      "name": "name",
+                      "value": {
+                        "shape": {
+                          "primitive": {
+                            "string": {
+                              "original": "name"
+                            },
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "jsonExample": "name"
+                      },
+                      "originalTypeDeclaration": {
+                        "typeId": "type_:Pet",
+                        "fernFilepath": {
+                          "allParts": [],
+                          "packagePath": []
+                        },
+                        "name": "Pet"
+                      }
+                    }
+                  ],
+                  "type": "object"
+                },
+                "type": "named"
+              },
+              "jsonExample": {
+                "id": 1000000,
+                "name": "name"
               }
             }
           }
@@ -581,6 +360,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -599,8 +379,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": "LONG",
@@ -609,6 +388,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -627,8 +407,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "typeReference": {
               "value": "STRING",
@@ -637,6 +416,7 @@
           },
           {
             "name": {
+              "wireValue": "tag",
               "name": {
                 "originalName": "tag",
                 "camelCase": {
@@ -655,8 +435,7 @@
                   "unsafeName": "Tag",
                   "safeName": "Tag"
                 }
-              },
-              "wireValue": "tag"
+              }
             },
             "typeReference": {
               "value": {
@@ -676,6 +455,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

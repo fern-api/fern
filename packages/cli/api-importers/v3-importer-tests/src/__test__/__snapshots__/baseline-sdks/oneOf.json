@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "OneOfService API",
   "auth": {
     "requirement": "ALL",
@@ -31,25 +13,7 @@
       "docs": "The login method to use. No display name should be generated for variants.",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestNoSummaryOrTitle",
-          "camelCase": {
-            "unsafeName": "userRequestNoSummaryOrTitle",
-            "safeName": "userRequestNoSummaryOrTitle"
-          },
-          "snakeCase": {
-            "unsafeName": "user_request_no_summary_or_title",
-            "safeName": "user_request_no_summary_or_title"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER_REQUEST_NO_SUMMARY_OR_TITLE",
-            "safeName": "USER_REQUEST_NO_SUMMARY_OR_TITLE"
-          },
-          "pascalCase": {
-            "unsafeName": "UserRequestNoSummaryOrTitle",
-            "safeName": "UserRequestNoSummaryOrTitle"
-          }
-        },
+        "name": "UserRequestNoSummaryOrTitle",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -60,25 +24,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "EmailObject",
-                "camelCase": {
-                  "unsafeName": "emailObject",
-                  "safeName": "emailObject"
-                },
-                "snakeCase": {
-                  "unsafeName": "email_object",
-                  "safeName": "email_object"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "EMAIL_OBJECT",
-                  "safeName": "EMAIL_OBJECT"
-                },
-                "pascalCase": {
-                  "unsafeName": "EmailObject",
-                  "safeName": "EmailObject"
-                }
-              },
+              "name": "EmailObject",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -90,25 +36,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "PhoneNumberObject",
-                "camelCase": {
-                  "unsafeName": "phoneNumberObject",
-                  "safeName": "phoneNumberObject"
-                },
-                "snakeCase": {
-                  "unsafeName": "phone_number_object",
-                  "safeName": "phone_number_object"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PHONE_NUMBER_OBJECT",
-                  "safeName": "PHONE_NUMBER_OBJECT"
-                },
-                "pascalCase": {
-                  "unsafeName": "PhoneNumberObject",
-                  "safeName": "PhoneNumberObject"
-                }
-              },
+              "name": "PhoneNumberObject",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -132,25 +60,7 @@
       "docs": "The login method to use. Display name should be generated for variants from the title.",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestNoSummaryAndTitle",
-          "camelCase": {
-            "unsafeName": "userRequestNoSummaryAndTitle",
-            "safeName": "userRequestNoSummaryAndTitle"
-          },
-          "snakeCase": {
-            "unsafeName": "user_request_no_summary_and_title",
-            "safeName": "user_request_no_summary_and_title"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER_REQUEST_NO_SUMMARY_AND_TITLE",
-            "safeName": "USER_REQUEST_NO_SUMMARY_AND_TITLE"
-          },
-          "pascalCase": {
-            "unsafeName": "UserRequestNoSummaryAndTitle",
-            "safeName": "UserRequestNoSummaryAndTitle"
-          }
-        },
+        "name": "UserRequestNoSummaryAndTitle",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -161,25 +71,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "SquareObject",
-                "camelCase": {
-                  "unsafeName": "squareObject",
-                  "safeName": "squareObject"
-                },
-                "snakeCase": {
-                  "unsafeName": "square_object",
-                  "safeName": "square_object"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SQUARE_OBJECT",
-                  "safeName": "SQUARE_OBJECT"
-                },
-                "pascalCase": {
-                  "unsafeName": "SquareObject",
-                  "safeName": "SquareObject"
-                }
-              },
+              "name": "SquareObject",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -191,25 +83,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "RectangleObject",
-                "camelCase": {
-                  "unsafeName": "rectangleObject",
-                  "safeName": "rectangleObject"
-                },
-                "snakeCase": {
-                  "unsafeName": "rectangle_object",
-                  "safeName": "rectangle_object"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "RECTANGLE_OBJECT",
-                  "safeName": "RECTANGLE_OBJECT"
-                },
-                "pascalCase": {
-                  "unsafeName": "RectangleObject",
-                  "safeName": "RectangleObject"
-                }
-              },
+              "name": "RectangleObject",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -233,25 +107,7 @@
       "docs": "The verification method to use. Display name should be generated for variants from the summary.",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestSummaryAndTitle",
-          "camelCase": {
-            "unsafeName": "userRequestSummaryAndTitle",
-            "safeName": "userRequestSummaryAndTitle"
-          },
-          "snakeCase": {
-            "unsafeName": "user_request_summary_and_title",
-            "safeName": "user_request_summary_and_title"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER_REQUEST_SUMMARY_AND_TITLE",
-            "safeName": "USER_REQUEST_SUMMARY_AND_TITLE"
-          },
-          "pascalCase": {
-            "unsafeName": "UserRequestSummaryAndTitle",
-            "safeName": "UserRequestSummaryAndTitle"
-          }
-        },
+        "name": "UserRequestSummaryAndTitle",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -262,25 +118,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "App",
-                "camelCase": {
-                  "unsafeName": "app",
-                  "safeName": "app"
-                },
-                "snakeCase": {
-                  "unsafeName": "app",
-                  "safeName": "app"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "APP",
-                  "safeName": "APP"
-                },
-                "pascalCase": {
-                  "unsafeName": "App",
-                  "safeName": "App"
-                }
-              },
+              "name": "App",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -292,25 +130,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "Email",
-                "camelCase": {
-                  "unsafeName": "email",
-                  "safeName": "email"
-                },
-                "snakeCase": {
-                  "unsafeName": "email",
-                  "safeName": "email"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "EMAIL",
-                  "safeName": "EMAIL"
-                },
-                "pascalCase": {
-                  "unsafeName": "Email",
-                  "safeName": "Email"
-                }
-              },
+              "name": "Email",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -333,25 +153,7 @@
     "type_:UserRequestInlinedOneOfNoNamesEmail": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestInlinedOneOfNoNamesEmail",
-          "camelCase": {
-            "unsafeName": "userRequestInlinedOneOfNoNamesEmail",
-            "safeName": "userRequestInlinedOneOfNoNamesEmail"
-          },
-          "snakeCase": {
-            "unsafeName": "user_request_inlined_one_of_no_names_email",
-            "safeName": "user_request_inlined_one_of_no_names_email"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER_REQUEST_INLINED_ONE_OF_NO_NAMES_EMAIL",
-            "safeName": "USER_REQUEST_INLINED_ONE_OF_NO_NAMES_EMAIL"
-          },
-          "pascalCase": {
-            "unsafeName": "UserRequestInlinedOneOfNoNamesEmail",
-            "safeName": "UserRequestInlinedOneOfNoNamesEmail"
-          }
-        },
+        "name": "UserRequestInlinedOneOfNoNamesEmail",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -362,28 +164,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "email",
-                "camelCase": {
-                  "unsafeName": "email",
-                  "safeName": "email"
-                },
-                "snakeCase": {
-                  "unsafeName": "email",
-                  "safeName": "email"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "EMAIL",
-                  "safeName": "EMAIL"
-                },
-                "pascalCase": {
-                  "unsafeName": "Email",
-                  "safeName": "Email"
-                }
-              },
-              "wireValue": "email"
-            },
+            "name": "email",
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -413,25 +194,7 @@
     "type_:UserRequestInlinedOneOfNoNamesPhoneNumber": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestInlinedOneOfNoNamesPhoneNumber",
-          "camelCase": {
-            "unsafeName": "userRequestInlinedOneOfNoNamesPhoneNumber",
-            "safeName": "userRequestInlinedOneOfNoNamesPhoneNumber"
-          },
-          "snakeCase": {
-            "unsafeName": "user_request_inlined_one_of_no_names_phone_number",
-            "safeName": "user_request_inlined_one_of_no_names_phone_number"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER_REQUEST_INLINED_ONE_OF_NO_NAMES_PHONE_NUMBER",
-            "safeName": "USER_REQUEST_INLINED_ONE_OF_NO_NAMES_PHONE_NUMBER"
-          },
-          "pascalCase": {
-            "unsafeName": "UserRequestInlinedOneOfNoNamesPhoneNumber",
-            "safeName": "UserRequestInlinedOneOfNoNamesPhoneNumber"
-          }
-        },
+        "name": "UserRequestInlinedOneOfNoNamesPhoneNumber",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -442,28 +205,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "phone_number",
-                "camelCase": {
-                  "unsafeName": "phoneNumber",
-                  "safeName": "phoneNumber"
-                },
-                "snakeCase": {
-                  "unsafeName": "phone_number",
-                  "safeName": "phone_number"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PHONE_NUMBER",
-                  "safeName": "PHONE_NUMBER"
-                },
-                "pascalCase": {
-                  "unsafeName": "PhoneNumber",
-                  "safeName": "PhoneNumber"
-                }
-              },
-              "wireValue": "phone_number"
-            },
+            "name": "phone_number",
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -494,25 +236,7 @@
       "docs": "Inlined one of. No display name should be generated for variants.",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestInlinedOneOfNoNames",
-          "camelCase": {
-            "unsafeName": "userRequestInlinedOneOfNoNames",
-            "safeName": "userRequestInlinedOneOfNoNames"
-          },
-          "snakeCase": {
-            "unsafeName": "user_request_inlined_one_of_no_names",
-            "safeName": "user_request_inlined_one_of_no_names"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER_REQUEST_INLINED_ONE_OF_NO_NAMES",
-            "safeName": "USER_REQUEST_INLINED_ONE_OF_NO_NAMES"
-          },
-          "pascalCase": {
-            "unsafeName": "UserRequestInlinedOneOfNoNames",
-            "safeName": "UserRequestInlinedOneOfNoNames"
-          }
-        },
+        "name": "UserRequestInlinedOneOfNoNames",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -523,25 +247,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "UserRequestInlinedOneOfNoNamesEmail",
-                "camelCase": {
-                  "unsafeName": "userRequestInlinedOneOfNoNamesEmail",
-                  "safeName": "userRequestInlinedOneOfNoNamesEmail"
-                },
-                "snakeCase": {
-                  "unsafeName": "user_request_inlined_one_of_no_names_email",
-                  "safeName": "user_request_inlined_one_of_no_names_email"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER_REQUEST_INLINED_ONE_OF_NO_NAMES_EMAIL",
-                  "safeName": "USER_REQUEST_INLINED_ONE_OF_NO_NAMES_EMAIL"
-                },
-                "pascalCase": {
-                  "unsafeName": "UserRequestInlinedOneOfNoNamesEmail",
-                  "safeName": "UserRequestInlinedOneOfNoNamesEmail"
-                }
-              },
+              "name": "UserRequestInlinedOneOfNoNamesEmail",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -553,25 +259,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "UserRequestInlinedOneOfNoNamesPhoneNumber",
-                "camelCase": {
-                  "unsafeName": "userRequestInlinedOneOfNoNamesPhoneNumber",
-                  "safeName": "userRequestInlinedOneOfNoNamesPhoneNumber"
-                },
-                "snakeCase": {
-                  "unsafeName": "user_request_inlined_one_of_no_names_phone_number",
-                  "safeName": "user_request_inlined_one_of_no_names_phone_number"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER_REQUEST_INLINED_ONE_OF_NO_NAMES_PHONE_NUMBER",
-                  "safeName": "USER_REQUEST_INLINED_ONE_OF_NO_NAMES_PHONE_NUMBER"
-                },
-                "pascalCase": {
-                  "unsafeName": "UserRequestInlinedOneOfNoNamesPhoneNumber",
-                  "safeName": "UserRequestInlinedOneOfNoNamesPhoneNumber"
-                }
-              },
+              "name": "UserRequestInlinedOneOfNoNamesPhoneNumber",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -594,25 +282,7 @@
     "type_:UserRequestInlinedOneOfWithNamesEmail": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestInlinedOneOfWithNamesEmail",
-          "camelCase": {
-            "unsafeName": "userRequestInlinedOneOfWithNamesEmail",
-            "safeName": "userRequestInlinedOneOfWithNamesEmail"
-          },
-          "snakeCase": {
-            "unsafeName": "user_request_inlined_one_of_with_names_email",
-            "safeName": "user_request_inlined_one_of_with_names_email"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER_REQUEST_INLINED_ONE_OF_WITH_NAMES_EMAIL",
-            "safeName": "USER_REQUEST_INLINED_ONE_OF_WITH_NAMES_EMAIL"
-          },
-          "pascalCase": {
-            "unsafeName": "UserRequestInlinedOneOfWithNamesEmail",
-            "safeName": "UserRequestInlinedOneOfWithNamesEmail"
-          }
-        },
+        "name": "UserRequestInlinedOneOfWithNamesEmail",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -623,48 +293,9 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "email",
-                "camelCase": {
-                  "unsafeName": "email",
-                  "safeName": "email"
-                },
-                "snakeCase": {
-                  "unsafeName": "email",
-                  "safeName": "email"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "EMAIL",
-                  "safeName": "EMAIL"
-                },
-                "pascalCase": {
-                  "unsafeName": "Email",
-                  "safeName": "Email"
-                }
-              },
-              "wireValue": "email"
-            },
+            "name": "email",
             "valueType": {
-              "name": {
-                "originalName": "EmailObject",
-                "camelCase": {
-                  "unsafeName": "emailObject",
-                  "safeName": "emailObject"
-                },
-                "snakeCase": {
-                  "unsafeName": "email_object",
-                  "safeName": "email_object"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "EMAIL_OBJECT",
-                  "safeName": "EMAIL_OBJECT"
-                },
-                "pascalCase": {
-                  "unsafeName": "EmailObject",
-                  "safeName": "EmailObject"
-                }
-              },
+              "name": "EmailObject",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -692,25 +323,7 @@
     "type_:UserRequestInlinedOneOfWithNamesPhoneNumber": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestInlinedOneOfWithNamesPhoneNumber",
-          "camelCase": {
-            "unsafeName": "userRequestInlinedOneOfWithNamesPhoneNumber",
-            "safeName": "userRequestInlinedOneOfWithNamesPhoneNumber"
-          },
-          "snakeCase": {
-            "unsafeName": "user_request_inlined_one_of_with_names_phone_number",
-            "safeName": "user_request_inlined_one_of_with_names_phone_number"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER_REQUEST_INLINED_ONE_OF_WITH_NAMES_PHONE_NUMBER",
-            "safeName": "USER_REQUEST_INLINED_ONE_OF_WITH_NAMES_PHONE_NUMBER"
-          },
-          "pascalCase": {
-            "unsafeName": "UserRequestInlinedOneOfWithNamesPhoneNumber",
-            "safeName": "UserRequestInlinedOneOfWithNamesPhoneNumber"
-          }
-        },
+        "name": "UserRequestInlinedOneOfWithNamesPhoneNumber",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -721,48 +334,9 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "phone_number",
-                "camelCase": {
-                  "unsafeName": "phoneNumber",
-                  "safeName": "phoneNumber"
-                },
-                "snakeCase": {
-                  "unsafeName": "phone_number",
-                  "safeName": "phone_number"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PHONE_NUMBER",
-                  "safeName": "PHONE_NUMBER"
-                },
-                "pascalCase": {
-                  "unsafeName": "PhoneNumber",
-                  "safeName": "PhoneNumber"
-                }
-              },
-              "wireValue": "phone_number"
-            },
+            "name": "phone_number",
             "valueType": {
-              "name": {
-                "originalName": "PhoneNumberObject",
-                "camelCase": {
-                  "unsafeName": "phoneNumberObject",
-                  "safeName": "phoneNumberObject"
-                },
-                "snakeCase": {
-                  "unsafeName": "phone_number_object",
-                  "safeName": "phone_number_object"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PHONE_NUMBER_OBJECT",
-                  "safeName": "PHONE_NUMBER_OBJECT"
-                },
-                "pascalCase": {
-                  "unsafeName": "PhoneNumberObject",
-                  "safeName": "PhoneNumberObject"
-                }
-              },
+              "name": "PhoneNumberObject",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -791,25 +365,7 @@
       "docs": "Inlined one of. Display name should be generated for variants from the title.",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestInlinedOneOfWithNames",
-          "camelCase": {
-            "unsafeName": "userRequestInlinedOneOfWithNames",
-            "safeName": "userRequestInlinedOneOfWithNames"
-          },
-          "snakeCase": {
-            "unsafeName": "user_request_inlined_one_of_with_names",
-            "safeName": "user_request_inlined_one_of_with_names"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER_REQUEST_INLINED_ONE_OF_WITH_NAMES",
-            "safeName": "USER_REQUEST_INLINED_ONE_OF_WITH_NAMES"
-          },
-          "pascalCase": {
-            "unsafeName": "UserRequestInlinedOneOfWithNames",
-            "safeName": "UserRequestInlinedOneOfWithNames"
-          }
-        },
+        "name": "UserRequestInlinedOneOfWithNames",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -820,25 +376,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "UserRequestInlinedOneOfWithNamesEmail",
-                "camelCase": {
-                  "unsafeName": "userRequestInlinedOneOfWithNamesEmail",
-                  "safeName": "userRequestInlinedOneOfWithNamesEmail"
-                },
-                "snakeCase": {
-                  "unsafeName": "user_request_inlined_one_of_with_names_email",
-                  "safeName": "user_request_inlined_one_of_with_names_email"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER_REQUEST_INLINED_ONE_OF_WITH_NAMES_EMAIL",
-                  "safeName": "USER_REQUEST_INLINED_ONE_OF_WITH_NAMES_EMAIL"
-                },
-                "pascalCase": {
-                  "unsafeName": "UserRequestInlinedOneOfWithNamesEmail",
-                  "safeName": "UserRequestInlinedOneOfWithNamesEmail"
-                }
-              },
+              "name": "UserRequestInlinedOneOfWithNamesEmail",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -850,25 +388,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "UserRequestInlinedOneOfWithNamesPhoneNumber",
-                "camelCase": {
-                  "unsafeName": "userRequestInlinedOneOfWithNamesPhoneNumber",
-                  "safeName": "userRequestInlinedOneOfWithNamesPhoneNumber"
-                },
-                "snakeCase": {
-                  "unsafeName": "user_request_inlined_one_of_with_names_phone_number",
-                  "safeName": "user_request_inlined_one_of_with_names_phone_number"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER_REQUEST_INLINED_ONE_OF_WITH_NAMES_PHONE_NUMBER",
-                  "safeName": "USER_REQUEST_INLINED_ONE_OF_WITH_NAMES_PHONE_NUMBER"
-                },
-                "pascalCase": {
-                  "unsafeName": "UserRequestInlinedOneOfWithNamesPhoneNumber",
-                  "safeName": "UserRequestInlinedOneOfWithNamesPhoneNumber"
-                }
-              },
+              "name": "UserRequestInlinedOneOfWithNamesPhoneNumber",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -890,25 +410,7 @@
     },
     "type_:SquareObject": {
       "name": {
-        "name": {
-          "originalName": "SquareObject",
-          "camelCase": {
-            "unsafeName": "squareObject",
-            "safeName": "squareObject"
-          },
-          "snakeCase": {
-            "unsafeName": "square_object",
-            "safeName": "square_object"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SQUARE_OBJECT",
-            "safeName": "SQUARE_OBJECT"
-          },
-          "pascalCase": {
-            "unsafeName": "SquareObject",
-            "safeName": "SquareObject"
-          }
-        },
+        "name": "SquareObject",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -919,28 +421,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "sideLength",
-                "camelCase": {
-                  "unsafeName": "sideLength",
-                  "safeName": "sideLength"
-                },
-                "snakeCase": {
-                  "unsafeName": "side_length",
-                  "safeName": "side_length"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SIDE_LENGTH",
-                  "safeName": "SIDE_LENGTH"
-                },
-                "pascalCase": {
-                  "unsafeName": "SideLength",
-                  "safeName": "SideLength"
-                }
-              },
-              "wireValue": "sideLength"
-            },
+            "name": "sideLength",
             "valueType": {
               "container": {
                 "optional": {
@@ -975,25 +456,7 @@
     },
     "type_:RectangleObject": {
       "name": {
-        "name": {
-          "originalName": "RectangleObject",
-          "camelCase": {
-            "unsafeName": "rectangleObject",
-            "safeName": "rectangleObject"
-          },
-          "snakeCase": {
-            "unsafeName": "rectangle_object",
-            "safeName": "rectangle_object"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "RECTANGLE_OBJECT",
-            "safeName": "RECTANGLE_OBJECT"
-          },
-          "pascalCase": {
-            "unsafeName": "RectangleObject",
-            "safeName": "RectangleObject"
-          }
-        },
+        "name": "RectangleObject",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -1004,28 +467,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "width",
-                "camelCase": {
-                  "unsafeName": "width",
-                  "safeName": "width"
-                },
-                "snakeCase": {
-                  "unsafeName": "width",
-                  "safeName": "width"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "WIDTH",
-                  "safeName": "WIDTH"
-                },
-                "pascalCase": {
-                  "unsafeName": "Width",
-                  "safeName": "Width"
-                }
-              },
-              "wireValue": "width"
-            },
+            "name": "width",
             "valueType": {
               "container": {
                 "optional": {
@@ -1047,28 +489,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "height",
-                "camelCase": {
-                  "unsafeName": "height",
-                  "safeName": "height"
-                },
-                "snakeCase": {
-                  "unsafeName": "height",
-                  "safeName": "height"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "HEIGHT",
-                  "safeName": "HEIGHT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Height",
-                  "safeName": "Height"
-                }
-              },
-              "wireValue": "height"
-            },
+            "name": "height",
             "valueType": {
               "container": {
                 "optional": {
@@ -1103,25 +524,7 @@
     },
     "type_:App": {
       "name": {
-        "name": {
-          "originalName": "App",
-          "camelCase": {
-            "unsafeName": "app",
-            "safeName": "app"
-          },
-          "snakeCase": {
-            "unsafeName": "app",
-            "safeName": "app"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "APP",
-            "safeName": "APP"
-          },
-          "pascalCase": {
-            "unsafeName": "App",
-            "safeName": "App"
-          }
-        },
+        "name": "App",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -1132,28 +535,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "app",
-                "camelCase": {
-                  "unsafeName": "app",
-                  "safeName": "app"
-                },
-                "snakeCase": {
-                  "unsafeName": "app",
-                  "safeName": "app"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "APP",
-                  "safeName": "APP"
-                },
-                "pascalCase": {
-                  "unsafeName": "App",
-                  "safeName": "App"
-                }
-              },
-              "wireValue": "app"
-            },
+            "name": "app",
             "valueType": {
               "container": {
                 "optional": {
@@ -1188,25 +570,7 @@
     },
     "type_:Email": {
       "name": {
-        "name": {
-          "originalName": "Email",
-          "camelCase": {
-            "unsafeName": "email",
-            "safeName": "email"
-          },
-          "snakeCase": {
-            "unsafeName": "email",
-            "safeName": "email"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "EMAIL",
-            "safeName": "EMAIL"
-          },
-          "pascalCase": {
-            "unsafeName": "Email",
-            "safeName": "Email"
-          }
-        },
+        "name": "Email",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -1217,28 +581,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "email",
-                "camelCase": {
-                  "unsafeName": "email",
-                  "safeName": "email"
-                },
-                "snakeCase": {
-                  "unsafeName": "email",
-                  "safeName": "email"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "EMAIL",
-                  "safeName": "EMAIL"
-                },
-                "pascalCase": {
-                  "unsafeName": "Email",
-                  "safeName": "Email"
-                }
-              },
-              "wireValue": "email"
-            },
+            "name": "email",
             "valueType": {
               "container": {
                 "optional": {
@@ -1273,25 +616,7 @@
     },
     "type_:EmailObject": {
       "name": {
-        "name": {
-          "originalName": "EmailObject",
-          "camelCase": {
-            "unsafeName": "emailObject",
-            "safeName": "emailObject"
-          },
-          "snakeCase": {
-            "unsafeName": "email_object",
-            "safeName": "email_object"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "EMAIL_OBJECT",
-            "safeName": "EMAIL_OBJECT"
-          },
-          "pascalCase": {
-            "unsafeName": "EmailObject",
-            "safeName": "EmailObject"
-          }
-        },
+        "name": "EmailObject",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -1302,28 +627,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "email",
-                "camelCase": {
-                  "unsafeName": "email",
-                  "safeName": "email"
-                },
-                "snakeCase": {
-                  "unsafeName": "email",
-                  "safeName": "email"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "EMAIL",
-                  "safeName": "EMAIL"
-                },
-                "pascalCase": {
-                  "unsafeName": "Email",
-                  "safeName": "Email"
-                }
-              },
-              "wireValue": "email"
-            },
+            "name": "email",
             "valueType": {
               "container": {
                 "optional": {
@@ -1358,25 +662,7 @@
     },
     "type_:PhoneNumberObject": {
       "name": {
-        "name": {
-          "originalName": "PhoneNumberObject",
-          "camelCase": {
-            "unsafeName": "phoneNumberObject",
-            "safeName": "phoneNumberObject"
-          },
-          "snakeCase": {
-            "unsafeName": "phone_number_object",
-            "safeName": "phone_number_object"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PHONE_NUMBER_OBJECT",
-            "safeName": "PHONE_NUMBER_OBJECT"
-          },
-          "pascalCase": {
-            "unsafeName": "PhoneNumberObject",
-            "safeName": "PhoneNumberObject"
-          }
-        },
+        "name": "PhoneNumberObject",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -1387,28 +673,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "phone_number",
-                "camelCase": {
-                  "unsafeName": "phoneNumber",
-                  "safeName": "phoneNumber"
-                },
-                "snakeCase": {
-                  "unsafeName": "phone_number",
-                  "safeName": "phone_number"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PHONE_NUMBER",
-                  "safeName": "PHONE_NUMBER"
-                },
-                "pascalCase": {
-                  "unsafeName": "PhoneNumber",
-                  "safeName": "PhoneNumber"
-                }
-              },
-              "wireValue": "phone_number"
-            },
+            "name": "phone_number",
             "valueType": {
               "container": {
                 "optional": {
@@ -1443,25 +708,7 @@
     },
     "type_:EmptyOneOf": {
       "name": {
-        "name": {
-          "originalName": "EmptyOneOf",
-          "camelCase": {
-            "unsafeName": "emptyOneOf",
-            "safeName": "emptyOneOf"
-          },
-          "snakeCase": {
-            "unsafeName": "empty_one_of",
-            "safeName": "empty_one_of"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "EMPTY_ONE_OF",
-            "safeName": "EMPTY_ONE_OF"
-          },
-          "pascalCase": {
-            "unsafeName": "EmptyOneOf",
-            "safeName": "EmptyOneOf"
-          }
-        },
+        "name": "EmptyOneOf",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -1472,28 +719,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "anonymous",
-                "camelCase": {
-                  "unsafeName": "anonymous",
-                  "safeName": "anonymous"
-                },
-                "snakeCase": {
-                  "unsafeName": "anonymous",
-                  "safeName": "anonymous"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ANONYMOUS",
-                  "safeName": "ANONYMOUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Anonymous",
-                  "safeName": "Anonymous"
-                }
-              },
-              "wireValue": "anonymous"
-            },
+            "name": "anonymous",
             "valueType": {
               "container": {
                 "keyType": {
@@ -1554,25 +780,7 @@
       "endpoints": [
         {
           "id": "endpoint_.createUser",
-          "name": {
-            "originalName": "createUser",
-            "camelCase": {
-              "unsafeName": "createUser",
-              "safeName": "createUser"
-            },
-            "snakeCase": {
-              "unsafeName": "create_user",
-              "safeName": "create_user"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "CREATE_USER",
-              "safeName": "CREATE_USER"
-            },
-            "pascalCase": {
-              "unsafeName": "CreateUser",
-              "safeName": "CreateUser"
-            }
-          },
+          "name": "createUser",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -1589,74 +797,17 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "UserRequest",
-              "camelCase": {
-                "unsafeName": "userRequest",
-                "safeName": "userRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "user_request",
-                "safeName": "user_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "USER_REQUEST",
-                "safeName": "USER_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "UserRequest",
-                "safeName": "UserRequest"
-              }
-            },
+            "name": "UserRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "The login method to use. No display name should be generated for variants.",
-                "name": {
-                  "name": {
-                    "originalName": "no-summary-or-title",
-                    "camelCase": {
-                      "unsafeName": "noSummaryOrTitle",
-                      "safeName": "noSummaryOrTitle"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "no_summary_or_title",
-                      "safeName": "no_summary_or_title"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "NO_SUMMARY_OR_TITLE",
-                      "safeName": "NO_SUMMARY_OR_TITLE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "NoSummaryOrTitle",
-                      "safeName": "NoSummaryOrTitle"
-                    }
-                  },
-                  "wireValue": "no-summary-or-title"
-                },
+                "name": "no-summary-or-title",
                 "valueType": {
                   "container": {
                     "optional": {
-                      "name": {
-                        "originalName": "UserRequestNoSummaryOrTitle",
-                        "camelCase": {
-                          "unsafeName": "userRequestNoSummaryOrTitle",
-                          "safeName": "userRequestNoSummaryOrTitle"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "user_request_no_summary_or_title",
-                          "safeName": "user_request_no_summary_or_title"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "USER_REQUEST_NO_SUMMARY_OR_TITLE",
-                          "safeName": "USER_REQUEST_NO_SUMMARY_OR_TITLE"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "UserRequestNoSummaryOrTitle",
-                          "safeName": "UserRequestNoSummaryOrTitle"
-                        }
-                      },
+                      "name": "UserRequestNoSummaryOrTitle",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -1675,50 +826,11 @@
               },
               {
                 "docs": "The login method to use. Display name should be generated for variants from the title.",
-                "name": {
-                  "name": {
-                    "originalName": "no-summary-and-title",
-                    "camelCase": {
-                      "unsafeName": "noSummaryAndTitle",
-                      "safeName": "noSummaryAndTitle"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "no_summary_and_title",
-                      "safeName": "no_summary_and_title"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "NO_SUMMARY_AND_TITLE",
-                      "safeName": "NO_SUMMARY_AND_TITLE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "NoSummaryAndTitle",
-                      "safeName": "NoSummaryAndTitle"
-                    }
-                  },
-                  "wireValue": "no-summary-and-title"
-                },
+                "name": "no-summary-and-title",
                 "valueType": {
                   "container": {
                     "optional": {
-                      "name": {
-                        "originalName": "UserRequestNoSummaryAndTitle",
-                        "camelCase": {
-                          "unsafeName": "userRequestNoSummaryAndTitle",
-                          "safeName": "userRequestNoSummaryAndTitle"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "user_request_no_summary_and_title",
-                          "safeName": "user_request_no_summary_and_title"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "USER_REQUEST_NO_SUMMARY_AND_TITLE",
-                          "safeName": "USER_REQUEST_NO_SUMMARY_AND_TITLE"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "UserRequestNoSummaryAndTitle",
-                          "safeName": "UserRequestNoSummaryAndTitle"
-                        }
-                      },
+                      "name": "UserRequestNoSummaryAndTitle",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -1737,50 +849,11 @@
               },
               {
                 "docs": "The verification method to use. Display name should be generated for variants from the summary.",
-                "name": {
-                  "name": {
-                    "originalName": "summary-and-title",
-                    "camelCase": {
-                      "unsafeName": "summaryAndTitle",
-                      "safeName": "summaryAndTitle"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "summary_and_title",
-                      "safeName": "summary_and_title"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "SUMMARY_AND_TITLE",
-                      "safeName": "SUMMARY_AND_TITLE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "SummaryAndTitle",
-                      "safeName": "SummaryAndTitle"
-                    }
-                  },
-                  "wireValue": "summary-and-title"
-                },
+                "name": "summary-and-title",
                 "valueType": {
                   "container": {
                     "optional": {
-                      "name": {
-                        "originalName": "UserRequestSummaryAndTitle",
-                        "camelCase": {
-                          "unsafeName": "userRequestSummaryAndTitle",
-                          "safeName": "userRequestSummaryAndTitle"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "user_request_summary_and_title",
-                          "safeName": "user_request_summary_and_title"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "USER_REQUEST_SUMMARY_AND_TITLE",
-                          "safeName": "USER_REQUEST_SUMMARY_AND_TITLE"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "UserRequestSummaryAndTitle",
-                          "safeName": "UserRequestSummaryAndTitle"
-                        }
-                      },
+                      "name": "UserRequestSummaryAndTitle",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -1799,28 +872,7 @@
               },
               {
                 "docs": "This property is useless. But no display name should be generated for variants.",
-                "name": {
-                  "name": {
-                    "originalName": "useless-property",
-                    "camelCase": {
-                      "unsafeName": "uselessProperty",
-                      "safeName": "uselessProperty"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "useless_property",
-                      "safeName": "useless_property"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "USELESS_PROPERTY",
-                      "safeName": "USELESS_PROPERTY"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "UselessProperty",
-                      "safeName": "UselessProperty"
-                    }
-                  },
-                  "wireValue": "useless-property"
-                },
+                "name": "useless-property",
                 "valueType": {
                   "container": {
                     "optional": {
@@ -1837,52 +889,13 @@
               },
               {
                 "docs": "Inlined one of. No display name should be generated for variants.",
-                "name": {
-                  "name": {
-                    "originalName": "inlined-one-of-no-names",
-                    "camelCase": {
-                      "unsafeName": "inlinedOneOfNoNames",
-                      "safeName": "inlinedOneOfNoNames"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "inlined_one_of_no_names",
-                      "safeName": "inlined_one_of_no_names"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "INLINED_ONE_OF_NO_NAMES",
-                      "safeName": "INLINED_ONE_OF_NO_NAMES"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "InlinedOneOfNoNames",
-                      "safeName": "InlinedOneOfNoNames"
-                    }
-                  },
-                  "wireValue": "inlined-one-of-no-names"
-                },
+                "name": "inlined-one-of-no-names",
                 "valueType": {
                   "container": {
                     "optional": {
                       "container": {
                         "nullable": {
-                          "name": {
-                            "originalName": "UserRequestInlinedOneOfNoNames",
-                            "camelCase": {
-                              "unsafeName": "userRequestInlinedOneOfNoNames",
-                              "safeName": "userRequestInlinedOneOfNoNames"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "user_request_inlined_one_of_no_names",
-                              "safeName": "user_request_inlined_one_of_no_names"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "USER_REQUEST_INLINED_ONE_OF_NO_NAMES",
-                              "safeName": "USER_REQUEST_INLINED_ONE_OF_NO_NAMES"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "UserRequestInlinedOneOfNoNames",
-                              "safeName": "UserRequestInlinedOneOfNoNames"
-                            }
-                          },
+                          "name": "UserRequestInlinedOneOfNoNames",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
@@ -1905,52 +918,13 @@
               },
               {
                 "docs": "Inlined one of. Display name should be generated for variants from the title.",
-                "name": {
-                  "name": {
-                    "originalName": "inlined-one-of-with-names",
-                    "camelCase": {
-                      "unsafeName": "inlinedOneOfWithNames",
-                      "safeName": "inlinedOneOfWithNames"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "inlined_one_of_with_names",
-                      "safeName": "inlined_one_of_with_names"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "INLINED_ONE_OF_WITH_NAMES",
-                      "safeName": "INLINED_ONE_OF_WITH_NAMES"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "InlinedOneOfWithNames",
-                      "safeName": "InlinedOneOfWithNames"
-                    }
-                  },
-                  "wireValue": "inlined-one-of-with-names"
-                },
+                "name": "inlined-one-of-with-names",
                 "valueType": {
                   "container": {
                     "optional": {
                       "container": {
                         "nullable": {
-                          "name": {
-                            "originalName": "UserRequestInlinedOneOfWithNames",
-                            "camelCase": {
-                              "unsafeName": "userRequestInlinedOneOfWithNames",
-                              "safeName": "userRequestInlinedOneOfWithNames"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "user_request_inlined_one_of_with_names",
-                              "safeName": "user_request_inlined_one_of_with_names"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "USER_REQUEST_INLINED_ONE_OF_WITH_NAMES",
-                              "safeName": "USER_REQUEST_INLINED_ONE_OF_WITH_NAMES"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "UserRequestInlinedOneOfWithNames",
-                              "safeName": "UserRequestInlinedOneOfWithNames"
-                            }
-                          },
+                          "name": "UserRequestInlinedOneOfWithNames",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
@@ -1978,67 +952,13 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "UserRequest",
-                "camelCase": {
-                  "unsafeName": "userRequest",
-                  "safeName": "userRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "user_request",
-                  "safeName": "user_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER_REQUEST",
-                  "safeName": "USER_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "UserRequest",
-                  "safeName": "UserRequest"
-                }
-              },
-              "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
-              },
+              "wrapperName": "UserRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -2078,28 +998,7 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -2278,6 +1177,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "email",
               "name": {
                 "originalName": "email",
                 "camelCase": {
@@ -2296,8 +1196,7 @@
                   "unsafeName": "Email",
                   "safeName": "Email"
                 }
-              },
-              "wireValue": "email"
+              }
             },
             "typeReference": {
               "value": "STRING",
@@ -2337,6 +1236,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "phone_number",
               "name": {
                 "originalName": "phone_number",
                 "camelCase": {
@@ -2355,8 +1255,7 @@
                   "unsafeName": "PhoneNumber",
                   "safeName": "PhoneNumber"
                 }
-              },
-              "wireValue": "phone_number"
+              }
             },
             "typeReference": {
               "value": "STRING",
@@ -2434,6 +1333,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "email",
               "name": {
                 "originalName": "email",
                 "camelCase": {
@@ -2452,8 +1352,7 @@
                   "unsafeName": "Email",
                   "safeName": "Email"
                 }
-              },
-              "wireValue": "email"
+              }
             },
             "typeReference": {
               "value": "type_:EmailObject",
@@ -2493,6 +1392,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "phone_number",
               "name": {
                 "originalName": "phone_number",
                 "camelCase": {
@@ -2511,8 +1411,7 @@
                   "unsafeName": "PhoneNumber",
                   "safeName": "PhoneNumber"
                 }
-              },
-              "wireValue": "phone_number"
+              }
             },
             "typeReference": {
               "value": "type_:PhoneNumberObject",
@@ -2590,6 +1489,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "sideLength",
               "name": {
                 "originalName": "sideLength",
                 "camelCase": {
@@ -2608,8 +1508,7 @@
                   "unsafeName": "SideLength",
                   "safeName": "SideLength"
                 }
-              },
-              "wireValue": "sideLength"
+              }
             },
             "typeReference": {
               "value": {
@@ -2652,6 +1551,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "width",
               "name": {
                 "originalName": "width",
                 "camelCase": {
@@ -2670,8 +1570,7 @@
                   "unsafeName": "Width",
                   "safeName": "Width"
                 }
-              },
-              "wireValue": "width"
+              }
             },
             "typeReference": {
               "value": {
@@ -2683,6 +1582,7 @@
           },
           {
             "name": {
+              "wireValue": "height",
               "name": {
                 "originalName": "height",
                 "camelCase": {
@@ -2701,8 +1601,7 @@
                   "unsafeName": "Height",
                   "safeName": "Height"
                 }
-              },
-              "wireValue": "height"
+              }
             },
             "typeReference": {
               "value": {
@@ -2745,6 +1644,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "app",
               "name": {
                 "originalName": "app",
                 "camelCase": {
@@ -2763,8 +1663,7 @@
                   "unsafeName": "App",
                   "safeName": "App"
                 }
-              },
-              "wireValue": "app"
+              }
             },
             "typeReference": {
               "value": {
@@ -2807,6 +1706,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "email",
               "name": {
                 "originalName": "email",
                 "camelCase": {
@@ -2825,8 +1725,7 @@
                   "unsafeName": "Email",
                   "safeName": "Email"
                 }
-              },
-              "wireValue": "email"
+              }
             },
             "typeReference": {
               "value": {
@@ -2869,6 +1768,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "email",
               "name": {
                 "originalName": "email",
                 "camelCase": {
@@ -2887,8 +1787,7 @@
                   "unsafeName": "Email",
                   "safeName": "Email"
                 }
-              },
-              "wireValue": "email"
+              }
             },
             "typeReference": {
               "value": {
@@ -2931,6 +1830,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "phone_number",
               "name": {
                 "originalName": "phone_number",
                 "camelCase": {
@@ -2949,8 +1849,7 @@
                   "unsafeName": "PhoneNumber",
                   "safeName": "PhoneNumber"
                 }
-              },
-              "wireValue": "phone_number"
+              }
             },
             "typeReference": {
               "value": {
@@ -2993,6 +1892,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "anonymous",
               "name": {
                 "originalName": "anonymous",
                 "camelCase": {
@@ -3011,8 +1911,7 @@
                   "unsafeName": "Anonymous",
                   "safeName": "Anonymous"
                 }
-              },
-              "wireValue": "anonymous"
+              }
             },
             "typeReference": {
               "key": {
@@ -3095,6 +1994,7 @@
             "value": [
               {
                 "name": {
+                  "wireValue": "no-summary-or-title",
                   "name": {
                     "originalName": "no-summary-or-title",
                     "camelCase": {
@@ -3113,8 +2013,7 @@
                       "unsafeName": "NoSummaryOrTitle",
                       "safeName": "NoSummaryOrTitle"
                     }
-                  },
-                  "wireValue": "no-summary-or-title"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -3126,6 +2025,7 @@
               },
               {
                 "name": {
+                  "wireValue": "no-summary-and-title",
                   "name": {
                     "originalName": "no-summary-and-title",
                     "camelCase": {
@@ -3144,8 +2044,7 @@
                       "unsafeName": "NoSummaryAndTitle",
                       "safeName": "NoSummaryAndTitle"
                     }
-                  },
-                  "wireValue": "no-summary-and-title"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -3157,6 +2056,7 @@
               },
               {
                 "name": {
+                  "wireValue": "summary-and-title",
                   "name": {
                     "originalName": "summary-and-title",
                     "camelCase": {
@@ -3175,8 +2075,7 @@
                       "unsafeName": "SummaryAndTitle",
                       "safeName": "SummaryAndTitle"
                     }
-                  },
-                  "wireValue": "summary-and-title"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -3188,6 +2087,7 @@
               },
               {
                 "name": {
+                  "wireValue": "useless-property",
                   "name": {
                     "originalName": "useless-property",
                     "camelCase": {
@@ -3206,8 +2106,7 @@
                       "unsafeName": "UselessProperty",
                       "safeName": "UselessProperty"
                     }
-                  },
-                  "wireValue": "useless-property"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -3218,6 +2117,7 @@
               },
               {
                 "name": {
+                  "wireValue": "inlined-one-of-no-names",
                   "name": {
                     "originalName": "inlined-one-of-no-names",
                     "camelCase": {
@@ -3236,8 +2136,7 @@
                       "unsafeName": "InlinedOneOfNoNames",
                       "safeName": "InlinedOneOfNoNames"
                     }
-                  },
-                  "wireValue": "inlined-one-of-no-names"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -3252,6 +2151,7 @@
               },
               {
                 "name": {
+                  "wireValue": "inlined-one-of-with-names",
                   "name": {
                     "originalName": "inlined-one-of-with-names",
                     "camelCase": {
@@ -3270,8 +2170,7 @@
                       "unsafeName": "InlinedOneOfWithNames",
                       "safeName": "InlinedOneOfWithNames"
                     }
-                  },
-                  "wireValue": "inlined-one-of-with-names"
+                  }
                 },
                 "typeReference": {
                   "value": {
@@ -3302,6 +2201,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

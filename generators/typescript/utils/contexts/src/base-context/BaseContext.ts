@@ -1,17 +1,19 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
-import { Constants } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { CoreUtilities, ExternalDependencies } from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
 
-import { TypeContext, TypeSchemaContext } from "../model-context";
-import { JsonContext } from "./json";
+import { TypeContext, TypeSchemaContext } from "../model-context/index.js";
+import { JsonContext } from "./json/index.js";
 
 export interface BaseContext {
+    case: CaseConverter;
     logger: Logger;
     sourceFile: SourceFile;
     externalDependencies: ExternalDependencies;
     coreUtilities: CoreUtilities;
-    fernConstants: Constants;
+    fernConstants: FernIr.Constants;
     type: TypeContext;
     typeSchema: TypeSchemaContext;
     includeSerdeLayer: boolean;

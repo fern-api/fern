@@ -4,6 +4,7 @@ package service
 
 import (
 	context "context"
+
 	fern "github.com/examples/fern"
 	core "github.com/examples/fern/core"
 	internal "github.com/examples/fern/internal"
@@ -34,12 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) GetException(
 	ctx context.Context,
-	notificationId string,
+	notificationID string,
 	opts ...option.RequestOption,
 ) (*fern.Exception, error) {
 	response, err := c.WithRawResponse.GetException(
 		ctx,
-		notificationId,
+		notificationID,
 		opts...,
 	)
 	if err != nil {

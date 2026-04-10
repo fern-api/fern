@@ -1,1 +1,1 @@
-export { FileUploadRequestBodyGenerator } from "./FileUploadRequestBodyGenerator";
+export { FileUploadRequestBodyGenerator } from "./FileUploadRequestBodyGenerator.js";

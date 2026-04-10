@@ -122,6 +122,10 @@ public final class Organization {
     public interface _FinalStage {
         Organization build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage domain(OptionalNullable<String> domain);
 
         _FinalStage domain(String domain);
@@ -224,6 +228,18 @@ public final class Organization {
         @java.lang.Override
         public Organization build() {
             return new Organization(id, name, domain, employeeCount, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

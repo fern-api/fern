@@ -45,7 +45,7 @@ public partial class ClientOptions
     } = [];
 
     /// <summary>
-    /// The http client used to make requests.
+    /// The max number of retries to attempt.
     /// </summary>
     public int MaxRetries { get;
 #if NET5_0_OR_GREATER
@@ -53,7 +53,7 @@ public partial class ClientOptions
 #else
         set;
 #endif
-    } = 2;
+    } = 5;
 
     /// <summary>
     /// The timeout for the request.

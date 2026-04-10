@@ -5,7 +5,7 @@
 //!
 //! ## Type Categories
 //!
-//! - **Request/Response Types**: 10 types for API operations
+//! - **Request/Response Types**: 11 types for API operations
 //! - **Model Types**: 9 types for data representation
 
 pub mod service_id;
@@ -26,6 +26,7 @@ pub mod with_form_encoding_request;
 pub mod with_form_encoded_containers_request;
 pub mod optional_args_request;
 pub mod with_inline_type_request;
+pub mod with_json_property_request;
 pub mod with_literal_and_enum_types_request;
 
 pub use service_id::Id;
@@ -46,5 +47,6 @@ pub use with_form_encoding_request::WithFormEncodingRequest;
 pub use with_form_encoded_containers_request::WithFormEncodedContainersRequest;
 pub use optional_args_request::OptionalArgsRequest;
 pub use with_inline_type_request::WithInlineTypeRequest;
+pub use with_json_property_request::WithJsonPropertyRequest;
 pub use with_literal_and_enum_types_request::WithLiteralAndEnumTypesRequest;
 

@@ -4,7 +4,7 @@ import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 
-import { MintlifyFrontmatter } from "./mintlify";
+import { MintlifyFrontmatter } from "./mintlify.js";
 
 export declare namespace convertMarkdown {
     interface Args {
