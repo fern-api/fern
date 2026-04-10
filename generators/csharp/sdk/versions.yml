@@ -2,13 +2,13 @@
 - version: 2.59.4
   changelogEntry:
     - summary: |
-        Round float primitive examples to 32-bit precision in mock server test
-        JSON. When an OpenAPI spec provides double-precision example values for
-        fields declared as `format: float`, the mock response JSON now uses
-        `Math.fround()` to match what C# produces after deserializing into
-        `System.Single`. This prevents `JsonAssert.AreEqual` failures caused by
-        precision loss during float round-trips (e.g. 0.10722749680280685
-        becoming 0.1072275).
+        Add `GetSingle()` fallback to `JsonElementComparer` number comparison.
+        When two JSON numbers differ as decimals but match as singles, they
+        represent the same float32 value and are now considered equal. This
+        fixes mock server test failures for fields declared as `format: float`
+        where C#'s `System.Text.Json` serializes `System.Single` with a shorter
+        decimal representation than the original JSON string (e.g.
+        0.10722749680280685 vs 0.1072275).
       type: fix
   createdAt: "2026-04-10"
   irVersion: 66
