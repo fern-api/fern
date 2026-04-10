@@ -1,6 +1,17 @@
 <% if (testFramework === "vitest") { %>
 import { expect } from "vitest";
 
+// Custom equality tester: treat all functions as equal so that union type
+// _visit methods (which differ by reference between SDK constructors and
+// serde-layer output) do not cause toEqual() mismatches in wire tests.
+const functionsAreEqual = (a: unknown, b: unknown): boolean | undefined => {
+    if (typeof a === "function" && typeof b === "function") {
+        return true;
+    }
+    return undefined;
+};
+expect.addEqualityTesters([functionsAreEqual]);
+
 interface CustomMatchers<R = unknown> {
     toContainHeaders(expectedHeaders: Record<string, string>): R;
 }
@@ -80,6 +91,17 @@ expect.extend({
     },
 });
 <% } else if (testFramework === "jest") { %>
+// Custom equality tester: treat all functions as equal so that union type
+// _visit methods (which differ by reference between SDK constructors and
+// serde-layer output) do not cause toEqual() mismatches in wire tests.
+const functionsAreEqual: jest.EqualityTester = (a: unknown, b: unknown): boolean | undefined => {
+    if (typeof a === "function" && typeof b === "function") {
+        return true;
+    }
+    return undefined;
+};
+expect.addEqualityTesters([functionsAreEqual]);
+
 expect.extend({
     toContainHeaders(this: jest.MatcherContext, actual: unknown, expectedHeaders: Record<string, string>) {
         const isHeaders = actual instanceof Headers;

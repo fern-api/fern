@@ -1,0 +1,6 @@
+- summary: |
+    Fix wire test failures when `includeUtilsOnUnionMembers` is enabled by adding
+    a custom Jest/Vitest equality tester that treats functions as equal. This
+    prevents `toEqual()` mismatches caused by `_visit` function references
+    differing between SDK constructors and serde-layer deserialized output.
+  type: fix
