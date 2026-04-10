@@ -330,7 +330,7 @@ function convertRequestBody({
                                             acc[getWireValue(bodyProperty.name)] = {
                                                 allOf: [converted],
                                                 description: bodyProperty.docs
-                                            } as OpenAPIV3.SchemaObject;
+                                            };
                                         } else {
                                             acc[getWireValue(bodyProperty.name)] = {
                                                 description: bodyProperty.docs ?? undefined,
