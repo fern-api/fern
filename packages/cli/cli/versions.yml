@@ -5,8 +5,7 @@
   changelogEntry:
     - summary: |
         Fix broken-link checker incorrectly flagging absolute links in versioned
-        docs pages as broken. Absolute links like `/about` in versioned pages now
-        correctly resolve within the version context.
+        docs pages as broken.
       type: fix
   createdAt: "2026-04-10"
 
