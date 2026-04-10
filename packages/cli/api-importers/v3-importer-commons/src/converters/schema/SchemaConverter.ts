@@ -179,19 +179,33 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             this.schema.allOf?.length === 1 &&
             this.schema.allOf[0] != null
         ) {
+            const allOfElement = this.schema.allOf[0];
+
+            // Guard against single-element allOf cycles (e.g. A → B → A via single-element allOf chains)
+            if (this.context.isReferenceObject(allOfElement)) {
+                const refPath = allOfElement.$ref;
+                if (this.visitedRefs.has(refPath)) {
+                    return undefined;
+                }
+            }
+
             const allOfSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
-                schemaOrReference: this.schema.allOf[0],
+                schemaOrReference: allOfElement,
                 breadcrumbs: this.breadcrumbs
             });
 
             if (allOfSchema != null) {
+                const visitedRefsForChild = this.context.isReferenceObject(allOfElement)
+                    ? new Set<string>([...this.visitedRefs, allOfElement.$ref])
+                    : this.visitedRefs;
+
                 const allOfConverter = new SchemaConverter({
                     context: this.context,
                     breadcrumbs: [...this.breadcrumbs, "allOf", "0"],
                     schema: allOfSchema,
                     id: this.id,
                     inlined: true,
-                    visitedRefs: this.visitedRefs
+                    visitedRefs: visitedRefsForChild
                 });
 
                 const allOfResult = allOfConverter.convert();
