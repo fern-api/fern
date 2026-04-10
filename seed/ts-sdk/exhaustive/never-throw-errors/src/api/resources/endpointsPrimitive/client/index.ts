@@ -1,9 +1,0 @@
-export * as endpointsPrimitiveGetAndReturnBase64 from "./endpointsPrimitiveGetAndReturnBase64.js";
-export * as endpointsPrimitiveGetAndReturnBool from "./endpointsPrimitiveGetAndReturnBool.js";
-export * as endpointsPrimitiveGetAndReturnDate from "./endpointsPrimitiveGetAndReturnDate.js";
-export * as endpointsPrimitiveGetAndReturnDatetime from "./endpointsPrimitiveGetAndReturnDatetime.js";
-export * as endpointsPrimitiveGetAndReturnDouble from "./endpointsPrimitiveGetAndReturnDouble.js";
-export * as endpointsPrimitiveGetAndReturnInt from "./endpointsPrimitiveGetAndReturnInt.js";
-export * as endpointsPrimitiveGetAndReturnLong from "./endpointsPrimitiveGetAndReturnLong.js";
-export * as endpointsPrimitiveGetAndReturnString from "./endpointsPrimitiveGetAndReturnString.js";
-export * as endpointsPrimitiveGetAndReturnUuid from "./endpointsPrimitiveGetAndReturnUuid.js";

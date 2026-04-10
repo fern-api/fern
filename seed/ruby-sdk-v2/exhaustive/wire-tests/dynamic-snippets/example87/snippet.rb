@@ -1,8 +1,0 @@
-require "seed"
-
-client = Seed::MyClient.new(
-  token: "<token>",
-  base_url: "https://api.fern.com"
-)
-
-client.endpoints_primitive.endpoints_primitive_get_and_return_datetime(request: "2024-01-15T09:30:00Z")
