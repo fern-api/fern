@@ -21,8 +21,6 @@ interface ChangelogEntry {
 
 const VALID_CHANGELOG_TYPES = new Set(["fix", "chore", "feat", "internal", "break"]);
 
-type ChangelogFileContent = ChangelogEntry[] | { rc?: boolean; changes: ChangelogEntry[] };
-
 type Severity = "major" | "minor" | "patch";
 
 function getSeverityFromType(type: ChangelogEntry["type"]): Severity {
@@ -82,47 +80,6 @@ function validateChangelogEntry(entry: unknown, filename: string, index: number)
     }
 }
 
-/**
- * Validates and parses the top-level structure of a changelog file.
- * Supports either an array of entries (legacy) or an object with optional `rc` and required `changes`.
- */
-function parseChangelogFile(parsed: unknown, filename: string): { rc: boolean; entries: ChangelogEntry[] } {
-    if (Array.isArray(parsed)) {
-        return { rc: false, entries: parsed as ChangelogEntry[] };
-    }
-
-    if (typeof parsed !== "object" || parsed === null) {
-        console.error(
-            `Error: Invalid format in ${filename}. Expected an array of changelog entries or an object with a "changes" field.`
-        );
-        process.exit(1);
-    }
-
-    const obj = parsed as Record<string, unknown>;
-
-    if (obj.rc !== undefined && typeof obj.rc !== "boolean") {
-        console.error(`Error in ${filename}: "rc" field must be a boolean, got ${typeof obj.rc}`);
-        process.exit(1);
-    }
-
-    if (!Array.isArray(obj.changes)) {
-        console.error(`Error in ${filename}: "changes" field must be an array of changelog entries.`);
-        process.exit(1);
-    }
-
-    const allowedKeys = new Set(["rc", "changes"]);
-    for (const key of Object.keys(obj)) {
-        if (!allowedKeys.has(key)) {
-            console.error(
-                `Error in ${filename}: Unknown top-level field "${key}". Only "rc" and "changes" are allowed.`
-            );
-            process.exit(1);
-        }
-    }
-
-    return { rc: (obj.rc as boolean | undefined) ?? false, entries: obj.changes as ChangelogEntry[] };
-}
-
 interface VersionEntry {
     version: string;
     changelogEntry: Array<{ summary: string; type: string }>;
@@ -133,7 +90,6 @@ interface VersionEntry {
 interface UnreleasedChange {
     filename: string;
     entries: ChangelogEntry[];
-    rc: boolean;
 }
 
 function readUnreleasedChanges(unreleasedDir: string): UnreleasedChange[] {
@@ -156,21 +112,25 @@ function readUnreleasedChanges(unreleasedDir: string): UnreleasedChange[] {
     for (const file of files) {
         const filePath = join(unreleasedDir, file);
         const content = readFileSync(filePath, "utf-8");
-        const parsed = parseYaml(content) as ChangelogFileContent;
-        const { rc, entries } = parseChangelogFile(parsed, file);
+        const entries = parseYaml(content) as ChangelogEntry[];
+
+        if (!Array.isArray(entries)) {
+            console.error(`Error: Invalid format in ${file}. Expected an array of changelog entries.`);
+            process.exit(1);
+        }
 
         // Validate each entry against the changelog schema
         for (let i = 0; i < entries.length; i++) {
             validateChangelogEntry(entries[i], file, i);
         }
 
-        changes.push({ filename: file, entries, rc });
+        changes.push({ filename: file, entries });
     }
 
     return changes;
 }
 
-function computeBaseNextVersion(baseVersion: string, changes: UnreleasedChange[]): string {
+function determineNextVersion(currentVersion: string, changes: UnreleasedChange[]): string {
     let highestSeverity: Severity = "patch";
 
     for (const change of changes) {
@@ -184,7 +144,7 @@ function computeBaseNextVersion(baseVersion: string, changes: UnreleasedChange[]
         }
     }
 
-    const [major, minor, patch] = baseVersion.split(".").map(Number);
+    const [major, minor, patch] = currentVersion.split(".").map(Number);
 
     if (
         major === undefined ||
@@ -206,33 +166,6 @@ function computeBaseNextVersion(baseVersion: string, changes: UnreleasedChange[]
         case "patch":
             return `${major}.${minor}.${patch + 1}`;
     }
-}
-
-function determineNextVersion(currentVersion: string, changes: UnreleasedChange[]): string {
-    const isRc = changes.some((change) => change.rc);
-
-    // If the current version is already an RC (e.g., "3.15.0-rc0"), we stay on the same
-    // target base version — we don't re-compute it from change types. Subsequent RC releases
-    // simply increment the RC counter. Finalizing (rc: false) returns the bare base version.
-    const rcMatch = currentVersion.match(/^(.+)-rc(\d+)$/);
-    if (rcMatch) {
-        const targetBase = rcMatch[1]; // e.g., "3.15.0"
-        const currentRcNum = parseInt(rcMatch[2], 10); // e.g., 0
-        if (isRc) {
-            return `${targetBase}-rc${currentRcNum + 1}`;
-        }
-        // Finalizing the RC: return the bare base version
-        return targetBase;
-    }
-
-    // Not currently in an RC — compute the next base version normally
-    const baseNextVersion = computeBaseNextVersion(currentVersion, changes);
-
-    if (isRc) {
-        return `${baseNextVersion}-rc0`;
-    }
-
-    return baseNextVersion;
 }
 
 function getCurrentVersion(versionsFile: string): string {

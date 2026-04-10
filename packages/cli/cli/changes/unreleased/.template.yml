@@ -2,10 +2,7 @@
 # Copy this file and rename it to describe your change (e.g., add-auth-feature.yml)
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
-rc: false  # Set to true to create a release candidate (e.g., 3.15.0-rc0).
-           # If the current version is already an RC of the same target, the RC counter increments (e.g., 3.15.0-rc1).
-changes:
-  - summary: |
-      Brief description of your change.
-      You can use multiple lines for longer descriptions.
-    type: feat  # Options: fix/chore (patch), feat/internal (minor), break (major)
+- summary: |
+    Brief description of your change.
+    You can use multiple lines for longer descriptions.
+  type: feat  # Options: fix/chore (patch), feat/internal (minor), break (major)
