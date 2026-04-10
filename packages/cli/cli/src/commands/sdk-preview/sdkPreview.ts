@@ -13,12 +13,7 @@ import { GROUP_CLI_OPTION } from "../../constants.js";
 import { computePreviewVersion } from "./computePreviewVersion.js";
 
 import { getPreviewId } from "./getPreviewId.js";
-import {
-    isNpmGenerator,
-    overrideGroupOutputForPreview,
-    overrideGroupOutputForRemotePreview,
-    PREVIEW_REGISTRY_URL
-} from "./overrideOutputForPreview.js";
+import { isNpmGenerator, overrideGroupOutputForPreview, PREVIEW_REGISTRY_URL } from "./overrideOutputForPreview.js";
 import { toPreviewPackageName } from "./toPreviewPackageName.js";
 
 interface SdkPreviewSuccess {
@@ -215,20 +210,13 @@ export async function sdkPreview({
                 const singleGeneratorGroup = { ...group, generators: [generator] };
                 const modifiedGroup =
                     publishToRegistry && registryUrl != null
-                        ? useRemoteGeneration
-                            ? overrideGroupOutputForRemotePreview({
-                                  group: singleGeneratorGroup,
-                                  packageName: previewPackageName,
-                                  token: token.value,
-                                  registryUrl,
-                                  pushDiff
-                              })
-                            : overrideGroupOutputForPreview({
-                                  group: singleGeneratorGroup,
-                                  packageName: previewPackageName,
-                                  token: token.value,
-                                  registryUrl
-                              })
+                        ? overrideGroupOutputForPreview({
+                              group: singleGeneratorGroup,
+                              packageName: previewPackageName,
+                              token: token.value,
+                              registryUrl,
+                              pushDiff: useRemoteGeneration ? pushDiff : undefined
+                          })
                         : singleGeneratorGroup;
 
                 if (useRemoteGeneration) {

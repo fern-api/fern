@@ -18,51 +18,6 @@ export function isNpmGenerator(generatorName: string): boolean {
 }
 
 /**
- * Overrides a generator group's output mode to publish to the preview registry
- * via local Docker generation (publishV2 / npmOverride).
- *
- * Used when --output is provided and local Docker generation is used.
- *
- * Only supports npm (TypeScript) generators for v1.
- *
- * @param token - The Fern org token (FERN_TOKEN). The preview registry must
- *   accept this token for publish authentication.
- */
-export function overrideGroupOutputForPreview({
-    group,
-    packageName,
-    token,
-    registryUrl
-}: {
-    group: generatorsYml.GeneratorGroup;
-    packageName: string;
-    token: string;
-    registryUrl: string;
-}): generatorsYml.GeneratorGroup {
-    const modifiedGenerators = group.generators.map((generator) => {
-        const modifiedGenerator: generatorsYml.GeneratorInvocation = {
-            ...generator,
-            outputMode: FernFiddle.OutputMode.publishV2(
-                FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
-                    registryUrl,
-                    packageName,
-                    token,
-                    downloadSnippets: false
-                })
-            ),
-            // Clear local output path — we're publishing, not writing to disk
-            absolutePathToLocalOutput: undefined
-        };
-        return modifiedGenerator;
-    });
-
-    return {
-        ...group,
-        generators: modifiedGenerators
-    };
-}
-
-/**
  * Extracts the GitHub owner and repo from a generator's existing output mode.
  * Returns undefined if the generator doesn't have a githubV2 or github output mode.
  */
@@ -84,10 +39,32 @@ function getGithubOwnerRepo(outputMode: FernFiddle.remoteGen.OutputMode): { owne
 }
 
 /**
- * Overrides a generator group's output mode for remote Fiddle generation.
+ * Creates a publishV2(npmOverride) output mode for preview registry publishing.
+ */
+function createNpmOverrideOutputMode({
+    registryUrl,
+    packageName,
+    token
+}: {
+    registryUrl: string;
+    packageName: string;
+    token: string;
+}): FernFiddle.OutputMode {
+    return FernFiddle.OutputMode.publishV2(
+        FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
+            registryUrl,
+            packageName,
+            token,
+            downloadSnippets: false
+        })
+    );
+}
+
+/**
+ * Overrides a generator group's output mode to publish to the preview registry.
  *
- * By default, uses publishV2(npmOverride) so Fiddle publishes to the preview
- * registry without touching the SDK repo.
+ * Used for both local Docker generation and remote Fiddle generation.
+ * By default, uses publishV2(npmOverride) for registry-only publishing.
  *
  * When pushDiff is true AND the generator has github configuration (owner/repo),
  * uses githubV2(push) with npm publishInfo so Fiddle routes the task to
@@ -97,7 +74,7 @@ function getGithubOwnerRepo(outputMode: FernFiddle.remoteGen.OutputMode): { owne
  * @param token - The Fern org token (FERN_TOKEN). Used for registry auth.
  * @param pushDiff - When true, use githubV2(push) to push a diff branch to the SDK repo.
  */
-export function overrideGroupOutputForRemotePreview({
+export function overrideGroupOutputForPreview({
     group,
     packageName,
     token,
@@ -114,9 +91,7 @@ export function overrideGroupOutputForRemotePreview({
         if (pushDiff === true) {
             const githubInfo = getGithubOwnerRepo(generator.outputMode);
             if (githubInfo != null) {
-                // Use githubV2(push) so Fiddle routes to GithubFiddleTask, which
-                // handles publishing + pushing the preview diff branch.
-                const modifiedGenerator: generatorsYml.GeneratorInvocation = {
+                return {
                     ...generator,
                     outputMode: FernFiddle.OutputMode.githubV2(
                         FernFiddle.GithubOutputModeV2.push({
@@ -134,24 +109,14 @@ export function overrideGroupOutputForRemotePreview({
                     ),
                     absolutePathToLocalOutput: undefined
                 };
-                return modifiedGenerator;
             }
         }
 
-        // Default: publishV2 for registry-only publish (no SDK repo push).
-        const modifiedGenerator: generatorsYml.GeneratorInvocation = {
+        return {
             ...generator,
-            outputMode: FernFiddle.OutputMode.publishV2(
-                FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
-                    registryUrl,
-                    packageName,
-                    token,
-                    downloadSnippets: false
-                })
-            ),
+            outputMode: createNpmOverrideOutputMode({ registryUrl, packageName, token }),
             absolutePathToLocalOutput: undefined
         };
-        return modifiedGenerator;
     });
 
     return {
