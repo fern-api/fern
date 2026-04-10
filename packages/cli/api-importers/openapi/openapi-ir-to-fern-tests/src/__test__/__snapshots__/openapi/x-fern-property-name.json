@@ -48,6 +48,7 @@
           "TestIdentity": {
             "availability": undefined,
             "base-properties": {},
+            "default-variant": undefined,
             "discriminant": {
               "context": "data",
               "name": "type",
@@ -66,6 +67,7 @@
           "UnionWithDiscriminant": {
             "availability": undefined,
             "base-properties": {},
+            "default-variant": undefined,
             "discriminant": {
               "context": "data",
               "name": "type",

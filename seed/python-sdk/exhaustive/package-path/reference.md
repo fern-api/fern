@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -74,8 +74,8 @@ client.endpoints.container.get_and_return_list_of_primitives(
 <dd>
 
 ```python
-from seed import SeedExhaustive
-from seed.types.object import ObjectWithRequiredField
+from seed.matryoshka.doll.structure import SeedExhaustive
+from seed.matryoshka.doll.structure.types.object import ObjectWithRequiredField
 
 client = SeedExhaustive(
     token="<token>",
@@ -140,7 +140,7 @@ client.endpoints.container.get_and_return_list_of_objects(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -200,8 +200,8 @@ client.endpoints.container.get_and_return_set_of_primitives(
 <dd>
 
 ```python
-from seed import SeedExhaustive
-from seed.types.object import ObjectWithRequiredField
+from seed.matryoshka.doll.structure import SeedExhaustive
+from seed.matryoshka.doll.structure.types.object import ObjectWithRequiredField
 
 client = SeedExhaustive(
     token="<token>",
@@ -263,7 +263,7 @@ client.endpoints.container.get_and_return_set_of_objects(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -323,8 +323,8 @@ client.endpoints.container.get_and_return_map_prim_to_prim(
 <dd>
 
 ```python
-from seed import SeedExhaustive
-from seed.types.object import ObjectWithRequiredField
+from seed.matryoshka.doll.structure import SeedExhaustive
+from seed.matryoshka.doll.structure.types.object import ObjectWithRequiredField
 
 client = SeedExhaustive(
     token="<token>",
@@ -386,7 +386,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -446,8 +446,8 @@ client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
 <dd>
 
 ```python
-from seed import SeedExhaustive
-from seed.types.object import ObjectWithRequiredField
+from seed.matryoshka.doll.structure import SeedExhaustive
+from seed.matryoshka.doll.structure.types.object import ObjectWithRequiredField
 
 client = SeedExhaustive(
     token="<token>",
@@ -508,7 +508,7 @@ client.endpoints.container.get_and_return_optional(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 import datetime
 import uuid
 
@@ -587,7 +587,7 @@ client.endpoints.content_type.post_json_patch_content_type(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 import datetime
 import uuid
 
@@ -667,7 +667,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -726,7 +726,7 @@ client.endpoints.enum.get_and_return_enum(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -784,7 +784,7 @@ client.endpoints.http_methods.test_get(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -842,7 +842,7 @@ client.endpoints.http_methods.test_post(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -909,7 +909,7 @@ client.endpoints.http_methods.test_put(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 import datetime
 import uuid
 
@@ -997,7 +997,7 @@ client.endpoints.http_methods.test_patch(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -1056,7 +1056,7 @@ client.endpoints.http_methods.test_delete(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 import datetime
 import uuid
 
@@ -1135,7 +1135,7 @@ client.endpoints.object.get_and_return_with_optional_field(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -1193,7 +1193,7 @@ client.endpoints.object.get_and_return_with_required_field(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -1255,8 +1255,8 @@ client.endpoints.object.get_and_return_with_map_of_map(
 <dd>
 
 ```python
-from seed import SeedExhaustive
-from seed.types.object import ObjectWithOptionalField
+from seed.matryoshka.doll.structure import SeedExhaustive
+from seed.matryoshka.doll.structure.types.object import ObjectWithOptionalField
 import datetime
 import uuid
 
@@ -1338,8 +1338,8 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 <dd>
 
 ```python
-from seed import SeedExhaustive
-from seed.types.object import ObjectWithOptionalField
+from seed.matryoshka.doll.structure import SeedExhaustive
+from seed.matryoshka.doll.structure.types.object import ObjectWithOptionalField
 import datetime
 import uuid
 
@@ -1430,8 +1430,8 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 <dd>
 
 ```python
-from seed import SeedExhaustive
-from seed.types.object import NestedObjectWithRequiredField, ObjectWithOptionalField
+from seed.matryoshka.doll.structure import SeedExhaustive
+from seed.matryoshka.doll.structure.types.object import NestedObjectWithRequiredField, ObjectWithOptionalField
 import datetime
 import uuid
 
@@ -1542,7 +1542,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -1600,7 +1600,7 @@ client.endpoints.object.get_and_return_with_unknown_field(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -1658,7 +1658,7 @@ client.endpoints.object.get_and_return_with_documented_unknown_type(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -1686,6 +1686,162 @@ client.endpoints.object.get_and_return_map_of_documented_unknown_type(
 <dd>
 
 **request:** `MapOfDocumentedUnknownType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="src/seed.matryoshka.doll.structure/endpoints/object/client.py">get_and_return_with_mixed_required_and_optional_fields</a>(...) -> ObjectWithMixedRequiredAndOptionalFields</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that dynamic snippets include all required properties in the
+object initializer, even when the example omits some required fields.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed.matryoshka.doll.structure import SeedExhaustive
+
+client = SeedExhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
+    required_string="hello",
+    required_integer=0,
+    optional_string="world",
+    required_long=0,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithMixedRequiredAndOptionalFields` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="src/seed.matryoshka.doll.structure/endpoints/object/client.py">get_and_return_with_required_nested_object</a>(...) -> ObjectWithRequiredNestedObject</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that dynamic snippets recursively construct default objects for
+required properties whose type is a named object. When the example
+omits the nested object, the generator should construct a default
+initializer with the nested object's required properties filled in.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed.matryoshka.doll.structure import SeedExhaustive
+from seed.matryoshka.doll.structure.types.object import NestedObjectWithRequiredField, ObjectWithOptionalField
+
+client = SeedExhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.object.get_and_return_with_required_nested_object(
+    required_string="hello",
+    required_object=NestedObjectWithRequiredField(
+        string="nested",
+        nested_object=ObjectWithOptionalField(),
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithRequiredNestedObject` 
     
 </dd>
 </dl>
@@ -1734,7 +1890,7 @@ without being converted to "2023-08-31T14:15:22.000Z".
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 import datetime
 
 client = SeedExhaustive(
@@ -1809,7 +1965,7 @@ List items with cursor pagination
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -1891,7 +2047,7 @@ GET with path param
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -1963,7 +2119,7 @@ GET with path param
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -2035,7 +2191,7 @@ GET with query param
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -2116,7 +2272,7 @@ GET with multiple of same query param
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -2197,7 +2353,7 @@ GET with path and query params
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -2278,7 +2434,7 @@ GET with path and query params
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -2359,7 +2515,7 @@ PUT to update with path param
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -2440,7 +2596,7 @@ PUT to update with path param
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -2521,7 +2677,7 @@ POST bytes with path param returning object
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -2574,6 +2730,78 @@ client.endpoints.params.upload_with_path(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">get_with_boolean_path</a>(...) -> str</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with boolean path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed.matryoshka.doll.structure import SeedExhaustive
+
+client = SeedExhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.params.get_with_boolean_path(
+    param=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">get_with_path_and_errors</a>(...) -> str</code></summary>
 <dl>
 <dd>
@@ -2601,7 +2829,7 @@ GET with path param that can throw errors
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -2660,7 +2888,7 @@ client.endpoints.params.get_with_path(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -2718,7 +2946,7 @@ client.endpoints.primitive.get_and_return_string(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -2776,7 +3004,7 @@ client.endpoints.primitive.get_and_return_int(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -2834,7 +3062,7 @@ client.endpoints.primitive.get_and_return_long(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -2892,7 +3120,7 @@ client.endpoints.primitive.get_and_return_double(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -2950,7 +3178,7 @@ client.endpoints.primitive.get_and_return_bool(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 import datetime
 
 client = SeedExhaustive(
@@ -3009,7 +3237,7 @@ client.endpoints.primitive.get_and_return_datetime(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 import datetime
 
 client = SeedExhaustive(
@@ -3068,7 +3296,7 @@ client.endpoints.primitive.get_and_return_date(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 import uuid
 
 client = SeedExhaustive(
@@ -3127,7 +3355,7 @@ client.endpoints.primitive.get_and_return_uuid(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -3186,7 +3414,7 @@ client.endpoints.primitive.get_and_return_base64(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -3245,8 +3473,8 @@ client.endpoints.put.add(
 <dd>
 
 ```python
-from seed import SeedExhaustive
-from seed.types.union import Animal_Dog
+from seed.matryoshka.doll.structure import SeedExhaustive
+from seed.matryoshka.doll.structure.types.union import Animal_Dog
 
 client = SeedExhaustive(
     token="<token>",
@@ -3308,7 +3536,7 @@ client.endpoints.union.get_and_return_union(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -3356,7 +3584,7 @@ client.endpoints.urls.with_mixed_case()
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -3404,7 +3632,7 @@ client.endpoints.urls.no_ending_slash()
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -3452,7 +3680,7 @@ client.endpoints.urls.with_ending_slash()
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -3515,8 +3743,8 @@ POST with custom object in request body, response is an object
 <dd>
 
 ```python
-from seed import SeedExhaustive
-from seed.types.object import ObjectWithOptionalField
+from seed.matryoshka.doll.structure import SeedExhaustive
+from seed.matryoshka.doll.structure.types.object import ObjectWithOptionalField
 import datetime
 import uuid
 
@@ -3630,7 +3858,7 @@ POST request with no auth
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -3689,7 +3917,7 @@ client.no_auth.post_with_no_auth(
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -3737,7 +3965,7 @@ client.no_req_body.get_with_no_request_body()
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
@@ -3786,7 +4014,7 @@ client.no_req_body.post_with_no_request_body()
 <dd>
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",

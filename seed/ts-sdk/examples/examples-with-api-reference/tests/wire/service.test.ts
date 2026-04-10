@@ -33,24 +33,7 @@ describe("ServiceClient", () => {
             .build();
 
         const response = await client.service.getMovie("movie-c06a4ad7");
-        expect(response).toEqual({
-            id: "movie-c06a4ad7",
-            prequel: "movie-cv9b914f",
-            title: "The Boy and the Heron",
-            from: "Hayao Miyazaki",
-            rating: 8,
-            type: "movie",
-            tag: "tag-wf9as23d",
-            metadata: {
-                actors: ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
-                releaseDate: "2023-12-08",
-                ratings: {
-                    rottenTomatoes: 97,
-                    imdb: 7.6,
-                },
-            },
-            revenue: 1000000,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("createMovie", async () => {
@@ -100,7 +83,7 @@ describe("ServiceClient", () => {
             },
             revenue: 1000000,
         });
-        expect(response).toEqual("movie-c06a4ad7");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getMetadata", async () => {
@@ -128,15 +111,7 @@ describe("ServiceClient", () => {
             shallow: false,
             tag: "development",
         });
-        expect(response).toEqual({
-            type: "html",
-            extra: {
-                version: "0.0.1",
-                tenancy: "test",
-            },
-            tags: ["development", "public"],
-            value: "<head>...</head>",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("createBigEntity", async () => {
@@ -450,23 +425,7 @@ describe("ServiceClient", () => {
                 datetime: "2024-01-15T09:30:00Z",
             },
         });
-        expect(response).toEqual({
-            response: {
-                key: "value",
-            },
-            identifiers: [
-                {
-                    type: "primitive",
-                    value: "value",
-                    label: "label",
-                },
-                {
-                    type: "primitive",
-                    value: "value",
-                    label: "label",
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("refreshToken (1)", async () => {

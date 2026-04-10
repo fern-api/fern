@@ -7,7 +7,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -53,7 +53,7 @@ class RawAdminClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-test-submission-status/{jsonable_encoder(submission_id)}",
+            f"admin/store-test-submission-status/{encode_path_param(submission_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=TestSubmissionStatus, direction="write"
@@ -98,7 +98,7 @@ class RawAdminClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-test-submission-status-v2/{jsonable_encoder(submission_id)}",
+            f"admin/store-test-submission-status-v2/{encode_path_param(submission_id)}",
             method="POST",
             json={
                 "updateTime": update_time,
@@ -143,7 +143,7 @@ class RawAdminClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-submission-status/{jsonable_encoder(submission_id)}",
+            f"admin/store-workspace-submission-status/{encode_path_param(submission_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=WorkspaceSubmissionStatus, direction="write"
@@ -188,7 +188,7 @@ class RawAdminClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-submission-status-v2/{jsonable_encoder(submission_id)}",
+            f"admin/store-workspace-submission-status-v2/{encode_path_param(submission_id)}",
             method="POST",
             json={
                 "updateTime": update_time,
@@ -239,7 +239,7 @@ class RawAdminClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-test-trace/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
+            f"admin/store-test-trace/submission/{encode_path_param(submission_id)}/testCase/{encode_path_param(test_case_id)}",
             method="POST",
             json={
                 "result": convert_and_respect_annotation_metadata(
@@ -289,7 +289,7 @@ class RawAdminClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-test-trace-v2/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
+            f"admin/store-test-trace-v2/submission/{encode_path_param(submission_id)}/testCase/{encode_path_param(test_case_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
@@ -334,7 +334,7 @@ class RawAdminClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-trace/submission/{jsonable_encoder(submission_id)}",
+            f"admin/store-workspace-trace/submission/{encode_path_param(submission_id)}",
             method="POST",
             json={
                 "workspaceRunDetails": convert_and_respect_annotation_metadata(
@@ -381,7 +381,7 @@ class RawAdminClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-trace-v2/submission/{jsonable_encoder(submission_id)}",
+            f"admin/store-workspace-trace-v2/submission/{encode_path_param(submission_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
@@ -428,7 +428,7 @@ class AsyncRawAdminClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-test-submission-status/{jsonable_encoder(submission_id)}",
+            f"admin/store-test-submission-status/{encode_path_param(submission_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=TestSubmissionStatus, direction="write"
@@ -473,7 +473,7 @@ class AsyncRawAdminClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-test-submission-status-v2/{jsonable_encoder(submission_id)}",
+            f"admin/store-test-submission-status-v2/{encode_path_param(submission_id)}",
             method="POST",
             json={
                 "updateTime": update_time,
@@ -518,7 +518,7 @@ class AsyncRawAdminClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-submission-status/{jsonable_encoder(submission_id)}",
+            f"admin/store-workspace-submission-status/{encode_path_param(submission_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=WorkspaceSubmissionStatus, direction="write"
@@ -563,7 +563,7 @@ class AsyncRawAdminClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-submission-status-v2/{jsonable_encoder(submission_id)}",
+            f"admin/store-workspace-submission-status-v2/{encode_path_param(submission_id)}",
             method="POST",
             json={
                 "updateTime": update_time,
@@ -614,7 +614,7 @@ class AsyncRawAdminClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-test-trace/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
+            f"admin/store-test-trace/submission/{encode_path_param(submission_id)}/testCase/{encode_path_param(test_case_id)}",
             method="POST",
             json={
                 "result": convert_and_respect_annotation_metadata(
@@ -664,7 +664,7 @@ class AsyncRawAdminClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-test-trace-v2/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
+            f"admin/store-test-trace-v2/submission/{encode_path_param(submission_id)}/testCase/{encode_path_param(test_case_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
@@ -709,7 +709,7 @@ class AsyncRawAdminClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-trace/submission/{jsonable_encoder(submission_id)}",
+            f"admin/store-workspace-trace/submission/{encode_path_param(submission_id)}",
             method="POST",
             json={
                 "workspaceRunDetails": convert_and_respect_annotation_metadata(
@@ -756,7 +756,7 @@ class AsyncRawAdminClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-trace-v2/submission/{jsonable_encoder(submission_id)}",
+            f"admin/store-workspace-trace-v2/submission/{encode_path_param(submission_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"

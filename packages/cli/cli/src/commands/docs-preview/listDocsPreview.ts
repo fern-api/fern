@@ -46,11 +46,19 @@ export async function listDocsPreview({
                     return context.failAndThrow(
                         "Unauthorized to list preview deployments. Please run 'fern login' to refresh your credentials, or set the FERN_TOKEN environment variable."
                     );
-                default:
+                default: {
+                    const errorContent =
+                        listResponse.error.content != null &&
+                        typeof listResponse.error.content === "object" &&
+                        "body" in listResponse.error.content
+                            ? listResponse.error.content.body
+                            : listResponse.error.content;
+                    context.logger.debug(`Error fetching preview deployments: ${JSON.stringify(errorContent)}`);
                     return context.failAndThrow(
-                        "Failed to fetch preview deployments. Please check your network connection and try again.",
+                        "Failed to fetch preview deployments. Please ensure you are logged in with 'fern login' or have FERN_TOKEN set, then try again.",
                         listResponse.error
                     );
+                }
             }
         }
 

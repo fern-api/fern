@@ -2,6 +2,7 @@
 import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
+import { getOrCreateFernRunId } from "@fern-api/cli-telemetry";
 import { runCliV2 } from "@fern-api/cli-v2";
 import {
     correctIncorrectDockerOrg,
@@ -90,6 +91,8 @@ void runCli();
 const USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
 
 async function runCli() {
+    getOrCreateFernRunId();
+
     const isLocal = process.argv.includes("--local");
     const cliContext = new CliContext(process.stdout, process.stderr, { isLocal });
 
@@ -2185,6 +2188,13 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     boolean: true,
                     default: false,
                     description: "Output result as JSON"
+                })
+                .option("output", {
+                    type: "array",
+                    string: true,
+                    description:
+                        "Output targets: filesystem paths and/or registry URLs. " +
+                        "Omit to publish to the default preview registry and write to a temp directory."
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
@@ -2197,7 +2207,8 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 groupName: argv.group,
                 generatorFilter,
                 apiName: argv.api,
-                json: argv.json
+                json: argv.json,
+                output: argv.output
             });
         }
     );

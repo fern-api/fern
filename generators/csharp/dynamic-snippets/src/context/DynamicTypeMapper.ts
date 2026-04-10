@@ -68,6 +68,12 @@ export class DynamicTypeMapper extends WithGeneration {
     private convertNamed({ named }: { named: FernIr.dynamic.NamedType }): ast.Type {
         switch (named.type) {
             case "alias":
+                if (this.settings.generateLiterals && named.typeReference.type === "literal") {
+                    return this.csharp.classReference({
+                        origin: named.declaration,
+                        namespace: this.context.getNamespace(named.declaration.fernFilepath)
+                    });
+                }
                 return this.convert({ typeReference: named.typeReference });
             case "enum":
             case "object":

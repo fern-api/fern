@@ -22,11 +22,7 @@ describe("ContactsClient", () => {
         const response = await client.contacts.create({
             name: "name",
         });
-        expect(response).toEqual({
-            id: "id",
-            name: "name",
-            email: "email",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get", async () => {
@@ -40,10 +36,6 @@ describe("ContactsClient", () => {
         const response = await client.contacts.get({
             id: "id",
         });
-        expect(response).toEqual({
-            id: "id",
-            name: "name",
-            email: "email",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

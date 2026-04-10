@@ -5,7 +5,7 @@ require "stringio"
 require "json"
 require "test_helper"
 
-OffsetPageResponse = Struct.new(:items, :has_next)
+OffsetPageResponse = Struct.new(:items, :has_next, keyword_init: true)
 TestIteratorConfig = Struct.new(
   :step,
   :has_next_field,

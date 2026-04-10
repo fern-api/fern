@@ -1,6 +1,6 @@
 import {
     AbstractDynamicSnippetsGeneratorContext,
-    FernGeneratorExec
+    type FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import type { FernIr } from "@fern-api/dynamic-ir-sdk";
@@ -219,10 +219,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             customConfig: generatorConfig.customConfig ?? config.customConfig,
             output: {
                 ...config.output,
-                mode: FernGeneratorExec.OutputMode.github({
+                mode: {
+                    type: "github",
                     version: publishInfo.version,
                     repoUrl: publishInfo.repoUrl
-                })
+                } as FernGeneratorExec.OutputMode
             }
         };
     }

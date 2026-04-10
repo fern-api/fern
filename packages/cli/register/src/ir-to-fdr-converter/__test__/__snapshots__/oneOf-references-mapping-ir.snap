@@ -789,6 +789,7 @@
       "shape": {
         "_visit": [Function],
         "baseProperties": [],
+        "default": undefined,
         "discriminant": "type",
         "discriminatorContext": undefined,
         "extends": [],

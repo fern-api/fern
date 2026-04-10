@@ -12,8 +12,8 @@ public class Example42
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnLongAsync(
-            1000000L
+        await client.Endpoints.Params.GetWithBooleanPathAsync(
+            true
         );
     }
 

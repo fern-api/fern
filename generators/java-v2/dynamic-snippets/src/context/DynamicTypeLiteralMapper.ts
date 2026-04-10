@@ -1,5 +1,5 @@
 import { Severity } from "@fern-api/browser-compatible-base-generator";
-import { assertNever, extractErrorMessage } from "@fern-api/core-utils";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { java } from "@fern-api/java-ast";
 
@@ -691,20 +691,16 @@ export class DynamicTypeLiteralMapper {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
     }): { valueTypeReference: FernIr.dynamic.TypeReference; typeInstantiation: java.TypeLiteral } | undefined {
-        const attemptedVariants: string[] = [];
-        const variantErrors: string[] = [];
-
         for (const typeReference of undiscriminatedUnion.types) {
             const errorsBefore = this.context.errors.size();
             try {
-                attemptedVariants.push(JSON.stringify(typeReference));
                 const typeInstantiation = this.convert({
                     typeReference,
                     value,
                     inUndiscriminatedUnion: true
                 });
 
-                if (java.TypeLiteral.isNop(typeInstantiation)) {
+                if (java.TypeLiteral.isNop(typeInstantiation) || this.context.errors.size() > errorsBefore) {
                     this.context.errors.truncate(errorsBefore);
                     continue;
                 }
@@ -712,26 +708,15 @@ export class DynamicTypeLiteralMapper {
                 return { valueTypeReference: typeReference, typeInstantiation };
             } catch (e) {
                 this.context.errors.truncate(errorsBefore);
-                variantErrors.push(`Type ${JSON.stringify(typeReference)}: ${extractErrorMessage(e)}`);
                 continue;
             }
         }
 
         this.context.errors.add({
             severity: Severity.Critical,
-            message: `None of the types in the undiscriminated union matched the given "${typeof value}" value. Tried ${attemptedVariants.length} variants. Errors: ${variantErrors.join("; ")}`
+            message: `None of the types in the undiscriminated union matched the given "${typeof value}" value`
         });
-
-        // Instead of returning undefined (which causes invalid code generation),
-        // throw an error to fail fast with a clear message
-        const unionName = undiscriminatedUnion.declaration.name ?? "UnknownUnion";
-        const detailedErrors = variantErrors.map((error, index) => `  ${index + 1}. ${error}`).join("\n");
-        throw new Error(
-            `Failed to match undiscriminated union "${unionName}" for ${typeof value} value.\n` +
-                `Value: ${JSON.stringify(value)}\n` +
-                `Attempted ${attemptedVariants.length} variants:\n${detailedErrors}\n\n` +
-                `This prevents invalid snippet code generation that would cause formatter errors.`
-        );
+        return undefined;
     }
 
     private getUndiscriminatedUnionFieldName({

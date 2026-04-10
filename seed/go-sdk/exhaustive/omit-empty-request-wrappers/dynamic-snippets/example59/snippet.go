@@ -16,7 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    client.NoReqBody.GetWithNoRequestBody(
+    client.Endpoints.URLs.WithUnderscores(
         context.TODO(),
     )
 }

@@ -234,6 +234,7 @@
           "ConnectionInfo": {
             "availability": undefined,
             "base-properties": {},
+            "default-variant": undefined,
             "discriminant": {
               "context": "data",
               "value": "status",

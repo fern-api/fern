@@ -227,6 +227,7 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                 discriminantProperty: oneOfSchema.discriminantProperty,
                 discriminantPropertyNameOverride: oneOfSchema.discriminantPropertyNameOverride,
                 discriminatorContext: oneOfSchema.discriminatorContext,
+                defaultDiscriminantValue: oneOfSchema.defaultDiscriminantValue,
                 generatedName: oneOfSchema.generatedName,
                 title: oneOfSchema.title,
                 nameOverride: oneOfSchema.nameOverride,

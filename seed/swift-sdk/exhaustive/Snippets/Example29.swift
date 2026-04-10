@@ -7,7 +7,30 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.params.getWithPath(param: "param")
+    _ = try await client.endpoints.object.getAndReturnWithRequiredNestedObject(request: ObjectWithRequiredNestedObject(
+        requiredString: "requiredString",
+        requiredObject: NestedObjectWithRequiredField(
+            string: "string",
+            nestedObject: ObjectWithOptionalField(
+                string: "string",
+                integer: 1,
+                long: 1000000,
+                double: 1.1,
+                bool: true,
+                datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                date: CalendarDate("2023-01-15")!,
+                uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                base64: "SGVsbG8gd29ybGQh",
+                list: [
+                    "list",
+                    "list"
+                ],
+                map: [
+                    1: "map"
+                ]
+            )
+        )
+    ))
 }
 
 try await main()
