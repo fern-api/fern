@@ -31,6 +31,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     whitelabel,
     absolutePathToPreview,
     isPreview,
+    fiddlePreview,
+    pushPreviewBranch,
     mode,
     fernignorePath,
     skipFernignore,
@@ -49,9 +51,12 @@ export async function runRemoteGenerationForAPIWorkspace({
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
-    /** Explicit preview override. When set, takes precedence over the default (absolutePathToPreview != null).
-     *  Controls CLI-side behavior: lenient env var substitution, skip version check, skip dynamic IR upload. */
+    /** Controls CLI-side behavior (lenient env vars, skip version check). Falls back to absolutePathToPreview != null. */
     isPreview?: boolean;
+    /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to isPreview. */
+    fiddlePreview?: boolean;
+    /** When true, tells Fiddle to push a preview branch to the SDK repo. */
+    pushPreviewBranch?: boolean;
     mode: "pull-request" | undefined;
     fernignorePath: string | undefined;
     skipFernignore?: boolean;
@@ -137,6 +142,8 @@ export async function runRemoteGenerationForAPIWorkspace({
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     absolutePathToPreview,
                     isPreview,
+                    fiddlePreview,
+                    pushPreviewBranch,
                     fernignorePath: effectiveFernignorePath,
                     skipFernignore,
                     dynamicIrOnly,

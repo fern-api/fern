@@ -35,6 +35,8 @@ export async function createAndStartJob({
     irVersionOverride,
     absolutePathToPreview,
     isPreview: isPreviewOverride,
+    fiddlePreview,
+    pushPreviewBranch,
     fernignorePath,
     skipFernignore,
     retryRateLimited
@@ -51,9 +53,12 @@ export async function createAndStartJob({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
-    /** Explicit preview override. When set, takes precedence over the default (absolutePathToPreview != null).
-     *  Controls CLI-side behavior: lenient env var substitution, skip version check, skip dynamic IR upload. */
+    /** Controls CLI-side behavior (lenient env vars, skip version check). Falls back to absolutePathToPreview != null. */
     isPreview?: boolean;
+    /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to isPreview. */
+    fiddlePreview?: boolean;
+    /** When true, tells Fiddle to push a preview branch to the SDK repo. Requires fiddle-sdk with pushPreviewBranch support. */
+    pushPreviewBranch?: boolean;
     fernignorePath: string | undefined;
     skipFernignore?: boolean;
     retryRateLimited: boolean;
@@ -87,6 +92,8 @@ export async function createAndStartJob({
                 whitelabel,
                 absolutePathToPreview,
                 isPreview: isPreviewOverride,
+                fiddlePreview,
+                pushPreviewBranch,
                 fernignoreContents
             }),
         retryRateLimited,
@@ -112,6 +119,8 @@ async function createJob({
     whitelabel,
     absolutePathToPreview,
     isPreview: isPreviewOverride,
+    fiddlePreview,
+    pushPreviewBranch,
     fernignoreContents
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -125,6 +134,8 @@ async function createJob({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     isPreview?: boolean;
+    fiddlePreview?: boolean;
+    pushPreviewBranch?: boolean;
     fernignoreContents: string | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
@@ -149,7 +160,13 @@ async function createJob({
             shouldLogS3Url
         }),
         whitelabel,
-        preview: isPreviewOverride ?? absolutePathToPreview != null,
+        // fiddlePreview overrides what we send to Fiddle as `preview`.
+        // For sdk preview: fiddlePreview=false so Fiddle doesn't set dryRun=true.
+        // For fern generate --preview: fiddlePreview is undefined, falls back to isPreview (true).
+        preview: fiddlePreview ?? isPreviewOverride ?? absolutePathToPreview != null,
+        // TODO: Send pushPreviewBranch to Fiddle once @fern-fern/fiddle-sdk is bumped
+        // to include the pushPreviewBranch field on CreateJobRequestV2.
+        // pushPreviewBranch,
         fernignoreContents
     });
 

@@ -7,6 +7,7 @@
         When no `--output` flag is provided, preview generation now runs server-side
         through Fiddle (matching the `fern generate` pattern) instead of requiring
         local Docker. Any `--output` flag still triggers local Docker generation.
+        Add `--push-diff` flag to push a preview branch to the SDK repo.
       type: feat
   createdAt: "2026-04-09"
   irVersion: 66

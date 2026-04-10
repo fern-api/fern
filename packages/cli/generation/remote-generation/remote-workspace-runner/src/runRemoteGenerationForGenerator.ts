@@ -39,6 +39,8 @@ export async function runRemoteGenerationForGenerator({
     irVersionOverride,
     absolutePathToPreview,
     isPreview: isPreviewOverride,
+    fiddlePreview,
+    pushPreviewBranch,
     readme,
     fernignorePath,
     skipFernignore,
@@ -58,9 +60,12 @@ export async function runRemoteGenerationForGenerator({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
-    /** Explicit preview override. When set, takes precedence over the default (absolutePathToPreview != null).
-     *  Controls CLI-side behavior: lenient env var substitution, skip version check, skip dynamic IR upload. */
+    /** Controls CLI-side behavior (lenient env vars, skip version check). Falls back to absolutePathToPreview != null. */
     isPreview?: boolean;
+    /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to isPreview. */
+    fiddlePreview?: boolean;
+    /** When true, tells Fiddle to push a preview branch to the SDK repo. */
+    pushPreviewBranch?: boolean;
     readme: generatorsYml.ReadmeSchema | undefined;
     fernignorePath: string | undefined;
     skipFernignore?: boolean;
@@ -272,6 +277,8 @@ export async function runRemoteGenerationForGenerator({
         irVersionOverride,
         absolutePathToPreview,
         isPreview: isPreviewOverride,
+        fiddlePreview,
+        pushPreviewBranch,
         fernignorePath,
         skipFernignore,
         retryRateLimited

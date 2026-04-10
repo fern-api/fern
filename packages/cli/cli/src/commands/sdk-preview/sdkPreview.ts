@@ -56,7 +56,8 @@ export async function sdkPreview({
     generatorFilter,
     apiName,
     json,
-    output
+    output,
+    pushDiff
 }: {
     cliContext: CliContext;
     groupName: string | undefined;
@@ -64,6 +65,7 @@ export async function sdkPreview({
     apiName: string | undefined;
     json: boolean;
     output: string[] | undefined;
+    pushDiff: boolean;
 }): Promise<void> {
     const previews: SdkPreviewSuccess["previews"] = [];
     let organization: string | undefined;
@@ -218,7 +220,8 @@ export async function sdkPreview({
                                   group: singleGeneratorGroup,
                                   packageName: previewPackageName,
                                   token: token.value,
-                                  registryUrl
+                                  registryUrl,
+                                  pushDiff
                               })
                             : overrideGroupOutputForPreview({
                                   group: singleGeneratorGroup,
@@ -243,7 +246,14 @@ export async function sdkPreview({
                             token,
                             whitelabel: workspace.generatorsConfiguration?.whitelabel,
                             absolutePathToPreview: undefined,
+                            // isPreview controls CLI-side behavior: lenient env var substitution,
+                            // skip version availability check, skip dynamic IR upload.
                             isPreview: true,
+                            // fiddlePreview controls what's sent to Fiddle as the `preview` flag.
+                            // We explicitly send false so Fiddle doesn't set dryRun=true (which
+                            // would cause `npm publish --dry-run` instead of actually publishing).
+                            fiddlePreview: false,
+                            pushPreviewBranch: pushDiff,
                             mode: undefined,
                             fernignorePath: undefined,
                             skipFernignore: false,
