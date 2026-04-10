@@ -85,4 +85,6 @@ jobs:
 
       - name: Run releases for all configured software
         if: steps.skip-release-loop.outputs.skip != 'true'
-        run: npx tsx scripts/release-workflow.ts ${{ inputs.software || 'all' }}
+        env:
+          SOFTWARE: ${{ inputs.software || 'all' }}
+        run: npx tsx scripts/release-workflow.ts "$SOFTWARE"
