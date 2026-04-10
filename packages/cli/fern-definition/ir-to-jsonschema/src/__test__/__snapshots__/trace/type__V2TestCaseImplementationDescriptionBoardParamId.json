@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "value": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/V2ParameterId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "V2ParameterId": {
+      "type": "string"
+    }
+  }
+}

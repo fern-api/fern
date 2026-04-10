@@ -1,15 +1,11 @@
 {
   "type": "object",
   "properties": {
-    "type": {
-      "const": "A"
-    },
     "valueA": {
       "type": "string"
     }
   },
   "required": [
-    "type",
     "valueA"
   ],
   "additionalProperties": false,

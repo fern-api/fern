@@ -1,0 +1,94 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "files": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/File"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "directories": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Directory"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "File": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "contents"
+      ],
+      "additionalProperties": false
+    },
+    "Directory": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "files": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/File"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "directories": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Directory"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

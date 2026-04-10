@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/VariableTypeSevenType"
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "VariableTypeSevenType": {
+      "type": "string",
+      "enum": [
+        "binaryTreeType"
+      ]
+    }
+  }
+}

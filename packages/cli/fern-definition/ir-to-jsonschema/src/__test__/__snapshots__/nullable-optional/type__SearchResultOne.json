@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "domain": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "employeeCount": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "type": {
+      "$ref": "#/definitions/SearchResultOneType"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "domain",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "SearchResultOneType": {
+      "type": "string",
+      "enum": [
+        "organization"
+      ]
+    }
+  }
+}

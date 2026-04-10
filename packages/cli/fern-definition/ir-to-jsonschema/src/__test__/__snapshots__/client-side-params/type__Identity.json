@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "properties": {
+    "connection": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "provider": {
+      "type": "string"
+    },
+    "is_social": {
+      "type": "boolean"
+    },
+    "access_token": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "expires_in": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "connection",
+    "user_id",
+    "provider",
+    "is_social"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

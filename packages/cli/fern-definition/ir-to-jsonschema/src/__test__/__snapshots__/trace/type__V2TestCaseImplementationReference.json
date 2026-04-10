@@ -1,0 +1,595 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/V2TestCaseImplementationReferenceType"
+    },
+    {
+      "$ref": "#/definitions/V2TestCaseImplementationReferenceOne"
+    }
+  ],
+  "definitions": {
+    "V2TestCaseImplementationReferenceTypeType": {
+      "type": "string",
+      "enum": [
+        "templateId"
+      ]
+    },
+    "V2TestCaseTemplateId": {
+      "type": "string"
+    },
+    "V2TestCaseImplementationReferenceType": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/V2TestCaseImplementationReferenceTypeType"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/V2TestCaseTemplateId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "V2ParameterId": {
+      "type": "string"
+    },
+    "V2TestCaseImplementationDescriptionBoard": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "html",
+            "paramId"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "html"
+            },
+            "value": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "paramId"
+            },
+            "value": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/V2ParameterId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "V2TestCaseImplementationDescription": {
+      "type": "object",
+      "properties": {
+        "boards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/V2TestCaseImplementationDescriptionBoard"
+          }
+        }
+      },
+      "required": [
+        "boards"
+      ],
+      "additionalProperties": false
+    },
+    "VariableTypeZeroType": {
+      "type": "string",
+      "enum": [
+        "integerType"
+      ]
+    },
+    "VariableTypeZero": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/VariableTypeZeroType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableTypeOneType": {
+      "type": "string",
+      "enum": [
+        "doubleType"
+      ]
+    },
+    "VariableTypeOne": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/VariableTypeOneType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableTypeTwoType": {
+      "type": "string",
+      "enum": [
+        "booleanType"
+      ]
+    },
+    "VariableTypeTwo": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/VariableTypeTwoType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableTypeThreeType": {
+      "type": "string",
+      "enum": [
+        "stringType"
+      ]
+    },
+    "VariableTypeThree": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/VariableTypeThreeType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableTypeFourType": {
+      "type": "string",
+      "enum": [
+        "charType"
+      ]
+    },
+    "VariableTypeFour": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/VariableTypeFourType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableTypeFiveType": {
+      "type": "string",
+      "enum": [
+        "listType"
+      ]
+    },
+    "VariableTypeFive": {
+      "type": "object",
+      "properties": {
+        "valueType": {
+          "$ref": "#/definitions/VariableType"
+        },
+        "isFixedLength": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "$ref": "#/definitions/VariableTypeFiveType"
+        }
+      },
+      "required": [
+        "valueType",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableTypeSixType": {
+      "type": "string",
+      "enum": [
+        "mapType"
+      ]
+    },
+    "VariableTypeSix": {
+      "type": "object",
+      "properties": {
+        "keyType": {
+          "$ref": "#/definitions/VariableType"
+        },
+        "valueType": {
+          "$ref": "#/definitions/VariableType"
+        },
+        "type": {
+          "$ref": "#/definitions/VariableTypeSixType"
+        }
+      },
+      "required": [
+        "keyType",
+        "valueType",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableTypeSevenType": {
+      "type": "string",
+      "enum": [
+        "binaryTreeType"
+      ]
+    },
+    "VariableTypeSeven": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/VariableTypeSevenType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableTypeEightType": {
+      "type": "string",
+      "enum": [
+        "singlyLinkedListType"
+      ]
+    },
+    "VariableTypeEight": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/VariableTypeEightType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableTypeNineType": {
+      "type": "string",
+      "enum": [
+        "doublyLinkedListType"
+      ]
+    },
+    "VariableTypeNine": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/VariableTypeNineType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableType": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/VariableTypeZero"
+        },
+        {
+          "$ref": "#/definitions/VariableTypeOne"
+        },
+        {
+          "$ref": "#/definitions/VariableTypeTwo"
+        },
+        {
+          "$ref": "#/definitions/VariableTypeThree"
+        },
+        {
+          "$ref": "#/definitions/VariableTypeFour"
+        },
+        {
+          "$ref": "#/definitions/VariableTypeFive"
+        },
+        {
+          "$ref": "#/definitions/VariableTypeSix"
+        },
+        {
+          "$ref": "#/definitions/VariableTypeSeven"
+        },
+        {
+          "$ref": "#/definitions/VariableTypeEight"
+        },
+        {
+          "$ref": "#/definitions/VariableTypeNine"
+        }
+      ]
+    },
+    "V2Parameter": {
+      "type": "object",
+      "properties": {
+        "parameterId": {
+          "$ref": "#/definitions/V2ParameterId"
+        },
+        "name": {
+          "type": "string"
+        },
+        "variableType": {
+          "$ref": "#/definitions/VariableType"
+        }
+      },
+      "required": [
+        "parameterId",
+        "name",
+        "variableType"
+      ],
+      "additionalProperties": false
+    },
+    "V2NonVoidFunctionSignature": {
+      "type": "object",
+      "properties": {
+        "parameters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/V2Parameter"
+          }
+        },
+        "returnType": {
+          "$ref": "#/definitions/VariableType"
+        }
+      },
+      "required": [
+        "parameters",
+        "returnType"
+      ],
+      "additionalProperties": false
+    },
+    "V2FunctionImplementation": {
+      "type": "object",
+      "properties": {
+        "impl": {
+          "type": "string"
+        },
+        "imports": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "impl"
+      ],
+      "additionalProperties": false
+    },
+    "V2FunctionImplementationForMultipleLanguages": {
+      "type": "object",
+      "properties": {
+        "codeByLanguage": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/V2FunctionImplementation"
+          }
+        }
+      },
+      "required": [
+        "codeByLanguage"
+      ],
+      "additionalProperties": false
+    },
+    "V2NonVoidFunctionDefinition": {
+      "type": "object",
+      "properties": {
+        "signature": {
+          "$ref": "#/definitions/V2NonVoidFunctionSignature"
+        },
+        "code": {
+          "$ref": "#/definitions/V2FunctionImplementationForMultipleLanguages"
+        }
+      },
+      "required": [
+        "signature",
+        "code"
+      ],
+      "additionalProperties": false
+    },
+    "V2AssertCorrectnessCheckZeroType": {
+      "type": "string",
+      "enum": [
+        "deepEquality"
+      ]
+    },
+    "V2AssertCorrectnessCheckZero": {
+      "type": "object",
+      "properties": {
+        "expectedValueParameterId": {
+          "$ref": "#/definitions/V2ParameterId"
+        },
+        "type": {
+          "$ref": "#/definitions/V2AssertCorrectnessCheckZeroType"
+        }
+      },
+      "required": [
+        "expectedValueParameterId",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "V2AssertCorrectnessCheckOneType": {
+      "type": "string",
+      "enum": [
+        "custom"
+      ]
+    },
+    "V2AssertCorrectnessCheckOne": {
+      "type": "object",
+      "properties": {
+        "additionalParameters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/V2Parameter"
+          }
+        },
+        "code": {
+          "$ref": "#/definitions/V2FunctionImplementationForMultipleLanguages"
+        },
+        "type": {
+          "$ref": "#/definitions/V2AssertCorrectnessCheckOneType"
+        }
+      },
+      "required": [
+        "additionalParameters",
+        "code",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "V2AssertCorrectnessCheck": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/V2AssertCorrectnessCheckZero"
+        },
+        {
+          "$ref": "#/definitions/V2AssertCorrectnessCheckOne"
+        }
+      ]
+    },
+    "V2TestCaseFunctionZeroType": {
+      "type": "string",
+      "enum": [
+        "withActualResult"
+      ]
+    },
+    "V2TestCaseFunctionZero": {
+      "type": "object",
+      "properties": {
+        "getActualResult": {
+          "$ref": "#/definitions/V2NonVoidFunctionDefinition"
+        },
+        "assertCorrectnessCheck": {
+          "$ref": "#/definitions/V2AssertCorrectnessCheck"
+        },
+        "type": {
+          "$ref": "#/definitions/V2TestCaseFunctionZeroType"
+        }
+      },
+      "required": [
+        "getActualResult",
+        "assertCorrectnessCheck",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "V2TestCaseFunctionOneType": {
+      "type": "string",
+      "enum": [
+        "custom"
+      ]
+    },
+    "V2TestCaseFunctionOne": {
+      "type": "object",
+      "properties": {
+        "parameters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/V2Parameter"
+          }
+        },
+        "code": {
+          "$ref": "#/definitions/V2FunctionImplementationForMultipleLanguages"
+        },
+        "type": {
+          "$ref": "#/definitions/V2TestCaseFunctionOneType"
+        }
+      },
+      "required": [
+        "parameters",
+        "code",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "V2TestCaseFunction": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/V2TestCaseFunctionZero"
+        },
+        {
+          "$ref": "#/definitions/V2TestCaseFunctionOne"
+        }
+      ]
+    },
+    "V2TestCaseImplementationReferenceOneType": {
+      "type": "string",
+      "enum": [
+        "implementation"
+      ]
+    },
+    "V2TestCaseImplementationReferenceOne": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "$ref": "#/definitions/V2TestCaseImplementationDescription"
+        },
+        "function": {
+          "$ref": "#/definitions/V2TestCaseFunction"
+        },
+        "type": {
+          "$ref": "#/definitions/V2TestCaseImplementationReferenceOneType"
+        }
+      },
+      "required": [
+        "description",
+        "function",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "prop": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/definitions/UnionTypeWithAliasVariantOneType"
+    }
+  },
+  "required": [
+    "prop",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "UnionTypeWithAliasVariantOneType": {
+      "type": "string",
+      "enum": [
+        "nonAliasVariant"
+      ]
+    }
+  }
+}

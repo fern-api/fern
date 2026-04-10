@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "properties": {
+    "nodeId": {
+      "$ref": "#/definitions/NodeId"
+    },
+    "val": {
+      "type": "number"
+    },
+    "right": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NodeId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "left": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NodeId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "nodeId",
+    "val"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "NodeId": {
+      "type": "string"
+    }
+  }
+}

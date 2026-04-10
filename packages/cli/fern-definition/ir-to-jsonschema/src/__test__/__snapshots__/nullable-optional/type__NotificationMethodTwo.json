@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "properties": {
+    "deviceToken": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "badge": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "type": {
+      "$ref": "#/definitions/NotificationMethodTwoType"
+    }
+  },
+  "required": [
+    "deviceToken",
+    "title",
+    "body",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "NotificationMethodTwoType": {
+      "type": "string",
+      "enum": [
+        "push"
+      ]
+    }
+  }
+}

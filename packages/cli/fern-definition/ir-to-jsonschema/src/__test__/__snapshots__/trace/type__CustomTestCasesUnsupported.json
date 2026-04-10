@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "problemId": {
+      "$ref": "#/definitions/ProblemId"
+    },
+    "submissionId": {
+      "$ref": "#/definitions/SubmissionId"
+    }
+  },
+  "required": [
+    "problemId",
+    "submissionId"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ProblemId": {
+      "type": "string"
+    },
+    "SubmissionId": {
+      "type": "string"
+    }
+  }
+}

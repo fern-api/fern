@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "literal1": {
+      "$ref": "#/definitions/NestedObjectWithLiteralsLiteral1"
+    },
+    "literal2": {
+      "$ref": "#/definitions/NestedObjectWithLiteralsLiteral2"
+    },
+    "strProp": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "literal1",
+    "literal2",
+    "strProp"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "NestedObjectWithLiteralsLiteral1": {
+      "type": "string",
+      "enum": [
+        "literal1"
+      ]
+    },
+    "NestedObjectWithLiteralsLiteral2": {
+      "type": "string",
+      "enum": [
+        "literal2"
+      ]
+    }
+  }
+}

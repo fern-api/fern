@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/definitions/BigUnionNineteenType"
+    }
+  },
+  "required": [
+    "value",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "BigUnionNineteenType": {
+      "type": "string",
+      "enum": [
+        "uniqueStress"
+      ]
+    }
+  }
+}

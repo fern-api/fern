@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/DebugVariableValueOneType"
+    },
+    "value": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "DebugVariableValueOneType": {
+      "type": "string",
+      "enum": [
+        "booleanValue"
+      ]
+    }
+  }
+}

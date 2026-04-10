@@ -1,0 +1,129 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/TestSubmissionUpdateInfoTwoType"
+    },
+    "value": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ErrorInfo"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "TestSubmissionUpdateInfoTwoType": {
+      "type": "string",
+      "enum": [
+        "errored"
+      ]
+    },
+    "ErrorInfoZeroType": {
+      "type": "string",
+      "enum": [
+        "compileError"
+      ]
+    },
+    "ErrorInfoZero": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/ErrorInfoZeroType"
+        }
+      },
+      "required": [
+        "message",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "ErrorInfoOneType": {
+      "type": "string",
+      "enum": [
+        "runtimeError"
+      ]
+    },
+    "ErrorInfoOne": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/ErrorInfoOneType"
+        }
+      },
+      "required": [
+        "message",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "ExceptionInfo": {
+      "type": "object",
+      "properties": {
+        "exceptionType": {
+          "type": "string"
+        },
+        "exceptionMessage": {
+          "type": "string"
+        },
+        "exceptionStacktrace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "exceptionType",
+        "exceptionMessage",
+        "exceptionStacktrace"
+      ],
+      "additionalProperties": false
+    },
+    "ErrorInfoTwoType": {
+      "type": "string",
+      "enum": [
+        "internalError"
+      ]
+    },
+    "ErrorInfoTwo": {
+      "type": "object",
+      "properties": {
+        "exceptionInfo": {
+          "$ref": "#/definitions/ExceptionInfo"
+        },
+        "type": {
+          "$ref": "#/definitions/ErrorInfoTwoType"
+        }
+      },
+      "required": [
+        "exceptionInfo",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "ErrorInfo": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ErrorInfoZero"
+        },
+        {
+          "$ref": "#/definitions/ErrorInfoOne"
+        },
+        {
+          "$ref": "#/definitions/ErrorInfoTwo"
+        }
+      ]
+    }
+  }
+}

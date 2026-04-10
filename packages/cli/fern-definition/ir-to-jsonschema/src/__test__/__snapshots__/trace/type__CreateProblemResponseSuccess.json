@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "value": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ProblemId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ProblemId": {
+      "type": "string"
+    }
+  }
+}

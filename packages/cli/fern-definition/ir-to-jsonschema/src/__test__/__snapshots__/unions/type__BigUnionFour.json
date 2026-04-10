@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/definitions/BigUnionFourType"
+    }
+  },
+  "required": [
+    "value",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "BigUnionFourType": {
+      "type": "string",
+      "enum": [
+        "mistySnow"
+      ]
+    }
+  }
+}

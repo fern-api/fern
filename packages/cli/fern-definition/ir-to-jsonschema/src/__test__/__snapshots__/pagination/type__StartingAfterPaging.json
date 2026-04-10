@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "per_page": {
+      "type": "integer"
+    },
+    "starting_after": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "per_page"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "filename": {
+      "type": "string"
+    },
+    "directory": {
+      "type": "string"
+    },
+    "contents": {
+      "type": "string"
+    },
+    "editable": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "filename",
+    "directory",
+    "contents",
+    "editable"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/WorkspaceSubmissionUpdateInfoTwoType"
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "WorkspaceSubmissionUpdateInfoTwoType": {
+      "type": "string",
+      "enum": [
+        "stopped"
+      ]
+    }
+  }
+}

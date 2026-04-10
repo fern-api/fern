@@ -1,0 +1,52 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/UnionWithNoPropertiesZero"
+    },
+    {
+      "$ref": "#/definitions/UnionWithNoPropertiesType"
+    }
+  ],
+  "definitions": {
+    "UnionWithNoPropertiesZeroType": {
+      "type": "string",
+      "enum": [
+        "foo"
+      ]
+    },
+    "UnionWithNoPropertiesZero": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/UnionWithNoPropertiesZeroType"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "UnionWithNoPropertiesTypeType": {
+      "type": "string",
+      "enum": [
+        "empty"
+      ]
+    },
+    "UnionWithNoPropertiesType": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/UnionWithNoPropertiesTypeType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

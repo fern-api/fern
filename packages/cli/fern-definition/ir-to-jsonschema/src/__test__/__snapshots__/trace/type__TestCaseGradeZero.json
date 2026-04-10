@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "passed": {
+      "type": "boolean"
+    },
+    "type": {
+      "$ref": "#/definitions/TestCaseGradeZeroType"
+    }
+  },
+  "required": [
+    "passed",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "TestCaseGradeZeroType": {
+      "type": "string",
+      "enum": [
+        "hidden"
+      ]
+    }
+  }
+}

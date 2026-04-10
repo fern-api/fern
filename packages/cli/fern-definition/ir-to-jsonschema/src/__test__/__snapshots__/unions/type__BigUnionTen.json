@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/definitions/BigUnionTenType"
+    }
+  },
+  "required": [
+    "value",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "BigUnionTenType": {
+      "type": "string",
+      "enum": [
+        "popularLimit"
+      ]
+    }
+  }
+}

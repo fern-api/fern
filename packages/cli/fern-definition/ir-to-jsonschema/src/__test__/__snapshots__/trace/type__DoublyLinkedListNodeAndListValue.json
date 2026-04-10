@@ -1,0 +1,82 @@
+{
+  "type": "object",
+  "properties": {
+    "nodeId": {
+      "$ref": "#/definitions/NodeId"
+    },
+    "fullList": {
+      "$ref": "#/definitions/DoublyLinkedListValue"
+    }
+  },
+  "required": [
+    "nodeId",
+    "fullList"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "NodeId": {
+      "type": "string"
+    },
+    "DoublyLinkedListNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "next": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prev": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ],
+      "additionalProperties": false
+    },
+    "DoublyLinkedListValue": {
+      "type": "object",
+      "properties": {
+        "head": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nodes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/DoublyLinkedListNodeValue"
+          }
+        }
+      },
+      "required": [
+        "nodes"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

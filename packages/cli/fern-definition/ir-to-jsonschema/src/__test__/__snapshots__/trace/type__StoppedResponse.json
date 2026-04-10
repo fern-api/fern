@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "submissionId": {
+      "$ref": "#/definitions/SubmissionId"
+    }
+  },
+  "required": [
+    "submissionId"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "SubmissionId": {
+      "type": "string"
+    }
+  }
+}

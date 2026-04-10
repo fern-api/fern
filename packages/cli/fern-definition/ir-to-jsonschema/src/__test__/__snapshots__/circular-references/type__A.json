@@ -1,0 +1,17 @@
+{
+  "$ref": "#/definitions/RootType",
+  "definitions": {
+    "RootType": {
+      "type": "object",
+      "properties": {
+        "s": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "s"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "properties": {
+    "data": {
+      "$ref": "#/definitions/UserOptionalListContainer"
+    },
+    "next": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "total_count": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "data",
+    "total_count"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "UserOptionalListContainer": {
+      "type": "object",
+      "properties": {
+        "users": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/definitions/BigUnionTwentyFourType"
+    }
+  },
+  "required": [
+    "value",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "BigUnionTwentyFourType": {
+      "type": "string",
+      "enum": [
+        "hoarseMouse"
+      ]
+    }
+  }
+}

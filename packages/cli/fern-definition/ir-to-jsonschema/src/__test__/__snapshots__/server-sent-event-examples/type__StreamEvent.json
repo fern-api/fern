@@ -1,0 +1,66 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/StreamEventZero"
+    },
+    {
+      "$ref": "#/definitions/StreamEventOne"
+    }
+  ],
+  "definitions": {
+    "StreamEventZeroEvent": {
+      "type": "string",
+      "enum": [
+        "completion"
+      ]
+    },
+    "StreamEventZero": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        },
+        "event": {
+          "$ref": "#/definitions/StreamEventZeroEvent"
+        }
+      },
+      "required": [
+        "content",
+        "event"
+      ],
+      "additionalProperties": false
+    },
+    "StreamEventOneEvent": {
+      "type": "string",
+      "enum": [
+        "error"
+      ]
+    },
+    "StreamEventOne": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event": {
+          "$ref": "#/definitions/StreamEventOneEvent"
+        }
+      },
+      "required": [
+        "error",
+        "event"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

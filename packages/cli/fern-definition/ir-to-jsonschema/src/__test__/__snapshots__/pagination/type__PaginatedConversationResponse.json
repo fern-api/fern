@@ -1,0 +1,133 @@
+{
+  "type": "object",
+  "properties": {
+    "conversations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Conversation"
+      }
+    },
+    "pages": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CursorPages"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "total_count": {
+      "type": "integer"
+    },
+    "type": {
+      "$ref": "#/definitions/PaginatedConversationResponseType"
+    }
+  },
+  "required": [
+    "conversations",
+    "total_count",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Conversation": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": false
+    },
+    "StartingAfterPaging": {
+      "type": "object",
+      "properties": {
+        "per_page": {
+          "type": "integer"
+        },
+        "starting_after": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "per_page"
+      ],
+      "additionalProperties": false
+    },
+    "CursorPagesType": {
+      "type": "string",
+      "enum": [
+        "pages"
+      ]
+    },
+    "CursorPages": {
+      "type": "object",
+      "properties": {
+        "next": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/StartingAfterPaging"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "page": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "per_page": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "total_pages": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "$ref": "#/definitions/CursorPagesType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "PaginatedConversationResponseType": {
+      "type": "string",
+      "enum": [
+        "conversation.list"
+      ]
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/BranchNode"
+    },
+    {
+      "$ref": "#/definitions/LeafNode"
+    }
+  ],
+  "definitions": {
+    "LeafNode": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "Node": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/BranchNode"
+        },
+        {
+          "$ref": "#/definitions/LeafNode"
+        }
+      ]
+    },
+    "BranchNode": {
+      "type": "object",
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Node"
+          }
+        }
+      },
+      "required": [
+        "children"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

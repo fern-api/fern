@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/definitions/BigUnionTwentyFiveType"
+    }
+  },
+  "required": [
+    "value",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "BigUnionTwentyFiveType": {
+      "type": "string",
+      "enum": [
+        "circularCard"
+      ]
+    }
+  }
+}

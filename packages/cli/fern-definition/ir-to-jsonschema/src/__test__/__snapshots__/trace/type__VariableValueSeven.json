@@ -1,0 +1,76 @@
+{
+  "type": "object",
+  "properties": {
+    "root": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/NodeId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nodes": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/BinaryTreeNodeValue"
+      }
+    },
+    "type": {
+      "$ref": "#/definitions/VariableValueSevenType"
+    }
+  },
+  "required": [
+    "nodes",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "NodeId": {
+      "type": "string"
+    },
+    "BinaryTreeNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "right": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "left": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ],
+      "additionalProperties": false
+    },
+    "VariableValueSevenType": {
+      "type": "string",
+      "enum": [
+        "binaryTreeValue"
+      ]
+    }
+  }
+}

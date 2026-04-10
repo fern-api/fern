@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "traceResponsesSize": {
+      "type": "integer"
+    },
+    "type": {
+      "$ref": "#/definitions/WorkspaceSubmissionUpdateInfoFourType"
+    }
+  },
+  "required": [
+    "traceResponsesSize",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "WorkspaceSubmissionUpdateInfoFourType": {
+      "type": "string",
+      "enum": [
+        "tracedV2"
+      ]
+    }
+  }
+}

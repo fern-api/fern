@@ -1,0 +1,73 @@
+{
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ]
+    },
+    "identifiers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Identifier"
+      }
+    }
+  },
+  "required": [
+    "response",
+    "identifiers"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "BasicType": {
+      "type": "string",
+      "enum": [
+        "primitive",
+        "literal"
+      ]
+    },
+    "ComplexType": {
+      "type": "string",
+      "enum": [
+        "object",
+        "union",
+        "unknown"
+      ]
+    },
+    "Type": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/BasicType"
+        },
+        {
+          "$ref": "#/definitions/ComplexType"
+        }
+      ]
+    },
+    "Identifier": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/Type"
+        },
+        "value": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value",
+        "label"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

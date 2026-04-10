@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "event": {
+      "$ref": "#/definitions/StreamEventContextProtocolTwoEvent"
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "event",
+    "name"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "StreamEventContextProtocolTwoEvent": {
+      "type": "string",
+      "enum": [
+        "event"
+      ]
+    }
+  }
+}

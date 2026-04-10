@@ -1,0 +1,7 @@
+{
+  "type": "string",
+  "enum": [
+    "gradedV2"
+  ],
+  "definitions": {}
+}

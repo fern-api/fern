@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "expectedLanguage": {
+      "$ref": "#/definitions/Language"
+    },
+    "actualLanguage": {
+      "$ref": "#/definitions/Language"
+    }
+  },
+  "required": [
+    "expectedLanguage",
+    "actualLanguage"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Language": {
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    }
+  }
+}

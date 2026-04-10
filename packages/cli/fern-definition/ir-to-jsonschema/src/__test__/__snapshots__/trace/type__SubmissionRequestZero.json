@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "problemId": {
+      "$ref": "#/definitions/ProblemId"
+    },
+    "problemVersion": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "type": {
+      "$ref": "#/definitions/SubmissionRequestZeroType"
+    }
+  },
+  "required": [
+    "problemId",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ProblemId": {
+      "type": "string"
+    },
+    "SubmissionRequestZeroType": {
+      "type": "string",
+      "enum": [
+        "initializeProblemRequest"
+      ]
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/V2V3TestCaseImplementationReferenceTypeType"
+    },
+    "value": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/V2V3TestCaseTemplateId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "V2V3TestCaseImplementationReferenceTypeType": {
+      "type": "string",
+      "enum": [
+        "templateId"
+      ]
+    },
+    "V2V3TestCaseTemplateId": {
+      "type": "string"
+    }
+  }
+}

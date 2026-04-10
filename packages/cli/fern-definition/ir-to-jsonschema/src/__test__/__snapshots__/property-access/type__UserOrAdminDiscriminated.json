@@ -1,64 +1,13 @@
 {
-  "type": "object",
-  "properties": {
-    "type": {
-      "type": "string",
-      "enum": [
-        "user",
-        "admin",
-        "empty"
-      ]
-    }
-  },
-  "oneOf": [
+  "anyOf": [
     {
-      "properties": {
-        "type": {
-          "const": "user"
-        },
-        "id": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        },
-        "profile": {
-          "$ref": "#/definitions/UserProfile"
-        }
-      },
-      "required": [
-        "type",
-        "id",
-        "email",
-        "password",
-        "profile"
-      ]
+      "$ref": "#/definitions/UserOrAdminDiscriminatedZero"
     },
     {
-      "properties": {
-        "type": {
-          "const": "admin"
-        },
-        "value": {
-          "$ref": "#/definitions/Admin"
-        }
-      },
-      "required": [
-        "type"
-      ]
+      "$ref": "#/definitions/UserOrAdminDiscriminatedAdmin"
     },
     {
-      "properties": {
-        "type": {
-          "const": "empty"
-        }
-      },
-      "required": [
-        "type"
-      ]
+      "$ref": "#/definitions/UserOrAdminDiscriminatedTwo"
     }
   ],
   "definitions": {
@@ -66,12 +15,16 @@
       "type": "object",
       "properties": {
         "verified": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
-      "required": [
-        "verified"
-      ],
       "additionalProperties": false
     },
     "UserProfile": {
@@ -94,14 +47,80 @@
       ],
       "additionalProperties": false
     },
+    "UserOrAdminDiscriminatedZeroType": {
+      "type": "string",
+      "enum": [
+        "user"
+      ]
+    },
+    "UserOrAdminDiscriminatedZero": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "email": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "password": {
+          "type": "string"
+        },
+        "profile": {
+          "$ref": "#/definitions/UserProfile"
+        },
+        "type": {
+          "$ref": "#/definitions/UserOrAdminDiscriminatedZeroType"
+        }
+      },
+      "required": [
+        "password",
+        "profile",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "UserOrAdminDiscriminatedAdminType": {
+      "type": "string",
+      "enum": [
+        "admin"
+      ]
+    },
     "Admin": {
       "type": "object",
       "properties": {
         "id": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "email": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "password": {
           "type": "string"
@@ -114,11 +133,49 @@
         }
       },
       "required": [
-        "id",
-        "email",
         "password",
         "profile",
         "adminLevel"
+      ],
+      "additionalProperties": false
+    },
+    "UserOrAdminDiscriminatedAdmin": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/UserOrAdminDiscriminatedAdminType"
+        },
+        "admin": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Admin"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "UserOrAdminDiscriminatedTwoType": {
+      "type": "string",
+      "enum": [
+        "empty"
+      ]
+    },
+    "UserOrAdminDiscriminatedTwo": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/UserOrAdminDiscriminatedTwoType"
+        }
+      },
+      "required": [
+        "type"
       ],
       "additionalProperties": false
     }

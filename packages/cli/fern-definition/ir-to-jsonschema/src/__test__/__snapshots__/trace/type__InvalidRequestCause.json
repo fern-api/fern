@@ -1,0 +1,103 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/InvalidRequestCauseZero"
+    },
+    {
+      "$ref": "#/definitions/InvalidRequestCauseOne"
+    },
+    {
+      "$ref": "#/definitions/InvalidRequestCauseTwo"
+    }
+  ],
+  "definitions": {
+    "SubmissionId": {
+      "type": "string"
+    },
+    "InvalidRequestCauseZeroType": {
+      "type": "string",
+      "enum": [
+        "submissionIdNotFound"
+      ]
+    },
+    "InvalidRequestCauseZero": {
+      "type": "object",
+      "properties": {
+        "missingSubmissionId": {
+          "$ref": "#/definitions/SubmissionId"
+        },
+        "type": {
+          "$ref": "#/definitions/InvalidRequestCauseZeroType"
+        }
+      },
+      "required": [
+        "missingSubmissionId",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "ProblemId": {
+      "type": "string"
+    },
+    "InvalidRequestCauseOneType": {
+      "type": "string",
+      "enum": [
+        "customTestCasesUnsupported"
+      ]
+    },
+    "InvalidRequestCauseOne": {
+      "type": "object",
+      "properties": {
+        "problemId": {
+          "$ref": "#/definitions/ProblemId"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/SubmissionId"
+        },
+        "type": {
+          "$ref": "#/definitions/InvalidRequestCauseOneType"
+        }
+      },
+      "required": [
+        "problemId",
+        "submissionId",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "Language": {
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    },
+    "InvalidRequestCauseTwoType": {
+      "type": "string",
+      "enum": [
+        "unexpectedLanguage"
+      ]
+    },
+    "InvalidRequestCauseTwo": {
+      "type": "object",
+      "properties": {
+        "expectedLanguage": {
+          "$ref": "#/definitions/Language"
+        },
+        "actualLanguage": {
+          "$ref": "#/definitions/Language"
+        },
+        "type": {
+          "$ref": "#/definitions/InvalidRequestCauseTwoType"
+        }
+      },
+      "required": [
+        "expectedLanguage",
+        "actualLanguage",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

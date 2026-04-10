@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "solutionFile": {
+      "$ref": "#/definitions/FileInfo"
+    },
+    "readOnlyFiles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/FileInfo"
+      }
+    }
+  },
+  "required": [
+    "solutionFile",
+    "readOnlyFiles"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "FileInfo": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "filename",
+        "contents"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

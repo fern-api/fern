@@ -1,0 +1,60 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/UnionWithSubTypesZero"
+    },
+    {
+      "$ref": "#/definitions/UnionWithSubTypesOne"
+    }
+  ],
+  "definitions": {
+    "UnionWithSubTypesZeroType": {
+      "type": "string",
+      "enum": [
+        "foo"
+      ]
+    },
+    "UnionWithSubTypesZero": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/UnionWithSubTypesZeroType"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "UnionWithSubTypesOneType": {
+      "type": "string",
+      "enum": [
+        "fooExtended"
+      ]
+    },
+    "UnionWithSubTypesOne": {
+      "type": "object",
+      "properties": {
+        "age": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/UnionWithSubTypesOneType"
+        }
+      },
+      "required": [
+        "age",
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

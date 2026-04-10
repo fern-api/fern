@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/definitions/UnionWithNoPropertiesZeroType"
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "UnionWithNoPropertiesZeroType": {
+      "type": "string",
+      "enum": [
+        "foo"
+      ]
+    }
+  }
+}

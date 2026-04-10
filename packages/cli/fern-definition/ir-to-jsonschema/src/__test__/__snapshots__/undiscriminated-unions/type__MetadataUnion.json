@@ -1,0 +1,65 @@
+{
+  "anyOf": [
+    {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/OptionalMetadata"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    {
+      "$ref": "#/definitions/NamedMetadata"
+    }
+  ],
+  "definitions": {
+    "OptionalMetadata": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "NamedMetadata": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "content": {
+      "type": "string"
+    },
+    "event": {
+      "$ref": "#/definitions/StreamEventZeroEvent"
+    }
+  },
+  "required": [
+    "content",
+    "event"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "StreamEventZeroEvent": {
+      "type": "string",
+      "enum": [
+        "completion"
+      ]
+    }
+  }
+}

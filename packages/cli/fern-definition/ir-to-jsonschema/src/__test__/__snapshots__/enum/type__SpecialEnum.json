@@ -3,8 +3,6 @@
   "enum": [
     "",
     "Hello \\\"World\\\"",
-    "Hello 'World'",
-    "Hello\\\\World",
     "Hello\\nWorld",
     "Hello\\rWorld",
     "Hello\\tWorld",
@@ -20,7 +18,6 @@
     "Hello\\u009FWorld",
     "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null",
     "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007",
-    "Hello 世界",
     "café",
     "🚀",
     "\\\\n",
@@ -31,8 +28,7 @@
     "/usr/local/bin/app",
     "\\\\d{3}-\\\\d{2}-\\\\d{4}",
     "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}",
-    "transcript[transcriptType=\"final\"]",
-    "transcript[transcriptType='final']"
+    "transcript[transcriptType=\"final\"]"
   ],
   "definitions": {}
 }

@@ -1,0 +1,106 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/UserOrAdminDiscriminatedAdminType"
+    },
+    "admin": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Admin"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "UserOrAdminDiscriminatedAdminType": {
+      "type": "string",
+      "enum": [
+        "admin"
+      ]
+    },
+    "UserProfileVerification": {
+      "type": "object",
+      "properties": {
+        "verified": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "UserProfile": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "verification": {
+          "$ref": "#/definitions/UserProfileVerification"
+        },
+        "ssn": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "verification",
+        "ssn"
+      ],
+      "additionalProperties": false
+    },
+    "Admin": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "email": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "password": {
+          "type": "string"
+        },
+        "profile": {
+          "$ref": "#/definitions/UserProfile"
+        },
+        "adminLevel": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "password",
+        "profile",
+        "adminLevel"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

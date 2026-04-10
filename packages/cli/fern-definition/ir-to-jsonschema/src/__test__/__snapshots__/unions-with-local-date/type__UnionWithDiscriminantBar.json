@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "bar": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Bar"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Bar": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

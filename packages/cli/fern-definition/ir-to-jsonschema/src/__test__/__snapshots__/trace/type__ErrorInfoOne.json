@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/definitions/ErrorInfoOneType"
+    }
+  },
+  "required": [
+    "message",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ErrorInfoOneType": {
+      "type": "string",
+      "enum": [
+        "runtimeError"
+      ]
+    }
+  }
+}

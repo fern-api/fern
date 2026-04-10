@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/definitions/ErrorInfoZeroType"
+    }
+  },
+  "required": [
+    "message",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ErrorInfoZeroType": {
+      "type": "string",
+      "enum": [
+        "compileError"
+      ]
+    }
+  }
+}

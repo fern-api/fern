@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "additionalProperties": {
+    "$ref": "#/definitions/TypesDocumentedUnknownType"
+  },
+  "definitions": {
+    "TypesDocumentedUnknownType": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ]
+    }
+  }
+}

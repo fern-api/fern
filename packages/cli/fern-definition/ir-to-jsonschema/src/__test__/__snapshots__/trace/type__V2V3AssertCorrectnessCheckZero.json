@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "expectedValueParameterId": {
+      "$ref": "#/definitions/V2V3ParameterId"
+    },
+    "type": {
+      "$ref": "#/definitions/V2V3AssertCorrectnessCheckZeroType"
+    }
+  },
+  "required": [
+    "expectedValueParameterId",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "V2V3ParameterId": {
+      "type": "string"
+    },
+    "V2V3AssertCorrectnessCheckZeroType": {
+      "type": "string",
+      "enum": [
+        "deepEquality"
+      ]
+    }
+  }
+}

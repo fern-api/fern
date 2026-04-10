@@ -1,43 +1,56 @@
 {
-  "type": "object",
-  "properties": {
-    "identifier_type": {
+  "anyOf": [
+    {
+      "$ref": "#/definitions/IdentifierZero"
+    },
+    {
+      "$ref": "#/definitions/IdentifierOne"
+    }
+  ],
+  "definitions": {
+    "IdentifierZeroIdentifierType": {
       "type": "string",
       "enum": [
-        "isin",
-        "cusip"
-      ]
-    }
-  },
-  "oneOf": [
-    {
-      "properties": {
-        "identifier_type": {
-          "const": "isin"
-        },
-        "isin": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "identifier_type",
         "isin"
       ]
     },
-    {
+    "IdentifierZero": {
+      "type": "object",
       "properties": {
-        "identifier_type": {
-          "const": "cusip"
-        },
-        "cusip": {
+        "isin": {
           "type": "string"
+        },
+        "identifier_type": {
+          "$ref": "#/definitions/IdentifierZeroIdentifierType"
         }
       },
       "required": [
-        "identifier_type",
+        "isin",
+        "identifier_type"
+      ],
+      "additionalProperties": false
+    },
+    "IdentifierOneIdentifierType": {
+      "type": "string",
+      "enum": [
         "cusip"
       ]
+    },
+    "IdentifierOne": {
+      "type": "object",
+      "properties": {
+        "cusip": {
+          "type": "string"
+        },
+        "identifier_type": {
+          "$ref": "#/definitions/IdentifierOneIdentifierType"
+        }
+      },
+      "required": [
+        "cusip",
+        "identifier_type"
+      ],
+      "additionalProperties": false
     }
-  ],
-  "definitions": {}
+  }
 }

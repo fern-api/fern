@@ -1,18 +1,17 @@
 {
-  "anyOf": [
-    {
-      "$ref": "#/definitions/VariantA"
-    },
-    {
-      "$ref": "#/definitions/VariantB"
-    },
-    {
-      "$ref": "#/definitions/VariantC"
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C"
+      ]
     }
-  ],
-  "definitions": {
-    "VariantA": {
-      "type": "object",
+  },
+  "oneOf": [
+    {
       "properties": {
         "type": {
           "const": "A"
@@ -24,11 +23,9 @@
       "required": [
         "type",
         "valueA"
-      ],
-      "additionalProperties": false
+      ]
     },
-    "VariantB": {
-      "type": "object",
+    {
       "properties": {
         "type": {
           "const": "B"
@@ -40,11 +37,9 @@
       "required": [
         "type",
         "valueB"
-      ],
-      "additionalProperties": false
+      ]
     },
-    "VariantC": {
-      "type": "object",
+    {
       "properties": {
         "type": {
           "const": "C"
@@ -56,8 +51,8 @@
       "required": [
         "type",
         "valueC"
-      ],
-      "additionalProperties": false
+      ]
     }
-  }
+  ],
+  "definitions": {}
 }

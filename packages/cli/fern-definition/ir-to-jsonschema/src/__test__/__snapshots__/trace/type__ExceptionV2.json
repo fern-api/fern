@@ -1,0 +1,60 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/ExceptionV2Zero"
+    },
+    {
+      "$ref": "#/definitions/ExceptionV2Type"
+    }
+  ],
+  "definitions": {
+    "ExceptionV2ZeroType": {
+      "type": "string",
+      "enum": [
+        "generic"
+      ]
+    },
+    "ExceptionV2Zero": {
+      "type": "object",
+      "properties": {
+        "exceptionType": {
+          "type": "string"
+        },
+        "exceptionMessage": {
+          "type": "string"
+        },
+        "exceptionStacktrace": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/ExceptionV2ZeroType"
+        }
+      },
+      "required": [
+        "exceptionType",
+        "exceptionMessage",
+        "exceptionStacktrace",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "ExceptionV2TypeType": {
+      "type": "string",
+      "enum": [
+        "timeout"
+      ]
+    },
+    "ExceptionV2Type": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/ExceptionV2TypeType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

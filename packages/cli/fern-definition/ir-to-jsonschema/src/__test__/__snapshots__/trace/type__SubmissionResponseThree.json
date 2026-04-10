@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "exceptionType": {
+      "type": "string"
+    },
+    "exceptionMessage": {
+      "type": "string"
+    },
+    "exceptionStacktrace": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/definitions/SubmissionResponseThreeType"
+    }
+  },
+  "required": [
+    "exceptionType",
+    "exceptionMessage",
+    "exceptionStacktrace",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "SubmissionResponseThreeType": {
+      "type": "string",
+      "enum": [
+        "serverErrored"
+      ]
+    }
+  }
+}

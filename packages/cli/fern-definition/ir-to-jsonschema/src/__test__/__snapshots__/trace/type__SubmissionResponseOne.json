@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/SubmissionResponseOneType"
+    },
+    "value": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ProblemId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "SubmissionResponseOneType": {
+      "type": "string",
+      "enum": [
+        "problemInitialized"
+      ]
+    },
+    "ProblemId": {
+      "type": "string"
+    }
+  }
+}

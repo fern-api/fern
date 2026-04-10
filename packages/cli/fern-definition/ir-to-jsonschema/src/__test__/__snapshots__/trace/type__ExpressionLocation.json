@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "start": {
+      "type": "integer"
+    },
+    "offset": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "start",
+    "offset"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

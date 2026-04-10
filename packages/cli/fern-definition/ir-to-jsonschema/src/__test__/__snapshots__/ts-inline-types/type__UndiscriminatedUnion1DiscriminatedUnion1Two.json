@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "foo": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/definitions/UndiscriminatedUnion1DiscriminatedUnion1TwoType"
+    }
+  },
+  "required": [
+    "foo",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "UndiscriminatedUnion1DiscriminatedUnion1TwoType": {
+      "type": "string",
+      "enum": [
+        "ref"
+      ]
+    }
+  }
+}

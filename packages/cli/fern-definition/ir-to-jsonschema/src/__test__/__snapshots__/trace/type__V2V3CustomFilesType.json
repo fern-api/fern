@@ -1,0 +1,72 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/V2V3CustomFilesTypeType"
+    },
+    "value": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/V2V3Files"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "V2V3CustomFilesTypeType": {
+      "type": "string",
+      "enum": [
+        "custom"
+      ]
+    },
+    "V2V3FileInfoV2": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "directory": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        },
+        "editable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "filename",
+        "directory",
+        "contents",
+        "editable"
+      ],
+      "additionalProperties": false
+    },
+    "V2V3Files": {
+      "type": "object",
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/V2V3FileInfoV2"
+          }
+        }
+      },
+      "required": [
+        "files"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

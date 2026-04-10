@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/FlushedEventType"
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "FlushedEventType": {
+      "type": "string",
+      "enum": [
+        "flushed"
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/VariableValueFourType"
+    },
+    "value": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "VariableValueFourType": {
+      "type": "string",
+      "enum": [
+        "charValue"
+      ]
+    }
+  }
+}

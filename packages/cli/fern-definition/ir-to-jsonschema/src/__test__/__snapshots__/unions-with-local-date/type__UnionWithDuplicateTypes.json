@@ -1,0 +1,56 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/UnionWithDuplicateTypesZero"
+    },
+    {
+      "$ref": "#/definitions/UnionWithDuplicateTypesOne"
+    }
+  ],
+  "definitions": {
+    "UnionWithDuplicateTypesZeroType": {
+      "type": "string",
+      "enum": [
+        "foo1"
+      ]
+    },
+    "UnionWithDuplicateTypesZero": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/UnionWithDuplicateTypesZeroType"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "UnionWithDuplicateTypesOneType": {
+      "type": "string",
+      "enum": [
+        "foo2"
+      ]
+    },
+    "UnionWithDuplicateTypesOne": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/UnionWithDuplicateTypesOneType"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

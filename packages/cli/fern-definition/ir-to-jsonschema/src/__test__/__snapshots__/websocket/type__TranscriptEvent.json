@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/TranscriptEventType"
+    },
+    "data": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "data"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "TranscriptEventType": {
+      "type": "string",
+      "enum": [
+        "transcript"
+      ]
+    }
+  }
+}

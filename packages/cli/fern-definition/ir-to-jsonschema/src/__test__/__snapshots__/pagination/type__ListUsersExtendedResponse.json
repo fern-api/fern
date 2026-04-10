@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "data": {
+      "$ref": "#/definitions/UserListContainer"
+    },
+    "next": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "total_count": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "data",
+    "total_count"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "UserListContainer": {
+      "type": "object",
+      "properties": {
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User"
+          }
+        }
+      },
+      "required": [
+        "users"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

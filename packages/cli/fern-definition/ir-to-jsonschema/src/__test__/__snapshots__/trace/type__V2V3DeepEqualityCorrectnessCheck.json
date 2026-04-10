@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "expectedValueParameterId": {
+      "$ref": "#/definitions/V2V3ParameterId"
+    }
+  },
+  "required": [
+    "expectedValueParameterId"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "V2V3ParameterId": {
+      "type": "string"
+    }
+  }
+}

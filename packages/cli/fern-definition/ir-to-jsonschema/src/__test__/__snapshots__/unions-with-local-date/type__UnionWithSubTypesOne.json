@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "age": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/definitions/UnionWithSubTypesOneType"
+    }
+  },
+  "required": [
+    "age",
+    "name",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "UnionWithSubTypesOneType": {
+      "type": "string",
+      "enum": [
+        "fooExtended"
+      ]
+    }
+  }
+}

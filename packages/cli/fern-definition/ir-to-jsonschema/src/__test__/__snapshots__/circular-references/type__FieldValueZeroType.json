@@ -1,0 +1,7 @@
+{
+  "type": "string",
+  "enum": [
+    "primitive_value"
+  ],
+  "definitions": {}
+}

@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "exceptionInfo": {
+      "$ref": "#/definitions/ExceptionInfo"
+    },
+    "type": {
+      "$ref": "#/definitions/ErrorInfoTwoType"
+    }
+  },
+  "required": [
+    "exceptionInfo",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ExceptionInfo": {
+      "type": "object",
+      "properties": {
+        "exceptionType": {
+          "type": "string"
+        },
+        "exceptionMessage": {
+          "type": "string"
+        },
+        "exceptionStacktrace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "exceptionType",
+        "exceptionMessage",
+        "exceptionStacktrace"
+      ],
+      "additionalProperties": false
+    },
+    "ErrorInfoTwoType": {
+      "type": "string",
+      "enum": [
+        "internalError"
+      ]
+    }
+  }
+}

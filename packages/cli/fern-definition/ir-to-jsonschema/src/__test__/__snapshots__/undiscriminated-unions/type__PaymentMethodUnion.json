@@ -1,0 +1,44 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/TokenizeCard"
+    },
+    {
+      "$ref": "#/definitions/ConvertToken"
+    }
+  ],
+  "definitions": {
+    "TokenizeCard": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "cardNumber": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "method",
+        "cardNumber"
+      ],
+      "additionalProperties": false
+    },
+    "ConvertToken": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "tokenId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "method",
+        "tokenId"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

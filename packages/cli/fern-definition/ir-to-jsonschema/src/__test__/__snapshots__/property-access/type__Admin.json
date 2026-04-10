@@ -2,10 +2,24 @@
   "type": "object",
   "properties": {
     "id": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "email": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "password": {
       "type": "string"
@@ -18,8 +32,6 @@
     }
   },
   "required": [
-    "id",
-    "email",
     "password",
     "profile",
     "adminLevel"
@@ -30,12 +42,16 @@
       "type": "object",
       "properties": {
         "verified": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
-      "required": [
-        "verified"
-      ],
       "additionalProperties": false
     },
     "UserProfile": {

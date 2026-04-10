@@ -1,0 +1,839 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/SubmissionStatusForTestCaseZero"
+    },
+    {
+      "$ref": "#/definitions/SubmissionStatusForTestCaseType"
+    },
+    {
+      "$ref": "#/definitions/SubmissionStatusForTestCaseTwo"
+    }
+  ],
+  "definitions": {
+    "VariableValueZeroType": {
+      "type": "string",
+      "enum": [
+        "integerValue"
+      ]
+    },
+    "VariableValueZero": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/VariableValueZeroType"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableValueOneType": {
+      "type": "string",
+      "enum": [
+        "booleanValue"
+      ]
+    },
+    "VariableValueOne": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/VariableValueOneType"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableValueTwoType": {
+      "type": "string",
+      "enum": [
+        "doubleValue"
+      ]
+    },
+    "VariableValueTwo": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/VariableValueTwoType"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableValueThreeType": {
+      "type": "string",
+      "enum": [
+        "stringValue"
+      ]
+    },
+    "VariableValueThree": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/VariableValueThreeType"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableValueFourType": {
+      "type": "string",
+      "enum": [
+        "charValue"
+      ]
+    },
+    "VariableValueFour": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/VariableValueFourType"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "KeyValuePair": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "$ref": "#/definitions/VariableValue"
+        },
+        "value": {
+          "$ref": "#/definitions/VariableValue"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "VariableValueFiveType": {
+      "type": "string",
+      "enum": [
+        "mapValue"
+      ]
+    },
+    "VariableValueFive": {
+      "type": "object",
+      "properties": {
+        "keyValuePairs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KeyValuePair"
+          }
+        },
+        "type": {
+          "$ref": "#/definitions/VariableValueFiveType"
+        }
+      },
+      "required": [
+        "keyValuePairs",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableValueSixType": {
+      "type": "string",
+      "enum": [
+        "listValue"
+      ]
+    },
+    "VariableValueSix": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/VariableValueSixType"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/VariableValue"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "NodeId": {
+      "type": "string"
+    },
+    "BinaryTreeNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "right": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "left": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ],
+      "additionalProperties": false
+    },
+    "VariableValueSevenType": {
+      "type": "string",
+      "enum": [
+        "binaryTreeValue"
+      ]
+    },
+    "VariableValueSeven": {
+      "type": "object",
+      "properties": {
+        "root": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nodes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/BinaryTreeNodeValue"
+          }
+        },
+        "type": {
+          "$ref": "#/definitions/VariableValueSevenType"
+        }
+      },
+      "required": [
+        "nodes",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "SinglyLinkedListNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "next": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ],
+      "additionalProperties": false
+    },
+    "VariableValueEightType": {
+      "type": "string",
+      "enum": [
+        "singlyLinkedListValue"
+      ]
+    },
+    "VariableValueEight": {
+      "type": "object",
+      "properties": {
+        "head": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nodes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/SinglyLinkedListNodeValue"
+          }
+        },
+        "type": {
+          "$ref": "#/definitions/VariableValueEightType"
+        }
+      },
+      "required": [
+        "nodes",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "DoublyLinkedListNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "next": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prev": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ],
+      "additionalProperties": false
+    },
+    "VariableValueNineType": {
+      "type": "string",
+      "enum": [
+        "doublyLinkedListValue"
+      ]
+    },
+    "VariableValueNine": {
+      "type": "object",
+      "properties": {
+        "head": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nodes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/DoublyLinkedListNodeValue"
+          }
+        },
+        "type": {
+          "$ref": "#/definitions/VariableValueNineType"
+        }
+      },
+      "required": [
+        "nodes",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableValueTypeType": {
+      "type": "string",
+      "enum": [
+        "nullValue"
+      ]
+    },
+    "VariableValueType": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/VariableValueTypeType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "VariableValue": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/VariableValueZero"
+        },
+        {
+          "$ref": "#/definitions/VariableValueOne"
+        },
+        {
+          "$ref": "#/definitions/VariableValueTwo"
+        },
+        {
+          "$ref": "#/definitions/VariableValueThree"
+        },
+        {
+          "$ref": "#/definitions/VariableValueFour"
+        },
+        {
+          "$ref": "#/definitions/VariableValueFive"
+        },
+        {
+          "$ref": "#/definitions/VariableValueSix"
+        },
+        {
+          "$ref": "#/definitions/VariableValueSeven"
+        },
+        {
+          "$ref": "#/definitions/VariableValueEight"
+        },
+        {
+          "$ref": "#/definitions/VariableValueNine"
+        },
+        {
+          "$ref": "#/definitions/VariableValueType"
+        }
+      ]
+    },
+    "ActualResultZeroType": {
+      "type": "string",
+      "enum": [
+        "value"
+      ]
+    },
+    "ActualResultZero": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/ActualResultZeroType"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/VariableValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "ActualResultOneType": {
+      "type": "string",
+      "enum": [
+        "exception"
+      ]
+    },
+    "ActualResultOne": {
+      "type": "object",
+      "properties": {
+        "exceptionType": {
+          "type": "string"
+        },
+        "exceptionMessage": {
+          "type": "string"
+        },
+        "exceptionStacktrace": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/ActualResultOneType"
+        }
+      },
+      "required": [
+        "exceptionType",
+        "exceptionMessage",
+        "exceptionStacktrace",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "ActualResultTwoType": {
+      "type": "string",
+      "enum": [
+        "exceptionV2"
+      ]
+    },
+    "ExceptionV2ZeroType": {
+      "type": "string",
+      "enum": [
+        "generic"
+      ]
+    },
+    "ExceptionV2Zero": {
+      "type": "object",
+      "properties": {
+        "exceptionType": {
+          "type": "string"
+        },
+        "exceptionMessage": {
+          "type": "string"
+        },
+        "exceptionStacktrace": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/ExceptionV2ZeroType"
+        }
+      },
+      "required": [
+        "exceptionType",
+        "exceptionMessage",
+        "exceptionStacktrace",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "ExceptionV2TypeType": {
+      "type": "string",
+      "enum": [
+        "timeout"
+      ]
+    },
+    "ExceptionV2Type": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/ExceptionV2TypeType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "ExceptionV2": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ExceptionV2Zero"
+        },
+        {
+          "$ref": "#/definitions/ExceptionV2Type"
+        }
+      ]
+    },
+    "ActualResultTwo": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/ActualResultTwoType"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ExceptionV2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "ActualResult": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ActualResultZero"
+        },
+        {
+          "$ref": "#/definitions/ActualResultOne"
+        },
+        {
+          "$ref": "#/definitions/ActualResultTwo"
+        }
+      ]
+    },
+    "TestCaseResult": {
+      "type": "object",
+      "properties": {
+        "expectedResult": {
+          "$ref": "#/definitions/VariableValue"
+        },
+        "actualResult": {
+          "$ref": "#/definitions/ActualResult"
+        },
+        "passed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "expectedResult",
+        "actualResult",
+        "passed"
+      ],
+      "additionalProperties": false
+    },
+    "SubmissionStatusForTestCaseZeroType": {
+      "type": "string",
+      "enum": [
+        "graded"
+      ]
+    },
+    "SubmissionStatusForTestCaseZero": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/TestCaseResult"
+        },
+        "stdout": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/SubmissionStatusForTestCaseZeroType"
+        }
+      },
+      "required": [
+        "result",
+        "stdout",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "SubmissionStatusForTestCaseTypeType": {
+      "type": "string",
+      "enum": [
+        "gradedV2"
+      ]
+    },
+    "TestCaseGradeZeroType": {
+      "type": "string",
+      "enum": [
+        "hidden"
+      ]
+    },
+    "TestCaseGradeZero": {
+      "type": "object",
+      "properties": {
+        "passed": {
+          "type": "boolean"
+        },
+        "type": {
+          "$ref": "#/definitions/TestCaseGradeZeroType"
+        }
+      },
+      "required": [
+        "passed",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "TestCaseGradeOneType": {
+      "type": "string",
+      "enum": [
+        "nonHidden"
+      ]
+    },
+    "TestCaseGradeOne": {
+      "type": "object",
+      "properties": {
+        "passed": {
+          "type": "boolean"
+        },
+        "actualResult": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/VariableValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exception": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ExceptionV2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stdout": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/TestCaseGradeOneType"
+        }
+      },
+      "required": [
+        "passed",
+        "stdout",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "TestCaseGrade": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/TestCaseGradeZero"
+        },
+        {
+          "$ref": "#/definitions/TestCaseGradeOne"
+        }
+      ]
+    },
+    "SubmissionStatusForTestCaseType": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/SubmissionStatusForTestCaseTypeType"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TestCaseGrade"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "TestCaseResultWithStdout": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/TestCaseResult"
+        },
+        "stdout": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "result",
+        "stdout"
+      ],
+      "additionalProperties": false
+    },
+    "SubmissionStatusForTestCaseTwoType": {
+      "type": "string",
+      "enum": [
+        "traced"
+      ]
+    },
+    "SubmissionStatusForTestCaseTwo": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/TestCaseResultWithStdout"
+        },
+        "traceResponsesSize": {
+          "type": "integer"
+        },
+        "type": {
+          "$ref": "#/definitions/SubmissionStatusForTestCaseTwoType"
+        }
+      },
+      "required": [
+        "result",
+        "traceResponsesSize",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

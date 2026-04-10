@@ -1,0 +1,91 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/StreamEventContextProtocolZero"
+    },
+    {
+      "$ref": "#/definitions/StreamEventContextProtocolOne"
+    },
+    {
+      "$ref": "#/definitions/StreamEventContextProtocolTwo"
+    }
+  ],
+  "definitions": {
+    "StreamEventContextProtocolZeroEvent": {
+      "type": "string",
+      "enum": [
+        "completion"
+      ]
+    },
+    "StreamEventContextProtocolZero": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        },
+        "event": {
+          "$ref": "#/definitions/StreamEventContextProtocolZeroEvent"
+        }
+      },
+      "required": [
+        "content",
+        "event"
+      ],
+      "additionalProperties": false
+    },
+    "StreamEventContextProtocolOneEvent": {
+      "type": "string",
+      "enum": [
+        "error"
+      ]
+    },
+    "StreamEventContextProtocolOne": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event": {
+          "$ref": "#/definitions/StreamEventContextProtocolOneEvent"
+        }
+      },
+      "required": [
+        "error",
+        "event"
+      ],
+      "additionalProperties": false
+    },
+    "StreamEventContextProtocolTwoEvent": {
+      "type": "string",
+      "enum": [
+        "event"
+      ]
+    },
+    "StreamEventContextProtocolTwo": {
+      "type": "object",
+      "properties": {
+        "event": {
+          "$ref": "#/definitions/StreamEventContextProtocolTwoEvent"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "event",
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

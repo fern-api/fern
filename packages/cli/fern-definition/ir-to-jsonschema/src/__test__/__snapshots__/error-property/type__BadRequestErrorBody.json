@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "errorName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BadRequestErrorBodyErrorName"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "content": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/PropertyBasedErrorTestBody"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "BadRequestErrorBodyErrorName": {
+      "type": "string",
+      "enum": [
+        "PropertyBasedErrorTest"
+      ]
+    },
+    "PropertyBasedErrorTestBody": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "message"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

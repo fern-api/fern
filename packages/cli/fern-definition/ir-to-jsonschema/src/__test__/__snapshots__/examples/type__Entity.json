@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/Type"
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "name"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "BasicType": {
+      "type": "string",
+      "enum": [
+        "primitive",
+        "literal"
+      ]
+    },
+    "ComplexType": {
+      "type": "string",
+      "enum": [
+        "object",
+        "union",
+        "unknown"
+      ]
+    },
+    "Type": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/BasicType"
+        },
+        {
+          "$ref": "#/definitions/ComplexType"
+        }
+      ]
+    }
+  }
+}

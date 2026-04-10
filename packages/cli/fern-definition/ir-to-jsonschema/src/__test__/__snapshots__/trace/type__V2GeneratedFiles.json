@@ -1,0 +1,70 @@
+{
+  "type": "object",
+  "properties": {
+    "generatedTestCaseFiles": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/V2Files"
+      }
+    },
+    "generatedTemplateFiles": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/V2Files"
+      }
+    },
+    "other": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/V2Files"
+      }
+    }
+  },
+  "required": [
+    "generatedTestCaseFiles",
+    "generatedTemplateFiles",
+    "other"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "V2FileInfoV2": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "directory": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        },
+        "editable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "filename",
+        "directory",
+        "contents",
+        "editable"
+      ],
+      "additionalProperties": false
+    },
+    "V2Files": {
+      "type": "object",
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/V2FileInfoV2"
+          }
+        }
+      },
+      "required": [
+        "files"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

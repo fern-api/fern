@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "properties": {
+    "submissionId": {
+      "$ref": "#/definitions/SubmissionId"
+    },
+    "state": {
+      "$ref": "#/definitions/RunningSubmissionState"
+    },
+    "type": {
+      "$ref": "#/definitions/CodeExecutionUpdateOneType"
+    }
+  },
+  "required": [
+    "submissionId",
+    "state",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "SubmissionId": {
+      "type": "string"
+    },
+    "RunningSubmissionState": {
+      "type": "string",
+      "enum": [
+        "QUEUEING_SUBMISSION",
+        "KILLING_HISTORICAL_SUBMISSIONS",
+        "WRITING_SUBMISSION_TO_FILE",
+        "COMPILING_SUBMISSION",
+        "RUNNING_SUBMISSION"
+      ]
+    },
+    "CodeExecutionUpdateOneType": {
+      "type": "string",
+      "enum": [
+        "running"
+      ]
+    }
+  }
+}

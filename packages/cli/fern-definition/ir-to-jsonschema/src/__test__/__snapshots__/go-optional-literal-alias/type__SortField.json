@@ -1,4 +1,7 @@
 {
-  "const": "DEFAULT",
+  "type": "string",
+  "enum": [
+    "DEFAULT"
+  ],
   "definitions": {}
 }

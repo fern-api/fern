@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "codeByLanguage": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/V2V3FunctionImplementation"
+      }
+    }
+  },
+  "required": [
+    "codeByLanguage"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "V2V3FunctionImplementation": {
+      "type": "object",
+      "properties": {
+        "impl": {
+          "type": "string"
+        },
+        "imports": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "impl"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

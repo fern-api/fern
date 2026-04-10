@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/UnionWithLiteralType"
+    },
+    "value": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/UnionWithLiteralValue"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "UnionWithLiteralType": {
+      "type": "string",
+      "enum": [
+        "fern"
+      ]
+    },
+    "UnionWithLiteralValue": {
+      "type": "string",
+      "enum": [
+        "fern"
+      ]
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/ExceptionZero"
+    },
+    {
+      "$ref": "#/definitions/ExceptionType"
+    }
+  ],
+  "definitions": {
+    "ExceptionZeroType": {
+      "type": "string",
+      "enum": [
+        "generic"
+      ]
+    },
+    "ExceptionZero": {
+      "type": "object",
+      "properties": {
+        "exceptionType": {
+          "type": "string"
+        },
+        "exceptionMessage": {
+          "type": "string"
+        },
+        "exceptionStacktrace": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/ExceptionZeroType"
+        }
+      },
+      "required": [
+        "exceptionType",
+        "exceptionMessage",
+        "exceptionStacktrace",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "ExceptionTypeType": {
+      "type": "string",
+      "enum": [
+        "timeout"
+      ]
+    },
+    "ExceptionType": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/ExceptionTypeType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

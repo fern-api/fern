@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Node"
+        }
+      }
+    }
+  },
+  "required": [
+    "nodes"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "BranchNode": {
+      "type": "object",
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Node"
+          }
+        }
+      },
+      "required": [
+        "children"
+      ],
+      "additionalProperties": false
+    },
+    "LeafNode": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "Node": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/BranchNode"
+        },
+        {
+          "$ref": "#/definitions/LeafNode"
+        }
+      ]
+    }
+  }
+}

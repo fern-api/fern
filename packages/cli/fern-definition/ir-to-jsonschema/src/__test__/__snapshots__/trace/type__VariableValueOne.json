@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/VariableValueOneType"
+    },
+    "value": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "VariableValueOneType": {
+      "type": "string",
+      "enum": [
+        "booleanValue"
+      ]
+    }
+  }
+}

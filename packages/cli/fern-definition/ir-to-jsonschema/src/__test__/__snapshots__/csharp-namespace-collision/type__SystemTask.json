@@ -1,0 +1,66 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "user": {
+      "$ref": "#/definitions/SystemUser"
+    },
+    "owner": {
+      "$ref": "#/definitions/SystemUser"
+    }
+  },
+  "required": [
+    "name",
+    "user",
+    "owner"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "SystemUserCountry": {
+      "type": "string",
+      "enum": [
+        "USA"
+      ]
+    },
+    "SystemUser": {
+      "type": "object",
+      "properties": {
+        "line1": {
+          "type": "string"
+        },
+        "line2": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string"
+        },
+        "country": {
+          "$ref": "#/definitions/SystemUserCountry"
+        }
+      },
+      "required": [
+        "line1",
+        "city",
+        "state",
+        "zip",
+        "country"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

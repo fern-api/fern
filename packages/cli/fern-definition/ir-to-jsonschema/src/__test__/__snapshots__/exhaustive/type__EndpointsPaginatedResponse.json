@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TypesObjectWithRequiredField"
+      }
+    },
+    "next": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "items"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "TypesObjectWithRequiredField": {
+      "type": "object",
+      "properties": {
+        "string": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "string"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

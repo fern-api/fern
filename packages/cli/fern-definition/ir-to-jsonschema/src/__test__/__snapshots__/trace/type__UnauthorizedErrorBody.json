@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "errorName": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/UnauthorizedErrorBodyErrorName"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "UnauthorizedErrorBodyErrorName": {
+      "type": "string",
+      "enum": [
+        "UnauthorizedError"
+      ]
+    }
+  }
+}

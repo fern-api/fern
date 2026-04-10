@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/UnionWithDuplicativeDiscriminantsZeroType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "name"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "UnionWithDuplicativeDiscriminantsZeroType": {
+      "type": "string",
+      "enum": [
+        "firstItemType"
+      ]
+    }
+  }
+}

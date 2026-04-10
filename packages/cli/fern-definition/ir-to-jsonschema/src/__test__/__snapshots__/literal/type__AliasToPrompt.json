@@ -1,0 +1,7 @@
+{
+  "type": "string",
+  "enum": [
+    "You are a helpful assistant"
+  ],
+  "definitions": {}
+}

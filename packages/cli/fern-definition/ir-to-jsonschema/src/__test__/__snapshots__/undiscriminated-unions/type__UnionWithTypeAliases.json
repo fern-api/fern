@@ -1,0 +1,21 @@
+{
+  "anyOf": [
+    {
+      "type": "string"
+    },
+    {
+      "$ref": "#/definitions/UserId"
+    },
+    {
+      "$ref": "#/definitions/Name"
+    }
+  ],
+  "definitions": {
+    "UserId": {
+      "type": "string"
+    },
+    "Name": {
+      "type": "string"
+    }
+  }
+}

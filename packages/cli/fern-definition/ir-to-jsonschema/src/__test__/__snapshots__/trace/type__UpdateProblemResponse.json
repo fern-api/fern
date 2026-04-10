@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "problemVersion": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "problemVersion"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

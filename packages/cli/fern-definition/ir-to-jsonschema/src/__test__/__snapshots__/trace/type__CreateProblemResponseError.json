@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "value": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CreateProblemError"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "CreateProblemErrorType": {
+      "type": "string",
+      "enum": [
+        "generic"
+      ]
+    },
+    "CreateProblemError": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "stacktrace": {
+          "type": "string"
+        },
+        "_type": {
+          "$ref": "#/definitions/CreateProblemErrorType"
+        }
+      },
+      "required": [
+        "message",
+        "type",
+        "stacktrace",
+        "_type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

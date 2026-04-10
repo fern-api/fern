@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "properties": {
+    "expectedLanguage": {
+      "$ref": "#/definitions/Language"
+    },
+    "actualLanguage": {
+      "$ref": "#/definitions/Language"
+    },
+    "type": {
+      "$ref": "#/definitions/InvalidRequestCauseTwoType"
+    }
+  },
+  "required": [
+    "expectedLanguage",
+    "actualLanguage",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Language": {
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    },
+    "InvalidRequestCauseTwoType": {
+      "type": "string",
+      "enum": [
+        "unexpectedLanguage"
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/DebugVariableValueTwoType"
+    },
+    "value": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "DebugVariableValueTwoType": {
+      "type": "string",
+      "enum": [
+        "doubleValue"
+      ]
+    }
+  }
+}

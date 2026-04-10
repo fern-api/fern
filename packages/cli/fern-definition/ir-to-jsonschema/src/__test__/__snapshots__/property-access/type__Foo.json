@@ -5,7 +5,14 @@
       "type": "string"
     },
     "read": {
-      "type": "string"
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "write": {
       "type": "string"
@@ -13,7 +20,6 @@
   },
   "required": [
     "normal",
-    "read",
     "write"
   ],
   "additionalProperties": false,

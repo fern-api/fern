@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/FirstItemTypeType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "FirstItemTypeType": {
+      "type": "string",
+      "enum": [
+        "firstItemType"
+      ]
+    }
+  }
+}

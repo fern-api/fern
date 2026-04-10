@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "starting_after": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -4,7 +4,7 @@
     "a": {
       "oneOf": [
         {
-          "$ref": "#/definitions/a.A"
+          "$ref": "#/definitions/A"
         },
         {
           "type": "null"
@@ -14,7 +14,7 @@
   },
   "additionalProperties": false,
   "definitions": {
-    "a.A": {
+    "RootType": {
       "type": "object",
       "properties": {
         "s": {
@@ -25,6 +25,9 @@
         "s"
       ],
       "additionalProperties": false
+    },
+    "A": {
+      "$ref": "#/definitions/RootType"
     }
   }
 }

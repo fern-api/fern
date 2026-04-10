@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "value": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {}
+}

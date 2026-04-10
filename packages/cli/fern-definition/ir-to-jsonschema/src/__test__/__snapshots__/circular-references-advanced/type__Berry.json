@@ -1,0 +1,85 @@
+{
+  "type": "object",
+  "properties": {
+    "animal": {
+      "$ref": "#/definitions/Animal"
+    }
+  },
+  "required": [
+    "animal"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Berry": {
+      "type": "object",
+      "properties": {
+        "animal": {
+          "$ref": "#/definitions/Animal"
+        }
+      },
+      "required": [
+        "animal"
+      ],
+      "additionalProperties": false
+    },
+    "Acai": {
+      "$ref": "#/definitions/Berry"
+    },
+    "Fig": {
+      "type": "object",
+      "properties": {
+        "animal": {
+          "$ref": "#/definitions/Animal"
+        }
+      },
+      "required": [
+        "animal"
+      ],
+      "additionalProperties": false
+    },
+    "Fruit": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Acai"
+        },
+        {
+          "$ref": "#/definitions/Fig"
+        }
+      ]
+    },
+    "Cat": {
+      "type": "object",
+      "properties": {
+        "fruit": {
+          "$ref": "#/definitions/Fruit"
+        }
+      },
+      "required": [
+        "fruit"
+      ],
+      "additionalProperties": false
+    },
+    "Dog": {
+      "type": "object",
+      "properties": {
+        "fruit": {
+          "$ref": "#/definitions/Fruit"
+        }
+      },
+      "required": [
+        "fruit"
+      ],
+      "additionalProperties": false
+    },
+    "Animal": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Cat"
+        },
+        {
+          "$ref": "#/definitions/Dog"
+        }
+      ]
+    }
+  }
+}

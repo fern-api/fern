@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/DebugVariableValueZeroType"
+    },
+    "value": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "DebugVariableValueZeroType": {
+      "type": "string",
+      "enum": [
+        "integerValue"
+      ]
+    }
+  }
+}

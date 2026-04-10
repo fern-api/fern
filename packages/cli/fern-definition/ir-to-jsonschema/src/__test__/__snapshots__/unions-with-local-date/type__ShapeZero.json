@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "radius": {
+      "type": "number"
+    },
+    "type": {
+      "$ref": "#/definitions/ShapeZeroType"
+    }
+  },
+  "required": [
+    "radius",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ShapeZeroType": {
+      "type": "string",
+      "enum": [
+        "circle"
+      ]
+    }
+  }
+}

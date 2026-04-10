@@ -1,0 +1,210 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "list",
+        "optional"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "list"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FieldValue"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "optional"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FieldValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  ],
+  "definitions": {
+    "FieldValueZeroType": {
+      "type": "string",
+      "enum": [
+        "primitive_value"
+      ]
+    },
+    "PrimitiveValue": {
+      "type": "string",
+      "enum": [
+        "STRING",
+        "NUMBER"
+      ]
+    },
+    "FieldValueZero": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/FieldValueZeroType"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PrimitiveValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "FieldValueOneType": {
+      "type": "string",
+      "enum": [
+        "object_value"
+      ]
+    },
+    "FieldValueOne": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/FieldValueOneType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "FieldValueTwoType": {
+      "type": "string",
+      "enum": [
+        "container_value"
+      ]
+    },
+    "ContainerValue": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "list",
+            "optional"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "list"
+            },
+            "value": {
+              "oneOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/FieldValue"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "optional"
+            },
+            "value": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/FieldValue"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "FieldValueTwo": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/FieldValueTwoType"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ContainerValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "FieldValue": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/FieldValueZero"
+        },
+        {
+          "$ref": "#/definitions/FieldValueOne"
+        },
+        {
+          "$ref": "#/definitions/FieldValueTwo"
+        }
+      ]
+    }
+  }
+}

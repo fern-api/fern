@@ -1,0 +1,7 @@
+{
+  "type": "string",
+  "enum": [
+    "02-12-2024"
+  ],
+  "definitions": {}
+}

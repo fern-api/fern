@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/definitions/V2V3TestCaseId"
+    },
+    "name": {
+      "type": "string"
+    },
+    "hidden": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "hidden"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "V2V3TestCaseId": {
+      "type": "string"
+    }
+  }
+}

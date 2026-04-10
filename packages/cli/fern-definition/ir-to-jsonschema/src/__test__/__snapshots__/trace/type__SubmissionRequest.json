@@ -1,0 +1,227 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/SubmissionRequestZero"
+    },
+    {
+      "$ref": "#/definitions/SubmissionRequestType"
+    },
+    {
+      "$ref": "#/definitions/SubmissionRequestTwo"
+    },
+    {
+      "$ref": "#/definitions/SubmissionRequestThree"
+    },
+    {
+      "$ref": "#/definitions/SubmissionRequestFour"
+    }
+  ],
+  "definitions": {
+    "ProblemId": {
+      "type": "string"
+    },
+    "SubmissionRequestZeroType": {
+      "type": "string",
+      "enum": [
+        "initializeProblemRequest"
+      ]
+    },
+    "SubmissionRequestZero": {
+      "type": "object",
+      "properties": {
+        "problemId": {
+          "$ref": "#/definitions/ProblemId"
+        },
+        "problemVersion": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "$ref": "#/definitions/SubmissionRequestZeroType"
+        }
+      },
+      "required": [
+        "problemId",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "SubmissionRequestTypeType": {
+      "type": "string",
+      "enum": [
+        "initializeWorkspaceRequest"
+      ]
+    },
+    "SubmissionRequestType": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/SubmissionRequestTypeType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "SubmissionId": {
+      "type": "string"
+    },
+    "Language": {
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    },
+    "SubmissionFileInfo": {
+      "type": "object",
+      "properties": {
+        "directory": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "directory",
+        "filename",
+        "contents"
+      ],
+      "additionalProperties": false
+    },
+    "SubmissionRequestTwoType": {
+      "type": "string",
+      "enum": [
+        "submitV2"
+      ]
+    },
+    "SubmissionRequestTwo": {
+      "type": "object",
+      "properties": {
+        "submissionId": {
+          "$ref": "#/definitions/SubmissionId"
+        },
+        "language": {
+          "$ref": "#/definitions/Language"
+        },
+        "submissionFiles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SubmissionFileInfo"
+          }
+        },
+        "problemId": {
+          "$ref": "#/definitions/ProblemId"
+        },
+        "problemVersion": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "userId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "$ref": "#/definitions/SubmissionRequestTwoType"
+        }
+      },
+      "required": [
+        "submissionId",
+        "language",
+        "submissionFiles",
+        "problemId",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "SubmissionRequestThreeType": {
+      "type": "string",
+      "enum": [
+        "workspaceSubmit"
+      ]
+    },
+    "SubmissionRequestThree": {
+      "type": "object",
+      "properties": {
+        "submissionId": {
+          "$ref": "#/definitions/SubmissionId"
+        },
+        "language": {
+          "$ref": "#/definitions/Language"
+        },
+        "submissionFiles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SubmissionFileInfo"
+          }
+        },
+        "userId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "$ref": "#/definitions/SubmissionRequestThreeType"
+        }
+      },
+      "required": [
+        "submissionId",
+        "language",
+        "submissionFiles",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "SubmissionRequestFourType": {
+      "type": "string",
+      "enum": [
+        "stop"
+      ]
+    },
+    "SubmissionRequestFour": {
+      "type": "object",
+      "properties": {
+        "submissionId": {
+          "$ref": "#/definitions/SubmissionId"
+        },
+        "type": {
+          "$ref": "#/definitions/SubmissionRequestFourType"
+        }
+      },
+      "required": [
+        "submissionId",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

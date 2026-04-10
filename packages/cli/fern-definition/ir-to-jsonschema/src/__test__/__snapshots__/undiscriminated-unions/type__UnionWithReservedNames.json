@@ -1,0 +1,27 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/UnionWithReservedNamesZero"
+    },
+    {
+      "$ref": "#/definitions/UnionWithReservedNamesOne"
+    },
+    {
+      "type": "string"
+    }
+  ],
+  "definitions": {
+    "UnionWithReservedNamesZero": {
+      "type": "string",
+      "enum": [
+        "type"
+      ]
+    },
+    "UnionWithReservedNamesOne": {
+      "type": "string",
+      "enum": [
+        "value"
+      ]
+    }
+  }
+}

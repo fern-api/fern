@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/UserOrAdminDiscriminatedTwoType"
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "UserOrAdminDiscriminatedTwoType": {
+      "type": "string",
+      "enum": [
+        "empty"
+      ]
+    }
+  }
+}

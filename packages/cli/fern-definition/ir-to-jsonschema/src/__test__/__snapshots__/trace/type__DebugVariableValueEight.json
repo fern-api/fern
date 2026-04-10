@@ -1,0 +1,82 @@
+{
+  "type": "object",
+  "properties": {
+    "nodeId": {
+      "$ref": "#/definitions/NodeId"
+    },
+    "fullList": {
+      "$ref": "#/definitions/SinglyLinkedListValue"
+    },
+    "type": {
+      "$ref": "#/definitions/DebugVariableValueEightType"
+    }
+  },
+  "required": [
+    "nodeId",
+    "fullList",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "NodeId": {
+      "type": "string"
+    },
+    "SinglyLinkedListNodeValue": {
+      "type": "object",
+      "properties": {
+        "nodeId": {
+          "$ref": "#/definitions/NodeId"
+        },
+        "val": {
+          "type": "number"
+        },
+        "next": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "nodeId",
+        "val"
+      ],
+      "additionalProperties": false
+    },
+    "SinglyLinkedListValue": {
+      "type": "object",
+      "properties": {
+        "head": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NodeId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nodes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/SinglyLinkedListNodeValue"
+          }
+        }
+      },
+      "required": [
+        "nodes"
+      ],
+      "additionalProperties": false
+    },
+    "DebugVariableValueEightType": {
+      "type": "string",
+      "enum": [
+        "singlyLinkedListNodeValue"
+      ]
+    }
+  }
+}
