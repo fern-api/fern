@@ -12,6 +12,7 @@ The Seed Swift library provides convenient access to the Seed APIs from Swift.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Errors](#errors)
+- [Request Types](#request-types)
 - [Advanced](#advanced)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
@@ -89,6 +90,18 @@ do {
 } catch {
     print("Unexpected error:", error)
 }
+```
+
+## Request Types
+
+The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
+
+```swift
+import Api
+
+let request = Requests.StreamXFernStreamingConditionStreamRequest(
+    ...
+)
 ```
 
 ## Advanced
