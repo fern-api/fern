@@ -40,8 +40,8 @@ catalogs:
       specifier: 0.9.4
       version: 0.9.4
     '@fern-api/venus-api-sdk':
-      specifier: 0.17.3-3-gf696595
-      version: 0.17.3-3-gf696595
+      specifier: 0.22.34
+      version: 0.22.34
     '@fern-fern/docs-config':
       specifier: 0.0.80
       version: 0.0.80
@@ -250,8 +250,8 @@ catalogs:
       specifier: ^5.0.0
       version: 5.0.0
     axios:
-      specifier: ^1.13.6
-      version: 1.14.0
+      specifier: ^1.15.0
+      version: 1.15.0
     boxen:
       specifier: ^7.1.1
       version: 7.1.1
@@ -4226,7 +4226,7 @@ importers:
         version: link:../task-context
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 0.17.3-3-gf696595
+        version: 0.22.34
       jsonwebtoken:
         specifier: 'catalog:'
         version: 9.0.3
@@ -4282,6 +4282,9 @@ importers:
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../cli-source-resolver
+      '@fern-api/cli-telemetry':
+        specifier: workspace:*
+        version: link:../cli-telemetry
       '@fern-api/cli-v2':
         specifier: workspace:*
         version: link:../cli-v2
@@ -4410,7 +4413,7 @@ importers:
         version: link:../task-context
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 0.17.3-3-gf696595
+        version: 0.22.34
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
@@ -4464,7 +4467,7 @@ importers:
         version: 17.0.35
       axios:
         specifier: 'catalog:'
-        version: 1.14.0
+        version: 1.15.0
       boxen:
         specifier: 'catalog:'
         version: 7.1.1
@@ -4682,6 +4685,24 @@ importers:
         specifier: 'catalog:'
         version: 4.1.0(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
+  packages/cli/cli-telemetry:
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../configs
+      '@sentry/node':
+        specifier: ^10.45.0
+        version: 10.47.0
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.19.17
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.0(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
+
   packages/cli/cli-v2:
     dependencies:
       tmp-promise:
@@ -4709,6 +4730,9 @@ importers:
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../cli-source-resolver
+      '@fern-api/cli-telemetry':
+        specifier: workspace:*
+        version: link:../cli-telemetry
       '@fern-api/config':
         specifier: workspace:*
         version: link:../config
@@ -4795,7 +4819,7 @@ importers:
         version: link:../task-context
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 0.17.3-3-gf696595
+        version: 0.22.34
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
@@ -6050,7 +6074,7 @@ importers:
         version: link:../../../../../generators/typescript-v2/dynamic-snippets
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 0.17.3-3-gf696595
+        version: 0.22.34
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../../workspace/loader
@@ -6207,7 +6231,7 @@ importers:
         version: link:../../../task-context
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 0.17.3-3-gf696595
+        version: 0.22.34
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../../workspace/loader
@@ -6216,7 +6240,7 @@ importers:
         version: 0.0.775
       axios:
         specifier: 'catalog:'
-        version: 1.14.0
+        version: 1.15.0
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
@@ -6344,7 +6368,7 @@ importers:
         version: link:../task-context
       axios:
         specifier: 'catalog:'
-        version: 1.14.0
+        version: 1.15.0
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
@@ -6443,7 +6467,7 @@ importers:
         version: link:../task-context
       axios:
         specifier: 'catalog:'
-        version: 1.14.0
+        version: 1.15.0
       boxen:
         specifier: 'catalog:'
         version: 7.1.1
@@ -6956,7 +6980,7 @@ importers:
         version: 9.0.8
       axios:
         specifier: 'catalog:'
-        version: 1.14.0
+        version: 1.15.0
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
@@ -7765,7 +7789,7 @@ importers:
         version: 0.145.12-b50d999d1(typescript@5.9.3)
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 0.17.3-3-gf696595
+        version: 0.22.34
       '@fern-fern/fdr-test-sdk':
         specifier: 'catalog:'
         version: 0.0.5297
@@ -9312,8 +9336,8 @@ packages:
   '@fern-api/ui-core-utils@0.145.12-b50d999d1':
     resolution: {integrity: sha512-S1sE+Fs6kc/7F1Gzwsz7sZlAhMLIsaMeVDQ68038YXfzsLhrsg3DEVPvil5T3KxH/qV80Uso25q1D1W/LwXo6Q==}
 
-  '@fern-api/venus-api-sdk@0.17.3-3-gf696595':
-    resolution: {integrity: sha512-JwtEDPtlrayTOTc4NR9opF4bD1LQtz222h1UnKseAv6Saopg2iHvxoGSf0SQfHA8i8atw+eJMNbHBWWTPdbBrA==}
+  '@fern-api/venus-api-sdk@0.22.34':
+    resolution: {integrity: sha512-21J/+zvL/v2LlCsVcBu7uM6k0Ej7Tz+2Tg6qZkUNH5TS0wmU6CyQ3lURE9jwiDRnw/bpNNkVXGuu9R7Vmvyi6Q==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/docs-config@0.0.80':
@@ -11136,8 +11160,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axios@1.14.0:
-    resolution: {integrity: sha512-3Y8yrqLSwjuzpXuZ0oIYZ/XGgLwUIBU3uLvbcpb0pidD9ctpShJd43KSlEEkVQg6DS0G9NKyzOvBfUtDKEyHvQ==}
+  axios@1.15.0:
+    resolution: {integrity: sha512-wWyJDlAatxk30ZJer+GeCWS209sA42X+N5jU2jy6oHTp7ufw8uzUTVFBX9+wTfAlhiJXGS0Bq7X6efruWjuK9Q==}
 
   b4a@1.8.0:
     resolution: {integrity: sha512-qRuSmNSkGQaHwNbM7J78Wwy+ghLEYF1zNrSeMxj4Kgw6y33O3mXcQ6Ie9fRvfU/YnxWkOchPXbaLb73TkIsfdg==}
@@ -16347,7 +16371,7 @@ snapshots:
       title: 3.5.3
       ua-parser-js: 1.0.41
 
-  '@fern-api/venus-api-sdk@0.17.3-3-gf696595': {}
+  '@fern-api/venus-api-sdk@0.22.34': {}
 
   '@fern-fern/docs-config@0.0.80': {}
 
@@ -18185,7 +18209,7 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.1.0
 
-  axios@1.14.0:
+  axios@1.15.0:
     dependencies:
       follow-redirects: 1.15.11
       form-data: 4.0.5

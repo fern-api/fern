@@ -144,7 +144,20 @@ export class GraphQLConverter {
                 } finally {
                     this.processingTypes.delete(typeName);
                 }
-            } else if (type instanceof GraphQLObjectType || type instanceof GraphQLInterfaceType) {
+            } else if (type instanceof GraphQLInterfaceType) {
+                this.processingTypes.add(typeName);
+                try {
+                    this.types[typeId] = {
+                        name: this.getNamespacedTypeName(typeName),
+                        shape: this.convertInterfaceTypeDefinition(type),
+                        displayName: undefined,
+                        description: type.description ?? undefined,
+                        availability: undefined
+                    };
+                } finally {
+                    this.processingTypes.delete(typeName);
+                }
+            } else if (type instanceof GraphQLObjectType) {
                 this.processingTypes.add(typeName);
                 try {
                     this.types[typeId] = {
@@ -452,21 +465,79 @@ export class GraphQLConverter {
         };
     }
 
-    private convertObjectTypeDefinition(
-        type: GraphQLObjectType | GraphQLInterfaceType
-    ): FdrAPI.api.v1.register.TypeShape {
+    private convertObjectTypeDefinition(type: GraphQLObjectType): FdrAPI.api.v1.register.TypeShape {
         const fields = type.getFields();
-        const properties: FdrAPI.api.v1.register.ObjectProperty[] = [];
-
-        for (const [fieldName, field] of Object.entries(fields)) {
-            properties.push({
+        const properties = Object.entries(fields).map(
+            ([fieldName, field]): FdrAPI.api.v1.register.ObjectProperty => ({
                 key: FdrAPI.PropertyKey(fieldName),
                 valueType: this.convertOutputType(field.type),
                 description: field.description ?? undefined,
                 availability: undefined,
                 propertyAccess: undefined
-            });
+            })
+        );
+
+        // Only extend interfaces that are converted to plain objects (no implementations).
+        // Interfaces with implementations are converted to undiscriminatedUnion, and the
+        // frontend's unwrapObjectType only supports extending object types.
+        // GraphQL implementing types already include all interface fields, so extends is
+        // only needed for documentation purposes when the interface is a plain object.
+        const interfaces = type.getInterfaces();
+        const extendsIds = interfaces
+            .filter((iface) => {
+                if (!this.schema) {
+                    return true;
+                }
+                const implementations = this.schema.getPossibleTypes(iface);
+                return implementations.length === 0;
+            })
+            .map((iface) => this.getNamespacedTypeId(iface.name));
+
+        return {
+            type: "object",
+            extends: extendsIds,
+            properties,
+            extraProperties: undefined
+        };
+    }
+
+    private convertInterfaceTypeDefinition(type: GraphQLInterfaceType): FdrAPI.api.v1.register.TypeShape {
+        if (!this.schema) {
+            return this.convertInterfaceAsObject(type);
         }
+
+        const implementations = this.schema.getPossibleTypes(type);
+        if (implementations.length === 0) {
+            return this.convertInterfaceAsObject(type);
+        }
+
+        return {
+            type: "undiscriminatedUnion",
+            variants: implementations.map((impl) => ({
+                typeName: impl.name,
+                displayName: impl.name,
+                type: {
+                    type: "id",
+                    value: this.getNamespacedTypeId(impl.name),
+                    default: undefined
+                },
+                description: impl.description ?? undefined,
+                availability: undefined
+            }))
+        };
+    }
+
+    private convertInterfaceAsObject(type: GraphQLInterfaceType): FdrAPI.api.v1.register.TypeShape {
+        const fields = type.getFields();
+        const properties = Object.entries(fields).map(
+            ([fieldName, field]): FdrAPI.api.v1.register.ObjectProperty => ({
+                key: FdrAPI.PropertyKey(fieldName),
+                valueType: this.convertOutputType(field.type),
+                description: field.description ?? undefined,
+                availability: undefined,
+                propertyAccess: undefined
+            })
+        );
 
         return {
             type: "object",
@@ -478,17 +549,15 @@ export class GraphQLConverter {
 
     private convertInputObjectTypeDefinition(type: GraphQLInputObjectType): FdrAPI.api.v1.register.TypeShape {
         const fields = type.getFields();
-        const properties: FdrAPI.api.v1.register.ObjectProperty[] = [];
-
-        for (const [fieldName, field] of Object.entries(fields)) {
-            properties.push({
+        const properties = Object.entries(fields).map(
+            ([fieldName, field]): FdrAPI.api.v1.register.ObjectProperty => ({
                 key: FdrAPI.PropertyKey(fieldName),
                 valueType: this.convertInputType(field.type),
                 description: field.description ?? undefined,
                 availability: undefined,
                 propertyAccess: undefined
-            });
-        }
+            })
+        );
 
         return {
             type: "object",

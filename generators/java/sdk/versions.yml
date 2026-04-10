@@ -7,6 +7,16 @@
   createdAt: "2026-04-01"
   irVersion: 66
 
+- version: 4.1.4
+  changelogEntry:
+    - summary: |
+        Update Node.js from 24.13.0 to 24.14.1 in the generator Docker image
+        to fix 7 CVEs (CVE-2026-21710, CVE-2026-21717, CVE-2026-21713,
+        CVE-2026-21714, CVE-2026-21712, CVE-2026-21715, CVE-2026-21716).
+      type: chore
+  createdAt: "2026-04-10"
+  irVersion: 65
+
 - version: 4.1.3
   changelogEntry:
     - summary: |
