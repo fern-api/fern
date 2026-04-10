@@ -109,12 +109,14 @@ describe("allOf SPS Commerce edge cases", () => {
         });
 
         it("results property should be a list, not optional", () => {
+            // biome-ignore lint/style/noNonNullAssertion: verified by prior test
             const type = findType(ir, "RuleTypeSearchResponse")!;
             const results = findProperty(type, "results");
             expect(results).toBeDefined();
 
             // results is required in the parent PaginatedResult, so it should NOT
             // be wrapped in optional/nullable after allOf composition
+            // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
             const containerType = getContainerType(results!);
             expect(containerType).not.toBe("optional");
             expect(containerType).not.toBe("nullable");
@@ -122,11 +124,13 @@ describe("allOf SPS Commerce edge cases", () => {
         });
 
         it("results items should be typed as RuleTypeResponse, not unknown", () => {
+            // biome-ignore lint/style/noNonNullAssertion: verified by prior test
             const type = findType(ir, "RuleTypeSearchResponse")!;
             const results = findProperty(type, "results");
             expect(results).toBeDefined();
 
             // Drill into the list's element type — it should be named:RuleTypeResponse
+            // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
             const valueType = results!.valueType;
             let listType: Record<string, unknown> | undefined;
             if (valueType._type === "container" && valueType.container?._type === "list") {
@@ -144,10 +148,12 @@ describe("allOf SPS Commerce edge cases", () => {
         });
 
         it("paging property should remain required (not optional)", () => {
+            // biome-ignore lint/style/noNonNullAssertion: verified by prior test
             const type = findType(ir, "RuleTypeSearchResponse")!;
             const paging = findProperty(type, "paging");
             expect(paging).toBeDefined();
 
+            // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
             const containerType = getContainerType(paging!);
             expect(containerType).not.toBe("optional");
         });
@@ -157,16 +163,19 @@ describe("allOf SPS Commerce edge cases", () => {
         it("RuleCreateRequest should exist as a type", () => {
             const type = findType(ir, "RuleCreateRequest");
             expect(type).toBeDefined();
+            // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
             expect(type!.shape._type).toBe("object");
         });
 
         it("executionContext property should exist", () => {
+            // biome-ignore lint/style/noNonNullAssertion: verified by prior test
             const type = findType(ir, "RuleCreateRequest")!;
             const prop = findProperty(type, "executionContext");
             expect(prop).toBeDefined();
         });
 
         it("executionContext should reference RuleExecutionContext, not be unknown or empty", () => {
+            // biome-ignore lint/style/noNonNullAssertion: verified by prior test
             const type = findType(ir, "RuleCreateRequest")!;
             const prop = findProperty(type, "executionContext");
             expect(prop).toBeDefined();
@@ -174,16 +183,20 @@ describe("allOf SPS Commerce edge cases", () => {
             // The property should reference the RuleExecutionContext enum.
             // It should NOT be: unknown, an empty object, or a named reference
             // to a synthetic type with zero properties.
+            // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
             const outerType = getOuterType(prop!);
             expect(outerType).not.toBe("unknown");
 
             // If it's a named reference, check it points to RuleExecutionContext
             // (not a synthetic empty object type)
             if (outerType === "named") {
+                // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
                 expect(prop!.valueType.name).toBe("RuleExecutionContext");
             } else if (outerType === "container") {
                 // Could be optional<named:RuleExecutionContext> since the enum
                 // doesn't have a default — but the inner type must still reference it
+                // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
+                // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
                 const container = prop!.valueType.container!;
                 if (container._type === "optional") {
                     const inner = container.optional as Record<string, unknown>;
@@ -200,8 +213,10 @@ describe("allOf SPS Commerce edge cases", () => {
             expect(type).toBeDefined();
 
             for (const requiredProp of ["id", "name", "status", "executionContext"]) {
+                // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
                 const prop = findProperty(type!, requiredProp);
                 expect(prop).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
                 const containerType = getContainerType(prop!);
                 expect(containerType).not.toBe("optional");
             }
