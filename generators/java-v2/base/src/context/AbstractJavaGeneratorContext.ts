@@ -1,4 +1,9 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import {
+    AbstractGeneratorContext,
+    CaseConverter,
+    FernGeneratorExec,
+    GeneratorNotificationService
+} from "@fern-api/base-generator";
 import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { JavaProject } from "../project/JavaProject.js";
@@ -10,6 +15,7 @@ export abstract class AbstractJavaGeneratorContext<
 > extends AbstractGeneratorContext {
     public readonly javaTypeMapper: JavaTypeMapper;
     public readonly project: JavaProject;
+    public readonly caseConverter: CaseConverter;
 
     public constructor(
         public readonly ir: FernIr.IntermediateRepresentation,
@@ -18,6 +24,11 @@ export abstract class AbstractJavaGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
+        this.caseConverter = new CaseConverter({
+            generationLanguage: "java",
+            keywords: ir.casingsConfig?.keywords,
+            smartCasing: ir.casingsConfig?.smartCasing ?? true
+        });
         this.javaTypeMapper = new JavaTypeMapper(this);
         this.project = new JavaProject({ context: this });
     }
@@ -37,7 +48,7 @@ export abstract class AbstractJavaGeneratorContext<
         typeDeclaration: FernIr.TypeDeclaration;
     }): java.ClassReference {
         return java.classReference({
-            name: typeDeclaration.name.name.pascalCase.unsafeName,
+            name: this.caseConverter.pascalUnsafe(typeDeclaration.name.name),
             packageName: this.getTypesPackageName(typeDeclaration.name.fernFilepath)
         });
     }
@@ -55,6 +66,6 @@ export abstract class AbstractJavaGeneratorContext<
     }
 
     public getClassName(name: FernIr.Name): string {
-        return name.pascalCase.safeName;
+        return this.caseConverter.pascalSafe(name);
     }
 }

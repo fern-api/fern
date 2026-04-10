@@ -173,19 +173,37 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         exampleObject: ExampleObjectType;
         parseDatetimes: boolean;
     }): ast.CodeBlock {
-        const args = exampleObject.properties.map((exampleProperty) => {
-            const propertyName = this.getPropertyName({
-                className: this.classReference.name,
-                objectProperty: exampleProperty.name
+        // When generateLiterals is enabled, collect wire values of literal properties so we
+        // can skip them in the object initializer. Their default `= new()` already sets the
+        // correct value and assigning a plain string would cause a CS0029 compilation error.
+        const literalPropertyWireValues = new Set<string>();
+        if (this.generation.settings.generateLiterals) {
+            const allProps = [
+                ...this.objectDeclaration.properties,
+                ...(this.objectDeclaration.extendedProperties ?? [])
+            ];
+            for (const prop of allProps) {
+                if (this.context.isLiteralValue(prop.valueType)) {
+                    literalPropertyWireValues.add(getWireValue(prop.name));
+                }
+            }
+        }
+
+        const args = exampleObject.properties
+            .filter((exampleProperty) => !literalPropertyWireValues.has(getWireValue(exampleProperty.name)))
+            .map((exampleProperty) => {
+                const propertyName = this.getPropertyName({
+                    className: this.classReference.name,
+                    objectProperty: exampleProperty.name
+                });
+                const assignment = this.exampleGenerator.getSnippetForTypeReference({
+                    exampleTypeReference: exampleProperty.value,
+                    parseDatetimes
+                });
+                // todo: considering filtering out "assignments" are are actually just null so that null properties
+                // are completely excluded from object initializers
+                return { name: propertyName, assignment };
             });
-            const assignment = this.exampleGenerator.getSnippetForTypeReference({
-                exampleTypeReference: exampleProperty.value,
-                parseDatetimes
-            });
-            // todo: considering filtering out "assignments" are are actually just null so that null properties
-            // are completely excluded from object initializers
-            return { name: propertyName, assignment };
-        });
 
         // Include default values for required properties missing from the example
         // so the generated object initializer compiles without CS9035 errors.
@@ -196,6 +214,10 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         ];
         for (const property of allProperties) {
             if (providedWireValues.has(getWireValue(property.name))) {
+                continue;
+            }
+            // Skip literal properties when generateLiterals is enabled; they have correct defaults.
+            if (literalPropertyWireValues.has(getWireValue(property.name))) {
                 continue;
             }
             if (this.isRequiredProperty(property.valueType)) {

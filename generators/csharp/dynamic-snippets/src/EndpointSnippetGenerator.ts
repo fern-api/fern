@@ -79,11 +79,13 @@ export class EndpointSnippetGenerator extends WithGeneration {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
         options: Options;
     }): ast.AstNode {
-        // if we're actually passed the examples, we need to
-        // check that the endpoint that we're generating has an example that matches the snippet
+        // If we're passed endpoint examples and the snippet includes an id (i.e. it's an
+        // EndpointExample, not just an EndpointSnippetRequest), verify the id matches one of
+        // the examples. Snippets without an id are user-provided requests and skip this check.
         if (
             endpoint.examples &&
-            !endpoint.examples?.find((each) => is.DynamicIR.EndpointExample(snippet) && each.id === snippet.id)
+            is.DynamicIR.EndpointExample(snippet) &&
+            !endpoint.examples.find((each) => each.id === snippet.id)
         ) {
             // the dsg expects us to just throw when there is nothing to generate.
             throw new Error("Endpoint does not have an example that matches the snippet");

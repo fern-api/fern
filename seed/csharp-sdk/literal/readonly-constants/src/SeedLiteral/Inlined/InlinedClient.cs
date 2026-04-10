@@ -83,15 +83,9 @@ public partial class InlinedClient : IInlinedClient
     ///     new SendLiteralsInlinedRequest
     ///     {
     ///         Temperature = 10.1,
-    ///         Prompt = "You are a helpful assistant",
     ///         Context = "You're super wise",
-    ///         AliasedContext = "You're super wise",
     ///         MaybeContext = "You're super wise",
-    ///         ObjectWithLiteral = new ATopLevelLiteral
-    ///         {
-    ///             NestedLiteral = new ANestedLiteral { MyLiteral = "How super cool" },
-    ///         },
-    ///         Stream = false,
+    ///         ObjectWithLiteral = new ATopLevelLiteral { NestedLiteral = new ANestedLiteral() },
     ///         Query = "What is the weather today",
     ///     }
     /// );
