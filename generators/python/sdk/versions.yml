@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 5.3.9
+- version: 5.3.10
   changelogEntry:
     - summary: |
         Fix duplicate keyword arguments in generated code for discriminated union
@@ -9,6 +9,23 @@
         emitted twice — once from the union's base properties and once from the
         variant's extended properties — causing SyntaxError in generated Python code.
       type: fix
+    - summary: |
+        Escape triple quotes in docstrings to prevent premature docstring termination
+        when OpenAPI descriptions contain Python code examples with triple-quoted strings.
+      type: fix
+    - summary: |
+        Add type ignore comment to exported client wrapper super().__init__() call
+        to suppress mypy call-overload errors when the base client has overloaded
+        __init__ signatures (e.g., OAuth + bearer token auth).
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 65
+
+- version: 5.3.9
+  changelogEntry:
+    - summary: |
+        Bump generator-cli to 0.9.5 which upgrades @fern-api/replay to 0.10.2.
+      type: chore
   createdAt: "2026-04-10"
   irVersion: 65
 

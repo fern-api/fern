@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/node";
-import { getFernRunId } from "../fernRunId.js";
+import { getFernRunId } from "./fernRunId.js";
 
 /**
  * Tags the current FERN_RUN_ID onto the Sentry scope so all captured errors

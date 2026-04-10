@@ -30,7 +30,17 @@ function generateMockServerTests({ context }: { context: SdkGeneratorContext }):
             // TODO: support other response body types
             const useableExamples = allExamples.filter((example): example is FernIr.ExampleEndpointCall => {
                 const response = example?.response;
-                return response?.type === "ok" && response.value.type === "body";
+                if (response?.type !== "ok" || response.value.type !== "body") {
+                    return false;
+                }
+                // Skip examples with empty string path parameters. An empty path parameter
+                // causes a URL mismatch: the mock server registers a collapsed path (e.g.
+                // /v0/tools/version/1) while the SDK client sends a double-slash path (e.g.
+                // /v0/tools//version/1), resulting in a 404 from WireMock.
+                if (example != null && hasEmptyPathParameter(example)) {
+                    return false;
+                }
+                return true;
             });
             if (useableExamples.length === 0) {
                 continue;
@@ -47,6 +57,15 @@ function generateMockServerTests({ context }: { context: SdkGeneratorContext }):
         files.push(new BaseMockServerTestGenerator(context).generate());
     }
     return files;
+}
+
+function hasEmptyPathParameter(example: FernIr.ExampleEndpointCall): boolean {
+    const allPathParams = [
+        ...example.rootPathParameters,
+        ...example.servicePathParameters,
+        ...example.endpointPathParameters
+    ];
+    return allPathParams.some((param) => param.value.jsonExample === "");
 }
 
 function shouldSkipMockServerTestForEndpoint({ endpoint }: { endpoint: FernIr.HttpEndpoint }): boolean {
