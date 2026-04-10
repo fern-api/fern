@@ -94,11 +94,11 @@ func (c *Circle) String() string {
 }
 
 var (
-	getShapeRequestFieldId = big.NewInt(1 << 0)
+	getShapeRequestFieldID = big.NewInt(1 << 0)
 )
 
 type GetShapeRequest struct {
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -107,11 +107,11 @@ type GetShapeRequest struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetShapeRequest) GetId() string {
+func (g *GetShapeRequest) GetID() string {
 	if g == nil {
 		return ""
 	}
-	return g.Id
+	return g.ID
 }
 
 func (g *GetShapeRequest) GetExtraProperties() map[string]interface{} {
@@ -128,11 +128,11 @@ func (g *GetShapeRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetShapeRequest) SetId(id string) {
-	g.Id = id
-	g.require(getShapeRequestFieldId)
+func (g *GetShapeRequest) SetID(id string) {
+	g.ID = id
+	g.require(getShapeRequestFieldID)
 }
 
 func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
@@ -180,7 +180,7 @@ func (g *GetShapeRequest) String() string {
 type Shape struct {
 	Type   string
 	Name   string
-	Id     string
+	ID     string
 	Circle *Circle
 	Square *Square
 }
@@ -199,11 +199,11 @@ func (s *Shape) GetName() string {
 	return s.Name
 }
 
-func (s *Shape) GetId() string {
+func (s *Shape) GetID() string {
 	if s == nil {
 		return ""
 	}
-	return s.Id
+	return s.ID
 }
 
 func (s *Shape) GetCircle() *Circle {
@@ -224,14 +224,14 @@ func (s *Shape) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 		Name string `json:"name" url:"name"`
-		Id   string `json:"id"`
+		ID   string `json:"id"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
 	s.Type = unmarshaler.Type
 	s.Name = unmarshaler.Name
-	s.Id = unmarshaler.Id
+	s.ID = unmarshaler.ID
 	if unmarshaler.Type == "" {
 		return fmt.Errorf("%T did not include discriminant type", s)
 	}

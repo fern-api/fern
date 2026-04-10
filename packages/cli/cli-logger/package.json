@@ -42,7 +42,6 @@
     "@types/is-ci": "catalog:",
     "@types/node": "catalog:",
     "ansi-escapes": "catalog:",
-    "chalk": "catalog:",
     "is-ci": "catalog:",
     "ora": "catalog:",
     "typescript": "catalog:",

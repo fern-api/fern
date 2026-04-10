@@ -27,7 +27,7 @@ if typing.TYPE_CHECKING:
     from .error_info import ErrorInfo, ErrorInfo_CompileError, ErrorInfo_InternalError, ErrorInfo_RuntimeError
     from .errored_response import ErroredResponse
     from .exception_info import ExceptionInfo
-    from .exception_v_2 import ExceptionV2, ExceptionV2_Generic, ExceptionV2_Timeout
+    from .exception_v2 import ExceptionV2, ExceptionV2_Generic, ExceptionV2_Timeout
     from .execution_session_response import ExecutionSessionResponse
     from .execution_session_state import ExecutionSessionState
     from .execution_session_status import ExecutionSessionStatus
@@ -38,7 +38,7 @@ if typing.TYPE_CHECKING:
     from .get_submission_state_response import GetSubmissionStateResponse
     from .get_trace_responses_page_request import GetTraceResponsesPageRequest
     from .graded_response import GradedResponse
-    from .graded_response_v_2 import GradedResponseV2
+    from .graded_response_v2 import GradedResponseV2
     from .graded_test_case_update import GradedTestCaseUpdate
     from .initialize_problem_request import InitializeProblemRequest
     from .internal_error import InternalError
@@ -90,10 +90,10 @@ if typing.TYPE_CHECKING:
         SubmissionStatusForTestCase_GradedV2,
         SubmissionStatusForTestCase_Traced,
     )
-    from .submission_status_v_2 import SubmissionStatusV2, SubmissionStatusV2_Test, SubmissionStatusV2_Workspace
+    from .submission_status_v2 import SubmissionStatusV2, SubmissionStatusV2_Test, SubmissionStatusV2_Workspace
     from .submission_type_enum import SubmissionTypeEnum
     from .submission_type_state import SubmissionTypeState, SubmissionTypeState_Test, SubmissionTypeState_Workspace
-    from .submit_request_v_2 import SubmitRequestV2
+    from .submit_request_v2 import SubmitRequestV2
     from .terminated_response import TerminatedResponse
     from .test_case_grade import TestCaseGrade, TestCaseGrade_Hidden, TestCaseGrade_NonHidden
     from .test_case_hidden_grade import TestCaseHiddenGrade
@@ -108,7 +108,7 @@ if typing.TYPE_CHECKING:
         TestSubmissionStatus_Stopped,
         TestSubmissionStatus_TestCaseIdToState,
     )
-    from .test_submission_status_v_2 import TestSubmissionStatusV2
+    from .test_submission_status_v2 import TestSubmissionStatusV2
     from .test_submission_update import TestSubmissionUpdate
     from .test_submission_update_info import (
         TestSubmissionUpdateInfo,
@@ -120,9 +120,9 @@ if typing.TYPE_CHECKING:
         TestSubmissionUpdateInfo_Stopped,
     )
     from .trace_response import TraceResponse
-    from .trace_response_v_2 import TraceResponseV2
+    from .trace_response_v2 import TraceResponseV2
     from .trace_responses_page import TraceResponsesPage
-    from .trace_responses_page_v_2 import TraceResponsesPageV2
+    from .trace_responses_page_v2 import TraceResponsesPageV2
     from .traced_file import TracedFile
     from .traced_test_case import TracedTestCase
     from .unexpected_language_error import UnexpectedLanguageError
@@ -130,7 +130,7 @@ if typing.TYPE_CHECKING:
     from .workspace_ran_response import WorkspaceRanResponse
     from .workspace_run_details import WorkspaceRunDetails
     from .workspace_starter_files_response import WorkspaceStarterFilesResponse
-    from .workspace_starter_files_response_v_2 import WorkspaceStarterFilesResponseV2
+    from .workspace_starter_files_response_v2 import WorkspaceStarterFilesResponseV2
     from .workspace_submission_state import WorkspaceSubmissionState
     from .workspace_submission_status import (
         WorkspaceSubmissionStatus,
@@ -140,7 +140,7 @@ if typing.TYPE_CHECKING:
         WorkspaceSubmissionStatus_Stopped,
         WorkspaceSubmissionStatus_Traced,
     )
-    from .workspace_submission_status_v_2 import WorkspaceSubmissionStatusV2
+    from .workspace_submission_status_v2 import WorkspaceSubmissionStatusV2
     from .workspace_submission_update import WorkspaceSubmissionUpdate
     from .workspace_submission_update_info import (
         WorkspaceSubmissionUpdateInfo,
@@ -180,9 +180,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ErrorInfo_RuntimeError": ".error_info",
     "ErroredResponse": ".errored_response",
     "ExceptionInfo": ".exception_info",
-    "ExceptionV2": ".exception_v_2",
-    "ExceptionV2_Generic": ".exception_v_2",
-    "ExceptionV2_Timeout": ".exception_v_2",
+    "ExceptionV2": ".exception_v2",
+    "ExceptionV2_Generic": ".exception_v2",
+    "ExceptionV2_Timeout": ".exception_v2",
     "ExecutionSessionResponse": ".execution_session_response",
     "ExecutionSessionState": ".execution_session_state",
     "ExecutionSessionStatus": ".execution_session_status",
@@ -193,7 +193,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetSubmissionStateResponse": ".get_submission_state_response",
     "GetTraceResponsesPageRequest": ".get_trace_responses_page_request",
     "GradedResponse": ".graded_response",
-    "GradedResponseV2": ".graded_response_v_2",
+    "GradedResponseV2": ".graded_response_v2",
     "GradedTestCaseUpdate": ".graded_test_case_update",
     "InitializeProblemRequest": ".initialize_problem_request",
     "InternalError": ".internal_error",
@@ -237,14 +237,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SubmissionStatusForTestCase_Graded": ".submission_status_for_test_case",
     "SubmissionStatusForTestCase_GradedV2": ".submission_status_for_test_case",
     "SubmissionStatusForTestCase_Traced": ".submission_status_for_test_case",
-    "SubmissionStatusV2": ".submission_status_v_2",
-    "SubmissionStatusV2_Test": ".submission_status_v_2",
-    "SubmissionStatusV2_Workspace": ".submission_status_v_2",
+    "SubmissionStatusV2": ".submission_status_v2",
+    "SubmissionStatusV2_Test": ".submission_status_v2",
+    "SubmissionStatusV2_Workspace": ".submission_status_v2",
     "SubmissionTypeEnum": ".submission_type_enum",
     "SubmissionTypeState": ".submission_type_state",
     "SubmissionTypeState_Test": ".submission_type_state",
     "SubmissionTypeState_Workspace": ".submission_type_state",
-    "SubmitRequestV2": ".submit_request_v_2",
+    "SubmitRequestV2": ".submit_request_v2",
     "TerminatedResponse": ".terminated_response",
     "TestCaseGrade": ".test_case_grade",
     "TestCaseGrade_Hidden": ".test_case_grade",
@@ -255,7 +255,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TestCaseResultWithStdout": ".test_case_result_with_stdout",
     "TestSubmissionState": ".test_submission_state",
     "TestSubmissionStatus": ".test_submission_status",
-    "TestSubmissionStatusV2": ".test_submission_status_v_2",
+    "TestSubmissionStatusV2": ".test_submission_status_v2",
     "TestSubmissionStatus_Errored": ".test_submission_status",
     "TestSubmissionStatus_Running": ".test_submission_status",
     "TestSubmissionStatus_Stopped": ".test_submission_status",
@@ -269,9 +269,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TestSubmissionUpdateInfo_Running": ".test_submission_update_info",
     "TestSubmissionUpdateInfo_Stopped": ".test_submission_update_info",
     "TraceResponse": ".trace_response",
-    "TraceResponseV2": ".trace_response_v_2",
+    "TraceResponseV2": ".trace_response_v2",
     "TraceResponsesPage": ".trace_responses_page",
-    "TraceResponsesPageV2": ".trace_responses_page_v_2",
+    "TraceResponsesPageV2": ".trace_responses_page_v2",
     "TracedFile": ".traced_file",
     "TracedTestCase": ".traced_test_case",
     "UnexpectedLanguageError": ".unexpected_language_error",
@@ -279,10 +279,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkspaceRanResponse": ".workspace_ran_response",
     "WorkspaceRunDetails": ".workspace_run_details",
     "WorkspaceStarterFilesResponse": ".workspace_starter_files_response",
-    "WorkspaceStarterFilesResponseV2": ".workspace_starter_files_response_v_2",
+    "WorkspaceStarterFilesResponseV2": ".workspace_starter_files_response_v2",
     "WorkspaceSubmissionState": ".workspace_submission_state",
     "WorkspaceSubmissionStatus": ".workspace_submission_status",
-    "WorkspaceSubmissionStatusV2": ".workspace_submission_status_v_2",
+    "WorkspaceSubmissionStatusV2": ".workspace_submission_status_v2",
     "WorkspaceSubmissionStatus_Errored": ".workspace_submission_status",
     "WorkspaceSubmissionStatus_Ran": ".workspace_submission_status",
     "WorkspaceSubmissionStatus_Running": ".workspace_submission_status",

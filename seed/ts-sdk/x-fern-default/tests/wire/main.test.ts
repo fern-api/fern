@@ -21,8 +21,6 @@ describe("SeedApiClient", () => {
         const response = await client.testGet({
             region: "region",
         });
-        expect(response).toEqual({
-            message: "message",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

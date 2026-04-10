@@ -18,7 +18,7 @@ func do() {
         ),
     )
     request := &pleaseinhere.Movie{
-        Id: "id",
+        ID: "id",
         Prequel: pleaseinhere.String(
             "prequel",
         ),

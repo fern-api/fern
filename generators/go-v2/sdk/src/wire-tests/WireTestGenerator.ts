@@ -1,9 +1,11 @@
+import { getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
+
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
@@ -654,7 +656,9 @@ export class WireTestGenerator {
                             );
                             break;
                         case "header": {
-                            const fieldName = scheme.name?.name?.pascalCase?.unsafeName;
+                            const fieldName = scheme.name
+                                ? this.context.caseConverter.pascalUnsafe(getNameFromWireValue(scheme.name))
+                                : undefined;
                             if (fieldName) {
                                 arguments_.push(
                                     go.invokeFunc({
@@ -816,7 +820,8 @@ export class WireTestGenerator {
         for (const qp of endpoint.queryParameters) {
             const primitive = this.context.maybePrimitive(qp.valueType);
             if (primitive === FernIr.PrimitiveTypeV1.DateTime) {
-                datetimeQueryParams.add(qp.name.wireValue);
+                const qpWireValue = getWireValue(qp.name);
+                datetimeQueryParams.add(qpWireValue);
             }
         }
 
@@ -978,7 +983,10 @@ export class WireTestGenerator {
     }
 
     private getFormattedServiceName(service: FernIr.HttpService): string {
-        return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
+        return (
+            service.name?.fernFilepath?.allParts?.map((part) => this.context.caseConverter.snakeSafe(part)).join("_") ||
+            "root"
+        );
     }
 
     /**

@@ -190,11 +190,11 @@ func (t *TypeWithSingleCharPropertyEqualToTypeStartingLetter) String() string {
 	return fmt.Sprintf("%#v", t)
 }
 
-type MovieId = string
+type MovieID = string
 
 type Movie struct {
-	Id      MovieId  `json:"id" url:"id"`
-	Prequel *MovieId `json:"prequel,omitempty" url:"prequel,omitempty"`
+	ID      MovieID  `json:"id" url:"id"`
+	Prequel *MovieID `json:"prequel,omitempty" url:"prequel,omitempty"`
 	Title   string   `json:"title" url:"title"`
 	From    string   `json:"from" url:"from"`
 	// The rating scale is one to five stars
@@ -209,14 +209,14 @@ type Movie struct {
 	rawJSON         json.RawMessage
 }
 
-func (m *Movie) GetId() MovieId {
+func (m *Movie) GetID() MovieID {
 	if m == nil {
 		return ""
 	}
-	return m.Id
+	return m.ID
 }
 
-func (m *Movie) GetPrequel() *MovieId {
+func (m *Movie) GetPrequel() *MovieID {
 	if m == nil {
 		return nil
 	}
@@ -345,7 +345,7 @@ type CastMember struct {
 
 type Actor struct {
 	Name string `json:"name" url:"name"`
-	Id   string `json:"id" url:"id"`
+	ID   string `json:"id" url:"id"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
@@ -358,11 +358,11 @@ func (a *Actor) GetName() string {
 	return a.Name
 }
 
-func (a *Actor) GetId() string {
+func (a *Actor) GetID() string {
 	if a == nil {
 		return ""
 	}
-	return a.Id
+	return a.ID
 }
 
 func (a *Actor) GetExtraProperties() map[string]any {
@@ -404,7 +404,7 @@ func (a *Actor) String() string {
 
 type Actress struct {
 	Name string `json:"name" url:"name"`
-	Id   string `json:"id" url:"id"`
+	ID   string `json:"id" url:"id"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
@@ -417,11 +417,11 @@ func (a *Actress) GetName() string {
 	return a.Name
 }
 
-func (a *Actress) GetId() string {
+func (a *Actress) GetID() string {
 	if a == nil {
 		return ""
 	}
-	return a.Id
+	return a.ID
 }
 
 func (a *Actress) GetExtraProperties() map[string]any {
@@ -463,7 +463,7 @@ func (a *Actress) String() string {
 
 type StuntDouble struct {
 	Name             string `json:"name" url:"name"`
-	ActorOrActressId string `json:"actorOrActressId" url:"actorOrActressId"`
+	ActorOrActressID string `json:"actorOrActressId" url:"actorOrActressId"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
@@ -476,11 +476,11 @@ func (s *StuntDouble) GetName() string {
 	return s.Name
 }
 
-func (s *StuntDouble) GetActorOrActressId() string {
+func (s *StuntDouble) GetActorOrActressID() string {
 	if s == nil {
 		return ""
 	}
-	return s.ActorOrActressId
+	return s.ActorOrActressID
 }
 
 func (s *StuntDouble) GetExtraProperties() map[string]any {
@@ -521,8 +521,8 @@ func (s *StuntDouble) String() string {
 }
 
 type ExtendedMovie struct {
-	Id      MovieId  `json:"id" url:"id"`
-	Prequel *MovieId `json:"prequel,omitempty" url:"prequel,omitempty"`
+	ID      MovieID  `json:"id" url:"id"`
+	Prequel *MovieID `json:"prequel,omitempty" url:"prequel,omitempty"`
 	Title   string   `json:"title" url:"title"`
 	From    string   `json:"from" url:"from"`
 	// The rating scale is one to five stars
@@ -538,14 +538,14 @@ type ExtendedMovie struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *ExtendedMovie) GetId() MovieId {
+func (e *ExtendedMovie) GetID() MovieID {
 	if e == nil {
 		return ""
 	}
-	return e.Id
+	return e.ID
 }
 
-func (e *ExtendedMovie) GetPrequel() *MovieId {
+func (e *ExtendedMovie) GetPrequel() *MovieID {
 	if e == nil {
 		return nil
 	}
@@ -674,7 +674,7 @@ func (e *ExtendedMovie) String() string {
 }
 
 type Moment struct {
-	Id       uuid.UUID `json:"id" url:"id"`
+	ID       uuid.UUID `json:"id" url:"id"`
 	Date     time.Time `json:"date" url:"date"`
 	Datetime time.Time `json:"datetime" url:"datetime"`
 
@@ -682,11 +682,11 @@ type Moment struct {
 	rawJSON         json.RawMessage
 }
 
-func (m *Moment) GetId() uuid.UUID {
+func (m *Moment) GetID() uuid.UUID {
 	if m == nil {
 		return uuid.UUID{}
 	}
-	return m.Id
+	return m.ID
 }
 
 func (m *Moment) GetDate() time.Time {
@@ -1010,7 +1010,7 @@ type Metadata struct {
 	Type     string
 	Extra    map[string]string
 	Tags     []string
-	Html     string
+	HTML     string
 	Markdown string
 }
 
@@ -1598,17 +1598,17 @@ func (c *CronJob) String() string {
 }
 
 type RefreshTokenRequest struct {
-	Ttl int `json:"ttl" url:"ttl"`
+	TTL int `json:"ttl" url:"ttl"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (r *RefreshTokenRequest) GetTtl() int {
+func (r *RefreshTokenRequest) GetTTL() int {
 	if r == nil {
 		return 0
 	}
-	return r.Ttl
+	return r.TTL
 }
 
 func (r *RefreshTokenRequest) GetExtraProperties() map[string]any {

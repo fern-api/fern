@@ -2,7 +2,7 @@ import { constructFullCasingsGenerator, FullCasingsGenerator } from "@fern-api/c
 import { generatorsYml } from "@fern-api/configuration";
 import { Name, NameAndWireValue, NameAndWireValueOrString, NameOrString, SafeAndUnsafeString } from "@fern-api/ir-sdk";
 
-export { getOriginalName, getWireValue } from "./NameHelpers.js";
+export { getNameFromWireValue, getOriginalName, getWireValue } from "./NameHelpers.js";
 
 /**
  * Unified input type for CaseConverter methods.

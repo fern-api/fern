@@ -12,7 +12,7 @@ import (
 
 var (
 	searchRequestFieldLimit            = big.NewInt(1 << 0)
-	searchRequestFieldId               = big.NewInt(1 << 1)
+	searchRequestFieldID               = big.NewInt(1 << 1)
 	searchRequestFieldDate             = big.NewInt(1 << 2)
 	searchRequestFieldDeadline         = big.NewInt(1 << 3)
 	searchRequestFieldBytes            = big.NewInt(1 << 4)
@@ -33,7 +33,7 @@ var (
 
 type SearchRequest struct {
 	Limit            int               `json:"-" url:"limit"`
-	Id               string            `json:"-" url:"id"`
+	ID               string            `json:"-" url:"id"`
 	Date             time.Time         `json:"-" url:"date" format:"date"`
 	Deadline         time.Time         `json:"-" url:"deadline"`
 	Bytes            string            `json:"-" url:"bytes"`
@@ -71,11 +71,11 @@ func (s *SearchRequest) SetLimit(limit int) {
 	s.require(searchRequestFieldLimit)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchRequest) SetId(id string) {
-	s.Id = id
-	s.require(searchRequestFieldId)
+func (s *SearchRequest) SetID(id string) {
+	s.ID = id
+	s.require(searchRequestFieldID)
 }
 
 // SetDate sets the Date field and marks it as non-optional;

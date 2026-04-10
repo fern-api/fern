@@ -162,10 +162,7 @@ describe("ProblemClient", () => {
             methodName: "methodName",
         });
         expect(response).toEqual({
-            body: {
-                type: "success",
-                value: SeedTrace.ProblemId("string"),
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -329,9 +326,7 @@ describe("ProblemClient", () => {
             methodName: "methodName",
         });
         expect(response).toEqual({
-            body: {
-                problemVersion: 1,
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -416,26 +411,7 @@ describe("ProblemClient", () => {
             methodName: "methodName",
         });
         expect(response).toEqual({
-            body: {
-                files: {
-                    JAVA: {
-                        solutionFile: {
-                            filename: "filename",
-                            contents: "contents",
-                        },
-                        readOnlyFiles: [
-                            {
-                                filename: "filename",
-                                contents: "contents",
-                            },
-                            {
-                                filename: "filename",
-                                contents: "contents",
-                            },
-                        ],
-                    },
-                },
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

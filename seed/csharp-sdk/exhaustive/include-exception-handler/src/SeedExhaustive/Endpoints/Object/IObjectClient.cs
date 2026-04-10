@@ -61,6 +61,28 @@ public partial interface IObjectClient
     );
 
     /// <summary>
+    /// Tests that dynamic snippets include all required properties in the
+    /// object initializer, even when the example omits some required fields.
+    /// </summary>
+    WithRawResponseTask<ObjectWithMixedRequiredAndOptionalFields> GetAndReturnWithMixedRequiredAndOptionalFieldsAsync(
+        ObjectWithMixedRequiredAndOptionalFields request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Tests that dynamic snippets recursively construct default objects for
+    /// required properties whose type is a named object. When the example
+    /// omits the nested object, the generator should construct a default
+    /// initializer with the nested object's required properties filled in.
+    /// </summary>
+    WithRawResponseTask<ObjectWithRequiredNestedObject> GetAndReturnWithRequiredNestedObjectAsync(
+        ObjectWithRequiredNestedObject request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Tests that string fields containing datetime-like values are NOT reformatted.
     /// The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
     /// without being converted to "2023-08-31T14:15:22.000Z".

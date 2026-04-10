@@ -76,6 +76,26 @@ types:
     docs: Tests that map value types with unknown types don't get spurious | undefined.
     type: map<string, DocumentedUnknownType>
 
+  ObjectWithMixedRequiredAndOptionalFields:
+    docs: |
+      Tests that dynamic snippets include all required properties even when
+      the example data only provides a subset. In C#, properties marked as
+      `required` must be set in the object initializer.
+    properties:
+      requiredString: string
+      requiredInteger: integer
+      optionalString: optional<string>
+      requiredLong: long
+
+  ObjectWithRequiredNestedObject:
+    docs: |
+      Tests that dynamic snippets recursively construct default objects for
+      required properties whose type is a named object. The nested object's
+      own required properties should also be filled with defaults.
+    properties:
+      requiredString: string
+      requiredObject: NestedObjectWithRequiredField
+
 errors:
   ObjectWithOptionalFieldError:
     status-code: 400

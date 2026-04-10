@@ -9,7 +9,7 @@ import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...core.serialization import FieldMetadata
 from ..commons.variable_value import VariableValue
-from .exception_v_2 import ExceptionV2
+from .exception_v2 import ExceptionV2
 
 
 class ActualResult_Value(UniversalBaseModel):

@@ -10,11 +10,11 @@ import (
 )
 
 func TestSettersGetDirectThreadRequest(t *testing.T) {
-	t.Run("SetIds", func(t *testing.T) {
+	t.Run("SetIDs", func(t *testing.T) {
 		obj := &GetDirectThreadRequest{}
-		var fernTestValueIds []string
-		obj.SetIds(fernTestValueIds)
-		assert.Equal(t, fernTestValueIds, obj.Ids)
+		var fernTestValueIDs []string
+		obj.SetIDs(fernTestValueIDs)
+		assert.Equal(t, fernTestValueIDs, obj.IDs)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -29,14 +29,14 @@ func TestSettersGetDirectThreadRequest(t *testing.T) {
 }
 
 func TestSettersMarkExplicitGetDirectThreadRequest(t *testing.T) {
-	t.Run("SetIds_MarksExplicit", func(t *testing.T) {
+	t.Run("SetIDs_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetDirectThreadRequest{}
-		var fernTestValueIds []string
+		var fernTestValueIDs []string
 
 		// Act
-		obj.SetIds(fernTestValueIds)
+		obj.SetIDs(fernTestValueIDs)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

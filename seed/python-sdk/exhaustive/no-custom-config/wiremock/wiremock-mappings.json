@@ -801,6 +801,68 @@
       }
     },
     {
+      "id": "dfdc28ab-32f9-45fe-962a-bc7d9766cb0e",
+      "name": "getAndReturnWithMixedRequiredAndOptionalFields - default",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-mixed-required-and-optional-fields",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"requiredString\": \"hello\",\n  \"requiredInteger\": 0,\n  \"optionalString\": \"world\",\n  \"requiredLong\": 0\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "dfdc28ab-32f9-45fe-962a-bc7d9766cb0e",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "7be0e9a9-5db3-4524-9509-5c3dfcbba301",
+      "name": "getAndReturnWithRequiredNestedObject - default",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-required-nested-object",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"requiredString\": \"hello\",\n  \"requiredObject\": {\n    \"string\": \"nested\",\n    \"NestedObject\": {}\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "7be0e9a9-5db3-4524-9509-5c3dfcbba301",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "e2cc3e92-6e37-4a50-9081-23952fdd73fe",
       "name": "getAndReturnWithDatetimeLikeString - default",
       "request": {
@@ -1166,6 +1228,42 @@
         }
       },
       "uuid": "6bfc7195-b99c-4449-bf47-7c4f74f6f33b",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "25a5031e-ad21-4379-8965-4732818bb823",
+      "name": "getWithBooleanPath - default",
+      "request": {
+        "urlPathTemplate": "/params/path-bool/{param}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "param": {
+            "equalTo": "true"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "25a5031e-ad21-4379-8965-4732818bb823",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -1835,6 +1933,6 @@
     }
   ],
   "meta": {
-    "total": 56
+    "total": 59
   }
 }

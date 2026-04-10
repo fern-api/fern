@@ -14,6 +14,7 @@ import {
     TypeResolverImpl
 } from "@fern-api/ir-generator";
 import chalk from "chalk";
+import { camelCase } from "lodash-es";
 
 import { Rule, RuleViolation } from "../../Rule.js";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator.js";
@@ -48,6 +49,13 @@ export const NoConflictingRequestWrapperPropertiesRule: Rule = {
                                     .join("\n")
                         });
                     }
+
+                    // Also check for collisions after camelCase normalization.
+                    // Different raw names (e.g. header "Organization-Id" with name: organizationId
+                    // and query param "organization_id") may normalize to the same camelCase name,
+                    // causing broken generated code (duplicate kwargs in Python, duplicate properties in TS).
+                    const camelCaseViolations = getCamelCaseNormalizedCollisions(nameToProperties);
+                    violations.push(...camelCaseViolations);
 
                     return violations;
                 }
@@ -207,4 +215,57 @@ function convertRequestWrapperPropertyToString(property: RequestWrapperProperty)
         default:
             assertNever(property);
     }
+}
+
+/**
+ * Detects collisions that only appear after camelCase normalization.
+ * For example, header "Organization-Id" (name: organizationId) and query param "organization_id"
+ * have different raw names but both normalize to "organizationId" in camelCase.
+ * This causes broken generated code (duplicate kwargs in Python, duplicate properties in TypeScript).
+ *
+ * Only reports collisions that were NOT already caught by the raw-name check above
+ * (i.e., properties that have different raw names but the same camelCase name).
+ */
+function getCamelCaseNormalizedCollisions(nameToProperties: Record<string, RequestWrapperProperty[]>): RuleViolation[] {
+    // Build a map from camelCase-normalized name to all properties across all raw-name groups.
+    const camelCaseToEntries: Record<string, { rawName: string; property: RequestWrapperProperty }[]> = {};
+
+    for (const [rawName, properties] of Object.entries(nameToProperties)) {
+        for (const property of properties) {
+            const normalizedName = camelCase(rawName);
+            const entries = (camelCaseToEntries[normalizedName] ??= []);
+            entries.push({ rawName, property });
+        }
+    }
+
+    const violations: RuleViolation[] = [];
+    for (const [normalizedName, entries] of Object.entries(camelCaseToEntries)) {
+        if (entries.length <= 1) {
+            continue;
+        }
+
+        // Only report if there are entries from different raw-name groups.
+        // If all entries share the same raw name, the raw-name check above already caught it.
+        const distinctRawNames = new Set(entries.map((e) => e.rawName));
+        if (distinctRawNames.size <= 1) {
+            continue;
+        }
+
+        violations.push({
+            severity: "fatal",
+            message:
+                `Multiple request properties resolve to the same generated name ${chalk.bold(
+                    normalizedName
+                )} after camelCase normalization. This causes broken generated code. ` +
+                `Use the "name" property to disambiguate.\n` +
+                entries
+                    .map(
+                        (entry) =>
+                            `  - ${convertRequestWrapperPropertyToString(entry.property)} (name: "${entry.rawName}")`
+                    )
+                    .join("\n")
+        });
+    }
+
+    return violations;
 }

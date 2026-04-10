@@ -167,6 +167,7 @@ export function visitTypeDeclaration({
                     }
                 },
                 "base-properties": noop,
+                "default-variant": noop,
                 availability: noop,
                 audiences: noop,
                 encoding: noop,

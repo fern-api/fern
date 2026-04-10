@@ -21,7 +21,7 @@ import { SchemaConverter } from "./converters/schema/SchemaConverter.js";
 import { APIErrorLevel, ErrorCollector } from "./ErrorCollector.js";
 import { Extensions } from "./index.js";
 
-export type DisplayNameOverrideSource = "schema_identifier" | "discriminator_key" | "reference_identifier";
+export type DisplayNameOverrideSource = "discriminator_key" | "reference_identifier";
 
 export declare namespace Spec {
     export interface Args<T> {

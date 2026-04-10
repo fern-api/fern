@@ -482,6 +482,7 @@
                   "name": "StreamUser",
                   "typeId": "StreamUser",
                   "inline": false,
+                  "displayName": "StreamUser",
                   "type": "named"
                 },
                 "type": "json"
@@ -529,6 +530,7 @@
                       "name": "StreamUser",
                       "typeId": "StreamUser",
                       "inline": false,
+                      "displayName": "StreamUser",
                       "type": "named"
                     },
                     "type": "json"
@@ -875,6 +877,7 @@
                   "name": "User",
                   "typeId": "User",
                   "inline": false,
+                  "displayName": "User",
                   "type": "named"
                 },
                 "docs": "",
@@ -922,6 +925,7 @@
                       "name": "User",
                       "typeId": "User",
                       "inline": false,
+                      "displayName": "User",
                       "type": "named"
                     },
                     "docs": "",

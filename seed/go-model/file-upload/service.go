@@ -9,7 +9,7 @@ import (
 	internal "github.com/file-upload/fern/internal"
 )
 
-type Id = string
+type ID = string
 
 type MyObjectWithOptional struct {
 	Prop         string  `json:"prop" url:"prop"`

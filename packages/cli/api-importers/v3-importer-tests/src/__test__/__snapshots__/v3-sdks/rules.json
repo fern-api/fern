@@ -290,6 +290,7 @@
               "name": "Schema",
               "typeId": "Schema",
               "inline": false,
+              "displayName": "Schema",
               "type": "named"
             }
           },

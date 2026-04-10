@@ -14,8 +14,8 @@ if typing.TYPE_CHECKING:
     from .my_union import MyUnion
     from .name import Name
     from .named_metadata import NamedMetadata
-    from .nested_union_l_1 import NestedUnionL1
-    from .nested_union_l_2 import NestedUnionL2
+    from .nested_union_l1 import NestedUnionL1
+    from .nested_union_l2 import NestedUnionL2
     from .nested_union_root import NestedUnionRoot
     from .optional_metadata import OptionalMetadata
     from .payment_method_union import PaymentMethodUnion
@@ -37,8 +37,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MyUnion": ".my_union",
     "Name": ".name",
     "NamedMetadata": ".named_metadata",
-    "NestedUnionL1": ".nested_union_l_1",
-    "NestedUnionL2": ".nested_union_l_2",
+    "NestedUnionL1": ".nested_union_l1",
+    "NestedUnionL2": ".nested_union_l2",
     "NestedUnionRoot": ".nested_union_root",
     "OptionalMetadata": ".optional_metadata",
     "PaymentMethodUnion": ".payment_method_union",

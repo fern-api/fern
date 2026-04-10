@@ -63,11 +63,11 @@ func TestSettersConvertToken(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetTokenId", func(t *testing.T) {
+	t.Run("SetTokenID", func(t *testing.T) {
 		obj := &ConvertToken{}
-		var fernTestValueTokenId string
-		obj.SetTokenId(fernTestValueTokenId)
-		assert.Equal(t, fernTestValueTokenId, obj.TokenId)
+		var fernTestValueTokenID string
+		obj.SetTokenID(fernTestValueTokenID)
+		assert.Equal(t, fernTestValueTokenID, obj.TokenID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -97,18 +97,18 @@ func TestGettersConvertToken(t *testing.T) {
 		_ = obj.GetMethod() // Should return zero value
 	})
 
-	t.Run("GetTokenId", func(t *testing.T) {
+	t.Run("GetTokenID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ConvertToken{}
 		var expected string
-		obj.TokenId = expected
+		obj.TokenID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetTokenId(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTokenID(), "getter should return the property value")
 	})
 
-	t.Run("GetTokenId_NilReceiver", func(t *testing.T) {
+	t.Run("GetTokenID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ConvertToken
 		// Should not panic - getters should handle nil receiver gracefully
@@ -117,7 +117,7 @@ func TestGettersConvertToken(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetTokenId() // Should return zero value
+		_ = obj.GetTokenID() // Should return zero value
 	})
 
 }
@@ -154,14 +154,14 @@ func TestSettersMarkExplicitConvertToken(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetTokenId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetTokenID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ConvertToken{}
-		var fernTestValueTokenId string
+		var fernTestValueTokenID string
 
 		// Act
-		obj.SetTokenId(fernTestValueTokenId)
+		obj.SetTokenID(fernTestValueTokenID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1532,18 +1532,18 @@ func TestGettersUnionWithTypeAliases(t *testing.T) {
 		_ = obj.GetString() // Should return zero value
 	})
 
-	t.Run("GetUserId", func(t *testing.T) {
+	t.Run("GetUserID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UnionWithTypeAliases{}
-		var expected UserId
-		obj.UserId = expected
+		var expected UserID
+		obj.UserID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetUserId(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetUserID(), "getter should return the property value")
 	})
 
-	t.Run("GetUserId_NilReceiver", func(t *testing.T) {
+	t.Run("GetUserID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *UnionWithTypeAliases
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1552,7 +1552,7 @@ func TestGettersUnionWithTypeAliases(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetUserId() // Should return zero value
+		_ = obj.GetUserID() // Should return zero value
 	})
 
 	t.Run("GetName", func(t *testing.T) {

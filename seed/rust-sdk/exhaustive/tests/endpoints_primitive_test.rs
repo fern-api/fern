@@ -230,7 +230,7 @@ async fn test_endpoints_primitive_get_and_return_uuid_with_wiremock() {
 
 #[tokio::test]
 #[allow(unused_variables, unreachable_code)]
-async fn test_endpoints_primitive_get_and_return_base_64_with_wiremock() {
+async fn test_endpoints_primitive_get_and_return_base64_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
     let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
@@ -245,7 +245,7 @@ async fn test_endpoints_primitive_get_and_return_base_64_with_wiremock() {
     let result = client
         .endpoints
         .primitive
-        .get_and_return_base_64(
+        .get_and_return_base64(
             &base64::engine::general_purpose::STANDARD
                 .decode("SGVsbG8gd29ybGQh")
                 .unwrap(),

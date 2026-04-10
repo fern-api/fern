@@ -13,7 +13,7 @@ module Seed
         member -> { Seed::Submission::Types::ErroredResponse }, key: "ERRORED"
         member -> { Seed::Submission::Types::StoppedResponse }, key: "STOPPED"
         member -> { Seed::Submission::Types::GradedResponse }, key: "GRADED"
-        member -> { Seed::Submission::Types::GradedResponseV2 }, key: "GRADED_V_2"
+        member -> { Seed::Submission::Types::GradedResponseV2 }, key: "GRADED_V2"
         member -> { Seed::Submission::Types::WorkspaceRanResponse }, key: "WORKSPACE_RAN"
         member -> { Seed::Submission::Types::RecordingResponseNotification }, key: "RECORDING"
         member -> { Seed::Submission::Types::RecordedResponseNotification }, key: "RECORDED"

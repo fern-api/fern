@@ -5,6 +5,8 @@ export * as getAndReturnNestedWithRequiredFieldAsList from "./getAndReturnNested
 export * as getAndReturnWithDatetimeLikeString from "./getAndReturnWithDatetimeLikeString.js";
 export * as getAndReturnWithDocumentedUnknownType from "./getAndReturnWithDocumentedUnknownType.js";
 export * as getAndReturnWithMapOfMap from "./getAndReturnWithMapOfMap.js";
+export * as getAndReturnWithMixedRequiredAndOptionalFields from "./getAndReturnWithMixedRequiredAndOptionalFields.js";
 export * as getAndReturnWithOptionalField from "./getAndReturnWithOptionalField.js";
 export * as getAndReturnWithRequiredField from "./getAndReturnWithRequiredField.js";
+export * as getAndReturnWithRequiredNestedObject from "./getAndReturnWithRequiredNestedObject.js";
 export * as getAndReturnWithUnknownField from "./getAndReturnWithUnknownField.js";

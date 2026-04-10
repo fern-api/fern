@@ -11,14 +11,14 @@ import (
 
 var (
 	documentMetadataFieldAuthor = big.NewInt(1 << 0)
-	documentMetadataFieldId     = big.NewInt(1 << 1)
+	documentMetadataFieldID     = big.NewInt(1 << 1)
 	documentMetadataFieldTags   = big.NewInt(1 << 2)
 	documentMetadataFieldTitle  = big.NewInt(1 << 3)
 )
 
 type DocumentMetadata struct {
 	Author *string `json:"author,omitempty" url:"author,omitempty"`
-	Id     *int    `json:"id,omitempty" url:"id,omitempty"`
+	ID     *int    `json:"id,omitempty" url:"id,omitempty"`
 	Tags   []any   `json:"tags,omitempty" url:"tags,omitempty"`
 	Title  *string `json:"title,omitempty" url:"title,omitempty"`
 
@@ -36,11 +36,11 @@ func (d *DocumentMetadata) GetAuthor() *string {
 	return d.Author
 }
 
-func (d *DocumentMetadata) GetId() *int {
+func (d *DocumentMetadata) GetID() *int {
 	if d == nil {
 		return nil
 	}
-	return d.Id
+	return d.ID
 }
 
 func (d *DocumentMetadata) GetTags() []any {
@@ -78,11 +78,11 @@ func (d *DocumentMetadata) SetAuthor(author *string) {
 	d.require(documentMetadataFieldAuthor)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DocumentMetadata) SetId(id *int) {
-	d.Id = id
-	d.require(documentMetadataFieldId)
+func (d *DocumentMetadata) SetID(id *int) {
+	d.ID = id
+	d.require(documentMetadataFieldID)
 }
 
 // SetTags sets the Tags field and marks it as non-optional;
@@ -142,12 +142,12 @@ func (d *DocumentMetadata) String() string {
 }
 
 var (
-	documentUploadResultFieldFileId = big.NewInt(1 << 0)
+	documentUploadResultFieldFileID = big.NewInt(1 << 0)
 	documentUploadResultFieldStatus = big.NewInt(1 << 1)
 )
 
 type DocumentUploadResult struct {
-	FileId *string `json:"fileId,omitempty" url:"fileId,omitempty"`
+	FileID *string `json:"fileId,omitempty" url:"fileId,omitempty"`
 	Status *string `json:"status,omitempty" url:"status,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -157,11 +157,11 @@ type DocumentUploadResult struct {
 	rawJSON         json.RawMessage
 }
 
-func (d *DocumentUploadResult) GetFileId() *string {
+func (d *DocumentUploadResult) GetFileID() *string {
 	if d == nil {
 		return nil
 	}
-	return d.FileId
+	return d.FileID
 }
 
 func (d *DocumentUploadResult) GetStatus() *string {
@@ -185,11 +185,11 @@ func (d *DocumentUploadResult) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
-// SetFileId sets the FileId field and marks it as non-optional;
+// SetFileID sets the FileID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DocumentUploadResult) SetFileId(fileId *string) {
-	d.FileId = fileId
-	d.require(documentUploadResultFieldFileId)
+func (d *DocumentUploadResult) SetFileID(fileID *string) {
+	d.FileID = fileID
+	d.require(documentUploadResultFieldFileID)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;

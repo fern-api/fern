@@ -12,8 +12,9 @@ public class Example39
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAndErrorsAsync(
-            "param"
+        await client.Endpoints.Params.ModifyWithPathAsync(
+            "param",
+            "string"
         );
     }
 

@@ -592,6 +592,7 @@
                   "name": "User",
                   "typeId": "User",
                   "inline": false,
+                  "displayName": "User",
                   "type": "named"
                 },
                 "docs": "Successful response",
@@ -657,6 +658,7 @@
                       "name": "User",
                       "typeId": "User",
                       "inline": false,
+                      "displayName": "User",
                       "type": "named"
                     },
                     "docs": "Successful response",
@@ -1121,6 +1123,7 @@
                   "name": "User",
                   "typeId": "User",
                   "inline": false,
+                  "displayName": "User",
                   "type": "named"
                 },
                 "docs": "Successful response",
@@ -1188,6 +1191,7 @@
                       "name": "User",
                       "typeId": "User",
                       "inline": false,
+                      "displayName": "User",
                       "type": "named"
                     },
                     "docs": "Successful response",
@@ -1464,6 +1468,7 @@
                   "name": "Token",
                   "typeId": "Token",
                   "inline": false,
+                  "displayName": "Token",
                   "type": "named"
                 },
                 "docs": "Successful response",
@@ -1527,6 +1532,7 @@
                       "name": "Token",
                       "typeId": "Token",
                       "inline": false,
+                      "displayName": "Token",
                       "type": "named"
                     },
                     "docs": "Successful response",
