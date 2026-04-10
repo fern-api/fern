@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.59.4
+  changelogEntry:
+    - summary: |
+        Add `GetSingle()` fallback to `JsonElementComparer` number comparison.
+        When two JSON numbers differ as decimals but match as singles, they
+        represent the same float32 value and are now considered equal. This
+        fixes mock server test failures for fields declared as `format: float`
+        where C#'s `System.Text.Json` serializes `System.Single` with a shorter
+        decimal representation than the original JSON string (e.g.
+        0.10722749680280685 vs 0.1072275).
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
+
 - version: 2.59.3
   changelogEntry:
     - summary: |
