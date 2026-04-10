@@ -1,4 +1,4 @@
-use seed_inferred_auth_implicit::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,16 +6,16 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = InferredAuthImplicitClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .auth
-        .get_token_with_client_credentials(
+        .gettokenwithclientcredentials(
             &GetTokenRequest {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
-                audience: "https://api.example.com".to_string(),
-                grant_type: "client_credentials".to_string(),
-                scope: Some("scope".to_string()),
+                audience: GetTokenRequestAudience::HttpsApiExampleCom,
+                grant_type: GetTokenRequestGrantType::ClientCredentials,
+                scope: None,
             },
             None,
         )

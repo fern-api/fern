@@ -22,82 +22,49 @@
             },
             "default": "./dist/cjs/index.js"
         },
-        "./commons": {
+        "./": {
             "import": {
-                "types": "./dist/esm/api/resources/commons/exports.d.mts",
-                "default": "./dist/esm/api/resources/commons/exports.mjs"
+                "types": "./dist/esm/api/resources/exports.d.mts",
+                "default": "./dist/esm/api/resources/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/commons/exports.d.ts",
-                "default": "./dist/cjs/api/resources/commons/exports.js"
+                "types": "./dist/cjs/api/resources/exports.d.ts",
+                "default": "./dist/cjs/api/resources/exports.js"
             },
-            "default": "./dist/cjs/api/resources/commons/exports.js"
+            "default": "./dist/cjs/api/resources/exports.js"
         },
-        "./file": {
+        "./fileNotificationService": {
             "import": {
-                "types": "./dist/esm/api/resources/file/exports.d.mts",
-                "default": "./dist/esm/api/resources/file/exports.mjs"
+                "types": "./dist/esm/api/resources/fileNotificationService/exports.d.mts",
+                "default": "./dist/esm/api/resources/fileNotificationService/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/file/exports.d.ts",
-                "default": "./dist/cjs/api/resources/file/exports.js"
+                "types": "./dist/cjs/api/resources/fileNotificationService/exports.d.ts",
+                "default": "./dist/cjs/api/resources/fileNotificationService/exports.js"
             },
-            "default": "./dist/cjs/api/resources/file/exports.js"
+            "default": "./dist/cjs/api/resources/fileNotificationService/exports.js"
         },
-        "./file/notification": {
+        "./fileService": {
             "import": {
-                "types": "./dist/esm/api/resources/file/resources/notification/exports.d.mts",
-                "default": "./dist/esm/api/resources/file/resources/notification/exports.mjs"
+                "types": "./dist/esm/api/resources/fileService/exports.d.mts",
+                "default": "./dist/esm/api/resources/fileService/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/file/resources/notification/exports.d.ts",
-                "default": "./dist/cjs/api/resources/file/resources/notification/exports.js"
+                "types": "./dist/cjs/api/resources/fileService/exports.d.ts",
+                "default": "./dist/cjs/api/resources/fileService/exports.js"
             },
-            "default": "./dist/cjs/api/resources/file/resources/notification/exports.js"
+            "default": "./dist/cjs/api/resources/fileService/exports.js"
         },
-        "./file/notification/service": {
+        "./healthService": {
             "import": {
-                "types": "./dist/esm/api/resources/file/resources/notification/resources/service/exports.d.mts",
-                "default": "./dist/esm/api/resources/file/resources/notification/resources/service/exports.mjs"
+                "types": "./dist/esm/api/resources/healthService/exports.d.mts",
+                "default": "./dist/esm/api/resources/healthService/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/file/resources/notification/resources/service/exports.d.ts",
-                "default": "./dist/cjs/api/resources/file/resources/notification/resources/service/exports.js"
+                "types": "./dist/cjs/api/resources/healthService/exports.d.ts",
+                "default": "./dist/cjs/api/resources/healthService/exports.js"
             },
-            "default": "./dist/cjs/api/resources/file/resources/notification/resources/service/exports.js"
-        },
-        "./file/service": {
-            "import": {
-                "types": "./dist/esm/api/resources/file/resources/service/exports.d.mts",
-                "default": "./dist/esm/api/resources/file/resources/service/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/file/resources/service/exports.d.ts",
-                "default": "./dist/cjs/api/resources/file/resources/service/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/file/resources/service/exports.js"
-        },
-        "./health": {
-            "import": {
-                "types": "./dist/esm/api/resources/health/exports.d.mts",
-                "default": "./dist/esm/api/resources/health/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/health/exports.d.ts",
-                "default": "./dist/cjs/api/resources/health/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/health/exports.js"
-        },
-        "./health/service": {
-            "import": {
-                "types": "./dist/esm/api/resources/health/resources/service/exports.d.mts",
-                "default": "./dist/esm/api/resources/health/resources/service/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/health/resources/service/exports.d.ts",
-                "default": "./dist/cjs/api/resources/health/resources/service/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/health/resources/service/exports.js"
+            "default": "./dist/cjs/api/resources/healthService/exports.js"
         },
         "./service": {
             "import": {

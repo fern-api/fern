@@ -1,26 +1,13 @@
 import Foundation
-import Trace
+import Api
 
 private func main() async throws {
-    let client = TraceClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.problem.getDefaultStarterFiles(request: .init(
-        inputParams: [
-            VariableTypeAndName(
-                variableType: VariableType.integerType,
-                name: "name"
-            ),
-            VariableTypeAndName(
-                variableType: VariableType.integerType,
-                name: "name"
-            )
-        ],
-        outputType: VariableType.integerType,
-        methodName: "methodName"
-    ))
+    _ = try await client.migration.getattemptedmigrations()
 }
 
 try await main()

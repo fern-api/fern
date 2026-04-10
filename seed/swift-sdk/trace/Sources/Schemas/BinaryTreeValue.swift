@@ -2,13 +2,13 @@ import Foundation
 
 public struct BinaryTreeValue: Codable, Hashable, Sendable {
     public let root: NodeId?
-    public let nodes: [NodeId: BinaryTreeNodeValue]
+    public let nodes: [String: BinaryTreeNodeValue]
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         root: NodeId? = nil,
-        nodes: [NodeId: BinaryTreeNodeValue],
+        nodes: [String: BinaryTreeNodeValue],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.root = root
@@ -19,7 +19,7 @@ public struct BinaryTreeValue: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.root = try container.decodeIfPresent(NodeId.self, forKey: .root)
-        self.nodes = try container.decode([NodeId: BinaryTreeNodeValue].self, forKey: .nodes)
+        self.nodes = try container.decode([String: BinaryTreeNodeValue].self, forKey: .nodes)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

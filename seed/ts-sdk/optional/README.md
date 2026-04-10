@@ -10,6 +10,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
@@ -39,14 +40,25 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedObjectsWithImportsClient } from "@fern/optional";
+import { SeedApiClient } from "@fern/optional";
 
-const client = new SeedObjectsWithImportsClient({ environment: "YOUR_BASE_URL" });
-await client.optional.sendOptionalBody({
-    "string": {
-        "key": "value"
-    }
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+await client.optional.sendoptionalbody({
+    "key": "value"
 });
+```
+
+## Request and Response Types
+
+The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+following namespace:
+
+```typescript
+import { SeedApi } from "@fern/optional";
+
+const request: SeedApi.SendOptionalBodyRequest = {
+    ...
+};
 ```
 
 ## Exception Handling
@@ -55,12 +67,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedObjectsWithImportsError } from "@fern/optional";
+import { SeedApiError } from "@fern/optional";
 
 try {
-    await client.optional.sendOptionalBody(...);
+    await client.optional.sendoptionalbody(...);
 } catch (err) {
-    if (err instanceof SeedObjectsWithImportsError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -86,16 +98,16 @@ const client = new OptionalClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedObjectsWithImportsClient } from "@fern/optional";
+import { SeedApiClient } from "@fern/optional";
 
-const client = new SeedObjectsWithImportsClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.optional.sendOptionalBody(..., {
+const response = await client.optional.sendoptionalbody(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -107,7 +119,7 @@ const response = await client.optional.sendOptionalBody(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.optional.sendOptionalBody(..., {
+const response = await client.optional.sendoptionalbody(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -129,7 +141,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.optional.sendOptionalBody(..., {
+const response = await client.optional.sendoptionalbody(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -139,7 +151,7 @@ const response = await client.optional.sendOptionalBody(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.optional.sendOptionalBody(..., {
+const response = await client.optional.sendoptionalbody(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -150,7 +162,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.optional.sendOptionalBody(..., {
+const response = await client.optional.sendoptionalbody(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -162,7 +174,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.optional.sendOptionalBody(...).withRawResponse();
+const { data, rawResponse } = await client.optional.sendoptionalbody(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -173,9 +185,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedObjectsWithImportsClient, logging } from "@fern/optional";
+import { SeedApiClient, logging } from "@fern/optional";
 
-const client = new SeedObjectsWithImportsClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

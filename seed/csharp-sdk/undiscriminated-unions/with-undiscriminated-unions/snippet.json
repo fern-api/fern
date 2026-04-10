@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.GetAsync(\"string\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Union.GetAsync(\"string\");\n"
             }
         },
         {
@@ -18,11 +18,11 @@
             "id": {
                 "path": "/metadata",
                 "method": "GET",
-                "identifier_override": "endpoint_union.getMetadata"
+                "identifier_override": "endpoint_union.getmetadata"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.GetMetadataAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Union.GetmetadataAsync();\n"
             }
         },
         {
@@ -30,11 +30,11 @@
             "id": {
                 "path": "/metadata",
                 "method": "PUT",
-                "identifier_override": "endpoint_union.updateMetadata"
+                "identifier_override": "endpoint_union.updatemetadata"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.UpdateMetadataAsync(\n    new Dictionary<string, object?>()\n    {\n        {\n            \"string\",\n            new Dictionary<object, object?>() { { \"key\", \"value\" } }\n        },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Union.UpdatemetadataAsync(new Dictionary<string, object?>() { { \"key\", \"value\" } });\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.CallAsync(\n    new Request\n    {\n        Union = new Dictionary<string, object?>()\n        {\n            {\n                \"string\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Union.CallAsync(new Request());\n"
             }
         },
         {
@@ -54,11 +54,11 @@
             "id": {
                 "path": "/duplicate",
                 "method": "POST",
-                "identifier_override": "endpoint_union.duplicateTypesUnion"
+                "identifier_override": "endpoint_union.duplicatetypesunion"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.DuplicateTypesUnionAsync(\"string\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Union.DuplicatetypesunionAsync(\"string\");\n"
             }
         },
         {
@@ -66,11 +66,11 @@
             "id": {
                 "path": "/nested",
                 "method": "POST",
-                "identifier_override": "endpoint_union.nestedUnions"
+                "identifier_override": "endpoint_union.nestedunions"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.NestedUnionsAsync(\"string\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Union.NestedunionsAsync(\"string\");\n"
             }
         },
         {
@@ -78,11 +78,11 @@
             "id": {
                 "path": "/camel-case",
                 "method": "POST",
-                "identifier_override": "endpoint_union.testCamelCaseProperties"
+                "identifier_override": "endpoint_union.testcamelcaseproperties"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.TestCamelCasePropertiesAsync(\n    new PaymentRequest\n    {\n        PaymentMethod = new TokenizeCard { Method = \"card\", CardNumber = \"1234567890123456\" },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Union.TestcamelcasepropertiesAsync(\n    new UnionTestCamelCasePropertiesRequest\n    {\n        PaymentMethod = new TokenizeCard { Method = \"method\", CardNumber = \"cardNumber\" },\n    }\n);\n"
             }
         }
     ]

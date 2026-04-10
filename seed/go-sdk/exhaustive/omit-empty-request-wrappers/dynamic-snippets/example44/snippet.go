@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
 )
@@ -16,8 +17,13 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Params.GetWithPathAndErrors(
+    request := &fern.TypesObjectWithUnknownField{
+        Unknown: map[string]any{
+            "key": "value",
+        },
+    }
+    client.EndpointsObject.EndpointsObjectGetAndReturnWithUnknownField(
         context.TODO(),
-        "param",
+        request,
     )
 }

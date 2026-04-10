@@ -3,8 +3,10 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\InlineUsers\InlineUsers\Requests\ListUsersCursorPaginationRequest;
-use Seed\InlineUsers\InlineUsers\Types\Order;
+use Seed\Complex\Requests\SearchRequest;
+use Seed\Types\StartingAfterPaging;
+use Seed\Types\SingleFilterSearchRequest;
+use Seed\Types\SingleFilterSearchRequestOperator;
 
 $client = new SeedClient(
     token: '<token>',
@@ -12,11 +14,17 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->inlineUsers->inlineUsers->listWithCursorPagination(
-    new ListUsersCursorPaginationRequest([
-        'page' => 1,
-        'perPage' => 1,
-        'order' => Order::Asc->value,
-        'startingAfter' => 'starting_after',
+$client->complex->search(
+    'index',
+    new SearchRequest([
+        'pagination' => new StartingAfterPaging([
+            'perPage' => 1,
+            'startingAfter' => 'starting_after',
+        ]),
+        'query' => new SingleFilterSearchRequest([
+            'field' => 'field',
+            'operator' => SingleFilterSearchRequestOperator::EqualTo->value,
+            'value' => 'value',
+        ]),
     ]),
 );

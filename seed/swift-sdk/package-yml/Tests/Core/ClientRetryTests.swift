@@ -1,4 +1,4 @@
-import PackageYml
+import Api
 import Foundation
 import Testing
 
@@ -14,17 +14,17 @@ import Testing
             ),
         ])
 
-        let client = PackageYmlClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.echo(
-                id: "id-ksfd9c1",
-                request: EchoRequest(
-                    name: "Hello world!",
-                    size: 20
+            _ = try await client..echo(
+                id: "id",
+                request: .init(
+                    name: "name",
+                    size: 1
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -45,17 +45,17 @@ import Testing
             ),
         ])
 
-        let client = PackageYmlClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.echo(
-                id: "id-ksfd9c1",
-                request: EchoRequest(
-                    name: "Hello world!",
-                    size: 20
+            _ = try await client..echo(
+                id: "id",
+                request: .init(
+                    name: "name",
+                    size: 1
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -76,17 +76,17 @@ import Testing
             ),
         ])
 
-        let client = PackageYmlClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.echo(
-                id: "id-ksfd9c1",
-                request: EchoRequest(
-                    name: "Hello world!",
-                    size: 20
+            _ = try await client..echo(
+                id: "id",
+                request: .init(
+                    name: "name",
+                    size: 1
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -106,17 +106,17 @@ import Testing
             ),
         ])
 
-        let client = PackageYmlClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.echo(
-                id: "id-ksfd9c1",
-                request: EchoRequest(
-                    name: "Hello world!",
-                    size: 20
+            _ = try await client..echo(
+                id: "id",
+                request: .init(
+                    name: "name",
+                    size: 1
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -135,17 +135,17 @@ import Testing
             )
         ])
 
-        let client = PackageYmlClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.echo(
-                id: "id-ksfd9c1",
-                request: EchoRequest(
-                    name: "Hello world!",
-                    size: 20
+            _ = try await client..echo(
+                id: "id",
+                request: .init(
+                    name: "name",
+                    size: 1
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -165,17 +165,17 @@ import Testing
             )
         ])
 
-        let client = PackageYmlClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.echo(
-                id: "id-ksfd9c1",
-                request: EchoRequest(
-                    name: "Hello world!",
-                    size: 20
+            _ = try await client..echo(
+                id: "id",
+                request: .init(
+                    name: "name",
+                    size: 1
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -195,17 +195,17 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = PackageYmlClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.echo(
-                id: "id-ksfd9c1",
-                request: EchoRequest(
-                    name: "Hello world!",
-                    size: 20
+            _ = try await client..echo(
+                id: "id",
+                request: .init(
+                    name: "name",
+                    size: 1
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -229,18 +229,18 @@ import Testing
             ),
         ])
 
-        let client = PackageYmlClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.echo(
-                id: "id-ksfd9c1",
-                request: EchoRequest(
-                    name: "Hello world!",
-                    size: 20
+            _ = try await client..echo(
+                id: "id",
+                request: .init(
+                    name: "name",
+                    size: 1
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -274,18 +274,18 @@ import Testing
             ),
         ])
 
-        let client = PackageYmlClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.echo(
-                id: "id-ksfd9c1",
-                request: EchoRequest(
-                    name: "Hello world!",
-                    size: 20
+            _ = try await client..echo(
+                id: "id",
+                request: .init(
+                    name: "name",
+                    size: 1
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -315,18 +315,18 @@ import Testing
             ),
         ])
 
-        let client = PackageYmlClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.echo(
-                id: "id-ksfd9c1",
-                request: EchoRequest(
-                    name: "Hello world!",
-                    size: 20
+            _ = try await client..echo(
+                id: "id",
+                request: .init(
+                    name: "name",
+                    size: 1
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -368,17 +368,17 @@ import Testing
             ),
         ])
 
-        let client = PackageYmlClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.echo(
-                id: "id-ksfd9c1",
-                request: EchoRequest(
-                    name: "Hello world!",
-                    size: 20
+            _ = try await client..echo(
+                id: "id",
+                request: .init(
+                    name: "name",
+                    size: 1
                 ),
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
             )
@@ -394,17 +394,17 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = PackageYmlClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.echo(
-                id: "id-ksfd9c1",
-                request: EchoRequest(
-                    name: "Hello world!",
-                    size: 20
+            _ = try await client..echo(
+                id: "id",
+                request: .init(
+                    name: "name",
+                    size: 1
                 ),
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
             )
@@ -424,17 +424,17 @@ import Testing
             )
         ])
 
-        let client = PackageYmlClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.echo(
-                id: "id-ksfd9c1",
-                request: EchoRequest(
-                    name: "Hello world!",
-                    size: 20
+            _ = try await client..echo(
+                id: "id",
+                request: .init(
+                    name: "name",
+                    size: 1
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )

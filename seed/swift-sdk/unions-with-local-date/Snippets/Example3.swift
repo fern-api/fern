@@ -1,10 +1,15 @@
 import Foundation
-import Unions
+import Api
 
 private func main() async throws {
-    let client = UnionsClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.types.get(id: "date-example")
+    _ = try await client.bigunion.update(request: BigUnion.bigUnionZero(
+        BigUnionZero(
+            value: "value",
+            type: .normalSweet
+        )
+    ))
 }
 
 try await main()

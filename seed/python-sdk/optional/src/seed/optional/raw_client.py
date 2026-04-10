@@ -10,10 +10,7 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..core.serialization import convert_and_respect_annotation_metadata
-from .types.deploy_params import DeployParams
-from .types.deploy_response import DeployResponse
-from .types.send_optional_body_request import SendOptionalBodyRequest
+from ..types.deploy_response import DeployResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -24,7 +21,7 @@ class RawOptionalClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def send_optional_body(
+    def sendoptionalbody(
         self,
         *,
         request: typing.Optional[typing.Dict[str, typing.Any]] = None,
@@ -47,6 +44,9 @@ class RawOptionalClient:
             "send-optional-body",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -69,16 +69,13 @@ class RawOptionalClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def send_optional_typed_body(
-        self,
-        *,
-        request: typing.Optional[SendOptionalBodyRequest] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+    def sendoptionaltypedbody(
+        self, *, message: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[str]:
         """
         Parameters
         ----------
-        request : typing.Optional[SendOptionalBodyRequest]
+        message : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -91,9 +88,12 @@ class RawOptionalClient:
         _response = self._client_wrapper.httpx_client.request(
             "send-optional-typed-body",
             method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=SendOptionalBodyRequest, direction="write"
-            ),
+            json={
+                "message": message,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -116,12 +116,12 @@ class RawOptionalClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def send_optional_nullable_with_all_optional_properties(
+    def sendoptionalnullablewithalloptionalproperties(
         self,
         action_id: str,
         id: str,
         *,
-        request: typing.Optional[DeployParams] = None,
+        update_draft: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DeployResponse]:
         """
@@ -134,7 +134,7 @@ class RawOptionalClient:
 
         id : str
 
-        request : typing.Optional[DeployParams]
+        update_draft : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -142,13 +142,17 @@ class RawOptionalClient:
         Returns
         -------
         HttpResponse[DeployResponse]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             f"deploy/{encode_path_param(action_id)}/versions/{encode_path_param(id)}",
             method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Optional[DeployParams], direction="write"
-            ),
+            json={
+                "updateDraft": update_draft,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -176,7 +180,7 @@ class AsyncRawOptionalClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def send_optional_body(
+    async def sendoptionalbody(
         self,
         *,
         request: typing.Optional[typing.Dict[str, typing.Any]] = None,
@@ -199,6 +203,9 @@ class AsyncRawOptionalClient:
             "send-optional-body",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -221,16 +228,13 @@ class AsyncRawOptionalClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def send_optional_typed_body(
-        self,
-        *,
-        request: typing.Optional[SendOptionalBodyRequest] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+    async def sendoptionaltypedbody(
+        self, *, message: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[str]:
         """
         Parameters
         ----------
-        request : typing.Optional[SendOptionalBodyRequest]
+        message : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -243,9 +247,12 @@ class AsyncRawOptionalClient:
         _response = await self._client_wrapper.httpx_client.request(
             "send-optional-typed-body",
             method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=SendOptionalBodyRequest, direction="write"
-            ),
+            json={
+                "message": message,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -268,12 +275,12 @@ class AsyncRawOptionalClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def send_optional_nullable_with_all_optional_properties(
+    async def sendoptionalnullablewithalloptionalproperties(
         self,
         action_id: str,
         id: str,
         *,
-        request: typing.Optional[DeployParams] = None,
+        update_draft: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DeployResponse]:
         """
@@ -286,7 +293,7 @@ class AsyncRawOptionalClient:
 
         id : str
 
-        request : typing.Optional[DeployParams]
+        update_draft : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -294,13 +301,17 @@ class AsyncRawOptionalClient:
         Returns
         -------
         AsyncHttpResponse[DeployResponse]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"deploy/{encode_path_param(action_id)}/versions/{encode_path_param(id)}",
             method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Optional[DeployParams], direction="write"
-            ),
+            json={
+                "updateDraft": update_draft,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )

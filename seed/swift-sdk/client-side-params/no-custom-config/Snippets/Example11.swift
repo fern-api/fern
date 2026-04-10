@@ -1,16 +1,16 @@
 import Foundation
-import ClientSideParams
+import Api
 
 private func main() async throws {
-    let client = ClientSideParamsClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.service.getClient(
-        clientId: "clientId",
-        fields: "fields",
-        includeFields: true
+    _ = try await client.service.getuserbyid(
+        userId: "userId",
+        fields: .value("fields"),
+        includeFields: .value(true)
     )
 }
 

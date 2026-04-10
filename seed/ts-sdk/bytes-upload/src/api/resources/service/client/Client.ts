@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedBytesUpload from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace ServiceClient {
     export type Options = BaseClientOptions;
@@ -24,10 +24,6 @@ export class ServiceClient {
     /**
      * @param {core.file.Uploadable} uploadable
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     import { createReadStream } from "fs";
-     *     await client.service.upload(createReadStream("path/to/file"))
      */
     public upload(
         uploadable: core.file.Uploadable,
@@ -70,7 +66,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedBytesUploadError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -82,26 +78,20 @@ export class ServiceClient {
 
     /**
      * @param {core.file.Uploadable} uploadable
-     * @param {SeedBytesUpload.UploadWithQueryParamsRequest} request
+     * @param {SeedApi.ServiceUploadWithQueryParamsRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     import { createReadStream } from "fs";
-     *     await client.service.uploadWithQueryParams(createReadStream("path/to/file"), {
-     *         model: "nova-2"
-     *     })
      */
-    public uploadWithQueryParams(
+    public uploadwithqueryparams(
         uploadable: core.file.Uploadable,
-        request: SeedBytesUpload.UploadWithQueryParamsRequest,
+        request: SeedApi.ServiceUploadWithQueryParamsRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__uploadWithQueryParams(uploadable, request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__uploadwithqueryparams(uploadable, request, requestOptions));
     }
 
-    private async __uploadWithQueryParams(
+    private async __uploadwithqueryparams(
         uploadable: core.file.Uploadable,
-        request: SeedBytesUpload.UploadWithQueryParamsRequest,
+        request: SeedApi.ServiceUploadWithQueryParamsRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _queryParams: Record<string, unknown> = {
@@ -138,7 +128,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedBytesUploadError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

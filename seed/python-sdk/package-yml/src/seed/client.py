@@ -7,16 +7,13 @@ import typing
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
-from .core.request_options import RequestOptions
-from .raw_client import AsyncRawSeedPackageYml, RawSeedPackageYml
 
 if typing.TYPE_CHECKING:
+    from ._.client import AsyncClient, Client
     from .service.client import AsyncServiceClient, ServiceClient
-# this is used as the default value for optional parameters
-OMIT = typing.cast(typing.Any, ...)
 
 
-class SeedPackageYml:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -42,9 +39,9 @@ class SeedPackageYml:
 
     Examples
     --------
-    from seed import SeedPackageYml
+    from seed import SeedApi
 
-    client = SeedPackageYml(
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -73,51 +70,16 @@ class SeedPackageYml:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._raw_client = RawSeedPackageYml(client_wrapper=self._client_wrapper)
+        self.__: typing.Optional[Client] = None
         self._service: typing.Optional[ServiceClient] = None
 
     @property
-    def with_raw_response(self) -> RawSeedPackageYml:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
+    def _(self):
+        if self.__ is None:
+            from ._.client import Client  # noqa: E402
 
-        Returns
-        -------
-        RawSeedPackageYml
-        """
-        return self._raw_client
-
-    def echo(self, id: str, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None) -> str:
-        """
-        Parameters
-        ----------
-        id : str
-
-        name : str
-
-        size : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        str
-
-        Examples
-        --------
-        from seed import SeedPackageYml
-
-        client = SeedPackageYml(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.echo(
-            name="Hello world!",
-            size=20,
-        )
-        """
-        _response = self._raw_client.echo(id, name=name, size=size, request_options=request_options)
-        return _response.data
+            self.__ = Client(client_wrapper=self._client_wrapper)
+        return self.__
 
     @property
     def service(self):
@@ -146,7 +108,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedPackageYml:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -172,9 +134,9 @@ class AsyncSeedPackageYml:
 
     Examples
     --------
-    from seed import AsyncSeedPackageYml
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedPackageYml(
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -201,61 +163,16 @@ class AsyncSeedPackageYml:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._raw_client = AsyncRawSeedPackageYml(client_wrapper=self._client_wrapper)
+        self.__: typing.Optional[AsyncClient] = None
         self._service: typing.Optional[AsyncServiceClient] = None
 
     @property
-    def with_raw_response(self) -> AsyncRawSeedPackageYml:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
+    def _(self):
+        if self.__ is None:
+            from ._.client import AsyncClient  # noqa: E402
 
-        Returns
-        -------
-        AsyncRawSeedPackageYml
-        """
-        return self._raw_client
-
-    async def echo(
-        self, id: str, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
-        """
-        Parameters
-        ----------
-        id : str
-
-        name : str
-
-        size : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        str
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedPackageYml
-
-        client = AsyncSeedPackageYml(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.echo(
-                name="Hello world!",
-                size=20,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.echo(id, name=name, size=size, request_options=request_options)
-        return _response.data
+            self.__ = AsyncClient(client_wrapper=self._client_wrapper)
+        return self.__
 
     @property
     def service(self):

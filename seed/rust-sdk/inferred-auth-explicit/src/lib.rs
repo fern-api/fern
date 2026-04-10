@@ -1,27 +1,27 @@
-//! # InferredAuthExplicit SDK
+//! # inferred-auth-explicit SDK
 //!
-//! The official Rust SDK for the InferredAuthExplicit.
+//! The official Rust SDK for the inferred-auth-explicit.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_inferred_auth_explicit::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = InferredAuthExplicitClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .auth
-//!         .get_token_with_client_credentials(
-//!             &GetTokenRequest {
+//!         .gettokenwithclientcredentials(
+//!             &AuthGetTokenWithClientCredentialsRequest {
 //!                 client_id: "client_id".to_string(),
 //!                 client_secret: "client_secret".to_string(),
-//!                 audience: "https://api.example.com".to_string(),
-//!                 grant_type: "client_credentials".to_string(),
-//!                 scope: Some("scope".to_string()),
+//!                 audience: AuthGetTokenWithClientCredentialsRequestAudience::HttpsApiExampleCom,
+//!                 grant_type: AuthGetTokenWithClientCredentialsRequestGrantType::ClientCredentials,
+//!                 scope: None,
 //!             },
 //!             Some(RequestOptions::new().additional_header("X-Api-Key", "X-Api-Key")),
 //!         )

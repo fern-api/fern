@@ -1,10 +1,10 @@
 import Foundation
-import InferredAuthImplicitNoExpiry
+import Api
 
 private func main() async throws {
-    let client = InferredAuthImplicitNoExpiryClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.simple.getSomething()
+    _ = try await client.nestedNoAuthApi.nestedNoAuthApiGetSomething()
 }
 
 try await main()

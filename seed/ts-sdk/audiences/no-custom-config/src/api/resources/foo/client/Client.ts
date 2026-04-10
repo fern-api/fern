@@ -4,9 +4,10 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as environments from "../../../../environments.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedAudiences from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace FooClient {
     export type Options = BaseClientOptions;
@@ -17,32 +18,28 @@ export declare namespace FooClient {
 export class FooClient {
     protected readonly _options: NormalizedClientOptions<FooClient.Options>;
 
-    constructor(options: FooClient.Options) {
+    constructor(options: FooClient.Options = {}) {
         this._options = normalizeClientOptions(options);
     }
 
     /**
-     * @param {SeedAudiences.FindRequest} request
+     * @param {SeedApi.FooFindRequest} request
      * @param {FooClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.foo.find({
-     *         optionalString: "optionalString",
-     *         publicProperty: "publicProperty",
-     *         privateProperty: 1
-     *     })
+     *     await client.foo.find()
      */
     public find(
-        request: SeedAudiences.FindRequest = {},
+        request: SeedApi.FooFindRequest = {},
         requestOptions?: FooClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedAudiences.ImportingType> {
+    ): core.HttpResponsePromise<SeedApi.ImportingType> {
         return core.HttpResponsePromise.fromPromise(this.__find(request, requestOptions));
     }
 
     private async __find(
-        request: SeedAudiences.FindRequest = {},
+        request: SeedApi.FooFindRequest = {},
         requestOptions?: FooClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedAudiences.ImportingType>> {
+    ): Promise<core.WithRawResponse<SeedApi.ImportingType>> {
         const { optionalString, ..._body } = request;
         const _queryParams: Record<string, unknown> = {
             optionalString,
@@ -51,7 +48,8 @@ export class FooClient {
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+                (await core.Supplier.get(this._options.environment)) ??
+                environments.SeedApiEnvironment.Default,
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -65,11 +63,11 @@ export class FooClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedAudiences.ImportingType, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.ImportingType, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedAudiencesError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "MultiUrlEnvironment",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "MultiUrlEnvironment",
-            targets: ["MultiUrlEnvironment"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "MultiUrlEnvironment",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "MultiUrlEnvironmentTests",
-            dependencies: ["MultiUrlEnvironment"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

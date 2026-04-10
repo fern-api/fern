@@ -30,10 +30,7 @@ require "seed"
 
 client = Seed::Client.new
 
-client.service.patch(
-  application: "application",
-  require_auth: true
-)
+client.service.patch
 ```
 
 ## Environments

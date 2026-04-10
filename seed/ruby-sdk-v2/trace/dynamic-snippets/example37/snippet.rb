@@ -5,7 +5,70 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.v2.v3.problem.get_problem_version(
-  problem_id: "problemId",
-  problem_version: 1
+client.problem.createproblem(
+  problem_name: "problemName",
+  problem_description: {
+    boards: []
+  },
+  files: {
+    files: {
+      solution_file: {
+        filename: "filename",
+        contents: "contents"
+      },
+      read_only_files: [{
+        filename: "filename",
+        contents: "contents"
+      }, {
+        filename: "filename",
+        contents: "contents"
+      }]
+    }
+  },
+  input_params: [{
+    variable_type: {
+      type: "integerType"
+    },
+    name: "name"
+  }, {
+    variable_type: {
+      type: "integerType"
+    },
+    name: "name"
+  }],
+  output_type: {
+    type: "integerType"
+  },
+  testcases: [{
+    test_case: {
+      id: "id",
+      params: [{
+        type: "integerValue",
+        value: 1
+      }, {
+        type: "integerValue",
+        value: 1
+      }]
+    },
+    expected_result: {
+      type: "integerValue",
+      value: 1
+    }
+  }, {
+    test_case: {
+      id: "id",
+      params: [{
+        type: "integerValue",
+        value: 1
+      }, {
+        type: "integerValue",
+        value: 1
+      }]
+    },
+    expected_result: {
+      type: "integerValue",
+      value: 1
+    }
+  }],
+  method_name: "methodName"
 )

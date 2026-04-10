@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getMovie</a>({ ...params }) -> SeedResponseProperty.Response</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getmovie</a>({ ...params }) -> SeedApi.Response</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```typescript
-await client.service.getMovie("string");
+await client.service.getmovie("string");
 
 ```
 </dd>
@@ -49,7 +49,7 @@ await client.service.getMovie("string");
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getMovieDocs</a>({ ...params }) -> SeedResponseProperty.Response</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getmoviedocs</a>({ ...params }) -> SeedApi.Response</code></summary>
 <dl>
 <dd>
 
@@ -62,7 +62,7 @@ await client.service.getMovie("string");
 <dd>
 
 ```typescript
-await client.service.getMovieDocs("string");
+await client.service.getmoviedocs("string");
 
 ```
 </dd>
@@ -98,7 +98,7 @@ await client.service.getMovieDocs("string");
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getMovieName</a>({ ...params }) -> SeedResponseProperty.StringResponse</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getmoviename</a>({ ...params }) -> SeedApi.StringResponse</code></summary>
 <dl>
 <dd>
 
@@ -111,7 +111,7 @@ await client.service.getMovieDocs("string");
 <dd>
 
 ```typescript
-await client.service.getMovieName("string");
+await client.service.getmoviename("string");
 
 ```
 </dd>
@@ -147,7 +147,7 @@ await client.service.getMovieName("string");
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getMovieMetadata</a>({ ...params }) -> SeedResponseProperty.Response</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getmoviemetadata</a>({ ...params }) -> SeedApi.Response</code></summary>
 <dl>
 <dd>
 
@@ -160,7 +160,7 @@ await client.service.getMovieName("string");
 <dd>
 
 ```typescript
-await client.service.getMovieMetadata("string");
+await client.service.getmoviemetadata("string");
 
 ```
 </dd>
@@ -196,7 +196,7 @@ await client.service.getMovieMetadata("string");
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getOptionalMovie</a>({ ...params }) -> SeedResponseProperty.Response | undefined</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getoptionalmovie</a>({ ...params }) -> SeedApi.Response</code></summary>
 <dl>
 <dd>
 
@@ -209,7 +209,7 @@ await client.service.getMovieMetadata("string");
 <dd>
 
 ```typescript
-await client.service.getOptionalMovie("string");
+await client.service.getoptionalmovie("string");
 
 ```
 </dd>
@@ -245,7 +245,7 @@ await client.service.getOptionalMovie("string");
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getOptionalMovieDocs</a>({ ...params }) -> SeedResponseProperty.OptionalWithDocs | undefined</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getoptionalmoviedocs</a>({ ...params }) -> SeedApi.OptionalWithDocs</code></summary>
 <dl>
 <dd>
 
@@ -258,7 +258,7 @@ await client.service.getOptionalMovie("string");
 <dd>
 
 ```typescript
-await client.service.getOptionalMovieDocs("string");
+await client.service.getoptionalmoviedocs("string");
 
 ```
 </dd>
@@ -294,7 +294,7 @@ await client.service.getOptionalMovieDocs("string");
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getOptionalMovieName</a>({ ...params }) -> SeedResponseProperty.OptionalStringResponse | undefined</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getoptionalmoviename</a>({ ...params }) -> SeedApi.OptionalStringResponse</code></summary>
 <dl>
 <dd>
 
@@ -307,7 +307,7 @@ await client.service.getOptionalMovieDocs("string");
 <dd>
 
 ```typescript
-await client.service.getOptionalMovieName("string");
+await client.service.getoptionalmoviename("string");
 
 ```
 </dd>

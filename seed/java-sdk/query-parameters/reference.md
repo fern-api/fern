@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.getUsername() -> User</code></summary>
+<details><summary><code>client.user.getusername() -> User</code></summary>
 <dl>
 <dd>
 
@@ -13,14 +13,14 @@
 <dd>
 
 ```java
-client.user().getUsername(
-    GetUsersRequest
+client.user().getusername(
+    UserGetUsernameRequest
         .builder()
         .limit(1)
-        .id(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+        .id("id")
         .date("2023-01-15")
         .deadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-        .bytes("SGVsbG8gd29ybGQh".getBytes())
+        .bytes("bytes")
         .user(
             User
                 .builder()
@@ -47,13 +47,6 @@ client.user().getUsername(
         )
         .userList(
             Arrays.asList(
-                User
-                    .builder()
-                    .name("name")
-                    .tags(
-                        Arrays.asList("tags", "tags")
-                    )
-                    .build(),
                 User
                     .builder()
                     .name("name")
@@ -117,7 +110,7 @@ client.user().getUsername(
 <dl>
 <dd>
 
-**id:** `UUID` 
+**id:** `String` 
     
 </dd>
 </dl>
@@ -141,7 +134,7 @@ client.user().getUsername(
 <dl>
 <dd>
 
-**bytes:** `byte[]` 
+**bytes:** `String` 
     
 </dd>
 </dl>
@@ -157,7 +150,7 @@ client.user().getUsername(
 <dl>
 <dd>
 
-**userList:** `List<User>` 
+**userList:** `Optional<User>` 
     
 </dd>
 </dl>
@@ -205,7 +198,7 @@ client.user().getUsername(
 <dl>
 <dd>
 
-**excludeUser:** `User` 
+**excludeUser:** `Optional<User>` 
     
 </dd>
 </dl>
@@ -213,7 +206,7 @@ client.user().getUsername(
 <dl>
 <dd>
 
-**filter:** `String` 
+**filter:** `Optional<String>` 
     
 </dd>
 </dl>

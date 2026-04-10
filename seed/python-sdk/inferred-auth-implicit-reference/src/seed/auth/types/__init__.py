@@ -6,13 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .get_token_request import GetTokenRequest
-    from .refresh_token_request import RefreshTokenRequest
-    from .token_response import TokenResponse
+    from .get_token_request_audience import GetTokenRequestAudience
+    from .get_token_request_grant_type import GetTokenRequestGrantType
+    from .refresh_token_request_audience import RefreshTokenRequestAudience
+    from .refresh_token_request_grant_type import RefreshTokenRequestGrantType
 _dynamic_imports: typing.Dict[str, str] = {
-    "GetTokenRequest": ".get_token_request",
-    "RefreshTokenRequest": ".refresh_token_request",
-    "TokenResponse": ".token_response",
+    "GetTokenRequestAudience": ".get_token_request_audience",
+    "GetTokenRequestGrantType": ".get_token_request_grant_type",
+    "RefreshTokenRequestAudience": ".refresh_token_request_audience",
+    "RefreshTokenRequestGrantType": ".refresh_token_request_grant_type",
 }
 
 
@@ -37,4 +39,9 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["GetTokenRequest", "RefreshTokenRequest", "TokenResponse"]
+__all__ = [
+    "GetTokenRequestAudience",
+    "GetTokenRequestGrantType",
+    "RefreshTokenRequestAudience",
+    "RefreshTokenRequestGrantType",
+]

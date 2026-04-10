@@ -55,29 +55,28 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.queryParameters.SeedQueryParametersClient;
-import com.seed.queryParameters.resources.user.requests.GetUsersRequest;
-import com.seed.queryParameters.resources.user.types.NestedUser;
-import com.seed.queryParameters.resources.user.types.User;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.user.requests.UserGetUsernameRequest;
+import com.seed.api.types.NestedUser;
+import com.seed.api.types.User;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.UUID;
 
 public class Example {
     public static void main(String[] args) {
-        SeedQueryParametersClient client = SeedQueryParametersClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .build();
 
-        client.user().getUsername(
-            GetUsersRequest
+        client.user().getusername(
+            UserGetUsernameRequest
                 .builder()
                 .limit(1)
-                .id(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+                .id("id")
                 .date("2023-01-15")
                 .deadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                .bytes("SGVsbG8gd29ybGQh".getBytes())
+                .bytes("bytes")
                 .user(
                     User
                         .builder()
@@ -104,13 +103,6 @@ public class Example {
                 )
                 .userList(
                     Arrays.asList(
-                        User
-                            .builder()
-                            .name("name")
-                            .tags(
-                                Arrays.asList("tags", "tags")
-                            )
-                            .build(),
                         User
                             .builder()
                             .name("name")
@@ -161,9 +153,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.queryParameters.SeedQueryParametersClient;
+import com.seed.api.SeedApiClient;
 
-SeedQueryParametersClient client = SeedQueryParametersClient
+SeedApiClient client = SeedApiClient
     .builder()
     .url("https://example.com")
     .build();
@@ -174,11 +166,11 @@ SeedQueryParametersClient client = SeedQueryParametersClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.queryParameters.core.SeedQueryParametersApiException;
+import com.seed.api.core.SeedApiApiException;
 
 try{
-    client.user().getUsername(...);
-} catch (SeedQueryParametersApiException e){
+    client.user().getusername(...);
+} catch (SeedApiApiException e){
     // Do something with the API exception...
 }
 ```
@@ -191,12 +183,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.queryParameters.SeedQueryParametersClient;
+import com.seed.api.SeedApiClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedQueryParametersClient client = SeedQueryParametersClient
+SeedApiClient client = SeedApiClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -219,9 +211,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.queryParameters.SeedQueryParametersClient;
+import com.seed.api.SeedApiClient;
 
-SeedQueryParametersClient client = SeedQueryParametersClient
+SeedApiClient client = SeedApiClient
     .builder()
     .maxRetries(1)
     .build();
@@ -231,17 +223,17 @@ SeedQueryParametersClient client = SeedQueryParametersClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.queryParameters.SeedQueryParametersClient;
-import com.seed.queryParameters.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedQueryParametersClient client = SeedQueryParametersClient
+SeedApiClient client = SeedApiClient
     .builder()
     .timeout(60)
     .build();
 
 // Request level
-client.user().getUsername(
+client.user().getusername(
     ...,
     RequestOptions
         .builder()
@@ -255,11 +247,11 @@ client.user().getUsername(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.queryParameters.SeedQueryParametersClient;
-import com.seed.queryParameters.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedQueryParametersClient client = SeedQueryParametersClient
+SeedApiClient client = SeedApiClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -267,7 +259,7 @@ SeedQueryParametersClient client = SeedQueryParametersClient
 ;
 
 // Request level
-client.user().getUsername(
+client.user().getusername(
     ...,
     RequestOptions
         .builder()
@@ -283,7 +275,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedQueryParametersHttpResponse response = client.user().withRawResponse().getUsername(...);
+SeedApiHttpResponse response = client.user().withRawResponse().getusername(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

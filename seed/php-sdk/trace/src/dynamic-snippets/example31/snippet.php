@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Playlist\Requests\UpdatePlaylistRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,4 +11,13 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->v2->problem->getProblems();
+$client->playlist->updateplaylist(
+    1,
+    'playlistId',
+    new UpdatePlaylistRequest([
+        'name' => 'name',
+        'problems' => [
+            'problems',
+        ],
+    ]),
+);

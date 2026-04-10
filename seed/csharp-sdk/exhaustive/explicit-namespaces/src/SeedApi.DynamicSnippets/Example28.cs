@@ -1,25 +1,22 @@
-using SeedExhaustive;
-using SeedExhaustive.Types.Object;
+using SeedApi;
+using SeedApi.EndpointsHttpMethods;
 
 namespace Usage;
 
 public class Example28
 {
     public async Task Do() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.Object.GetAndReturnWithRequiredNestedObjectAsync(
-            new ObjectWithRequiredNestedObject {
-                RequiredString = "hello",
-                RequiredObject = new NestedObjectWithRequiredField {
-                    String = "nested",
-                    NestedObject = new ObjectWithOptionalField()
-                }
+        await client.EndpointsHttpMethods.EndpointsHttpMethodsTestPatchAsync(
+            new EndpointsHttpMethodsTestPatchRequest {
+                Id = "id",
+                Body = new TypesObjectWithOptionalField()
             }
         );
     }

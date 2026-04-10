@@ -11,7 +11,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Inlined::Types::SendLiteralsInlinedRequest]
+      # @param params [Seed::Inlined::Types::InlinedSendRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -25,7 +25,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "inlined",
-          body: Seed::Inlined::Types::SendLiteralsInlinedRequest.new(params).to_h,
+          body: Seed::Inlined::Types::InlinedSendRequest.new(params).to_h,
           request_options: request_options
         )
         begin

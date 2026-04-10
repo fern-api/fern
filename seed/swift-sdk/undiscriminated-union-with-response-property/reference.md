@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/UndiscriminatedUnionWithResponsePropertyClient.swift">getUnion</a>(requestOptions: RequestOptions?) -> UnionResponse</code></summary>
+## 
+<details><summary><code>client..<a href="/Sources/Resources//Client.swift">getUnion</a>(requestOptions: RequestOptions?) -> UnionResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +14,12 @@
 
 ```swift
 import Foundation
-import UndiscriminatedUnionWithResponseProperty
+import Api
 
 private func main() async throws {
-    let client = UndiscriminatedUnionWithResponsePropertyClient()
+    let client = ApiClient()
 
-    _ = try await client.getUnion()
+    _ = try await client..getUnion()
 }
 
 try await main()
@@ -48,7 +49,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/Sources/UndiscriminatedUnionWithResponsePropertyClient.swift">listUnions</a>(requestOptions: RequestOptions?) -> UnionListResponse</code></summary>
+<details><summary><code>client..<a href="/Sources/Resources//Client.swift">listUnions</a>(requestOptions: RequestOptions?) -> UnionListResponse</code></summary>
 <dl>
 <dd>
 
@@ -62,12 +63,12 @@ try await main()
 
 ```swift
 import Foundation
-import UndiscriminatedUnionWithResponseProperty
+import Api
 
 private func main() async throws {
-    let client = UndiscriminatedUnionWithResponsePropertyClient()
+    let client = ApiClient()
 
-    _ = try await client.listUnions()
+    _ = try await client..listUnions()
 }
 
 try await main()

@@ -14,7 +14,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.FindRequest{
+    request := &fern.FooFindRequest{
         OptionalString: fern.String(
             "optionalString",
         ),

@@ -10,6 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->health->service->check(
-    'id-3tey93i',
+$client->healthService->healthServiceCheck(
+    'id',
 );

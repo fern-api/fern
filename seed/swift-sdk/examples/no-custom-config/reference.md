@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/ExamplesClient.swift">echo</a>(request: String, requestOptions: RequestOptions?) -> String</code></summary>
+## 
+<details><summary><code>client..<a href="/Sources/Resources//Client.swift">echo</a>(request: String, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +14,12 @@
 
 ```swift
 import Foundation
-import Examples
+import Api
 
 private func main() async throws {
-    let client = ExamplesClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.echo(request: "Hello world!\n\nwith\n\tnewlines")
+    _ = try await client..echo(request: "string")
 }
 
 try await main()
@@ -56,7 +57,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/Sources/ExamplesClient.swift">createType</a>(request: Type, requestOptions: RequestOptions?) -> Identifier</code></summary>
+<details><summary><code>client..<a href="/Sources/Resources//Client.swift">createType</a>(request: Type, requestOptions: RequestOptions?) -> Identifier</code></summary>
 <dl>
 <dd>
 
@@ -70,12 +71,12 @@ try await main()
 
 ```swift
 import Foundation
-import Examples
+import Api
 
 private func main() async throws {
-    let client = ExamplesClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.createType(request: `Type`.basicType(
+    _ = try await client..createType(request: `Type`.basicType(
         .primitive
     ))
 }
@@ -115,8 +116,8 @@ try await main()
 </dl>
 </details>
 
-## File Notification Service
-<details><summary><code>client.file.notification.service.<a href="/Sources/Resources/File/Notification/Service/ServiceClient.swift">getException</a>(notificationId: String, requestOptions: RequestOptions?) -> Exception</code></summary>
+## FileNotificationService
+<details><summary><code>client.fileNotificationService.<a href="/Sources/Resources/FileNotificationService/FileNotificationServiceClient.swift">fileNotificationServiceGetException</a>(notificationId: String, requestOptions: RequestOptions?) -> Exception</code></summary>
 <dl>
 <dd>
 
@@ -130,12 +131,12 @@ try await main()
 
 ```swift
 import Foundation
-import Examples
+import Api
 
 private func main() async throws {
-    let client = ExamplesClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.file.notification.service.getException(notificationId: "notification-hsy129x")
+    _ = try await client.fileNotificationService.fileNotificationServiceGetException(notificationId: "notificationId")
 }
 
 try await main()
@@ -173,8 +174,8 @@ try await main()
 </dl>
 </details>
 
-## File Service
-<details><summary><code>client.file.service.<a href="/Sources/Resources/File/Service/FileServiceClient.swift">getFile</a>(filename: String, xFileApiVersion: String, requestOptions: RequestOptions?) -> File</code></summary>
+## FileService
+<details><summary><code>client.fileService.<a href="/Sources/Resources/FileService/FileServiceClient.swift">fileServiceGetFile</a>(filename: String, requestOptions: RequestOptions?) -> File</code></summary>
 <dl>
 <dd>
 
@@ -202,12 +203,12 @@ This endpoint returns a file by its name.
 
 ```swift
 import Foundation
-import Examples
+import Api
 
 private func main() async throws {
-    let client = ExamplesClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.file.service.getFile(filename: "file.txt")
+    _ = try await client.fileService.fileServiceGetFile(filename: "filename")
 }
 
 try await main()
@@ -233,14 +234,6 @@ try await main()
 <dl>
 <dd>
 
-**xFileApiVersion:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
     
 </dd>
@@ -253,8 +246,8 @@ try await main()
 </dl>
 </details>
 
-## Health Service
-<details><summary><code>client.health.service.<a href="/Sources/Resources/Health/Service/HealthServiceClient.swift">check</a>(id: String, requestOptions: RequestOptions?) -> Void</code></summary>
+## HealthService
+<details><summary><code>client.healthService.<a href="/Sources/Resources/HealthService/HealthServiceClient.swift">healthServiceCheck</a>(id: String, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -282,12 +275,12 @@ This endpoint checks the health of a resource.
 
 ```swift
 import Foundation
-import Examples
+import Api
 
 private func main() async throws {
-    let client = ExamplesClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.health.service.check(id: "id-2sdx82h")
+    _ = try await client.healthService.healthServiceCheck(id: "id")
 }
 
 try await main()
@@ -325,7 +318,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.health.service.<a href="/Sources/Resources/Health/Service/HealthServiceClient.swift">ping</a>(requestOptions: RequestOptions?) -> Bool</code></summary>
+<details><summary><code>client.healthService.<a href="/Sources/Resources/HealthService/HealthServiceClient.swift">healthServicePing</a>(requestOptions: RequestOptions?) -> Bool</code></summary>
 <dl>
 <dd>
 
@@ -353,12 +346,12 @@ This endpoint checks the health of the service.
 
 ```swift
 import Foundation
-import Examples
+import Api
 
 private func main() async throws {
-    let client = ExamplesClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.health.service.ping()
+    _ = try await client.healthService.healthServicePing()
 }
 
 try await main()
@@ -389,7 +382,7 @@ try await main()
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient_.swift">getMovie</a>(movieId: String, requestOptions: RequestOptions?) -> Movie</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getmovie</a>(movieId: String, requestOptions: RequestOptions?) -> Movie</code></summary>
 <dl>
 <dd>
 
@@ -403,12 +396,12 @@ try await main()
 
 ```swift
 import Foundation
-import Examples
+import Api
 
 private func main() async throws {
-    let client = ExamplesClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.getMovie(movieId: "movie-c06a4ad7")
+    _ = try await client.service.getmovie(movieId: "movieId")
 }
 
 try await main()
@@ -446,7 +439,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient_.swift">createMovie</a>(request: Movie, requestOptions: RequestOptions?) -> MovieId</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">createmovie</a>(request: Movie, requestOptions: RequestOptions?) -> MovieId</code></summary>
 <dl>
 <dd>
 
@@ -460,30 +453,20 @@ try await main()
 
 ```swift
 import Foundation
-import Examples
+import Api
 
 private func main() async throws {
-    let client = ExamplesClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.createMovie(request: Movie(
-        id: "movie-c06a4ad7",
-        prequel: "movie-cv9b914f",
-        title: "The Boy and the Heron",
-        from: "Hayao Miyazaki",
-        rating: 8,
+    _ = try await client.service.createmovie(request: Movie(
+        id: "id",
+        title: "title",
+        from: "from",
+        rating: 1.1,
         type: .movie,
-        tag: "tag-wf9as23d",
+        tag: "tag",
         metadata: [
-            "actors": .array([
-                .string("Christian Bale"),
-                .string("Florence Pugh"),
-                .string("Willem Dafoe")
-            ]), 
-            "releaseDate": .string("2023-12-08"), 
-            "ratings": .object([
-                "rottenTomatoes": .number(97), 
-                "imdb": .number(7.6)
-            ])
+            "key": .string("value")
         ],
         revenue: 1000000
     ))
@@ -524,7 +507,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient_.swift">getMetadata</a>(xApiVersion: String, shallow: Bool?, tag: String?, requestOptions: RequestOptions?) -> MetadataType</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getmetadata</a>(apiVersion: String, shallow: Nullable&lt;Bool&gt;?, tag: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> Metadata</code></summary>
 <dl>
 <dd>
 
@@ -538,12 +521,12 @@ try await main()
 
 ```swift
 import Foundation
-import Examples
+import Api
 
 private func main() async throws {
-    let client = ExamplesClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.getMetadata(shallow: false)
+    _ = try await client.service.getmetadata()
 }
 
 try await main()
@@ -561,7 +544,7 @@ try await main()
 <dl>
 <dd>
 
-**xApiVersion:** `String` 
+**apiVersion:** `String` 
     
 </dd>
 </dl>
@@ -569,7 +552,7 @@ try await main()
 <dl>
 <dd>
 
-**shallow:** `Bool?` 
+**shallow:** `Nullable<Bool>?` 
     
 </dd>
 </dl>
@@ -577,7 +560,7 @@ try await main()
 <dl>
 <dd>
 
-**tag:** `String?` 
+**tag:** `Nullable<String>?` 
     
 </dd>
 </dl>
@@ -597,7 +580,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient_.swift">createBigEntity</a>(request: BigEntity, requestOptions: RequestOptions?) -> Response</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">createbigentity</a>(request: Requests.BigEntity, requestOptions: RequestOptions?) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -611,216 +594,12 @@ try await main()
 
 ```swift
 import Foundation
-import Examples
+import Api
 
 private func main() async throws {
-    let client = ExamplesClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.createBigEntity(request: BigEntity(
-        castMember: CastMember.actor(
-            Actor(
-                name: "name",
-                id: "id"
-            )
-        ),
-        extendedMovie: ExtendedMovie(
-            id: "id",
-            prequel: "prequel",
-            title: "title",
-            from: "from",
-            rating: 1.1,
-            type: .movie,
-            tag: "tag",
-            book: "book",
-            metadata: [
-                "metadata": .object([
-                    "key": .string("value")
-                ])
-            ],
-            revenue: 1000000,
-            cast: [
-                "cast",
-                "cast"
-            ]
-        ),
-        entity: Entity(
-            type: `Type`.basicType(
-                .primitive
-            ),
-            name: "name"
-        ),
-        metadata: MetadataType.html(
-
-        ),
-        commonMetadata: Metadata(
-            id: "id",
-            data: [
-                "data": "data"
-            ],
-            jsonString: "jsonString"
-        ),
-        eventInfo: EventInfo.metadata(
-            Metadata(
-                id: "id",
-                data: [
-                    "data": "data"
-                ],
-                jsonString: "jsonString"
-            )
-        ),
-        data: Data.string(
-
-        ),
-        migration: Migration(
-            name: "name",
-            status: .running
-        ),
-        exception: Exception.generic(
-            ExceptionInfo(
-                exceptionType: "exceptionType",
-                exceptionMessage: "exceptionMessage",
-                exceptionStacktrace: "exceptionStacktrace"
-            )
-        ),
-        test: Test.and(
-
-        ),
-        node: Node(
-            name: "name",
-            nodes: [
-                Node(
-                    name: "name",
-                    nodes: [
-                        Node(
-                            name: "name"
-                        ),
-                        Node(
-                            name: "name"
-                        )
-                    ],
-                    trees: [
-                        Tree(
-                            nodes: []
-                        ),
-                        Tree(
-                            nodes: []
-                        )
-                    ]
-                ),
-                Node(
-                    name: "name",
-                    nodes: [
-                        Node(
-                            name: "name"
-                        ),
-                        Node(
-                            name: "name"
-                        )
-                    ],
-                    trees: [
-                        Tree(
-                            nodes: []
-                        ),
-                        Tree(
-                            nodes: []
-                        )
-                    ]
-                )
-            ],
-            trees: [
-                Tree(
-                    nodes: [
-                        Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
-                        ),
-                        Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
-                        )
-                    ]
-                ),
-                Tree(
-                    nodes: [
-                        Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
-                        ),
-                        Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
-                        )
-                    ]
-                )
-            ]
-        ),
-        directory: Directory(
-            name: "name",
-            files: [
-                File(
-                    name: "name",
-                    contents: "contents"
-                ),
-                File(
-                    name: "name",
-                    contents: "contents"
-                )
-            ],
-            directories: [
-                Directory(
-                    name: "name",
-                    files: [
-                        File(
-                            name: "name",
-                            contents: "contents"
-                        ),
-                        File(
-                            name: "name",
-                            contents: "contents"
-                        )
-                    ],
-                    directories: [
-                        Directory(
-                            name: "name"
-                        ),
-                        Directory(
-                            name: "name"
-                        )
-                    ]
-                ),
-                Directory(
-                    name: "name",
-                    files: [
-                        File(
-                            name: "name",
-                            contents: "contents"
-                        ),
-                        File(
-                            name: "name",
-                            contents: "contents"
-                        )
-                    ],
-                    directories: [
-                        Directory(
-                            name: "name"
-                        ),
-                        Directory(
-                            name: "name"
-                        )
-                    ]
-                )
-            ]
-        ),
-        moment: Moment(
-            id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-            date: CalendarDate("2023-01-15")!,
-            datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
-        )
-    ))
+    _ = try await client.service.createbigentity(request: .init())
 }
 
 try await main()
@@ -838,7 +617,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `BigEntity` 
+**request:** `Requests.BigEntity` 
     
 </dd>
 </dl>
@@ -858,7 +637,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient_.swift">refreshToken</a>(request: RefreshTokenRequest?, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">refreshtoken</a>(request: Requests.RefreshTokenRequest, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -872,14 +651,12 @@ try await main()
 
 ```swift
 import Foundation
-import Examples
+import Api
 
 private func main() async throws {
-    let client = ExamplesClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.refreshToken(request: RefreshTokenRequest(
-
-    ))
+    _ = try await client.service.refreshtoken(request: .init(ttl: 1))
 }
 
 try await main()
@@ -897,7 +674,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `RefreshTokenRequest?` 
+**request:** `Requests.RefreshTokenRequest` 
     
 </dd>
 </dl>

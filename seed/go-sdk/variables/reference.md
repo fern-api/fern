@@ -13,9 +13,12 @@
 <dd>
 
 ```go
+request := &fern.ServicePostRequest{
+        EndpointParam: "endpointParam",
+    }
 client.Service.Post(
         context.TODO(),
-        "<endpointParam>",
+        request,
     )
 }
 ```

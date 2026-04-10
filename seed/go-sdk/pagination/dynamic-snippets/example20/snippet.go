@@ -17,14 +17,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsersBodyOffsetPaginationRequest{
-        Pagination: &fern.WithPage{
-            Page: fern.Int(
-                1,
-            ),
-        },
-    }
-    client.Users.ListWithBodyOffsetPagination(
+    request := &fern.InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest{}
+    client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithExtendedResultsAndOptionalData(
         context.TODO(),
         request,
     )

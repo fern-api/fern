@@ -1,10 +1,10 @@
 import Foundation
-import NoRetries
+import Api
 
 private func main() async throws {
-    let client = NoRetriesClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.retries.getUsers()
+    _ = try await client.retries.getusers()
 }
 
 try await main()

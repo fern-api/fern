@@ -4,22 +4,22 @@
             "id": {
                 "path": "/users/path",
                 "method": "GET",
-                "identifier_override": "endpoint_users.listWithPathPagination"
+                "identifier_override": "endpoint_users.listwithpathpagination"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/pagination-uri-path/fern/client\"\n\toption \"github.com/pagination-uri-path/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Users.ListWithPathPagination(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/pagination-uri-path/fern/client\"\n\toption \"github.com/pagination-uri-path/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Users.Listwithpathpagination(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/users/uri",
                 "method": "GET",
-                "identifier_override": "endpoint_users.listWithUriPagination"
+                "identifier_override": "endpoint_users.listwithuripagination"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/pagination-uri-path/fern/client\"\n\toption \"github.com/pagination-uri-path/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Users.ListWithUriPagination(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/pagination-uri-path/fern/client\"\n\toption \"github.com/pagination-uri-path/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Users.Listwithuripagination(\n\tcontext.TODO(),\n)\n"
             }
         }
     ]

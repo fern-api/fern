@@ -5,7 +5,7 @@ info:
 paths:
   /users/uri:
     get:
-      operationId: users_listWithUriPagination
+      operationId: users_listwithuripagination
       tags:
         - Users
       parameters: []
@@ -16,9 +16,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersUriPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    data:
+                      - name: name
+                        id: 1
+                    next: next
   /users/path:
     get:
-      operationId: users_listWithPathPagination
+      operationId: users_listwithpathpagination
       tags:
         - Users
       parameters: []
@@ -29,6 +36,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersPathPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    data:
+                      - name: name
+                        id: 1
+                    next: next
 components:
   schemas:
     User:
@@ -69,6 +83,6 @@ components:
       required:
         - data
   securitySchemes:
-    Bearer:
+    BearerAuth:
       type: http
       scheme: bearer

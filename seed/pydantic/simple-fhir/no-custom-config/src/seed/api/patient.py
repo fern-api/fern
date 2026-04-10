@@ -6,10 +6,11 @@ import typing
 
 import pydantic
 from .core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from .patient_resource_type import PatientResourceType
 
 
 class Patient(BaseResource):
-    resource_type: typing.Literal["Patient"] = "Patient"
+    resource_type: PatientResourceType
     name: str
     scripts: typing.List["Script"]
 

@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_username</a>(...) -> User</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">getusername</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -13,21 +13,19 @@
 <dd>
 
 ```python
-from seed import SeedQueryParameters
-import uuid
+from seed import SeedApi, User, NestedUser
 import datetime
-from seed.user import User, NestedUser
 
-client = SeedQueryParameters(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_username(
+client.user.getusername(
     limit=1,
-    id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    id="id",
     date=datetime.date.fromisoformat("2023-01-15"),
     deadline=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-    bytes="SGVsbG8gd29ybGQh",
+    bytes="bytes",
     user=User(
         name="name",
         tags=[
@@ -36,13 +34,6 @@ client.user.get_username(
         ],
     ),
     user_list=[
-        User(
-            name="name",
-            tags=[
-                "tags",
-                "tags"
-            ],
-        ),
         User(
             name="name",
             tags=[
@@ -109,7 +100,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**id:** `uuid.UUID` 
+**id:** `str` 
     
 </dd>
 </dl>
@@ -149,14 +140,6 @@ client.user.get_username(
 <dl>
 <dd>
 
-**user_list:** `typing.List[User]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **key_value:** `typing.Dict[str, str]` 
     
 </dd>
@@ -173,15 +156,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**exclude_user:** `typing.Union[User, typing.Sequence[User]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**filter:** `typing.Union[str, typing.Sequence[str]]` 
+**user_list:** `typing.Optional[typing.Union[User, typing.Sequence[User]]]` 
     
 </dd>
 </dl>
@@ -206,6 +181,22 @@ client.user.get_username(
 <dd>
 
 **optional_user:** `typing.Optional[User]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**exclude_user:** `typing.Optional[typing.Union[User, typing.Sequence[User]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
     
 </dd>
 </dl>

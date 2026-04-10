@@ -3,9 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Problem\Requests\GetDefaultStarterFilesRequest;
-use Seed\Problem\Types\VariableTypeAndName;
-use Seed\Commons\Types\VariableType;
+use Seed\Migration\Requests\MigrationGetAttemptedMigrationsRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -13,19 +11,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->problem->getDefaultStarterFiles(
-    new GetDefaultStarterFilesRequest([
-        'inputParams' => [
-            new VariableTypeAndName([
-                'variableType' => VariableType::integerType(),
-                'name' => 'name',
-            ]),
-            new VariableTypeAndName([
-                'variableType' => VariableType::integerType(),
-                'name' => 'name',
-            ]),
-        ],
-        'outputType' => VariableType::integerType(),
-        'methodName' => 'methodName',
+$client->migration->getattemptedmigrations(
+    new MigrationGetAttemptedMigrationsRequest([
+        'adminKeyHeader' => 'adminKeyHeader',
     ]),
 );

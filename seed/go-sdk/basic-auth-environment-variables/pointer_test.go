@@ -1,4 +1,4 @@
-package basicauthenvironmentvariables
+package api
 
 import (
 	"testing"

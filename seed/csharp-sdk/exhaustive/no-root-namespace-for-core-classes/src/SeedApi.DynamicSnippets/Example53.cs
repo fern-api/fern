@@ -1,20 +1,24 @@
-using SeedExhaustive;
-using SeedExhaustive.Core;
+using SeedApi;
+using SeedApi.Core;
+using System.Globalization;
 
 namespace Usage;
 
 public class Example53
 {
     public async Task Do() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnBase64Async(
-            "SGVsbG8gd29ybGQh"
+        await client.EndpointsObject.EndpointsObjectGetAndReturnWithDatetimeLikeStringAsync(
+            new TypesObjectWithDatetimeLikeString {
+                DatetimeLikeString = "datetimeLikeString",
+                ActualDatetime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal)
+            }
         );
     }
 

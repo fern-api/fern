@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">get_organization</a>(...) -> Organization</code></summary>
+<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">getorganization</a>(...) -> Organization</code></summary>
 <dl>
 <dd>
 
@@ -13,14 +13,13 @@
 <dd>
 
 ```python
-from seed import SeedPathParameters
+from seed import SeedApi
 
-client = SeedPathParameters(
-    tenant_id="tenant_id",
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.organizations.get_organization(
+client.organizations.getorganization(
     tenant_id="tenant_id",
     organization_id="organization_id",
 )
@@ -67,7 +66,7 @@ client.organizations.get_organization(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">get_organization_user</a>(...) -> User</code></summary>
+<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">getorganizationuser</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -80,14 +79,14 @@ client.organizations.get_organization(
 <dd>
 
 ```python
-from seed import SeedPathParameters
+from seed import SeedApi
 
-client = SeedPathParameters(
-    tenant_id="tenant_id",
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.organizations.get_organization_user(
+client.organizations.getorganizationuser(
+    tenant_id="tenant_id",
     organization_id="organization_id",
     user_id="user_id",
 )
@@ -142,7 +141,7 @@ client.organizations.get_organization_user(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">search_organizations</a>(...) -> typing.List[Organization]</code></summary>
+<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">searchorganizations</a>(...) -> typing.List[Organization]</code></summary>
 <dl>
 <dd>
 
@@ -155,16 +154,15 @@ client.organizations.get_organization_user(
 <dd>
 
 ```python
-from seed import SeedPathParameters
+from seed import SeedApi
 
-client = SeedPathParameters(
-    tenant_id="tenant_id",
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.organizations.search_organizations(
+client.organizations.searchorganizations(
+    tenant_id="tenant_id",
     organization_id="organization_id",
-    limit=1,
 )
 
 ```
@@ -218,7 +216,7 @@ client.organizations.search_organizations(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user</a>(...) -> User</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">getuser</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -231,14 +229,14 @@ client.organizations.search_organizations(
 <dd>
 
 ```python
-from seed import SeedPathParameters
+from seed import SeedApi
 
-client = SeedPathParameters(
-    tenant_id="tenant_id",
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_user(
+client.user.getuser(
+    tenant_id="tenant_id",
     user_id="user_id",
 )
 
@@ -284,7 +282,7 @@ client.user.get_user(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_user</a>(...) -> User</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">updateuser</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -297,89 +295,17 @@ client.user.get_user(
 <dd>
 
 ```python
-from seed import SeedPathParameters
+from seed import SeedApi
 
-client = SeedPathParameters(
-    tenant_id="tenant_id",
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.create_user(
+client.user.updateuser(
     tenant_id="tenant_id",
-    name="name",
-    tags=[
-        "tags",
-        "tags"
-    ],
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**tenant_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `User` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.user.<a href="src/seed/user/client.py">update_user</a>(...) -> User</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from seed import SeedPathParameters
-
-client = SeedPathParameters(
-    tenant_id="tenant_id",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.user.update_user(
     user_id="user_id",
     name="name",
     tags=[
-        "tags",
         "tags"
     ],
 )
@@ -434,7 +360,7 @@ client.user.update_user(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">search_users</a>(...) -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">createuser</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -447,16 +373,84 @@ client.user.update_user(
 <dd>
 
 ```python
-from seed import SeedPathParameters
+from seed import SeedApi
 
-client = SeedPathParameters(
-    tenant_id="tenant_id",
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.search_users(
+client.user.createuser(
+    tenant_id="tenant_id",
+    name="name",
+    tags=[
+        "tags"
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenant_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `User` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.<a href="src/seed/user/client.py">searchusers</a>(...) -> typing.List[User]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedApi
+
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.user.searchusers(
+    tenant_id="tenant_id",
     user_id="user_id",
-    limit=1,
 )
 
 ```
@@ -509,7 +503,7 @@ client.user.search_users(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user_metadata</a>(...) -> User</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">getusermetadata</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -536,14 +530,14 @@ Test endpoint with path parameter that has a text prefix (v{version})
 <dd>
 
 ```python
-from seed import SeedPathParameters
+from seed import SeedApi
 
-client = SeedPathParameters(
-    tenant_id="tenant_id",
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_user_metadata(
+client.user.getusermetadata(
+    tenant_id="tenant_id",
     user_id="user_id",
     version=1,
 )
@@ -598,7 +592,7 @@ client.user.get_user_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user_specifics</a>(...) -> User</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">getuserspecifics</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -625,14 +619,14 @@ Test endpoint with path parameters listed in different order than found in path
 <dd>
 
 ```python
-from seed import SeedPathParameters
+from seed import SeedApi
 
-client = SeedPathParameters(
-    tenant_id="tenant_id",
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_user_specifics(
+client.user.getuserspecifics(
+    tenant_id="tenant_id",
     user_id="user_id",
     version=1,
     thought="thought",

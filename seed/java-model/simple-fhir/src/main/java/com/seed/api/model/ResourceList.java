@@ -4,125 +4,377 @@
 
 package com.seed.api.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.seed.api.core.ObjectMappers;
-import java.io.IOException;
-import java.lang.IllegalStateException;
 import java.lang.Object;
-import java.lang.RuntimeException;
+import java.lang.Override;
 import java.lang.String;
-import java.lang.SuppressWarnings;
 import java.util.Objects;
+import java.util.Optional;
 
-@JsonDeserialize(
-    using = ResourceList.Deserializer.class
-)
 public final class ResourceList {
-  private final Object value;
+  private final Value value;
 
-  private final int type;
-
-  private ResourceList(Object value, int type) {
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  private ResourceList(Value value) {
     this.value = value;
-    this.type = type;
+  }
+
+  public <T> T visit(Visitor<T> visitor) {
+    return value.visit(visitor);
+  }
+
+  public static ResourceList account(Account value) {
+    return new ResourceList(new AccountValue(value));
+  }
+
+  public static ResourceList patient(Patient value) {
+    return new ResourceList(new PatientValue(value));
+  }
+
+  public static ResourceList practitioner(Practitioner value) {
+    return new ResourceList(new PractitionerValue(value));
+  }
+
+  public static ResourceList script(Script value) {
+    return new ResourceList(new ScriptValue(value));
+  }
+
+  public boolean isAccount() {
+    return value instanceof AccountValue;
+  }
+
+  public boolean isPatient() {
+    return value instanceof PatientValue;
+  }
+
+  public boolean isPractitioner() {
+    return value instanceof PractitionerValue;
+  }
+
+  public boolean isScript() {
+    return value instanceof ScriptValue;
+  }
+
+  public boolean _isUnknown() {
+    return value instanceof _UnknownValue;
+  }
+
+  public Optional<Account> getAccount() {
+    if (isAccount()) {
+      return Optional.of(((AccountValue) value).value);
+    }
+    return Optional.empty();
+  }
+
+  public Optional<Patient> getPatient() {
+    if (isPatient()) {
+      return Optional.of(((PatientValue) value).value);
+    }
+    return Optional.empty();
+  }
+
+  public Optional<Practitioner> getPractitioner() {
+    if (isPractitioner()) {
+      return Optional.of(((PractitionerValue) value).value);
+    }
+    return Optional.empty();
+  }
+
+  public Optional<Script> getScript() {
+    if (isScript()) {
+      return Optional.of(((ScriptValue) value).value);
+    }
+    return Optional.empty();
+  }
+
+  public Optional<Object> _getUnknown() {
+    if (_isUnknown()) {
+      return Optional.of(((_UnknownValue) value).value);
+    }
+    return Optional.empty();
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof ResourceList && value.equals(((ResourceList) other).value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
   }
 
   @JsonValue
-  public Object get() {
+  private Value getValue() {
     return this.value;
   }
 
-  @SuppressWarnings("unchecked")
-  public <T> T visit(Visitor<T> visitor) {
-    if(this.type == 0) {
-      return visitor.visit((Account) this.value);
-    } else if(this.type == 1) {
-      return visitor.visit((Patient) this.value);
-    } else if(this.type == 2) {
-      return visitor.visit((Practitioner) this.value);
-    } else if(this.type == 3) {
-      return visitor.visit((Script) this.value);
-    }
-    throw new IllegalStateException("Failed to visit value. This should never happen.");
-  }
-
-  @java.lang.Override
-  public boolean equals(Object other) {
-    if (this == other) return true;
-    return other instanceof ResourceList && equalTo((ResourceList) other);
-  }
-
-  private boolean equalTo(ResourceList other) {
-    return value.equals(other.value);
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    return Objects.hash(this.value);
-  }
-
-  @java.lang.Override
-  public String toString() {
-    return this.value.toString();
-  }
-
-  public static ResourceList of(Account value) {
-    return new ResourceList(value, 0);
-  }
-
-  public static ResourceList of(Patient value) {
-    return new ResourceList(value, 1);
-  }
-
-  public static ResourceList of(Practitioner value) {
-    return new ResourceList(value, 2);
-  }
-
-  public static ResourceList of(Script value) {
-    return new ResourceList(value, 3);
-  }
-
   public interface Visitor<T> {
-    T visit(Account value);
+    T visitAccount(Account account);
 
-    T visit(Patient value);
+    T visitPatient(Patient patient);
 
-    T visit(Practitioner value);
+    T visitPractitioner(Practitioner practitioner);
 
-    T visit(Script value);
+    T visitScript(Script script);
+
+    T _visitUnknown(Object unknownType);
   }
 
-  static final class Deserializer extends StdDeserializer<ResourceList> {
-    Deserializer() {
-      super(ResourceList.class);
+  @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME,
+      property = "resource_type",
+      visible = true,
+      defaultImpl = _UnknownValue.class
+  )
+  @JsonSubTypes({
+      @JsonSubTypes.Type(AccountValue.class),
+      @JsonSubTypes.Type(PatientValue.class),
+      @JsonSubTypes.Type(PractitionerValue.class),
+      @JsonSubTypes.Type(ScriptValue.class)
+  })
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  private interface Value {
+    <T> T visit(Visitor<T> visitor);
+  }
+
+  @JsonTypeName("Account")
+  @JsonIgnoreProperties("resource_type")
+  private static final class AccountValue implements Value {
+    @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "resource_type",
+        allowSetters = true
+    )
+    private Account value;
+
+    @JsonCreator(
+        mode = JsonCreator.Mode.PROPERTIES
+    )
+    private AccountValue() {
+    }
+
+    private AccountValue(Account value) {
+      this.value = value;
     }
 
     @java.lang.Override
-    public ResourceList deserialize(JsonParser p, DeserializationContext context) throws
-        IOException {
-      Object value = p.readValueAs(Object.class);
-      try {
-        return of(ObjectMappers.JSON_MAPPER.convertValue(value, Account.class));
-      } catch(RuntimeException e) {
-      }
-      try {
-        return of(ObjectMappers.JSON_MAPPER.convertValue(value, Patient.class));
-      } catch(RuntimeException e) {
-      }
-      try {
-        return of(ObjectMappers.JSON_MAPPER.convertValue(value, Practitioner.class));
-      } catch(RuntimeException e) {
-      }
-      try {
-        return of(ObjectMappers.JSON_MAPPER.convertValue(value, Script.class));
-      } catch(RuntimeException e) {
-      }
-      throw new JsonParseException(p, "Failed to deserialize");
+    public <T> T visit(Visitor<T> visitor) {
+      return visitor.visitAccount(value);
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof AccountValue && equalTo((AccountValue) other);
+    }
+
+    private boolean equalTo(AccountValue other) {
+      return value.equals(other.value);
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      return Objects.hash(this.value);
+    }
+
+    @java.lang.Override
+    public String toString() {
+      return "ResourceList{" + "value: " + value + "}";
+    }
+  }
+
+  @JsonTypeName("Patient")
+  @JsonIgnoreProperties("resource_type")
+  private static final class PatientValue implements Value {
+    @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "resource_type",
+        allowSetters = true
+    )
+    private Patient value;
+
+    @JsonCreator(
+        mode = JsonCreator.Mode.PROPERTIES
+    )
+    private PatientValue() {
+    }
+
+    private PatientValue(Patient value) {
+      this.value = value;
+    }
+
+    @java.lang.Override
+    public <T> T visit(Visitor<T> visitor) {
+      return visitor.visitPatient(value);
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof PatientValue && equalTo((PatientValue) other);
+    }
+
+    private boolean equalTo(PatientValue other) {
+      return value.equals(other.value);
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      return Objects.hash(this.value);
+    }
+
+    @java.lang.Override
+    public String toString() {
+      return "ResourceList{" + "value: " + value + "}";
+    }
+  }
+
+  @JsonTypeName("Practitioner")
+  @JsonIgnoreProperties("resource_type")
+  private static final class PractitionerValue implements Value {
+    @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "resource_type",
+        allowSetters = true
+    )
+    private Practitioner value;
+
+    @JsonCreator(
+        mode = JsonCreator.Mode.PROPERTIES
+    )
+    private PractitionerValue() {
+    }
+
+    private PractitionerValue(Practitioner value) {
+      this.value = value;
+    }
+
+    @java.lang.Override
+    public <T> T visit(Visitor<T> visitor) {
+      return visitor.visitPractitioner(value);
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof PractitionerValue && equalTo((PractitionerValue) other);
+    }
+
+    private boolean equalTo(PractitionerValue other) {
+      return value.equals(other.value);
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      return Objects.hash(this.value);
+    }
+
+    @java.lang.Override
+    public String toString() {
+      return "ResourceList{" + "value: " + value + "}";
+    }
+  }
+
+  @JsonTypeName("Script")
+  @JsonIgnoreProperties("resource_type")
+  private static final class ScriptValue implements Value {
+    @JsonUnwrapped
+    @JsonIgnoreProperties(
+        value = "resource_type",
+        allowSetters = true
+    )
+    private Script value;
+
+    @JsonCreator(
+        mode = JsonCreator.Mode.PROPERTIES
+    )
+    private ScriptValue() {
+    }
+
+    private ScriptValue(Script value) {
+      this.value = value;
+    }
+
+    @java.lang.Override
+    public <T> T visit(Visitor<T> visitor) {
+      return visitor.visitScript(value);
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof ScriptValue && equalTo((ScriptValue) other);
+    }
+
+    private boolean equalTo(ScriptValue other) {
+      return value.equals(other.value);
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      return Objects.hash(this.value);
+    }
+
+    @java.lang.Override
+    public String toString() {
+      return "ResourceList{" + "value: " + value + "}";
+    }
+  }
+
+  @JsonIgnoreProperties("resource_type")
+  private static final class _UnknownValue implements Value {
+    private String type;
+
+    @JsonValue
+    private Object value;
+
+    @JsonCreator(
+        mode = JsonCreator.Mode.PROPERTIES
+    )
+    private _UnknownValue(@JsonProperty("value") Object value) {
+    }
+
+    @java.lang.Override
+    public <T> T visit(Visitor<T> visitor) {
+      return visitor._visitUnknown(value);
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
+    }
+
+    private boolean equalTo(_UnknownValue other) {
+      return type.equals(other.type) && value.equals(other.value);
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      return Objects.hash(this.type, this.value);
+    }
+
+    @java.lang.Override
+    public String toString() {
+      return "ResourceList{" + "type: " + type + ", value: " + value + "}";
     }
   }
 }

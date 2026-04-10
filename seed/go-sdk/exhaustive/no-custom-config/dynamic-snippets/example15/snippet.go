@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
 )
@@ -16,8 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.HTTPMethods.TestDelete(
+    request := &fern.TypesObjectWithRequiredField{
+        FieldString: "string",
+    }
+    client.EndpointsContainer.EndpointsContainerGetAndReturnOptional(
         context.TODO(),
-        "id",
+        request,
     )
 }

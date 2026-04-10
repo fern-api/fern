@@ -4,199 +4,98 @@ package sse
 
 import (
 	json "encoding/json"
-	fmt "fmt"
 	internal "github.com/fern-api/sse-go/internal"
 	big "math/big"
 )
 
 var (
-	streamCompletionRequestFieldQuery = big.NewInt(1 << 0)
+	completionsStreamRequestFieldQuery = big.NewInt(1 << 0)
 )
 
-type StreamCompletionRequest struct {
+type CompletionsStreamRequest struct {
 	Query string `json:"query" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (s *StreamCompletionRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+func (c *CompletionsStreamRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamCompletionRequest) SetQuery(query string) {
-	s.Query = query
-	s.require(streamCompletionRequestFieldQuery)
+func (c *CompletionsStreamRequest) SetQuery(query string) {
+	c.Query = query
+	c.require(completionsStreamRequestFieldQuery)
 }
 
-func (s *StreamCompletionRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler StreamCompletionRequest
+func (c *CompletionsStreamRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler CompletionsStreamRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*s = StreamCompletionRequest(body)
+	*c = CompletionsStreamRequest(body)
 	return nil
 }
 
-func (s *StreamCompletionRequest) MarshalJSON() ([]byte, error) {
-	type embed StreamCompletionRequest
+func (c *CompletionsStreamRequest) MarshalJSON() ([]byte, error) {
+	type embed CompletionsStreamRequest
 	var marshaler = struct {
 		embed
 	}{
-		embed: embed(*s),
+		embed: embed(*c),
 	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 
 var (
-	streamCompletionRequestWithoutTerminatorFieldQuery = big.NewInt(1 << 0)
+	completionsStreamWithoutTerminatorRequestFieldQuery = big.NewInt(1 << 0)
 )
 
-type StreamCompletionRequestWithoutTerminator struct {
+type CompletionsStreamWithoutTerminatorRequest struct {
 	Query string `json:"query" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (s *StreamCompletionRequestWithoutTerminator) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+func (c *CompletionsStreamWithoutTerminatorRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamCompletionRequestWithoutTerminator) SetQuery(query string) {
-	s.Query = query
-	s.require(streamCompletionRequestWithoutTerminatorFieldQuery)
+func (c *CompletionsStreamWithoutTerminatorRequest) SetQuery(query string) {
+	c.Query = query
+	c.require(completionsStreamWithoutTerminatorRequestFieldQuery)
 }
 
-func (s *StreamCompletionRequestWithoutTerminator) UnmarshalJSON(data []byte) error {
-	type unmarshaler StreamCompletionRequestWithoutTerminator
+func (c *CompletionsStreamWithoutTerminatorRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler CompletionsStreamWithoutTerminatorRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*s = StreamCompletionRequestWithoutTerminator(body)
+	*c = CompletionsStreamWithoutTerminatorRequest(body)
 	return nil
 }
 
-func (s *StreamCompletionRequestWithoutTerminator) MarshalJSON() ([]byte, error) {
-	type embed StreamCompletionRequestWithoutTerminator
+func (c *CompletionsStreamWithoutTerminatorRequest) MarshalJSON() ([]byte, error) {
+	type embed CompletionsStreamWithoutTerminatorRequest
 	var marshaler = struct {
 		embed
 	}{
-		embed: embed(*s),
+		embed: embed(*c),
 	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
 	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	streamedCompletionFieldDelta  = big.NewInt(1 << 0)
-	streamedCompletionFieldTokens = big.NewInt(1 << 1)
-)
-
-type StreamedCompletion struct {
-	Delta  string `json:"delta" url:"delta"`
-	Tokens *int   `json:"tokens,omitempty" url:"tokens,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (s *StreamedCompletion) GetDelta() string {
-	if s == nil {
-		return ""
-	}
-	return s.Delta
-}
-
-func (s *StreamedCompletion) GetTokens() *int {
-	if s == nil {
-		return nil
-	}
-	return s.Tokens
-}
-
-func (s *StreamedCompletion) GetExtraProperties() map[string]interface{} {
-	if s == nil {
-		return nil
-	}
-	return s.extraProperties
-}
-
-func (s *StreamedCompletion) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
-	}
-	s.explicitFields.Or(s.explicitFields, field)
-}
-
-// SetDelta sets the Delta field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamedCompletion) SetDelta(delta string) {
-	s.Delta = delta
-	s.require(streamedCompletionFieldDelta)
-}
-
-// SetTokens sets the Tokens field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamedCompletion) SetTokens(tokens *int) {
-	s.Tokens = tokens
-	s.require(streamedCompletionFieldTokens)
-}
-
-func (s *StreamedCompletion) UnmarshalJSON(data []byte) error {
-	type unmarshaler StreamedCompletion
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*s = StreamedCompletion(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *s)
-	if err != nil {
-		return err
-	}
-	s.extraProperties = extraProperties
-	s.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (s *StreamedCompletion) MarshalJSON() ([]byte, error) {
-	type embed StreamedCompletion
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*s),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (s *StreamedCompletion) String() string {
-	if s == nil {
-		return "<nil>"
-	}
-	if len(s.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
 }

@@ -18,7 +18,7 @@ import java.util.Objects;
 @JsonDeserialize(
     builder = RootType.Builder.class
 )
-public final class RootType implements IRootType {
+public final class RootType {
   private final String s;
 
   private RootType(String s) {
@@ -26,7 +26,6 @@ public final class RootType implements IRootType {
   }
 
   @JsonProperty("s")
-  @java.lang.Override
   public String getS() {
     return s;
   }

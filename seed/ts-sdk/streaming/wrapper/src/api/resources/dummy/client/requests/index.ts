@@ -1,2 +1,2 @@
-export type { Generateequest } from "./Generateequest.js";
-export type { GenerateStreamRequest } from "./GenerateStreamRequest.js";
+export type { DummyGenerateRequest } from "./DummyGenerateRequest.js";
+export type { DummyGenerateStreamRequest } from "./DummyGenerateStreamRequest.js";

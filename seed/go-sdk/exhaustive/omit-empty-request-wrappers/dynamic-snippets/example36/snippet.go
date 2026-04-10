@@ -3,8 +3,8 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
-    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
 )
 
@@ -17,15 +17,14 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.GetWithMultipleQuery{
-        Query: []string{
-            "query",
-        },
-        Number: []int{
-            1,
+    request := &fern.TypesObjectWithMapOfMap{
+        Map: map[string]map[string]string{
+            "key": map[string]string{
+                "key": "value",
+            },
         },
     }
-    client.Endpoints.Params.GetWithAllowMultipleQuery(
+    client.EndpointsObject.EndpointsObjectGetAndReturnWithMapOfMap(
         context.TODO(),
         request,
     )

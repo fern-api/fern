@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">upload_json_document</a>(...) -> UploadDocumentResponse</code></summary>
+## _
+<details><summary><code>client._.<a href="src/seed/_/client.py">upload_json_document</a>(...) -> UploadDocumentResponse</code></summary>
 <dl>
 <dd>
 
@@ -20,7 +21,7 @@ client = SeedApi(
     environment=SeedApiEnvironment.DEFAULT,
 )
 
-client.upload_json_document()
+client._.upload_json_document()
 
 ```
 </dd>
@@ -72,7 +73,7 @@ client.upload_json_document()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">upload_pdf_document</a>(...) -> UploadDocumentResponse</code></summary>
+<details><summary><code>client._.<a href="src/seed/_/client.py">upload_pdf_document</a>(...) -> UploadDocumentResponse</code></summary>
 <dl>
 <dd>
 
@@ -85,7 +86,7 @@ client.upload_json_document()
 <dd>
 
 ```python
-client.upload_pdf_document(...)
+client._.upload_pdf_document(...)
 ```
 </dd>
 </dl>

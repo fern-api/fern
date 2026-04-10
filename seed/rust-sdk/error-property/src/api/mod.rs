@@ -1,4 +1,4 @@
-//! API client and types for the ErrorProperty
+//! API client and types for the error-property
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,5 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{ErrorPropertyClient, ErrorsClient, PropertyBasedErrorClient};
+pub use resources::{ApiClient, PropertybasederrorClient};
 pub use types::*;

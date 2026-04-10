@@ -37,12 +37,12 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Completions\Requests\StreamCompletionRequest;
+use Seed\Completions\Requests\CompletionsStreamRequest;
 
 $client = new SeedClient();
 $client->completions->stream(
-    new StreamCompletionRequest([
-        'query' => 'foo',
+    new CompletionsStreamRequest([
+        'query' => 'query',
     ]),
 );
 

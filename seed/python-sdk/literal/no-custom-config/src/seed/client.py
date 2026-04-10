@@ -16,7 +16,7 @@ if typing.TYPE_CHECKING:
     from .reference.client import AsyncReferenceClient, ReferenceClient
 
 
-class SeedLiteral:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -40,13 +40,11 @@ class SeedLiteral:
     logging : typing.Optional[typing.Union[LogConfig, Logger]]
         Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
 
-    version : typing.Optional[str]
-    audit_logging : typing.Optional[str]
     Examples
     --------
-    from seed import SeedLiteral
+    from seed import SeedApi
 
-    client = SeedLiteral(
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -60,8 +58,6 @@ class SeedLiteral:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        version: typing.Optional[str] = None,
-        audit_logging: typing.Optional[str] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -76,8 +72,6 @@ class SeedLiteral:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
             logging=logging,
-            version=version,
-            audit_logging=audit_logging,
         )
         self._headers: typing.Optional[HeadersClient] = None
         self._inlined: typing.Optional[InlinedClient] = None
@@ -144,7 +138,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedLiteral:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -168,13 +162,11 @@ class AsyncSeedLiteral:
     logging : typing.Optional[typing.Union[LogConfig, Logger]]
         Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
 
-    version : typing.Optional[str]
-    audit_logging : typing.Optional[str]
     Examples
     --------
-    from seed import AsyncSeedLiteral
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedLiteral(
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -188,8 +180,6 @@ class AsyncSeedLiteral:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        version: typing.Optional[str] = None,
-        audit_logging: typing.Optional[str] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -202,8 +192,6 @@ class AsyncSeedLiteral:
             else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
             timeout=_defaulted_timeout,
             logging=logging,
-            version=version,
-            audit_logging=audit_logging,
         )
         self._headers: typing.Optional[AsyncHeadersClient] = None
         self._inlined: typing.Optional[AsyncInlinedClient] = None

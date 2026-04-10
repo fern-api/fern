@@ -20,13 +20,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Seed::Organization::Types::Organization]
+      # @return [Seed::Types::Organization]
       def create(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/organizations/",
+          path: "organizations/",
           body: Seed::Organization::Types::CreateOrganizationRequest.new(params).to_h,
           request_options: request_options
         )
@@ -37,7 +37,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Organization::Types::Organization.load(response.body)
+          Seed::Types::Organization.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

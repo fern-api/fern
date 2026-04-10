@@ -2,13 +2,13 @@ import Foundation
 
 public struct TypeWithOptionalMap: Codable, Hashable, Sendable {
     public let key: String
-    public let columnValues: [String: String?]
+    public let columnValues: [String: Nullable<String>]
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         key: String,
-        columnValues: [String: String?],
+        columnValues: [String: Nullable<String>],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.key = key
@@ -19,7 +19,7 @@ public struct TypeWithOptionalMap: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.key = try container.decode(String.self, forKey: .key)
-        self.columnValues = try container.decode([String: String?].self, forKey: .columnValues)
+        self.columnValues = try container.decode([String: Nullable<String>].self, forKey: .columnValues)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

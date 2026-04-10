@@ -2,7 +2,9 @@ package example
 
 import (
     context "context"
+    strings "strings"
 
+    upload "github.com/fern-api/file-upload-go"
     client "github.com/fern-api/file-upload-go/client"
     option "github.com/fern-api/file-upload-go/option"
 )
@@ -13,7 +15,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Service.Simple(
+    request := &upload.ServiceJustFileWithOptionalQueryParamsRequest{
+        File: strings.NewReader(
+            "",
+        ),
+    }
+    client.Service.Justfilewithoptionalqueryparams(
         context.TODO(),
+        request,
     )
 }

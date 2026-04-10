@@ -65,7 +65,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/container/",
+                    path: "container/",
                     method: HttpMethod::DELETE,
                 ),
                 $options,

@@ -2,24 +2,68 @@
     "endpoints": [
         {
             "id": {
-                "path": "/just-file",
+                "path": "/",
                 "method": "POST",
-                "identifier_override": "endpoint_service.justFile"
+                "identifier_override": "endpoint_service.post"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.JustFile(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/file-upload/fern\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.Post(\n\tcontext.TODO(),\n\t\u0026fern.ServicePostRequest{},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/form-encoded",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withformencodedcontainers"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/file-upload/fern\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.Withformencodedcontainers(\n\tcontext.TODO(),\n\t\u0026fern.ServiceWithFormEncodedContainersRequest{},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline-type",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withinlinetype"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/file-upload/fern\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.Withinlinetype(\n\tcontext.TODO(),\n\t\u0026fern.ServiceWithInlineTypeRequest{},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/just-file-with-optional-query-params",
+                "method": "POST",
+                "identifier_override": "endpoint_service.justfilewithoptionalqueryparams"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/file-upload/fern\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.Justfilewithoptionalqueryparams(\n\tcontext.TODO(),\n\t\u0026fern.ServiceJustFileWithOptionalQueryParamsRequest{},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/just-file",
+                "method": "POST",
+                "identifier_override": "endpoint_service.justfile"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.Justfile(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/optional-args",
                 "method": "POST",
-                "identifier_override": "endpoint_service.optionalArgs"
+                "identifier_override": "endpoint_service.optionalargs"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/file-upload/fern\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.OptionalArgs(\n\tcontext.TODO(),\n\t\u0026fern.OptionalArgsRequest{},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/file-upload/fern\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.Optionalargs(\n\tcontext.TODO(),\n\t\u0026fern.ServiceOptionalArgsRequest{},\n)\n"
             }
         },
         {
@@ -31,6 +75,50 @@
             "snippet": {
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.Simple(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/with-content-type",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withcontenttype"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/file-upload/fern\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.Withcontenttype(\n\tcontext.TODO(),\n\t\u0026fern.ServiceWithContentTypeRequest{},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/with-form-encoding",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withformencoding"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/file-upload/fern\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.Withformencoding(\n\tcontext.TODO(),\n\t\u0026fern.ServiceWithFormEncodingRequest{},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/with-json-property",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withjsonproperty"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/file-upload/fern\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.Withjsonproperty(\n\tcontext.TODO(),\n\t\u0026fern.ServiceWithJSONPropertyRequest{},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/with-literal-enum",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withliteralandenumtypes"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/file-upload/fern\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.Withliteralandenumtypes(\n\tcontext.TODO(),\n\t\u0026fern.ServiceWithLiteralAndEnumTypesRequest{},\n)\n"
             }
         }
     ]

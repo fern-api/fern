@@ -1,6 +1,6 @@
 # Reference
-## NullableOptional
-<details><summary><code>$client-&gt;nullableOptional-&gt;getUser($userId) -> ?UserResponse</code></summary>
+## Nullableoptional
+<details><summary><code>$client-&gt;nullableoptional-&gt;getuser($userId) -> ?UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ Get a user by ID
 <dd>
 
 ```php
-$client->nullableOptional->getUser(
+$client->nullableoptional->getuser(
     'userId',
 );
 ```
@@ -56,76 +56,7 @@ $client->nullableOptional->getUser(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;nullableOptional-&gt;createUser($request) -> ?UserResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new user
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->nullableOptional->createUser(
-    new CreateUserRequest([
-        'username' => 'username',
-        'email' => 'email',
-        'phone' => 'phone',
-        'address' => new Address([
-            'street' => 'street',
-            'city' => 'city',
-            'state' => 'state',
-            'zipCode' => 'zipCode',
-            'country' => 'country',
-            'buildingId' => 'buildingId',
-            'tenantId' => 'tenantId',
-        ]),
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `CreateUserRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;nullableOptional-&gt;updateUser($userId, $request) -> ?UserResponse</code></summary>
+<details><summary><code>$client-&gt;nullableoptional-&gt;updateuser($userId, $request) -> ?UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -152,22 +83,9 @@ Update a user (partial update)
 <dd>
 
 ```php
-$client->nullableOptional->updateUser(
+$client->nullableoptional->updateuser(
     'userId',
-    new UpdateUserRequest([
-        'username' => 'username',
-        'email' => 'email',
-        'phone' => 'phone',
-        'address' => new Address([
-            'street' => 'street',
-            'city' => 'city',
-            'state' => 'state',
-            'zipCode' => 'zipCode',
-            'country' => 'country',
-            'buildingId' => 'buildingId',
-            'tenantId' => 'tenantId',
-        ]),
-    ]),
+    new UpdateUserRequest([]),
 );
 ```
 </dd>
@@ -191,7 +109,31 @@ $client->nullableOptional->updateUser(
 <dl>
 <dd>
 
-**$request:** `UpdateUserRequest` 
+**$username:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$email:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$phone:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$address:** `?Address` 
     
 </dd>
 </dl>
@@ -203,7 +145,7 @@ $client->nullableOptional->updateUser(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;nullableOptional-&gt;listUsers($request) -> ?array</code></summary>
+<details><summary><code>$client-&gt;nullableoptional-&gt;listusers($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -230,13 +172,8 @@ List all users
 <dd>
 
 ```php
-$client->nullableOptional->listUsers(
-    new ListUsersRequest([
-        'limit' => 1,
-        'offset' => 1,
-        'includeDeleted' => true,
-        'sortBy' => 'sortBy',
-    ]),
+$client->nullableoptional->listusers(
+    new NullableOptionalListUsersRequest([]),
 );
 ```
 </dd>
@@ -288,7 +225,89 @@ $client->nullableOptional->listUsers(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;nullableOptional-&gt;searchUsers($request) -> ?array</code></summary>
+<details><summary><code>$client-&gt;nullableoptional-&gt;createuser($request) -> ?UserResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->nullableoptional->createuser(
+    new CreateUserRequest([
+        'username' => 'username',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$username:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$email:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$phone:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$address:** `?Address` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;nullableoptional-&gt;searchusers($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -315,12 +334,10 @@ Search users
 <dd>
 
 ```php
-$client->nullableOptional->searchUsers(
-    new SearchUsersRequest([
+$client->nullableoptional->searchusers(
+    new NullableOptionalSearchUsersRequest([
         'query' => 'query',
         'department' => 'department',
-        'role' => 'role',
-        'isActive' => true,
     ]),
 );
 ```
@@ -373,7 +390,7 @@ $client->nullableOptional->searchUsers(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;nullableOptional-&gt;createComplexProfile($request) -> ?ComplexProfile</code></summary>
+<details><summary><code>$client-&gt;nullableoptional-&gt;createcomplexprofile($request) -> ?ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -400,106 +417,22 @@ Create a complex profile to test nullable enums and unions
 <dd>
 
 ```php
-$client->nullableOptional->createComplexProfile(
+$client->nullableoptional->createcomplexprofile(
     new ComplexProfile([
         'id' => 'id',
         'nullableRole' => UserRole::Admin->value,
-        'optionalRole' => UserRole::Admin->value,
-        'optionalNullableRole' => UserRole::Admin->value,
         'nullableStatus' => UserStatus::Active->value,
-        'optionalStatus' => UserStatus::Active->value,
-        'optionalNullableStatus' => UserStatus::Active->value,
-        'nullableNotification' => NotificationMethod::email(new EmailNotification([
+        'nullableNotification' => new NotificationMethodZero([
             'emailAddress' => 'emailAddress',
             'subject' => 'subject',
-            'htmlContent' => 'htmlContent',
-        ])),
-        'optionalNotification' => NotificationMethod::email(new EmailNotification([
-            'emailAddress' => 'emailAddress',
-            'subject' => 'subject',
-            'htmlContent' => 'htmlContent',
-        ])),
-        'optionalNullableNotification' => NotificationMethod::email(new EmailNotification([
-            'emailAddress' => 'emailAddress',
-            'subject' => 'subject',
-            'htmlContent' => 'htmlContent',
-        ])),
-        'nullableSearchResult' => SearchResult::user(new UserResponse([
+            'type' => NotificationMethodZeroType::Email->value,
+        ]),
+        'nullableSearchResult' => new SearchResultZero([
             'id' => 'id',
             'username' => 'username',
-            'email' => 'email',
-            'phone' => 'phone',
             'createdAt' => new DateTime('2024-01-15T09:30:00Z'),
-            'updatedAt' => new DateTime('2024-01-15T09:30:00Z'),
-            'address' => new Address([
-                'street' => 'street',
-                'city' => 'city',
-                'state' => 'state',
-                'zipCode' => 'zipCode',
-                'country' => 'country',
-                'buildingId' => 'buildingId',
-                'tenantId' => 'tenantId',
-            ]),
-        ])),
-        'optionalSearchResult' => SearchResult::user(new UserResponse([
-            'id' => 'id',
-            'username' => 'username',
-            'email' => 'email',
-            'phone' => 'phone',
-            'createdAt' => new DateTime('2024-01-15T09:30:00Z'),
-            'updatedAt' => new DateTime('2024-01-15T09:30:00Z'),
-            'address' => new Address([
-                'street' => 'street',
-                'city' => 'city',
-                'state' => 'state',
-                'zipCode' => 'zipCode',
-                'country' => 'country',
-                'buildingId' => 'buildingId',
-                'tenantId' => 'tenantId',
-            ]),
-        ])),
-        'nullableArray' => [
-            'nullableArray',
-            'nullableArray',
-        ],
-        'optionalArray' => [
-            'optionalArray',
-            'optionalArray',
-        ],
-        'optionalNullableArray' => [
-            'optionalNullableArray',
-            'optionalNullableArray',
-        ],
-        'nullableListOfNullables' => [
-            'nullableListOfNullables',
-            'nullableListOfNullables',
-        ],
-        'nullableMapOfNullables' => [
-            'nullableMapOfNullables' => new Address([
-                'street' => 'street',
-                'city' => 'city',
-                'state' => 'state',
-                'zipCode' => 'zipCode',
-                'country' => 'country',
-                'buildingId' => 'buildingId',
-                'tenantId' => 'tenantId',
-            ]),
-        ],
-        'nullableListOfUnions' => [
-            NotificationMethod::email(new EmailNotification([
-                'emailAddress' => 'emailAddress',
-                'subject' => 'subject',
-                'htmlContent' => 'htmlContent',
-            ])),
-            NotificationMethod::email(new EmailNotification([
-                'emailAddress' => 'emailAddress',
-                'subject' => 'subject',
-                'htmlContent' => 'htmlContent',
-            ])),
-        ],
-        'optionalMapOfEnums' => [
-            'optionalMapOfEnums' => UserRole::Admin->value,
-        ],
+            'type' => SearchResultZeroType::User->value,
+        ]),
     ]),
 );
 ```
@@ -528,7 +461,7 @@ $client->nullableOptional->createComplexProfile(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;nullableOptional-&gt;getComplexProfile($profileId) -> ?ComplexProfile</code></summary>
+<details><summary><code>$client-&gt;nullableoptional-&gt;getcomplexprofile($profileId) -> ?ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -555,7 +488,7 @@ Get a complex profile by ID
 <dd>
 
 ```php
-$client->nullableOptional->getComplexProfile(
+$client->nullableoptional->getcomplexprofile(
     'profileId',
 );
 ```
@@ -584,7 +517,7 @@ $client->nullableOptional->getComplexProfile(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;nullableOptional-&gt;updateComplexProfile($profileId, $request) -> ?ComplexProfile</code></summary>
+<details><summary><code>$client-&gt;nullableoptional-&gt;updatecomplexprofile($profileId, $request) -> ?ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -611,38 +544,9 @@ Update complex profile to test nullable field updates
 <dd>
 
 ```php
-$client->nullableOptional->updateComplexProfile(
+$client->nullableoptional->updatecomplexprofile(
     'profileId',
-    new UpdateComplexProfileRequest([
-        'nullableRole' => UserRole::Admin->value,
-        'nullableStatus' => UserStatus::Active->value,
-        'nullableNotification' => NotificationMethod::email(new EmailNotification([
-            'emailAddress' => 'emailAddress',
-            'subject' => 'subject',
-            'htmlContent' => 'htmlContent',
-        ])),
-        'nullableSearchResult' => SearchResult::user(new UserResponse([
-            'id' => 'id',
-            'username' => 'username',
-            'email' => 'email',
-            'phone' => 'phone',
-            'createdAt' => new DateTime('2024-01-15T09:30:00Z'),
-            'updatedAt' => new DateTime('2024-01-15T09:30:00Z'),
-            'address' => new Address([
-                'street' => 'street',
-                'city' => 'city',
-                'state' => 'state',
-                'zipCode' => 'zipCode',
-                'country' => 'country',
-                'buildingId' => 'buildingId',
-                'tenantId' => 'tenantId',
-            ]),
-        ])),
-        'nullableArray' => [
-            'nullableArray',
-            'nullableArray',
-        ],
-    ]),
+    new NullableOptionalUpdateComplexProfileRequest([]),
 );
 ```
 </dd>
@@ -682,7 +586,7 @@ $client->nullableOptional->updateComplexProfile(
 <dl>
 <dd>
 
-**$nullableNotification:** `?NotificationMethod` 
+**$nullableNotification:** `NotificationMethodZero|NotificationMethodOne|NotificationMethodTwo|null` 
     
 </dd>
 </dl>
@@ -690,7 +594,7 @@ $client->nullableOptional->updateComplexProfile(
 <dl>
 <dd>
 
-**$nullableSearchResult:** `?SearchResult` 
+**$nullableSearchResult:** `SearchResultZero|SearchResultOne|SearchResultTwo|null` 
     
 </dd>
 </dl>
@@ -710,7 +614,7 @@ $client->nullableOptional->updateComplexProfile(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;nullableOptional-&gt;testDeserialization($request) -> ?DeserializationTestResponse</code></summary>
+<details><summary><code>$client-&gt;nullableoptional-&gt;testdeserialization($request) -> ?DeserializationTestResponse</code></summary>
 <dl>
 <dd>
 
@@ -737,57 +641,18 @@ Test endpoint for validating null deserialization
 <dd>
 
 ```php
-$client->nullableOptional->testDeserialization(
+$client->nullableoptional->testdeserialization(
     new DeserializationTestRequest([
         'requiredString' => 'requiredString',
-        'nullableString' => 'nullableString',
-        'optionalString' => 'optionalString',
-        'optionalNullableString' => 'optionalNullableString',
         'nullableEnum' => UserRole::Admin->value,
-        'optionalEnum' => UserStatus::Active->value,
-        'nullableUnion' => NotificationMethod::email(new EmailNotification([
+        'nullableUnion' => new NotificationMethodZero([
             'emailAddress' => 'emailAddress',
             'subject' => 'subject',
-            'htmlContent' => 'htmlContent',
-        ])),
-        'optionalUnion' => SearchResult::user(new UserResponse([
-            'id' => 'id',
-            'username' => 'username',
-            'email' => 'email',
-            'phone' => 'phone',
-            'createdAt' => new DateTime('2024-01-15T09:30:00Z'),
-            'updatedAt' => new DateTime('2024-01-15T09:30:00Z'),
-            'address' => new Address([
-                'street' => 'street',
-                'city' => 'city',
-                'state' => 'state',
-                'zipCode' => 'zipCode',
-                'country' => 'country',
-                'buildingId' => 'buildingId',
-                'tenantId' => 'tenantId',
-            ]),
-        ])),
-        'nullableList' => [
-            'nullableList',
-            'nullableList',
-        ],
-        'nullableMap' => [
-            'nullableMap' => 1,
-        ],
+            'type' => NotificationMethodZeroType::Email->value,
+        ]),
         'nullableObject' => new Address([
             'street' => 'street',
-            'city' => 'city',
-            'state' => 'state',
             'zipCode' => 'zipCode',
-            'country' => 'country',
-            'buildingId' => 'buildingId',
-            'tenantId' => 'tenantId',
-        ]),
-        'optionalObject' => new Organization([
-            'id' => 'id',
-            'name' => 'name',
-            'domain' => 'domain',
-            'employeeCount' => 1,
         ]),
     ]),
 );
@@ -817,7 +682,7 @@ $client->nullableOptional->testDeserialization(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;nullableOptional-&gt;filterByRole($request) -> ?array</code></summary>
+<details><summary><code>$client-&gt;nullableoptional-&gt;filterbyrole($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -844,11 +709,9 @@ Filter users by role with nullable enum
 <dd>
 
 ```php
-$client->nullableOptional->filterByRole(
-    new FilterByRoleRequest([
+$client->nullableoptional->filterbyrole(
+    new NullableOptionalFilterByRoleRequest([
         'role' => UserRole::Admin->value,
-        'status' => UserStatus::Active->value,
-        'secondaryRole' => UserRole::Admin->value,
     ]),
 );
 ```
@@ -865,7 +728,7 @@ $client->nullableOptional->filterByRole(
 <dl>
 <dd>
 
-**$role:** `?string` 
+**$role:** `string` 
     
 </dd>
 </dl>
@@ -893,7 +756,7 @@ $client->nullableOptional->filterByRole(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;nullableOptional-&gt;getNotificationSettings($userId) -> ?NotificationMethod</code></summary>
+<details><summary><code>$client-&gt;nullableoptional-&gt;getnotificationsettings($userId) -> NotificationMethodZero|NotificationMethodOne|NotificationMethodTwo|null</code></summary>
 <dl>
 <dd>
 
@@ -920,7 +783,7 @@ Get notification settings which may be null
 <dd>
 
 ```php
-$client->nullableOptional->getNotificationSettings(
+$client->nullableoptional->getnotificationsettings(
     'userId',
 );
 ```
@@ -949,7 +812,7 @@ $client->nullableOptional->getNotificationSettings(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;nullableOptional-&gt;updateTags($userId, $request) -> ?array</code></summary>
+<details><summary><code>$client-&gt;nullableoptional-&gt;updatetags($userId, $request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -976,22 +839,9 @@ Update tags to test array handling
 <dd>
 
 ```php
-$client->nullableOptional->updateTags(
+$client->nullableoptional->updatetags(
     'userId',
-    new UpdateTagsRequest([
-        'tags' => [
-            'tags',
-            'tags',
-        ],
-        'categories' => [
-            'categories',
-            'categories',
-        ],
-        'labels' => [
-            'labels',
-            'labels',
-        ],
-    ]),
+    new NullableOptionalUpdateTagsRequest([]),
 );
 ```
 </dd>
@@ -1043,7 +893,7 @@ $client->nullableOptional->updateTags(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;nullableOptional-&gt;getSearchResults($request) -> ?array</code></summary>
+<details><summary><code>$client-&gt;nullableoptional-&gt;getsearchresults($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -1070,16 +920,9 @@ Get search results with nullable unions
 <dd>
 
 ```php
-$client->nullableOptional->getSearchResults(
-    new SearchRequest([
+$client->nullableoptional->getsearchresults(
+    new NullableOptionalGetSearchResultsRequest([
         'query' => 'query',
-        'filters' => [
-            'filters' => 'filters',
-        ],
-        'includeTypes' => [
-            'includeTypes',
-            'includeTypes',
-        ],
     ]),
 );
 ```

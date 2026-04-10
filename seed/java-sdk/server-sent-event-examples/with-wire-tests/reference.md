@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.completions.stream(request) -> Iterable&amp;lt;StreamedCompletion&amp;gt;</code></summary>
+<details><summary><code>client.completions.stream(request) -> InputStream</code></summary>
 <dl>
 <dd>
 
@@ -14,52 +14,7 @@
 
 ```java
 client.completions().stream(
-    StreamCompletionRequest
-        .builder()
-        .query("foo")
-        .build()
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**query:** `String` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.completions.streamEvents(request) -> Iterable&amp;lt;StreamEvent&amp;gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```java
-client.completions().streamEvents(
-    StreamEventsRequest
+    CompletionsStreamRequest
         .builder()
         .query("query")
         .build()
@@ -90,7 +45,7 @@ client.completions().streamEvents(
 </dl>
 </details>
 
-<details><summary><code>client.completions.streamEventsContextProtocol(request) -> Iterable&amp;lt;StreamEventContextProtocol&amp;gt;</code></summary>
+<details><summary><code>client.completions.streamevents(request) -> InputStream</code></summary>
 <dl>
 <dd>
 
@@ -103,8 +58,53 @@ client.completions().streamEvents(
 <dd>
 
 ```java
-client.completions().streamEventsContextProtocol(
-    StreamEventsContextProtocolRequest
+client.completions().streamevents(
+    CompletionsStreamEventsRequest
+        .builder()
+        .query("query")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**query:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.completions.streameventscontextprotocol(request) -> InputStream</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.completions().streameventscontextprotocol(
+    CompletionsStreamEventsContextProtocolRequest
         .builder()
         .query("query")
         .build()

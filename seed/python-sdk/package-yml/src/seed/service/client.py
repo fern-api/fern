@@ -39,13 +39,14 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import SeedPackageYml
+        from seed import SeedApi
 
-        client = SeedPackageYml(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
         client.service.nop(
-            nested_id="id-219xca8",
+            id="id",
+            nested_id="nestedId",
         )
         """
         _response = self._raw_client.nop(id, nested_id, request_options=request_options)
@@ -86,16 +87,17 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedPackageYml
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedPackageYml(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.service.nop(
-                nested_id="id-219xca8",
+                id="id",
+                nested_id="nestedId",
             )
 
 

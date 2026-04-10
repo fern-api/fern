@@ -1,4 +1,4 @@
-package dollarstringexamples
+package api
 
 import (
 	"testing"

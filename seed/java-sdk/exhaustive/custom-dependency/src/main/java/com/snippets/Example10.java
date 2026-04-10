@@ -1,15 +1,25 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.resources.types.enum_.types.WeatherReport;
+import com.seed.api.SeedApiClient;
+import com.seed.api.types.TypesObjectWithRequiredField;
+import java.util.HashMap;
 
 public class Example10 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints().enum_().getAndReturnEnum(WeatherReport.SUNNY);
+        client.endpointsContainer()
+                .endpointsContainerGetAndReturnMapOfPrimToObject(new HashMap<String, TypesObjectWithRequiredField>() {
+                    {
+                        put(
+                                "key",
+                                TypesObjectWithRequiredField.builder()
+                                        .string("string")
+                                        .build());
+                    }
+                });
     }
 }

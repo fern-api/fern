@@ -22,7 +22,7 @@ impl BigunionClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/bigunion/{}", id),
+                &format!("bigunion/{}", id),
                 None,
                 None,
                 options,
@@ -38,7 +38,7 @@ impl BigunionClient {
         self.http_client
             .execute_request(
                 Method::PATCH,
-                "/bigunion",
+                "bigunion",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -54,7 +54,7 @@ impl BigunionClient {
         self.http_client
             .execute_request(
                 Method::PATCH,
-                "/bigunion/many",
+                "bigunion/many",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

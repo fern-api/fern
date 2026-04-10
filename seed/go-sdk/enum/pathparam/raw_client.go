@@ -33,8 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Send(
 	ctx context.Context,
-	operand *fern.Operand,
-	operandOrColor *fern.ColorOrOperand,
+	request *fern.PathParamSendRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -45,8 +44,8 @@ func (r *RawClient) Send(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/path/%v/%v",
-		operand,
-		operandOrColor,
+		request.Operand,
+		request.OperandOrColor,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

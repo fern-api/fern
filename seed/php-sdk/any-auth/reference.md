@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>$client-&gt;auth-&gt;getToken($request) -> ?TokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;gettoken($request) -> ?TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +13,12 @@
 <dd>
 
 ```php
-$client->auth->getToken(
-    new GetTokenRequest([
+$client->auth->gettoken(
+    new AuthGetTokenRequest([
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
-        'audience' => 'https://api.example.com',
-        'grantType' => 'client_credentials',
+        'audience' => AuthGetTokenRequestAudience::HttpsApiExampleCom->value,
+        'grantType' => AuthGetTokenRequestGrantType::ClientCredentials->value,
     ]),
 );
 ```
@@ -97,7 +97,7 @@ $client->user->get();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;getAdmins() -> ?array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getadmins() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -110,7 +110,7 @@ $client->user->get();
 <dd>
 
 ```php
-$client->user->getAdmins();
+$client->user->getadmins();
 ```
 </dd>
 </dl>

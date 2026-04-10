@@ -18,6 +18,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Raw Response](#raw-response)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
+  - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -39,15 +40,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedServerSentEvents;
+using SeedApi;
 
-var client = new SeedServerSentEventsClient();
-var items = client.Completions.StreamAsync(new StreamCompletionRequest { Query = "" });
-
-await foreach (var item in items)
-{
-    // do something with item
-}
+var client = new SeedApiClient();
+await client.Completions.StreamAsync(new CompletionsStreamRequest { Query = "query" });
 ```
 
 ## Exception Handling
@@ -56,11 +52,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedServerSentEvents;
+using SeedApi;
 
 try {
     var response = await client.Completions.StreamAsync(...);
-} catch (SeedServerSentEventsApiException e) {
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -109,7 +105,7 @@ var response = await client.Completions.StreamAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedServerSentEvents;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
 var result = await client.Completions.StreamAsync(...).WithRawResponse();
@@ -162,6 +158,35 @@ var response = await client.Completions.StreamAsync(
         }
     }
 );
+```
+
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedApi;
+
+// Using a built-in value
+var streamEventContextProtocolZeroEvent = StreamEventContextProtocolZeroEvent.Completion;
+
+// Using a custom value
+var customStreamEventContextProtocolZeroEvent = StreamEventContextProtocolZeroEvent.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (streamEventContextProtocolZeroEvent.Value)
+{
+    case StreamEventContextProtocolZeroEvent.Values.Completion:
+        Console.WriteLine("Completion");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {streamEventContextProtocolZeroEvent.Value}");
+        break;
+}
+
+// Explicit casting
+string streamEventContextProtocolZeroEventString = (string)StreamEventContextProtocolZeroEvent.Completion;
+StreamEventContextProtocolZeroEvent streamEventContextProtocolZeroEventFromString = (StreamEventContextProtocolZeroEvent)"completion";
 ```
 
 ## Contributing

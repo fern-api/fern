@@ -1,14 +1,14 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "api",
+    "title": "imdb",
     "version": ""
   },
   "paths": {
     "/movies/create-movie": {
       "post": {
         "description": "Add a movie to the database using the movies/* /... path.",
-        "operationId": "imdb_createMovie",
+        "operationId": "imdb_createmovie",
         "tags": [
           "Imdb"
         ],
@@ -20,18 +20,45 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/MovieId"
+                },
+                "examples": {
+                  "Example1": {
+                    "value": "string"
+                  }
                 }
               }
             }
           }
         },
-        "x-fern-availability": "pre-release",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateMovieRequest"
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "title"
+                  },
+                  "rating": {
+                    "type": "number",
+                    "format": "double",
+                    "example": 1.1
+                  }
+                },
+                "required": [
+                  "title",
+                  "rating"
+                ]
+              },
+              "examples": {
+                "Example1": {
+                  "value": {
+                    "title": "title",
+                    "rating": 1.1
+                  }
+                }
               }
             }
           }
@@ -40,7 +67,7 @@
     },
     "/movies/{movieId}": {
       "get": {
-        "operationId": "imdb_getMovie",
+        "operationId": "imdb_getmovie",
         "tags": [
           "Imdb"
         ],
@@ -51,6 +78,12 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/MovieId"
+            },
+            "example": "movieId",
+            "examples": {
+              "Example1": {
+                "value": "movieId"
+              }
             }
           }
         ],
@@ -61,6 +94,15 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Movie"
+                },
+                "examples": {
+                  "Example1": {
+                    "value": {
+                      "id": "id",
+                      "title": "title",
+                      "rating": 1.1
+                    }
+                  }
                 }
               }
             }
@@ -75,8 +117,7 @@
               }
             }
           }
-        },
-        "x-fern-availability": "deprecated"
+        }
       }
     }
   },
@@ -94,42 +135,25 @@
             "$ref": "#/components/schemas/MovieId"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "example": "title"
           },
           "rating": {
             "type": "number",
             "format": "double",
             "description": "The rating scale is one to five stars",
-            "x-fern-availability": "deprecated"
+            "example": 1.1
           }
         },
         "required": [
           "id",
           "title",
           "rating"
-        ],
-        "x-fern-availability": "generally-available"
-      },
-      "CreateMovieRequest": {
-        "title": "CreateMovieRequest",
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string"
-          },
-          "rating": {
-            "type": "number",
-            "format": "double"
-          }
-        },
-        "required": [
-          "title",
-          "rating"
         ]
       }
     },
     "securitySchemes": {
-      "Bearer": {
+      "BearerAuth": {
         "type": "http",
         "scheme": "bearer"
       }

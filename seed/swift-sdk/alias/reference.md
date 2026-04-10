@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/AliasClient.swift">get</a>(typeId: String, requestOptions: RequestOptions?) -> Void</code></summary>
+## 
+<details><summary><code>client..<a href="/Sources/Resources//Client.swift">get</a>(typeId: String, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +14,12 @@
 
 ```swift
 import Foundation
-import Alias
+import Api
 
 private func main() async throws {
-    let client = AliasClient()
+    let client = ApiClient()
 
-    _ = try await client.get(typeId: "typeId")
+    _ = try await client..get(typeId: "typeId")
 }
 
 try await main()

@@ -14,10 +14,10 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &undiscriminated.NestedUnionRoot{
+    request := &undiscriminated.UnionWithDuplicateTypes{
         String: "string",
     }
-    client.Union.NestedUnions(
+    client.Union.Duplicatetypesunion(
         context.TODO(),
         request,
     )

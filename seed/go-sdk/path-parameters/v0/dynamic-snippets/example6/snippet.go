@@ -3,7 +3,6 @@ package example
 import (
     context "context"
 
-    fern "github.com/path-parameters/fern"
     client "github.com/path-parameters/fern/client"
     option "github.com/path-parameters/fern/option"
 )
@@ -14,15 +13,9 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.SearchUsersRequest{
-        Limit: fern.Int(
-            1,
-        ),
-    }
-    client.User.SearchUsers(
+    client.User.Getuser(
         context.TODO(),
         "tenant_id",
         "user_id",
-        request,
     )
 }

@@ -1,24 +1,24 @@
-using SeedCsharpReadonlyRequest;
+using SeedApi;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedCsharpReadonlyRequestClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.BatchCreateAsync(
+        await client._.BatchCreateAsync(
             new CreateVendorRequest {
                 Vendors = new Dictionary<string, Vendor>(){
-                    ["vendor-1"] = new Vendor {
-                        Id = "vendor-1",
-                        Name = "Acme Corp",
-                        CreatedAt = "2024-01-01T00:00:00Z",
-                        UpdatedAt = "2024-01-01T00:00:00Z"
+                    ["key"] = new Vendor {
+                        Id = "id",
+                        Name = "name",
+                        CreatedAt = "created_at",
+                        UpdatedAt = "updated_at"
                     },
                 }
 

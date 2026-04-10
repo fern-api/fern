@@ -6,17 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .errors import NotFoundError
     from . import service
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedAccept, SeedAccept
-    from .service import NotFoundError
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedAccept": ".client",
+    "AsyncSeedApi": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "NotFoundError": ".service",
-    "SeedAccept": ".client",
+    "NotFoundError": ".errors",
+    "SeedApi": ".client",
     "__version__": ".version",
     "service": ".service",
 }
@@ -44,11 +44,11 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedAccept",
+    "AsyncSeedApi",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "NotFoundError",
-    "SeedAccept",
+    "SeedApi",
     "__version__",
     "service",
 ]

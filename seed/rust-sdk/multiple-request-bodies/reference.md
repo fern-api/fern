@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">upload_json_document</a>(request: UploadDocumentRequest) -> Result&lt;UploadDocumentResponse, ApiError&gt;</code></summary>
+## 
+<details><summary><code>client.<a href="/src/api/resources//client.rs">upload_json_document</a>(request: UploadJsonDocumentRequest) -> Result&lt;UploadDocumentResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -22,8 +23,8 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .upload_json_document(
-            &UploadDocumentRequest {
+        ..upload_json_document(
+            &UploadJsonDocumentRequest {
                 ..Default::default()
             },
             None,
@@ -44,7 +45,7 @@ async fn main() {
 <dl>
 <dd>
 
-**author:** `Option<String>` 
+**author:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -52,7 +53,7 @@ async fn main() {
 <dl>
 <dd>
 
-**tags:** `Option<Vec<String>>` 
+**tags:** `Option<Option<Vec<String>>>` 
     
 </dd>
 </dl>
@@ -60,7 +61,7 @@ async fn main() {
 <dl>
 <dd>
 
-**title:** `Option<String>` 
+**title:** `Option<Option<String>>` 
     
 </dd>
 </dl>

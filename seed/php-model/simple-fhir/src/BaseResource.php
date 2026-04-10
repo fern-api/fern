@@ -5,7 +5,6 @@ namespace Seed;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
-use Seed\Core\Types\Union;
 
 class BaseResource extends JsonSerializableType
 {
@@ -16,14 +15,9 @@ class BaseResource extends JsonSerializableType
     public string $id;
 
     /**
-     * @var array<(
-     *    Account
-     *   |Patient
-     *   |Practitioner
-     *   |Script
-     * )> $relatedResources
+     * @var array<ResourceList> $relatedResources
      */
-    #[JsonProperty('related_resources'), ArrayType([new Union(Account::class, Patient::class, Practitioner::class, Script::class)])]
+    #[JsonProperty('related_resources'), ArrayType([ResourceList::class])]
     public array $relatedResources;
 
     /**
@@ -35,12 +29,7 @@ class BaseResource extends JsonSerializableType
     /**
      * @param array{
      *   id: string,
-     *   relatedResources: array<(
-     *    Account
-     *   |Patient
-     *   |Practitioner
-     *   |Script
-     * )>,
+     *   relatedResources: array<ResourceList>,
      *   memo: Memo,
      * } $values
      */

@@ -8,12 +8,20 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .bond_single_leg import BondSingleLeg
     from .cusip import Cusip
-    from .identifier import Identifier, Identifier_Cusip, Identifier_Isin
+    from .identifier import Identifier
+    from .identifier_one import IdentifierOne
+    from .identifier_one_identifier_type import IdentifierOneIdentifierType
+    from .identifier_zero import IdentifierZero
+    from .identifier_zero_identifier_type import IdentifierZeroIdentifierType
     from .isin import Isin
     from .isin_with_discriminator import IsinWithDiscriminator
+    from .isin_with_discriminator_type import IsinWithDiscriminatorType
     from .multiple_discriminators import MultipleDiscriminators
+    from .multiple_discriminators_type import MultipleDiscriminatorsType
+    from .multiple_discriminators_version import MultipleDiscriminatorsVersion
     from .one_required_one_optional import OneRequiredOneOptional
     from .quantity import Quantity
+    from .quantity_type import QuantityType
     from .taker_party import TakerParty
     from .trader import Trader
     from .two_fields import TwoFields
@@ -21,13 +29,19 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BondSingleLeg": ".bond_single_leg",
     "Cusip": ".cusip",
     "Identifier": ".identifier",
-    "Identifier_Cusip": ".identifier",
-    "Identifier_Isin": ".identifier",
+    "IdentifierOne": ".identifier_one",
+    "IdentifierOneIdentifierType": ".identifier_one_identifier_type",
+    "IdentifierZero": ".identifier_zero",
+    "IdentifierZeroIdentifierType": ".identifier_zero_identifier_type",
     "Isin": ".isin",
     "IsinWithDiscriminator": ".isin_with_discriminator",
+    "IsinWithDiscriminatorType": ".isin_with_discriminator_type",
     "MultipleDiscriminators": ".multiple_discriminators",
+    "MultipleDiscriminatorsType": ".multiple_discriminators_type",
+    "MultipleDiscriminatorsVersion": ".multiple_discriminators_version",
     "OneRequiredOneOptional": ".one_required_one_optional",
     "Quantity": ".quantity",
+    "QuantityType": ".quantity_type",
     "TakerParty": ".taker_party",
     "Trader": ".trader",
     "TwoFields": ".two_fields",
@@ -59,13 +73,19 @@ __all__ = [
     "BondSingleLeg",
     "Cusip",
     "Identifier",
-    "Identifier_Cusip",
-    "Identifier_Isin",
+    "IdentifierOne",
+    "IdentifierOneIdentifierType",
+    "IdentifierZero",
+    "IdentifierZeroIdentifierType",
     "Isin",
     "IsinWithDiscriminator",
+    "IsinWithDiscriminatorType",
     "MultipleDiscriminators",
+    "MultipleDiscriminatorsType",
+    "MultipleDiscriminatorsVersion",
     "OneRequiredOneOptional",
     "Quantity",
+    "QuantityType",
     "TakerParty",
     "Trader",
     "TwoFields",

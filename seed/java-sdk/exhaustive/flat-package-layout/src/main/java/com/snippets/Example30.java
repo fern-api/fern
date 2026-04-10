@@ -1,21 +1,17 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.types.types.ObjectWithDatetimeLikeString;
-import java.time.OffsetDateTime;
+import com.seed.api.SeedApiClient;
+import com.seed.api.types.TypesObjectWithRequiredField;
 
 public class Example30 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints()
-                .object()
-                .getAndReturnWithDatetimeLikeString(ObjectWithDatetimeLikeString.builder()
-                        .datetimeLikeString("2023-08-31T14:15:22Z")
-                        .actualDatetime(OffsetDateTime.parse("2023-08-31T14:15:22Z"))
-                        .build());
+        client.endpointsHttpMethods()
+                .endpointsHttpMethodsTestPost(
+                        TypesObjectWithRequiredField.builder().string("string").build());
     }
 }

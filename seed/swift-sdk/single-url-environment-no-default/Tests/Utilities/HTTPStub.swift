@@ -1,4 +1,4 @@
-import SingleUrlEnvironmentNoDefault
+import Api
 import Foundation
 
 final class HTTPStub {

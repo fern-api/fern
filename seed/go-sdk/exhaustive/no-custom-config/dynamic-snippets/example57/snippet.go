@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
 )
@@ -16,7 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.URLs.NoEndingSlash(
+    request := &fern.EndpointsParamsGetWithPathRequest{
+        Param: "param",
+    }
+    client.EndpointsParams.EndpointsParamsGetWithPath(
         context.TODO(),
+        request,
     )
 }

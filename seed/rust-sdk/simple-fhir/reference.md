@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">get_account</a>(account_id: String) -> Result&lt;Account, ApiError&gt;</code></summary>
+## 
+<details><summary><code>client.<a href="/src/api/resources//client.rs">get_account</a>(account_id: String) -> Result&lt;Account, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -20,7 +21,7 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client.get_account(&"account_id".to_string(), None).await;
+    client..get_account(&"account_id".to_string(), None).await;
 }
 ```
 </dd>

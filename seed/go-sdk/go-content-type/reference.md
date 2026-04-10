@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.Imdb.CreateMovie(request) -> string</code></summary>
+<details><summary><code>client.Imdb.Createmovie(request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -31,7 +31,7 @@ request := &fern.CreateMovieRequest{
         Title: "title",
         Rating: 1.1,
     }
-client.Imdb.CreateMovie(
+client.Imdb.Createmovie(
         context.TODO(),
         request,
     )
@@ -50,7 +50,15 @@ client.Imdb.CreateMovie(
 <dl>
 <dd>
 
-**request:** `*fern.CreateMovieRequest` 
+**title:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rating:** `float64` 
     
 </dd>
 </dl>

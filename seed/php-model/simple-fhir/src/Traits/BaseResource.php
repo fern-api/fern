@@ -2,23 +2,14 @@
 
 namespace Seed\Traits;
 
-use Seed\Account;
-use Seed\Patient;
-use Seed\Practitioner;
-use Seed\Script;
+use Seed\ResourceList;
 use Seed\Memo;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
-use Seed\Core\Types\Union;
 
 /**
  * @property string $id
- * @property array<(
- *    Account
- *   |Patient
- *   |Practitioner
- *   |Script
- * )> $relatedResources
+ * @property array<ResourceList> $relatedResources
  * @property Memo $memo
  */
 trait BaseResource
@@ -30,14 +21,9 @@ trait BaseResource
     public string $id;
 
     /**
-     * @var array<(
-     *    Account
-     *   |Patient
-     *   |Practitioner
-     *   |Script
-     * )> $relatedResources
+     * @var array<ResourceList> $relatedResources
      */
-    #[JsonProperty('related_resources'), ArrayType([new Union(Account::class, Patient::class, Practitioner::class, Script::class)])]
+    #[JsonProperty('related_resources'), ArrayType([ResourceList::class])]
     public array $relatedResources;
 
     /**

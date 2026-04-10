@@ -1,20 +1,20 @@
 {
   "mappings": [
     {
-      "id": "da00c5d3-8997-4a3a-ac5a-78907c04708e",
-      "name": "stream - Stream completions",
+      "id": "07afdcff-a307-475a-b81a-89ebf2b474b2",
+      "name": "stream - default",
       "request": {
         "urlPathTemplate": "/stream",
         "method": "POST"
       },
       "response": {
         "status": 200,
-        "body": "event: completion\ndata: {\"delta\":\"foo\",\"tokens\":1}\n\nevent: completion\ndata: {\"delta\":\"bar\",\"tokens\":2}\n",
+        "body": "\"string\"",
         "headers": {
-          "Content-Type": "text/event-stream"
+          "Content-Type": "application/json"
         }
       },
-      "uuid": "da00c5d3-8997-4a3a-ac5a-78907c04708e",
+      "uuid": "07afdcff-a307-475a-b81a-89ebf2b474b2",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -27,20 +27,20 @@
       }
     },
     {
-      "id": "9a6b501e-3920-47d3-a852-e05e4eba58a6",
-      "name": "streamEvents - Stream events",
+      "id": "5ff8cb75-23bb-499f-aa88-3347d1bffcee",
+      "name": "streamevents - default",
       "request": {
         "urlPathTemplate": "/stream-events",
         "method": "POST"
       },
       "response": {
         "status": 200,
-        "body": "event: completion\ndata: {\"event\":\"completion\",\"content\":\"hello\"}\n\nevent: error\ndata: {\"event\":\"error\",\"error\":\"something went wrong\"}\n",
+        "body": "\"string\"",
         "headers": {
-          "Content-Type": "text/event-stream"
+          "Content-Type": "application/json"
         }
       },
-      "uuid": "9a6b501e-3920-47d3-a852-e05e4eba58a6",
+      "uuid": "5ff8cb75-23bb-499f-aa88-3347d1bffcee",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -53,20 +53,20 @@
       }
     },
     {
-      "id": "0913bb86-4b39-4c8a-9875-111a5210a147",
-      "name": "streamEventsContextProtocol - Stream events context protocol",
+      "id": "2717fc19-fffc-4fb3-a3e4-6b7026c2203d",
+      "name": "streameventscontextprotocol - default",
       "request": {
         "urlPathTemplate": "/stream-events-context-protocol",
         "method": "POST"
       },
       "response": {
         "status": 200,
-        "body": "event: completion\ndata: {\"event\":\"completion\",\"content\":\"hello\"}\n\nevent: error\ndata: {\"event\":\"error\",\"error\":\"something went wrong\"}\n",
+        "body": "\"string\"",
         "headers": {
-          "Content-Type": "text/event-stream"
+          "Content-Type": "application/json"
         }
       },
-      "uuid": "0913bb86-4b39-4c8a-9875-111a5210a147",
+      "uuid": "2717fc19-fffc-4fb3-a3e4-6b7026c2203d",
       "persistent": true,
       "priority": 3,
       "metadata": {

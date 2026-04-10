@@ -9,9 +9,9 @@ import (
 	testing "testing"
 )
 
-func TestSettersJustFileWithOptionalQueryParamsRequest(t *testing.T) {
+func TestSettersServiceJustFileWithOptionalQueryParamsRequest(t *testing.T) {
 	t.Run("SetMaybeString", func(t *testing.T) {
-		obj := &JustFileWithOptionalQueryParamsRequest{}
+		obj := &ServiceJustFileWithOptionalQueryParamsRequest{}
 		var fernTestValueMaybeString *string
 		obj.SetMaybeString(fernTestValueMaybeString)
 		assert.Equal(t, fernTestValueMaybeString, obj.MaybeString)
@@ -19,7 +19,7 @@ func TestSettersJustFileWithOptionalQueryParamsRequest(t *testing.T) {
 	})
 
 	t.Run("SetMaybeInteger", func(t *testing.T) {
-		obj := &JustFileWithOptionalQueryParamsRequest{}
+		obj := &ServiceJustFileWithOptionalQueryParamsRequest{}
 		var fernTestValueMaybeInteger *int
 		obj.SetMaybeInteger(fernTestValueMaybeInteger)
 		assert.Equal(t, fernTestValueMaybeInteger, obj.MaybeInteger)
@@ -28,11 +28,11 @@ func TestSettersJustFileWithOptionalQueryParamsRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitJustFileWithOptionalQueryParamsRequest(t *testing.T) {
+func TestSettersMarkExplicitServiceJustFileWithOptionalQueryParamsRequest(t *testing.T) {
 	t.Run("SetMaybeString_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JustFileWithOptionalQueryParamsRequest{}
+		obj := &ServiceJustFileWithOptionalQueryParamsRequest{}
 		var fernTestValueMaybeString *string
 
 		// Act
@@ -63,7 +63,7 @@ func TestSettersMarkExplicitJustFileWithOptionalQueryParamsRequest(t *testing.T)
 	t.Run("SetMaybeInteger_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JustFileWithOptionalQueryParamsRequest{}
+		obj := &ServiceJustFileWithOptionalQueryParamsRequest{}
 		var fernTestValueMaybeInteger *int
 
 		// Act
@@ -93,9 +93,9 @@ func TestSettersMarkExplicitJustFileWithOptionalQueryParamsRequest(t *testing.T)
 
 }
 
-func TestSettersJustFileWithQueryParamsRequest(t *testing.T) {
+func TestSettersServiceJustFileWithQueryParamsRequest(t *testing.T) {
 	t.Run("SetMaybeString", func(t *testing.T) {
-		obj := &JustFileWithQueryParamsRequest{}
+		obj := &ServiceJustFileWithQueryParamsRequest{}
 		var fernTestValueMaybeString *string
 		obj.SetMaybeString(fernTestValueMaybeString)
 		assert.Equal(t, fernTestValueMaybeString, obj.MaybeString)
@@ -103,7 +103,7 @@ func TestSettersJustFileWithQueryParamsRequest(t *testing.T) {
 	})
 
 	t.Run("SetInteger", func(t *testing.T) {
-		obj := &JustFileWithQueryParamsRequest{}
+		obj := &ServiceJustFileWithQueryParamsRequest{}
 		var fernTestValueInteger int
 		obj.SetInteger(fernTestValueInteger)
 		assert.Equal(t, fernTestValueInteger, obj.Integer)
@@ -111,7 +111,7 @@ func TestSettersJustFileWithQueryParamsRequest(t *testing.T) {
 	})
 
 	t.Run("SetMaybeInteger", func(t *testing.T) {
-		obj := &JustFileWithQueryParamsRequest{}
+		obj := &ServiceJustFileWithQueryParamsRequest{}
 		var fernTestValueMaybeInteger *int
 		obj.SetMaybeInteger(fernTestValueMaybeInteger)
 		assert.Equal(t, fernTestValueMaybeInteger, obj.MaybeInteger)
@@ -119,15 +119,15 @@ func TestSettersJustFileWithQueryParamsRequest(t *testing.T) {
 	})
 
 	t.Run("SetListOfStrings", func(t *testing.T) {
-		obj := &JustFileWithQueryParamsRequest{}
-		var fernTestValueListOfStrings []string
+		obj := &ServiceJustFileWithQueryParamsRequest{}
+		var fernTestValueListOfStrings []*string
 		obj.SetListOfStrings(fernTestValueListOfStrings)
 		assert.Equal(t, fernTestValueListOfStrings, obj.ListOfStrings)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetOptionalListOfStrings", func(t *testing.T) {
-		obj := &JustFileWithQueryParamsRequest{}
+		obj := &ServiceJustFileWithQueryParamsRequest{}
 		var fernTestValueOptionalListOfStrings []*string
 		obj.SetOptionalListOfStrings(fernTestValueOptionalListOfStrings)
 		assert.Equal(t, fernTestValueOptionalListOfStrings, obj.OptionalListOfStrings)
@@ -136,11 +136,11 @@ func TestSettersJustFileWithQueryParamsRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitJustFileWithQueryParamsRequest(t *testing.T) {
+func TestSettersMarkExplicitServiceJustFileWithQueryParamsRequest(t *testing.T) {
 	t.Run("SetMaybeString_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JustFileWithQueryParamsRequest{}
+		obj := &ServiceJustFileWithQueryParamsRequest{}
 		var fernTestValueMaybeString *string
 
 		// Act
@@ -171,7 +171,7 @@ func TestSettersMarkExplicitJustFileWithQueryParamsRequest(t *testing.T) {
 	t.Run("SetInteger_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JustFileWithQueryParamsRequest{}
+		obj := &ServiceJustFileWithQueryParamsRequest{}
 		var fernTestValueInteger int
 
 		// Act
@@ -202,7 +202,7 @@ func TestSettersMarkExplicitJustFileWithQueryParamsRequest(t *testing.T) {
 	t.Run("SetMaybeInteger_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JustFileWithQueryParamsRequest{}
+		obj := &ServiceJustFileWithQueryParamsRequest{}
 		var fernTestValueMaybeInteger *int
 
 		// Act
@@ -233,8 +233,8 @@ func TestSettersMarkExplicitJustFileWithQueryParamsRequest(t *testing.T) {
 	t.Run("SetListOfStrings_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JustFileWithQueryParamsRequest{}
-		var fernTestValueListOfStrings []string
+		obj := &ServiceJustFileWithQueryParamsRequest{}
+		var fernTestValueListOfStrings []*string
 
 		// Act
 		obj.SetListOfStrings(fernTestValueListOfStrings)
@@ -264,7 +264,7 @@ func TestSettersMarkExplicitJustFileWithQueryParamsRequest(t *testing.T) {
 	t.Run("SetOptionalListOfStrings_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JustFileWithQueryParamsRequest{}
+		obj := &ServiceJustFileWithQueryParamsRequest{}
 		var fernTestValueOptionalListOfStrings []*string
 
 		// Act
@@ -723,6 +723,28 @@ func TestStringMyObjectWithOptional(t *testing.T) {
 		var obj *MyObjectWithOptional
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestEnumModelType(t *testing.T) {
+	t.Run("NewFromString_model_v1", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewModelTypeFromString("model_v1")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ModelType("model_v1"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewModelTypeFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewModelTypeFromString("model_v1")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
 	})
 }
 

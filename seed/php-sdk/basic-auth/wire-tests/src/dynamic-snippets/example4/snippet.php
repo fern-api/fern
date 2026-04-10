@@ -11,7 +11,7 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->basicAuth->postWithBasicAuth(
+$client->basicauth->postwithbasicauth(
     [
         'key' => "value",
     ],

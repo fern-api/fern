@@ -1,4 +1,4 @@
-use seed_examples::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,15 +7,15 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExamplesClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .service
-        .get_metadata(
-            &GetMetadataQueryRequest {
+        .getmetadata(
+            &GetmetadataQueryRequest {
                 shallow: Some(true),
                 tag: vec![Some("tag".to_string())],
             },
-            Some(RequestOptions::new().additional_header("X-API-Version", "X-API-Version")),
+            Some(RequestOptions::new().additional_header("X-API-Version", "apiVersion")),
         )
         .await;
 }

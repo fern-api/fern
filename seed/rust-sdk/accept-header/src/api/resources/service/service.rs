@@ -14,7 +14,7 @@ impl ServiceClient {
 
     pub async fn endpoint(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(Method::DELETE, "/container/", None, None, options)
+            .execute_request(Method::DELETE, "container/", None, None, options)
             .await
     }
 }

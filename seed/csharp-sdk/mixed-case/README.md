@@ -40,10 +40,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedMixedCase;
+using SeedApi;
 
-var client = new SeedMixedCaseClient();
-await client.Service.GetResourceAsync("rsc-xyz");
+var client = new SeedApiClient();
+await client.Service.GetresourceAsync(new ServiceGetResourceRequest { ResourceId = "ResourceID" });
 ```
 
 ## Exception Handling
@@ -52,11 +52,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedMixedCase;
+using SeedApi;
 
 try {
-    var response = await client.Service.GetResourceAsync(...);
-} catch (SeedMixedCaseApiException e) {
+    var response = await client.Service.GetresourceAsync(...);
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -79,7 +79,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Service.GetResourceAsync(
+var response = await client.Service.GetresourceAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -92,7 +92,7 @@ var response = await client.Service.GetResourceAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Service.GetResourceAsync(
+var response = await client.Service.GetresourceAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -105,10 +105,10 @@ var response = await client.Service.GetResourceAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedMixedCase;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.Service.GetResourceAsync(...).WithRawResponse();
+var result = await client.Service.GetresourceAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -125,7 +125,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.Service.GetResourceAsync(...);
+var data = await client.Service.GetresourceAsync(...);
 ```
 
 ### Additional Headers
@@ -133,7 +133,7 @@ var data = await client.Service.GetResourceAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.Service.GetResourceAsync(
+var response = await client.Service.GetresourceAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -149,7 +149,7 @@ var response = await client.Service.GetResourceAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.Service.GetResourceAsync(
+var response = await client.Service.GetresourceAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>
@@ -165,7 +165,7 @@ var response = await client.Service.GetResourceAsync(
 This SDK uses forward-compatible enums that can handle unknown values gracefully.
 
 ```csharp
-using SeedMixedCase;
+using SeedApi;
 
 // Using a built-in value
 var resourceStatus = ResourceStatus.Active;

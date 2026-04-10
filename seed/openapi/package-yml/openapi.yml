@@ -5,7 +5,7 @@ info:
 paths:
   /{id}/:
     post:
-      operationId: echo
+      operationId: _echo
       tags:
         - ''
       parameters:
@@ -14,10 +14,10 @@ paths:
           required: true
           schema:
             type: string
-          example: id-ksfd9c1
+          example: id
           examples:
             Example1:
-              value: id-ksfd9c1
+              value: id
       responses:
         '200':
           description: ''
@@ -27,18 +27,28 @@ paths:
                 type: string
               examples:
                 Example1:
-                  value: Hello world!
+                  value: string
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EchoRequest'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: name
+                size:
+                  type: integer
+                  example: 1
+              required:
+                - name
+                - size
             examples:
               Example1:
                 value:
-                  name: Hello world!
-                  size: 20
+                  name: name
+                  size: 1
   /{id}//{nestedId}:
     get:
       operationId: service_nop
@@ -50,35 +60,22 @@ paths:
           required: true
           schema:
             type: string
-          example: id-a2ijs82
+          example: id
           examples:
             Example1:
-              value: id-a2ijs82
+              value: id
         - name: nestedId
           in: path
           required: true
           schema:
             type: string
-          example: id-219xca8
+          example: nestedId
           examples:
             Example1:
-              value: id-219xca8
+              value: nestedId
       responses:
         '204':
           description: ''
 components:
-  schemas:
-    EchoRequest:
-      title: EchoRequest
-      type: object
-      properties:
-        name:
-          type: string
-          example: Hello world!
-        size:
-          type: integer
-          example: 20
-      required:
-        - name
-        - size
+  schemas: {}
   securitySchemes: {}

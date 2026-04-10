@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Webhooks",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Webhooks",
-            targets: ["Webhooks"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Webhooks",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "WebhooksTests",
-            dependencies: ["Webhooks"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

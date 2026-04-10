@@ -29,9 +29,7 @@ impl UsernameCursorBuilder {
     /// - [`cursor`](UsernameCursorBuilder::cursor)
     pub fn build(self) -> Result<UsernameCursor, BuildError> {
         Ok(UsernameCursor {
-            cursor: self
-                .cursor
-                .ok_or_else(|| BuildError::missing_field("cursor"))?,
+            cursor: self.cursor.ok_or_else(|| BuildError::missing_field("cursor"))?,
         })
     }
 }

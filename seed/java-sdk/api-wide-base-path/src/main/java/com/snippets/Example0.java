@@ -1,14 +1,19 @@
 package com.snippets;
 
-import com.seed.apiWideBasePath.SeedApiWideBasePathClient;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.service.requests.ServicePostRequest;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedApiWideBasePathClient client = SeedApiWideBasePathClient.builder()
-                .url("https://api.fern.com")
-                .pathParam("pathParam")
-                .build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.service().post("serviceParam", 1, "resourceParam");
+        client.service()
+                .post(
+                        "pathParam",
+                        "serviceParam",
+                        1,
+                        "resourceParam",
+                        ServicePostRequest.builder().build());
     }
 }

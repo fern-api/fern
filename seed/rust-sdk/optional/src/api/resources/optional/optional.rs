@@ -14,7 +14,7 @@ impl OptionalClient {
         })
     }
 
-    pub async fn send_optional_body(
+    pub async fn sendoptionalbody(
         &self,
         request: &Option<HashMap<String, serde_json::Value>>,
         options: Option<RequestOptions>,
@@ -30,9 +30,9 @@ impl OptionalClient {
             .await
     }
 
-    pub async fn send_optional_typed_body(
+    pub async fn sendoptionaltypedbody(
         &self,
-        request: &Option<SendOptionalBodyRequest>,
+        request: &SendOptionalBodyRequest,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
@@ -56,11 +56,11 @@ impl OptionalClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn send_optional_nullable_with_all_optional_properties(
+    pub async fn sendoptionalnullablewithalloptionalproperties(
         &self,
         action_id: &str,
         id: &str,
-        request: &Option<DeployParams>,
+        request: &DeployParams,
         options: Option<RequestOptions>,
     ) -> Result<DeployResponse, ApiError> {
         self.http_client

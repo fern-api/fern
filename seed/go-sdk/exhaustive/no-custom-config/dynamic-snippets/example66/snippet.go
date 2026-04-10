@@ -17,12 +17,19 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ReqWithHeaders{
-        XTestServiceHeader: "X-TEST-SERVICE-HEADER",
-        XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
-        Body: "string",
+    request := &fern.EndpointsParamsGetWithAllowMultipleQueryRequest{
+        Query: []*string{
+            fern.String(
+                "query",
+            ),
+        },
+        Number: []*int{
+            fern.Int(
+                1,
+            ),
+        },
     }
-    client.ReqWithHeaders.GetWithCustomHeader(
+    client.EndpointsParams.EndpointsParamsGetWithAllowMultipleQuery(
         context.TODO(),
         request,
     )

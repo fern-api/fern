@@ -1,10 +1,10 @@
 import Foundation
-import ResponseProperty
+import Api
 
 private func main() async throws {
-    let client = ResponsePropertyClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.service.getOptionalMovie(request: "string")
+    _ = try await client.service.getmoviename(request: "string")
 }
 
 try await main()

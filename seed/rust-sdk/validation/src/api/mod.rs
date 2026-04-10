@@ -1,4 +1,4 @@
-//! API client and types for the Validation
+//! API client and types for the validation
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,5 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::ValidationClient;
-pub use types::*;
+pub use resources::{Client, ApiClient};
+pub use types::{*};
+

@@ -2,6 +2,7 @@ import Foundation
 
 /// Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 public final class ApiClient: Sendable {
+    public let : Client
     private let httpClient: HTTPClient
 
     /// Initialize the client with the specified configuration and a static bearer token.
@@ -80,27 +81,7 @@ public final class ApiClient: Sendable {
             maxRetries: maxRetries,
             urlSession: urlSession
         )
+        self. = Client(config: config)
         self.httpClient = HTTPClient(config: config)
-    }
-
-    public func uploadJsonDocument(request: Requests.UploadDocumentRequest, requestOptions: RequestOptions? = nil) async throws -> UploadDocumentResponse {
-        return try await httpClient.performRequest(
-            method: .post,
-            path: "/documents/upload/json",
-            body: request,
-            requestOptions: requestOptions,
-            responseType: UploadDocumentResponse.self
-        )
-    }
-
-    public func uploadPdfDocument(request: Data, requestOptions: RequestOptions? = nil) async throws -> UploadDocumentResponse {
-        return try await httpClient.performRequest(
-            method: .post,
-            path: "/documents/upload/pdf",
-            contentType: .applicationOctetStream,
-            body: request,
-            requestOptions: requestOptions,
-            responseType: UploadDocumentResponse.self
-        )
     }
 }

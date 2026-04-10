@@ -16,7 +16,7 @@
 client.headers.send_(
   endpoint_version: "02-12-2024",
   async: true,
-  query: "What is the weather today"
+  query: "query"
 )
 ```
 </dd>
@@ -32,7 +32,7 @@ client.headers.send_(
 <dl>
 <dd>
 
-**endpoint_version:** `String` 
+**endpoint_version:** `Seed::Headers::Types::HeadersSendRequestXEndpointVersion` 
     
 </dd>
 </dl>
@@ -83,18 +83,15 @@ client.headers.send_(
 
 ```ruby
 client.inlined.send_(
-  temperature: 10.1,
   prompt: "You are a helpful assistant",
-  context: "You're super wise",
+  query: "query",
+  stream: true,
   aliased_context: "You're super wise",
-  maybe_context: "You're super wise",
   object_with_literal: {
     nested_literal: {
       my_literal: "How super cool"
     }
-  },
-  stream: false,
-  query: "What is the weather today"
+  }
 )
 ```
 </dd>
@@ -110,7 +107,7 @@ client.inlined.send_(
 <dl>
 <dd>
 
-**prompt:** `String` 
+**prompt:** `Seed::Inlined::Types::InlinedSendRequestPrompt` 
     
 </dd>
 </dl>
@@ -118,7 +115,7 @@ client.inlined.send_(
 <dl>
 <dd>
 
-**context:** `String` 
+**context:** `Seed::Inlined::Types::InlinedSendRequestContext` 
     
 </dd>
 </dl>
@@ -150,7 +147,7 @@ client.inlined.send_(
 <dl>
 <dd>
 
-**aliased_context:** `String` 
+**aliased_context:** `Seed::Types::SomeAliasedLiteral` 
     
 </dd>
 </dl>
@@ -158,7 +155,7 @@ client.inlined.send_(
 <dl>
 <dd>
 
-**maybe_context:** `String` 
+**maybe_context:** `Seed::Types::SomeAliasedLiteral` 
     
 </dd>
 </dl>
@@ -166,7 +163,7 @@ client.inlined.send_(
 <dl>
 <dd>
 
-**object_with_literal:** `Seed::Inlined::Types::ATopLevelLiteral` 
+**object_with_literal:** `Seed::Types::ATopLevelLiteral` 
     
 </dd>
 </dl>
@@ -215,7 +212,7 @@ client.path.send_(id: "123")
 <dl>
 <dd>
 
-**id:** `String` 
+**id:** `Seed::Path::Types::PathSendRequestID` 
     
 </dd>
 </dl>
@@ -251,14 +248,10 @@ client.path.send_(id: "123")
 ```ruby
 client.query.send_(
   prompt: "You are a helpful assistant",
-  optional_prompt: "You are a helpful assistant",
   alias_prompt: "You are a helpful assistant",
-  alias_optional_prompt: "You are a helpful assistant",
-  stream: false,
-  optional_stream: false,
-  alias_stream: false,
-  alias_optional_stream: false,
-  query: "What is the weather today"
+  query: "query",
+  stream: true,
+  alias_stream: true
 )
 ```
 </dd>
@@ -274,7 +267,7 @@ client.query.send_(
 <dl>
 <dd>
 
-**prompt:** `String` 
+**prompt:** `Seed::Query::Types::QuerySendRequestPrompt` 
     
 </dd>
 </dl>
@@ -282,7 +275,7 @@ client.query.send_(
 <dl>
 <dd>
 
-**optional_prompt:** `String` 
+**optional_prompt:** `Seed::Query::Types::QuerySendRequestOptionalPrompt` 
     
 </dd>
 </dl>
@@ -290,7 +283,7 @@ client.query.send_(
 <dl>
 <dd>
 
-**alias_prompt:** `String` 
+**alias_prompt:** `Seed::Types::AliasToPrompt` 
     
 </dd>
 </dl>
@@ -298,7 +291,7 @@ client.query.send_(
 <dl>
 <dd>
 
-**alias_optional_prompt:** `String` 
+**alias_optional_prompt:** `Seed::Types::AliasToPrompt` 
     
 </dd>
 </dl>
@@ -374,8 +367,9 @@ client.query.send_(
 ```ruby
 client.reference.send_(
   prompt: "You are a helpful assistant",
-  query: "What is the weather today",
-  stream: false,
+  query: "query",
+  stream: true,
+  ending: "$ending",
   context: "You're super wise",
   container_object: {
     nested_objects: [{
@@ -399,7 +393,55 @@ client.reference.send_(
 <dl>
 <dd>
 
-**request:** `Seed::Reference::Types::SendRequest` 
+**prompt:** `Seed::Reference::Types::SendRequestPrompt` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream:** `Internal::Types::Boolean` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ending:** `Seed::Reference::Types::SendRequestEnding` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**context:** `Seed::Types::SomeLiteral` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**maybe_context:** `Seed::Types::SomeLiteral` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container_object:** `Seed::Types::ContainerObject` 
     
 </dd>
 </dl>

@@ -6,12 +6,20 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .movie import Movie
     from .optional_string_response import OptionalStringResponse
+    from .optional_with_docs import OptionalWithDocs
+    from .response import Response
     from .string_response import StringResponse
+    from .with_docs import WithDocs
     from .with_metadata import WithMetadata
 _dynamic_imports: typing.Dict[str, str] = {
+    "Movie": ".movie",
     "OptionalStringResponse": ".optional_string_response",
+    "OptionalWithDocs": ".optional_with_docs",
+    "Response": ".response",
     "StringResponse": ".string_response",
+    "WithDocs": ".with_docs",
     "WithMetadata": ".with_metadata",
 }
 
@@ -37,4 +45,12 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["OptionalStringResponse", "StringResponse", "WithMetadata"]
+__all__ = [
+    "Movie",
+    "OptionalStringResponse",
+    "OptionalWithDocs",
+    "Response",
+    "StringResponse",
+    "WithDocs",
+    "WithMetadata",
+]

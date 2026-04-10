@@ -16,8 +16,8 @@ components:
       required:
         - sendText
         - sendParam
-    send_snake_case:
-      title: send_snake_case
+    SendSnakeCase:
+      title: SendSnakeCase
       type: object
       properties:
         send_text:
@@ -38,8 +38,8 @@ components:
       required:
         - alpha
         - beta
-    receive_snake_case:
-      title: receive_snake_case
+    ReceiveSnakeCase:
+      title: ReceiveSnakeCase
       type: object
       properties:
         receive_text:
@@ -82,25 +82,33 @@ components:
           type: string
       required:
         - receiveText3
+    TranscriptEventType:
+      title: TranscriptEventType
+      type: string
+      enum:
+        - transcript
     TranscriptEvent:
       title: TranscriptEvent
       type: object
       properties:
         type:
-          type: string
-          const: transcript
+          $ref: '#/components/schemas/TranscriptEventType'
         data:
           type: string
       required:
         - type
         - data
+    FlushedEventType:
+      title: FlushedEventType
+      type: string
+      enum:
+        - flushed
     FlushedEvent:
       title: FlushedEvent
       type: object
       properties:
         type:
-          type: string
-          const: flushed
+          $ref: '#/components/schemas/FlushedEventType'
       required:
         - type
     ErrorEvent:

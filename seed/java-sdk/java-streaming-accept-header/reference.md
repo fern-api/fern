@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.generateStream(request) -> Iterable&amp;lt;StreamResponse&amp;gt;</code></summary>
+<details><summary><code>client.dummy.generateStream(request) -> InputStream</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,7 @@
 
 ```java
 client.dummy().generateStream(
-    GenerateStreamRequest
+    DummyGenerateStreamRequest
         .builder()
         .numEvents(1)
         .build()
@@ -59,9 +59,9 @@ client.dummy().generateStream(
 
 ```java
 client.dummy().generate(
-    GenerateRequest
+    DummyGenerateRequest
         .builder()
-        .numEvents(5)
+        .numEvents(1)
         .build()
 );
 ```

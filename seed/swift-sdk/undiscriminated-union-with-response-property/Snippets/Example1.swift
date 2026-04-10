@@ -1,10 +1,10 @@
 import Foundation
-import UndiscriminatedUnionWithResponseProperty
+import Api
 
 private func main() async throws {
-    let client = UndiscriminatedUnionWithResponsePropertyClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.listUnions()
+    _ = try await client..getUnion()
 }
 
 try await main()

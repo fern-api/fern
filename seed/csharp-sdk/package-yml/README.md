@@ -39,10 +39,17 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedPackageYml;
+using SeedApi;
 
-var client = new SeedPackageYmlClient();
-await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Size = 20 });
+var client = new SeedApiClient();
+await client._.EchoAsync(
+    new EchoRequest
+    {
+        Id = "id",
+        Name = "name",
+        Size = 1,
+    }
+);
 ```
 
 ## Exception Handling
@@ -51,11 +58,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedPackageYml;
+using SeedApi;
 
 try {
-    var response = await client.EchoAsync(...);
-} catch (SeedPackageYmlApiException e) {
+    var response = await client._.EchoAsync(...);
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -78,7 +85,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.EchoAsync(
+var response = await client._.EchoAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -91,7 +98,7 @@ var response = await client.EchoAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.EchoAsync(
+var response = await client._.EchoAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -104,10 +111,10 @@ var response = await client.EchoAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedPackageYml;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.EchoAsync(...).WithRawResponse();
+var result = await client._.EchoAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -124,7 +131,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.EchoAsync(...);
+var data = await client._.EchoAsync(...);
 ```
 
 ### Additional Headers
@@ -132,7 +139,7 @@ var data = await client.EchoAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.EchoAsync(
+var response = await client._.EchoAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -148,7 +155,7 @@ var response = await client.EchoAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.EchoAsync(
+var response = await client._.EchoAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>

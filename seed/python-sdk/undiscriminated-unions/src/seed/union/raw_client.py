@@ -10,12 +10,12 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
-from .types.metadata import Metadata
-from .types.metadata_union import MetadataUnion
-from .types.my_union import MyUnion
-from .types.nested_union_root import NestedUnionRoot
-from .types.payment_method_union import PaymentMethodUnion
-from .types.union_with_duplicate_types import UnionWithDuplicateTypes
+from ..types.metadata import Metadata
+from ..types.metadata_union import MetadataUnion
+from ..types.my_union import MyUnion
+from ..types.nested_union_root import NestedUnionRoot
+from ..types.payment_method_union import PaymentMethodUnion
+from ..types.union_with_duplicate_types import UnionWithDuplicateTypes
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -40,10 +40,14 @@ class RawUnionClient:
         Returns
         -------
         HttpResponse[MyUnion]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=MyUnion, direction="write"),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -66,7 +70,7 @@ class RawUnionClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_metadata(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Metadata]:
+    def getmetadata(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Metadata]:
         """
         Parameters
         ----------
@@ -76,6 +80,7 @@ class RawUnionClient:
         Returns
         -------
         HttpResponse[Metadata]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "metadata",
@@ -101,7 +106,7 @@ class RawUnionClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def update_metadata(
+    def updatemetadata(
         self, *, request: MetadataUnion, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[bool]:
         """
@@ -115,11 +120,15 @@ class RawUnionClient:
         Returns
         -------
         HttpResponse[bool]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "metadata",
             method="PUT",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=MetadataUnion, direction="write"),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -156,6 +165,7 @@ class RawUnionClient:
         Returns
         -------
         HttpResponse[bool]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "call",
@@ -164,6 +174,9 @@ class RawUnionClient:
                 "union": convert_and_respect_annotation_metadata(
                     object_=union, annotation=MetadataUnion, direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -187,7 +200,7 @@ class RawUnionClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def duplicate_types_union(
+    def duplicatetypesunion(
         self, *, request: UnionWithDuplicateTypes, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[UnionWithDuplicateTypes]:
         """
@@ -201,6 +214,7 @@ class RawUnionClient:
         Returns
         -------
         HttpResponse[UnionWithDuplicateTypes]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "duplicate",
@@ -208,6 +222,9 @@ class RawUnionClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=UnionWithDuplicateTypes, direction="write"
             ),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -230,7 +247,7 @@ class RawUnionClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def nested_unions(
+    def nestedunions(
         self, *, request: NestedUnionRoot, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[str]:
         """
@@ -244,6 +261,7 @@ class RawUnionClient:
         Returns
         -------
         HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "nested",
@@ -251,6 +269,9 @@ class RawUnionClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=NestedUnionRoot, direction="write"
             ),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -273,7 +294,7 @@ class RawUnionClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def test_camel_case_properties(
+    def testcamelcaseproperties(
         self, *, payment_method: PaymentMethodUnion, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[str]:
         """
@@ -287,6 +308,7 @@ class RawUnionClient:
         Returns
         -------
         HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "camel-case",
@@ -295,6 +317,9 @@ class RawUnionClient:
                 "paymentMethod": convert_and_respect_annotation_metadata(
                     object_=payment_method, annotation=PaymentMethodUnion, direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -337,10 +362,14 @@ class AsyncRawUnionClient:
         Returns
         -------
         AsyncHttpResponse[MyUnion]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=MyUnion, direction="write"),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -363,7 +392,7 @@ class AsyncRawUnionClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def get_metadata(
+    async def getmetadata(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Metadata]:
         """
@@ -375,6 +404,7 @@ class AsyncRawUnionClient:
         Returns
         -------
         AsyncHttpResponse[Metadata]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "metadata",
@@ -400,7 +430,7 @@ class AsyncRawUnionClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def update_metadata(
+    async def updatemetadata(
         self, *, request: MetadataUnion, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[bool]:
         """
@@ -414,11 +444,15 @@ class AsyncRawUnionClient:
         Returns
         -------
         AsyncHttpResponse[bool]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "metadata",
             method="PUT",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=MetadataUnion, direction="write"),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -455,6 +489,7 @@ class AsyncRawUnionClient:
         Returns
         -------
         AsyncHttpResponse[bool]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "call",
@@ -463,6 +498,9 @@ class AsyncRawUnionClient:
                 "union": convert_and_respect_annotation_metadata(
                     object_=union, annotation=MetadataUnion, direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -486,7 +524,7 @@ class AsyncRawUnionClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def duplicate_types_union(
+    async def duplicatetypesunion(
         self, *, request: UnionWithDuplicateTypes, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[UnionWithDuplicateTypes]:
         """
@@ -500,6 +538,7 @@ class AsyncRawUnionClient:
         Returns
         -------
         AsyncHttpResponse[UnionWithDuplicateTypes]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "duplicate",
@@ -507,6 +546,9 @@ class AsyncRawUnionClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=UnionWithDuplicateTypes, direction="write"
             ),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -529,7 +571,7 @@ class AsyncRawUnionClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def nested_unions(
+    async def nestedunions(
         self, *, request: NestedUnionRoot, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[str]:
         """
@@ -543,6 +585,7 @@ class AsyncRawUnionClient:
         Returns
         -------
         AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "nested",
@@ -550,6 +593,9 @@ class AsyncRawUnionClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=NestedUnionRoot, direction="write"
             ),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -572,7 +618,7 @@ class AsyncRawUnionClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def test_camel_case_properties(
+    async def testcamelcaseproperties(
         self, *, payment_method: PaymentMethodUnion, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[str]:
         """
@@ -586,6 +632,7 @@ class AsyncRawUnionClient:
         Returns
         -------
         AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "camel-case",
@@ -594,6 +641,9 @@ class AsyncRawUnionClient:
                 "paymentMethod": convert_and_respect_annotation_metadata(
                     object_=payment_method, annotation=PaymentMethodUnion, direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

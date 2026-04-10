@@ -1,8 +1,8 @@
 import Foundation
-import Errors
+import Api
 
 private func main() async throws {
-    let client = ErrorsClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
     _ = try await client.simple.foo(request: FooRequest(
         bar: "bar"

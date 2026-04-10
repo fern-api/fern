@@ -14,10 +14,10 @@
 
 ```swift
 import Foundation
-import UndiscriminatedUnions
+import Api
 
 private func main() async throws {
-    let client = UndiscriminatedUnionsClient()
+    let client = ApiClient()
 
     _ = try await client.union.get(request: MyUnion.string(
         "string"
@@ -59,7 +59,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">getMetadata</a>(requestOptions: RequestOptions?) -> Metadata</code></summary>
+<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">getmetadata</a>(requestOptions: RequestOptions?) -> Metadata</code></summary>
 <dl>
 <dd>
 
@@ -73,12 +73,12 @@ try await main()
 
 ```swift
 import Foundation
-import UndiscriminatedUnions
+import Api
 
 private func main() async throws {
-    let client = UndiscriminatedUnionsClient()
+    let client = ApiClient()
 
-    _ = try await client.union.getMetadata()
+    _ = try await client.union.getmetadata()
 }
 
 try await main()
@@ -108,7 +108,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">updateMetadata</a>(request: MetadataUnion, requestOptions: RequestOptions?) -> Bool</code></summary>
+<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">updatemetadata</a>(request: MetadataUnion, requestOptions: RequestOptions?) -> Bool</code></summary>
 <dl>
 <dd>
 
@@ -122,17 +122,15 @@ try await main()
 
 ```swift
 import Foundation
-import UndiscriminatedUnions
+import Api
 
 private func main() async throws {
-    let client = UndiscriminatedUnionsClient()
+    let client = ApiClient()
 
-    _ = try await client.union.updateMetadata(request: MetadataUnion.optionalMetadata(
-        [
-            "string": .object([
-                "key": .string("value")
-            ])
-        ]
+    _ = try await client.union.updatemetadata(request: MetadataUnion.nullableOptionalMetadata(
+        .value(.value([
+            "key": .string("value")
+        ]))
     ))
 }
 
@@ -171,7 +169,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">call</a>(request: Request, requestOptions: RequestOptions?) -> Bool</code></summary>
+<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">call</a>(request: Requests.Request, requestOptions: RequestOptions?) -> Bool</code></summary>
 <dl>
 <dd>
 
@@ -185,20 +183,12 @@ try await main()
 
 ```swift
 import Foundation
-import UndiscriminatedUnions
+import Api
 
 private func main() async throws {
-    let client = UndiscriminatedUnionsClient()
+    let client = ApiClient()
 
-    _ = try await client.union.call(request: Request(
-        union: MetadataUnion.optionalMetadata(
-            [
-                "string": .object([
-                    "key": .string("value")
-                ])
-            ]
-        )
-    ))
+    _ = try await client.union.call(request: .init())
 }
 
 try await main()
@@ -216,7 +206,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Request` 
+**request:** `Requests.Request` 
     
 </dd>
 </dl>
@@ -236,7 +226,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">duplicateTypesUnion</a>(request: UnionWithDuplicateTypes, requestOptions: RequestOptions?) -> UnionWithDuplicateTypes</code></summary>
+<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">duplicatetypesunion</a>(request: UnionWithDuplicateTypes, requestOptions: RequestOptions?) -> UnionWithDuplicateTypes</code></summary>
 <dl>
 <dd>
 
@@ -250,12 +240,12 @@ try await main()
 
 ```swift
 import Foundation
-import UndiscriminatedUnions
+import Api
 
 private func main() async throws {
-    let client = UndiscriminatedUnionsClient()
+    let client = ApiClient()
 
-    _ = try await client.union.duplicateTypesUnion(request: UnionWithDuplicateTypes.string(
+    _ = try await client.union.duplicatetypesunion(request: UnionWithDuplicateTypes.string(
         "string"
     ))
 }
@@ -295,7 +285,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">nestedUnions</a>(request: NestedUnionRoot, requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">nestedunions</a>(request: NestedUnionRoot, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -309,12 +299,12 @@ try await main()
 
 ```swift
 import Foundation
-import UndiscriminatedUnions
+import Api
 
 private func main() async throws {
-    let client = UndiscriminatedUnionsClient()
+    let client = ApiClient()
 
-    _ = try await client.union.nestedUnions(request: NestedUnionRoot.string(
+    _ = try await client.union.nestedunions(request: NestedUnionRoot.string(
         "string"
     ))
 }
@@ -354,7 +344,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">testCamelCaseProperties</a>(request: Requests.PaymentRequest, requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">testcamelcaseproperties</a>(request: Requests.UnionTestCamelCasePropertiesRequest, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -368,15 +358,15 @@ try await main()
 
 ```swift
 import Foundation
-import UndiscriminatedUnions
+import Api
 
 private func main() async throws {
-    let client = UndiscriminatedUnionsClient()
+    let client = ApiClient()
 
-    _ = try await client.union.testCamelCaseProperties(request: .init(paymentMethod: PaymentMethodUnion.tokenizeCard(
+    _ = try await client.union.testcamelcaseproperties(request: .init(paymentMethod: PaymentMethodUnion.tokenizeCard(
         TokenizeCard(
-            method: "card",
-            cardNumber: "1234567890123456"
+            method: "method",
+            cardNumber: "cardNumber"
         )
     )))
 }
@@ -396,7 +386,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.PaymentRequest` 
+**request:** `Requests.UnionTestCamelCasePropertiesRequest` 
     
 </dd>
 </dl>

@@ -35,12 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Get(
 	ctx context.Context,
-	id string,
+	request *unions.UnionGetRequest,
 	opts ...option.RequestOption,
 ) (*unions.Shape, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
-		id,
+		request,
 		opts...,
 	)
 	if err != nil {

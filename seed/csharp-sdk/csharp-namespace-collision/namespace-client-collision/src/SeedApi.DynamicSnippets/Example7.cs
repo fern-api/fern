@@ -11,8 +11,17 @@ public class Example7
             }
         );
 
-        await client.System.GetUserAsync(
-            "userId"
+        await client.Scimconfiguration.CreatetokenAsync(
+            new ScimConfigurationScimToken {
+                TokenId = "tokenId",
+                Token = "token",
+                Scopes = new List<string>(){
+                    "scopes",
+                    "scopes",
+                }
+                ,
+                CreatedAt = "createdAt"
+            }
         );
     }
 

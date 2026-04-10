@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>$client-&gt;optional-&gt;sendOptionalBody($request) -> ?string</code></summary>
+<details><summary><code>$client-&gt;optional-&gt;sendoptionalbody($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -13,11 +13,9 @@
 <dd>
 
 ```php
-$client->optional->sendOptionalBody(
+$client->optional->sendoptionalbody(
     [
-        'string' => [
-            'key' => "value",
-        ],
+        'key' => "value",
     ],
 );
 ```
@@ -46,7 +44,7 @@ $client->optional->sendOptionalBody(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;optional-&gt;sendOptionalTypedBody($request) -> ?string</code></summary>
+<details><summary><code>$client-&gt;optional-&gt;sendoptionaltypedbody($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -59,7 +57,7 @@ $client->optional->sendOptionalBody(
 <dd>
 
 ```php
-$client->optional->sendOptionalTypedBody(
+$client->optional->sendoptionaltypedbody(
     new SendOptionalBodyRequest([
         'message' => 'message',
     ]),
@@ -78,7 +76,7 @@ $client->optional->sendOptionalTypedBody(
 <dl>
 <dd>
 
-**$request:** `?SendOptionalBodyRequest` 
+**$message:** `string` 
     
 </dd>
 </dl>
@@ -90,7 +88,7 @@ $client->optional->sendOptionalTypedBody(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;optional-&gt;sendOptionalNullableWithAllOptionalProperties($actionId, $id, $request) -> ?DeployResponse</code></summary>
+<details><summary><code>$client-&gt;optional-&gt;sendoptionalnullablewithalloptionalproperties($actionId, $id, $request) -> ?DeployResponse</code></summary>
 <dl>
 <dd>
 
@@ -118,12 +116,10 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 <dd>
 
 ```php
-$client->optional->sendOptionalNullableWithAllOptionalProperties(
+$client->optional->sendoptionalnullablewithalloptionalproperties(
     'actionId',
     'id',
-    new DeployParams([
-        'updateDraft' => true,
-    ]),
+    new DeployParams([]),
 );
 ```
 </dd>
@@ -155,7 +151,7 @@ $client->optional->sendOptionalNullableWithAllOptionalProperties(
 <dl>
 <dd>
 
-**$request:** `?DeployParams` 
+**$updateDraft:** `?bool` 
     
 </dd>
 </dl>

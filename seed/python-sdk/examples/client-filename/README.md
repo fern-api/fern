@@ -41,8 +41,8 @@ client = SeedExhaustive(
     token="<token>",
 )
 
-client.echo(
-    request="Hello world!\\n\\nwith\\n\\tnewlines",
+client._.echo(
+    request="string",
 )
 ```
 
@@ -74,8 +74,8 @@ client = AsyncSeedExhaustive(
 
 
 async def main() -> None:
-    await client.echo(
-        request="Hello world!\\n\\nwith\\n\\tnewlines",
+    await client._.echo(
+        request="string",
     )
 
 
@@ -91,7 +91,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.echo(...)
+    client._.echo(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -108,7 +108,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 from seed import SeedExhaustive
 
 client = SeedExhaustive(...)
-response = client.with_raw_response.echo(...)
+response = client._.with_raw_response.echo(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -129,7 +129,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.echo(..., request_options={
+client._.echo(..., request_options={
     "max_retries": 1
 })
 ```
@@ -144,7 +144,7 @@ from seed import SeedExhaustive
 client = SeedExhaustive(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.echo(..., request_options={
+client._.echo(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

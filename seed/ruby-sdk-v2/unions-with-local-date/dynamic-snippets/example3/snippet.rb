@@ -2,4 +2,7 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.types.get(id: "date-example")
+client.bigunion.update(
+  value: "value",
+  type: "normalSweet"
+)

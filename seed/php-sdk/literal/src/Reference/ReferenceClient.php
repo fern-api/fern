@@ -4,7 +4,7 @@ namespace Seed\Reference;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Reference\Types\SendRequest;
+use Seed\Reference\Requests\SendRequest;
 use Seed\Types\SendResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;

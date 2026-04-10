@@ -9,8 +9,8 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .upload_json_document(
-            &UploadDocumentRequest {
+        ..upload_json_document(
+            &UploadJsonDocumentRequest {
                 ..Default::default()
             },
             None,

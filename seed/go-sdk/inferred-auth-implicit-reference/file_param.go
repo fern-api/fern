@@ -1,4 +1,4 @@
-package inferredauthimplicit
+package api
 
 import (
 	"io"

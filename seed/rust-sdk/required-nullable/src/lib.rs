@@ -14,7 +14,7 @@
 //!     };
 //!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
-//!         .get_foo(
+//!         ..get_foo(
 //!             &GetFooQueryRequest {
 //!                 required_baz: "required_baz".to_string(),
 //!                 required_nullable_baz: Some("required_nullable_baz".to_string()),
@@ -37,14 +37,15 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod client;
-pub mod config;
-pub mod core;
 pub mod error;
+pub mod core;
+pub mod config;
+pub mod client;
 pub mod prelude;
 
-pub use api::*;
-pub use client::*;
-pub use config::*;
-pub use core::*;
 pub use error::{ApiError, BuildError};
+pub use api::{*};
+pub use core::{*};
+pub use config::{*};
+pub use client::{*};
+

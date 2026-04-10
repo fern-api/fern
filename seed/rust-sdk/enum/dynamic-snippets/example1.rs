@@ -1,4 +1,4 @@
-use seed_enum::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,17 +6,14 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = EnumClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .inlined_request
-        .send(
-            &SendEnumInlinedRequest {
-                operand: Operand::GreaterThan,
-                operand_or_color: ColorOrOperand::Color(Color::Red),
-                maybe_operand: None,
-                maybe_operand_or_color: None,
-            },
-            None,
-        )
+        .headers
+        .send(Some(
+            RequestOptions::new()
+                .additional_header("operand", ">")
+                .additional_header("maybeOperand", ">")
+                .additional_header("operandOrColor", "red"),
+        ))
         .await;
 }

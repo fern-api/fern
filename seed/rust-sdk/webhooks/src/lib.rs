@@ -1,6 +1,6 @@
-//! # Webhooks SDK
+//! # webhooks SDK
 //!
-//! The official Rust SDK for the Webhooks.
+//! The official Rust SDK for the webhooks.
 //!
 //! ## Getting Started
 //!

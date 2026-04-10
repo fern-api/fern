@@ -1,4 +1,4 @@
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,20 +7,127 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .playlist
-        .update_playlist(
-            1,
-            &PlaylistId("playlistId".to_string()),
-            &Some(UpdatePlaylistRequest {
-                name: "name".to_string(),
-                problems: vec![
-                    ProblemId("problems".to_string()),
-                    ProblemId("problems".to_string()),
-                ],
-                ..Default::default()
-            }),
+        .admin
+        .storetracedworkspacev2(
+            &SubmissionId("submissionId".to_string()),
+            &vec![
+                TraceResponseV2 {
+                    submission_id: SubmissionId("submissionId".to_string()),
+                    line_number: 1,
+                    file: TracedFile {
+                        filename: "filename".to_string(),
+                        directory: "directory".to_string(),
+                        ..Default::default()
+                    },
+                    return_value: Some(DebugVariableValue::DebugVariableValueZero(
+                        DebugVariableValueZero {
+                            r#type: DebugVariableValueZeroType::IntegerValue,
+                            value: Some(1),
+                        },
+                    )),
+                    expression_location: Some(ExpressionLocation {
+                        start: 1,
+                        offset: 1,
+                        ..Default::default()
+                    }),
+                    stack: StackInformation {
+                        num_stack_frames: 1,
+                        top_stack_frame: Some(StackFrame {
+                            method_name: "methodName".to_string(),
+                            line_number: 1,
+                            scopes: vec![
+                                Scope {
+                                    variables: HashMap::from([(
+                                        "variables".to_string(),
+                                        DebugVariableValue::DebugVariableValueZero(
+                                            DebugVariableValueZero {
+                                                r#type: DebugVariableValueZeroType::IntegerValue,
+                                                value: None,
+                                            },
+                                        ),
+                                    )]),
+                                    ..Default::default()
+                                },
+                                Scope {
+                                    variables: HashMap::from([(
+                                        "variables".to_string(),
+                                        DebugVariableValue::DebugVariableValueZero(
+                                            DebugVariableValueZero {
+                                                r#type: DebugVariableValueZeroType::IntegerValue,
+                                                value: None,
+                                            },
+                                        ),
+                                    )]),
+                                    ..Default::default()
+                                },
+                            ],
+                            ..Default::default()
+                        }),
+                        ..Default::default()
+                    },
+                    stdout: Some("stdout".to_string()),
+                    ..Default::default()
+                },
+                TraceResponseV2 {
+                    submission_id: SubmissionId("submissionId".to_string()),
+                    line_number: 1,
+                    file: TracedFile {
+                        filename: "filename".to_string(),
+                        directory: "directory".to_string(),
+                        ..Default::default()
+                    },
+                    return_value: Some(DebugVariableValue::DebugVariableValueZero(
+                        DebugVariableValueZero {
+                            r#type: DebugVariableValueZeroType::IntegerValue,
+                            value: Some(1),
+                        },
+                    )),
+                    expression_location: Some(ExpressionLocation {
+                        start: 1,
+                        offset: 1,
+                        ..Default::default()
+                    }),
+                    stack: StackInformation {
+                        num_stack_frames: 1,
+                        top_stack_frame: Some(StackFrame {
+                            method_name: "methodName".to_string(),
+                            line_number: 1,
+                            scopes: vec![
+                                Scope {
+                                    variables: HashMap::from([(
+                                        "variables".to_string(),
+                                        DebugVariableValue::DebugVariableValueZero(
+                                            DebugVariableValueZero {
+                                                r#type: DebugVariableValueZeroType::IntegerValue,
+                                                value: None,
+                                            },
+                                        ),
+                                    )]),
+                                    ..Default::default()
+                                },
+                                Scope {
+                                    variables: HashMap::from([(
+                                        "variables".to_string(),
+                                        DebugVariableValue::DebugVariableValueZero(
+                                            DebugVariableValueZero {
+                                                r#type: DebugVariableValueZeroType::IntegerValue,
+                                                value: None,
+                                            },
+                                        ),
+                                    )]),
+                                    ..Default::default()
+                                },
+                            ],
+                            ..Default::default()
+                        }),
+                        ..Default::default()
+                    },
+                    stdout: Some("stdout".to_string()),
+                    ..Default::default()
+                },
+            ],
             None,
         )
         .await;

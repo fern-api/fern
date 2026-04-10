@@ -4,7 +4,7 @@ pub use crate::prelude::*;
 pub struct Practitioner {
     #[serde(flatten)]
     pub base_resource_fields: BaseResource,
-    pub resource_type: String,
+    pub resource_type: PractitionerResourceType,
     #[serde(default)]
     pub name: String,
 }
@@ -19,7 +19,7 @@ impl Practitioner {
 #[non_exhaustive]
 pub struct PractitionerBuilder {
     base_resource_fields: Option<BaseResource>,
-    resource_type: Option<String>,
+    resource_type: Option<PractitionerResourceType>,
     name: Option<String>,
 }
 
@@ -29,8 +29,8 @@ impl PractitionerBuilder {
         self
     }
 
-    pub fn resource_type(mut self, value: impl Into<String>) -> Self {
-        self.resource_type = Some(value.into());
+    pub fn resource_type(mut self, value: PractitionerResourceType) -> Self {
+        self.resource_type = Some(value);
         self
     }
 

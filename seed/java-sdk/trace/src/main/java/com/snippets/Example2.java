@@ -1,26 +1,23 @@
 package com.snippets;
 
-import com.seed.trace.SeedTraceClient;
-import com.seed.trace.resources.submission.types.RunningSubmissionState;
-import com.seed.trace.resources.submission.types.TestSubmissionUpdate;
-import com.seed.trace.resources.submission.types.TestSubmissionUpdateInfo;
-import java.time.OffsetDateTime;
-import java.util.UUID;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.admin.requests.AdminUpdateTestSubmissionStatusRequest;
+import com.seed.api.types.TestSubmissionStatus;
+import com.seed.api.types.TestSubmissionStatusStopped;
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedTraceClient client = SeedTraceClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.admin()
-                .sendTestSubmissionUpdate(
-                        UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                        TestSubmissionUpdate.builder()
-                                .updateTime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                                .updateInfo(
-                                        TestSubmissionUpdateInfo.running(RunningSubmissionState.QUEUEING_SUBMISSION))
+                .updatetestsubmissionstatus(
+                        "submissionId",
+                        AdminUpdateTestSubmissionStatusRequest.builder()
+                                .body(TestSubmissionStatus.stopped(
+                                        TestSubmissionStatusStopped.builder().build()))
                                 .build());
     }
 }

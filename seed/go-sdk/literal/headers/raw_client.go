@@ -4,6 +4,7 @@ package headers
 
 import (
 	context "context"
+	fmt "fmt"
 	http "net/http"
 
 	fern "github.com/literal/fern"
@@ -33,7 +34,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Send(
 	ctx context.Context,
-	request *fern.SendLiteralsInHeadersRequest,
+	request *fern.HeadersSendRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.SendResponse], error) {
 	options := core.NewRequestOptions(opts...)
@@ -47,8 +48,9 @@ func (r *RawClient) Send(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("X-Endpoint-Version", "02-12-2024")
-	headers.Add("X-Async", "true")
+	headers.Add("X-Endpoint-Version", string(request.EndpointVersion))
+	headers.Add("X-Async", fmt.Sprintf("%v", request.Async))
+	headers.Add("Content-Type", "application/json")
 	var response *fern.SendResponse
 	raw, err := r.caller.Call(
 		ctx,

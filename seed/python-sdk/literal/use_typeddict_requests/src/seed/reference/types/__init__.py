@@ -6,15 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .container_object import ContainerObject
-    from .nested_object_with_literals import NestedObjectWithLiterals
-    from .send_request import SendRequest
-    from .some_literal import SomeLiteral
+    from .send_request_ending import SendRequestEnding
+    from .send_request_prompt import SendRequestPrompt
 _dynamic_imports: typing.Dict[str, str] = {
-    "ContainerObject": ".container_object",
-    "NestedObjectWithLiterals": ".nested_object_with_literals",
-    "SendRequest": ".send_request",
-    "SomeLiteral": ".some_literal",
+    "SendRequestEnding": ".send_request_ending",
+    "SendRequestPrompt": ".send_request_prompt",
 }
 
 
@@ -39,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ContainerObject", "NestedObjectWithLiterals", "SendRequest", "SomeLiteral"]
+__all__ = ["SendRequestEnding", "SendRequestPrompt"]

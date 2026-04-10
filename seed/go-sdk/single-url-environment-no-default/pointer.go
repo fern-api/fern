@@ -1,4 +1,4 @@
-package singleurlenvironmentnodefault
+package api
 
 import (
 	"time"

@@ -37,19 +37,19 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\User\Requests\GetUsersRequest;
+use Seed\User\Requests\UserGetUsernameRequest;
 use DateTime;
-use Seed\User\Types\User;
-use Seed\User\Types\NestedUser;
+use Seed\Types\User;
+use Seed\Types\NestedUser;
 
 $client = new SeedClient();
-$client->user->getUsername(
-    new GetUsersRequest([
+$client->user->getusername(
+    new UserGetUsernameRequest([
         'limit' => 1,
-        'id' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+        'id' => 'id',
         'date' => new DateTime('2023-01-15'),
         'deadline' => new DateTime('2024-01-15T09:30:00Z'),
-        'bytes' => 'SGVsbG8gd29ybGQh',
+        'bytes' => 'bytes',
         'user' => new User([
             'name' => 'name',
             'tags' => [
@@ -58,13 +58,6 @@ $client->user->getUsername(
             ],
         ]),
         'userList' => [
-            new User([
-                'name' => 'name',
-                'tags' => [
-                    'tags',
-                    'tags',
-                ],
-            ]),
             new User([
                 'name' => 'name',
                 'tags' => [
@@ -121,7 +114,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->user->getUsername(...);
+    $response = $client->user->getusername(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -175,7 +168,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->user->getUsername(
+$response = $client->user->getusername(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -188,7 +181,7 @@ $response = $client->user->getUsername(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->user->getUsername(
+$response = $client->user->getusername(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

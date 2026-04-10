@@ -7,16 +7,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Parent(UniversalBaseModel):
-    """
-    Examples
-    --------
-    from seed import Parent
-
-    Parent(
-        parent="Property from the parent",
-    )
-    """
-
     parent: str
 
     if IS_PYDANTIC_V2:

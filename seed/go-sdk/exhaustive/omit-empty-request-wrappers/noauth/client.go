@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // POST request with no auth
-func (c *Client) PostWithNoAuth(
+func (c *Client) Postwithnoauth(
 	ctx context.Context,
 	request any,
 	opts ...option.RequestOption,
 ) (bool, error) {
-	response, err := c.WithRawResponse.PostWithNoAuth(
+	response, err := c.WithRawResponse.Postwithnoauth(
 		ctx,
 		request,
 		opts...,

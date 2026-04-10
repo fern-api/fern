@@ -2,16 +2,16 @@
 
 namespace Seed;
 
-use Seed\NullableOptional\NullableOptionalClient;
+use Seed\Nullableoptional\NullableoptionalClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
     /**
-     * @var NullableOptionalClient $nullableOptional
+     * @var NullableoptionalClient $nullableoptional
      */
-    public NullableOptionalClient $nullableOptional;
+    public NullableoptionalClient $nullableoptional;
 
     /**
      * @var array{
@@ -59,6 +59,6 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->nullableOptional = new NullableOptionalClient($this->client, $this->options);
+        $this->nullableoptional = new NullableoptionalClient($this->client, $this->options);
     }
 }

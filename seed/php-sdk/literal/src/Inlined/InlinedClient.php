@@ -4,7 +4,7 @@ namespace Seed\Inlined;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Inlined\Requests\SendLiteralsInlinedRequest;
+use Seed\Inlined\Requests\InlinedSendRequest;
 use Seed\Types\SendResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -50,7 +50,7 @@ class InlinedClient
     }
 
     /**
-     * @param SendLiteralsInlinedRequest $request
+     * @param InlinedSendRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -63,7 +63,7 @@ class InlinedClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function send(SendLiteralsInlinedRequest $request, ?array $options = null): ?SendResponse
+    public function send(InlinedSendRequest $request, ?array $options = null): ?SendResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

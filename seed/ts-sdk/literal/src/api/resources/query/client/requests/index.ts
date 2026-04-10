@@ -1,1 +1,1 @@
-export type { SendLiteralsInQueryRequest } from "./SendLiteralsInQueryRequest.js";
+export type { QuerySendRequest } from "./QuerySendRequest.js";

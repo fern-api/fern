@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Endpoints\Params\Requests\GetWithPathAndQuery;
+use Seed\Types\TypesObjectWithMapOfMap;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,9 +11,12 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->params->getWithPathAndQuery(
-    'param',
-    new GetWithPathAndQuery([
-        'query' => 'query',
+$client->endpointsObject->endpointsObjectGetAndReturnWithMapOfMap(
+    new TypesObjectWithMapOfMap([
+        'map' => [
+            'map' => [
+                'map' => 'map',
+            ],
+        ],
     ]),
 );

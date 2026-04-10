@@ -5,7 +5,7 @@ info:
 paths:
   /token:
     post:
-      operationId: auth_getTokenWithClientCredentials
+      operationId: auth_gettokenwithclientcredentials
       tags:
         - Auth
       parameters:
@@ -14,6 +14,10 @@ paths:
           required: true
           schema:
             type: string
+          example: X-Api-Key
+          examples:
+            Example1:
+              value: X-Api-Key
       responses:
         '200':
           description: ''
@@ -21,6 +25,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TokenResponse'
+              examples:
+                Example1:
+                  value:
+                    access_token: access_token
+                    expires_in: 1
+                    refresh_token: refresh_token
       requestBody:
         required: true
         content:
@@ -30,14 +40,16 @@ paths:
               properties:
                 client_id:
                   type: string
+                  example: client_id
                 client_secret:
                   type: string
+                  example: client_secret
                 audience:
-                  type: string
-                  const: https://api.example.com
+                  $ref: >-
+                    #/components/schemas/AuthGetTokenWithClientCredentialsRequestAudience
                 grant_type:
-                  type: string
-                  const: client_credentials
+                  $ref: >-
+                    #/components/schemas/AuthGetTokenWithClientCredentialsRequestGrantType
                 scope:
                   type: string
                   nullable: true
@@ -46,9 +58,16 @@ paths:
                 - client_secret
                 - audience
                 - grant_type
+            examples:
+              Example1:
+                value:
+                  client_id: client_id
+                  client_secret: client_secret
+                  audience: https://api.example.com
+                  grant_type: client_credentials
   /token/refresh:
     post:
-      operationId: auth_refreshToken
+      operationId: auth_refreshtoken
       tags:
         - Auth
       parameters:
@@ -57,6 +76,10 @@ paths:
           required: true
           schema:
             type: string
+          example: X-Api-Key
+          examples:
+            Example1:
+              value: X-Api-Key
       responses:
         '200':
           description: ''
@@ -64,6 +87,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TokenResponse'
+              examples:
+                Example1:
+                  value:
+                    access_token: access_token
+                    expires_in: 1
+                    refresh_token: refresh_token
       requestBody:
         required: true
         content:
@@ -73,16 +102,17 @@ paths:
               properties:
                 client_id:
                   type: string
+                  example: client_id
                 client_secret:
                   type: string
+                  example: client_secret
                 refresh_token:
                   type: string
+                  example: refresh_token
                 audience:
-                  type: string
-                  const: https://api.example.com
+                  $ref: '#/components/schemas/AuthRefreshTokenRequestAudience'
                 grant_type:
-                  type: string
-                  const: refresh_token
+                  $ref: '#/components/schemas/AuthRefreshTokenRequestGrantType'
                 scope:
                   type: string
                   nullable: true
@@ -92,9 +122,17 @@ paths:
                 - refresh_token
                 - audience
                 - grant_type
+            examples:
+              Example1:
+                value:
+                  client_id: client_id
+                  client_secret: client_secret
+                  refresh_token: refresh_token
+                  audience: https://api.example.com
+                  grant_type: refresh_token
   /nested-no-auth/get-something:
     get:
-      operationId: nestedNoAuth_api_getSomething
+      operationId: nestedNoAuthAPI_nestedNoAuth_api_getSomething
       tags:
         - NestedNoAuthAPI
       parameters: []
@@ -103,7 +141,7 @@ paths:
           description: ''
   /nested/get-something:
     get:
-      operationId: nested_api_getSomething
+      operationId: nestedAPI_nested_api_getSomething
       tags:
         - NestedAPI
       parameters: []
@@ -111,10 +149,10 @@ paths:
         '204':
           description: ''
       security:
-        - InferredAuthScheme: []
+        - {}
   /get-something:
     get:
-      operationId: simple_getSomething
+      operationId: simple_getsomething
       tags:
         - Simple
       parameters: []
@@ -122,9 +160,29 @@ paths:
         '204':
           description: ''
       security:
-        - InferredAuthScheme: []
+        - {}
 components:
   schemas:
+    AuthGetTokenWithClientCredentialsRequestAudience:
+      title: AuthGetTokenWithClientCredentialsRequestAudience
+      type: string
+      enum:
+        - https://api.example.com
+    AuthGetTokenWithClientCredentialsRequestGrantType:
+      title: AuthGetTokenWithClientCredentialsRequestGrantType
+      type: string
+      enum:
+        - client_credentials
+    AuthRefreshTokenRequestAudience:
+      title: AuthRefreshTokenRequestAudience
+      type: string
+      enum:
+        - https://api.example.com
+    AuthRefreshTokenRequestGrantType:
+      title: AuthRefreshTokenRequestGrantType
+      type: string
+      enum:
+        - refresh_token
     TokenResponse:
       title: TokenResponse
       type: object
@@ -132,15 +190,14 @@ components:
       properties:
         access_token:
           type: string
+          example: access_token
         expires_in:
           type: integer
+          example: 1
         refresh_token:
           type: string
           nullable: true
       required:
         - access_token
         - expires_in
-  securitySchemes:
-    InferredAuthScheme:
-      type: http
-      scheme: bearer
+  securitySchemes: {}

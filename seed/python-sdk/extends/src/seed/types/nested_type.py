@@ -8,18 +8,6 @@ from .json import Json
 
 
 class NestedType(Json):
-    """
-    Examples
-    --------
-    from seed import NestedType
-
-    NestedType(
-        docs="This is an example nested type.",
-        name="NestedExample",
-        raw='{"nested": "example"}',
-    )
-    """
-
     name: str
 
     if IS_PYDANTIC_V2:

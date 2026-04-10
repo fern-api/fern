@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) SendOptionalBody(
+func (c *Client) Sendoptionalbody(
 	ctx context.Context,
 	request map[string]any,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.SendOptionalBody(
+	response, err := c.WithRawResponse.Sendoptionalbody(
 		ctx,
 		request,
 		opts...,
@@ -49,12 +49,12 @@ func (c *Client) SendOptionalBody(
 	return response.Body, nil
 }
 
-func (c *Client) SendOptionalTypedBody(
+func (c *Client) Sendoptionaltypedbody(
 	ctx context.Context,
 	request *fern.SendOptionalBodyRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.SendOptionalTypedBody(
+	response, err := c.WithRawResponse.Sendoptionaltypedbody(
 		ctx,
 		request,
 		opts...,
@@ -67,17 +67,13 @@ func (c *Client) SendOptionalTypedBody(
 
 // Tests optional(nullable(T)) where T has only optional properties.
 // This should not generate wire tests expecting {} when Optional.empty() is passed.
-func (c *Client) SendOptionalNullableWithAllOptionalProperties(
+func (c *Client) Sendoptionalnullablewithalloptionalproperties(
 	ctx context.Context,
-	actionID string,
-	id string,
 	request *fern.DeployParams,
 	opts ...option.RequestOption,
 ) (*fern.DeployResponse, error) {
-	response, err := c.WithRawResponse.SendOptionalNullableWithAllOptionalProperties(
+	response, err := c.WithRawResponse.Sendoptionalnullablewithalloptionalproperties(
 		ctx,
-		actionID,
-		id,
 		request,
 		opts...,
 	)

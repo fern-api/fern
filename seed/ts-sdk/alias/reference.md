@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/Client.ts">get</a>(typeId) -> void</code></summary>
+## 
+<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">get</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +13,9 @@
 <dd>
 
 ```typescript
-await client.get("typeId");
+await client..get({
+    typeId: "typeId"
+});
 
 ```
 </dd>
@@ -28,7 +31,7 @@ await client.get("typeId");
 <dl>
 <dd>
 
-**typeId:** `SeedAlias.TypeId` 
+**request:** `SeedApi.GetRequest` 
     
 </dd>
 </dl>
@@ -36,7 +39,7 @@ await client.get("typeId");
 <dl>
 <dd>
 
-**requestOptions:** `SeedAliasClient.RequestOptions` 
+**requestOptions:** `Client.RequestOptions` 
     
 </dd>
 </dl>

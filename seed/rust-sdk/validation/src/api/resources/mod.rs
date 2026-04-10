@@ -1,57 +1,25 @@
 //! Service clients and API endpoints
 //!
-//! This module provides the client implementations for all available services.
+//! This module contains client implementations for:
+//!
+//! - ****
 
-use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
-use reqwest::Method;
+use crate::{ClientConfig, ApiError};
 
-pub struct ValidationClient {
+pub mod ;
+pub struct ApiClient {
     pub config: ClientConfig,
-    pub http_client: HttpClient,
+    pub : Client,
 }
 
-impl ValidationClient {
+impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            http_client: HttpClient::new(config.clone())?,
+            : Client::new(config.clone())?
         })
     }
 
-    pub async fn create(
-        &self,
-        request: &CreateRequest,
-        options: Option<RequestOptions>,
-    ) -> Result<Type, ApiError> {
-        self.http_client
-            .execute_request(
-                Method::POST,
-                "/create",
-                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
-                None,
-                options,
-            )
-            .await
-    }
-
-    pub async fn get(
-        &self,
-        request: &GetQueryRequest,
-        options: Option<RequestOptions>,
-    ) -> Result<Type, ApiError> {
-        self.http_client
-            .execute_request(
-                Method::GET,
-                "",
-                None,
-                QueryBuilder::new()
-                    .float("decimal", request.decimal.clone())
-                    .int("even", request.even.clone())
-                    .string("name", request.name.clone())
-                    .build(),
-                options,
-            )
-            .await
-    }
 }
+
+pub use ::Client;

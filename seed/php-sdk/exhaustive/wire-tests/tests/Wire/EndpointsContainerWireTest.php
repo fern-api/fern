@@ -4,7 +4,7 @@ namespace Seed\Tests;
 
 use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
-use Seed\Types\Object\Types\ObjectWithRequiredField;
+use Seed\Types\TypesObjectWithRequiredField;
 
 class EndpointsContainerWireTest extends WireMockTestCase
 {
@@ -15,16 +15,15 @@ class EndpointsContainerWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnListOfPrimitives(): void {
-        $testId = 'endpoints.container.get_and_return_list_of_primitives.0';
-        $this->client->endpoints->container->getAndReturnListOfPrimitives(
+    public function testEndpointsContainerGetAndReturnListOfPrimitives(): void {
+        $testId = 'endpoints_container.endpoints_container_get_and_return_list_of_primitives.0';
+        $this->client->endpointsContainer->endpointsContainerGetAndReturnListOfPrimitives(
             [
-                'string',
                 'string',
             ],
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.container.get_and_return_list_of_primitives.0',
+                    'X-Test-Id' => 'endpoints_container.endpoints_container_get_and_return_list_of_primitives.0',
                 ],
             ],
         );
@@ -39,20 +38,17 @@ class EndpointsContainerWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnListOfObjects(): void {
-        $testId = 'endpoints.container.get_and_return_list_of_objects.0';
-        $this->client->endpoints->container->getAndReturnListOfObjects(
+    public function testEndpointsContainerGetAndReturnListOfObjects(): void {
+        $testId = 'endpoints_container.endpoints_container_get_and_return_list_of_objects.0';
+        $this->client->endpointsContainer->endpointsContainerGetAndReturnListOfObjects(
             [
-                new ObjectWithRequiredField([
-                    'string' => 'string',
-                ]),
-                new ObjectWithRequiredField([
+                new TypesObjectWithRequiredField([
                     'string' => 'string',
                 ]),
             ],
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.container.get_and_return_list_of_objects.0',
+                    'X-Test-Id' => 'endpoints_container.endpoints_container_get_and_return_list_of_objects.0',
                 ],
             ],
         );
@@ -67,15 +63,15 @@ class EndpointsContainerWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnSetOfPrimitives(): void {
-        $testId = 'endpoints.container.get_and_return_set_of_primitives.0';
-        $this->client->endpoints->container->getAndReturnSetOfPrimitives(
+    public function testEndpointsContainerGetAndReturnSetOfPrimitives(): void {
+        $testId = 'endpoints_container.endpoints_container_get_and_return_set_of_primitives.0';
+        $this->client->endpointsContainer->endpointsContainerGetAndReturnSetOfPrimitives(
             [
                 'string',
             ],
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.container.get_and_return_set_of_primitives.0',
+                    'X-Test-Id' => 'endpoints_container.endpoints_container_get_and_return_set_of_primitives.0',
                 ],
             ],
         );
@@ -90,17 +86,17 @@ class EndpointsContainerWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnSetOfObjects(): void {
-        $testId = 'endpoints.container.get_and_return_set_of_objects.0';
-        $this->client->endpoints->container->getAndReturnSetOfObjects(
+    public function testEndpointsContainerGetAndReturnSetOfObjects(): void {
+        $testId = 'endpoints_container.endpoints_container_get_and_return_set_of_objects.0';
+        $this->client->endpointsContainer->endpointsContainerGetAndReturnSetOfObjects(
             [
-                new ObjectWithRequiredField([
+                new TypesObjectWithRequiredField([
                     'string' => 'string',
                 ]),
             ],
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.container.get_and_return_set_of_objects.0',
+                    'X-Test-Id' => 'endpoints_container.endpoints_container_get_and_return_set_of_objects.0',
                 ],
             ],
         );
@@ -115,15 +111,15 @@ class EndpointsContainerWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnMapPrimToPrim(): void {
-        $testId = 'endpoints.container.get_and_return_map_prim_to_prim.0';
-        $this->client->endpoints->container->getAndReturnMapPrimToPrim(
+    public function testEndpointsContainerGetAndReturnMapPrimToPrim(): void {
+        $testId = 'endpoints_container.endpoints_container_get_and_return_map_prim_to_prim.0';
+        $this->client->endpointsContainer->endpointsContainerGetAndReturnMapPrimToPrim(
             [
-                'string' => 'string',
+                'key' => 'value',
             ],
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.container.get_and_return_map_prim_to_prim.0',
+                    'X-Test-Id' => 'endpoints_container.endpoints_container_get_and_return_map_prim_to_prim.0',
                 ],
             ],
         );
@@ -138,17 +134,17 @@ class EndpointsContainerWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnMapOfPrimToObject(): void {
-        $testId = 'endpoints.container.get_and_return_map_of_prim_to_object.0';
-        $this->client->endpoints->container->getAndReturnMapOfPrimToObject(
+    public function testEndpointsContainerGetAndReturnMapOfPrimToObject(): void {
+        $testId = 'endpoints_container.endpoints_container_get_and_return_map_of_prim_to_object.0';
+        $this->client->endpointsContainer->endpointsContainerGetAndReturnMapOfPrimToObject(
             [
-                'string' => new ObjectWithRequiredField([
+                'key' => new TypesObjectWithRequiredField([
                     'string' => 'string',
                 ]),
             ],
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.container.get_and_return_map_of_prim_to_object.0',
+                    'X-Test-Id' => 'endpoints_container.endpoints_container_get_and_return_map_of_prim_to_object.0',
                 ],
             ],
         );
@@ -163,15 +159,15 @@ class EndpointsContainerWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnMapOfPrimToUndiscriminatedUnion(): void {
-        $testId = 'endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0';
-        $this->client->endpoints->container->getAndReturnMapOfPrimToUndiscriminatedUnion(
+    public function testEndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion(): void {
+        $testId = 'endpoints_container.endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union.0';
+        $this->client->endpointsContainer->endpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion(
             [
-                'string' => 1.1,
+                'key' => 1.1,
             ],
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0',
+                    'X-Test-Id' => 'endpoints_container.endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union.0',
                 ],
             ],
         );
@@ -186,15 +182,15 @@ class EndpointsContainerWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnOptional(): void {
-        $testId = 'endpoints.container.get_and_return_optional.0';
-        $this->client->endpoints->container->getAndReturnOptional(
-            new ObjectWithRequiredField([
+    public function testEndpointsContainerGetAndReturnOptional(): void {
+        $testId = 'endpoints_container.endpoints_container_get_and_return_optional.0';
+        $this->client->endpointsContainer->endpointsContainerGetAndReturnOptional(
+            new TypesObjectWithRequiredField([
                 'string' => 'string',
             ]),
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.container.get_and_return_optional.0',
+                    'X-Test-Id' => 'endpoints_container.endpoints_container_get_and_return_optional.0',
                 ],
             ],
         );

@@ -1,57 +1,45 @@
 import Foundation
 
 public enum SubmissionRequest: Codable, Hashable, Sendable {
-    case initializeProblemRequest(InitializeProblemRequest)
-    case initializeWorkspaceRequest
-    case stop(StopRequest)
-    case submitV2(SubmitRequestV2)
-    case workspaceSubmit(WorkspaceSubmitRequest)
+    case submissionRequestFour(SubmissionRequestFour)
+    case submissionRequestThree(SubmissionRequestThree)
+    case submissionRequestTwo(SubmissionRequestTwo)
+    case submissionRequestType(SubmissionRequestType)
+    case submissionRequestZero(SubmissionRequestZero)
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let discriminant = try container.decode(String.self, forKey: .type)
-        switch discriminant {
-        case "initializeProblemRequest":
-            self = .initializeProblemRequest(try InitializeProblemRequest(from: decoder))
-        case "initializeWorkspaceRequest":
-            self = .initializeWorkspaceRequest
-        case "stop":
-            self = .stop(try StopRequest(from: decoder))
-        case "submitV2":
-            self = .submitV2(try SubmitRequestV2(from: decoder))
-        case "workspaceSubmit":
-            self = .workspaceSubmit(try WorkspaceSubmitRequest(from: decoder))
-        default:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: decoder.codingPath,
-                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
-                )
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(SubmissionRequestFour.self) {
+            self = .submissionRequestFour(value)
+        } else if let value = try? container.decode(SubmissionRequestThree.self) {
+            self = .submissionRequestThree(value)
+        } else if let value = try? container.decode(SubmissionRequestTwo.self) {
+            self = .submissionRequestTwo(value)
+        } else if let value = try? container.decode(SubmissionRequestType.self) {
+            self = .submissionRequestType(value)
+        } else if let value = try? container.decode(SubmissionRequestZero.self) {
+            self = .submissionRequestZero(value)
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unexpected value."
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.singleValueContainer()
         switch self {
-        case .initializeProblemRequest(let data):
-            try container.encode("initializeProblemRequest", forKey: .type)
-            try data.encode(to: encoder)
-        case .initializeWorkspaceRequest:
-            try container.encode("initializeWorkspaceRequest", forKey: .type)
-        case .stop(let data):
-            try container.encode("stop", forKey: .type)
-            try data.encode(to: encoder)
-        case .submitV2(let data):
-            try container.encode("submitV2", forKey: .type)
-            try data.encode(to: encoder)
-        case .workspaceSubmit(let data):
-            try container.encode("workspaceSubmit", forKey: .type)
-            try data.encode(to: encoder)
+        case .submissionRequestFour(let value):
+            try container.encode(value)
+        case .submissionRequestThree(let value):
+            try container.encode(value)
+        case .submissionRequestTwo(let value):
+            try container.encode(value)
+        case .submissionRequestType(let value):
+            try container.encode(value)
+        case .submissionRequestZero(let value):
+            try container.encode(value)
         }
-    }
-
-    enum CodingKeys: String, CodingKey, CaseIterable {
-        case type
     }
 }

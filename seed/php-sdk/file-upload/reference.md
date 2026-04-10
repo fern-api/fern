@@ -13,7 +13,14 @@
 <dd>
 
 ```php
-$client->service->post($request);
+$client->service->post(
+    new ServicePostRequest([
+        'file' => File::createFromString("example_file", "example_file"),
+        'fileList' => File::createFromString("example_file_list", "example_file_list"),
+        'maybeFile' => File::createFromString("example_maybe_file", "example_maybe_file"),
+        'maybeFileList' => File::createFromString("example_maybe_file_list", "example_maybe_file_list"),
+    ]),
+);
 ```
 </dd>
 </dl>
@@ -25,7 +32,7 @@ $client->service->post($request);
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;justFile($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;justfile($request)</code></summary>
 <dl>
 <dd>
 
@@ -38,8 +45,8 @@ $client->service->post($request);
 <dd>
 
 ```php
-$client->service->justFile(
-    new JustFileRequest([
+$client->service->justfile(
+    new ServiceJustFileRequest([
         'file' => File::createFromString("example_file", "example_file"),
     ]),
 );
@@ -54,7 +61,7 @@ $client->service->justFile(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;justFileWithQueryParams($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;justfilewithqueryparams($request)</code></summary>
 <dl>
 <dd>
 
@@ -67,7 +74,7 @@ $client->service->justFile(
 <dd>
 
 ```php
-$client->service->justFileWithQueryParams($request);
+$client->service->justfilewithqueryparams($request);
 ```
 </dd>
 </dl>
@@ -106,7 +113,7 @@ $client->service->justFileWithQueryParams($request);
 <dl>
 <dd>
 
-**$listOfStrings:** `string` 
+**$listOfStrings:** `?string` 
     
 </dd>
 </dl>
@@ -126,7 +133,7 @@ $client->service->justFileWithQueryParams($request);
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;justFileWithOptionalQueryParams($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;justfilewithoptionalqueryparams($request)</code></summary>
 <dl>
 <dd>
 
@@ -139,7 +146,11 @@ $client->service->justFileWithQueryParams($request);
 <dd>
 
 ```php
-$client->service->justFileWithOptionalQueryParams($request);
+$client->service->justfilewithoptionalqueryparams(
+    new ServiceJustFileWithOptionalQueryParamsRequest([
+        'file' => File::createFromString("example_file", "example_file"),
+    ]),
+);
 ```
 </dd>
 </dl>
@@ -174,7 +185,7 @@ $client->service->justFileWithOptionalQueryParams($request);
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;withContentType($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withcontenttype($request)</code></summary>
 <dl>
 <dd>
 
@@ -187,7 +198,11 @@ $client->service->justFileWithOptionalQueryParams($request);
 <dd>
 
 ```php
-$client->service->withContentType($request);
+$client->service->withcontenttype(
+    new ServiceWithContentTypeRequest([
+        'file' => File::createFromString("example_file", "example_file"),
+    ]),
+);
 ```
 </dd>
 </dl>
@@ -199,7 +214,7 @@ $client->service->withContentType($request);
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;withFormEncoding($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withformencoding($request)</code></summary>
 <dl>
 <dd>
 
@@ -212,7 +227,11 @@ $client->service->withContentType($request);
 <dd>
 
 ```php
-$client->service->withFormEncoding($request);
+$client->service->withformencoding(
+    new ServiceWithFormEncodingRequest([
+        'file' => File::createFromString("example_file", "example_file"),
+    ]),
+);
 ```
 </dd>
 </dl>
@@ -224,7 +243,7 @@ $client->service->withFormEncoding($request);
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;withFormEncodedContainers($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withformencodedcontainers($request)</code></summary>
 <dl>
 <dd>
 
@@ -237,7 +256,14 @@ $client->service->withFormEncoding($request);
 <dd>
 
 ```php
-$client->service->withFormEncodedContainers($request);
+$client->service->withformencodedcontainers(
+    new ServiceWithFormEncodedContainersRequest([
+        'file' => File::createFromString("example_file", "example_file"),
+        'fileList' => File::createFromString("example_file_list", "example_file_list"),
+        'maybeFile' => File::createFromString("example_maybe_file", "example_maybe_file"),
+        'maybeFileList' => File::createFromString("example_maybe_file_list", "example_maybe_file_list"),
+    ]),
+);
 ```
 </dd>
 </dl>
@@ -249,7 +275,7 @@ $client->service->withFormEncodedContainers($request);
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;optionalArgs($request) -> ?string</code></summary>
+<details><summary><code>$client-&gt;service-&gt;optionalargs($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -262,8 +288,8 @@ $client->service->withFormEncodedContainers($request);
 <dd>
 
 ```php
-$client->service->optionalArgs(
-    new OptionalArgsRequest([
+$client->service->optionalargs(
+    new ServiceOptionalArgsRequest([
         'imageFile' => File::createFromString("example_image_file", "example_image_file"),
     ]),
 );
@@ -278,7 +304,7 @@ $client->service->optionalArgs(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;withInlineType($request) -> ?string</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withinlinetype($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -291,7 +317,11 @@ $client->service->optionalArgs(
 <dd>
 
 ```php
-$client->service->withInlineType($request): ?string;
+$client->service->withinlinetype(
+    new ServiceWithInlineTypeRequest([
+        'file' => File::createFromString("example_file", "example_file"),
+    ]),
+);
 ```
 </dd>
 </dl>
@@ -303,7 +333,7 @@ $client->service->withInlineType($request): ?string;
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;withJsonProperty($request) -> ?string</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withjsonproperty($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -316,7 +346,11 @@ $client->service->withInlineType($request): ?string;
 <dd>
 
 ```php
-$client->service->withJsonProperty($request): ?string;
+$client->service->withjsonproperty(
+    new ServiceWithJsonPropertyRequest([
+        'file' => File::createFromString("example_file", "example_file"),
+    ]),
+);
 ```
 </dd>
 </dl>
@@ -353,7 +387,7 @@ $client->service->simple();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;withLiteralAndEnumTypes($request) -> ?string</code></summary>
+<details><summary><code>$client-&gt;service-&gt;withliteralandenumtypes($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -366,7 +400,11 @@ $client->service->simple();
 <dd>
 
 ```php
-$client->service->withLiteralAndEnumTypes($request): ?string;
+$client->service->withliteralandenumtypes(
+    new ServiceWithLiteralAndEnumTypesRequest([
+        'file' => File::createFromString("example_file", "example_file"),
+    ]),
+);
 ```
 </dd>
 </dl>

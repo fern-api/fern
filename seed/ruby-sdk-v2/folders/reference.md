@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">foo</a>() -> </code></summary>
+## 
+<details><summary><code>client..<a href="/lib/seed/client.rb">foo</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -12,7 +13,7 @@
 <dd>
 
 ```ruby
-client.foo
+client..foo
 ```
 </dd>
 </dl>
@@ -27,7 +28,7 @@ client.foo
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `Seed::::RequestOptions` 
     
 </dd>
 </dl>
@@ -39,8 +40,8 @@ client.foo
 </dl>
 </details>
 
-## A B
-<details><summary><code>client.a.b.<a href="/lib/seed/a/b/client.rb">foo</a>() -> </code></summary>
+## Ab
+<details><summary><code>client.ab.<a href="/lib/seed/ab/client.rb">a_b_foo</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -53,7 +54,7 @@ client.foo
 <dd>
 
 ```ruby
-client.a.b.foo
+client.ab.a_b_foo
 ```
 </dd>
 </dl>
@@ -68,7 +69,7 @@ client.a.b.foo
 <dl>
 <dd>
 
-**request_options:** `Seed::A::B::RequestOptions` 
+**request_options:** `Seed::Ab::RequestOptions` 
     
 </dd>
 </dl>
@@ -80,8 +81,8 @@ client.a.b.foo
 </dl>
 </details>
 
-## A C
-<details><summary><code>client.a.c.<a href="/lib/seed/a/c/client.rb">foo</a>() -> </code></summary>
+## Ac
+<details><summary><code>client.ac.<a href="/lib/seed/ac/client.rb">a_c_foo</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -94,7 +95,7 @@ client.a.b.foo
 <dd>
 
 ```ruby
-client.a.c.foo
+client.ac.a_c_foo
 ```
 </dd>
 </dl>
@@ -109,7 +110,7 @@ client.a.c.foo
 <dl>
 <dd>
 
-**request_options:** `Seed::A::C::RequestOptions` 
+**request_options:** `Seed::Ac::RequestOptions` 
     
 </dd>
 </dl>
@@ -162,8 +163,8 @@ client.folder.foo
 </dl>
 </details>
 
-## Folder Service
-<details><summary><code>client.folder.service.<a href="/lib/seed/folder/service/client.rb">endpoint</a>() -> </code></summary>
+## FolderService
+<details><summary><code>client.folder_service.<a href="/lib/seed/folder_service/client.rb">folder_service_endpoint</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -176,7 +177,7 @@ client.folder.foo
 <dd>
 
 ```ruby
-client.folder.service.endpoint
+client.folder_service.folder_service_endpoint
 ```
 </dd>
 </dl>
@@ -191,7 +192,7 @@ client.folder.service.endpoint
 <dl>
 <dd>
 
-**request_options:** `Seed::Folder::Service::RequestOptions` 
+**request_options:** `Seed::FolderService::RequestOptions` 
     
 </dd>
 </dl>
@@ -203,7 +204,7 @@ client.folder.service.endpoint
 </dl>
 </details>
 
-<details><summary><code>client.folder.service.<a href="/lib/seed/folder/service/client.rb">unknown_request</a>(request) -> </code></summary>
+<details><summary><code>client.folder_service.<a href="/lib/seed/folder_service/client.rb">folder_service_unknown_request</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -216,7 +217,7 @@ client.folder.service.endpoint
 <dd>
 
 ```ruby
-client.folder.service.unknown_request
+client.folder_service.folder_service_unknown_request
 ```
 </dd>
 </dl>
@@ -239,7 +240,7 @@ client.folder.service.unknown_request
 <dl>
 <dd>
 
-**request_options:** `Seed::Folder::Service::RequestOptions` 
+**request_options:** `Seed::FolderService::RequestOptions` 
     
 </dd>
 </dl>

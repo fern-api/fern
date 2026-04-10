@@ -1,5 +1,5 @@
-use crate::{join_url, ApiError, ClientConfig, OAuthTokenProvider, RequestOptions};
 use base64::Engine;
+use crate::{join_url, ApiError, ClientConfig, OAuthTokenProvider, RequestOptions};
 use futures::{Stream, StreamExt};
 use reqwest::{
     header::{HeaderName, HeaderValue},
@@ -325,10 +325,7 @@ impl HttpClient {
 
         if let Some(key) = api_key {
             let header_value = key.to_string();
-            headers.insert(
-                "api_key",
-                header_value.parse().map_err(|_| ApiError::InvalidHeader)?,
-            );
+            headers.insert("api_key", header_value.parse().map_err(|_| ApiError::InvalidHeader)?);
         }
 
         // Apply bearer token - priority: request options > OAuth > config
@@ -415,8 +412,10 @@ impl HttpClient {
         }
 
         // Parse the token response
-        let token_response: OAuthTokenResponse =
-            response.json().await.map_err(ApiError::Network)?;
+        let token_response: OAuthTokenResponse = response
+            .json()
+            .await
+            .map_err(ApiError::Network)?;
 
         let expires_in = token_response.expires_in.unwrap_or(3600) as u64;
         Ok((token_response.access_token, expires_in))
@@ -551,9 +550,7 @@ impl HttpClient {
         let base64_string: String = serde_json::from_str(&text).map_err(ApiError::Serialization)?;
         base64::engine::general_purpose::STANDARD
             .decode(&base64_string)
-            .map_err(|e| {
-                ApiError::Serialization(SerdeError::custom(format!("base64 decode error: {}", e)))
-            })
+            .map_err(|e| ApiError::Serialization(SerdeError::custom(format!("base64 decode error: {}", e))))
     }
 
     /// Execute a request and return a streaming response (for large file downloads)
@@ -689,4 +686,5 @@ impl HttpClient {
 
         Ok(ByteStream::new(response))
     }
+
 }

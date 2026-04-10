@@ -1,4 +1,4 @@
-use seed_examples::prelude::*;
+use seed_api::prelude::*;
 
 mod wire_test_utils;
 
@@ -14,11 +14,9 @@ async fn test_root_echo_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExamplesClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
-    let result = client
-        .echo(&"Hello world!\\n\\nwith\\n\\tnewlines".to_string(), None)
-        .await;
+    let result = client..echo(&"string".to_string(), None).await;
 
     assert!(result.is_ok(), "Client method call should succeed");
 
@@ -39,11 +37,9 @@ async fn test_root_create_type_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExamplesClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
-    let result = client
-        .create_type(&Type::BasicType(BasicType::Primitive), None)
-        .await;
+    let result = client..create_type(&Type::BasicType(BasicType::Primitive), None).await;
 
     assert!(result.is_ok(), "Client method call should succeed");
 

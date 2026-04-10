@@ -7,7 +7,17 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .id import Id
-_dynamic_imports: typing.Dict[str, str] = {"Id": ".id"}
+    from .organization import Organization
+    from .user import User
+    from .user_event import UserEvent
+    from .userevents_metadata import UsereventsMetadata
+_dynamic_imports: typing.Dict[str, str] = {
+    "Id": ".id",
+    "Organization": ".organization",
+    "User": ".user",
+    "UserEvent": ".user_event",
+    "UsereventsMetadata": ".userevents_metadata",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +41,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["Id"]
+__all__ = ["Id", "Organization", "User", "UserEvent", "UsereventsMetadata"]

@@ -1,31 +1,21 @@
 import Foundation
-import Examples
+import Api
 
 private func main() async throws {
-    let client = ExamplesClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.service.createMovie(request: Movie(
-        id: "movie-c06a4ad7",
-        prequel: "movie-cv9b914f",
-        title: "The Boy and the Heron",
-        from: "Hayao Miyazaki",
-        rating: 8,
+    _ = try await client.service.createmovie(request: Movie(
+        id: "id",
+        title: "title",
+        from: "from",
+        rating: 1.1,
         type: .movie,
-        tag: "tag-wf9as23d",
+        tag: "tag",
         metadata: [
-            "actors": .array([
-                .string("Christian Bale"),
-                .string("Florence Pugh"),
-                .string("Willem Dafoe")
-            ]), 
-            "releaseDate": .string("2023-12-08"), 
-            "ratings": .object([
-                "rottenTomatoes": .number(97), 
-                "imdb": .number(7.6)
-            ])
+            "key": .string("value")
         ],
         revenue: 1000000
     ))

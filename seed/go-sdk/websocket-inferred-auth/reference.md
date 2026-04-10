@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.GetTokenWithClientCredentials(request) -> *fern.TokenResponse</code></summary>
+<details><summary><code>client.Auth.Gettokenwithclientcredentials(request) -> *fern.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,15 +13,13 @@
 <dd>
 
 ```go
-request := &fern.GetTokenRequest{
-        XAPIKey: "X-Api-Key",
+request := &fern.AuthGetTokenWithClientCredentialsRequest{
         ClientID: "client_id",
         ClientSecret: "client_secret",
-        Scope: fern.String(
-            "scope",
-        ),
+        Audience: fern.AuthGetTokenWithClientCredentialsRequestAudienceHttpsApiExampleCom,
+        GrantType: fern.AuthGetTokenWithClientCredentialsRequestGrantTypeClientCredentials,
     }
-client.Auth.GetTokenWithClientCredentials(
+client.Auth.Gettokenwithclientcredentials(
         context.TODO(),
         request,
     )
@@ -36,14 +34,6 @@ client.Auth.GetTokenWithClientCredentials(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**xAPIKey:** `string` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -64,7 +54,7 @@ client.Auth.GetTokenWithClientCredentials(
 <dl>
 <dd>
 
-**audience:** `string` 
+**audience:** `*fern.AuthGetTokenWithClientCredentialsRequestAudience` 
     
 </dd>
 </dl>
@@ -72,7 +62,7 @@ client.Auth.GetTokenWithClientCredentials(
 <dl>
 <dd>
 
-**grantType:** `string` 
+**grantType:** `*fern.AuthGetTokenWithClientCredentialsRequestGrantType` 
     
 </dd>
 </dl>
@@ -92,7 +82,7 @@ client.Auth.GetTokenWithClientCredentials(
 </dl>
 </details>
 
-<details><summary><code>client.Auth.RefreshToken(request) -> *fern.TokenResponse</code></summary>
+<details><summary><code>client.Auth.Refreshtoken(request) -> *fern.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -105,16 +95,14 @@ client.Auth.GetTokenWithClientCredentials(
 <dd>
 
 ```go
-request := &fern.RefreshTokenRequest{
-        XAPIKey: "X-Api-Key",
+request := &fern.AuthRefreshTokenRequest{
         ClientID: "client_id",
         ClientSecret: "client_secret",
         RefreshToken: "refresh_token",
-        Scope: fern.String(
-            "scope",
-        ),
+        Audience: fern.AuthRefreshTokenRequestAudienceHttpsApiExampleCom,
+        GrantType: fern.AuthRefreshTokenRequestGrantTypeRefreshToken,
     }
-client.Auth.RefreshToken(
+client.Auth.Refreshtoken(
         context.TODO(),
         request,
     )
@@ -129,14 +117,6 @@ client.Auth.RefreshToken(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**xAPIKey:** `string` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -165,7 +145,7 @@ client.Auth.RefreshToken(
 <dl>
 <dd>
 
-**audience:** `string` 
+**audience:** `*fern.AuthRefreshTokenRequestAudience` 
     
 </dd>
 </dl>
@@ -173,7 +153,7 @@ client.Auth.RefreshToken(
 <dl>
 <dd>
 
-**grantType:** `string` 
+**grantType:** `*fern.AuthRefreshTokenRequestGrantType` 
     
 </dd>
 </dl>

@@ -1,15 +1,10 @@
 import Foundation
-import Enum
+import Api
 
 private func main() async throws {
-    let client = EnumClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.pathParam.send(
-        operand: .greaterThan,
-        operandOrColor: ColorOrOperand.color(
-            .red
-        )
-    )
+    _ = try await client.multipartform.multipartform(request: .init())
 }
 
 try await main()

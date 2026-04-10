@@ -41,11 +41,14 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedTrace, SeedTraceClient } from "@fern/trace";
+import { SeedApi, SeedApiClient } from "@fern/trace";
 
-const client = new SeedTraceClient({ token: "YOUR_TOKEN", xRandomHeader: "YOUR_X_RANDOM_HEADER" });
-await client.admin.updateTestSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
-    type: "stopped"
+const client = new SeedApiClient({ token: "YOUR_TOKEN" });
+await client.admin.updatetestsubmissionstatus({
+    submissionId: SeedApi.SubmissionId("submissionId"),
+    body: {
+        type: "stopped"
+    }
 });
 ```
 
@@ -54,10 +57,10 @@ await client.admin.updateTestSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c
 This SDK allows you to configure different environments for API requests.
 
 ```typescript
-import { SeedTraceClient, SeedTraceEnvironment } from "@fern/trace";
+import { SeedApiClient, SeedApiEnvironment } from "@fern/trace";
 
-const client = new SeedTraceClient({
-    environment: SeedTraceEnvironment.Prod,
+const client = new SeedApiClient({
+    environment: SeedApiEnvironment.Default,
 });
 ```
 
@@ -67,9 +70,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedTrace } from "@fern/trace";
+import { SeedApi } from "@fern/trace";
 
-const request: SeedTrace.StoreTracedTestCaseRequest = {
+const request: SeedApi.AdminUpdateTestSubmissionStatusRequest = {
     ...
 };
 ```
@@ -80,12 +83,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedTraceError } from "@fern/trace";
+import { SeedApiError } from "@fern/trace";
 
 try {
-    await client.admin.updateTestSubmissionStatus(...);
+    await client.admin.updatetestsubmissionstatus(...);
 } catch (err) {
-    if (err instanceof SeedTraceError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -111,16 +114,16 @@ const client = new V2Client({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedTraceClient } from "@fern/trace";
+import { SeedApiClient } from "@fern/trace";
 
-const client = new SeedTraceClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.admin.updateTestSubmissionStatus(..., {
+const response = await client.admin.updatetestsubmissionstatus(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -132,7 +135,7 @@ const response = await client.admin.updateTestSubmissionStatus(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.admin.updateTestSubmissionStatus(..., {
+const response = await client.admin.updatetestsubmissionstatus(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -154,7 +157,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.admin.updateTestSubmissionStatus(..., {
+const response = await client.admin.updatetestsubmissionstatus(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -164,7 +167,7 @@ const response = await client.admin.updateTestSubmissionStatus(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.admin.updateTestSubmissionStatus(..., {
+const response = await client.admin.updatetestsubmissionstatus(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -175,7 +178,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.admin.updateTestSubmissionStatus(..., {
+const response = await client.admin.updatetestsubmissionstatus(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -187,7 +190,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.admin.updateTestSubmissionStatus(...).withRawResponse();
+const { data, rawResponse } = await client.admin.updatetestsubmissionstatus(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -198,9 +201,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedTraceClient, logging } from "@fern/trace";
+import { SeedApiClient, logging } from "@fern/trace";
 
-const client = new SeedTraceClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

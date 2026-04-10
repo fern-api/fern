@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Enum",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Enum",
-            targets: ["Enum"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Enum",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "EnumTests",
-            dependencies: ["Enum"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

@@ -10,6 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->imdb->getMovie(
+$client->imdb->getmovie(
     'movieId',
 );

@@ -18,6 +18,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Raw Response](#raw-response)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
+  - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -39,15 +40,15 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedLiteral;
+using SeedApi;
 
-var client = new SeedLiteralClient();
+var client = new SeedApiClient();
 await client.Headers.SendAsync(
-    new SendLiteralsInHeadersRequest
+    new HeadersSendRequest
     {
-        EndpointVersion = "02-12-2024",
+        EndpointVersion = HeadersSendRequestXEndpointVersion.Two122024,
         Async = true,
-        Query = "What is the weather today",
+        Query = "query",
     }
 );
 ```
@@ -58,11 +59,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedLiteral;
+using SeedApi;
 
 try {
     var response = await client.Headers.SendAsync(...);
-} catch (SeedLiteralApiException e) {
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -111,7 +112,7 @@ var response = await client.Headers.SendAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedLiteral;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
 var result = await client.Headers.SendAsync(...).WithRawResponse();
@@ -164,6 +165,35 @@ var response = await client.Headers.SendAsync(
         }
     }
 );
+```
+
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedApi;
+
+// Using a built-in value
+var headersSendRequestXEndpointVersion = HeadersSendRequestXEndpointVersion.Two122024;
+
+// Using a custom value
+var customHeadersSendRequestXEndpointVersion = HeadersSendRequestXEndpointVersion.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (headersSendRequestXEndpointVersion.Value)
+{
+    case HeadersSendRequestXEndpointVersion.Values.Two122024:
+        Console.WriteLine("Two122024");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {headersSendRequestXEndpointVersion.Value}");
+        break;
+}
+
+// Explicit casting
+string headersSendRequestXEndpointVersionString = (string)HeadersSendRequestXEndpointVersion.Two122024;
+HeadersSendRequestXEndpointVersion headersSendRequestXEndpointVersionFromString = (HeadersSendRequestXEndpointVersion)"02-12-2024";
 ```
 
 ## Contributing

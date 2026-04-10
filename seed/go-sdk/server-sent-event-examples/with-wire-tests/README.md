@@ -38,8 +38,8 @@ import (
 
 func do() {
     client := client.NewClient()
-    request := &sse.StreamCompletionRequest{
-        Query: "foo",
+    request := &sse.CompletionsStreamRequest{
+        Query: "query",
     }
     client.Completions.Stream(
         context.TODO(),

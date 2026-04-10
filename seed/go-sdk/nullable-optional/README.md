@@ -40,33 +40,8 @@ func do() {
     client := client.NewClient()
     request := &fern.CreateUserRequest{
         Username: "username",
-        Email: fern.String(
-            "email",
-        ),
-        Phone: fern.String(
-            "phone",
-        ),
-        Address: &fern.Address{
-            Street: "street",
-            City: fern.String(
-                "city",
-            ),
-            State: fern.String(
-                "state",
-            ),
-            ZipCode: "zipCode",
-            Country: fern.String(
-                "country",
-            ),
-            BuildingID: fern.String(
-                "buildingId",
-            ),
-            TenantID: fern.String(
-                "tenantId",
-            ),
-        },
     }
-    client.NullableOptional.CreateUser(
+    client.Nullableoptional.Createuser(
         context.TODO(),
         request,
     )
@@ -90,7 +65,7 @@ Structured error types are returned from API calls that return non-success statu
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.NullableOptional.CreateUser(...)
+response, err := client.Nullableoptional.Createuser(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {
@@ -124,7 +99,7 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.NullableOptional.CreateUser(
+response, err := client.Nullableoptional.Createuser(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
@@ -139,7 +114,7 @@ when you need to examine the response headers received from the API call. (When 
 the raw HTTP response data will be included automatically in the Page response object.)
 
 ```go
-response, err := client.NullableOptional.WithRawResponse.CreateUser(...)
+response, err := client.Nullableoptional.WithRawResponse.Createuser(...)
 if err != nil {
     return err
 }
@@ -169,7 +144,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.NullableOptional.CreateUser(
+response, err := client.Nullableoptional.Createuser(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -183,7 +158,7 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.NullableOptional.CreateUser(ctx, ...)
+response, err := client.Nullableoptional.Createuser(ctx, ...)
 ```
 
 ### Explicit Null
@@ -205,7 +180,7 @@ type ExampleRequest struct {
 request := &ExampleRequest{}
 request.SetName(nil)
 
-response, err := client.NullableOptional.CreateUser(ctx, request, ...)
+response, err := client.Nullableoptional.Createuser(ctx, request, ...)
 ```
 
 ## Contributing

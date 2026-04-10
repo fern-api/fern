@@ -37,7 +37,7 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Organization\Types\CreateOrganizationRequest;
+use Seed\Organization\Requests\CreateOrganizationRequest;
 
 $client = new SeedClient();
 $client->organization->create(

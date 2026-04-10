@@ -1,37 +1,24 @@
 package com.snippets;
 
-import com.seed.clientSideParams.SeedClientSideParamsClient;
-import com.seed.clientSideParams.resources.types.types.CreateUserRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.service.requests.ServiceSearchResourcesRequest;
 import java.util.HashMap;
 
 public class Example5 {
     public static void main(String[] args) {
-        SeedClientSideParamsClient client = SeedClientSideParamsClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.service()
-                .createUser(CreateUserRequest.builder()
-                        .email("email")
-                        .connection("connection")
-                        .emailVerified(true)
-                        .username("username")
-                        .password("password")
-                        .phoneNumber("phone_number")
-                        .phoneVerified(true)
-                        .userMetadata(new HashMap<String, Object>() {
+                .searchresources(ServiceSearchResourcesRequest.builder()
+                        .limit(1)
+                        .offset(1)
+                        .query("query")
+                        .filters(new HashMap<String, Object>() {
                             {
-                                put("user_metadata", new HashMap<String, Object>() {
-                                    {
-                                        put("key", "value");
-                                    }
-                                });
-                            }
-                        })
-                        .appMetadata(new HashMap<String, Object>() {
-                            {
-                                put("app_metadata", new HashMap<String, Object>() {
+                                put("filters", new HashMap<String, Object>() {
                                     {
                                         put("key", "value");
                                     }

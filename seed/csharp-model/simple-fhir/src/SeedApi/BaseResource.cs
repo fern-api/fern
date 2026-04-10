@@ -1,6 +1,5 @@
 using global::System.Text.Json;
 using global::System.Text.Json.Serialization;
-using OneOf;
 using SeedApi.Core;
 
 namespace SeedApi;
@@ -16,9 +15,7 @@ public record BaseResource : IJsonOnDeserialized
     public required string Id { get; set; }
 
     [JsonPropertyName("related_resources")]
-    public IEnumerable<
-        OneOf<Account, Patient, Practitioner, Script>
-    > RelatedResources { get; set; } = new List<OneOf<Account, Patient, Practitioner, Script>>();
+    public IEnumerable<ResourceList> RelatedResources { get; set; } = new List<ResourceList>();
 
     [JsonPropertyName("memo")]
     public required Memo Memo { get; set; }

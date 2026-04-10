@@ -35,16 +35,14 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedTrace
-import uuid
-from seed.submission import TestSubmissionStatus_Stopped
+from seed import SeedApi, TestSubmissionStatus_Stopped
 
-client = SeedTrace(
+client = SeedApi(
     token="<token>",
 )
 
-client.admin.update_test_submission_status(
-    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+client.admin.updatetestsubmissionstatus(
+    submission_id="submissionId",
     request=TestSubmissionStatus_Stopped(),
 )
 ```
@@ -54,11 +52,11 @@ client.admin.update_test_submission_status(
 This SDK allows you to configure different environments for API requests.
 
 ```python
-from seed import SeedTrace
-from seed.environment import SeedTraceEnvironment
+from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedTrace(
-    environment=SeedTraceEnvironment.PROD,
+client = SeedApi(
+    environment=SeedApiEnvironment.DEFAULT,
 )
 ```
 
@@ -68,19 +66,17 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
-import uuid
-from seed.submission import TestSubmissionStatus_Stopped
 
-from seed import AsyncSeedTrace
+from seed import AsyncSeedApi
 
-client = AsyncSeedTrace(
+client = AsyncSeedApi(
     token="<token>",
 )
 
 
 async def main() -> None:
-    await client.admin.update_test_submission_status(
-        submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    await client.admin.updatetestsubmissionstatus(
+        submission_id="submissionId",
         request=TestSubmissionStatus_Stopped(),
     )
 
@@ -97,7 +93,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.admin.update_test_submission_status(...)
+    client.admin.updatetestsubmissionstatus(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -111,10 +107,10 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedTrace
+from seed import SeedApi
 
-client = SeedTrace(...)
-response = client.admin.with_raw_response.update_test_submission_status(...)
+client = SeedApi(...)
+response = client.admin.with_raw_response.updatetestsubmissionstatus(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -135,7 +131,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.admin.update_test_submission_status(..., request_options={
+client.admin.updatetestsubmissionstatus(..., request_options={
     "max_retries": 1
 })
 ```
@@ -145,12 +141,12 @@ client.admin.update_test_submission_status(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedTrace
+from seed import SeedApi
 
-client = SeedTrace(..., timeout=20.0)
+client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.admin.update_test_submission_status(..., request_options={
+client.admin.updatetestsubmissionstatus(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -162,9 +158,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedTrace
+from seed import SeedApi
 
-client = SeedTrace(
+client = SeedApi(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

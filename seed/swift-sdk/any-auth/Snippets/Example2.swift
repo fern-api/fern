@@ -1,13 +1,14 @@
 import Foundation
-import AnyAuth
+import Api
 
 private func main() async throws {
-    let client = AnyAuthClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
-        token: "<token>"
+        token: "<token>",
+        apiKey: "<X-API-Key>"
     )
 
-    _ = try await client.user.getAdmins()
+    _ = try await client.user.get()
 }
 
 try await main()

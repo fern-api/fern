@@ -3,14 +3,14 @@ import Foundation
 public struct RefundProcessedPayload: Codable, Hashable, Sendable {
     public let refundId: String
     public let amount: Double
-    public let reason: String?
+    public let reason: Nullable<String>?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         refundId: String,
         amount: Double,
-        reason: String? = nil,
+        reason: Nullable<String>? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.refundId = refundId
@@ -23,7 +23,7 @@ public struct RefundProcessedPayload: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.refundId = try container.decode(String.self, forKey: .refundId)
         self.amount = try container.decode(Double.self, forKey: .amount)
-        self.reason = try container.decodeIfPresent(String.self, forKey: .reason)
+        self.reason = try container.decodeNullableIfPresent(String.self, forKey: .reason)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -32,7 +32,7 @@ public struct RefundProcessedPayload: Codable, Hashable, Sendable {
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.refundId, forKey: .refundId)
         try container.encode(self.amount, forKey: .amount)
-        try container.encodeIfPresent(self.reason, forKey: .reason)
+        try container.encodeNullableIfPresent(self.reason, forKey: .reason)
     }
 
     /// Keys for encoding/decoding struct properties.

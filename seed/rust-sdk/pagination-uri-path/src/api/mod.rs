@@ -1,4 +1,4 @@
-//! API client and types for the PaginationUriPath
+//! API client and types for the pagination-uri-path
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,5 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{PaginationUriPathClient, UsersClient};
+pub use resources::{ApiClient, UsersClient};
 pub use types::*;

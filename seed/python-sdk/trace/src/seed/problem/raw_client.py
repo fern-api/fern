@@ -3,10 +3,6 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from ..commons.types.language import Language
-from ..commons.types.problem_id import ProblemId
-from ..commons.types.test_case_with_expected_result import TestCaseWithExpectedResult
-from ..commons.types.variable_type import VariableType
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
@@ -15,12 +11,15 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
-from .types.create_problem_response import CreateProblemResponse
-from .types.get_default_starter_files_response import GetDefaultStarterFilesResponse
-from .types.problem_description import ProblemDescription
-from .types.problem_files import ProblemFiles
-from .types.update_problem_response import UpdateProblemResponse
-from .types.variable_type_and_name import VariableTypeAndName
+from ..types.create_problem_response import CreateProblemResponse
+from ..types.get_default_starter_files_response import GetDefaultStarterFilesResponse
+from ..types.problem_description import ProblemDescription
+from ..types.problem_files import ProblemFiles
+from ..types.problem_id import ProblemId
+from ..types.test_case_with_expected_result import TestCaseWithExpectedResult
+from ..types.update_problem_response import UpdateProblemResponse
+from ..types.variable_type import VariableType
+from ..types.variable_type_and_name import VariableTypeAndName
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -31,12 +30,12 @@ class RawProblemClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def create_problem(
+    def createproblem(
         self,
         *,
         problem_name: str,
         problem_description: ProblemDescription,
-        files: typing.Dict[Language, ProblemFiles],
+        files: typing.Dict[str, ProblemFiles],
         input_params: typing.Sequence[VariableTypeAndName],
         output_type: VariableType,
         testcases: typing.Sequence[TestCaseWithExpectedResult],
@@ -52,7 +51,7 @@ class RawProblemClient:
 
         problem_description : ProblemDescription
 
-        files : typing.Dict[Language, ProblemFiles]
+        files : typing.Dict[str, ProblemFiles]
 
         input_params : typing.Sequence[VariableTypeAndName]
 
@@ -68,6 +67,7 @@ class RawProblemClient:
         Returns
         -------
         HttpResponse[CreateProblemResponse]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "problem-crud/create",
@@ -78,7 +78,7 @@ class RawProblemClient:
                     object_=problem_description, annotation=ProblemDescription, direction="write"
                 ),
                 "files": convert_and_respect_annotation_metadata(
-                    object_=files, annotation=typing.Dict[Language, ProblemFiles], direction="write"
+                    object_=files, annotation=typing.Dict[str, ProblemFiles], direction="write"
                 ),
                 "inputParams": convert_and_respect_annotation_metadata(
                     object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
@@ -91,10 +91,22 @@ class RawProblemClient:
                 ),
                 "methodName": method_name,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CreateProblemResponse,
+                    parse_obj_as(
+                        type_=CreateProblemResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -102,29 +114,15 @@ class RawProblemClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    CreateProblemResponse,
-                    parse_obj_as(
-                        type_=CreateProblemResponse,  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def update_problem(
+    def updateproblem(
         self,
         problem_id: ProblemId,
         *,
         problem_name: str,
         problem_description: ProblemDescription,
-        files: typing.Dict[Language, ProblemFiles],
+        files: typing.Dict[str, ProblemFiles],
         input_params: typing.Sequence[VariableTypeAndName],
         output_type: VariableType,
         testcases: typing.Sequence[TestCaseWithExpectedResult],
@@ -142,7 +140,7 @@ class RawProblemClient:
 
         problem_description : ProblemDescription
 
-        files : typing.Dict[Language, ProblemFiles]
+        files : typing.Dict[str, ProblemFiles]
 
         input_params : typing.Sequence[VariableTypeAndName]
 
@@ -158,6 +156,7 @@ class RawProblemClient:
         Returns
         -------
         HttpResponse[UpdateProblemResponse]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             f"problem-crud/update/{encode_path_param(problem_id)}",
@@ -168,7 +167,7 @@ class RawProblemClient:
                     object_=problem_description, annotation=ProblemDescription, direction="write"
                 ),
                 "files": convert_and_respect_annotation_metadata(
-                    object_=files, annotation=typing.Dict[Language, ProblemFiles], direction="write"
+                    object_=files, annotation=typing.Dict[str, ProblemFiles], direction="write"
                 ),
                 "inputParams": convert_and_respect_annotation_metadata(
                     object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
@@ -181,10 +180,22 @@ class RawProblemClient:
                 ),
                 "methodName": method_name,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UpdateProblemResponse,
+                    parse_obj_as(
+                        type_=UpdateProblemResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -192,23 +203,9 @@ class RawProblemClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    UpdateProblemResponse,
-                    parse_obj_as(
-                        type_=UpdateProblemResponse,  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def delete_problem(
+    def deleteproblem(
         self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
@@ -230,9 +227,9 @@ class RawProblemClient:
             method="DELETE",
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            return HttpResponse(response=_response, data=None)
         try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -242,7 +239,7 @@ class RawProblemClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_default_starter_files(
+    def getdefaultstarterfiles(
         self,
         *,
         input_params: typing.Sequence[VariableTypeAndName],
@@ -273,6 +270,7 @@ class RawProblemClient:
         Returns
         -------
         HttpResponse[GetDefaultStarterFilesResponse]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "problem-crud/default-starter-files",
@@ -286,10 +284,22 @@ class RawProblemClient:
                 ),
                 "methodName": method_name,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetDefaultStarterFilesResponse,
+                    parse_obj_as(
+                        type_=GetDefaultStarterFilesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -297,20 +307,6 @@ class RawProblemClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    GetDefaultStarterFilesResponse,
-                    parse_obj_as(
-                        type_=GetDefaultStarterFilesResponse,  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -318,12 +314,12 @@ class AsyncRawProblemClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def create_problem(
+    async def createproblem(
         self,
         *,
         problem_name: str,
         problem_description: ProblemDescription,
-        files: typing.Dict[Language, ProblemFiles],
+        files: typing.Dict[str, ProblemFiles],
         input_params: typing.Sequence[VariableTypeAndName],
         output_type: VariableType,
         testcases: typing.Sequence[TestCaseWithExpectedResult],
@@ -339,7 +335,7 @@ class AsyncRawProblemClient:
 
         problem_description : ProblemDescription
 
-        files : typing.Dict[Language, ProblemFiles]
+        files : typing.Dict[str, ProblemFiles]
 
         input_params : typing.Sequence[VariableTypeAndName]
 
@@ -355,6 +351,7 @@ class AsyncRawProblemClient:
         Returns
         -------
         AsyncHttpResponse[CreateProblemResponse]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "problem-crud/create",
@@ -365,7 +362,7 @@ class AsyncRawProblemClient:
                     object_=problem_description, annotation=ProblemDescription, direction="write"
                 ),
                 "files": convert_and_respect_annotation_metadata(
-                    object_=files, annotation=typing.Dict[Language, ProblemFiles], direction="write"
+                    object_=files, annotation=typing.Dict[str, ProblemFiles], direction="write"
                 ),
                 "inputParams": convert_and_respect_annotation_metadata(
                     object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
@@ -378,10 +375,22 @@ class AsyncRawProblemClient:
                 ),
                 "methodName": method_name,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CreateProblemResponse,
+                    parse_obj_as(
+                        type_=CreateProblemResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -389,29 +398,15 @@ class AsyncRawProblemClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    CreateProblemResponse,
-                    parse_obj_as(
-                        type_=CreateProblemResponse,  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def update_problem(
+    async def updateproblem(
         self,
         problem_id: ProblemId,
         *,
         problem_name: str,
         problem_description: ProblemDescription,
-        files: typing.Dict[Language, ProblemFiles],
+        files: typing.Dict[str, ProblemFiles],
         input_params: typing.Sequence[VariableTypeAndName],
         output_type: VariableType,
         testcases: typing.Sequence[TestCaseWithExpectedResult],
@@ -429,7 +424,7 @@ class AsyncRawProblemClient:
 
         problem_description : ProblemDescription
 
-        files : typing.Dict[Language, ProblemFiles]
+        files : typing.Dict[str, ProblemFiles]
 
         input_params : typing.Sequence[VariableTypeAndName]
 
@@ -445,6 +440,7 @@ class AsyncRawProblemClient:
         Returns
         -------
         AsyncHttpResponse[UpdateProblemResponse]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"problem-crud/update/{encode_path_param(problem_id)}",
@@ -455,7 +451,7 @@ class AsyncRawProblemClient:
                     object_=problem_description, annotation=ProblemDescription, direction="write"
                 ),
                 "files": convert_and_respect_annotation_metadata(
-                    object_=files, annotation=typing.Dict[Language, ProblemFiles], direction="write"
+                    object_=files, annotation=typing.Dict[str, ProblemFiles], direction="write"
                 ),
                 "inputParams": convert_and_respect_annotation_metadata(
                     object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
@@ -468,10 +464,22 @@ class AsyncRawProblemClient:
                 ),
                 "methodName": method_name,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UpdateProblemResponse,
+                    parse_obj_as(
+                        type_=UpdateProblemResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -479,23 +487,9 @@ class AsyncRawProblemClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    UpdateProblemResponse,
-                    parse_obj_as(
-                        type_=UpdateProblemResponse,  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def delete_problem(
+    async def deleteproblem(
         self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
@@ -517,9 +511,9 @@ class AsyncRawProblemClient:
             method="DELETE",
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            return AsyncHttpResponse(response=_response, data=None)
         try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -529,7 +523,7 @@ class AsyncRawProblemClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def get_default_starter_files(
+    async def getdefaultstarterfiles(
         self,
         *,
         input_params: typing.Sequence[VariableTypeAndName],
@@ -560,6 +554,7 @@ class AsyncRawProblemClient:
         Returns
         -------
         AsyncHttpResponse[GetDefaultStarterFilesResponse]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "problem-crud/default-starter-files",
@@ -573,10 +568,22 @@ class AsyncRawProblemClient:
                 ),
                 "methodName": method_name,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetDefaultStarterFilesResponse,
+                    parse_obj_as(
+                        type_=GetDefaultStarterFilesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -584,18 +591,4 @@ class AsyncRawProblemClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    GetDefaultStarterFilesResponse,
-                    parse_obj_as(
-                        type_=GetDefaultStarterFilesResponse,  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

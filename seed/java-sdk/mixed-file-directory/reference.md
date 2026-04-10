@@ -47,7 +47,7 @@ client.organization().create(
 <dl>
 <dd>
 
-**request:** `CreateOrganizationRequest` 
+**name:** `String` 
     
 </dd>
 </dl>
@@ -88,9 +88,8 @@ List all users.
 
 ```java
 client.user().list(
-    ListUsersRequest
+    UserListRequest
         .builder()
-        .limit(1)
         .build()
 );
 ```
@@ -119,8 +118,8 @@ client.user().list(
 </dl>
 </details>
 
-## User Events
-<details><summary><code>client.user.events.listEvents() -> List&amp;lt;Event&amp;gt;</code></summary>
+## UserEvents
+<details><summary><code>client.userEvents.userEventsListEvents() -> List&amp;lt;UserEvent&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -147,10 +146,9 @@ List all user events.
 <dd>
 
 ```java
-client.user().events().listEvents(
-    ListUserEventsRequest
+client.userEvents().userEventsListEvents(
+    UserEventsListEventsRequest
         .builder()
-        .limit(1)
         .build()
 );
 ```
@@ -179,8 +177,8 @@ client.user().events().listEvents(
 </dl>
 </details>
 
-## User Events Metadata
-<details><summary><code>client.user.events.metadata.getMetadata() -> Metadata</code></summary>
+## UserEventsMetadata
+<details><summary><code>client.userEventsMetadata.userEventsMetadataGetMetadata() -> UsereventsMetadata</code></summary>
 <dl>
 <dd>
 
@@ -207,8 +205,8 @@ Get event metadata.
 <dd>
 
 ```java
-client.user().events().metadata().getMetadata(
-    GetEventMetadataRequest
+client.userEventsMetadata().userEventsMetadataGetMetadata(
+    UserEventsMetadataGetMetadataRequest
         .builder()
         .id("id")
         .build()

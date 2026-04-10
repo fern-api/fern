@@ -1,4 +1,4 @@
-package clientsideparams
+package api
 
 import (
 	"io"

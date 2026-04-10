@@ -2,13 +2,13 @@ import Foundation
 
 public struct InitializeProblemRequest: Codable, Hashable, Sendable {
     public let problemId: ProblemId
-    public let problemVersion: Int?
+    public let problemVersion: Nullable<Int>?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         problemId: ProblemId,
-        problemVersion: Int? = nil,
+        problemVersion: Nullable<Int>? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.problemId = problemId
@@ -19,7 +19,7 @@ public struct InitializeProblemRequest: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.problemId = try container.decode(ProblemId.self, forKey: .problemId)
-        self.problemVersion = try container.decodeIfPresent(Int.self, forKey: .problemVersion)
+        self.problemVersion = try container.decodeNullableIfPresent(Int.self, forKey: .problemVersion)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -27,7 +27,7 @@ public struct InitializeProblemRequest: Codable, Hashable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.problemId, forKey: .problemId)
-        try container.encodeIfPresent(self.problemVersion, forKey: .problemVersion)
+        try container.encodeNullableIfPresent(self.problemVersion, forKey: .problemVersion)
     }
 
     /// Keys for encoding/decoding struct properties.

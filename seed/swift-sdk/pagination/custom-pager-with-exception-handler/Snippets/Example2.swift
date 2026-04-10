@@ -1,13 +1,13 @@
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination(cursor: "cursor")
+    _ = try await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithCursorPagination()
 }
 
 try await main()

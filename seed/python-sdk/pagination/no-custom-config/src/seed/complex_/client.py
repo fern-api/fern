@@ -3,13 +3,11 @@
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
+from ..types.paginated_conversation_response import PaginatedConversationResponse
+from ..types.search_request_query import SearchRequestQuery
+from ..types.starting_after_paging import StartingAfterPaging
 from .raw_client import AsyncRawComplexClient, RawComplexClient
-from .types.conversation import Conversation
-from .types.paginated_conversation_response import PaginatedConversationResponse
-from .types.search_request_query import SearchRequestQuery
-from .types.starting_after_paging import StartingAfterPaging
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -37,7 +35,7 @@ class ComplexClient:
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Conversation, PaginatedConversationResponse]:
+    ) -> PaginatedConversationResponse:
         """
         Parameters
         ----------
@@ -52,36 +50,24 @@ class ComplexClient:
 
         Returns
         -------
-        SyncPager[Conversation, PaginatedConversationResponse]
+        PaginatedConversationResponse
+
 
         Examples
         --------
-        from seed import SeedPagination
-        from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
+        from seed import SeedApi, SingleFilterSearchRequest
 
-        client = SeedPagination(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.complex_.search(
+        client.complex_.search(
             index="index",
-            pagination=StartingAfterPaging(
-                per_page=1,
-                starting_after="starting_after",
-            ),
-            query=SingleFilterSearchRequest(
-                field="field",
-                operator="=",
-                value="value",
-            ),
+            query=SingleFilterSearchRequest(),
         )
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
         """
-        return self._raw_client.search(index, query=query, pagination=pagination, request_options=request_options)
+        _response = self._raw_client.search(index, query=query, pagination=pagination, request_options=request_options)
+        return _response.data
 
 
 class AsyncComplexClient:
@@ -106,7 +92,7 @@ class AsyncComplexClient:
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Conversation, PaginatedConversationResponse]:
+    ) -> PaginatedConversationResponse:
         """
         Parameters
         ----------
@@ -121,42 +107,31 @@ class AsyncComplexClient:
 
         Returns
         -------
-        AsyncPager[Conversation, PaginatedConversationResponse]
+        PaginatedConversationResponse
+
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedPagination
-        from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
+        from seed import AsyncSeedApi, SingleFilterSearchRequest
 
-        client = AsyncSeedPagination(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            response = await client.complex_.search(
+            await client.complex_.search(
                 index="index",
-                pagination=StartingAfterPaging(
-                    per_page=1,
-                    starting_after="starting_after",
-                ),
-                query=SingleFilterSearchRequest(
-                    field="field",
-                    operator="=",
-                    value="value",
-                ),
+                query=SingleFilterSearchRequest(),
             )
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
 
 
         asyncio.run(main())
         """
-        return await self._raw_client.search(index, query=query, pagination=pagination, request_options=request_options)
+        _response = await self._raw_client.search(
+            index, query=query, pagination=pagination, request_options=request_options
+        )
+        return _response.data

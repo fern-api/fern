@@ -1,16 +1,24 @@
 package com.snippets;
 
-import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.types.enum_.types.WeatherReport;
+import com.fern.sdk.SeedApiClient;
+import com.fern.sdk.types.TypesObjectWithRequiredField;
+import java.util.HashMap;
 
 public class Example10 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().enum_().getAndReturnEnum(WeatherReport.SUNNY);
+        client.endpointsContainer().endpointsContainerGetAndReturnMapOfPrimToObject(
+            new HashMap<String, TypesObjectWithRequiredField>() {{
+                put("key", TypesObjectWithRequiredField
+                    .builder()
+                    .string("string")
+                    .build());
+            }}
+        );
     }
 }

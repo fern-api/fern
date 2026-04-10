@@ -40,11 +40,13 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedLiteralClient } from "@fern/literal";
+import { SeedApiClient } from "@fern/literal";
 
-const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.headers.send({
-    query: "What is the weather today"
+    "X-Endpoint-Version": "02-12-2024",
+    "X-Async": true,
+    query: "query"
 });
 ```
 
@@ -54,9 +56,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedLiteral } from "@fern/literal";
+import { SeedApi } from "@fern/literal";
 
-const request: SeedLiteral.SendLiteralsInHeadersRequest = {
+const request: SeedApi.HeadersSendRequest = {
     ...
 };
 ```
@@ -67,12 +69,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedLiteralError } from "@fern/literal";
+import { SeedApiError } from "@fern/literal";
 
 try {
     await client.headers.send(...);
 } catch (err) {
-    if (err instanceof SeedLiteralError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -98,9 +100,9 @@ const client = new HeadersClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedLiteralClient } from "@fern/literal";
+import { SeedApiClient } from "@fern/literal";
 
-const client = new SeedLiteralClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -185,9 +187,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedLiteralClient, logging } from "@fern/literal";
+import { SeedApiClient, logging } from "@fern/literal";
 
-const client = new SeedLiteralClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

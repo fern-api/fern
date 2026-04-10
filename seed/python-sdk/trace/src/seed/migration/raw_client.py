@@ -9,7 +9,7 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from .types.migration import Migration
+from ..types.migration import Migration
 from pydantic import ValidationError
 
 
@@ -17,7 +17,7 @@ class RawMigrationClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_attempted_migrations(
+    def getattemptedmigrations(
         self, *, admin_key_header: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[typing.List[Migration]]:
         """
@@ -31,6 +31,7 @@ class RawMigrationClient:
         Returns
         -------
         HttpResponse[typing.List[Migration]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "migration-info/all",
@@ -41,6 +42,15 @@ class RawMigrationClient:
             request_options=request_options,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[Migration],
+                    parse_obj_as(
+                        type_=typing.List[Migration],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -48,20 +58,6 @@ class RawMigrationClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    typing.List[Migration],
-                    parse_obj_as(
-                        type_=typing.List[Migration],  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -69,7 +65,7 @@ class AsyncRawMigrationClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_attempted_migrations(
+    async def getattemptedmigrations(
         self, *, admin_key_header: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[Migration]]:
         """
@@ -83,6 +79,7 @@ class AsyncRawMigrationClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[Migration]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "migration-info/all",
@@ -93,6 +90,15 @@ class AsyncRawMigrationClient:
             request_options=request_options,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[Migration],
+                    parse_obj_as(
+                        type_=typing.List[Migration],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -100,18 +106,4 @@ class AsyncRawMigrationClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    typing.List[Migration],
-                    parse_obj_as(
-                        type_=typing.List[Migration],  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

@@ -1,56 +1,78 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-#[serde(tag = "type")]
+#[serde(untagged)]
 pub enum UserOrAdminDiscriminated {
-        #[serde(rename = "user")]
-        #[non_exhaustive]
-        User {
-            #[serde(flatten)]
-            data: User,
-            normal: String,
-            foo: Foo,
-        },
+        UserOrAdminDiscriminatedZero(UserOrAdminDiscriminatedZero),
 
-        #[serde(rename = "admin")]
-        #[non_exhaustive]
-        Admin {
-            admin: Admin,
-            normal: String,
-            foo: Foo,
-        },
+        UserOrAdminDiscriminatedAdmin(UserOrAdminDiscriminatedAdmin),
 
-        #[serde(rename = "empty")]
-        #[non_exhaustive]
-        Empty {},
+        UserOrAdminDiscriminatedTwo(UserOrAdminDiscriminatedTwo),
 }
 
 impl UserOrAdminDiscriminated {
-    pub fn user(data: User, normal: String, foo: Foo) -> Self {
-        Self::User { data, normal, foo }
+    pub fn is_user_or_admin_discriminated_zero(&self) -> bool {
+        matches!(self, Self::UserOrAdminDiscriminatedZero(_))
     }
 
-    pub fn admin(admin: Admin, normal: String, foo: Foo) -> Self {
-        Self::Admin { admin, normal, foo }
+    pub fn is_user_or_admin_discriminated_admin(&self) -> bool {
+        matches!(self, Self::UserOrAdminDiscriminatedAdmin(_))
     }
 
-    pub fn empty() -> Self {
-        Self::Empty {}
+    pub fn is_user_or_admin_discriminated_two(&self) -> bool {
+        matches!(self, Self::UserOrAdminDiscriminatedTwo(_))
     }
 
-    pub fn get_normal(&self) -> &str {
+
+    pub fn as_user_or_admin_discriminated_zero(&self) -> Option<&UserOrAdminDiscriminatedZero> {
         match self {
-                    Self::User { normal, .. } => normal,
-                    Self::Admin { normal, .. } => normal,
-                    Self::Empty { normal, .. } => normal,
+                    Self::UserOrAdminDiscriminatedZero(value) => Some(value),
+                    _ => None,
                 }
     }
 
-    pub fn get_foo(&self) -> &Foo {
+    pub fn into_user_or_admin_discriminated_zero(self) -> Option<UserOrAdminDiscriminatedZero> {
         match self {
-                    Self::User { foo, .. } => foo,
-                    Self::Admin { foo, .. } => foo,
-                    Self::Empty { foo, .. } => foo,
+                    Self::UserOrAdminDiscriminatedZero(value) => Some(value),
+                    _ => None,
                 }
+    }
+
+    pub fn as_user_or_admin_discriminated_admin(&self) -> Option<&UserOrAdminDiscriminatedAdmin> {
+        match self {
+                    Self::UserOrAdminDiscriminatedAdmin(value) => Some(value),
+                    _ => None,
+                }
+    }
+
+    pub fn into_user_or_admin_discriminated_admin(self) -> Option<UserOrAdminDiscriminatedAdmin> {
+        match self {
+                    Self::UserOrAdminDiscriminatedAdmin(value) => Some(value),
+                    _ => None,
+                }
+    }
+
+    pub fn as_user_or_admin_discriminated_two(&self) -> Option<&UserOrAdminDiscriminatedTwo> {
+        match self {
+                    Self::UserOrAdminDiscriminatedTwo(value) => Some(value),
+                    _ => None,
+                }
+    }
+
+    pub fn into_user_or_admin_discriminated_two(self) -> Option<UserOrAdminDiscriminatedTwo> {
+        match self {
+                    Self::UserOrAdminDiscriminatedTwo(value) => Some(value),
+                    _ => None,
+                }
+    }
+}
+
+impl fmt::Display for UserOrAdminDiscriminated {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::UserOrAdminDiscriminatedZero(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
+            Self::UserOrAdminDiscriminatedAdmin(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
+            Self::UserOrAdminDiscriminatedTwo(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
+        }
     }
 }

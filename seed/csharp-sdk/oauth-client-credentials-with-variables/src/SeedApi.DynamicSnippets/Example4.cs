@@ -1,21 +1,18 @@
-using SeedOauthClientCredentialsWithVariables;
+using SeedApi;
 
 namespace Usage;
 
 public class Example4
 {
     public async Task Do() {
-        var client = new SeedOauthClientCredentialsWithVariablesClient(
-            clientId: "<clientId>",
-            clientSecret: "<clientSecret>",
+        var client = new SeedApiClient(
+            token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Service.PostAsync(
-            "<endpointParam>"
-        );
+        await client.NestedNoAuthApi.NestedNoAuthApiGetSomethingAsync();
     }
 
 }

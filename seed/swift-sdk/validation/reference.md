@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/ValidationClient.swift">create</a>(request: Requests.CreateRequest, requestOptions: RequestOptions?) -> Type</code></summary>
+## 
+<details><summary><code>client..<a href="/Sources/Resources//Client.swift">create</a>(request: Requests.CreateRequest, requestOptions: RequestOptions?) -> Type</code></summary>
 <dl>
 <dd>
 
@@ -13,15 +14,15 @@
 
 ```swift
 import Foundation
-import Validation
+import Api
 
 private func main() async throws {
-    let client = ValidationClient()
+    let client = ApiClient()
 
-    _ = try await client.create(request: .init(
-        decimal: 2.2,
-        even: 100,
-        name: "fern",
+    _ = try await client..create(request: .init(
+        decimal: 1.1,
+        even: 1,
+        name: "name",
         shape: .square
     ))
 }
@@ -61,7 +62,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/Sources/ValidationClient.swift">get</a>(decimal: Swift.Double, even: Int, name: String, requestOptions: RequestOptions?) -> Type</code></summary>
+<details><summary><code>client..<a href="/Sources/Resources//Client.swift">get</a>(decimal: Swift.Double, even: Int, name: String, requestOptions: RequestOptions?) -> Type</code></summary>
 <dl>
 <dd>
 
@@ -75,15 +76,15 @@ try await main()
 
 ```swift
 import Foundation
-import Validation
+import Api
 
 private func main() async throws {
-    let client = ValidationClient()
+    let client = ApiClient()
 
-    _ = try await client.get(
-        decimal: 2.2,
-        even: 100,
-        name: "fern"
+    _ = try await client..get(
+        decimal: 1.1,
+        even: 1,
+        name: "name"
     )
 }
 

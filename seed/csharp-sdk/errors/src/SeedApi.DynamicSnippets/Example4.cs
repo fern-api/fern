@@ -1,17 +1,17 @@
-using SeedErrors;
+using SeedApi;
 
 namespace Usage;
 
 public class Example4
 {
     public async Task Do() {
-        var client = new SeedErrorsClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Simple.FooAsync(
+        await client.Simple.FoowithoutendpointerrorAsync(
             new FooRequest {
                 Bar = "bar"
             }

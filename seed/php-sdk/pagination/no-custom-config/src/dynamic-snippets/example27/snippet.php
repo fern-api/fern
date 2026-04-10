@@ -3,7 +3,8 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Users\Requests\ListUsernamesRequest;
+use Seed\Users\Requests\UsersListWithCursorPaginationRequest;
+use Seed\Types\Order;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,8 +12,11 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->users->listUsernames(
-    new ListUsernamesRequest([
+$client->users->listwithcursorpagination(
+    new UsersListWithCursorPaginationRequest([
+        'page' => 1,
+        'perPage' => 1,
+        'order' => Order::Asc->value,
         'startingAfter' => 'starting_after',
     ]),
 );

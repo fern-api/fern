@@ -18,6 +18,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Raw Response](#raw-response)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
+  - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -42,7 +43,7 @@ Instantiate and use the client with the following:
 using SeedApi;
 
 var client = new SeedApiClient();
-await client.GetAccountAsync("account_id");
+await client._.GetAccountAsync(new GetAccountRequest { AccountId = "account_id" });
 ```
 
 ## Exception Handling
@@ -54,7 +55,7 @@ will be thrown.
 using SeedApi;
 
 try {
-    var response = await client.GetAccountAsync(...);
+    var response = await client._.GetAccountAsync(...);
 } catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -78,7 +79,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.GetAccountAsync(
+var response = await client._.GetAccountAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -91,7 +92,7 @@ var response = await client.GetAccountAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.GetAccountAsync(
+var response = await client._.GetAccountAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -107,7 +108,7 @@ Access raw HTTP response data (status code, headers, URL) alongside parsed respo
 using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.GetAccountAsync(...).WithRawResponse();
+var result = await client._.GetAccountAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -124,7 +125,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.GetAccountAsync(...);
+var data = await client._.GetAccountAsync(...);
 ```
 
 ### Additional Headers
@@ -132,7 +133,7 @@ var data = await client.GetAccountAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.GetAccountAsync(
+var response = await client._.GetAccountAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -148,7 +149,7 @@ var response = await client.GetAccountAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.GetAccountAsync(
+var response = await client._.GetAccountAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>
@@ -157,6 +158,35 @@ var response = await client.GetAccountAsync(
         }
     }
 );
+```
+
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedApi;
+
+// Using a built-in value
+var accountResourceType = AccountResourceType.Account;
+
+// Using a custom value
+var customAccountResourceType = AccountResourceType.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (accountResourceType.Value)
+{
+    case AccountResourceType.Values.Account:
+        Console.WriteLine("Account");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {accountResourceType.Value}");
+        break;
+}
+
+// Explicit casting
+string accountResourceTypeString = (string)AccountResourceType.Account;
+AccountResourceType accountResourceTypeFromString = (AccountResourceType)"Account";
 ```
 
 ## Contributing

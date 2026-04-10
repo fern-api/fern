@@ -40,9 +40,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedUndiscriminatedUnions;
+using SeedApi;
 
-var client = new SeedUndiscriminatedUnionsClient();
+var client = new SeedApiClient();
 await client.Union.GetAsync("string");
 ```
 
@@ -52,11 +52,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedUndiscriminatedUnions;
+using SeedApi;
 
 try {
     var response = await client.Union.GetAsync(...);
-} catch (SeedUndiscriminatedUnionsApiException e) {
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -105,7 +105,7 @@ var response = await client.Union.GetAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedUndiscriminatedUnions;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
 var result = await client.Union.GetAsync(...).WithRawResponse();
@@ -165,28 +165,28 @@ var response = await client.Union.GetAsync(
 This SDK uses forward-compatible enums that can handle unknown values gracefully.
 
 ```csharp
-using SeedUndiscriminatedUnions;
+using SeedApi;
 
 // Using a built-in value
-var keyType = KeyType.Name;
+var keyOne = KeyOne.Default;
 
 // Using a custom value
-var customKeyType = KeyType.FromCustom("custom-value");
+var customKeyOne = KeyOne.FromCustom("custom-value");
 
 // Using in a switch statement
-switch (keyType.Value)
+switch (keyOne.Value)
 {
-    case KeyType.Values.Name:
-        Console.WriteLine("Name");
+    case KeyOne.Values.Default:
+        Console.WriteLine("Default");
         break;
     default:
-        Console.WriteLine($"Unknown value: {keyType.Value}");
+        Console.WriteLine($"Unknown value: {keyOne.Value}");
         break;
 }
 
 // Explicit casting
-string keyTypeString = (string)KeyType.Name;
-KeyType keyTypeFromString = (KeyType)"name";
+string keyOneString = (string)KeyOne.Default;
+KeyOne keyOneFromString = (KeyOne)"default";
 ```
 
 ## Contributing

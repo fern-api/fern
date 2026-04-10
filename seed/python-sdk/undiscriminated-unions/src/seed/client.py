@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .union.client import AsyncUnionClient, UnionClient
 
 
-class SeedUndiscriminatedUnions:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -38,9 +38,9 @@ class SeedUndiscriminatedUnions:
 
     Examples
     --------
-    from seed import SeedUndiscriminatedUnions
+    from seed import SeedApi
 
-    client = SeedUndiscriminatedUnions(
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -98,7 +98,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedUndiscriminatedUnions:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -124,9 +124,9 @@ class AsyncSeedUndiscriminatedUnions:
 
     Examples
     --------
-    from seed import AsyncSeedUndiscriminatedUnions
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedUndiscriminatedUnions(
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """

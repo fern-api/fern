@@ -1,20 +1,23 @@
 package com.snippets;
 
-import com.fern.sdk.SeedExhaustiveClient;
+import com.fern.sdk.SeedApiClient;
+import com.fern.sdk.types.TypesObjectWithRequiredField;
 import java.util.Arrays;
-import java.util.HashSet;
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().container().getAndReturnSetOfPrimitives(
-            new HashSet<String>(
-                Arrays.asList("string")
+        client.endpointsContainer().endpointsContainerGetAndReturnListOfObjects(
+            Arrays.asList(
+                TypesObjectWithRequiredField
+                    .builder()
+                    .string("string")
+                    .build()
             )
         );
     }

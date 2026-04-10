@@ -4,7 +4,7 @@ pub use crate::prelude::*;
 pub struct Account {
     #[serde(flatten)]
     pub base_resource_fields: BaseResource,
-    pub resource_type: String,
+    pub resource_type: AccountResourceType,
     #[serde(default)]
     pub name: String,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -23,7 +23,7 @@ impl Account {
 #[non_exhaustive]
 pub struct AccountBuilder {
     base_resource_fields: Option<BaseResource>,
-    resource_type: Option<String>,
+    resource_type: Option<AccountResourceType>,
     name: Option<String>,
     patient: Option<Patient>,
     practitioner: Option<Practitioner>,
@@ -35,8 +35,8 @@ impl AccountBuilder {
         self
     }
 
-    pub fn resource_type(mut self, value: impl Into<String>) -> Self {
-        self.resource_type = Some(value.into());
+    pub fn resource_type(mut self, value: AccountResourceType) -> Self {
+        self.resource_type = Some(value);
         self
     }
 

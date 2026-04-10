@@ -1,6 +1,6 @@
 # Reference
-## FolderA Service
-<details><summary><code>client.FolderA.Service.GetDirectThread() -> *foldera.Response</code></summary>
+## FolderAService
+<details><summary><code>client.FolderAService.FolderAServiceGetDirectThread() -> *fern.FolderAResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.FolderA.Service.GetDirectThread(
+client.FolderAService.FolderAServiceGetDirectThread(
         context.TODO(),
     )
 }
@@ -28,8 +28,8 @@ client.FolderA.Service.GetDirectThread(
 </dl>
 </details>
 
-## FolderD Service
-<details><summary><code>client.FolderD.Service.GetDirectThread() -> *folderd.Response</code></summary>
+## FolderDService
+<details><summary><code>client.FolderDService.FolderDServiceGetDirectThread() -> *fern.FolderDResponse</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ client.FolderA.Service.GetDirectThread(
 <dd>
 
 ```go
-client.FolderD.Service.GetDirectThread(
+client.FolderDService.FolderDServiceGetDirectThread(
         context.TODO(),
     )
 }
@@ -71,17 +71,7 @@ client.FolderD.Service.GetDirectThread(
 <dd>
 
 ```go
-request := &fern.FindRequest{
-        OptionalString: fern.String(
-            "optionalString",
-        ),
-        PublicProperty: fern.String(
-            "publicProperty",
-        ),
-        PrivateProperty: fern.Int(
-            1,
-        ),
-    }
+request := &fern.FooFindRequest{}
 client.Foo.Find(
         context.TODO(),
         request,
@@ -101,7 +91,7 @@ client.Foo.Find(
 <dl>
 <dd>
 
-**optionalString:** `fern.OptionalString` 
+**optionalString:** `*fern.OptionalString` 
     
 </dd>
 </dl>

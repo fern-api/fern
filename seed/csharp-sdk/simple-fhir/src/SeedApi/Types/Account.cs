@@ -1,6 +1,5 @@
 using global::System.Text.Json;
 using global::System.Text.Json.Serialization;
-using OneOf;
 using SeedApi.Core;
 
 namespace SeedApi;
@@ -13,7 +12,7 @@ public record Account : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("resource_type")]
-    public string ResourceType { get; set; } = "Account";
+    public required AccountResourceType ResourceType { get; set; }
 
     [JsonPropertyName("name")]
     public required string Name { get; set; }
@@ -28,9 +27,7 @@ public record Account : IJsonOnDeserialized
     public required string Id { get; set; }
 
     [JsonPropertyName("related_resources")]
-    public IEnumerable<
-        OneOf<Account, Patient, Practitioner, Script>
-    > RelatedResources { get; set; } = new List<OneOf<Account, Patient, Practitioner, Script>>();
+    public IEnumerable<ResourceList> RelatedResources { get; set; } = new List<ResourceList>();
 
     [JsonPropertyName("memo")]
     public required Memo Memo { get; set; }

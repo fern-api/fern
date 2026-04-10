@@ -6,21 +6,23 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .errors import PropertyBasedErrorTest, PropertyBasedErrorTestBody
-    from . import errors, property_based_error
+    from .types import BadRequestErrorBody, BadRequestErrorBodyErrorName, PropertyBasedErrorTestBody
+    from .errors import BadRequestError
+    from . import propertybasederror
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedErrorProperty, SeedErrorProperty
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedErrorProperty": ".client",
+    "AsyncSeedApi": ".client",
+    "BadRequestError": ".errors",
+    "BadRequestErrorBody": ".types",
+    "BadRequestErrorBodyErrorName": ".types",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "PropertyBasedErrorTest": ".errors",
-    "PropertyBasedErrorTestBody": ".errors",
-    "SeedErrorProperty": ".client",
+    "PropertyBasedErrorTestBody": ".types",
+    "SeedApi": ".client",
     "__version__": ".version",
-    "errors": ".errors",
-    "property_based_error": ".property_based_error",
+    "propertybasederror": ".propertybasederror",
 }
 
 
@@ -46,13 +48,14 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedErrorProperty",
+    "AsyncSeedApi",
+    "BadRequestError",
+    "BadRequestErrorBody",
+    "BadRequestErrorBodyErrorName",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
-    "PropertyBasedErrorTest",
     "PropertyBasedErrorTestBody",
-    "SeedErrorProperty",
+    "SeedApi",
     "__version__",
-    "errors",
-    "property_based_error",
+    "propertybasederror",
 ]

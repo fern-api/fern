@@ -1,4 +1,4 @@
-use seed_literal::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,6 +6,9 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = LiteralClient::new(config).expect("Failed to build client");
-    client.path.send(&"123".to_string(), None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .path
+        .send(&PathSendRequestId::OneHundredTwentyThree, None)
+        .await;
 }

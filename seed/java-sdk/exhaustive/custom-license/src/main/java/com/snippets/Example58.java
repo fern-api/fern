@@ -1,14 +1,20 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.endpointsparams.requests.EndpointsParamsModifyWithPathRequest;
 
 public class Example58 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints().urls().withEndingSlash();
+        client.endpointsParams()
+                .endpointsParamsModifyWithPath(
+                        "param",
+                        EndpointsParamsModifyWithPathRequest.builder()
+                                .body("string")
+                                .build());
     }
 }

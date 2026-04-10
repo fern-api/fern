@@ -6,11 +6,9 @@ module Seed
     class UserOrAdminDiscriminated < Internal::Types::Model
       extend Seed::Internal::Types::Union
 
-      discriminant :type
-
-      member -> { Seed::Types::User }, key: "USER"
-      member -> { Seed::Types::Admin }, key: "ADMIN"
-      member -> { Object }, key: "EMPTY"
+      member -> { Seed::Types::UserOrAdminDiscriminatedZero }
+      member -> { Seed::Types::UserOrAdminDiscriminatedAdmin }
+      member -> { Seed::Types::UserOrAdminDiscriminatedTwo }
     end
   end
 end

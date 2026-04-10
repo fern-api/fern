@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>client.optional.<a href="/src/api/resources/optional/client/Client.ts">sendOptionalBody</a>({ ...params }) -> string</code></summary>
+<details><summary><code>client.optional.<a href="/src/api/resources/optional/client/Client.ts">sendoptionalbody</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +13,8 @@
 <dd>
 
 ```typescript
-await client.optional.sendOptionalBody({
-    "string": {
-        "key": "value"
-    }
+await client.optional.sendoptionalbody({
+    "key": "value"
 });
 
 ```
@@ -33,7 +31,7 @@ await client.optional.sendOptionalBody({
 <dl>
 <dd>
 
-**request:** `Record<string, unknown>` 
+**request:** `Record<string, unknown> | null` 
     
 </dd>
 </dl>
@@ -53,7 +51,7 @@ await client.optional.sendOptionalBody({
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="/src/api/resources/optional/client/Client.ts">sendOptionalTypedBody</a>({ ...params }) -> string</code></summary>
+<details><summary><code>client.optional.<a href="/src/api/resources/optional/client/Client.ts">sendoptionaltypedbody</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +64,7 @@ await client.optional.sendOptionalBody({
 <dd>
 
 ```typescript
-await client.optional.sendOptionalTypedBody({
+await client.optional.sendoptionaltypedbody({
     message: "message"
 });
 
@@ -84,7 +82,7 @@ await client.optional.sendOptionalTypedBody({
 <dl>
 <dd>
 
-**request:** `SeedObjectsWithImports.SendOptionalBodyRequest` 
+**request:** `SeedApi.SendOptionalBodyRequest` 
     
 </dd>
 </dl>
@@ -104,7 +102,7 @@ await client.optional.sendOptionalTypedBody({
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="/src/api/resources/optional/client/Client.ts">sendOptionalNullableWithAllOptionalProperties</a>(actionId, id, { ...params }) -> SeedObjectsWithImports.DeployResponse</code></summary>
+<details><summary><code>client.optional.<a href="/src/api/resources/optional/client/Client.ts">sendoptionalnullablewithalloptionalproperties</a>({ ...params }) -> SeedApi.DeployResponse</code></summary>
 <dl>
 <dd>
 
@@ -132,8 +130,9 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 <dd>
 
 ```typescript
-await client.optional.sendOptionalNullableWithAllOptionalProperties("actionId", "id", {
-    updateDraft: true
+await client.optional.sendoptionalnullablewithalloptionalproperties({
+    actionId: "actionId",
+    id: "id"
 });
 
 ```
@@ -150,23 +149,7 @@ await client.optional.sendOptionalNullableWithAllOptionalProperties("actionId", 
 <dl>
 <dd>
 
-**actionId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `SeedObjectsWithImports.DeployParams | null` 
+**request:** `SeedApi.DeployParams` 
     
 </dd>
 </dl>

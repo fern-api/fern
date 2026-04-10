@@ -40,15 +40,15 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedValidation;
+using SeedApi;
 
-var client = new SeedValidationClient();
-await client.CreateAsync(
+var client = new SeedApiClient();
+await client._.CreateAsync(
     new CreateRequest
     {
-        Decimal = 2.2,
-        Even = 100,
-        Name = "fern",
+        Decimal = 1.1,
+        Even = 1,
+        Name = "name",
         Shape = Shape.Square,
     }
 );
@@ -60,11 +60,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedValidation;
+using SeedApi;
 
 try {
-    var response = await client.CreateAsync(...);
-} catch (SeedValidationApiException e) {
+    var response = await client._.CreateAsync(...);
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -87,7 +87,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.CreateAsync(
+var response = await client._.CreateAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -100,7 +100,7 @@ var response = await client.CreateAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.CreateAsync(
+var response = await client._.CreateAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -113,10 +113,10 @@ var response = await client.CreateAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedValidation;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.CreateAsync(...).WithRawResponse();
+var result = await client._.CreateAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -133,7 +133,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.CreateAsync(...);
+var data = await client._.CreateAsync(...);
 ```
 
 ### Additional Headers
@@ -141,7 +141,7 @@ var data = await client.CreateAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.CreateAsync(
+var response = await client._.CreateAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -157,7 +157,7 @@ var response = await client.CreateAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.CreateAsync(
+var response = await client._.CreateAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>
@@ -173,7 +173,7 @@ var response = await client.CreateAsync(
 This SDK uses forward-compatible enums that can handle unknown values gracefully.
 
 ```csharp
-using SeedValidation;
+using SeedApi;
 
 // Using a built-in value
 var shape = Shape.Square;

@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Endpoints\Params\Requests\GetWithInlinePathAndQuery;
+use Seed\Types\TypesNestedObjectWithOptionalField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,9 +11,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->params->getWithInlinePathAndQuery(
-    'param',
-    new GetWithInlinePathAndQuery([
-        'query' => 'query',
-    ]),
+$client->endpointsObject->endpointsObjectGetAndReturnNestedWithOptionalField(
+    new TypesNestedObjectWithOptionalField([]),
 );

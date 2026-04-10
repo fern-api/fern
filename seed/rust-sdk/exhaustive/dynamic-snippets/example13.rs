@@ -1,4 +1,4 @@
-use seed_exhaustive::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,16 +7,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .endpoints
-        .http_methods
-        .test_put(
-            &"id".to_string(),
-            &ObjectWithRequiredField {
-                string: "string".to_string(),
-                ..Default::default()
-            },
+        .endpoints_container
+        .endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union(
+            &HashMap::from([("string".to_string(), TypesMixedType::Double(1.1))]),
             None,
         )
         .await;

@@ -2,19 +2,18 @@
 
 import typing
 
-from ..commons.types.language import Language
-from ..commons.types.problem_id import ProblemId
-from ..commons.types.test_case_with_expected_result import TestCaseWithExpectedResult
-from ..commons.types.variable_type import VariableType
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.create_problem_response import CreateProblemResponse
+from ..types.get_default_starter_files_response import GetDefaultStarterFilesResponse
+from ..types.problem_description import ProblemDescription
+from ..types.problem_files import ProblemFiles
+from ..types.problem_id import ProblemId
+from ..types.test_case_with_expected_result import TestCaseWithExpectedResult
+from ..types.update_problem_response import UpdateProblemResponse
+from ..types.variable_type import VariableType
+from ..types.variable_type_and_name import VariableTypeAndName
 from .raw_client import AsyncRawProblemClient, RawProblemClient
-from .types.create_problem_response import CreateProblemResponse
-from .types.get_default_starter_files_response import GetDefaultStarterFilesResponse
-from .types.problem_description import ProblemDescription
-from .types.problem_files import ProblemFiles
-from .types.update_problem_response import UpdateProblemResponse
-from .types.variable_type_and_name import VariableTypeAndName
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -35,12 +34,12 @@ class ProblemClient:
         """
         return self._raw_client
 
-    def create_problem(
+    def createproblem(
         self,
         *,
         problem_name: str,
         problem_description: ProblemDescription,
-        files: typing.Dict[Language, ProblemFiles],
+        files: typing.Dict[str, ProblemFiles],
         input_params: typing.Sequence[VariableTypeAndName],
         output_type: VariableType,
         testcases: typing.Sequence[TestCaseWithExpectedResult],
@@ -56,7 +55,7 @@ class ProblemClient:
 
         problem_description : ProblemDescription
 
-        files : typing.Dict[Language, ProblemFiles]
+        files : typing.Dict[str, ProblemFiles]
 
         input_params : typing.Sequence[VariableTypeAndName]
 
@@ -73,37 +72,32 @@ class ProblemClient:
         -------
         CreateProblemResponse
 
+
         Examples
         --------
-        from seed import SeedTrace
-        from seed.commons import (
+        from seed import (
             FileInfo,
-            TestCase,
-            TestCaseWithExpectedResult,
-            VariableType,
-            VariableValue_IntegerValue,
-        )
-        from seed.problem import (
             ProblemDescription,
             ProblemDescriptionBoard_Html,
             ProblemFiles,
+            SeedApi,
+            TestCase,
+            TestCaseWithExpectedResult,
             VariableTypeAndName,
+            VariableTypeZero,
+            VariableValueZero,
         )
 
-        client = SeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
+        client = SeedApi(
             token="YOUR_TOKEN",
         )
-        client.problem.create_problem(
+        client.problem.createproblem(
             problem_name="problemName",
             problem_description=ProblemDescription(
-                boards=[
-                    ProblemDescriptionBoard_Html(value="boards"),
-                    ProblemDescriptionBoard_Html(value="boards"),
-                ],
+                boards=[ProblemDescriptionBoard_Html()],
             ),
             files={
-                "JAVA": ProblemFiles(
+                "key": ProblemFiles(
                     solution_file=FileInfo(
                         filename="filename",
                         contents="contents",
@@ -112,51 +106,40 @@ class ProblemClient:
                         FileInfo(
                             filename="filename",
                             contents="contents",
-                        ),
-                        FileInfo(
-                            filename="filename",
-                            contents="contents",
-                        ),
+                        )
                     ],
                 )
             },
             input_params=[
                 VariableTypeAndName(
-                    variable_type=VariableType(),
+                    variable_type=VariableTypeZero(
+                        type="integerType",
+                    ),
                     name="name",
-                ),
-                VariableTypeAndName(
-                    variable_type=VariableType(),
-                    name="name",
-                ),
+                )
             ],
-            output_type=VariableType(),
+            output_type=VariableTypeZero(
+                type="integerType",
+            ),
             testcases=[
                 TestCaseWithExpectedResult(
                     test_case=TestCase(
                         id="id",
                         params=[
-                            VariableValue_IntegerValue(value=1),
-                            VariableValue_IntegerValue(value=1),
+                            VariableValueZero(
+                                type="integerValue",
+                            )
                         ],
                     ),
-                    expected_result=VariableValue_IntegerValue(value=1),
-                ),
-                TestCaseWithExpectedResult(
-                    test_case=TestCase(
-                        id="id",
-                        params=[
-                            VariableValue_IntegerValue(value=1),
-                            VariableValue_IntegerValue(value=1),
-                        ],
+                    expected_result=VariableValueZero(
+                        type="integerValue",
                     ),
-                    expected_result=VariableValue_IntegerValue(value=1),
-                ),
+                )
             ],
             method_name="methodName",
         )
         """
-        _response = self._raw_client.create_problem(
+        _response = self._raw_client.createproblem(
             problem_name=problem_name,
             problem_description=problem_description,
             files=files,
@@ -168,13 +151,13 @@ class ProblemClient:
         )
         return _response.data
 
-    def update_problem(
+    def updateproblem(
         self,
         problem_id: ProblemId,
         *,
         problem_name: str,
         problem_description: ProblemDescription,
-        files: typing.Dict[Language, ProblemFiles],
+        files: typing.Dict[str, ProblemFiles],
         input_params: typing.Sequence[VariableTypeAndName],
         output_type: VariableType,
         testcases: typing.Sequence[TestCaseWithExpectedResult],
@@ -192,7 +175,7 @@ class ProblemClient:
 
         problem_description : ProblemDescription
 
-        files : typing.Dict[Language, ProblemFiles]
+        files : typing.Dict[str, ProblemFiles]
 
         input_params : typing.Sequence[VariableTypeAndName]
 
@@ -209,38 +192,33 @@ class ProblemClient:
         -------
         UpdateProblemResponse
 
+
         Examples
         --------
-        from seed import SeedTrace
-        from seed.commons import (
+        from seed import (
             FileInfo,
-            TestCase,
-            TestCaseWithExpectedResult,
-            VariableType,
-            VariableValue_IntegerValue,
-        )
-        from seed.problem import (
             ProblemDescription,
             ProblemDescriptionBoard_Html,
             ProblemFiles,
+            SeedApi,
+            TestCase,
+            TestCaseWithExpectedResult,
             VariableTypeAndName,
+            VariableTypeZero,
+            VariableValueZero,
         )
 
-        client = SeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
+        client = SeedApi(
             token="YOUR_TOKEN",
         )
-        client.problem.update_problem(
+        client.problem.updateproblem(
             problem_id="problemId",
             problem_name="problemName",
             problem_description=ProblemDescription(
-                boards=[
-                    ProblemDescriptionBoard_Html(value="boards"),
-                    ProblemDescriptionBoard_Html(value="boards"),
-                ],
+                boards=[ProblemDescriptionBoard_Html()],
             ),
             files={
-                "JAVA": ProblemFiles(
+                "key": ProblemFiles(
                     solution_file=FileInfo(
                         filename="filename",
                         contents="contents",
@@ -249,51 +227,40 @@ class ProblemClient:
                         FileInfo(
                             filename="filename",
                             contents="contents",
-                        ),
-                        FileInfo(
-                            filename="filename",
-                            contents="contents",
-                        ),
+                        )
                     ],
                 )
             },
             input_params=[
                 VariableTypeAndName(
-                    variable_type=VariableType(),
+                    variable_type=VariableTypeZero(
+                        type="integerType",
+                    ),
                     name="name",
-                ),
-                VariableTypeAndName(
-                    variable_type=VariableType(),
-                    name="name",
-                ),
+                )
             ],
-            output_type=VariableType(),
+            output_type=VariableTypeZero(
+                type="integerType",
+            ),
             testcases=[
                 TestCaseWithExpectedResult(
                     test_case=TestCase(
                         id="id",
                         params=[
-                            VariableValue_IntegerValue(value=1),
-                            VariableValue_IntegerValue(value=1),
+                            VariableValueZero(
+                                type="integerValue",
+                            )
                         ],
                     ),
-                    expected_result=VariableValue_IntegerValue(value=1),
-                ),
-                TestCaseWithExpectedResult(
-                    test_case=TestCase(
-                        id="id",
-                        params=[
-                            VariableValue_IntegerValue(value=1),
-                            VariableValue_IntegerValue(value=1),
-                        ],
+                    expected_result=VariableValueZero(
+                        type="integerValue",
                     ),
-                    expected_result=VariableValue_IntegerValue(value=1),
-                ),
+                )
             ],
             method_name="methodName",
         )
         """
-        _response = self._raw_client.update_problem(
+        _response = self._raw_client.updateproblem(
             problem_id,
             problem_name=problem_name,
             problem_description=problem_description,
@@ -306,7 +273,7 @@ class ProblemClient:
         )
         return _response.data
 
-    def delete_problem(self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def deleteproblem(self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Soft deletes a problem
 
@@ -323,20 +290,19 @@ class ProblemClient:
 
         Examples
         --------
-        from seed import SeedTrace
+        from seed import SeedApi
 
-        client = SeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
+        client = SeedApi(
             token="YOUR_TOKEN",
         )
-        client.problem.delete_problem(
+        client.problem.deleteproblem(
             problem_id="problemId",
         )
         """
-        _response = self._raw_client.delete_problem(problem_id, request_options=request_options)
+        _response = self._raw_client.deleteproblem(problem_id, request_options=request_options)
         return _response.data
 
-    def get_default_starter_files(
+    def getdefaultstarterfiles(
         self,
         *,
         input_params: typing.Sequence[VariableTypeAndName],
@@ -368,32 +334,30 @@ class ProblemClient:
         -------
         GetDefaultStarterFilesResponse
 
+
         Examples
         --------
-        from seed import SeedTrace
-        from seed.commons import VariableType
-        from seed.problem import VariableTypeAndName
+        from seed import SeedApi, VariableTypeAndName, VariableTypeZero
 
-        client = SeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
+        client = SeedApi(
             token="YOUR_TOKEN",
         )
-        client.problem.get_default_starter_files(
+        client.problem.getdefaultstarterfiles(
             input_params=[
                 VariableTypeAndName(
-                    variable_type=VariableType(),
+                    variable_type=VariableTypeZero(
+                        type="integerType",
+                    ),
                     name="name",
-                ),
-                VariableTypeAndName(
-                    variable_type=VariableType(),
-                    name="name",
-                ),
+                )
             ],
-            output_type=VariableType(),
+            output_type=VariableTypeZero(
+                type="integerType",
+            ),
             method_name="methodName",
         )
         """
-        _response = self._raw_client.get_default_starter_files(
+        _response = self._raw_client.getdefaultstarterfiles(
             input_params=input_params, output_type=output_type, method_name=method_name, request_options=request_options
         )
         return _response.data
@@ -414,12 +378,12 @@ class AsyncProblemClient:
         """
         return self._raw_client
 
-    async def create_problem(
+    async def createproblem(
         self,
         *,
         problem_name: str,
         problem_description: ProblemDescription,
-        files: typing.Dict[Language, ProblemFiles],
+        files: typing.Dict[str, ProblemFiles],
         input_params: typing.Sequence[VariableTypeAndName],
         output_type: VariableType,
         testcases: typing.Sequence[TestCaseWithExpectedResult],
@@ -435,7 +399,7 @@ class AsyncProblemClient:
 
         problem_description : ProblemDescription
 
-        files : typing.Dict[Language, ProblemFiles]
+        files : typing.Dict[str, ProblemFiles]
 
         input_params : typing.Sequence[VariableTypeAndName]
 
@@ -452,42 +416,37 @@ class AsyncProblemClient:
         -------
         CreateProblemResponse
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedTrace
-        from seed.commons import (
+        from seed import (
+            AsyncSeedApi,
             FileInfo,
-            TestCase,
-            TestCaseWithExpectedResult,
-            VariableType,
-            VariableValue_IntegerValue,
-        )
-        from seed.problem import (
             ProblemDescription,
             ProblemDescriptionBoard_Html,
             ProblemFiles,
+            TestCase,
+            TestCaseWithExpectedResult,
             VariableTypeAndName,
+            VariableTypeZero,
+            VariableValueZero,
         )
 
-        client = AsyncSeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.problem.create_problem(
+            await client.problem.createproblem(
                 problem_name="problemName",
                 problem_description=ProblemDescription(
-                    boards=[
-                        ProblemDescriptionBoard_Html(value="boards"),
-                        ProblemDescriptionBoard_Html(value="boards"),
-                    ],
+                    boards=[ProblemDescriptionBoard_Html()],
                 ),
                 files={
-                    "JAVA": ProblemFiles(
+                    "key": ProblemFiles(
                         solution_file=FileInfo(
                             filename="filename",
                             contents="contents",
@@ -496,46 +455,35 @@ class AsyncProblemClient:
                             FileInfo(
                                 filename="filename",
                                 contents="contents",
-                            ),
-                            FileInfo(
-                                filename="filename",
-                                contents="contents",
-                            ),
+                            )
                         ],
                     )
                 },
                 input_params=[
                     VariableTypeAndName(
-                        variable_type=VariableType(),
+                        variable_type=VariableTypeZero(
+                            type="integerType",
+                        ),
                         name="name",
-                    ),
-                    VariableTypeAndName(
-                        variable_type=VariableType(),
-                        name="name",
-                    ),
+                    )
                 ],
-                output_type=VariableType(),
+                output_type=VariableTypeZero(
+                    type="integerType",
+                ),
                 testcases=[
                     TestCaseWithExpectedResult(
                         test_case=TestCase(
                             id="id",
                             params=[
-                                VariableValue_IntegerValue(value=1),
-                                VariableValue_IntegerValue(value=1),
+                                VariableValueZero(
+                                    type="integerValue",
+                                )
                             ],
                         ),
-                        expected_result=VariableValue_IntegerValue(value=1),
-                    ),
-                    TestCaseWithExpectedResult(
-                        test_case=TestCase(
-                            id="id",
-                            params=[
-                                VariableValue_IntegerValue(value=1),
-                                VariableValue_IntegerValue(value=1),
-                            ],
+                        expected_result=VariableValueZero(
+                            type="integerValue",
                         ),
-                        expected_result=VariableValue_IntegerValue(value=1),
-                    ),
+                    )
                 ],
                 method_name="methodName",
             )
@@ -543,7 +491,7 @@ class AsyncProblemClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_problem(
+        _response = await self._raw_client.createproblem(
             problem_name=problem_name,
             problem_description=problem_description,
             files=files,
@@ -555,13 +503,13 @@ class AsyncProblemClient:
         )
         return _response.data
 
-    async def update_problem(
+    async def updateproblem(
         self,
         problem_id: ProblemId,
         *,
         problem_name: str,
         problem_description: ProblemDescription,
-        files: typing.Dict[Language, ProblemFiles],
+        files: typing.Dict[str, ProblemFiles],
         input_params: typing.Sequence[VariableTypeAndName],
         output_type: VariableType,
         testcases: typing.Sequence[TestCaseWithExpectedResult],
@@ -579,7 +527,7 @@ class AsyncProblemClient:
 
         problem_description : ProblemDescription
 
-        files : typing.Dict[Language, ProblemFiles]
+        files : typing.Dict[str, ProblemFiles]
 
         input_params : typing.Sequence[VariableTypeAndName]
 
@@ -596,43 +544,38 @@ class AsyncProblemClient:
         -------
         UpdateProblemResponse
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedTrace
-        from seed.commons import (
+        from seed import (
+            AsyncSeedApi,
             FileInfo,
-            TestCase,
-            TestCaseWithExpectedResult,
-            VariableType,
-            VariableValue_IntegerValue,
-        )
-        from seed.problem import (
             ProblemDescription,
             ProblemDescriptionBoard_Html,
             ProblemFiles,
+            TestCase,
+            TestCaseWithExpectedResult,
             VariableTypeAndName,
+            VariableTypeZero,
+            VariableValueZero,
         )
 
-        client = AsyncSeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.problem.update_problem(
+            await client.problem.updateproblem(
                 problem_id="problemId",
                 problem_name="problemName",
                 problem_description=ProblemDescription(
-                    boards=[
-                        ProblemDescriptionBoard_Html(value="boards"),
-                        ProblemDescriptionBoard_Html(value="boards"),
-                    ],
+                    boards=[ProblemDescriptionBoard_Html()],
                 ),
                 files={
-                    "JAVA": ProblemFiles(
+                    "key": ProblemFiles(
                         solution_file=FileInfo(
                             filename="filename",
                             contents="contents",
@@ -641,46 +584,35 @@ class AsyncProblemClient:
                             FileInfo(
                                 filename="filename",
                                 contents="contents",
-                            ),
-                            FileInfo(
-                                filename="filename",
-                                contents="contents",
-                            ),
+                            )
                         ],
                     )
                 },
                 input_params=[
                     VariableTypeAndName(
-                        variable_type=VariableType(),
+                        variable_type=VariableTypeZero(
+                            type="integerType",
+                        ),
                         name="name",
-                    ),
-                    VariableTypeAndName(
-                        variable_type=VariableType(),
-                        name="name",
-                    ),
+                    )
                 ],
-                output_type=VariableType(),
+                output_type=VariableTypeZero(
+                    type="integerType",
+                ),
                 testcases=[
                     TestCaseWithExpectedResult(
                         test_case=TestCase(
                             id="id",
                             params=[
-                                VariableValue_IntegerValue(value=1),
-                                VariableValue_IntegerValue(value=1),
+                                VariableValueZero(
+                                    type="integerValue",
+                                )
                             ],
                         ),
-                        expected_result=VariableValue_IntegerValue(value=1),
-                    ),
-                    TestCaseWithExpectedResult(
-                        test_case=TestCase(
-                            id="id",
-                            params=[
-                                VariableValue_IntegerValue(value=1),
-                                VariableValue_IntegerValue(value=1),
-                            ],
+                        expected_result=VariableValueZero(
+                            type="integerValue",
                         ),
-                        expected_result=VariableValue_IntegerValue(value=1),
-                    ),
+                    )
                 ],
                 method_name="methodName",
             )
@@ -688,7 +620,7 @@ class AsyncProblemClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.update_problem(
+        _response = await self._raw_client.updateproblem(
             problem_id,
             problem_name=problem_name,
             problem_description=problem_description,
@@ -701,7 +633,7 @@ class AsyncProblemClient:
         )
         return _response.data
 
-    async def delete_problem(
+    async def deleteproblem(
         self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
@@ -722,26 +654,25 @@ class AsyncProblemClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedTrace
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.problem.delete_problem(
+            await client.problem.deleteproblem(
                 problem_id="problemId",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete_problem(problem_id, request_options=request_options)
+        _response = await self._raw_client.deleteproblem(problem_id, request_options=request_options)
         return _response.data
 
-    async def get_default_starter_files(
+    async def getdefaultstarterfiles(
         self,
         *,
         input_params: typing.Sequence[VariableTypeAndName],
@@ -773,40 +704,38 @@ class AsyncProblemClient:
         -------
         GetDefaultStarterFilesResponse
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedTrace
-        from seed.commons import VariableType
-        from seed.problem import VariableTypeAndName
+        from seed import AsyncSeedApi, VariableTypeAndName, VariableTypeZero
 
-        client = AsyncSeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.problem.get_default_starter_files(
+            await client.problem.getdefaultstarterfiles(
                 input_params=[
                     VariableTypeAndName(
-                        variable_type=VariableType(),
+                        variable_type=VariableTypeZero(
+                            type="integerType",
+                        ),
                         name="name",
-                    ),
-                    VariableTypeAndName(
-                        variable_type=VariableType(),
-                        name="name",
-                    ),
+                    )
                 ],
-                output_type=VariableType(),
+                output_type=VariableTypeZero(
+                    type="integerType",
+                ),
                 method_name="methodName",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_default_starter_files(
+        _response = await self._raw_client.getdefaultstarterfiles(
             input_params=input_params, output_type=output_type, method_name=method_name, request_options=request_options
         )
         return _response.data

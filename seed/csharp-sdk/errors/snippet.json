@@ -6,11 +6,11 @@
             "id": {
                 "path": "/foo1",
                 "method": "POST",
-                "identifier_override": "endpoint_simple.fooWithoutEndpointError"
+                "identifier_override": "endpoint_simple.foowithoutendpointerror"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedErrors;\n\nvar client = new SeedErrorsClient();\nawait client.Simple.FooWithoutEndpointErrorAsync(new FooRequest { Bar = \"bar\" });\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Simple.FoowithoutendpointerrorAsync(new FooRequest { Bar = \"bar\" });\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedErrors;\n\nvar client = new SeedErrorsClient();\nawait client.Simple.FooAsync(new FooRequest { Bar = \"bar\" });\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Simple.FooAsync(new FooRequest { Bar = \"bar\" });\n"
             }
         },
         {
@@ -30,35 +30,11 @@
             "id": {
                 "path": "/foo3",
                 "method": "POST",
-                "identifier_override": "endpoint_simple.fooWithExamples"
+                "identifier_override": "endpoint_simple.foowithexamples"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedErrors;\n\nvar client = new SeedErrorsClient();\nawait client.Simple.FooWithExamplesAsync(new FooRequest { Bar = \"hello\" });\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/foo3",
-                "method": "POST",
-                "identifier_override": "endpoint_simple.fooWithExamples"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedErrors;\n\nvar client = new SeedErrorsClient();\nawait client.Simple.FooWithExamplesAsync(new FooRequest { Bar = \"hello\" });\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/foo3",
-                "method": "POST",
-                "identifier_override": "endpoint_simple.fooWithExamples"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedErrors;\n\nvar client = new SeedErrorsClient();\nawait client.Simple.FooWithExamplesAsync(new FooRequest { Bar = \"hello\" });\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Simple.FoowithexamplesAsync(new FooRequest { Bar = \"bar\" });\n"
             }
         }
     ]

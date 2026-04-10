@@ -38,9 +38,7 @@ impl NestedTypeBuilder {
     /// - [`name`](NestedTypeBuilder::name)
     pub fn build(self) -> Result<NestedType, BuildError> {
         Ok(NestedType {
-            json_fields: self
-                .json_fields
-                .ok_or_else(|| BuildError::missing_field("json_fields"))?,
+            json_fields: self.json_fields.ok_or_else(|| BuildError::missing_field("json_fields"))?,
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
         })
     }

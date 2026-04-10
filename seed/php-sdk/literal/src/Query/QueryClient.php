@@ -4,7 +4,7 @@ namespace Seed\Query;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Query\Requests\SendLiteralsInQueryRequest;
+use Seed\Query\Requests\QuerySendRequest;
 use Seed\Types\SendResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -50,7 +50,7 @@ class QueryClient
     }
 
     /**
-     * @param SendLiteralsInQueryRequest $request
+     * @param QuerySendRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -63,14 +63,14 @@ class QueryClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function send(SendLiteralsInQueryRequest $request, ?array $options = null): ?SendResponse
+    public function send(QuerySendRequest $request, ?array $options = null): ?SendResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        $query['prompt'] = 'You are a helpful assistant';
+        $query['prompt'] = $request->prompt;
         $query['alias_prompt'] = $request->aliasPrompt;
         $query['query'] = $request->query;
-        $query['stream'] = 'false';
+        $query['stream'] = $request->stream;
         $query['alias_stream'] = $request->aliasStream;
         if ($request->optionalPrompt != null) {
             $query['optional_prompt'] = $request->optionalPrompt;

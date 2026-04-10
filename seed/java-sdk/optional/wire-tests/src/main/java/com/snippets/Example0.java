@@ -1,23 +1,17 @@
 package com.snippets;
 
-import com.seed.objectsWithImports.SeedObjectsWithImportsClient;
+import com.seed.api.SeedApiClient;
 import java.util.HashMap;
-import java.util.Optional;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient.builder()
-                .url("https://api.fern.com")
-                .build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.optional().sendOptionalBody(Optional.of(new HashMap<String, Object>() {
+        client.optional().sendoptionalbody(new HashMap<String, Object>() {
             {
-                put("string", new HashMap<String, Object>() {
-                    {
-                        put("key", "value");
-                    }
-                });
+                put("key", "value");
             }
-        }));
+        });
     }
 }

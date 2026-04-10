@@ -1,4 +1,2 @@
-export * from "./inlinedRequest/client/requests/index.js";
-export * as inlinedRequest from "./inlinedRequest/index.js";
-export * as unknown from "./unknown/index.js";
-export * from "./unknown/types/index.js";
+export * from "./inlinedrequest/client/requests/index.js";
+export * as inlinedrequest from "./inlinedrequest/index.js";

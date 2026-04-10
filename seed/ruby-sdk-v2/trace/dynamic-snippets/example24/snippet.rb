@@ -5,4 +5,9 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.submission.create_execution_session(language: "JAVA")
+client.playlist.createplaylist(
+  service_param: 1,
+  datetime: "2024-01-15T09:30:00Z",
+  name: "name",
+  problems: ["problems"]
+)

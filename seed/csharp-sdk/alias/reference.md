@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedAlias/SeedAliasClient.cs">GetAsync</a>(typeId)</code></summary>
+## _
+<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">GetAsync</a>(GetRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.GetAsync("typeId");
+await client._.GetAsync(new GetRequest { TypeId = "typeId" });
 ```
 </dd>
 </dl>
@@ -27,7 +28,7 @@ await client.GetAsync("typeId");
 <dl>
 <dd>
 
-**typeId:** `string` 
+**request:** `GetRequest` 
     
 </dd>
 </dl>

@@ -2,11 +2,11 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedLiteral from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace ReferenceClient {
     export type Options = BaseClientOptions;
@@ -22,15 +22,16 @@ export class ReferenceClient {
     }
 
     /**
-     * @param {SeedLiteral.SendRequest} request
+     * @param {SeedApi.SendRequest} request
      * @param {ReferenceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.reference.send({
      *         prompt: "You are a helpful assistant",
-     *         stream: false,
+     *         query: "query",
+     *         stream: true,
+     *         ending: "\\$ending",
      *         context: "You're super wise",
-     *         query: "What is the weather today",
      *         containerObject: {
      *             nestedObjects: [{
      *                     literal1: "literal1",
@@ -41,24 +42,17 @@ export class ReferenceClient {
      *     })
      */
     public send(
-        request: SeedLiteral.SendRequest,
+        request: SeedApi.SendRequest,
         requestOptions?: ReferenceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+    ): core.HttpResponsePromise<SeedApi.SendResponse> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
-        request: SeedLiteral.SendRequest,
+        request: SeedApi.SendRequest,
         requestOptions?: ReferenceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-API-Version": requestOptions?.version ?? "02-02-2024",
-                "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? true).toString(),
-            }),
-            requestOptions?.headers,
-        );
+    ): Promise<core.WithRawResponse<SeedApi.SendResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -78,11 +72,11 @@ export class ReferenceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedLiteral.SendResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.SendResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedLiteralError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

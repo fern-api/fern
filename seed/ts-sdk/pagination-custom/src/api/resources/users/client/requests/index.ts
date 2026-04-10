@@ -1,1 +1,1 @@
-export type { ListWithCustomPagerRequest } from "./ListWithCustomPagerRequest.js";
+export type { UsersListWithCustomPagerRequest } from "./UsersListWithCustomPagerRequest.js";

@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "QueryParameters",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "QueryParameters",
-            targets: ["QueryParameters"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "QueryParameters",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "QueryParametersTests",
-            dependencies: ["QueryParameters"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

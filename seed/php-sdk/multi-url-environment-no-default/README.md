@@ -10,7 +10,6 @@ The Seed PHP library provides convenient access to the Seed APIs from PHP.
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Custom Client](#custom-client)
@@ -38,59 +37,17 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Environments;
-use Seed\Ec2\Requests\BootInstanceRequest;
+use Seed\Ec2\Requests\Ec2BootInstanceRequest;
 
 $client = new SeedClient(
     token: '<token>',
-    environment: Environments::Production(),
 );
-$client->ec2->bootInstance(
-    new BootInstanceRequest([
+$client->ec2->bootinstance(
+    new Ec2BootInstanceRequest([
         'size' => 'size',
     ]),
 );
 
-```
-
-## Environments
-
-This SDK allows you to configure different environments for API requests.
-
-```php
-This API uses multiple base URLs for different services. The SDK defaults to the `Production` environment.
-
-Available environments:
-- `Environments::Production()`
-- `Environments::Staging()`
-
-Each environment provides multiple base URLs:
-  - `ec2`: The ec2 base URL
-  - `s3`: The s3 base URL
-
-To use a different environment, pass it to the client constructor:
-
-```php
-use Seed\SeedClient;
-use Seed\Environments;
-
-$client = new SeedClient(
-    token: '<YOUR_TOKEN>',
-    environment: Environments::Staging()
-);
-```
-
-You can also create a custom environment with your own URLs:
-
-```php
-$client = new SeedClient(
-    token: '<YOUR_TOKEN>',
-    environment: Environments::custom(
-        ec2: 'https://your-ec2-url.com',
-    s3: 'https://your-s3-url.com'
-    )
-);
-```
 ```
 
 ## Exception Handling
@@ -102,7 +59,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->ec2->bootInstance(...);
+    $response = $client->ec2->bootinstance(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -156,7 +113,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->ec2->bootInstance(
+$response = $client->ec2->bootinstance(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -169,7 +126,7 @@ $response = $client->ec2->bootInstance(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->ec2->bootInstance(
+$response = $client->ec2->bootinstance(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

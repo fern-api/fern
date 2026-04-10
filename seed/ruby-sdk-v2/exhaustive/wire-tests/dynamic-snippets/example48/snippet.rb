@@ -5,4 +5,8 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.primitive.get_and_return_double(request: 1.1)
+client.endpoints_object.endpoints_object_get_and_return_with_mixed_required_and_optional_fields(
+  required_string: "requiredString",
+  required_integer: 1,
+  required_long: 1000000
+)

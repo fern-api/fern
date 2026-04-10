@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Endpoints\Params\Requests\GetWithMultipleQuery;
+use Seed\Types\TypesObjectWithMapOfMap;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,13 +11,12 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->params->getWithAllowMultipleQuery(
-    new GetWithMultipleQuery([
-        'query' => [
-            'query',
-        ],
-        'number' => [
-            1,
+$client->endpointsObject->endpointsObjectGetAndReturnWithMapOfMap(
+    new TypesObjectWithMapOfMap([
+        'map' => [
+            'key' => [
+                'key' => 'value',
+            ],
         ],
     ]),
 );

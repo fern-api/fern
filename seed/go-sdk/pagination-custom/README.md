@@ -9,7 +9,6 @@ The Seed Go library provides convenient access to the Seed APIs from Go.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Environments](#environments)
-- [Pagination](#pagination)
 - [Errors](#errors)
 - [Request Options](#request-options)
 - [Advanced](#advanced)
@@ -44,15 +43,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListWithCustomPagerRequest{
-        Limit: fern.Int(
-            1,
-        ),
-        StartingAfter: fern.String(
-            "starting_after",
-        ),
-    }
-    client.Users.ListWithCustomPager(
+    request := &fern.UsersListWithCustomPagerRequest{}
+    client.Users.Listwithcustompager(
         context.TODO(),
         request,
     )
@@ -70,79 +62,13 @@ client := client.NewClient(
 )
 ```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items.
-You can also iterate page-by-page using the `GetNextPage` helper method.
-
-The `Page.Results` attribute, which contains the relevant list of items returned by the call to the server,
-is the only attribute you will need for most use cases. But if need be, several other attributes are available:
-
-- `Page.Response` contains the full spec-defined response as returned by the server.
-- `Page.StatusCode` and `Page.Header` returns HTTP metadata associated with the call to the server.
-- `Page.RawResponse` returns the pagination object if you need to access its fields (like `Next`).
-
-```go
-// Loop over the items using the provided iterator.
-ctx := context.TODO()
-page, err := client.Users.ListWithCustomPager(
-    ctx,
-    ...
-)
-if err != nil {
-    return err
-}
-iter := page.Iterator()
-for iter.Next(ctx) {
-    item := iter.Current()
-    fmt.Printf("Got item: %v", *item)
-}
-if err := iter.Err(); err != nil {
-    return err
-}
-
-// Alternatively, iterate page-by-page.
-for page != nil {
-    for _, item := range page.Results {
-        fmt.Printf("Got item: %v", *item)
-    }
-    page, err = page.GetNextPage(ctx)
-    if errors.Is(err, core.ErrNoPages) {
-        break
-    }
-    if err != nil {
-        return err
-    }
-}
-
-// Paginated endpoints return a Page with directly accessible headers, status code, and full response
-ctx := context.TODO()
-page, err := client.Users.ListWithCustomPager(
-    ctx,
-    ...
-)
-if err != nil {
-    return err
-}
-
-// Access response metadata directly from the page
-fmt.Printf("Got headers: %v", page.Header)
-fmt.Printf("Got status code: %d", page.StatusCode)
-
-// Access the full spec-defined response object
-fullResponse := page.Response
-
-// Access individual fields from the pagination object
-nextCursor := page.RawResponse.Next
-```
-
 ## Errors
 
 Structured error types are returned from API calls that return non-success status codes. These errors are compatible
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.Users.ListWithCustomPager(...)
+response, err := client.Users.Listwithcustompager(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {
@@ -176,7 +102,7 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.Users.ListWithCustomPager(
+response, err := client.Users.Listwithcustompager(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
@@ -191,23 +117,12 @@ when you need to examine the response headers received from the API call. (When 
 the raw HTTP response data will be included automatically in the Page response object.)
 
 ```go
-// For non-paginated endpoints, use WithRawResponse as described
-// to retrieve the headers and returned status code:
-response, err := client.Users.WithRawResponse.ListWithCustomPager(...)
+response, err := client.Users.WithRawResponse.Listwithcustompager(...)
 if err != nil {
     return err
 }
 fmt.Printf("Got response headers: %v", response.Header)
 fmt.Printf("Got status code: %d", response.StatusCode)
-
-// For paginated endpoints, WithRawResponse is unnecessary, as the
-// headers and status code are directly available on the Page object.
-page, err := client.Users.ListWithCustomPager(...)
-if err != nil {
-    return err
-}
-fmt.Printf("Got response headers: %v", page.Header)
-fmt.Printf("Got status code: %d", page.StatusCode)
 ```
 
 ### Retries
@@ -232,7 +147,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.Users.ListWithCustomPager(
+response, err := client.Users.Listwithcustompager(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -246,7 +161,7 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.Users.ListWithCustomPager(ctx, ...)
+response, err := client.Users.Listwithcustompager(ctx, ...)
 ```
 
 ### Explicit Null
@@ -268,7 +183,7 @@ type ExampleRequest struct {
 request := &ExampleRequest{}
 request.SetName(nil)
 
-response, err := client.Users.ListWithCustomPager(ctx, request, ...)
+response, err := client.Users.Listwithcustompager(ctx, request, ...)
 ```
 
 ## Contributing

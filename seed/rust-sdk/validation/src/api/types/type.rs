@@ -57,14 +57,10 @@ impl TypeBuilder {
     /// - [`shape`](TypeBuilder::shape)
     pub fn build(self) -> Result<Type, BuildError> {
         Ok(Type {
-            decimal: self
-                .decimal
-                .ok_or_else(|| BuildError::missing_field("decimal"))?,
+            decimal: self.decimal.ok_or_else(|| BuildError::missing_field("decimal"))?,
             even: self.even.ok_or_else(|| BuildError::missing_field("even"))?,
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
-            shape: self
-                .shape
-                .ok_or_else(|| BuildError::missing_field("shape"))?,
+            shape: self.shape.ok_or_else(|| BuildError::missing_field("shape"))?,
         })
     }
 }

@@ -16,7 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    client.Dummy.GetDummy(
+    client.Dummy.Getdummy(
         context.TODO(),
     )
 }

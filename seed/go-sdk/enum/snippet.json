@@ -2,46 +2,68 @@
     "endpoints": [
         {
             "id": {
-                "path": "/inlined",
+                "path": "/headers",
                 "method": "POST",
-                "identifier_override": "endpoint_inlined-request.send"
+                "identifier_override": "endpoint_headers.send"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/enum/fern\"\n\tfernclient \"github.com/enum/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.InlinedRequest.Send(\n\tcontext.TODO(),\n\t\u0026fern.SendEnumInlinedRequest{\n\t\tOperand: fern.OperandGreaterThan,\n\t\tOperandOrColor: \u0026fern.ColorOrOperand{\n\t\t\tColor: fern.ColorRed,\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/enum/fern\"\n\tfernclient \"github.com/enum/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Headers.Send(\n\tcontext.TODO(),\n\t\u0026fern.HeadersSendRequest{\n\t\tOperand: fern.OperandGreaterThan,\n\t\tOperandOrColor: \u0026fern.ColorOrOperand{\n\t\t\tColor: fern.ColorRed,\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inlined",
+                "method": "POST",
+                "identifier_override": "endpoint_inlinedrequest.send"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/enum/fern\"\n\tfernclient \"github.com/enum/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Inlinedrequest.Send(\n\tcontext.TODO(),\n\t\u0026fern.InlinedRequestSendRequest{\n\t\tOperand: fern.OperandGreaterThan,\n\t\tOperandOrColor: \u0026fern.ColorOrOperand{\n\t\t\tColor: fern.ColorRed,\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/multipart",
+                "method": "POST",
+                "identifier_override": "endpoint_multipartform.multipartform"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/enum/fern\"\n\tfernclient \"github.com/enum/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Multipartform.Multipartform(\n\tcontext.TODO(),\n\t\u0026fern.MultipartFormMultipartFormRequest{},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/path/{operand}/{operandOrColor}",
                 "method": "POST",
-                "identifier_override": "endpoint_path-param.send"
+                "identifier_override": "endpoint_pathparam.send"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/enum/fern\"\n\tfernclient \"github.com/enum/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.PathParam.Send(\n\tcontext.TODO(),\n\tfern.OperandGreaterThan,\n\t\u0026fern.ColorOrOperand{\n\t\tColor: fern.ColorRed,\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/enum/fern\"\n\tfernclient \"github.com/enum/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Pathparam.Send(\n\tcontext.TODO(),\n\t\u0026fern.PathParamSendRequest{\n\t\tOperand: fern.OperandGreaterThan,\n\t\tOperandOrColor: \u0026fern.ColorOrOperand{\n\t\t\tColor: fern.ColorRed,\n\t\t},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/query-list",
                 "method": "POST",
-                "identifier_override": "endpoint_query-param.sendList"
+                "identifier_override": "endpoint_queryparam.sendlist"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/enum/fern\"\n\tfernclient \"github.com/enum/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.QueryParam.SendList(\n\tcontext.TODO(),\n\t\u0026fern.SendEnumListAsQueryParamRequest{\n\t\tOperand: []fern.Operand{\n\t\t\tfern.OperandGreaterThan,\n\t\t},\n\t\tMaybeOperand: []*fern.Operand{\n\t\t\tfern.OperandGreaterThan,\n\t\t},\n\t\tOperandOrColor: []*fern.ColorOrOperand{\n\t\t\t\u0026fern.ColorOrOperand{\n\t\t\t\tColor: fern.ColorRed,\n\t\t\t},\n\t\t},\n\t\tMaybeOperandOrColor: []**fern.ColorOrOperand{\n\t\t\t\u0026fern.ColorOrOperand{\n\t\t\t\tColor: fern.ColorRed,\n\t\t\t},\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/enum/fern\"\n\tfernclient \"github.com/enum/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Queryparam.Sendlist(\n\tcontext.TODO(),\n\t\u0026fern.QueryParamSendListRequest{\n\t\tOperand: []*fern.Operand{\n\t\t\tfern.OperandGreaterThan,\n\t\t},\n\t\tMaybeOperand: []*fern.Operand{\n\t\t\tfern.OperandGreaterThan,\n\t\t},\n\t\tOperandOrColor: []**fern.ColorOrOperand{\n\t\t\t\u0026fern.ColorOrOperand{\n\t\t\t\tColor: fern.ColorRed,\n\t\t\t},\n\t\t},\n\t\tMaybeOperandOrColor: []**fern.ColorOrOperand{\n\t\t\t\u0026fern.ColorOrOperand{\n\t\t\t\tColor: fern.ColorRed,\n\t\t\t},\n\t\t},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/query",
                 "method": "POST",
-                "identifier_override": "endpoint_query-param.send"
+                "identifier_override": "endpoint_queryparam.send"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/enum/fern\"\n\tfernclient \"github.com/enum/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.QueryParam.Send(\n\tcontext.TODO(),\n\t\u0026fern.SendEnumAsQueryParamRequest{\n\t\tOperand: fern.OperandGreaterThan,\n\t\tOperandOrColor: \u0026fern.ColorOrOperand{\n\t\t\tColor: fern.ColorRed,\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/enum/fern\"\n\tfernclient \"github.com/enum/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Queryparam.Send(\n\tcontext.TODO(),\n\t\u0026fern.QueryParamSendRequest{\n\t\tOperand:        fern.OperandGreaterThan,\n\t\tOperandOrColor: fern.ColorRed,\n\t},\n)\n"
             }
         }
     ]

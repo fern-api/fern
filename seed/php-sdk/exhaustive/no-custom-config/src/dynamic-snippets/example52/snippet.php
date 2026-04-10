@@ -3,6 +3,8 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Types\TypesObjectWithDatetimeLikeString;
+use DateTime;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,6 +12,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->primitive->getAndReturnUuid(
-    'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+$client->endpointsObject->endpointsObjectGetAndReturnWithDatetimeLikeString(
+    new TypesObjectWithDatetimeLikeString([
+        'datetimeLikeString' => 'datetimeLikeString',
+        'actualDatetime' => new DateTime('2024-01-15T09:30:00Z'),
+    ]),
 );

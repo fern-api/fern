@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Pagination",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Pagination",
-            targets: ["Pagination"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Pagination",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "PaginationTests",
-            dependencies: ["Pagination"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

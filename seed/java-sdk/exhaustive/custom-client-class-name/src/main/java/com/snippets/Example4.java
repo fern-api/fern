@@ -1,17 +1,13 @@
 package com.snippets;
 
-import com.seed.exhaustive.Best;
-import java.util.HashMap;
+import com.seed.api.Best;
+import java.util.Arrays;
 
 public class Example4 {
     public static void main(String[] args) {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpoints().container().getAndReturnMapPrimToPrim(new HashMap<String, String>() {
-            {
-                put("string", "string");
-            }
-        });
+        client.endpointsContainer().endpointsContainerGetAndReturnSetOfPrimitives(Arrays.asList("string"));
     }
 }

@@ -1,19 +1,19 @@
-using SeedLiteral;
+using SeedApi;
 
 namespace Usage;
 
 public class Example1
 {
     public async Task Do() {
-        var client = new SeedLiteralClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Headers.SendAsync(
-            new SendLiteralsInHeadersRequest {
-                EndpointVersion = "02-12-2024",
+            new HeadersSendRequest {
+                EndpointVersion = HeadersSendRequestXEndpointVersion.Two122024,
                 Async = true,
                 Query = "query"
             }

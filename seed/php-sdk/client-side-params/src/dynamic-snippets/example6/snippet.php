@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\Types\UpdateUserRequest;
+use Seed\Service\Requests\ServiceListUsersRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,25 +11,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->updateUser(
-    'userId',
-    new UpdateUserRequest([
-        'email' => 'email',
-        'emailVerified' => true,
-        'username' => 'username',
-        'phoneNumber' => 'phone_number',
-        'phoneVerified' => true,
-        'userMetadata' => [
-            'user_metadata' => [
-                'key' => "value",
-            ],
-        ],
-        'appMetadata' => [
-            'app_metadata' => [
-                'key' => "value",
-            ],
-        ],
-        'password' => 'password',
-        'blocked' => true,
-    ]),
+$client->service->listusers(
+    new ServiceListUsersRequest([]),
 );

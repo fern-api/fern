@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="/src/SeedQueryParameters/User/UserClient.cs">GetUsernameAsync</a>(GetUsersRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetusernameAsync</a>(UserGetUsernameRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,32 +13,27 @@
 <dd>
 
 ```csharp
-await client.User.GetUsernameAsync(
-    new GetUsersRequest
+await client.User.GetusernameAsync(
+    new UserGetUsernameRequest
     {
         Limit = 1,
-        Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        Id = "id",
         Date = new DateOnly(2023, 1, 15),
         Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-        Bytes = "SGVsbG8gd29ybGQh",
+        Bytes = "bytes",
         User = new User
         {
             Name = "name",
             Tags = new List<string>() { "tags", "tags" },
         },
-        UserList = new List<User>()
-        {
+        UserList =
+        [
             new User
             {
                 Name = "name",
                 Tags = new List<string>() { "tags", "tags" },
             },
-            new User
-            {
-                Name = "name",
-                Tags = new List<string>() { "tags", "tags" },
-            },
-        },
+        ],
         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
         KeyValue = new Dictionary<string, string>() { { "keyValue", "keyValue" } },
         OptionalString = "optionalString",
@@ -81,7 +76,7 @@ await client.User.GetUsernameAsync(
 <dl>
 <dd>
 
-**request:** `GetUsersRequest` 
+**request:** `UserGetUsernameRequest` 
     
 </dd>
 </dl>

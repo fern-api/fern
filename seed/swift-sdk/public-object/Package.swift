@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "PublicObject",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "PublicObject",
-            targets: ["PublicObject"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "PublicObject",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "PublicObjectTests",
-            dependencies: ["PublicObject"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

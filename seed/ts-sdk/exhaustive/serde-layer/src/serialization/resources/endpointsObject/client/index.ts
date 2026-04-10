@@ -1,0 +1,1 @@
+export * as endpointsObjectGetAndReturnNestedWithRequiredFieldAsList from "./endpointsObjectGetAndReturnNestedWithRequiredFieldAsList.js";

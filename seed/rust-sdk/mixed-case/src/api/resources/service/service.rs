@@ -13,7 +13,7 @@ impl ServiceClient {
         })
     }
 
-    pub async fn get_resource(
+    pub async fn getresource(
         &self,
         resource_id: &str,
         options: Option<RequestOptions>,
@@ -21,7 +21,7 @@ impl ServiceClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/resource/{}", resource_id),
+                &format!("resource/{}", resource_id),
                 None,
                 None,
                 options,
@@ -29,15 +29,15 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn list_resources(
+    pub async fn listresources(
         &self,
-        request: &ListResourcesQueryRequest,
+        request: &ListresourcesQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<Resource>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/resource",
+                "resource",
                 None,
                 QueryBuilder::new()
                     .int("page_limit", request.page_limit.clone())

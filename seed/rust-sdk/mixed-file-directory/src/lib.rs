@@ -1,24 +1,23 @@
-//! # MixedFileDirectory SDK
+//! # mixed-file-directory SDK
 //!
-//! The official Rust SDK for the MixedFileDirectory.
+//! The official Rust SDK for the mixed-file-directory.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_mixed_file_directory::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = MixedFileDirectoryClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .organization
 //!         .create(
 //!             &CreateOrganizationRequest {
 //!                 name: "name".to_string(),
-//!                 ..Default::default()
 //!             },
 //!             None,
 //!         )

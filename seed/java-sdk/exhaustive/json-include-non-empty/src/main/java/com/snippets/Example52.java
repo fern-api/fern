@@ -1,15 +1,20 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
-import java.util.UUID;
+import com.seed.api.SeedApiClient;
+import com.seed.api.types.TypesObjectWithDatetimeLikeString;
+import java.time.OffsetDateTime;
 
 public class Example52 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints().primitive().getAndReturnUuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"));
+        client.endpointsObject()
+                .endpointsObjectGetAndReturnWithDatetimeLikeString(TypesObjectWithDatetimeLikeString.builder()
+                        .datetimeLikeString("datetimeLikeString")
+                        .actualDatetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                        .build());
     }
 }

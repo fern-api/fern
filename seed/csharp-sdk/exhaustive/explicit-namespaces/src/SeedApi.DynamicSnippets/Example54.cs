@@ -1,22 +1,20 @@
-using SeedExhaustive;
-using SeedExhaustive.Endpoints.Put;
+using SeedApi;
+using SeedApi.EndpointsPagination;
 
 namespace Usage;
 
 public class Example54
 {
     public async Task Do() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.Put.AddAsync(
-            new PutRequest {
-                Id = "id"
-            }
+        await client.EndpointsPagination.EndpointsPaginationListItemsAsync(
+            new EndpointsPaginationListItemsRequest()
         );
     }
 

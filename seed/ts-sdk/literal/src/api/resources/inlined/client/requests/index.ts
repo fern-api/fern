@@ -1,1 +1,1 @@
-export type { SendLiteralsInlinedRequest } from "./SendLiteralsInlinedRequest.js";
+export { InlinedSendRequest } from "./InlinedSendRequest.js";

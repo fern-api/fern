@@ -8,6 +8,6 @@ import java.lang.String;
 
 public final class App {
   public static void main(String[] args) {
-    // import com.seed.websocketAuth.AsyncSeedWebsocketAuthClient
+    // import com.seed.api.AsyncSeedApiClient
   }
 }

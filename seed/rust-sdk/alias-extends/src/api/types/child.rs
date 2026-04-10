@@ -38,12 +38,8 @@ impl ChildBuilder {
     /// - [`child`](ChildBuilder::child)
     pub fn build(self) -> Result<Child, BuildError> {
         Ok(Child {
-            parent_fields: self
-                .parent_fields
-                .ok_or_else(|| BuildError::missing_field("parent_fields"))?,
-            child: self
-                .child
-                .ok_or_else(|| BuildError::missing_field("child"))?,
+            parent_fields: self.parent_fields.ok_or_else(|| BuildError::missing_field("parent_fields"))?,
+            child: self.child.ok_or_else(|| BuildError::missing_field("child"))?,
         })
     }
 }

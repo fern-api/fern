@@ -1,4 +1,4 @@
-package responseproperty
+package api
 
 import (
 	"time"

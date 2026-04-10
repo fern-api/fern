@@ -14,10 +14,10 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &sse.StreamCompletionRequest{
-        Query: "",
+    request := &sse.CompletionsStreamEventsRequest{
+        Query: "query",
     }
-    client.Completions.Stream(
+    client.Completions.Streamevents(
         context.TODO(),
         request,
     )

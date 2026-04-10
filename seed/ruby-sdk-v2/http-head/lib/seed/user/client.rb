@@ -17,14 +17,21 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Integer] :limit
       #
-      # @return [untyped]
-      def head(request_options: {}, **params)
-        Seed::Internal::Types::Utils.normalize_keys(params)
+      # @return [Array[Seed::Types::User]]
+      def list(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        query_param_names = %i[limit]
+        query_params = {}
+        query_params["limit"] = params[:limit] if params.key?(:limit)
+        params.except(*query_param_names)
+
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
-          method: "HEAD",
-          path: "/users",
+          method: "GET",
+          path: "users",
+          query: query_params,
           request_options: request_options
         )
         begin
@@ -46,21 +53,14 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Integer] :limit
       #
-      # @return [Array[Seed::User::Types::User]]
-      def list(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[limit]
-        query_params = {}
-        query_params["limit"] = params[:limit] if params.key?(:limit)
-        params.except(*query_param_names)
-
+      # @return [untyped]
+      def head(request_options: {}, **params)
+        Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
-          method: "GET",
-          path: "/users",
-          query: query_params,
+          method: "HEAD",
+          path: "users",
           request_options: request_options
         )
         begin

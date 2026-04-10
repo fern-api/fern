@@ -3,7 +3,6 @@ package example
 import (
     context "context"
 
-    fern "github.com/optional/fern"
     client "github.com/optional/fern/client"
     option "github.com/optional/fern/option"
 )
@@ -14,10 +13,12 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.SendOptionalBodyRequest{
-        Message: "message",
+    request := map[string]any{
+        "string": map[string]any{
+            "key": "value",
+        },
     }
-    client.Optional.SendOptionalTypedBody(
+    client.Optional.Sendoptionalbody(
         context.TODO(),
         request,
     )

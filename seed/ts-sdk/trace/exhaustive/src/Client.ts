@@ -8,18 +8,20 @@ import { ProblemClient } from "./api/resources/problem/client/Client.js";
 import { SubmissionClient } from "./api/resources/submission/client/Client.js";
 import { SyspropClient } from "./api/resources/sysprop/client/Client.js";
 import { V2Client } from "./api/resources/v2/client/Client.js";
+import { V2ProblemClient } from "./api/resources/v2Problem/client/Client.js";
+import { V2V3ProblemClient } from "./api/resources/v2V3Problem/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 import * as core from "./core/index.js";
 
-export declare namespace SeedTraceClient {
+export declare namespace SeedApiClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class SeedTraceClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<SeedTraceClient.Options>;
+export class SeedApiClient {
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedApiClient.Options>;
     protected _v2: V2Client | undefined;
     protected _admin: AdminClient | undefined;
     protected _homepage: HomepageClient | undefined;
@@ -28,8 +30,10 @@ export class SeedTraceClient {
     protected _problem: ProblemClient | undefined;
     protected _submission: SubmissionClient | undefined;
     protected _sysprop: SyspropClient | undefined;
+    protected _v2Problem: V2ProblemClient | undefined;
+    protected _v2V3Problem: V2V3ProblemClient | undefined;
 
-    constructor(options: SeedTraceClient.Options = {}) {
+    constructor(options: SeedApiClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
@@ -63,6 +67,14 @@ export class SeedTraceClient {
 
     public get sysprop(): SyspropClient {
         return (this._sysprop ??= new SyspropClient(this._options));
+    }
+
+    public get v2Problem(): V2ProblemClient {
+        return (this._v2Problem ??= new V2ProblemClient(this._options));
+    }
+
+    public get v2V3Problem(): V2V3ProblemClient {
+        return (this._v2V3Problem ??= new V2V3ProblemClient(this._options));
     }
 
     /**

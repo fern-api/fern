@@ -1,0 +1,38 @@
+import Foundation
+
+public struct V2V3AssertCorrectnessCheckZero: Codable, Hashable, Sendable {
+    public let expectedValueParameterId: V2V3ParameterId
+    public let type: V2V3AssertCorrectnessCheckZeroType
+    /// Additional properties that are not explicitly defined in the schema
+    public let additionalProperties: [String: JSONValue]
+
+    public init(
+        expectedValueParameterId: V2V3ParameterId,
+        type: V2V3AssertCorrectnessCheckZeroType,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
+        self.expectedValueParameterId = expectedValueParameterId
+        self.type = type
+        self.additionalProperties = additionalProperties
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.expectedValueParameterId = try container.decode(V2V3ParameterId.self, forKey: .expectedValueParameterId)
+        self.type = try container.decode(V2V3AssertCorrectnessCheckZeroType.self, forKey: .type)
+        self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try encoder.encodeAdditionalProperties(self.additionalProperties)
+        try container.encode(self.expectedValueParameterId, forKey: .expectedValueParameterId)
+        try container.encode(self.type, forKey: .type)
+    }
+
+    /// Keys for encoding/decoding struct properties.
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case expectedValueParameterId
+        case type
+    }
+}

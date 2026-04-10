@@ -1,22 +1,22 @@
-//! # InferredAuthImplicitApiKey SDK
+//! # inferred-auth-implicit-api-key SDK
 //!
-//! The official Rust SDK for the InferredAuthImplicitApiKey.
+//! The official Rust SDK for the inferred-auth-implicit-api-key.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_inferred_auth_implicit_api_key::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = InferredAuthImplicitApiKeyClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .auth
-//!         .get_token(Some(
-//!             RequestOptions::new().additional_header("X-Api-Key", "api_key"),
+//!         .gettoken(Some(
+//!             RequestOptions::new().additional_header("X-Api-Key", "X-Api-Key"),
 //!         ))
 //!         .await;
 //! }

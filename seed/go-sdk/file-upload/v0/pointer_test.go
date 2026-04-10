@@ -1,4 +1,4 @@
-package fileupload
+package api
 
 import (
 	"testing"

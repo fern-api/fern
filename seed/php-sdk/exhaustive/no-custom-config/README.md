@@ -11,7 +11,6 @@ The Seed PHP library provides convenient access to the Seed APIs from PHP.
 - [Installation](#installation)
 - [Usage](#usage)
 - [Exception Handling](#exception-handling)
-- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Custom Client](#custom-client)
   - [Retries](#retries)
@@ -42,9 +41,8 @@ use Seed\SeedClient;
 $client = new SeedClient(
     token: '<token>',
 );
-$client->endpoints->container->getAndReturnListOfPrimitives(
+$client->endpointsContainer->endpointsContainerGetAndReturnListOfPrimitives(
     [
-        'string',
         'string',
     ],
 );
@@ -60,7 +58,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->endpoints->container->getAndReturnListOfPrimitives(...);
+    $response = $client->endpointsContainer->endpointsContainerGetAndReturnListOfPrimitives(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -68,35 +66,6 @@ try {
     // Optionally, rethrow the exception or handle accordingly.
 }
 ```
-
-## Pagination
-
-List endpoints return a `Pager<T>` which lets you loop over all items and the SDK will automatically make multiple HTTP requests for you.
-
-```php
-use Seed\SeedClient;
-
-$client = new SeedClient(
-    '<token>',
-    ['baseUrl' => 'https://api.example.com'],
-);
-
-$items = $client->endpoints->pagination->listItems(['limit' => 10]);
-
-foreach ($items as $item) {
-    var_dump($item);
-}
-```
-You can also iterate page-by-page:
-
-```php
-foreach ($items->getPages() as $page) {
-    foreach ($page->getItems() as $pageItem) {
-        var_dump($pageItem);
-    }
-}
-```
-
 
 ## Advanced
 
@@ -143,7 +112,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->endpoints->container->getAndReturnListOfPrimitives(
+$response = $client->endpointsContainer->endpointsContainerGetAndReturnListOfPrimitives(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -156,7 +125,7 @@ $response = $client->endpoints->container->getAndReturnListOfPrimitives(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->endpoints->container->getAndReturnListOfPrimitives(
+$response = $client->endpointsContainer->endpointsContainerGetAndReturnListOfPrimitives(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

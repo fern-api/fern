@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import NurseryApi
+import Api
 
 @Suite("PackageClient Wire Tests") struct PackageClientWireTests {
 }

@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.GetUsername() -> *fern.User</code></summary>
+<details><summary><code>client.User.Getusername() -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -13,18 +13,16 @@
 <dd>
 
 ```go
-request := &fern.GetUsersRequest{
+request := &fern.UserGetUsernameRequest{
         Limit: 1,
-        ID: uuid.MustParse(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        ),
+        ID: "id",
         Date: fern.MustParseDate(
             "2023-01-15",
         ),
         Deadline: fern.MustParseDateTime(
             "2024-01-15T09:30:00Z",
         ),
-        Bytes: []byte("SGVsbG8gd29ybGQh"),
+        Bytes: "bytes",
         User: &fern.User{
             Name: "name",
             Tags: []string{
@@ -33,13 +31,6 @@ request := &fern.GetUsersRequest{
             },
         },
         UserList: []*fern.User{
-            &fern.User{
-                Name: "name",
-                Tags: []string{
-                    "tags",
-                    "tags",
-                },
-            },
             &fern.User{
                 Name: "name",
                 Tags: []string{
@@ -85,11 +76,13 @@ request := &fern.GetUsersRequest{
                 },
             },
         },
-        Filter: []string{
-            "filter",
+        Filter: []*string{
+            fern.String(
+                "filter",
+            ),
         },
     }
-client.User.GetUsername(
+client.User.Getusername(
         context.TODO(),
         request,
     )
@@ -116,7 +109,7 @@ client.User.GetUsername(
 <dl>
 <dd>
 
-**id:** `uuid.UUID` 
+**id:** `string` 
     
 </dd>
 </dl>
@@ -140,7 +133,7 @@ client.User.GetUsername(
 <dl>
 <dd>
 
-**bytes:** `[]byte` 
+**bytes:** `string` 
     
 </dd>
 </dl>
@@ -156,7 +149,7 @@ client.User.GetUsername(
 <dl>
 <dd>
 
-**userList:** `[]*fern.User` 
+**userList:** `*fern.User` 
     
 </dd>
 </dl>
@@ -212,7 +205,7 @@ client.User.GetUsername(
 <dl>
 <dd>
 
-**filter:** `string` 
+**filter:** `*string` 
     
 </dd>
 </dl>

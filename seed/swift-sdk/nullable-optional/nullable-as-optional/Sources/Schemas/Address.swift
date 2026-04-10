@@ -4,22 +4,22 @@ import Foundation
 public struct Address: Codable, Hashable, Sendable {
     public let street: String
     public let city: Nullable<String>
-    public let state: String?
+    public let state: Nullable<String>?
     public let zipCode: String
     public let country: Nullable<String>?
-    public let buildingId: NullableUserId
-    public let tenantId: OptionalUserId
+    public let buildingId: Nullable<NullableUserId>
+    public let tenantId: Nullable<OptionalUserId>
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         street: String,
         city: Nullable<String>,
-        state: String? = nil,
+        state: Nullable<String>? = nil,
         zipCode: String,
         country: Nullable<String>? = nil,
-        buildingId: NullableUserId,
-        tenantId: OptionalUserId,
+        buildingId: Nullable<NullableUserId>,
+        tenantId: Nullable<OptionalUserId>,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.street = street
@@ -36,11 +36,11 @@ public struct Address: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.street = try container.decode(String.self, forKey: .street)
         self.city = try container.decode(Nullable<String>.self, forKey: .city)
-        self.state = try container.decodeIfPresent(String.self, forKey: .state)
+        self.state = try container.decodeNullableIfPresent(String.self, forKey: .state)
         self.zipCode = try container.decode(String.self, forKey: .zipCode)
         self.country = try container.decodeNullableIfPresent(String.self, forKey: .country)
-        self.buildingId = try container.decode(NullableUserId.self, forKey: .buildingId)
-        self.tenantId = try container.decode(OptionalUserId.self, forKey: .tenantId)
+        self.buildingId = try container.decode(Nullable<NullableUserId>.self, forKey: .buildingId)
+        self.tenantId = try container.decode(Nullable<OptionalUserId>.self, forKey: .tenantId)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -49,7 +49,7 @@ public struct Address: Codable, Hashable, Sendable {
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.street, forKey: .street)
         try container.encode(self.city, forKey: .city)
-        try container.encodeIfPresent(self.state, forKey: .state)
+        try container.encodeNullableIfPresent(self.state, forKey: .state)
         try container.encode(self.zipCode, forKey: .zipCode)
         try container.encodeNullableIfPresent(self.country, forKey: .country)
         try container.encode(self.buildingId, forKey: .buildingId)

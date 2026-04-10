@@ -37,15 +37,11 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Foo\Requests\FindRequest;
+use Seed\Foo\Requests\FooFindRequest;
 
 $client = new SeedClient();
 $client->foo->find(
-    new FindRequest([
-        'optionalString' => 'optionalString',
-        'publicProperty' => 'publicProperty',
-        'privateProperty' => 1,
-    ]),
+    new FooFindRequest([]),
 );
 
 ```

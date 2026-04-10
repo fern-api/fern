@@ -5,7 +5,8 @@ package com.seed.unions.resources.union;
 
 import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.RequestOptions;
-import com.seed.unions.resources.union.types.Shape;
+import com.seed.unions.resources.union.requests.UnionGetRequest;
+import com.seed.unions.types.Shape;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncUnionClient {
@@ -31,6 +32,14 @@ public class AsyncUnionClient {
 
     public CompletableFuture<Shape> get(String id, RequestOptions requestOptions) {
         return this.rawClient.get(id, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Shape> get(String id, UnionGetRequest request) {
+        return this.rawClient.get(id, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Shape> get(String id, UnionGetRequest request, RequestOptions requestOptions) {
+        return this.rawClient.get(id, request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Boolean> update(Shape request) {

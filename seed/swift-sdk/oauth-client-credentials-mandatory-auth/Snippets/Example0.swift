@@ -1,15 +1,17 @@
 import Foundation
-import OauthClientCredentialsMandatoryAuth
+import Api
 
 private func main() async throws {
-    let client = OauthClientCredentialsMandatoryAuthClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(
+        baseURL: "https://api.fern.com",
+        token: "<token>"
+    )
 
-    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
-        clientId: "my_oauth_app_123",
-        clientSecret: "sk_live_abcdef123456789",
+    _ = try await client.auth.gettokenwithclientcredentials(request: .init(
+        clientId: "client_id",
+        clientSecret: "client_secret",
         audience: .httpsApiExampleCom,
-        grantType: .clientCredentials,
-        scope: "read:users"
+        grantType: .clientCredentials
     ))
 }
 

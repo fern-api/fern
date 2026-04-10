@@ -1,4 +1,4 @@
-use seed_examples::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,13 +7,9 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExamplesClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .file
-        .service
-        .get_file(
-            &"file.txt".to_string(),
-            Some(RequestOptions::new().additional_header("X-File-API-Version", "0.0.2")),
-        )
+        .file_notification_service
+        .file_notification_service_get_exception(&"notificationId".to_string(), None)
         .await;
 }

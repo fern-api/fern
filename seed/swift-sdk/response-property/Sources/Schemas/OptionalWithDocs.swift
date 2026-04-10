@@ -1,3 +1,3 @@
 import Foundation
 
-public typealias OptionalWithDocs = WithDocs?
+public typealias OptionalWithDocs = WithDocs

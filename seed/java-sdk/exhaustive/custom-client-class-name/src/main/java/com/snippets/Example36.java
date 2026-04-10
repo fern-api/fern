@@ -1,19 +1,26 @@
 package com.snippets;
 
-import com.seed.exhaustive.Best;
-import com.seed.exhaustive.resources.endpoints.params.requests.GetWithMultipleQuery;
-import java.util.Arrays;
+import com.seed.api.Best;
+import com.seed.api.types.TypesObjectWithMapOfMap;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Example36 {
     public static void main(String[] args) {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpoints()
-                .params()
-                .getWithAllowMultipleQuery(GetWithMultipleQuery.builder()
-                        .query(Arrays.asList("query"))
-                        .number(Arrays.asList(1))
+        client.endpointsObject()
+                .endpointsObjectGetAndReturnWithMapOfMap(TypesObjectWithMapOfMap.builder()
+                        .map(new HashMap<String, Map<String, String>>() {
+                            {
+                                put("key", new HashMap<String, String>() {
+                                    {
+                                        put("key", "value");
+                                    }
+                                });
+                            }
+                        })
                         .build());
     }
 }

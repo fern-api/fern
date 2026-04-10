@@ -16,7 +16,7 @@ public final class UserClient: Sendable {
         )
     }
 
-    public func getAdmins(requestOptions: RequestOptions? = nil) async throws -> [User] {
+    public func getadmins(requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get,
             path: "/admins",

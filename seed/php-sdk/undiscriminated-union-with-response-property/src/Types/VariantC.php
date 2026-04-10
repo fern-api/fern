@@ -8,12 +8,6 @@ use Seed\Core\Json\JsonProperty;
 class VariantC extends JsonSerializableType
 {
     /**
-     * @var 'C' $type
-     */
-    #[JsonProperty('type')]
-    public string $type;
-
-    /**
      * @var bool $valueC
      */
     #[JsonProperty('valueC')]
@@ -21,14 +15,12 @@ class VariantC extends JsonSerializableType
 
     /**
      * @param array{
-     *   type: 'C',
      *   valueC: bool,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->type = $values['type'];
         $this->valueC = $values['valueC'];
     }
 

@@ -4,8 +4,11 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.optional_string_response import OptionalStringResponse
+from ..types.optional_with_docs import OptionalWithDocs
+from ..types.response import Response
+from ..types.string_response import StringResponse
 from .raw_client import AsyncRawServiceClient, RawServiceClient
-from .types.movie import Movie
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -26,7 +29,7 @@ class ServiceClient:
         """
         return self._raw_client
 
-    def get_movie(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> Movie:
+    def getmovie(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> Response:
         """
         Parameters
         ----------
@@ -37,23 +40,24 @@ class ServiceClient:
 
         Returns
         -------
-        Movie
+        Response
+
 
         Examples
         --------
-        from seed import SeedResponseProperty
+        from seed import SeedApi
 
-        client = SeedResponseProperty(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.get_movie(
+        client.service.getmovie(
             request="string",
         )
         """
-        _response = self._raw_client.get_movie(request=request, request_options=request_options)
+        _response = self._raw_client.getmovie(request=request, request_options=request_options)
         return _response.data
 
-    def get_movie_docs(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
+    def getmoviedocs(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> Response:
         """
         Parameters
         ----------
@@ -64,23 +68,24 @@ class ServiceClient:
 
         Returns
         -------
-        str
+        Response
+
 
         Examples
         --------
-        from seed import SeedResponseProperty
+        from seed import SeedApi
 
-        client = SeedResponseProperty(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.get_movie_docs(
+        client.service.getmoviedocs(
             request="string",
         )
         """
-        _response = self._raw_client.get_movie_docs(request=request, request_options=request_options)
+        _response = self._raw_client.getmoviedocs(request=request, request_options=request_options)
         return _response.data
 
-    def get_movie_name(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
+    def getmoviename(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> StringResponse:
         """
         Parameters
         ----------
@@ -91,25 +96,82 @@ class ServiceClient:
 
         Returns
         -------
-        str
+        StringResponse
+
 
         Examples
         --------
-        from seed import SeedResponseProperty
+        from seed import SeedApi
 
-        client = SeedResponseProperty(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.get_movie_name(
+        client.service.getmoviename(
             request="string",
         )
         """
-        _response = self._raw_client.get_movie_name(request=request, request_options=request_options)
+        _response = self._raw_client.getmoviename(request=request, request_options=request_options)
         return _response.data
 
-    def get_movie_metadata(
+    def getmoviemetadata(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> Response:
+        """
+        Parameters
+        ----------
+        request : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Response
+
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.getmoviemetadata(
+            request="string",
+        )
+        """
+        _response = self._raw_client.getmoviemetadata(request=request, request_options=request_options)
+        return _response.data
+
+    def getoptionalmovie(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> Response:
+        """
+        Parameters
+        ----------
+        request : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Response
+
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.getoptionalmovie(
+            request="string",
+        )
+        """
+        _response = self._raw_client.getoptionalmovie(request=request, request_options=request_options)
+        return _response.data
+
+    def getoptionalmoviedocs(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[str, str]:
+    ) -> OptionalWithDocs:
         """
         Parameters
         ----------
@@ -120,25 +182,26 @@ class ServiceClient:
 
         Returns
         -------
-        typing.Dict[str, str]
+        OptionalWithDocs
+
 
         Examples
         --------
-        from seed import SeedResponseProperty
+        from seed import SeedApi
 
-        client = SeedResponseProperty(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.get_movie_metadata(
+        client.service.getoptionalmoviedocs(
             request="string",
         )
         """
-        _response = self._raw_client.get_movie_metadata(request=request, request_options=request_options)
+        _response = self._raw_client.getoptionalmoviedocs(request=request, request_options=request_options)
         return _response.data
 
-    def get_optional_movie(
+    def getoptionalmoviename(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[Movie]:
+    ) -> OptionalStringResponse:
         """
         Parameters
         ----------
@@ -149,74 +212,21 @@ class ServiceClient:
 
         Returns
         -------
-        typing.Optional[Movie]
+        OptionalStringResponse
+
 
         Examples
         --------
-        from seed import SeedResponseProperty
+        from seed import SeedApi
 
-        client = SeedResponseProperty(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.get_optional_movie(
+        client.service.getoptionalmoviename(
             request="string",
         )
         """
-        _response = self._raw_client.get_optional_movie(request=request, request_options=request_options)
-        return _response.data
-
-    def get_optional_movie_docs(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
-        """
-        Parameters
-        ----------
-        request : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        str
-
-        Examples
-        --------
-        from seed import SeedResponseProperty
-
-        client = SeedResponseProperty(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.get_optional_movie_docs(
-            request="string",
-        )
-        """
-        _response = self._raw_client.get_optional_movie_docs(request=request, request_options=request_options)
-        return _response.data
-
-    def get_optional_movie_name(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
-        """
-        Parameters
-        ----------
-        request : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        str
-
-        Examples
-        --------
-        from seed import SeedResponseProperty
-
-        client = SeedResponseProperty(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.get_optional_movie_name(
-            request="string",
-        )
-        """
-        _response = self._raw_client.get_optional_movie_name(request=request, request_options=request_options)
+        _response = self._raw_client.getoptionalmoviename(request=request, request_options=request_options)
         return _response.data
 
 
@@ -235,7 +245,7 @@ class AsyncServiceClient:
         """
         return self._raw_client
 
-    async def get_movie(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> Movie:
+    async def getmovie(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> Response:
         """
         Parameters
         ----------
@@ -246,31 +256,32 @@ class AsyncServiceClient:
 
         Returns
         -------
-        Movie
+        Response
+
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedResponseProperty
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedResponseProperty(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.get_movie(
+            await client.service.getmovie(
                 request="string",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_movie(request=request, request_options=request_options)
+        _response = await self._raw_client.getmovie(request=request, request_options=request_options)
         return _response.data
 
-    async def get_movie_docs(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
+    async def getmoviedocs(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> Response:
         """
         Parameters
         ----------
@@ -281,68 +292,34 @@ class AsyncServiceClient:
 
         Returns
         -------
-        str
+        Response
+
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedResponseProperty
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedResponseProperty(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.get_movie_docs(
+            await client.service.getmoviedocs(
                 request="string",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_movie_docs(request=request, request_options=request_options)
+        _response = await self._raw_client.getmoviedocs(request=request, request_options=request_options)
         return _response.data
 
-    async def get_movie_name(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
-        """
-        Parameters
-        ----------
-        request : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        str
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedResponseProperty
-
-        client = AsyncSeedResponseProperty(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.get_movie_name(
-                request="string",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get_movie_name(request=request, request_options=request_options)
-        return _response.data
-
-    async def get_movie_metadata(
+    async def getmoviename(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[str, str]:
+    ) -> StringResponse:
         """
         Parameters
         ----------
@@ -353,33 +330,34 @@ class AsyncServiceClient:
 
         Returns
         -------
-        typing.Dict[str, str]
+        StringResponse
+
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedResponseProperty
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedResponseProperty(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.get_movie_metadata(
+            await client.service.getmoviename(
                 request="string",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_movie_metadata(request=request, request_options=request_options)
+        _response = await self._raw_client.getmoviename(request=request, request_options=request_options)
         return _response.data
 
-    async def get_optional_movie(
+    async def getmoviemetadata(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[Movie]:
+    ) -> Response:
         """
         Parameters
         ----------
@@ -390,33 +368,34 @@ class AsyncServiceClient:
 
         Returns
         -------
-        typing.Optional[Movie]
+        Response
+
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedResponseProperty
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedResponseProperty(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.get_optional_movie(
+            await client.service.getmoviemetadata(
                 request="string",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_optional_movie(request=request, request_options=request_options)
+        _response = await self._raw_client.getmoviemetadata(request=request, request_options=request_options)
         return _response.data
 
-    async def get_optional_movie_docs(
+    async def getoptionalmovie(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    ) -> Response:
         """
         Parameters
         ----------
@@ -427,33 +406,34 @@ class AsyncServiceClient:
 
         Returns
         -------
-        str
+        Response
+
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedResponseProperty
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedResponseProperty(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.get_optional_movie_docs(
+            await client.service.getoptionalmovie(
                 request="string",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_optional_movie_docs(request=request, request_options=request_options)
+        _response = await self._raw_client.getoptionalmovie(request=request, request_options=request_options)
         return _response.data
 
-    async def get_optional_movie_name(
+    async def getoptionalmoviedocs(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    ) -> OptionalWithDocs:
         """
         Parameters
         ----------
@@ -464,26 +444,65 @@ class AsyncServiceClient:
 
         Returns
         -------
-        str
+        OptionalWithDocs
+
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedResponseProperty
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedResponseProperty(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.get_optional_movie_name(
+            await client.service.getoptionalmoviedocs(
                 request="string",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_optional_movie_name(request=request, request_options=request_options)
+        _response = await self._raw_client.getoptionalmoviedocs(request=request, request_options=request_options)
+        return _response.data
+
+    async def getoptionalmoviename(
+        self, *, request: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> OptionalStringResponse:
+        """
+        Parameters
+        ----------
+        request : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        OptionalStringResponse
+
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.getoptionalmoviename(
+                request="string",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.getoptionalmoviename(request=request, request_options=request_options)
         return _response.data

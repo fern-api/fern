@@ -7,13 +7,13 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.uploadJsonDocument(request: .init(
-        author: "author",
-        tags: [
+    _ = try await client..uploadJsonDocument(request: .init(
+        author: .value("author"),
+        tags: .value([
             "tags",
             "tags"
-        ],
-        title: "title"
+        ]),
+        title: .value("title")
     ))
 }
 

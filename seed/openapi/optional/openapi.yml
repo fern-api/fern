@@ -1,11 +1,11 @@
 openapi: 3.0.1
 info:
-  title: objects-with-imports
+  title: optional
   version: ''
 paths:
   /send-optional-body:
     post:
-      operationId: optional_sendOptionalBody
+      operationId: optional_sendoptionalbody
       tags:
         - Optional
       parameters: []
@@ -16,17 +16,24 @@ paths:
             application/json:
               schema:
                 type: string
+              examples:
+                Example1:
+                  value: string
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
               type: object
               additionalProperties: true
               nullable: true
+            examples:
+              Example1:
+                value:
+                  key: value
   /send-optional-typed-body:
     post:
-      operationId: optional_sendOptionalTypedBody
+      operationId: optional_sendoptionaltypedbody
       tags:
         - Optional
       parameters: []
@@ -37,13 +44,25 @@ paths:
             application/json:
               schema:
                 type: string
+              examples:
+                Example1:
+                  value: string
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SendOptionalBodyRequest'
-              nullable: true
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: message
+              required:
+                - message
+            examples:
+              Example1:
+                value:
+                  message: message
   /deploy/{actionId}/versions/{id}:
     post:
       description: >-
@@ -51,7 +70,7 @@ paths:
 
         This should not generate wire tests expecting {} when Optional.empty()
         is passed.
-      operationId: optional_sendOptionalNullableWithAllOptionalProperties
+      operationId: optional_sendoptionalnullablewithalloptionalproperties
       tags:
         - Optional
       parameters:
@@ -60,11 +79,19 @@ paths:
           required: true
           schema:
             type: string
+          example: actionId
+          examples:
+            Example1:
+              value: actionId
         - name: id
           in: path
           required: true
           schema:
             type: string
+          example: id
+          examples:
+            Example1:
+              value: id
       responses:
         '200':
           description: ''
@@ -72,36 +99,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeployResponse'
+              examples:
+                Example1:
+                  value:
+                    success: true
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DeployParams'
-              nullable: true
+              type: object
+              properties:
+                updateDraft:
+                  type: boolean
+                  nullable: true
+            examples:
+              Example1:
+                value: {}
 components:
   schemas:
-    SendOptionalBodyRequest:
-      title: SendOptionalBodyRequest
-      type: object
-      properties:
-        message:
-          type: string
-      required:
-        - message
-    DeployParams:
-      title: DeployParams
-      type: object
-      properties:
-        updateDraft:
-          type: boolean
-          nullable: true
     DeployResponse:
       title: DeployResponse
       type: object
       properties:
         success:
           type: boolean
+          example: true
       required:
         - success
   securitySchemes: {}

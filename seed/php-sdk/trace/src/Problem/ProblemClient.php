@@ -4,8 +4,8 @@ namespace Seed\Problem;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Problem\Types\CreateProblemRequest;
-use Seed\Problem\Types\CreateProblemResponse;
+use Seed\Types\CreateProblemRequest;
+use Seed\Types\CreateProblemResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -13,9 +13,10 @@ use Seed\Environments;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Problem\Types\UpdateProblemResponse;
-use Seed\Problem\Requests\GetDefaultStarterFilesRequest;
-use Seed\Problem\Types\GetDefaultStarterFilesResponse;
+use Seed\Problem\Requests\ProblemUpdateProblemRequest;
+use Seed\Types\UpdateProblemResponse;
+use Seed\Problem\Requests\ProblemGetDefaultStarterFilesRequest;
+use Seed\Types\GetDefaultStarterFilesResponse;
 
 class ProblemClient
 {
@@ -69,14 +70,14 @@ class ProblemClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createProblem(CreateProblemRequest $request, ?array $options = null): ?CreateProblemResponse
+    public function createproblem(CreateProblemRequest $request, ?array $options = null): ?CreateProblemResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/problem-crud/create",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "problem-crud/create",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -106,7 +107,7 @@ class ProblemClient
      * Updates a problem
      *
      * @param string $problemId
-     * @param CreateProblemRequest $request
+     * @param ProblemUpdateProblemRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -119,16 +120,16 @@ class ProblemClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updateProblem(string $problemId, CreateProblemRequest $request, ?array $options = null): ?UpdateProblemResponse
+    public function updateproblem(string $problemId, ProblemUpdateProblemRequest $request, ?array $options = null): ?UpdateProblemResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/problem-crud/update/{$problemId}",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "problem-crud/update/{$problemId}",
                     method: HttpMethod::POST,
-                    body: $request,
+                    body: $request->body,
                 ),
                 $options,
             );
@@ -167,14 +168,14 @@ class ProblemClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function deleteProblem(string $problemId, ?array $options = null): void
+    public function deleteproblem(string $problemId, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/problem-crud/delete/{$problemId}",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "problem-crud/delete/{$problemId}",
                     method: HttpMethod::DELETE,
                 ),
                 $options,
@@ -196,7 +197,7 @@ class ProblemClient
     /**
      * Returns default starter files for problem
      *
-     * @param GetDefaultStarterFilesRequest $request
+     * @param ProblemGetDefaultStarterFilesRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -209,14 +210,14 @@ class ProblemClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getDefaultStarterFiles(GetDefaultStarterFilesRequest $request, ?array $options = null): ?GetDefaultStarterFilesResponse
+    public function getdefaultstarterfiles(ProblemGetDefaultStarterFilesRequest $request, ?array $options = null): ?GetDefaultStarterFilesResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/problem-crud/default-starter-files",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "problem-crud/default-starter-files",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

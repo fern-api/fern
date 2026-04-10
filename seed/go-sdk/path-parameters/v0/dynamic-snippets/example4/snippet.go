@@ -14,16 +14,11 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.User{
-        Name: "name",
-        Tags: []string{
-            "tags",
-            "tags",
-        },
-    }
-    client.User.CreateUser(
+    request := &fern.OrganizationsSearchOrganizationsRequest{}
+    client.Organizations.Searchorganizations(
         context.TODO(),
         "tenant_id",
+        "organization_id",
         request,
     )
 }

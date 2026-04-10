@@ -14,10 +14,10 @@
 
 ```php
 $client->headers->send(
-    new SendLiteralsInHeadersRequest([
-        'endpointVersion' => '02-12-2024',
+    new HeadersSendRequest([
+        'endpointVersion' => HeadersSendRequestXEndpointVersion::Two122024->value,
         'async' => true,
-        'query' => 'What is the weather today',
+        'query' => 'query',
     ]),
 );
 ```
@@ -77,19 +77,16 @@ $client->headers->send(
 
 ```php
 $client->inlined->send(
-    new SendLiteralsInlinedRequest([
-        'temperature' => 10.1,
-        'prompt' => 'You are a helpful assistant',
-        'context' => "You're super wise",
-        'aliasedContext' => "You're super wise",
-        'maybeContext' => "You're super wise",
+    new InlinedSendRequest([
+        'prompt' => InlinedSendRequestPrompt::YouAreAHelpfulAssistant->value,
+        'query' => 'query',
+        'stream' => true,
+        'aliasedContext' => SomeAliasedLiteral::YoureSuperWise->value,
         'objectWithLiteral' => new ATopLevelLiteral([
             'nestedLiteral' => new ANestedLiteral([
-                'myLiteral' => 'How super cool',
+                'myLiteral' => ANestedLiteralMyLiteral::HowSuperCool->value,
             ]),
         ]),
-        'stream' => false,
-        'query' => 'What is the weather today',
     ]),
 );
 ```
@@ -189,7 +186,7 @@ $client->inlined->send(
 
 ```php
 $client->path->send(
-    '123',
+    PathSendRequestId::OneHundredTwentyThree->value,
 );
 ```
 </dd>
@@ -232,16 +229,12 @@ $client->path->send(
 
 ```php
 $client->query->send(
-    new SendLiteralsInQueryRequest([
-        'prompt' => 'You are a helpful assistant',
-        'optionalPrompt' => 'You are a helpful assistant',
-        'aliasPrompt' => 'You are a helpful assistant',
-        'aliasOptionalPrompt' => 'You are a helpful assistant',
-        'stream' => false,
-        'optionalStream' => false,
-        'aliasStream' => false,
-        'aliasOptionalStream' => false,
-        'query' => 'What is the weather today',
+    new QuerySendRequest([
+        'prompt' => QuerySendRequestPrompt::YouAreAHelpfulAssistant->value,
+        'aliasPrompt' => AliasToPrompt::YouAreAHelpfulAssistant->value,
+        'query' => 'query',
+        'stream' => true,
+        'aliasStream' => true,
     ]),
 );
 ```
@@ -350,20 +343,20 @@ $client->query->send(
 ```php
 $client->reference->send(
     new SendRequest([
-        'prompt' => 'You are a helpful assistant',
-        'stream' => false,
-        'context' => "You're super wise",
-        'query' => 'What is the weather today',
+        'prompt' => SendRequestPrompt::YouAreAHelpfulAssistant->value,
+        'query' => 'query',
+        'stream' => true,
+        'ending' => SendRequestEnding::Ending->value,
+        'context' => SomeLiteral::YoureSuperWise->value,
         'containerObject' => new ContainerObject([
             'nestedObjects' => [
                 new NestedObjectWithLiterals([
-                    'literal1' => 'literal1',
-                    'literal2' => 'literal2',
+                    'literal1' => NestedObjectWithLiteralsLiteral1::Literal1->value,
+                    'literal2' => NestedObjectWithLiteralsLiteral2::Literal2->value,
                     'strProp' => 'strProp',
                 ]),
             ],
         ]),
-        'ending' => '$ending',
     ]),
 );
 ```
@@ -380,7 +373,55 @@ $client->reference->send(
 <dl>
 <dd>
 
-**$request:** `SendRequest` 
+**$prompt:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$query:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$stream:** `bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$ending:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$context:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$maybeContext:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$containerObject:** `ContainerObject` 
     
 </dd>
 </dl>

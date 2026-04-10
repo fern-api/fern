@@ -1,1 +1,1 @@
-package serversentevents
+package api

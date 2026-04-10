@@ -4,13 +4,78 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/just-file",
+                "path": "/",
                 "method": "POST",
-                "identifier_override": "endpoint_service.justFile"
+                "identifier_override": "endpoint_service.post"
             },
             "snippet": {
-                "sync_client": "from seed import SeedFileUpload\n\nclient = SeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.just_file()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedFileUpload\n\nclient = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.just_file()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.post()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.post()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/just-file",
+                "method": "POST",
+                "identifier_override": "endpoint_service.justfile"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.justfile()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.justfile()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/just-file-with-optional-query-params",
+                "method": "POST",
+                "identifier_override": "endpoint_service.justfilewithoptionalqueryparams"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.justfilewithoptionalqueryparams()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.justfilewithoptionalqueryparams()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/with-content-type",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withcontenttype"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.withcontenttype()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.withcontenttype()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/with-form-encoding",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withformencoding"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.withformencoding()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.withformencoding()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/form-encoded",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withformencodedcontainers"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.withformencodedcontainers()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.withformencodedcontainers()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -19,11 +84,37 @@
             "id": {
                 "path": "/optional-args",
                 "method": "POST",
-                "identifier_override": "endpoint_service.optionalArgs"
+                "identifier_override": "endpoint_service.optionalargs"
             },
             "snippet": {
-                "sync_client": "from seed import SeedFileUpload\n\nclient = SeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.optional_args()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedFileUpload\n\nclient = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.optional_args()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.optionalargs()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.optionalargs()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/inline-type",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withinlinetype"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.withinlinetype()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.withinlinetype()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/with-json-property",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withjsonproperty"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.withjsonproperty()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.withjsonproperty()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -35,8 +126,21 @@
                 "identifier_override": "endpoint_service.simple"
             },
             "snippet": {
-                "sync_client": "from seed import SeedFileUpload\n\nclient = SeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.simple()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedFileUpload\n\nclient = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.simple()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.simple()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.simple()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/with-literal-enum",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withliteralandenumtypes"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.withliteralandenumtypes()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.withliteralandenumtypes()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

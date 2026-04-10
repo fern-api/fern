@@ -19,7 +19,7 @@ pub struct ClientConfig {
 impl Default for ClientConfig {
     fn default() -> Self {
         Self {
-            base_url: String::new(),
+            base_url: Environment::default().url().to_string(),
             api_key: None,
             token: None,
             username: None,
@@ -36,7 +36,7 @@ impl Default for ClientConfig {
                 ),
                 ("X-Fern-SDK-Version".to_string(), "1.2.0".to_string()),
             ]),
-            user_agent: "SimpleApi Rust SDK".to_string(),
+            user_agent: "Api Rust SDK".to_string(),
         }
     }
 }

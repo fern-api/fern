@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">CreateUsernameAsync</a>(CreateUsernameRequest { ... })</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">CreateusernameAsync</a>(UserCreateUsernameRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,13 @@
 <dd>
 
 ```csharp
-await client.User.CreateUsernameAsync(
-    new CreateUsernameRequest
+await client.User.CreateusernameAsync(
+    new UserCreateUsernameRequest
     {
-        Tags = new List<string>() { "tags", "tags" },
+        Tags = ["tags"],
         Username = "username",
         Password = "password",
-        Name = "test",
+        Name = "name",
     }
 );
 ```
@@ -36,7 +36,7 @@ await client.User.CreateUsernameAsync(
 <dl>
 <dd>
 
-**request:** `CreateUsernameRequest` 
+**request:** `UserCreateUsernameRequest` 
     
 </dd>
 </dl>
@@ -48,7 +48,7 @@ await client.User.CreateUsernameAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">CreateUsernameWithReferencedTypeAsync</a>(CreateUsernameReferencedRequest { ... })</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">CreateusernamewithreferencedtypeAsync</a>(CreateUsernameBody { ... })</code></summary>
 <dl>
 <dd>
 
@@ -61,16 +61,13 @@ await client.User.CreateUsernameAsync(
 <dd>
 
 ```csharp
-await client.User.CreateUsernameWithReferencedTypeAsync(
-    new CreateUsernameReferencedRequest
+await client.User.CreateusernamewithreferencedtypeAsync(
+    new CreateUsernameBody
     {
-        Tags = new List<string>() { "tags", "tags" },
-        Body = new CreateUsernameBody
-        {
-            Username = "username",
-            Password = "password",
-            Name = "test",
-        },
+        Tags = ["tags"],
+        Username = "username",
+        Password = "password",
+        Name = "name",
     }
 );
 ```
@@ -87,7 +84,7 @@ await client.User.CreateUsernameWithReferencedTypeAsync(
 <dl>
 <dd>
 
-**request:** `CreateUsernameReferencedRequest` 
+**request:** `CreateUsernameBody` 
     
 </dd>
 </dl>
@@ -99,7 +96,7 @@ await client.User.CreateUsernameWithReferencedTypeAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">CreateUsernameOptionalAsync</a>(CreateUsernameBodyOptionalProperties? { ... })</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">CreateusernameoptionalAsync</a>(CreateUsernameBodyOptionalProperties { ... })</code></summary>
 <dl>
 <dd>
 
@@ -112,7 +109,7 @@ await client.User.CreateUsernameWithReferencedTypeAsync(
 <dd>
 
 ```csharp
-await client.User.CreateUsernameOptionalAsync(new CreateUsernameBodyOptionalProperties());
+await client.User.CreateusernameoptionalAsync(new CreateUsernameBodyOptionalProperties());
 ```
 </dd>
 </dl>
@@ -127,7 +124,7 @@ await client.User.CreateUsernameOptionalAsync(new CreateUsernameBodyOptionalProp
 <dl>
 <dd>
 
-**request:** `CreateUsernameBodyOptionalProperties?` 
+**request:** `CreateUsernameBodyOptionalProperties` 
     
 </dd>
 </dl>
@@ -139,7 +136,7 @@ await client.User.CreateUsernameOptionalAsync(new CreateUsernameBodyOptionalProp
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">GetUsernameAsync</a>(GetUsersRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetusernameAsync</a>(UserGetUsernameRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -152,32 +149,27 @@ await client.User.CreateUsernameOptionalAsync(new CreateUsernameBodyOptionalProp
 <dd>
 
 ```csharp
-await client.User.GetUsernameAsync(
-    new GetUsersRequest
+await client.User.GetusernameAsync(
+    new UserGetUsernameRequest
     {
         Limit = 1,
-        Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        Id = "id",
         Date = new DateOnly(2023, 1, 15),
         Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-        Bytes = "SGVsbG8gd29ybGQh",
+        Bytes = "bytes",
         User = new User
         {
             Name = "name",
             Tags = new List<string>() { "tags", "tags" },
         },
-        UserList = new List<User>()
-        {
+        UserList =
+        [
             new User
             {
                 Name = "name",
                 Tags = new List<string>() { "tags", "tags" },
             },
-            new User
-            {
-                Name = "name",
-                Tags = new List<string>() { "tags", "tags" },
-            },
-        },
+        ],
         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
         KeyValue = new Dictionary<string, string>() { { "keyValue", "keyValue" } },
         OptionalString = "optionalString",
@@ -205,7 +197,7 @@ await client.User.GetUsernameAsync(
         ],
         Filter = ["filter"],
         LongParam = 1000000,
-        BigIntParam = "1000000",
+        BigIntParam = 1,
     }
 );
 ```
@@ -222,7 +214,7 @@ await client.User.GetUsernameAsync(
 <dl>
 <dd>
 
-**request:** `GetUsersRequest` 
+**request:** `UserGetUsernameRequest` 
     
 </dd>
 </dl>

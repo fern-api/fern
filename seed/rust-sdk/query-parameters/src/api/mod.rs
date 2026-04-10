@@ -1,4 +1,4 @@
-//! API client and types for the QueryParameters
+//! API client and types for the query-parameters
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,5 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{QueryParametersClient, UserClient};
+pub use resources::{ApiClient, UserClient};
 pub use types::*;

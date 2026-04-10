@@ -34,14 +34,17 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedFileUpload
+from seed import SeedApi
 
-client = SeedFileUpload(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.just_file(
+client.service.post(
     file="example_file",
+    file_list="example_file_list",
+    maybe_file="example_maybe_file",
+    maybe_file_list="example_maybe_file_list",
 )
 ```
 
@@ -52,16 +55,19 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedFileUpload
+from seed import AsyncSeedApi
 
-client = AsyncSeedFileUpload(
+client = AsyncSeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    await client.service.just_file(
+    await client.service.post(
         file="example_file",
+        file_list="example_file_list",
+        maybe_file="example_maybe_file",
+        maybe_file_list="example_maybe_file_list",
     )
 
 
@@ -77,7 +83,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.service.just_file(...)
+    client.service.post(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -91,10 +97,10 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedFileUpload
+from seed import SeedApi
 
-client = SeedFileUpload(...)
-response = client.service.with_raw_response.just_file(...)
+client = SeedApi(...)
+response = client.service.with_raw_response.post(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -115,7 +121,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.service.just_file(..., request_options={
+client.service.post(..., request_options={
     "max_retries": 1
 })
 ```
@@ -125,12 +131,12 @@ client.service.just_file(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedFileUpload
+from seed import SeedApi
 
-client = SeedFileUpload(..., timeout=20.0)
+client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.service.just_file(..., request_options={
+client.service.post(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -142,9 +148,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedFileUpload
+from seed import SeedApi
 
-client = SeedFileUpload(
+client = SeedApi(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

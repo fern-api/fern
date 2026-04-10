@@ -1,14 +1,21 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.api.SeedApiClient;
+import com.seed.api.types.TypesObjectWithMixedRequiredAndOptionalFields;
 
 public class Example48 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints().primitive().getAndReturnDouble(1.1);
+        client.endpointsObject()
+                .endpointsObjectGetAndReturnWithMixedRequiredAndOptionalFields(
+                        TypesObjectWithMixedRequiredAndOptionalFields.builder()
+                                .requiredString("requiredString")
+                                .requiredInteger(1)
+                                .requiredLong(1000000L)
+                                .build());
     }
 }

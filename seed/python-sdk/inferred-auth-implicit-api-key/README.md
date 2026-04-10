@@ -34,15 +34,14 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedInferredAuthImplicitApiKey
+from seed import SeedApi
 
-client = SeedInferredAuthImplicitApiKey(
-    api_key="X-Api-Key",
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.auth.get_token(
-    api_key="api_key",
+client.auth.gettoken(
+    api_key="X-Api-Key",
 )
 ```
 
@@ -53,17 +52,16 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedInferredAuthImplicitApiKey
+from seed import AsyncSeedApi
 
-client = AsyncSeedInferredAuthImplicitApiKey(
-    api_key="X-Api-Key",
+client = AsyncSeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    await client.auth.get_token(
-        api_key="api_key",
+    await client.auth.gettoken(
+        api_key="X-Api-Key",
     )
 
 
@@ -79,7 +77,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.auth.get_token()
+    client.auth.gettoken()
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -93,10 +91,10 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedInferredAuthImplicitApiKey
+from seed import SeedApi
 
-client = SeedInferredAuthImplicitApiKey(...)
-response = client.auth.with_raw_response.get_token()
+client = SeedApi(...)
+response = client.auth.with_raw_response.gettoken()
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -117,7 +115,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.auth.get_token(request_options={
+client.auth.gettoken(request_options={
     "max_retries": 1
 })
 ```
@@ -127,12 +125,12 @@ client.auth.get_token(request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedInferredAuthImplicitApiKey
+from seed import SeedApi
 
-client = SeedInferredAuthImplicitApiKey(..., timeout=20.0)
+client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.auth.get_token(request_options={
+client.auth.gettoken(request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -144,9 +142,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedInferredAuthImplicitApiKey
+from seed import SeedApi
 
-client = SeedInferredAuthImplicitApiKey(
+client = SeedApi(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

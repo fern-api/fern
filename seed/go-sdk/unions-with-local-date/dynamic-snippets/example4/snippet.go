@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/unions-with-local-date/fern"
     client "github.com/unions-with-local-date/fern/client"
     option "github.com/unions-with-local-date/fern/option"
 )
@@ -13,8 +14,16 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Types.Get(
+    request := []*fern.BigUnion{
+        &fern.BigUnion{
+            BigUnionZero: &fern.BigUnionZero{
+                Value: "value",
+                Type: fern.BigUnionZeroTypeNormalSweet,
+            },
+        },
+    }
+    client.Bigunion.UpdateMany(
         context.TODO(),
-        "datetime-example",
+        request,
     )
 }

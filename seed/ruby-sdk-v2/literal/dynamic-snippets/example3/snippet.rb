@@ -7,7 +7,7 @@ client.inlined.send_(
   context: "You're super wise",
   query: "query",
   temperature: 1.1,
-  stream: false,
+  stream: true,
   aliased_context: "You're super wise",
   maybe_context: "You're super wise",
   object_with_literal: {

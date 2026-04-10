@@ -14,19 +14,10 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.SearchRequest{
-        Query: "query",
-        Filters: map[string]*string{
-            "filters": fern.String(
-                "filters",
-            ),
-        },
-        IncludeTypes: []string{
-            "includeTypes",
-            "includeTypes",
-        },
+    request := &fern.NullableOptionalGetComplexProfileRequest{
+        ProfileID: "profileId",
     }
-    client.NullableOptional.GetSearchResults(
+    client.Nullableoptional.Getcomplexprofile(
         context.TODO(),
         request,
     )

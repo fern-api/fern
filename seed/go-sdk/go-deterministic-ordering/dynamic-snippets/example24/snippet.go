@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/go-deterministic-ordering/fern"
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
 )
@@ -16,8 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.HTTPMethods.TestDelete(
+    request := &fern.EndpointsDuplicateNamesAGetRequest{
+        ID: "id",
+    }
+    client.EndpointsDuplicateNamesA.EndpointsDuplicateNamesAGet(
         context.TODO(),
-        "id",
+        request,
     )
 }

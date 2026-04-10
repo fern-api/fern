@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
-/// Query parameters for listWithGlobalConfig
+/// Query parameters for inlineUsers_inlineUsers_listWithGlobalConfig
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct InlineUsersInlineUsersListWithGlobalConfigQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -26,11 +26,10 @@ impl InlineUsersInlineUsersListWithGlobalConfigQueryRequestBuilder {
     }
 
     /// Consumes the builder and constructs a [`InlineUsersInlineUsersListWithGlobalConfigQueryRequest`].
-    pub fn build(
-        self,
-    ) -> Result<InlineUsersInlineUsersListWithGlobalConfigQueryRequest, BuildError> {
+    pub fn build(self) -> Result<InlineUsersInlineUsersListWithGlobalConfigQueryRequest, BuildError> {
         Ok(InlineUsersInlineUsersListWithGlobalConfigQueryRequest {
             offset: self.offset,
         })
     }
 }
+

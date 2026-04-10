@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedLicense/SeedLicenseClient.cs">GetAsync</a>()</code></summary>
+## _
+<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">GetAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.GetAsync();
+await client._.GetAsync();
 ```
 </dd>
 </dl>

@@ -5,7 +5,16 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.playlist.get_playlist(
-  service_param: 1,
-  playlist_id: "playlistId"
+client.admin.storetracedworkspace(
+  submission_id: "submissionId",
+  workspace_run_details: {
+    stdout: "stdout"
+  },
+  trace_responses: [{
+    submission_id: "submissionId",
+    line_number: 1,
+    stack: {
+      num_stack_frames: 1
+    }
+  }]
 )

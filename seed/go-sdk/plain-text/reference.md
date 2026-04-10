@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.GetText() -> string</code></summary>
+<details><summary><code>client.Service.Gettext() -> string</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Service.GetText(
+client.Service.Gettext(
         context.TODO(),
     )
 }

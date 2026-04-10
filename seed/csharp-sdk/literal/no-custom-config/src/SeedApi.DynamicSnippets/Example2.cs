@@ -1,30 +1,27 @@
-using SeedLiteral;
+using SeedApi;
 
 namespace Usage;
 
 public class Example2
 {
     public async Task Do() {
-        var client = new SeedLiteralClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Inlined.SendAsync(
-            new SendLiteralsInlinedRequest {
-                Temperature = 10.1,
-                Prompt = "You are a helpful assistant",
-                Context = "You're super wise",
-                AliasedContext = "You're super wise",
-                MaybeContext = "You're super wise",
+            new InlinedSendRequest {
+                Prompt = InlinedSendRequestPrompt.YouAreAHelpfulAssistant,
+                Query = "query",
+                Stream = true,
+                AliasedContext = SomeAliasedLiteral.YoureSuperWise,
                 ObjectWithLiteral = new ATopLevelLiteral {
                     NestedLiteral = new ANestedLiteral {
-                        MyLiteral = "How super cool"
+                        MyLiteral = ANestedLiteralMyLiteral.HowSuperCool
                     }
-                },
-                Stream = false,
-                Query = "What is the weather today"
+                }
             }
         );
     }

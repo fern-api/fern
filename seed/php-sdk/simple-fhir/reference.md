@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>$client-&gt;getAccount($accountId) -> ?Account</code></summary>
+## 
+<details><summary><code>$client-&gt;-&gt;getAccount($accountId) -> ?Account</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +13,7 @@
 <dd>
 
 ```php
-$client->getAccount(
+$client->_->getAccount(
     'account_id',
 );
 ```

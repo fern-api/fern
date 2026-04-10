@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedPagination from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace UsersClient {
     export type Options = BaseClientOptions;
@@ -22,1149 +22,28 @@ export class UsersClient {
     }
 
     /**
-     * @param {SeedPagination.ListUsersCursorPaginationRequest} request
+     * @param {SeedApi.UsersListWithCursorPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.users.listWithCursorPagination({
-     *         page: 1,
-     *         per_page: 1,
-     *         order: "asc",
-     *         starting_after: "starting_after"
-     *     })
+     *     await client.users.listwithcursorpagination()
      */
-    public async listWithCursorPagination(
-        request: SeedPagination.ListUsersCursorPaginationRequest = {},
+    public listwithcursorpagination(
+        request: SeedApi.UsersListWithCursorPaginationRequest = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListUsersCursorPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
-                const { page, per_page: perPage, order, starting_after: startingAfter } = request;
-                const _queryParams: Record<string, unknown> = {
-                    page,
-                    per_page: perPage,
-                    order: order != null ? order : undefined,
-                    starting_after: startingAfter,
-                };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/cursor",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/cursor");
-            },
-        );
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.page?.next?.starting_after != null &&
-                !(
-                    typeof response?.page?.next?.starting_after === "string" &&
-                    response?.page?.next?.starting_after === ""
-                ),
-            getItems: (response) => response?.data ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "starting_after", response?.page?.next?.starting_after));
-            },
-        });
+    ): core.HttpResponsePromise<SeedApi.ListUsersPaginationResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listwithcursorpagination(request, requestOptions));
     }
 
-    /**
-     * @param {SeedPagination.ListUsersMixedTypeCursorPaginationRequest} request
-     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithMixedTypeCursorPagination({
-     *         cursor: "cursor"
-     *     })
-     */
-    public async listWithMixedTypeCursorPagination(
-        request: SeedPagination.ListUsersMixedTypeCursorPaginationRequest = {},
+    private async __listwithcursorpagination(
+        request: SeedApi.UsersListWithCursorPaginationRequest = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersMixedTypePaginationResponse>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListUsersMixedTypeCursorPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersMixedTypePaginationResponse>> => {
-                const { cursor } = request;
-                const _queryParams: Record<string, unknown> = {
-                    cursor,
-                };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/mixed-type-cursor",
-                    ),
-                    method: "POST",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersMixedTypePaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                return handleNonStatusCodeError(
-                    _response.error,
-                    _response.rawResponse,
-                    "POST",
-                    "/users/mixed-type-cursor",
-                );
-            },
-        );
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersMixedTypePaginationResponse>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
-            getItems: (response) => response?.data ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "cursor", response?.next));
-            },
-        });
-    }
-
-    /**
-     * @param {SeedPagination.ListUsersBodyCursorPaginationRequest} request
-     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithBodyCursorPagination({
-     *         pagination: {
-     *             cursor: "cursor"
-     *         }
-     *     })
-     */
-    public async listWithBodyCursorPagination(
-        request: SeedPagination.ListUsersBodyCursorPaginationRequest = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListUsersBodyCursorPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/body-cursor",
-                    ),
-                    method: "POST",
-                    headers: _headers,
-                    contentType: "application/json",
-                    queryParameters: requestOptions?.queryParams,
-                    requestType: "json",
-                    body: request,
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/users/body-cursor");
-            },
-        );
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.page?.next?.starting_after != null &&
-                !(
-                    typeof response?.page?.next?.starting_after === "string" &&
-                    response?.page?.next?.starting_after === ""
-                ),
-            getItems: (response) => response?.data ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "pagination.cursor", response?.page?.next?.starting_after));
-            },
-        });
-    }
-
-    /**
-     * Pagination endpoint with a top-level cursor field in the request body.
-     * This tests that the mock server correctly ignores cursor mismatches
-     * when getNextPage() is called with a different cursor value.
-     *
-     * @param {SeedPagination.ListUsersTopLevelBodyCursorPaginationRequest} request
-     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithTopLevelBodyCursorPagination({
-     *         cursor: "initial_cursor",
-     *         filter: "active"
-     *     })
-     */
-    public async listWithTopLevelBodyCursorPagination(
-        request: SeedPagination.ListUsersTopLevelBodyCursorPaginationRequest = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersTopLevelCursorPaginationResponse>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListUsersTopLevelBodyCursorPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersTopLevelCursorPaginationResponse>> => {
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/top-level-cursor",
-                    ),
-                    method: "POST",
-                    headers: _headers,
-                    contentType: "application/json",
-                    queryParameters: requestOptions?.queryParams,
-                    requestType: "json",
-                    body: request,
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersTopLevelCursorPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                return handleNonStatusCodeError(
-                    _response.error,
-                    _response.rawResponse,
-                    "POST",
-                    "/users/top-level-cursor",
-                );
-            },
-        );
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersTopLevelCursorPaginationResponse>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.next_cursor != null &&
-                !(typeof response?.next_cursor === "string" && response?.next_cursor === ""),
-            getItems: (response) => response?.data ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "cursor", response?.next_cursor));
-            },
-        });
-    }
-
-    /**
-     * @param {SeedPagination.ListUsersOffsetPaginationRequest} request
-     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithOffsetPagination({
-     *         page: 1,
-     *         per_page: 1,
-     *         order: "asc",
-     *         starting_after: "starting_after"
-     *     })
-     */
-    public async listWithOffsetPagination(
-        request: SeedPagination.ListUsersOffsetPaginationRequest = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListUsersOffsetPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
-                const { page, per_page: perPage, order, starting_after: startingAfter } = request;
-                const _queryParams: Record<string, unknown> = {
-                    page,
-                    per_page: perPage,
-                    order: order != null ? order : undefined,
-                    starting_after: startingAfter,
-                };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/offset",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/offset");
-            },
-        );
-        let _offset = request?.page != null ? request?.page : 0;
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => (response?.data ?? []).length > 0,
-            getItems: (response) => response?.data ?? [],
-            loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "page", _offset));
-            },
-        });
-    }
-
-    /**
-     * @param {SeedPagination.ListUsersDoubleOffsetPaginationRequest} request
-     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithDoubleOffsetPagination({
-     *         page: 1.1,
-     *         per_page: 1.1,
-     *         order: "asc",
-     *         starting_after: "starting_after"
-     *     })
-     */
-    public async listWithDoubleOffsetPagination(
-        request: SeedPagination.ListUsersDoubleOffsetPaginationRequest = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListUsersDoubleOffsetPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
-                const { page, per_page: perPage, order, starting_after: startingAfter } = request;
-                const _queryParams: Record<string, unknown> = {
-                    page,
-                    per_page: perPage,
-                    order: order != null ? order : undefined,
-                    starting_after: startingAfter,
-                };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/double-offset",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/double-offset");
-            },
-        );
-        let _offset = request?.page != null ? request?.page : 1;
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => (response?.data ?? []).length > 0,
-            getItems: (response) => response?.data ?? [],
-            loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "page", _offset));
-            },
-        });
-    }
-
-    /**
-     * @param {SeedPagination.ListUsersBodyOffsetPaginationRequest} request
-     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithBodyOffsetPagination({
-     *         pagination: {
-     *             page: 1
-     *         }
-     *     })
-     */
-    public async listWithBodyOffsetPagination(
-        request: SeedPagination.ListUsersBodyOffsetPaginationRequest = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListUsersBodyOffsetPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/body-offset",
-                    ),
-                    method: "POST",
-                    headers: _headers,
-                    contentType: "application/json",
-                    queryParameters: requestOptions?.queryParams,
-                    requestType: "json",
-                    body: request,
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/users/body-offset");
-            },
-        );
-        let _offset = request?.pagination?.page != null ? request?.pagination?.page : 1;
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => (response?.data ?? []).length > 0,
-            getItems: (response) => response?.data ?? [],
-            loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "pagination.page", _offset));
-            },
-        });
-    }
-
-    /**
-     * @param {SeedPagination.ListUsersOffsetStepPaginationRequest} request
-     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithOffsetStepPagination({
-     *         page: 1,
-     *         limit: 1,
-     *         order: "asc"
-     *     })
-     */
-    public async listWithOffsetStepPagination(
-        request: SeedPagination.ListUsersOffsetStepPaginationRequest = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListUsersOffsetStepPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
-                const { page, limit, order } = request;
-                const _queryParams: Record<string, unknown> = {
-                    page,
-                    limit,
-                    order: order != null ? order : undefined,
-                };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/offset-step",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/offset-step");
-            },
-        );
-        let _offset = request?.page != null ? request?.page : 1;
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => (response?.data ?? []).length >= Math.floor(request?.limit ?? 123),
-            getItems: (response) => response?.data ?? [],
-            loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "page", _offset));
-            },
-        });
-    }
-
-    /**
-     * @param {SeedPagination.ListWithOffsetPaginationHasNextPageRequest} request
-     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithOffsetPaginationHasNextPage({
-     *         page: 1,
-     *         limit: 3,
-     *         order: "asc"
-     *     })
-     *
-     * @example
-     *     await client.users.listWithOffsetPaginationHasNextPage({
-     *         page: 1,
-     *         limit: 10,
-     *         order: "asc"
-     *     })
-     */
-    public async listWithOffsetPaginationHasNextPage(
-        request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
-                const { page, limit, order } = request;
-                const _queryParams: Record<string, unknown> = {
-                    page,
-                    limit,
-                    order: order != null ? order : undefined,
-                };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/offset-has-next-page",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                return handleNonStatusCodeError(
-                    _response.error,
-                    _response.rawResponse,
-                    "GET",
-                    "/users/offset-has-next-page",
-                );
-            },
-        );
-        let _offset = request?.page != null ? request?.page : 1;
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.hasNextPage ?? (response?.data ?? []).length >= Math.floor(request?.limit ?? 1),
-            getItems: (response) => response?.data ?? [],
-            loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "page", _offset));
-            },
-        });
-    }
-
-    /**
-     * @param {SeedPagination.ListUsersExtendedRequest} request
-     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithExtendedResults({
-     *         cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
-     *     })
-     */
-    public async listWithExtendedResults(
-        request: SeedPagination.ListUsersExtendedRequest = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersExtendedResponse>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListUsersExtendedRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersExtendedResponse>> => {
-                const { cursor } = request;
-                const _queryParams: Record<string, unknown> = {
-                    cursor,
-                };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/extended",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersExtendedResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/extended");
-            },
-        );
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersExtendedResponse>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
-            getItems: (response) => response?.data.users ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "cursor", response?.next));
-            },
-        });
-    }
-
-    /**
-     * @param {SeedPagination.ListUsersExtendedRequestForOptionalData} request
-     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithExtendedResultsAndOptionalData({
-     *         cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
-     *     })
-     */
-    public async listWithExtendedResultsAndOptionalData(
-        request: SeedPagination.ListUsersExtendedRequestForOptionalData = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersExtendedOptionalListResponse>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListUsersExtendedRequestForOptionalData,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersExtendedOptionalListResponse>> => {
-                const { cursor } = request;
-                const _queryParams: Record<string, unknown> = {
-                    cursor,
-                };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/extended-optional",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersExtendedOptionalListResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                return handleNonStatusCodeError(
-                    _response.error,
-                    _response.rawResponse,
-                    "GET",
-                    "/users/extended-optional",
-                );
-            },
-        );
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersExtendedOptionalListResponse>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
-            getItems: (response) => response?.data.users ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "cursor", response?.next));
-            },
-        });
-    }
-
-    /**
-     * @param {SeedPagination.ListUsernamesRequest} request
-     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listUsernames({
-     *         starting_after: "starting_after"
-     *     })
-     */
-    public async listUsernames(
-        request: SeedPagination.ListUsernamesRequest = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<string, SeedPagination.UsernameCursor>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListUsernamesRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.UsernameCursor>> => {
-                const { starting_after: startingAfter } = request;
-                const _queryParams: Record<string, unknown> = {
-                    starting_after: startingAfter,
-                };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/usernames",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.UsernameCursor,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/usernames");
-            },
-        );
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<string, SeedPagination.UsernameCursor>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.cursor.after != null &&
-                !(typeof response?.cursor.after === "string" && response?.cursor.after === ""),
-            getItems: (response) => response?.cursor.data ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "starting_after", response?.cursor.after));
-            },
-        });
-    }
-
-    /**
-     * @param {SeedPagination.ListUsernamesWithOptionalResponseRequest} request
-     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listUsernamesWithOptionalResponse({
-     *         starting_after: "starting_after"
-     *     })
-     */
-    public async listUsernamesWithOptionalResponse(
-        request: SeedPagination.ListUsernamesWithOptionalResponseRequest = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<string, SeedPagination.UsernameCursor | undefined>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListUsernamesWithOptionalResponseRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.UsernameCursor | undefined>> => {
-                const { starting_after: startingAfter } = request;
-                const _queryParams: Record<string, unknown> = {
-                    starting_after: startingAfter,
-                };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/usernames-optional",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.UsernameCursor | undefined,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                return handleNonStatusCodeError(
-                    _response.error,
-                    _response.rawResponse,
-                    "GET",
-                    "/users/usernames-optional",
-                );
-            },
-        );
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<string, SeedPagination.UsernameCursor | undefined>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.cursor.after != null &&
-                !(typeof response?.cursor.after === "string" && response?.cursor.after === ""),
-            getItems: (response) => response?.cursor.data ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "starting_after", response?.cursor.after));
-            },
-        });
-    }
-
-    /**
-     * @param {SeedPagination.ListWithGlobalConfigRequest} request
-     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithGlobalConfig({
-     *         offset: 1
-     *     })
-     */
-    public async listWithGlobalConfig(
-        request: SeedPagination.ListWithGlobalConfigRequest = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<string, SeedPagination.UsernameContainer>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListWithGlobalConfigRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.UsernameContainer>> => {
-                const { offset } = request;
-                const _queryParams: Record<string, unknown> = {
-                    offset,
-                };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/global-config",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.UsernameContainer,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/global-config");
-            },
-        );
-        let _offset = request?.offset != null ? request?.offset : 1;
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<string, SeedPagination.UsernameContainer>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => (response?.results ?? []).length > 0,
-            getItems: (response) => response?.results ?? [],
-            loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "offset", _offset));
-            },
-        });
-    }
-
-    /**
-     * @param {SeedPagination.ListUsersOptionalDataRequest} request
-     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithOptionalData({
-     *         page: 1
-     *     })
-     */
-    public async listWithOptionalData(
-        request: SeedPagination.ListUsersOptionalDataRequest = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersOptionalDataPaginationResponse>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListUsersOptionalDataRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersOptionalDataPaginationResponse>> => {
-                const { page } = request;
-                const _queryParams: Record<string, unknown> = {
-                    page,
-                };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/optional-data",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersOptionalDataPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/optional-data");
-            },
-        );
-        let _offset = request?.page != null ? request?.page : 0;
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersOptionalDataPaginationResponse>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => (response?.data ?? []).length > 0,
-            getItems: (response) => response?.data ?? [],
-            loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "page", _offset));
-            },
-        });
-    }
-
-    /**
-     * @param {SeedPagination.ListUsersAliasedDataRequest} request
-     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithAliasedData({
-     *         page: 1,
-     *         per_page: 1,
-     *         starting_after: "starting_after"
-     *     })
-     */
-    public listWithAliasedData(
-        request: SeedPagination.ListUsersAliasedDataRequest = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedPagination.ListUsersAliasedDataPaginationResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listWithAliasedData(request, requestOptions));
-    }
-
-    private async __listWithAliasedData(
-        request: SeedPagination.ListUsersAliasedDataRequest = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPagination.ListUsersAliasedDataPaginationResponse>> {
-        const { page, per_page: perPage, starting_after: startingAfter } = request;
+    ): Promise<core.WithRawResponse<SeedApi.ListUsersPaginationResponse>> {
+        const { page, per_page: perPage, order, starting_after: startingAfter } = request;
         const _queryParams: Record<string, unknown> = {
             page,
             per_page: perPage,
+            order: order != null ? order : undefined,
             starting_after: startingAfter,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -1172,7 +51,560 @@ export class UsersClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/users/aliased-data",
+                "users/cursor",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.ListUsersPaginationResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/cursor");
+    }
+
+    /**
+     * @param {SeedApi.UsersListWithMixedTypeCursorPaginationRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listwithmixedtypecursorpagination()
+     */
+    public listwithmixedtypecursorpagination(
+        request: SeedApi.UsersListWithMixedTypeCursorPaginationRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.ListUsersMixedTypePaginationResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listwithmixedtypecursorpagination(request, requestOptions));
+    }
+
+    private async __listwithmixedtypecursorpagination(
+        request: SeedApi.UsersListWithMixedTypeCursorPaginationRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.ListUsersMixedTypePaginationResponse>> {
+        const { cursor } = request;
+        const _queryParams: Record<string, unknown> = {
+            cursor,
+        };
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users/mixed-type-cursor",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedApi.ListUsersMixedTypePaginationResponse,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/users/mixed-type-cursor");
+    }
+
+    /**
+     * @param {SeedApi.UsersListWithBodyCursorPaginationRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listwithbodycursorpagination()
+     */
+    public listwithbodycursorpagination(
+        request: SeedApi.UsersListWithBodyCursorPaginationRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.ListUsersPaginationResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listwithbodycursorpagination(request, requestOptions));
+    }
+
+    private async __listwithbodycursorpagination(
+        request: SeedApi.UsersListWithBodyCursorPaginationRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.ListUsersPaginationResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users/body-cursor",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.ListUsersPaginationResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/users/body-cursor");
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     *
+     * @param {SeedApi.UsersListWithTopLevelBodyCursorPaginationRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listwithtoplevelbodycursorpagination()
+     */
+    public listwithtoplevelbodycursorpagination(
+        request: SeedApi.UsersListWithTopLevelBodyCursorPaginationRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.ListUsersTopLevelCursorPaginationResponse> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__listwithtoplevelbodycursorpagination(request, requestOptions),
+        );
+    }
+
+    private async __listwithtoplevelbodycursorpagination(
+        request: SeedApi.UsersListWithTopLevelBodyCursorPaginationRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.ListUsersTopLevelCursorPaginationResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users/top-level-cursor",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedApi.ListUsersTopLevelCursorPaginationResponse,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/users/top-level-cursor");
+    }
+
+    /**
+     * @param {SeedApi.UsersListWithOffsetPaginationRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listwithoffsetpagination()
+     */
+    public listwithoffsetpagination(
+        request: SeedApi.UsersListWithOffsetPaginationRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.ListUsersPaginationResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listwithoffsetpagination(request, requestOptions));
+    }
+
+    private async __listwithoffsetpagination(
+        request: SeedApi.UsersListWithOffsetPaginationRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.ListUsersPaginationResponse>> {
+        const { page, per_page: perPage, order, starting_after: startingAfter } = request;
+        const _queryParams: Record<string, unknown> = {
+            page,
+            per_page: perPage,
+            order: order != null ? order : undefined,
+            starting_after: startingAfter,
+        };
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users/offset",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.ListUsersPaginationResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/offset");
+    }
+
+    /**
+     * @param {SeedApi.UsersListWithDoubleOffsetPaginationRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listwithdoubleoffsetpagination()
+     */
+    public listwithdoubleoffsetpagination(
+        request: SeedApi.UsersListWithDoubleOffsetPaginationRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.ListUsersPaginationResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listwithdoubleoffsetpagination(request, requestOptions));
+    }
+
+    private async __listwithdoubleoffsetpagination(
+        request: SeedApi.UsersListWithDoubleOffsetPaginationRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.ListUsersPaginationResponse>> {
+        const { page, per_page: perPage, order, starting_after: startingAfter } = request;
+        const _queryParams: Record<string, unknown> = {
+            page,
+            per_page: perPage,
+            order: order != null ? order : undefined,
+            starting_after: startingAfter,
+        };
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users/double-offset",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.ListUsersPaginationResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/double-offset");
+    }
+
+    /**
+     * @param {SeedApi.UsersListWithBodyOffsetPaginationRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listwithbodyoffsetpagination()
+     */
+    public listwithbodyoffsetpagination(
+        request: SeedApi.UsersListWithBodyOffsetPaginationRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.ListUsersPaginationResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listwithbodyoffsetpagination(request, requestOptions));
+    }
+
+    private async __listwithbodyoffsetpagination(
+        request: SeedApi.UsersListWithBodyOffsetPaginationRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.ListUsersPaginationResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users/body-offset",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.ListUsersPaginationResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/users/body-offset");
+    }
+
+    /**
+     * @param {SeedApi.UsersListWithOffsetStepPaginationRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listwithoffsetsteppagination()
+     */
+    public listwithoffsetsteppagination(
+        request: SeedApi.UsersListWithOffsetStepPaginationRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.ListUsersPaginationResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listwithoffsetsteppagination(request, requestOptions));
+    }
+
+    private async __listwithoffsetsteppagination(
+        request: SeedApi.UsersListWithOffsetStepPaginationRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.ListUsersPaginationResponse>> {
+        const { page, limit, order } = request;
+        const _queryParams: Record<string, unknown> = {
+            page,
+            limit,
+            order: order != null ? order : undefined,
+        };
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users/offset-step",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.ListUsersPaginationResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/offset-step");
+    }
+
+    /**
+     * @param {SeedApi.UsersListWithOffsetPaginationHasNextPageRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listwithoffsetpaginationhasnextpage()
+     */
+    public listwithoffsetpaginationhasnextpage(
+        request: SeedApi.UsersListWithOffsetPaginationHasNextPageRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.ListUsersPaginationResponse> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__listwithoffsetpaginationhasnextpage(request, requestOptions),
+        );
+    }
+
+    private async __listwithoffsetpaginationhasnextpage(
+        request: SeedApi.UsersListWithOffsetPaginationHasNextPageRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.ListUsersPaginationResponse>> {
+        const { page, limit, order } = request;
+        const _queryParams: Record<string, unknown> = {
+            page,
+            limit,
+            order: order != null ? order : undefined,
+        };
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users/offset-has-next-page",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.ListUsersPaginationResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/offset-has-next-page");
+    }
+
+    /**
+     * @param {SeedApi.UsersListWithExtendedResultsRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listwithextendedresults()
+     */
+    public listwithextendedresults(
+        request: SeedApi.UsersListWithExtendedResultsRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.ListUsersExtendedResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listwithextendedresults(request, requestOptions));
+    }
+
+    private async __listwithextendedresults(
+        request: SeedApi.UsersListWithExtendedResultsRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.ListUsersExtendedResponse>> {
+        const { cursor } = request;
+        const _queryParams: Record<string, unknown> = {
+            cursor,
+        };
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users/extended",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.ListUsersExtendedResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/extended");
+    }
+
+    /**
+     * @param {SeedApi.UsersListWithExtendedResultsAndOptionalDataRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listwithextendedresultsandoptionaldata()
+     */
+    public listwithextendedresultsandoptionaldata(
+        request: SeedApi.UsersListWithExtendedResultsAndOptionalDataRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.ListUsersExtendedOptionalListResponse> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__listwithextendedresultsandoptionaldata(request, requestOptions),
+        );
+    }
+
+    private async __listwithextendedresultsandoptionaldata(
+        request: SeedApi.UsersListWithExtendedResultsAndOptionalDataRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.ListUsersExtendedOptionalListResponse>> {
+        const { cursor } = request;
+        const _queryParams: Record<string, unknown> = {
+            cursor,
+        };
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users/extended-optional",
             ),
             method: "GET",
             headers: _headers,
@@ -1185,13 +617,286 @@ export class UsersClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedPagination.ListUsersAliasedDataPaginationResponse,
+                data: _response.body as SeedApi.ListUsersExtendedOptionalListResponse,
                 rawResponse: _response.rawResponse,
             };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedPaginationError({
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/extended-optional");
+    }
+
+    /**
+     * @param {SeedApi.UsersListUsernamesRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listusernames()
+     */
+    public listusernames(
+        request: SeedApi.UsersListUsernamesRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.UsernameCursor> {
+        return core.HttpResponsePromise.fromPromise(this.__listusernames(request, requestOptions));
+    }
+
+    private async __listusernames(
+        request: SeedApi.UsersListUsernamesRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.UsernameCursor>> {
+        const { starting_after: startingAfter } = request;
+        const _queryParams: Record<string, unknown> = {
+            starting_after: startingAfter,
+        };
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users/usernames",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.UsernameCursor, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/usernames");
+    }
+
+    /**
+     * @param {SeedApi.UsersListUsernamesWithOptionalResponseRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listusernameswithoptionalresponse()
+     */
+    public listusernameswithoptionalresponse(
+        request: SeedApi.UsersListUsernamesWithOptionalResponseRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.UsernameCursor> {
+        return core.HttpResponsePromise.fromPromise(this.__listusernameswithoptionalresponse(request, requestOptions));
+    }
+
+    private async __listusernameswithoptionalresponse(
+        request: SeedApi.UsersListUsernamesWithOptionalResponseRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.UsernameCursor>> {
+        const { starting_after: startingAfter } = request;
+        const _queryParams: Record<string, unknown> = {
+            starting_after: startingAfter,
+        };
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users/usernames-optional",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.UsernameCursor, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/usernames-optional");
+    }
+
+    /**
+     * @param {SeedApi.UsersListWithGlobalConfigRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listwithglobalconfig()
+     */
+    public listwithglobalconfig(
+        request: SeedApi.UsersListWithGlobalConfigRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.UsernameContainer> {
+        return core.HttpResponsePromise.fromPromise(this.__listwithglobalconfig(request, requestOptions));
+    }
+
+    private async __listwithglobalconfig(
+        request: SeedApi.UsersListWithGlobalConfigRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.UsernameContainer>> {
+        const { offset } = request;
+        const _queryParams: Record<string, unknown> = {
+            offset,
+        };
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users/global-config",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.UsernameContainer, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/global-config");
+    }
+
+    /**
+     * @param {SeedApi.UsersListWithOptionalDataRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listwithoptionaldata()
+     */
+    public listwithoptionaldata(
+        request: SeedApi.UsersListWithOptionalDataRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.ListUsersOptionalDataPaginationResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listwithoptionaldata(request, requestOptions));
+    }
+
+    private async __listwithoptionaldata(
+        request: SeedApi.UsersListWithOptionalDataRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.ListUsersOptionalDataPaginationResponse>> {
+        const { page } = request;
+        const _queryParams: Record<string, unknown> = {
+            page,
+        };
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users/optional-data",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedApi.ListUsersOptionalDataPaginationResponse,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/optional-data");
+    }
+
+    /**
+     * @param {SeedApi.UsersListWithAliasedDataRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listwithaliaseddata()
+     */
+    public listwithaliaseddata(
+        request: SeedApi.UsersListWithAliasedDataRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.ListUsersAliasedDataPaginationResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listwithaliaseddata(request, requestOptions));
+    }
+
+    private async __listwithaliaseddata(
+        request: SeedApi.UsersListWithAliasedDataRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.ListUsersAliasedDataPaginationResponse>> {
+        const { page, per_page: perPage, starting_after: startingAfter } = request;
+        const _queryParams: Record<string, unknown> = {
+            page,
+            per_page: perPage,
+            starting_after: startingAfter,
+        };
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users/aliased-data",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedApi.ListUsersAliasedDataPaginationResponse,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

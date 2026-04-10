@@ -1,28 +1,19 @@
-using SeedNullableOptional;
+using SeedApi;
 
 namespace Usage;
 
 public class Example12
 {
     public async Task Do() {
-        var client = new SeedNullableOptionalClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.NullableOptional.GetSearchResultsAsync(
-            new SearchRequest {
-                Query = "query",
-                Filters = new Dictionary<string, string?>(){
-                    ["filters"] = "filters",
-                }
-                ,
-                IncludeTypes = new List<string>(){
-                    "includeTypes",
-                    "includeTypes",
-                }
-
+        await client.Nullableoptional.GetcomplexprofileAsync(
+            new NullableOptionalGetComplexProfileRequest {
+                ProfileId = "profileId"
             }
         );
     }

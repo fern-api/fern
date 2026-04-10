@@ -5,14 +5,13 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.service.create_movie(
-  id: "movie-c06a4ad7",
-  prequel: "movie-cv9b914f",
-  title: "The Boy and the Heron",
-  from: "Hayao Miyazaki",
-  rating: 8,
+client.service.createmovie(
+  id: "id",
+  title: "title",
+  from: "from",
+  rating: 1.1,
   type: "movie",
-  tag: "tag-wf9as23d",
+  tag: "tag",
   metadata: {},
   revenue: 1000000
 )

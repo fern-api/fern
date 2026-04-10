@@ -14,13 +14,15 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &unions.Shape{
-        Circle: &unions.Circle{
-            Radius: 1.1,
+    request := []*unions.BigUnion{
+        &unions.BigUnion{
+            BigUnionZero: &unions.BigUnionZero{
+                Value: "value",
+                Type: unions.BigUnionZeroTypeNormalSweet,
+            },
         },
-        ID: "id",
     }
-    client.Union.Update(
+    client.Bigunion.UpdateMany(
         context.TODO(),
         request,
     )

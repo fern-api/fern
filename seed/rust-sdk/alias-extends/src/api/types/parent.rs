@@ -29,9 +29,7 @@ impl ParentBuilder {
     /// - [`parent`](ParentBuilder::parent)
     pub fn build(self) -> Result<Parent, BuildError> {
         Ok(Parent {
-            parent: self
-                .parent
-                .ok_or_else(|| BuildError::missing_field("parent"))?,
+            parent: self.parent.ok_or_else(|| BuildError::missing_field("parent"))?,
         })
     }
 }

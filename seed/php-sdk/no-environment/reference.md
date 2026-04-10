@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>$client-&gt;dummy-&gt;getDummy() -> ?string</code></summary>
+<details><summary><code>$client-&gt;dummy-&gt;getdummy() -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```php
-$client->dummy->getDummy();
+$client->dummy->getdummy();
 ```
 </dd>
 </dl>

@@ -1,4 +1,4 @@
-package oauthclientcredentialsenvironmentvariables
+package api
 
 import (
 	"io"

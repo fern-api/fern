@@ -2,6 +2,6 @@
 
 # isort: skip_file
 
-from .resources import a
+from .ad_foo import AdFoo
 
-__all__ = ["a"]
+__all__ = ["AdFoo"]

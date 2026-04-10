@@ -5,4 +5,7 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.primitive.get_and_return_uuid(request: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+client.endpoints_object.endpoints_object_get_and_return_with_datetime_like_string(
+  datetime_like_string: "datetimeLikeString",
+  actual_datetime: "2024-01-15T09:30:00Z"
+)

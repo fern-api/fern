@@ -1,4 +1,4 @@
-package errorproperty
+package api
 
 import (
 	"io"

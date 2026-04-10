@@ -1,14 +1,14 @@
 package com.snippets;
 
-import com.seed.serverSentEvents.SeedServerSentEventsClient;
-import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.completions.requests.CompletionsStreamRequest;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedServerSentEventsClient client =
-                SeedServerSentEventsClient.builder().url("https://api.fern.com").build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
         client.completions().stream(
-                StreamCompletionRequest.builder().query("foo").build());
+                CompletionsStreamRequest.builder().query("query").build());
     }
 }

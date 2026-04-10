@@ -48,10 +48,10 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import Unions
+import Api
 
 private func main() async throws {
-    let client = UnionsClient()
+    let client = ApiClient()
 
     _ = try await client.bigunion.get(id: "id")
 }
@@ -64,14 +64,14 @@ try await main()
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import Unions
+import Api
 
-let client = UnionsClient(...)
+let client = ApiClient(...)
 
 do {
     let response = try await client.bigunion.get(...)
     // Handle successful response
-} catch let error as UnionsError {
+} catch let error as ApiError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -131,9 +131,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import Unions
+import Api
 
-let client = UnionsClient(
+let client = ApiClient(
     ...,
     urlSession: // Provide your implementation here
 )

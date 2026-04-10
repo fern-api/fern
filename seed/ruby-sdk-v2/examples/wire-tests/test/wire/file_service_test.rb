@@ -12,15 +12,14 @@ class FileServiceWireTest < WireMockTestCase
     )
   end
 
-  def test_file_service_get_file_with_wiremock
-    test_id = "file.service.get_file.0"
+  def test_file_service_file_service_get_file_with_wiremock
+    test_id = "file_service.file_service_get_file.0"
 
-    @client.file.service.get_file(
-      filename: "file.txt",
-      x_file_api_version: "0.0.2",
+    @client.file_service.file_service_get_file(
+      filename: "filename",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "file.service.get_file.0"
+          "X-Test-Id" => "file_service.file_service_get_file.0"
         }
       }
     )
@@ -28,7 +27,7 @@ class FileServiceWireTest < WireMockTestCase
     verify_request_count(
       test_id: test_id,
       method: "GET",
-      url_path: "/file/file.txt",
+      url_path: "/file/filename",
       query_params: nil,
       expected: 1
     )

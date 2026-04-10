@@ -15,13 +15,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnString(): void {
-        $testId = 'endpoints.primitive.get_and_return_string.0';
-        $this->client->endpoints->primitive->getAndReturnString(
+    public function testEndpointsPrimitiveGetAndReturnString(): void {
+        $testId = 'endpoints_primitive.endpoints_primitive_get_and_return_string.0';
+        $this->client->endpointsPrimitive->endpointsPrimitiveGetAndReturnString(
             'string',
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.primitive.get_and_return_string.0',
+                    'X-Test-Id' => 'endpoints_primitive.endpoints_primitive_get_and_return_string.0',
                 ],
             ],
         );
@@ -36,13 +36,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnInt(): void {
-        $testId = 'endpoints.primitive.get_and_return_int.0';
-        $this->client->endpoints->primitive->getAndReturnInt(
+    public function testEndpointsPrimitiveGetAndReturnInt(): void {
+        $testId = 'endpoints_primitive.endpoints_primitive_get_and_return_int.0';
+        $this->client->endpointsPrimitive->endpointsPrimitiveGetAndReturnInt(
             1,
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.primitive.get_and_return_int.0',
+                    'X-Test-Id' => 'endpoints_primitive.endpoints_primitive_get_and_return_int.0',
                 ],
             ],
         );
@@ -57,13 +57,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnLong(): void {
-        $testId = 'endpoints.primitive.get_and_return_long.0';
-        $this->client->endpoints->primitive->getAndReturnLong(
+    public function testEndpointsPrimitiveGetAndReturnLong(): void {
+        $testId = 'endpoints_primitive.endpoints_primitive_get_and_return_long.0';
+        $this->client->endpointsPrimitive->endpointsPrimitiveGetAndReturnLong(
             1000000,
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.primitive.get_and_return_long.0',
+                    'X-Test-Id' => 'endpoints_primitive.endpoints_primitive_get_and_return_long.0',
                 ],
             ],
         );
@@ -78,13 +78,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnDouble(): void {
-        $testId = 'endpoints.primitive.get_and_return_double.0';
-        $this->client->endpoints->primitive->getAndReturnDouble(
+    public function testEndpointsPrimitiveGetAndReturnDouble(): void {
+        $testId = 'endpoints_primitive.endpoints_primitive_get_and_return_double.0';
+        $this->client->endpointsPrimitive->endpointsPrimitiveGetAndReturnDouble(
             1.1,
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.primitive.get_and_return_double.0',
+                    'X-Test-Id' => 'endpoints_primitive.endpoints_primitive_get_and_return_double.0',
                 ],
             ],
         );
@@ -99,13 +99,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnBool(): void {
-        $testId = 'endpoints.primitive.get_and_return_bool.0';
-        $this->client->endpoints->primitive->getAndReturnBool(
+    public function testEndpointsPrimitiveGetAndReturnBool(): void {
+        $testId = 'endpoints_primitive.endpoints_primitive_get_and_return_bool.0';
+        $this->client->endpointsPrimitive->endpointsPrimitiveGetAndReturnBool(
             true,
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.primitive.get_and_return_bool.0',
+                    'X-Test-Id' => 'endpoints_primitive.endpoints_primitive_get_and_return_bool.0',
                 ],
             ],
         );
@@ -120,13 +120,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnDatetime(): void {
-        $testId = 'endpoints.primitive.get_and_return_datetime.0';
-        $this->client->endpoints->primitive->getAndReturnDatetime(
+    public function testEndpointsPrimitiveGetAndReturnDatetime(): void {
+        $testId = 'endpoints_primitive.endpoints_primitive_get_and_return_datetime.0';
+        $this->client->endpointsPrimitive->endpointsPrimitiveGetAndReturnDatetime(
             new DateTime('2024-01-15T09:30:00Z'),
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.primitive.get_and_return_datetime.0',
+                    'X-Test-Id' => 'endpoints_primitive.endpoints_primitive_get_and_return_datetime.0',
                 ],
             ],
         );
@@ -141,13 +141,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnDate(): void {
-        $testId = 'endpoints.primitive.get_and_return_date.0';
-        $this->client->endpoints->primitive->getAndReturnDate(
+    public function testEndpointsPrimitiveGetAndReturnDate(): void {
+        $testId = 'endpoints_primitive.endpoints_primitive_get_and_return_date.0';
+        $this->client->endpointsPrimitive->endpointsPrimitiveGetAndReturnDate(
             new DateTime('2023-01-15'),
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.primitive.get_and_return_date.0',
+                    'X-Test-Id' => 'endpoints_primitive.endpoints_primitive_get_and_return_date.0',
                 ],
             ],
         );
@@ -162,13 +162,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnUuid(): void {
-        $testId = 'endpoints.primitive.get_and_return_uuid.0';
-        $this->client->endpoints->primitive->getAndReturnUuid(
-            'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    public function testEndpointsPrimitiveGetAndReturnUuid(): void {
+        $testId = 'endpoints_primitive.endpoints_primitive_get_and_return_uuid.0';
+        $this->client->endpointsPrimitive->endpointsPrimitiveGetAndReturnUuid(
+            'string',
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.primitive.get_and_return_uuid.0',
+                    'X-Test-Id' => 'endpoints_primitive.endpoints_primitive_get_and_return_uuid.0',
                 ],
             ],
         );
@@ -183,13 +183,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnBase64(): void {
-        $testId = 'endpoints.primitive.get_and_return_base64.0';
-        $this->client->endpoints->primitive->getAndReturnBase64(
-            'SGVsbG8gd29ybGQh',
+    public function testEndpointsPrimitiveGetAndReturnBase64(): void {
+        $testId = 'endpoints_primitive.endpoints_primitive_get_and_return_base64.0';
+        $this->client->endpointsPrimitive->endpointsPrimitiveGetAndReturnBase64(
+            'string',
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.primitive.get_and_return_base64.0',
+                    'X-Test-Id' => 'endpoints_primitive.endpoints_primitive_get_and_return_base64.0',
                 ],
             ],
         );

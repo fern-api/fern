@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Playlist\Requests\PlaylistGetPlaylistsRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,6 +11,17 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->submission->stopExecutionSession(
-    'sessionId',
+$client->playlist->getplaylists(
+    1,
+    new PlaylistGetPlaylistsRequest([
+        'limit' => 1,
+        'otherField' => 'otherField',
+        'multiLineDocs' => 'multiLineDocs',
+        'optionalMultipleField' => [
+            'optionalMultipleField',
+        ],
+        'multipleField' => [
+            'multipleField',
+        ],
+    ]),
 );

@@ -19,8 +19,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :admin_key_header
       #
-      # @return [Array[Seed::Migration::Types::Migration]]
-      def get_attempted_migrations(request_options: {}, **params)
+      # @return [Array[Seed::Types::Migration]]
+      def getattemptedmigrations(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         headers = {}
         headers["admin-key-header"] = params[:admin_key_header] if params[:admin_key_header]
@@ -28,7 +28,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/migration-info/all",
+          path: "migration-info/all",
           headers: headers,
           request_options: request_options
         )

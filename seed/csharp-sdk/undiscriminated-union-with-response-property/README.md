@@ -39,10 +39,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedUndiscriminatedUnionWithResponseProperty;
+using SeedApi;
 
-var client = new SeedUndiscriminatedUnionWithResponsePropertyClient();
-await client.GetUnionAsync();
+var client = new SeedApiClient();
+await client._.GetUnionAsync();
 ```
 
 ## Exception Handling
@@ -51,11 +51,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedUndiscriminatedUnionWithResponseProperty;
+using SeedApi;
 
 try {
-    var response = await client.GetUnionAsync(...);
-} catch (SeedUndiscriminatedUnionWithResponsePropertyApiException e) {
+    var response = await client._.GetUnionAsync(...);
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -78,7 +78,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.GetUnionAsync(
+var response = await client._.GetUnionAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -91,7 +91,7 @@ var response = await client.GetUnionAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.GetUnionAsync(
+var response = await client._.GetUnionAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -104,10 +104,10 @@ var response = await client.GetUnionAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedUndiscriminatedUnionWithResponseProperty;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.GetUnionAsync(...).WithRawResponse();
+var result = await client._.GetUnionAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -124,7 +124,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.GetUnionAsync(...);
+var data = await client._.GetUnionAsync(...);
 ```
 
 ### Additional Headers
@@ -132,7 +132,7 @@ var data = await client.GetUnionAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.GetUnionAsync(
+var response = await client._.GetUnionAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -148,7 +148,7 @@ var response = await client.GetUnionAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.GetUnionAsync(
+var response = await client._.GetUnionAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>

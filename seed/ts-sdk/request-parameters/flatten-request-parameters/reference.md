@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createUsername</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createusername</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -13,11 +13,11 @@
 <dd>
 
 ```typescript
-await client.user.createUsername({
-    tags: ["tags", "tags"],
+await client.user.createusername({
+    tags: "tags",
     username: "username",
     password: "password",
-    name: "test"
+    name: "name"
 });
 
 ```
@@ -34,7 +34,7 @@ await client.user.createUsername({
 <dl>
 <dd>
 
-**request:** `SeedRequestParameters.CreateUsernameRequest` 
+**request:** `SeedApi.UserCreateUsernameRequest` 
     
 </dd>
 </dl>
@@ -54,7 +54,7 @@ await client.user.createUsername({
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createUsernameWithReferencedType</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createusernamewithreferencedtype</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -67,11 +67,11 @@ await client.user.createUsername({
 <dd>
 
 ```typescript
-await client.user.createUsernameWithReferencedType({
-    tags: ["tags", "tags"],
+await client.user.createusernamewithreferencedtype({
+    tags: "tags",
     username: "username",
     password: "password",
-    name: "test"
+    name: "name"
 });
 
 ```
@@ -88,7 +88,7 @@ await client.user.createUsernameWithReferencedType({
 <dl>
 <dd>
 
-**request:** `SeedRequestParameters.CreateUsernameReferencedRequest` 
+**request:** `SeedApi.CreateUsernameBody` 
     
 </dd>
 </dl>
@@ -108,7 +108,7 @@ await client.user.createUsernameWithReferencedType({
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createUsernameOptional</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createusernameoptional</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -121,7 +121,7 @@ await client.user.createUsernameWithReferencedType({
 <dd>
 
 ```typescript
-await client.user.createUsernameOptional();
+await client.user.createusernameoptional();
 
 ```
 </dd>
@@ -137,7 +137,7 @@ await client.user.createUsernameOptional();
 <dl>
 <dd>
 
-**request:** `SeedRequestParameters.CreateUsernameBodyOptionalProperties | null` 
+**request:** `SeedApi.CreateUsernameBodyOptionalProperties` 
     
 </dd>
 </dl>
@@ -157,7 +157,7 @@ await client.user.createUsernameOptional();
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getUsername</a>({ ...params }) -> SeedRequestParameters.User</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getusername</a>({ ...params }) -> SeedApi.User</code></summary>
 <dl>
 <dd>
 
@@ -170,23 +170,20 @@ await client.user.createUsernameOptional();
 <dd>
 
 ```typescript
-await client.user.getUsername({
+await client.user.getusername({
     limit: 1,
-    id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    id: "id",
     date: "2023-01-15",
     deadline: "2024-01-15T09:30:00Z",
-    bytes: "SGVsbG8gd29ybGQh",
+    bytes: "bytes",
     user: {
         name: "name",
         tags: ["tags", "tags"]
     },
-    userList: [{
-            name: "name",
-            tags: ["tags", "tags"]
-        }, {
-            name: "name",
-            tags: ["tags", "tags"]
-        }],
+    userList: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
     optionalDeadline: "2024-01-15T09:30:00Z",
     keyValue: {
         "keyValue": "keyValue"
@@ -209,7 +206,7 @@ await client.user.getUsername({
     },
     filter: "filter",
     longParam: 1000000,
-    bigIntParam: "1000000"
+    bigIntParam: 1
 });
 
 ```
@@ -226,7 +223,7 @@ await client.user.getUsername({
 <dl>
 <dd>
 
-**request:** `SeedRequestParameters.GetUsersRequest` 
+**request:** `SeedApi.UserGetUsernameRequest` 
     
 </dd>
 </dl>

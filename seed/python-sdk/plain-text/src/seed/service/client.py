@@ -22,7 +22,7 @@ class ServiceClient:
         """
         return self._raw_client
 
-    def get_text(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
+    def gettext(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
@@ -33,16 +33,17 @@ class ServiceClient:
         -------
         str
 
+
         Examples
         --------
-        from seed import SeedPlainText
+        from seed import SeedApi
 
-        client = SeedPlainText(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.get_text()
+        client.service.gettext()
         """
-        _response = self._raw_client.get_text(request_options=request_options)
+        _response = self._raw_client.gettext(request_options=request_options)
         return _response.data
 
 
@@ -61,7 +62,7 @@ class AsyncServiceClient:
         """
         return self._raw_client
 
-    async def get_text(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
+    async def gettext(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
@@ -72,22 +73,23 @@ class AsyncServiceClient:
         -------
         str
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedPlainText
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedPlainText(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.get_text()
+            await client.service.gettext()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_text(request_options=request_options)
+        _response = await self._raw_client.gettext(request_options=request_options)
         return _response.data

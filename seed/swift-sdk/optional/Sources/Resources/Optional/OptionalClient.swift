@@ -7,7 +7,7 @@ public final class OptionalClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func sendOptionalBody(request: [String: JSONValue]?, requestOptions: RequestOptions? = nil) async throws -> String {
+    public func sendoptionalbody(request: Nullable<[String: JSONValue]>, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/send-optional-body",
@@ -17,7 +17,7 @@ public final class OptionalClient: Sendable {
         )
     }
 
-    public func sendOptionalTypedBody(request: SendOptionalBodyRequest?, requestOptions: RequestOptions? = nil) async throws -> String {
+    public func sendoptionaltypedbody(request: Requests.SendOptionalBodyRequest, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/send-optional-typed-body",
@@ -31,7 +31,7 @@ public final class OptionalClient: Sendable {
     /// This should not generate wire tests expecting {} when Optional.empty() is passed.
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func sendOptionalNullableWithAllOptionalProperties(actionId: String, id: String, request: Nullable<DeployParams>?, requestOptions: RequestOptions? = nil) async throws -> DeployResponse {
+    public func sendoptionalnullablewithalloptionalproperties(actionId: String, id: String, request: Requests.DeployParams, requestOptions: RequestOptions? = nil) async throws -> DeployResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/deploy/\(actionId)/versions/\(id)",

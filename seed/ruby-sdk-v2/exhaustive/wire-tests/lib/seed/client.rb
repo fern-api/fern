@@ -17,29 +17,79 @@ module Seed
       )
     end
 
-    # @return [Seed::Endpoints::Client]
-    def endpoints
-      @endpoints ||= Seed::Endpoints::Client.new(client: @raw_client)
+    # @return [Seed::EndpointsContainer::Client]
+    def endpoints_container
+      @endpoints_container ||= Seed::EndpointsContainer::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::InlinedRequests::Client]
-    def inlined_requests
-      @inlined_requests ||= Seed::InlinedRequests::Client.new(client: @raw_client)
+    # @return [Seed::EndpointsContentType::Client]
+    def endpoints_content_type
+      @endpoints_content_type ||= Seed::EndpointsContentType::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::NoAuth::Client]
-    def no_auth
-      @no_auth ||= Seed::NoAuth::Client.new(client: @raw_client)
+    # @return [Seed::EndpointsEnum::Client]
+    def endpoints_enum
+      @endpoints_enum ||= Seed::EndpointsEnum::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::NoReqBody::Client]
-    def no_req_body
-      @no_req_body ||= Seed::NoReqBody::Client.new(client: @raw_client)
+    # @return [Seed::EndpointsHTTPMethods::Client]
+    def endpoints_http_methods
+      @endpoints_http_methods ||= Seed::EndpointsHTTPMethods::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::ReqWithHeaders::Client]
-    def req_with_headers
-      @req_with_headers ||= Seed::ReqWithHeaders::Client.new(client: @raw_client)
+    # @return [Seed::EndpointsObject::Client]
+    def endpoints_object
+      @endpoints_object ||= Seed::EndpointsObject::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::EndpointsPagination::Client]
+    def endpoints_pagination
+      @endpoints_pagination ||= Seed::EndpointsPagination::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::EndpointsParams::Client]
+    def endpoints_params
+      @endpoints_params ||= Seed::EndpointsParams::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::EndpointsPrimitive::Client]
+    def endpoints_primitive
+      @endpoints_primitive ||= Seed::EndpointsPrimitive::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::EndpointsPut::Client]
+    def endpoints_put
+      @endpoints_put ||= Seed::EndpointsPut::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::EndpointsUnion::Client]
+    def endpoints_union
+      @endpoints_union ||= Seed::EndpointsUnion::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::EndpointsUrLs::Client]
+    def endpoints_ur_ls
+      @endpoints_ur_ls ||= Seed::EndpointsUrLs::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::Inlinedrequests::Client]
+    def inlinedrequests
+      @inlinedrequests ||= Seed::Inlinedrequests::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::Noauth::Client]
+    def noauth
+      @noauth ||= Seed::Noauth::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::Noreqbody::Client]
+    def noreqbody
+      @noreqbody ||= Seed::Noreqbody::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::Reqwithheaders::Client]
+    def reqwithheaders
+      @reqwithheaders ||= Seed::Reqwithheaders::Client.new(client: @raw_client)
     end
   end
 end

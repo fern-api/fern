@@ -6,26 +6,26 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import commons, folder_a, folder_b, folder_c, folder_d, foo
+    from .types import FolderAResponse, FolderBFoo, FolderCFoo, FolderDResponse, Imported, ImportingType, OptionalString
+    from . import folder_a_service, folder_d_service, foo
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedCrossPackageTypeNames, SeedCrossPackageTypeNames
-    from .commons import Imported
-    from .foo import ImportingType, OptionalString
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedCrossPackageTypeNames": ".client",
+    "AsyncSeedApi": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "Imported": ".commons",
-    "ImportingType": ".foo",
-    "OptionalString": ".foo",
-    "SeedCrossPackageTypeNames": ".client",
+    "FolderAResponse": ".types",
+    "FolderBFoo": ".types",
+    "FolderCFoo": ".types",
+    "FolderDResponse": ".types",
+    "Imported": ".types",
+    "ImportingType": ".types",
+    "OptionalString": ".types",
+    "SeedApi": ".client",
     "__version__": ".version",
-    "commons": ".commons",
-    "folder_a": ".folder_a",
-    "folder_b": ".folder_b",
-    "folder_c": ".folder_c",
-    "folder_d": ".folder_d",
+    "folder_a_service": ".folder_a_service",
+    "folder_d_service": ".folder_d_service",
     "foo": ".foo",
 }
 
@@ -52,18 +52,19 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedCrossPackageTypeNames",
+    "AsyncSeedApi",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
+    "FolderAResponse",
+    "FolderBFoo",
+    "FolderCFoo",
+    "FolderDResponse",
     "Imported",
     "ImportingType",
     "OptionalString",
-    "SeedCrossPackageTypeNames",
+    "SeedApi",
     "__version__",
-    "commons",
-    "folder_a",
-    "folder_b",
-    "folder_c",
-    "folder_d",
+    "folder_a_service",
+    "folder_d_service",
     "foo",
 ]

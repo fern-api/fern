@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>client.bigunion.<a href="/src/api/resources/bigunion/client/Client.ts">get</a>(id) -> SeedUnions.BigUnion</code></summary>
+<details><summary><code>client.bigunion.<a href="/src/api/resources/bigunion/client/Client.ts">get</a>({ ...params }) -> SeedApi.BigUnion</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,9 @@
 <dd>
 
 ```typescript
-await client.bigunion.get("id");
+await client.bigunion.get({
+    id: "id"
+});
 
 ```
 </dd>
@@ -29,7 +31,7 @@ await client.bigunion.get("id");
 <dl>
 <dd>
 
-**id:** `string` 
+**request:** `SeedApi.BigunionGetRequest` 
     
 </dd>
 </dl>
@@ -63,11 +65,8 @@ await client.bigunion.get("id");
 
 ```typescript
 await client.bigunion.update({
-    type: "normalSweet",
-    id: "id",
-    createdAt: new Date("2024-01-15T09:30:00.000Z"),
-    archivedAt: new Date("2024-01-15T09:30:00.000Z"),
-    value: "value"
+    value: "value",
+    type: "normalSweet"
 });
 
 ```
@@ -84,7 +83,7 @@ await client.bigunion.update({
 <dl>
 <dd>
 
-**request:** `SeedUnions.BigUnion` 
+**request:** `SeedApi.BigUnion` 
     
 </dd>
 </dl>
@@ -118,17 +117,8 @@ await client.bigunion.update({
 
 ```typescript
 await client.bigunion.updateMany([{
-        type: "normalSweet",
-        id: "id",
-        createdAt: new Date("2024-01-15T09:30:00.000Z"),
-        archivedAt: new Date("2024-01-15T09:30:00.000Z"),
-        value: "value"
-    }, {
-        type: "normalSweet",
-        id: "id",
-        createdAt: new Date("2024-01-15T09:30:00.000Z"),
-        archivedAt: new Date("2024-01-15T09:30:00.000Z"),
-        value: "value"
+        value: "value",
+        type: "normalSweet"
     }]);
 
 ```
@@ -145,7 +135,7 @@ await client.bigunion.updateMany([{
 <dl>
 <dd>
 
-**request:** `SeedUnions.BigUnion[]` 
+**request:** `SeedApi.BigUnion[]` 
     
 </dd>
 </dl>
@@ -166,7 +156,7 @@ await client.bigunion.updateMany([{
 </details>
 
 ## Union
-<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">get</a>(id) -> SeedUnions.Shape</code></summary>
+<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">get</a>({ ...params }) -> SeedApi.Shape</code></summary>
 <dl>
 <dd>
 
@@ -179,7 +169,9 @@ await client.bigunion.updateMany([{
 <dd>
 
 ```typescript
-await client.union.get("id");
+await client.union.get({
+    id: "id"
+});
 
 ```
 </dd>
@@ -195,7 +187,7 @@ await client.union.get("id");
 <dl>
 <dd>
 
-**id:** `string` 
+**request:** `SeedApi.UnionGetRequest` 
     
 </dd>
 </dl>
@@ -229,10 +221,8 @@ await client.union.get("id");
 
 ```typescript
 await client.union.update({
-    type: "circle",
-    id: "id",
-    name: "name",
-    radius: 1.1
+    radius: 1.1,
+    type: "circle"
 });
 
 ```
@@ -249,7 +239,7 @@ await client.union.update({
 <dl>
 <dd>
 
-**request:** `SeedUnions.Shape` 
+**request:** `SeedApi.Shape` 
     
 </dd>
 </dl>

@@ -1,12 +1,12 @@
 import Foundation
 
 public struct FlushedEvent: Codable, Hashable, Sendable {
-    public let type: Flushed
+    public let type: FlushedEventType
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        type: Flushed,
+        type: FlushedEventType,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.type = type
@@ -15,7 +15,7 @@ public struct FlushedEvent: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.decode(Flushed.self, forKey: .type)
+        self.type = try container.decode(FlushedEventType.self, forKey: .type)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -23,10 +23,6 @@ public struct FlushedEvent: Codable, Hashable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.type, forKey: .type)
-    }
-
-    public enum Flushed: String, Codable, Hashable, CaseIterable, Sendable {
-        case flushed
     }
 
     /// Keys for encoding/decoding struct properties.

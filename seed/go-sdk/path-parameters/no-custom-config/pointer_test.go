@@ -1,4 +1,4 @@
-package pathparameters
+package api
 
 import (
 	"testing"

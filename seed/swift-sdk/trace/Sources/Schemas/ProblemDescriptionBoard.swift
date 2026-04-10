@@ -1,20 +1,20 @@
 import Foundation
 
 public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
-    case html(String)
-    case testCaseId(String)
-    case variable(VariableValue)
+    case html(ProblemDescriptionBoardHtml)
+    case testCaseId(ProblemDescriptionBoardTestCaseId)
+    case variable(ProblemDescriptionBoardVariable)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
         case "html":
-            self = .html(try container.decode(String.self, forKey: .value))
+            self = .html(try ProblemDescriptionBoardHtml(from: decoder))
         case "testCaseId":
-            self = .testCaseId(try container.decode(String.self, forKey: .value))
+            self = .testCaseId(try ProblemDescriptionBoardTestCaseId(from: decoder))
         case "variable":
-            self = .variable(try container.decode(VariableValue.self, forKey: .value))
+            self = .variable(try ProblemDescriptionBoardVariable(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -30,18 +30,17 @@ public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
         switch self {
         case .html(let data):
             try container.encode("html", forKey: .type)
-            try container.encode(data, forKey: .value)
+            try data.encode(to: encoder)
         case .testCaseId(let data):
             try container.encode("testCaseId", forKey: .type)
-            try container.encode(data, forKey: .value)
+            try data.encode(to: encoder)
         case .variable(let data):
             try container.encode("variable", forKey: .type)
-            try container.encode(data, forKey: .value)
+            try data.encode(to: encoder)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
-        case value
     }
 }

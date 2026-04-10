@@ -3,7 +3,9 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Endpoints\Params\Requests\ModifyResourceAtInlinedPath;
+use Seed\EndpointsObject\Requests\EndpointsObjectGetAndReturnNestedWithRequiredFieldRequest;
+use Seed\Types\TypesNestedObjectWithRequiredField;
+use Seed\Types\TypesObjectWithOptionalField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,9 +13,12 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->params->modifyWithInlinePath(
-    'param',
-    new ModifyResourceAtInlinedPath([
-        'body' => 'string',
+$client->endpointsObject->endpointsObjectGetAndReturnNestedWithRequiredField(
+    'string',
+    new EndpointsObjectGetAndReturnNestedWithRequiredFieldRequest([
+        'body' => new TypesNestedObjectWithRequiredField([
+            'string' => 'string',
+            'nestedObject' => new TypesObjectWithOptionalField([]),
+        ]),
     ]),
 );

@@ -13,7 +13,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Organizations.GetOrganization(
+    client.Organizations.Getorganization(
         context.TODO(),
         "tenant_id",
         "organization_id",

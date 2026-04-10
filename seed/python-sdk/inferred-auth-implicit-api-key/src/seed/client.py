@@ -6,17 +6,16 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .core.inferred_auth_token_provider import AsyncInferredAuthTokenProvider, InferredAuthTokenProvider
 from .core.logging import LogConfig, Logger
 
 if typing.TYPE_CHECKING:
     from .auth.client import AsyncAuthClient, AuthClient
-    from .nested.client import AsyncNestedClient, NestedClient
-    from .nested_no_auth.client import AsyncNestedNoAuthClient, NestedNoAuthClient
+    from .nested_api.client import AsyncNestedApiClient, NestedApiClient
+    from .nested_no_auth_api.client import AsyncNestedNoAuthApiClient, NestedNoAuthApiClient
     from .simple.client import AsyncSimpleClient, SimpleClient
 
 
-class SeedInferredAuthImplicitApiKey:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -27,9 +26,6 @@ class SeedInferredAuthImplicitApiKey:
 
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
-
-    api_key : str
-        Credential used for inferred authentication.
 
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
@@ -45,11 +41,10 @@ class SeedInferredAuthImplicitApiKey:
 
     Examples
     --------
-    from seed import SeedInferredAuthImplicitApiKey
+    from seed import SeedApi
 
-    client = SeedInferredAuthImplicitApiKey(
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
-        api_key="YOUR_API_KEY",
     )
     """
 
@@ -58,7 +53,6 @@ class SeedInferredAuthImplicitApiKey:
         *,
         base_url: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
-        api_key: str,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
@@ -66,20 +60,6 @@ class SeedInferredAuthImplicitApiKey:
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
-        inferred_auth_token_provider = InferredAuthTokenProvider(
-            api_key=api_key,
-            client_wrapper=SyncClientWrapper(
-                base_url=base_url,
-                headers=headers,
-                httpx_client=httpx_client
-                if httpx_client is not None
-                else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
-                if follow_redirects is not None
-                else httpx.Client(timeout=_defaulted_timeout),
-                timeout=_defaulted_timeout,
-                logging=logging,
-            ),
         )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
@@ -91,11 +71,10 @@ class SeedInferredAuthImplicitApiKey:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
             logging=logging,
-            auth_headers=inferred_auth_token_provider.get_headers,
         )
         self._auth: typing.Optional[AuthClient] = None
-        self._nested_no_auth: typing.Optional[NestedNoAuthClient] = None
-        self._nested: typing.Optional[NestedClient] = None
+        self._nested_no_auth_api: typing.Optional[NestedNoAuthApiClient] = None
+        self._nested_api: typing.Optional[NestedApiClient] = None
         self._simple: typing.Optional[SimpleClient] = None
 
     @property
@@ -107,20 +86,20 @@ class SeedInferredAuthImplicitApiKey:
         return self._auth
 
     @property
-    def nested_no_auth(self):
-        if self._nested_no_auth is None:
-            from .nested_no_auth.client import NestedNoAuthClient  # noqa: E402
+    def nested_no_auth_api(self):
+        if self._nested_no_auth_api is None:
+            from .nested_no_auth_api.client import NestedNoAuthApiClient  # noqa: E402
 
-            self._nested_no_auth = NestedNoAuthClient(client_wrapper=self._client_wrapper)
-        return self._nested_no_auth
+            self._nested_no_auth_api = NestedNoAuthApiClient(client_wrapper=self._client_wrapper)
+        return self._nested_no_auth_api
 
     @property
-    def nested(self):
-        if self._nested is None:
-            from .nested.client import NestedClient  # noqa: E402
+    def nested_api(self):
+        if self._nested_api is None:
+            from .nested_api.client import NestedApiClient  # noqa: E402
 
-            self._nested = NestedClient(client_wrapper=self._client_wrapper)
-        return self._nested
+            self._nested_api = NestedApiClient(client_wrapper=self._client_wrapper)
+        return self._nested_api
 
     @property
     def simple(self):
@@ -149,7 +128,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedInferredAuthImplicitApiKey:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -160,9 +139,6 @@ class AsyncSeedInferredAuthImplicitApiKey:
 
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
-
-    api_key : str
-        Credential used for inferred authentication.
 
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
@@ -178,11 +154,10 @@ class AsyncSeedInferredAuthImplicitApiKey:
 
     Examples
     --------
-    from seed import AsyncSeedInferredAuthImplicitApiKey
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedInferredAuthImplicitApiKey(
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
-        api_key="YOUR_API_KEY",
     )
     """
 
@@ -191,7 +166,6 @@ class AsyncSeedInferredAuthImplicitApiKey:
         *,
         base_url: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
-        api_key: str,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
@@ -199,18 +173,6 @@ class AsyncSeedInferredAuthImplicitApiKey:
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        )
-        inferred_auth_token_provider = AsyncInferredAuthTokenProvider(
-            api_key=api_key,
-            client_wrapper=AsyncClientWrapper(
-                base_url=base_url,
-                headers=headers,
-                httpx_client=httpx_client
-                if httpx_client is not None
-                else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
-                timeout=_defaulted_timeout,
-                logging=logging,
-            ),
         )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
@@ -220,11 +182,10 @@ class AsyncSeedInferredAuthImplicitApiKey:
             else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
             timeout=_defaulted_timeout,
             logging=logging,
-            async_auth_headers=inferred_auth_token_provider.get_headers,
         )
         self._auth: typing.Optional[AsyncAuthClient] = None
-        self._nested_no_auth: typing.Optional[AsyncNestedNoAuthClient] = None
-        self._nested: typing.Optional[AsyncNestedClient] = None
+        self._nested_no_auth_api: typing.Optional[AsyncNestedNoAuthApiClient] = None
+        self._nested_api: typing.Optional[AsyncNestedApiClient] = None
         self._simple: typing.Optional[AsyncSimpleClient] = None
 
     @property
@@ -236,20 +197,20 @@ class AsyncSeedInferredAuthImplicitApiKey:
         return self._auth
 
     @property
-    def nested_no_auth(self):
-        if self._nested_no_auth is None:
-            from .nested_no_auth.client import AsyncNestedNoAuthClient  # noqa: E402
+    def nested_no_auth_api(self):
+        if self._nested_no_auth_api is None:
+            from .nested_no_auth_api.client import AsyncNestedNoAuthApiClient  # noqa: E402
 
-            self._nested_no_auth = AsyncNestedNoAuthClient(client_wrapper=self._client_wrapper)
-        return self._nested_no_auth
+            self._nested_no_auth_api = AsyncNestedNoAuthApiClient(client_wrapper=self._client_wrapper)
+        return self._nested_no_auth_api
 
     @property
-    def nested(self):
-        if self._nested is None:
-            from .nested.client import AsyncNestedClient  # noqa: E402
+    def nested_api(self):
+        if self._nested_api is None:
+            from .nested_api.client import AsyncNestedApiClient  # noqa: E402
 
-            self._nested = AsyncNestedClient(client_wrapper=self._client_wrapper)
-        return self._nested
+            self._nested_api = AsyncNestedApiClient(client_wrapper=self._client_wrapper)
+        return self._nested_api
 
     @property
     def simple(self):

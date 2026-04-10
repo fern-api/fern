@@ -1,15 +1,14 @@
 import Foundation
-import InferredAuthImplicitNoExpiry
+import Api
 
 private func main() async throws {
-    let client = InferredAuthImplicitNoExpiryClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
+    _ = try await client.auth.gettokenwithclientcredentials(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
         audience: .httpsApiExampleCom,
-        grantType: .clientCredentials,
-        scope: "scope"
+        grantType: .clientCredentials
     ))
 }
 

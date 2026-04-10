@@ -4,7 +4,7 @@ namespace Seed\User;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\User\Types\User;
+use Seed\Types\User;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -62,14 +62,14 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUser(string $userId, ?array $options = null): ?User
+    public function getuser(string $userId, ?array $options = null): ?User
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users/{$userId}",
+                    path: "users/{$userId}",
                     method: HttpMethod::GET,
                 ),
                 $options,

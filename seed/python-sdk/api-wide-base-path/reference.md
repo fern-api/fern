@@ -13,10 +13,9 @@
 <dd>
 
 ```python
-from seed import SeedApiWideBasePath
+from seed import SeedApi
 
-client = SeedApiWideBasePath(
-    path_param="pathParam",
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 

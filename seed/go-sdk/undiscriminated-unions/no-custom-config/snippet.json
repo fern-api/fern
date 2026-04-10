@@ -19,62 +19,62 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.Call(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.Request{\n\t\tUnion: \u0026undiscriminatedgo.MetadataUnion{\n\t\t\tOptionalMetadata: map[string]any{\n\t\t\t\t\"string\": map[string]interface{}{\n\t\t\t\t\t\"key\": \"value\",\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.Call(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.Request{},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/camel-case",
                 "method": "POST",
-                "identifier_override": "endpoint_union.testCamelCaseProperties"
+                "identifier_override": "endpoint_union.testcamelcaseproperties"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.TestCamelCaseProperties(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.PaymentRequest{\n\t\tPaymentMethod: \u0026undiscriminatedgo.PaymentMethodUnion{\n\t\t\tTokenizeCard: \u0026undiscriminatedgo.TokenizeCard{\n\t\t\t\tMethod:     \"card\",\n\t\t\t\tCardNumber: \"1234567890123456\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.Testcamelcaseproperties(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.UnionTestCamelCasePropertiesRequest{\n\t\tPaymentMethod: \u0026undiscriminatedgo.PaymentMethodUnion{\n\t\t\tTokenizeCard: \u0026undiscriminatedgo.TokenizeCard{\n\t\t\t\tMethod:     \"method\",\n\t\t\t\tCardNumber: \"cardNumber\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/duplicate",
                 "method": "POST",
-                "identifier_override": "endpoint_union.duplicateTypesUnion"
+                "identifier_override": "endpoint_union.duplicatetypesunion"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.DuplicateTypesUnion(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.UnionWithDuplicateTypes{\n\t\tString: \"string\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.Duplicatetypesunion(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.UnionWithDuplicateTypes{\n\t\tString: \"string\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/metadata",
                 "method": "GET",
-                "identifier_override": "endpoint_union.getMetadata"
+                "identifier_override": "endpoint_union.getmetadata"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.GetMetadata(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.Getmetadata(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/metadata",
                 "method": "PUT",
-                "identifier_override": "endpoint_union.updateMetadata"
+                "identifier_override": "endpoint_union.updatemetadata"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.UpdateMetadata(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.MetadataUnion{\n\t\tOptionalMetadata: map[string]any{\n\t\t\t\"string\": map[string]interface{}{\n\t\t\t\t\"key\": \"value\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.Updatemetadata(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.MetadataUnion{\n\t\tOptionalMetadataOptional: map[string]any{\n\t\t\t\"key\": \"value\",\n\t\t},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/nested",
                 "method": "POST",
-                "identifier_override": "endpoint_union.nestedUnions"
+                "identifier_override": "endpoint_union.nestedunions"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.NestedUnions(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.NestedUnionRoot{\n\t\tString: \"string\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.Nestedunions(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.NestedUnionRoot{\n\t\tString: \"string\",\n\t},\n)\n"
             }
         }
     ]

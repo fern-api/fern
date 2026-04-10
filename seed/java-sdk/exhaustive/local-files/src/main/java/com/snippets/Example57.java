@@ -1,15 +1,21 @@
 package com.snippets;
 
-import com.fern.sdk.SeedExhaustiveClient;
+import com.fern.sdk.SeedApiClient;
+import com.fern.sdk.resources.endpointsparams.requests.EndpointsParamsGetWithPathRequest;
 
 public class Example57 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().urls().noEndingSlash();
+        client.endpointsParams().endpointsParamsGetWithPath(
+            EndpointsParamsGetWithPathRequest
+                .builder()
+                .param("param")
+                .build()
+        );
     }
 }

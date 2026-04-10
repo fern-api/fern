@@ -10,6 +10,8 @@ use Seed\Playlist\PlaylistClient;
 use Seed\Problem\ProblemClient;
 use Seed\Submission\SubmissionClient;
 use Seed\Sysprop\SyspropClient;
+use Seed\V2Problem\V2ProblemClient;
+use Seed\V2V3Problem\V2V3ProblemClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
@@ -56,6 +58,16 @@ class SeedClient
     public SyspropClient $sysprop;
 
     /**
+     * @var V2ProblemClient $v2Problem
+     */
+    public V2ProblemClient $v2Problem;
+
+    /**
+     * @var V2V3ProblemClient $v2V3Problem
+     */
+    public V2V3ProblemClient $v2V3Problem;
+
+    /**
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -73,7 +85,6 @@ class SeedClient
 
     /**
      * @param ?string $token The token to use for authentication.
-     * @param ?string $xRandomHeader
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -84,7 +95,6 @@ class SeedClient
      */
     public function __construct(
         ?string $token = null,
-        ?string $xRandomHeader = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
@@ -95,9 +105,6 @@ class SeedClient
         ];
         if ($token != null) {
             $defaultHeaders['Authorization'] = "Bearer $token";
-        }
-        if ($xRandomHeader != null) {
-            $defaultHeaders['X-Random-Header'] = $xRandomHeader;
         }
 
         $this->options = $options ?? [];
@@ -119,5 +126,7 @@ class SeedClient
         $this->problem = new ProblemClient($this->client, $this->options);
         $this->submission = new SubmissionClient($this->client, $this->options);
         $this->sysprop = new SyspropClient($this->client, $this->options);
+        $this->v2Problem = new V2ProblemClient($this->client, $this->options);
+        $this->v2V3Problem = new V2V3ProblemClient($this->client, $this->options);
     }
 }

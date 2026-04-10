@@ -2,4 +2,4 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.optional.send_optional_body(request: {})
+client.optional.sendoptionalbody(request: {})

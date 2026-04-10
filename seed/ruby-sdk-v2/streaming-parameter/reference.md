@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="/lib/seed/dummy/client.rb">generate</a>(request) -> Seed::Dummy::Types::StreamResponse</code></summary>
+<details><summary><code>client.dummy.<a href="/lib/seed/dummy/client.rb">generate</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -14,8 +14,8 @@
 
 ```ruby
 client.dummy.generate(
-  stream: false,
-  num_events: 5
+  stream: true,
+  num_events: 1
 )
 ```
 </dd>

@@ -12,7 +12,7 @@ public class Example0
             }
         );
 
-        await client.Imdb.CreateMovieAsync(
+        await client.Imdb.CreatemovieAsync(
             new CreateMovieRequest {
                 Title = "title",
                 Rating = 1.1

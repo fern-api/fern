@@ -6,8 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedMixedFileDirectory from "../../../index.js";
-import { EventsClient } from "../resources/events/client/Client.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace UserClient {
     export type Options = BaseClientOptions;
@@ -17,38 +16,31 @@ export declare namespace UserClient {
 
 export class UserClient {
     protected readonly _options: NormalizedClientOptions<UserClient.Options>;
-    protected _events: EventsClient | undefined;
 
     constructor(options: UserClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get events(): EventsClient {
-        return (this._events ??= new EventsClient(this._options));
-    }
-
     /**
      * List all users.
      *
-     * @param {SeedMixedFileDirectory.ListUsersRequest} request
+     * @param {SeedApi.UserListRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.list({
-     *         limit: 1
-     *     })
+     *     await client.user.list()
      */
     public list(
-        request: SeedMixedFileDirectory.ListUsersRequest = {},
+        request: SeedApi.UserListRequest = {},
         requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedMixedFileDirectory.User[]> {
+    ): core.HttpResponsePromise<SeedApi.User[]> {
         return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
     }
 
     private async __list(
-        request: SeedMixedFileDirectory.ListUsersRequest = {},
+        request: SeedApi.UserListRequest = {},
         requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.User[]>> {
+    ): Promise<core.WithRawResponse<SeedApi.User[]>> {
         const { limit } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
@@ -58,7 +50,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/users/",
+                "users/",
             ),
             method: "GET",
             headers: _headers,
@@ -70,11 +62,11 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedMixedFileDirectory.User[], rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.User[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedMixedFileDirectoryError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

@@ -1,11 +1,11 @@
-pub mod named_mixed_patch_request;
-pub mod optional_merge_patch_request;
-pub mod patch_complex_request;
-pub mod patch_proxy_request;
-pub mod regular_patch_request;
+pub mod service_named_patch_with_mixed_request;
+pub mod service_optional_merge_patch_test_request;
+pub mod service_patch_complex_request;
+pub mod service_patch_request;
+pub mod service_regular_patch_request;
 
-pub use named_mixed_patch_request::NamedMixedPatchRequest;
-pub use optional_merge_patch_request::OptionalMergePatchRequest;
-pub use patch_complex_request::PatchComplexRequest;
-pub use patch_proxy_request::PatchProxyRequest;
-pub use regular_patch_request::RegularPatchRequest;
+pub use service_named_patch_with_mixed_request::ServiceNamedPatchWithMixedRequest;
+pub use service_optional_merge_patch_test_request::ServiceOptionalMergePatchTestRequest;
+pub use service_patch_complex_request::ServicePatchComplexRequest;
+pub use service_patch_request::ServicePatchRequest;
+pub use service_regular_patch_request::ServiceRegularPatchRequest;

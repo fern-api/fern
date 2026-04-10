@@ -1,5 +1,5 @@
 # Reference
-## Conversations
+## Complex
 <details><summary><code>$client-&gt;complex-&gt;search($index, $request) -> ?PaginatedConversationResponse</code></summary>
 <dl>
 <dd>
@@ -16,15 +16,7 @@
 $client->complex->search(
     'index',
     new SearchRequest([
-        'pagination' => new StartingAfterPaging([
-            'perPage' => 1,
-            'startingAfter' => 'starting_after',
-        ]),
-        'query' => new SingleFilterSearchRequest([
-            'field' => 'field',
-            'operator' => SingleFilterSearchRequestOperator::Equals->value,
-            'value' => 'value',
-        ]),
+        'query' => new SingleFilterSearchRequest([]),
     ]),
 );
 ```
@@ -49,7 +41,15 @@ $client->complex->search(
 <dl>
 <dd>
 
-**$request:** `SearchRequest` 
+**$pagination:** `?StartingAfterPaging` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$query:** `SingleFilterSearchRequest|MultipleFilterSearchRequest` 
     
 </dd>
 </dl>
@@ -61,8 +61,8 @@ $client->complex->search(
 </dl>
 </details>
 
-## InlineUsers InlineUsers
-<details><summary><code>$client-&gt;inlineUsers-&gt;inlineUsers-&gt;listWithCursorPagination($request) -> ?ListUsersPaginationResponse</code></summary>
+## InlineUsersInlineUsers
+<details><summary><code>$client-&gt;inlineUsersInlineUsers-&gt;inlineUsersInlineUsersListWithCursorPagination($request) -> ?InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -75,13 +75,8 @@ $client->complex->search(
 <dd>
 
 ```php
-$client->inlineUsers->inlineUsers->listWithCursorPagination(
-    new ListUsersCursorPaginationRequest([
-        'page' => 1,
-        'perPage' => 1,
-        'order' => Order::Asc->value,
-        'startingAfter' => 'starting_after',
-    ]),
+$client->inlineUsersInlineUsers->inlineUsersInlineUsersListWithCursorPagination(
+    new InlineUsersInlineUsersListWithCursorPaginationRequest([]),
 );
 ```
 </dd>
@@ -136,7 +131,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;inlineUsers-&gt;inlineUsers-&gt;listWithMixedTypeCursorPagination($request) -> ?ListUsersMixedTypePaginationResponse</code></summary>
+<details><summary><code>$client-&gt;inlineUsersInlineUsers-&gt;inlineUsersInlineUsersListWithMixedTypeCursorPagination($request) -> ?InlineUsersListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -149,10 +144,8 @@ the next page of results.
 <dd>
 
 ```php
-$client->inlineUsers->inlineUsers->listWithMixedTypeCursorPagination(
-    new ListUsersMixedTypeCursorPaginationRequest([
-        'cursor' => 'cursor',
-    ]),
+$client->inlineUsersInlineUsers->inlineUsersInlineUsersListWithMixedTypeCursorPagination(
+    new InlineUsersInlineUsersListWithMixedTypeCursorPaginationRequest([]),
 );
 ```
 </dd>
@@ -180,7 +173,7 @@ $client->inlineUsers->inlineUsers->listWithMixedTypeCursorPagination(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;inlineUsers-&gt;inlineUsers-&gt;listWithBodyCursorPagination($request) -> ?ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;inlineUsersInlineUsers-&gt;inlineUsersInlineUsersListWithBodyCursorPagination($request) -> ?InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -193,12 +186,8 @@ $client->inlineUsers->inlineUsers->listWithMixedTypeCursorPagination(
 <dd>
 
 ```php
-$client->inlineUsers->inlineUsers->listWithBodyCursorPagination(
-    new ListUsersBodyCursorPaginationRequest([
-        'pagination' => new WithCursor([
-            'cursor' => 'cursor',
-        ]),
-    ]),
+$client->inlineUsersInlineUsers->inlineUsersInlineUsersListWithBodyCursorPagination(
+    new InlineUsersInlineUsersListWithBodyCursorPaginationRequest([]),
 );
 ```
 </dd>
@@ -214,7 +203,7 @@ $client->inlineUsers->inlineUsers->listWithBodyCursorPagination(
 <dl>
 <dd>
 
-**$pagination:** `?WithCursor` 
+**$pagination:** `?InlineUsersWithCursor` 
 
 The object that contains the cursor used for pagination
 in order to fetch the next page of results.
@@ -229,7 +218,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;inlineUsers-&gt;inlineUsers-&gt;listWithOffsetPagination($request) -> ?ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;inlineUsersInlineUsers-&gt;inlineUsersInlineUsersListWithOffsetPagination($request) -> ?InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -242,13 +231,8 @@ in order to fetch the next page of results.
 <dd>
 
 ```php
-$client->inlineUsers->inlineUsers->listWithOffsetPagination(
-    new ListUsersOffsetPaginationRequest([
-        'page' => 1,
-        'perPage' => 1,
-        'order' => Order::Asc->value,
-        'startingAfter' => 'starting_after',
-    ]),
+$client->inlineUsersInlineUsers->inlineUsersInlineUsersListWithOffsetPagination(
+    new InlineUsersInlineUsersListWithOffsetPaginationRequest([]),
 );
 ```
 </dd>
@@ -303,7 +287,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;inlineUsers-&gt;inlineUsers-&gt;listWithDoubleOffsetPagination($request) -> ?ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;inlineUsersInlineUsers-&gt;inlineUsersInlineUsersListWithDoubleOffsetPagination($request) -> ?InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -316,13 +300,8 @@ the next page of results.
 <dd>
 
 ```php
-$client->inlineUsers->inlineUsers->listWithDoubleOffsetPagination(
-    new ListUsersDoubleOffsetPaginationRequest([
-        'page' => 1.1,
-        'perPage' => 1.1,
-        'order' => Order::Asc->value,
-        'startingAfter' => 'starting_after',
-    ]),
+$client->inlineUsersInlineUsers->inlineUsersInlineUsersListWithDoubleOffsetPagination(
+    new InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest([]),
 );
 ```
 </dd>
@@ -377,7 +356,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;inlineUsers-&gt;inlineUsers-&gt;listWithBodyOffsetPagination($request) -> ?ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;inlineUsersInlineUsers-&gt;inlineUsersInlineUsersListWithBodyOffsetPagination($request) -> ?InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -390,12 +369,8 @@ the next page of results.
 <dd>
 
 ```php
-$client->inlineUsers->inlineUsers->listWithBodyOffsetPagination(
-    new ListUsersBodyOffsetPaginationRequest([
-        'pagination' => new WithPage([
-            'page' => 1,
-        ]),
-    ]),
+$client->inlineUsersInlineUsers->inlineUsersInlineUsersListWithBodyOffsetPagination(
+    new InlineUsersInlineUsersListWithBodyOffsetPaginationRequest([]),
 );
 ```
 </dd>
@@ -411,7 +386,7 @@ $client->inlineUsers->inlineUsers->listWithBodyOffsetPagination(
 <dl>
 <dd>
 
-**$pagination:** `?WithPage` 
+**$pagination:** `?InlineUsersWithPage` 
 
 The object that contains the offset used for pagination
 in order to fetch the next page of results.
@@ -426,7 +401,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;inlineUsers-&gt;inlineUsers-&gt;listWithOffsetStepPagination($request) -> ?ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;inlineUsersInlineUsers-&gt;inlineUsersInlineUsersListWithOffsetStepPagination($request) -> ?InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -439,12 +414,8 @@ in order to fetch the next page of results.
 <dd>
 
 ```php
-$client->inlineUsers->inlineUsers->listWithOffsetStepPagination(
-    new ListUsersOffsetStepPaginationRequest([
-        'page' => 1,
-        'limit' => 1,
-        'order' => Order::Asc->value,
-    ]),
+$client->inlineUsersInlineUsers->inlineUsersInlineUsersListWithOffsetStepPagination(
+    new InlineUsersInlineUsersListWithOffsetStepPaginationRequest([]),
 );
 ```
 </dd>
@@ -492,7 +463,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;inlineUsers-&gt;inlineUsers-&gt;listWithOffsetPaginationHasNextPage($request) -> ?ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;inlineUsersInlineUsers-&gt;inlineUsersInlineUsersListWithOffsetPaginationHasNextPage($request) -> ?InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -505,12 +476,8 @@ paginated endpoint.
 <dd>
 
 ```php
-$client->inlineUsers->inlineUsers->listWithOffsetPaginationHasNextPage(
-    new ListWithOffsetPaginationHasNextPageRequest([
-        'page' => 1,
-        'limit' => 1,
-        'order' => Order::Asc->value,
-    ]),
+$client->inlineUsersInlineUsers->inlineUsersInlineUsersListWithOffsetPaginationHasNextPage(
+    new InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest([]),
 );
 ```
 </dd>
@@ -558,7 +525,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;inlineUsers-&gt;inlineUsers-&gt;listWithExtendedResults($request) -> ?ListUsersExtendedResponse</code></summary>
+<details><summary><code>$client-&gt;inlineUsersInlineUsers-&gt;inlineUsersInlineUsersListWithExtendedResults($request) -> ?InlineUsersListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -571,10 +538,8 @@ paginated endpoint.
 <dd>
 
 ```php
-$client->inlineUsers->inlineUsers->listWithExtendedResults(
-    new ListUsersExtendedRequest([
-        'cursor' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    ]),
+$client->inlineUsersInlineUsers->inlineUsersInlineUsersListWithExtendedResults(
+    new InlineUsersInlineUsersListWithExtendedResultsRequest([]),
 );
 ```
 </dd>
@@ -602,7 +567,7 @@ $client->inlineUsers->inlineUsers->listWithExtendedResults(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;inlineUsers-&gt;inlineUsers-&gt;listWithExtendedResultsAndOptionalData($request) -> ?ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>$client-&gt;inlineUsersInlineUsers-&gt;inlineUsersInlineUsersListWithExtendedResultsAndOptionalData($request) -> ?InlineUsersListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -615,10 +580,8 @@ $client->inlineUsers->inlineUsers->listWithExtendedResults(
 <dd>
 
 ```php
-$client->inlineUsers->inlineUsers->listWithExtendedResultsAndOptionalData(
-    new ListUsersExtendedRequestForOptionalData([
-        'cursor' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    ]),
+$client->inlineUsersInlineUsers->inlineUsersInlineUsersListWithExtendedResultsAndOptionalData(
+    new InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest([]),
 );
 ```
 </dd>
@@ -646,7 +609,7 @@ $client->inlineUsers->inlineUsers->listWithExtendedResultsAndOptionalData(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;inlineUsers-&gt;inlineUsers-&gt;listUsernames($request) -> ?UsernameCursor</code></summary>
+<details><summary><code>$client-&gt;inlineUsersInlineUsers-&gt;inlineUsersInlineUsersListUsernames($request) -> ?UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -659,10 +622,8 @@ $client->inlineUsers->inlineUsers->listWithExtendedResultsAndOptionalData(
 <dd>
 
 ```php
-$client->inlineUsers->inlineUsers->listUsernames(
-    new ListUsernamesRequest([
-        'startingAfter' => 'starting_after',
-    ]),
+$client->inlineUsersInlineUsers->inlineUsersInlineUsersListUsernames(
+    new InlineUsersInlineUsersListUsernamesRequest([]),
 );
 ```
 </dd>
@@ -693,7 +654,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;inlineUsers-&gt;inlineUsers-&gt;listWithGlobalConfig($request) -> ?UsernameContainer</code></summary>
+<details><summary><code>$client-&gt;inlineUsersInlineUsers-&gt;inlineUsersInlineUsersListWithGlobalConfig($request) -> ?InlineUsersUsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -706,10 +667,8 @@ the next page of results.
 <dd>
 
 ```php
-$client->inlineUsers->inlineUsers->listWithGlobalConfig(
-    new ListWithGlobalConfigRequest([
-        'offset' => 1,
-    ]),
+$client->inlineUsersInlineUsers->inlineUsersInlineUsersListWithGlobalConfig(
+    new InlineUsersInlineUsersListWithGlobalConfigRequest([]),
 );
 ```
 </dd>
@@ -738,7 +697,7 @@ $client->inlineUsers->inlineUsers->listWithGlobalConfig(
 </details>
 
 ## Users
-<details><summary><code>$client-&gt;users-&gt;listWithCursorPagination($request) -> ?ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithcursorpagination($request) -> ?ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -751,13 +710,8 @@ $client->inlineUsers->inlineUsers->listWithGlobalConfig(
 <dd>
 
 ```php
-$client->users->listWithCursorPagination(
-    new ListUsersCursorPaginationRequest([
-        'page' => 1,
-        'perPage' => 1,
-        'order' => Order::Asc->value,
-        'startingAfter' => 'starting_after',
-    ]),
+$client->users->listwithcursorpagination(
+    new UsersListWithCursorPaginationRequest([]),
 );
 ```
 </dd>
@@ -812,7 +766,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listWithMixedTypeCursorPagination($request) -> ?ListUsersMixedTypePaginationResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithmixedtypecursorpagination($request) -> ?ListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -825,10 +779,8 @@ the next page of results.
 <dd>
 
 ```php
-$client->users->listWithMixedTypeCursorPagination(
-    new ListUsersMixedTypeCursorPaginationRequest([
-        'cursor' => 'cursor',
-    ]),
+$client->users->listwithmixedtypecursorpagination(
+    new UsersListWithMixedTypeCursorPaginationRequest([]),
 );
 ```
 </dd>
@@ -856,7 +808,7 @@ $client->users->listWithMixedTypeCursorPagination(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listWithBodyCursorPagination($request) -> ?ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithbodycursorpagination($request) -> ?ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -869,12 +821,8 @@ $client->users->listWithMixedTypeCursorPagination(
 <dd>
 
 ```php
-$client->users->listWithBodyCursorPagination(
-    new ListUsersBodyCursorPaginationRequest([
-        'pagination' => new WithCursor([
-            'cursor' => 'cursor',
-        ]),
-    ]),
+$client->users->listwithbodycursorpagination(
+    new UsersListWithBodyCursorPaginationRequest([]),
 );
 ```
 </dd>
@@ -905,7 +853,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listWithTopLevelBodyCursorPagination($request) -> ?ListUsersTopLevelCursorPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithtoplevelbodycursorpagination($request) -> ?ListUsersTopLevelCursorPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -934,11 +882,8 @@ when getNextPage() is called with a different cursor value.
 <dd>
 
 ```php
-$client->users->listWithTopLevelBodyCursorPagination(
-    new ListUsersTopLevelBodyCursorPaginationRequest([
-        'cursor' => 'initial_cursor',
-        'filter' => 'active',
-    ]),
+$client->users->listwithtoplevelbodycursorpagination(
+    new UsersListWithTopLevelBodyCursorPaginationRequest([]),
 );
 ```
 </dd>
@@ -977,7 +922,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listWithOffsetPagination($request) -> ?ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithoffsetpagination($request) -> ?ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -990,13 +935,8 @@ the next page of results.
 <dd>
 
 ```php
-$client->users->listWithOffsetPagination(
-    new ListUsersOffsetPaginationRequest([
-        'page' => 1,
-        'perPage' => 1,
-        'order' => Order::Asc->value,
-        'startingAfter' => 'starting_after',
-    ]),
+$client->users->listwithoffsetpagination(
+    new UsersListWithOffsetPaginationRequest([]),
 );
 ```
 </dd>
@@ -1051,7 +991,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listWithDoubleOffsetPagination($request) -> ?ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithdoubleoffsetpagination($request) -> ?ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1064,13 +1004,8 @@ the next page of results.
 <dd>
 
 ```php
-$client->users->listWithDoubleOffsetPagination(
-    new ListUsersDoubleOffsetPaginationRequest([
-        'page' => 1.1,
-        'perPage' => 1.1,
-        'order' => Order::Asc->value,
-        'startingAfter' => 'starting_after',
-    ]),
+$client->users->listwithdoubleoffsetpagination(
+    new UsersListWithDoubleOffsetPaginationRequest([]),
 );
 ```
 </dd>
@@ -1125,7 +1060,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listWithBodyOffsetPagination($request) -> ?ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithbodyoffsetpagination($request) -> ?ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1138,12 +1073,8 @@ the next page of results.
 <dd>
 
 ```php
-$client->users->listWithBodyOffsetPagination(
-    new ListUsersBodyOffsetPaginationRequest([
-        'pagination' => new WithPage([
-            'page' => 1,
-        ]),
-    ]),
+$client->users->listwithbodyoffsetpagination(
+    new UsersListWithBodyOffsetPaginationRequest([]),
 );
 ```
 </dd>
@@ -1174,7 +1105,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listWithOffsetStepPagination($request) -> ?ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithoffsetsteppagination($request) -> ?ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1187,12 +1118,8 @@ in order to fetch the next page of results.
 <dd>
 
 ```php
-$client->users->listWithOffsetStepPagination(
-    new ListUsersOffsetStepPaginationRequest([
-        'page' => 1,
-        'limit' => 1,
-        'order' => Order::Asc->value,
-    ]),
+$client->users->listwithoffsetsteppagination(
+    new UsersListWithOffsetStepPaginationRequest([]),
 );
 ```
 </dd>
@@ -1240,7 +1167,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listWithOffsetPaginationHasNextPage($request) -> ?ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithoffsetpaginationhasnextpage($request) -> ?ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1253,12 +1180,8 @@ paginated endpoint.
 <dd>
 
 ```php
-$client->users->listWithOffsetPaginationHasNextPage(
-    new ListWithOffsetPaginationHasNextPageRequest([
-        'page' => 1,
-        'limit' => 3,
-        'order' => Order::Asc->value,
-    ]),
+$client->users->listwithoffsetpaginationhasnextpage(
+    new UsersListWithOffsetPaginationHasNextPageRequest([]),
 );
 ```
 </dd>
@@ -1306,7 +1229,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listWithExtendedResults($request) -> ?ListUsersExtendedResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithextendedresults($request) -> ?ListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -1319,10 +1242,8 @@ paginated endpoint.
 <dd>
 
 ```php
-$client->users->listWithExtendedResults(
-    new ListUsersExtendedRequest([
-        'cursor' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    ]),
+$client->users->listwithextendedresults(
+    new UsersListWithExtendedResultsRequest([]),
 );
 ```
 </dd>
@@ -1350,7 +1271,7 @@ $client->users->listWithExtendedResults(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listWithExtendedResultsAndOptionalData($request) -> ?ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithextendedresultsandoptionaldata($request) -> ?ListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -1363,10 +1284,8 @@ $client->users->listWithExtendedResults(
 <dd>
 
 ```php
-$client->users->listWithExtendedResultsAndOptionalData(
-    new ListUsersExtendedRequestForOptionalData([
-        'cursor' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    ]),
+$client->users->listwithextendedresultsandoptionaldata(
+    new UsersListWithExtendedResultsAndOptionalDataRequest([]),
 );
 ```
 </dd>
@@ -1394,7 +1313,7 @@ $client->users->listWithExtendedResultsAndOptionalData(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listUsernames($request) -> ?UsernameCursor</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listusernames($request) -> ?UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1407,10 +1326,8 @@ $client->users->listWithExtendedResultsAndOptionalData(
 <dd>
 
 ```php
-$client->users->listUsernames(
-    new ListUsernamesRequest([
-        'startingAfter' => 'starting_after',
-    ]),
+$client->users->listusernames(
+    new UsersListUsernamesRequest([]),
 );
 ```
 </dd>
@@ -1441,7 +1358,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listUsernamesWithOptionalResponse($request) -> ?UsernameCursor</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listusernameswithoptionalresponse($request) -> ?UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1454,10 +1371,8 @@ the next page of results.
 <dd>
 
 ```php
-$client->users->listUsernamesWithOptionalResponse(
-    new ListUsernamesWithOptionalResponseRequest([
-        'startingAfter' => 'starting_after',
-    ]),
+$client->users->listusernameswithoptionalresponse(
+    new UsersListUsernamesWithOptionalResponseRequest([]),
 );
 ```
 </dd>
@@ -1488,7 +1403,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listWithGlobalConfig($request) -> ?UsernameContainer</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithglobalconfig($request) -> ?UsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -1501,10 +1416,8 @@ the next page of results.
 <dd>
 
 ```php
-$client->users->listWithGlobalConfig(
-    new ListWithGlobalConfigRequest([
-        'offset' => 1,
-    ]),
+$client->users->listwithglobalconfig(
+    new UsersListWithGlobalConfigRequest([]),
 );
 ```
 </dd>
@@ -1532,7 +1445,7 @@ $client->users->listWithGlobalConfig(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listWithOptionalData($request) -> ?ListUsersOptionalDataPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithoptionaldata($request) -> ?ListUsersOptionalDataPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1545,10 +1458,8 @@ $client->users->listWithGlobalConfig(
 <dd>
 
 ```php
-$client->users->listWithOptionalData(
-    new ListUsersOptionalDataRequest([
-        'page' => 1,
-    ]),
+$client->users->listwithoptionaldata(
+    new UsersListWithOptionalDataRequest([]),
 );
 ```
 </dd>
@@ -1576,7 +1487,7 @@ $client->users->listWithOptionalData(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listWithAliasedData($request) -> ?ListUsersAliasedDataPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithaliaseddata($request) -> ?ListUsersAliasedDataPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1589,12 +1500,8 @@ $client->users->listWithOptionalData(
 <dd>
 
 ```php
-$client->users->listWithAliasedData(
-    new ListUsersAliasedDataRequest([
-        'page' => 1,
-        'perPage' => 1,
-        'startingAfter' => 'starting_after',
-    ]),
+$client->users->listwithaliaseddata(
+    new UsersListWithAliasedDataRequest([]),
 );
 ```
 </dd>

@@ -4,55 +4,55 @@
             "id": {
                 "path": "/get-something",
                 "method": "GET",
-                "identifier_override": "endpoint_simple.getSomething"
+                "identifier_override": "endpoint_simple.getsomething"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/inferred-auth-implicit-no-expiry/fern/client\"\n\toption \"github.com/inferred-auth-implicit-no-expiry/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithXAPIKey(\n\t\t\"\u003cYOUR_X_API_KEY\u003e\",\n\t),\n)\nerr := client.Simple.GetSomething(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/inferred-auth-implicit-no-expiry/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Simple.Getsomething(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/nested-no-auth/get-something",
                 "method": "GET",
-                "identifier_override": "endpoint_nested-no-auth/api.getSomething"
+                "identifier_override": "endpoint_nestedNoAuthApi.nestedNoAuth_api_getSomething"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/inferred-auth-implicit-no-expiry/fern/client\"\n\toption \"github.com/inferred-auth-implicit-no-expiry/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithXAPIKey(\n\t\t\"\u003cYOUR_X_API_KEY\u003e\",\n\t),\n)\nerr := client.NestedNoAuth.API.GetSomething(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/inferred-auth-implicit-no-expiry/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.NestedNoAuthAPI.NestedNoAuthAPIGetSomething(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/nested/get-something",
                 "method": "GET",
-                "identifier_override": "endpoint_nested/api.getSomething"
+                "identifier_override": "endpoint_nestedApi.nested_api_getSomething"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/inferred-auth-implicit-no-expiry/fern/client\"\n\toption \"github.com/inferred-auth-implicit-no-expiry/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithXAPIKey(\n\t\t\"\u003cYOUR_X_API_KEY\u003e\",\n\t),\n)\nerr := client.Nested.API.GetSomething(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/inferred-auth-implicit-no-expiry/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.NestedAPI.NestedAPIGetSomething(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/token",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+                "identifier_override": "endpoint_auth.gettokenwithclientcredentials"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/inferred-auth-implicit-no-expiry/fern\"\n\tfernclient \"github.com/inferred-auth-implicit-no-expiry/fern/client\"\n\toption \"github.com/inferred-auth-implicit-no-expiry/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithXAPIKey(\n\t\t\"\u003cYOUR_X_API_KEY\u003e\",\n\t),\n)\nresponse, err := client.Auth.GetTokenWithClientCredentials(\n\tcontext.TODO(),\n\t\u0026fern.GetTokenRequest{\n\t\tXAPIKey:      \"X-Api-Key\",\n\t\tClientID:     \"client_id\",\n\t\tClientSecret: \"client_secret\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/inferred-auth-implicit-no-expiry/fern\"\n\tfernclient \"github.com/inferred-auth-implicit-no-expiry/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.Gettokenwithclientcredentials(\n\tcontext.TODO(),\n\t\u0026fern.AuthGetTokenWithClientCredentialsRequest{\n\t\tAPIKey:       \"X-Api-Key\",\n\t\tClientID:     \"client_id\",\n\t\tClientSecret: \"client_secret\",\n\t\tAudience:     fern.AuthGetTokenWithClientCredentialsRequestAudienceHttpsApiExampleCom,\n\t\tGrantType:    fern.AuthGetTokenWithClientCredentialsRequestGrantTypeClientCredentials,\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/token/refresh",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.refreshToken"
+                "identifier_override": "endpoint_auth.refreshtoken"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/inferred-auth-implicit-no-expiry/fern\"\n\tfernclient \"github.com/inferred-auth-implicit-no-expiry/fern/client\"\n\toption \"github.com/inferred-auth-implicit-no-expiry/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithXAPIKey(\n\t\t\"\u003cYOUR_X_API_KEY\u003e\",\n\t),\n)\nresponse, err := client.Auth.RefreshToken(\n\tcontext.TODO(),\n\t\u0026fern.RefreshTokenRequest{\n\t\tXAPIKey:      \"X-Api-Key\",\n\t\tClientID:     \"client_id\",\n\t\tClientSecret: \"client_secret\",\n\t\tRefreshToken: \"refresh_token\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/inferred-auth-implicit-no-expiry/fern\"\n\tfernclient \"github.com/inferred-auth-implicit-no-expiry/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.Refreshtoken(\n\tcontext.TODO(),\n\t\u0026fern.AuthRefreshTokenRequest{\n\t\tAPIKey:       \"X-Api-Key\",\n\t\tClientID:     \"client_id\",\n\t\tClientSecret: \"client_secret\",\n\t\tRefreshToken: \"refresh_token\",\n\t\tAudience:     fern.AuthRefreshTokenRequestAudienceHttpsApiExampleCom,\n\t\tGrantType:    fern.AuthRefreshTokenRequestGrantTypeRefreshToken,\n\t},\n)\n"
             }
         }
     ]

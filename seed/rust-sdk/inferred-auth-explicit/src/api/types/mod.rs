@@ -1,7 +1,15 @@
-pub mod auth_token_response;
-pub mod get_token_request;
-pub mod refresh_token_request;
+pub mod auth_auth_get_token_with_client_credentials_request_audience;
+pub mod auth_auth_get_token_with_client_credentials_request_grant_type;
+pub mod auth_auth_refresh_token_request_audience;
+pub mod auth_auth_refresh_token_request_grant_type;
+pub mod auth_get_token_with_client_credentials_request;
+pub mod auth_refresh_token_request;
+pub mod token_response;
 
-pub use auth_token_response::TokenResponse;
-pub use get_token_request::GetTokenRequest;
-pub use refresh_token_request::RefreshTokenRequest;
+pub use auth_auth_get_token_with_client_credentials_request_audience::AuthGetTokenWithClientCredentialsRequestAudience;
+pub use auth_auth_get_token_with_client_credentials_request_grant_type::AuthGetTokenWithClientCredentialsRequestGrantType;
+pub use auth_auth_refresh_token_request_audience::AuthRefreshTokenRequestAudience;
+pub use auth_auth_refresh_token_request_grant_type::AuthRefreshTokenRequestGrantType;
+pub use auth_get_token_with_client_credentials_request::AuthGetTokenWithClientCredentialsRequest;
+pub use auth_refresh_token_request::AuthRefreshTokenRequest;
+pub use token_response::TokenResponse;

@@ -14,11 +14,11 @@ impl ServiceClient {
 
     pub async fn simple(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(Method::POST, "/snippet", None, None, options)
+            .execute_request(Method::POST, "snippet", None, None, options)
             .await
     }
 
-    pub async fn download_file(
+    pub async fn downloadfile(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<ByteStream, ApiError> {

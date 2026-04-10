@@ -1,6 +1,6 @@
 # Reference
 ## Retries
-<details><summary><code>client.retries.<a href="/lib/seed/retries/client.rb">get_users</a>() -> Internal::Types::Array[Seed::Retries::Types::User]</code></summary>
+<details><summary><code>client.retries.<a href="/lib/seed/retries/client.rb">getusers</a>() -> Internal::Types::Array[Seed::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.retries.get_users
+client.retries.getusers
 ```
 </dd>
 </dl>

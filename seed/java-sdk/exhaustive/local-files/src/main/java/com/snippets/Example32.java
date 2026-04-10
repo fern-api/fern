@@ -1,21 +1,19 @@
 package com.snippets;
 
-import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.endpoints.pagination.requests.ListItemsRequest;
+import com.fern.sdk.SeedApiClient;
+import com.fern.sdk.types.TypesObjectWithOptionalField;
 
 public class Example32 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().pagination().listItems(
-            ListItemsRequest
+        client.endpointsObject().endpointsObjectGetAndReturnWithOptionalField(
+            TypesObjectWithOptionalField
                 .builder()
-                .cursor("cursor")
-                .limit(1)
                 .build()
         );
     }

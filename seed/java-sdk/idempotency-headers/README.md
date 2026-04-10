@@ -55,19 +55,19 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;
-import com.seed.idempotencyHeaders.resources.payment.requests.CreatePaymentRequest;
-import com.seed.idempotencyHeaders.resources.payment.types.Currency;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.payment.requests.PaymentCreateRequest;
+import com.seed.api.types.Currency;
 
 public class Example {
     public static void main(String[] args) {
-        SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .build();
 
         client.payment().create(
-            CreatePaymentRequest
+            PaymentCreateRequest
                 .builder()
                 .amount(1)
                 .currency(Currency.USD)
@@ -82,9 +82,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;
+import com.seed.api.SeedApiClient;
 
-SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient
+SeedApiClient client = SeedApiClient
     .builder()
     .url("https://example.com")
     .build();
@@ -95,11 +95,11 @@ SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.idempotencyHeaders.core.SeedIdempotencyHeadersApiException;
+import com.seed.api.core.SeedApiApiException;
 
 try{
     client.payment().create(...);
-} catch (SeedIdempotencyHeadersApiException e){
+} catch (SeedApiApiException e){
     // Do something with the API exception...
 }
 ```
@@ -112,12 +112,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;
+import com.seed.api.SeedApiClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient
+SeedApiClient client = SeedApiClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -140,9 +140,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;
+import com.seed.api.SeedApiClient;
 
-SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient
+SeedApiClient client = SeedApiClient
     .builder()
     .maxRetries(1)
     .build();
@@ -152,11 +152,11 @@ SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;
-import com.seed.idempotencyHeaders.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient
+SeedApiClient client = SeedApiClient
     .builder()
     .timeout(60)
     .build();
@@ -176,11 +176,11 @@ client.payment().create(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;
-import com.seed.idempotencyHeaders.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient
+SeedApiClient client = SeedApiClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -204,7 +204,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedIdempotencyHeadersHttpResponse response = client.payment().withRawResponse().create(...);
+SeedApiHttpResponse response = client.payment().withRawResponse().create(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

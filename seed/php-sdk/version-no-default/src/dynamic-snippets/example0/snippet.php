@@ -9,6 +9,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->user->getUser(
+$client->user->getuser(
     'userId',
 );

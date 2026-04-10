@@ -1,9 +1,8 @@
 require "seed"
 
 client = Seed::Client.new(
-  client_id: "<clientId>",
-  client_secret: "<clientSecret>",
+  token: "<token>",
   base_url: "https://api.fern.com"
 )
 
-client.simple.get_something
+client.nested_api.nested_api_get_something

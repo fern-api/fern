@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedApiWideBasePath/Service/ServiceClient.cs">PostAsync</a>(pathParam, serviceParam, endpointParam, resourceParam)</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">PostAsync</a>(ServicePostRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,15 @@
 <dd>
 
 ```csharp
-await client.Service.PostAsync("pathParam", "serviceParam", 1, "resourceParam");
+await client.Service.PostAsync(
+    new ServicePostRequest
+    {
+        PathParam = "pathParam",
+        ServiceParam = "serviceParam",
+        EndpointParam = 1,
+        ResourceParam = "resourceParam",
+    }
+);
 ```
 </dd>
 </dl>
@@ -28,31 +36,7 @@ await client.Service.PostAsync("pathParam", "serviceParam", 1, "resourceParam");
 <dl>
 <dd>
 
-**pathParam:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**serviceParam:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**endpointParam:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**resourceParam:** `string` 
+**request:** `ServicePostRequest` 
     
 </dd>
 </dl>

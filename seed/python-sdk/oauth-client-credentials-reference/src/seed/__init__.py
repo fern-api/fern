@@ -6,18 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .types import TokenResponse
     from . import auth, simple
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .auth import GetTokenRequest, TokenResponse
-    from .client import AsyncSeedOauthClientCredentialsReference, SeedOauthClientCredentialsReference
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedOauthClientCredentialsReference": ".client",
+    "AsyncSeedApi": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "GetTokenRequest": ".auth",
-    "SeedOauthClientCredentialsReference": ".client",
-    "TokenResponse": ".auth",
+    "SeedApi": ".client",
+    "TokenResponse": ".types",
     "__version__": ".version",
     "auth": ".auth",
     "simple": ".simple",
@@ -46,11 +45,10 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedOauthClientCredentialsReference",
+    "AsyncSeedApi",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
-    "GetTokenRequest",
-    "SeedOauthClientCredentialsReference",
+    "SeedApi",
     "TokenResponse",
     "__version__",
     "auth",

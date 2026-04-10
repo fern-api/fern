@@ -13,10 +13,9 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.User.GetUserMetadata(
+    client.User.Getuser(
         context.TODO(),
         "tenant_id",
         "user_id",
-        1,
     )
 }

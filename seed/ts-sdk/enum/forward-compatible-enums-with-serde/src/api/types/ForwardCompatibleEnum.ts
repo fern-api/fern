@@ -3,12 +3,6 @@
 /**
  * Tests forward-compatible enums that accept
  * both known values and arbitrary strings.
- *
- * @example
- *     SeedEnum.ForwardCompatibleEnum.Active
- *
- * @example
- *     SeedEnum.ForwardCompatibleEnum.Inactive
  */
 export const ForwardCompatibleEnum = {
     Active: "active",

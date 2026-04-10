@@ -6,11 +6,11 @@
             "id": {
                 "path": "/send-optional-body",
                 "method": "POST",
-                "identifier_override": "endpoint_optional.sendOptionalBody"
+                "identifier_override": "endpoint_optional.sendoptionalbody"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedObjectsWithImports;\n\nvar client = new SeedObjectsWithImportsClient();\nawait client.Optional.SendOptionalBodyAsync(\n    new Dictionary<string, object?>()\n    {\n        {\n            \"string\",\n            new Dictionary<object, object?>() { { \"key\", \"value\" } }\n        },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Optional.SendoptionalbodyAsync(\n    new Dictionary<string, object?>() { { \"key\", \"value\" } }\n);\n"
             }
         },
         {
@@ -18,11 +18,11 @@
             "id": {
                 "path": "/send-optional-typed-body",
                 "method": "POST",
-                "identifier_override": "endpoint_optional.sendOptionalTypedBody"
+                "identifier_override": "endpoint_optional.sendoptionaltypedbody"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedObjectsWithImports;\n\nvar client = new SeedObjectsWithImportsClient();\nawait client.Optional.SendOptionalTypedBodyAsync(\n    new SendOptionalBodyRequest { Message = \"message\" }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Optional.SendoptionaltypedbodyAsync(\n    new SendOptionalBodyRequest { Message = \"message\" }\n);\n"
             }
         },
         {
@@ -30,11 +30,11 @@
             "id": {
                 "path": "/deploy/{actionId}/versions/{id}",
                 "method": "POST",
-                "identifier_override": "endpoint_optional.sendOptionalNullableWithAllOptionalProperties"
+                "identifier_override": "endpoint_optional.sendoptionalnullablewithalloptionalproperties"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedObjectsWithImports;\n\nvar client = new SeedObjectsWithImportsClient();\nawait client.Optional.SendOptionalNullableWithAllOptionalPropertiesAsync(\n    \"actionId\",\n    \"id\",\n    new DeployParams { UpdateDraft = true }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Optional.SendoptionalnullablewithalloptionalpropertiesAsync(\n    new DeployParams { ActionId = \"actionId\", Id = \"id\" }\n);\n"
             }
         }
     ]

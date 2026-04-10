@@ -3,15 +3,15 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Dummy\Requests\GenerateStreamRequest;
+use Seed\Dummy\Requests\DummyGenerateRequest;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->dummy->generateStream(
-    new GenerateStreamRequest([
+$client->dummy->generate(
+    new DummyGenerateRequest([
         'stream' => true,
         'numEvents' => 1,
     ]),

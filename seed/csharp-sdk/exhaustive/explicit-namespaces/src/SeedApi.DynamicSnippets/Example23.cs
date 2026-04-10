@@ -1,25 +1,21 @@
-using SeedExhaustive;
-using SeedExhaustive.Types.Object;
+using SeedApi;
+using SeedApi.EndpointsHttpMethods;
 
 namespace Usage;
 
 public class Example23
 {
     public async Task Do() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.Object.GetAndReturnWithUnknownFieldAsync(
-            new ObjectWithUnknownField {
-                Unknown = new Dictionary<string, object>()
-                {
-                    ["key"] = "value",
-                }
-
+        await client.EndpointsHttpMethods.EndpointsHttpMethodsTestGetAsync(
+            new EndpointsHttpMethodsTestGetRequest {
+                Id = "id"
             }
         );
     }

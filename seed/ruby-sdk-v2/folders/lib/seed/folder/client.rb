@@ -24,7 +24,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/folder",
+          path: "folder",
           request_options: request_options
         )
         begin
@@ -37,11 +37,6 @@ module Seed
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
-      end
-
-      # @return [Seed::Service::Client]
-      def service
-        @service ||= Seed::Folder::Service::Client.new(client: @client)
       end
     end
   end

@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">get_union</a>() -> UnionResponse</code></summary>
+## _
+<details><summary><code>client._.<a href="src/seed/_/client.py">get_union</a>() -> UnionResponse</code></summary>
 <dl>
 <dd>
 
@@ -12,13 +13,13 @@
 <dd>
 
 ```python
-from seed import SeedUndiscriminatedUnionWithResponseProperty
+from seed import SeedApi
 
-client = SeedUndiscriminatedUnionWithResponseProperty(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.get_union()
+client._.get_union()
 
 ```
 </dd>
@@ -46,7 +47,7 @@ client.get_union()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">list_unions</a>() -> UnionListResponse</code></summary>
+<details><summary><code>client._.<a href="src/seed/_/client.py">list_unions</a>() -> UnionListResponse</code></summary>
 <dl>
 <dd>
 
@@ -59,13 +60,13 @@ client.get_union()
 <dd>
 
 ```python
-from seed import SeedUndiscriminatedUnionWithResponseProperty
+from seed import SeedApi
 
-client = SeedUndiscriminatedUnionWithResponseProperty(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.list_unions()
+client._.list_unions()
 
 ```
 </dd>

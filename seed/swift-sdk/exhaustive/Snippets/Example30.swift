@@ -1,15 +1,14 @@
 import Foundation
-import Exhaustive
+import Api
 
 private func main() async throws {
-    let client = ExhaustiveClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpoints.object.getAndReturnWithDatetimeLikeString(request: ObjectWithDatetimeLikeString(
-        datetimeLikeString: "2023-08-31T14:15:22Z",
-        actualDatetime: try! Date("2023-08-31T14:15:22Z", strategy: .iso8601)
+    _ = try await client.endpointsHttpMethods.endpointsHttpMethodsTestPost(request: TypesObjectWithRequiredField(
+        string: "string"
     ))
 }
 

@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.payment.create(request) -> UUID</code></summary>
+<details><summary><code>client.payment.create(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,7 @@
 
 ```java
 client.payment().create(
-    CreatePaymentRequest
+    PaymentCreateRequest
         .builder()
         .amount(1)
         .currency(Currency.USD)
@@ -67,7 +67,12 @@ client.payment().create(
 <dd>
 
 ```java
-client.payment().delete("paymentId");
+client.payment().delete(
+    "paymentId",
+    PaymentDeleteRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>

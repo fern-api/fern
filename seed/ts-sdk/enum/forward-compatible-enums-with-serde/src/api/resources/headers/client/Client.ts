@@ -8,7 +8,7 @@ import { toJson } from "../../../../core/json.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedEnum from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace HeadersClient {
     export type Options = BaseClientOptions;
@@ -24,26 +24,24 @@ export class HeadersClient {
     }
 
     /**
-     * @param {SeedEnum.SendEnumAsHeaderRequest} request
+     * @param {SeedApi.HeadersSendRequest} request
      * @param {HeadersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.headers.send({
      *         operand: ">",
-     *         maybeOperand: ">",
-     *         operandOrColor: "red",
-     *         maybeOperandOrColor: undefined
+     *         operandOrColor: "red"
      *     })
      */
     public send(
-        request: SeedEnum.SendEnumAsHeaderRequest,
+        request: SeedApi.HeadersSendRequest,
         requestOptions?: HeadersClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
-        request: SeedEnum.SendEnumAsHeaderRequest,
+        request: SeedApi.HeadersSendRequest,
         requestOptions?: HeadersClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
@@ -92,7 +90,7 @@ export class HeadersClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedEnumError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

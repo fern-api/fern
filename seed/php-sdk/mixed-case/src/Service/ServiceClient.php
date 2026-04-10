@@ -4,16 +4,18 @@ namespace Seed\Service;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Service\Types\Resource;
+use Seed\Types\ResourceZero;
+use Seed\Types\ResourceOne;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
+use Seed\Core\Json\JsonDecoder;
+use Seed\Core\Types\Union;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Service\Requests\ListResourcesRequest;
+use Seed\Service\Requests\ServiceListResourcesRequest;
 use Seed\Core\Json\JsonSerializer;
-use Seed\Core\Json\JsonDecoder;
 
 class ServiceClient
 {
@@ -61,18 +63,21 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?Resource
+     * @return (
+     *    ResourceZero
+     *   |ResourceOne
+     * )|null
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getResource(string $resourceId, ?array $options = null): ?Resource
+    public function getresource(string $resourceId, ?array $options = null): ResourceZero|ResourceOne|null
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/resource/{$resourceId}",
+                    path: "resource/{$resourceId}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -83,7 +88,7 @@ class ServiceClient
                 if (empty($json)) {
                     return null;
                 }
-                return Resource::fromJson($json);
+                return JsonDecoder::decodeUnion($json, new Union(ResourceZero::class, ResourceOne::class)); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -98,7 +103,7 @@ class ServiceClient
     }
 
     /**
-     * @param ListResourcesRequest $request
+     * @param ServiceListResourcesRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -107,11 +112,14 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?array<Resource>
+     * @return ?array<(
+     *    ResourceZero
+     *   |ResourceOne
+     * )>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listResources(ListResourcesRequest $request, ?array $options = null): ?array
+    public function listresources(ServiceListResourcesRequest $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -121,7 +129,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/resource",
+                    path: "resource",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -133,7 +141,7 @@ class ServiceClient
                 if (empty($json)) {
                     return null;
                 }
-                return JsonDecoder::decodeArray($json, [Resource::class]); // @phpstan-ignore-line
+                return JsonDecoder::decodeArray($json, [new Union(ResourceZero::class, ResourceOne::class)]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

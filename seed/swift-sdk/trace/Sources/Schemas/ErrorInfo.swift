@@ -1,48 +1,35 @@
 import Foundation
 
 public enum ErrorInfo: Codable, Hashable, Sendable {
-    case compileError(CompileError)
-    /// If the trace backend encounters an unexpected error.
-    case internalError(InternalError)
-    /// If the submission cannot be executed and throws a runtime error before getting to any of the testcases.
-    case runtimeError(RuntimeError)
+    case errorInfoOne(ErrorInfoOne)
+    case errorInfoTwo(ErrorInfoTwo)
+    case errorInfoZero(ErrorInfoZero)
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let discriminant = try container.decode(String.self, forKey: .type)
-        switch discriminant {
-        case "compileError":
-            self = .compileError(try CompileError(from: decoder))
-        case "internalError":
-            self = .internalError(try InternalError(from: decoder))
-        case "runtimeError":
-            self = .runtimeError(try RuntimeError(from: decoder))
-        default:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: decoder.codingPath,
-                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
-                )
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(ErrorInfoOne.self) {
+            self = .errorInfoOne(value)
+        } else if let value = try? container.decode(ErrorInfoTwo.self) {
+            self = .errorInfoTwo(value)
+        } else if let value = try? container.decode(ErrorInfoZero.self) {
+            self = .errorInfoZero(value)
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unexpected value."
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.singleValueContainer()
         switch self {
-        case .compileError(let data):
-            try container.encode("compileError", forKey: .type)
-            try data.encode(to: encoder)
-        case .internalError(let data):
-            try container.encode("internalError", forKey: .type)
-            try data.encode(to: encoder)
-        case .runtimeError(let data):
-            try container.encode("runtimeError", forKey: .type)
-            try data.encode(to: encoder)
+        case .errorInfoOne(let value):
+            try container.encode(value)
+        case .errorInfoTwo(let value):
+            try container.encode(value)
+        case .errorInfoZero(let value):
+            try container.encode(value)
         }
-    }
-
-    enum CodingKeys: String, CodingKey, CaseIterable {
-        case type
     }
 }

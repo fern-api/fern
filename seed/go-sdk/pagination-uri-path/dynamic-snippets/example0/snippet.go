@@ -16,7 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    client.Users.ListWithUriPagination(
+    client.Users.Listwithuripagination(
         context.TODO(),
     )
 }

@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamAsync</a>(StreamCompletionRequest { ... }) -> IAsyncEnumerable&lt;StreamedCompletion&gt;</code></summary>
+<details><summary><code>client.Completions.<a href="/src/SeedApi/Completions/CompletionsClient.cs">StreamAsync</a>(CompletionsStreamRequest { ... }) -> WithRawResponseTask&lt;Stream&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-client.Completions.StreamAsync(new StreamCompletionRequest { Query = "foo" });
+await client.Completions.StreamAsync(new CompletionsStreamRequest { Query = "query" });
 ```
 </dd>
 </dl>
@@ -28,7 +28,7 @@ client.Completions.StreamAsync(new StreamCompletionRequest { Query = "foo" });
 <dl>
 <dd>
 
-**request:** `StreamCompletionRequest` 
+**request:** `CompletionsStreamRequest` 
     
 </dd>
 </dl>
@@ -40,7 +40,7 @@ client.Completions.StreamAsync(new StreamCompletionRequest { Query = "foo" });
 </dl>
 </details>
 
-<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamEventsAsync</a>(StreamEventsRequest { ... }) -> IAsyncEnumerable&lt;StreamEvent&gt;</code></summary>
+<details><summary><code>client.Completions.<a href="/src/SeedApi/Completions/CompletionsClient.cs">StreameventsAsync</a>(CompletionsStreamEventsRequest { ... }) -> WithRawResponseTask&lt;Stream&gt;</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +53,7 @@ client.Completions.StreamAsync(new StreamCompletionRequest { Query = "foo" });
 <dd>
 
 ```csharp
-client.Completions.StreamEventsAsync(new StreamEventsRequest { Query = "query" });
+await client.Completions.StreameventsAsync(new CompletionsStreamEventsRequest { Query = "query" });
 ```
 </dd>
 </dl>
@@ -68,7 +68,7 @@ client.Completions.StreamEventsAsync(new StreamEventsRequest { Query = "query" }
 <dl>
 <dd>
 
-**request:** `StreamEventsRequest` 
+**request:** `CompletionsStreamEventsRequest` 
     
 </dd>
 </dl>
@@ -80,7 +80,7 @@ client.Completions.StreamEventsAsync(new StreamEventsRequest { Query = "query" }
 </dl>
 </details>
 
-<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamEventsContextProtocolAsync</a>(StreamEventsContextProtocolRequest { ... }) -> IAsyncEnumerable&lt;StreamEventContextProtocol&gt;</code></summary>
+<details><summary><code>client.Completions.<a href="/src/SeedApi/Completions/CompletionsClient.cs">StreameventscontextprotocolAsync</a>(CompletionsStreamEventsContextProtocolRequest { ... }) -> WithRawResponseTask&lt;Stream&gt;</code></summary>
 <dl>
 <dd>
 
@@ -93,8 +93,8 @@ client.Completions.StreamEventsAsync(new StreamEventsRequest { Query = "query" }
 <dd>
 
 ```csharp
-client.Completions.StreamEventsContextProtocolAsync(
-    new StreamEventsContextProtocolRequest { Query = "query" }
+await client.Completions.StreameventscontextprotocolAsync(
+    new CompletionsStreamEventsContextProtocolRequest { Query = "query" }
 );
 ```
 </dd>
@@ -110,7 +110,7 @@ client.Completions.StreamEventsContextProtocolAsync(
 <dl>
 <dd>
 
-**request:** `StreamEventsContextProtocolRequest` 
+**request:** `CompletionsStreamEventsContextProtocolRequest` 
     
 </dd>
 </dl>

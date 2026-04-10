@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.getResource(resourceId) -> Resource</code></summary>
+<details><summary><code>client.service.getresource(resourceId) -> Resource</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,12 @@
 <dd>
 
 ```java
-client.service().getResource("rsc-xyz");
+client.service().getresource(
+    "ResourceID",
+    ServiceGetResourceRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -40,7 +45,7 @@ client.service().getResource("rsc-xyz");
 </dl>
 </details>
 
-<details><summary><code>client.service.listResources() -> List&amp;lt;Resource&amp;gt;</code></summary>
+<details><summary><code>client.service.listresources() -> List&amp;lt;Resource&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -53,11 +58,11 @@ client.service().getResource("rsc-xyz");
 <dd>
 
 ```java
-client.service().listResources(
-    ListResourcesRequest
+client.service().listresources(
+    ServiceListResourcesRequest
         .builder()
-        .pageLimit(10)
-        .beforeDate("2023-01-01")
+        .pageLimit(1)
+        .beforeDate("2023-01-15")
         .build()
 );
 ```

@@ -1,13 +1,13 @@
 import Foundation
-import Examples
+import Api
 
 private func main() async throws {
-    let client = ExamplesClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.service.createMovie(request: Movie(
+    _ = try await client.service.createmovie(request: Movie(
         id: "id",
         prequel: "prequel",
         title: "title",
@@ -15,7 +15,7 @@ private func main() async throws {
         rating: 1.1,
         type: .movie,
         tag: "tag",
-        book: "book",
+        book: .value("book"),
         metadata: [
             "metadata": .object([
                 "key": .string("value")

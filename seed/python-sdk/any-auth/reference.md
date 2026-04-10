@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">gettoken</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,16 +13,19 @@
 <dd>
 
 ```python
-from seed import SeedAnyAuth
+from seed import SeedApi
 
-client = SeedAnyAuth(
+client = SeedApi(
     token="<token>",
+    api_key="<X-API-Key>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.auth.get_token(
+client.auth.gettoken(
     client_id="client_id",
     client_secret="client_secret",
+    audience="https://api.example.com",
+    grant_type="client_credentials",
 )
 
 ```
@@ -55,7 +58,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**audience:** `typing.Literal` 
+**audience:** `AuthGetTokenRequestAudience` 
     
 </dd>
 </dl>
@@ -63,7 +66,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**grant_type:** `typing.Literal` 
+**grant_type:** `AuthGetTokenRequestGrantType` 
     
 </dd>
 </dl>
@@ -97,10 +100,11 @@ client.auth.get_token(
 <dd>
 
 ```python
-from seed import SeedAnyAuth
+from seed import SeedApi
 
-client = SeedAnyAuth(
+client = SeedApi(
     token="<token>",
+    api_key="<X-API-Key>",
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -132,7 +136,7 @@ client.user.get()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_admins</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">getadmins</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -145,14 +149,15 @@ client.user.get()
 <dd>
 
 ```python
-from seed import SeedAnyAuth
+from seed import SeedApi
 
-client = SeedAnyAuth(
+client = SeedApi(
     token="<token>",
+    api_key="<X-API-Key>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_admins()
+client.user.getadmins()
 
 ```
 </dd>

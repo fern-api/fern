@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/LicenseClient.swift">get</a>(requestOptions: RequestOptions?) -> Void</code></summary>
+## 
+<details><summary><code>client..<a href="/Sources/Resources//Client.swift">get</a>(requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +14,12 @@
 
 ```swift
 import Foundation
-import License
+import Api
 
 private func main() async throws {
-    let client = LicenseClient()
+    let client = ApiClient()
 
-    _ = try await client.get()
+    _ = try await client..get()
 }
 
 try await main()

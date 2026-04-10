@@ -23,10 +23,8 @@ pub fn serialize<S>(value: &f64, serializer: S) -> Result<S::Ok, S::Error>
 where
     S: Serializer,
 {
-    if value.fract() == 0.0
-        && value.is_finite()
-        && *value >= (i64::MIN as f64)
-        && *value <= (i64::MAX as f64)
+    if value.fract() == 0.0 && value.is_finite()
+        && *value >= (i64::MIN as f64) && *value <= (i64::MAX as f64)
     {
         // Serialize as integer to avoid trailing .0
         (*value as i64).serialize(serializer)
@@ -53,10 +51,8 @@ pub mod option {
     {
         match value {
             Some(v) => {
-                if v.fract() == 0.0
-                    && v.is_finite()
-                    && *v >= (i64::MIN as f64)
-                    && *v <= (i64::MAX as f64)
+                if v.fract() == 0.0 && v.is_finite()
+                    && *v >= (i64::MIN as f64) && *v <= (i64::MAX as f64)
                 {
                     serializer.serialize_some(&(*v as i64))
                 } else {

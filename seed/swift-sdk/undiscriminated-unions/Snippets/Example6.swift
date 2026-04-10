@@ -1,18 +1,10 @@
 import Foundation
-import UndiscriminatedUnions
+import Api
 
 private func main() async throws {
-    let client = UndiscriminatedUnionsClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.union.call(request: Request(
-        union: MetadataUnion.optionalMetadata(
-            [
-                "union": .object([
-                    "key": .string("value")
-                ])
-            ]
-        )
-    ))
+    _ = try await client.union.call(request: .init())
 }
 
 try await main()

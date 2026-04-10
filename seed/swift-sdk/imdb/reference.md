@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.imdb.<a href="/Sources/Resources/Imdb/ImdbClient.swift">createMovie</a>(request: CreateMovieRequest, requestOptions: RequestOptions?) -> MovieId</code></summary>
+<details><summary><code>client.imdb.<a href="/Sources/Resources/Imdb/ImdbClient.swift">createmovie</a>(request: Requests.CreateMovieRequest, requestOptions: RequestOptions?) -> MovieId</code></summary>
 <dl>
 <dd>
 
@@ -33,7 +33,7 @@ import Api
 private func main() async throws {
     let client = ApiClient(token: "<token>")
 
-    _ = try await client.imdb.createMovie(request: CreateMovieRequest(
+    _ = try await client.imdb.createmovie(request: .init(
         title: "title",
         rating: 1.1
     ))
@@ -54,7 +54,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `CreateMovieRequest` 
+**request:** `Requests.CreateMovieRequest` 
     
 </dd>
 </dl>
@@ -74,7 +74,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.imdb.<a href="/Sources/Resources/Imdb/ImdbClient.swift">getMovie</a>(movieId: String, requestOptions: RequestOptions?) -> Movie</code></summary>
+<details><summary><code>client.imdb.<a href="/Sources/Resources/Imdb/ImdbClient.swift">getmovie</a>(movieId: String, requestOptions: RequestOptions?) -> Movie</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +93,7 @@ import Api
 private func main() async throws {
     let client = ApiClient(token: "<token>")
 
-    _ = try await client.imdb.getMovie(movieId: "movieId")
+    _ = try await client.imdb.getmovie(movieId: "movieId")
 }
 
 try await main()

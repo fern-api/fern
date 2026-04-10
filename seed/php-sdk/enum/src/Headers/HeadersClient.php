@@ -4,7 +4,7 @@ namespace Seed\Headers;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Headers\Requests\SendEnumAsHeaderRequest;
+use Seed\Headers\Requests\HeadersSendRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -48,7 +48,7 @@ class HeadersClient
     }
 
     /**
-     * @param SendEnumAsHeaderRequest $request
+     * @param HeadersSendRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -60,7 +60,7 @@ class HeadersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function send(SendEnumAsHeaderRequest $request, ?array $options = null): void
+    public function send(HeadersSendRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];

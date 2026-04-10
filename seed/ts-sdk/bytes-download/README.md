@@ -10,6 +10,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Binary Response](#binary-response)
 - [Advanced](#advanced)
@@ -40,10 +41,23 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedBytesDownloadClient } from "@fern/bytes-download";
+import { SeedApiClient } from "@fern/bytes-download";
 
-const client = new SeedBytesDownloadClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.service.simple();
+```
+
+## Request and Response Types
+
+The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+following namespace:
+
+```typescript
+import { SeedApi } from "@fern/bytes-download";
+
+const request: SeedApi.ServiceDownloadRequest = {
+    ...
+};
 ```
 
 ## Exception Handling
@@ -52,12 +66,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedBytesDownloadError } from "@fern/bytes-download";
+import { SeedApiError } from "@fern/bytes-download";
 
 try {
     await client.service.simple(...);
 } catch (err) {
-    if (err instanceof SeedBytesDownloadError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -472,9 +486,9 @@ const client = new ServiceClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedBytesDownloadClient } from "@fern/bytes-download";
+import { SeedApiClient } from "@fern/bytes-download";
 
-const client = new SeedBytesDownloadClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -559,9 +573,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedBytesDownloadClient, logging } from "@fern/bytes-download";
+import { SeedApiClient, logging } from "@fern/bytes-download";
 
-const client = new SeedBytesDownloadClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

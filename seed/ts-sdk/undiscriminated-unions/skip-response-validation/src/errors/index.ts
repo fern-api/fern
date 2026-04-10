@@ -1,2 +1,2 @@
-export { SeedUndiscriminatedUnionsError } from "./SeedUndiscriminatedUnionsError.js";
-export { SeedUndiscriminatedUnionsTimeoutError } from "./SeedUndiscriminatedUnionsTimeoutError.js";
+export { SeedApiError } from "./SeedApiError.js";
+export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";

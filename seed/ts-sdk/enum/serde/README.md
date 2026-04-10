@@ -40,14 +40,12 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedEnumClient } from "@fern/enum";
+import { SeedApiClient } from "@fern/enum";
 
-const client = new SeedEnumClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.headers.send({
     operand: ">",
-    maybeOperand: ">",
-    operandOrColor: "red",
-    maybeOperandOrColor: undefined
+    operandOrColor: "red"
 });
 ```
 
@@ -57,9 +55,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedEnum } from "@fern/enum";
+import { SeedApi } from "@fern/enum";
 
-const request: SeedEnum.SendEnumAsHeaderRequest = {
+const request: SeedApi.HeadersSendRequest = {
     ...
 };
 ```
@@ -70,12 +68,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedEnumError } from "@fern/enum";
+import { SeedApiError } from "@fern/enum";
 
 try {
     await client.headers.send(...);
 } catch (err) {
-    if (err instanceof SeedEnumError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -101,9 +99,9 @@ const client = new HeadersClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedEnumClient } from "@fern/enum";
+import { SeedApiClient } from "@fern/enum";
 
-const client = new SeedEnumClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -188,9 +186,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedEnumClient, logging } from "@fern/enum";
+import { SeedApiClient, logging } from "@fern/enum";
 
-const client = new SeedEnumClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

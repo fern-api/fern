@@ -1,14 +1,23 @@
 package com.snippets;
 
-import com.seed.trace.SeedTraceClient;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.playlist.requests.UpdatePlaylistRequest;
+import java.util.Arrays;
 
 public class Example33 {
     public static void main(String[] args) {
-        SeedTraceClient client = SeedTraceClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.v2().problem().getProblemVersion("problemId", 1);
+        client.playlist()
+                .updateplaylist(
+                        1,
+                        "playlistId",
+                        UpdatePlaylistRequest.builder()
+                                .name("name")
+                                .problems(Arrays.asList("problems", "problems"))
+                                .build());
     }
 }

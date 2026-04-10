@@ -11,6 +11,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->createType(
+$client->_->createType(
     BasicType::Primitive->value,
 );

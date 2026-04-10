@@ -6,19 +6,21 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .types import TokenResponse, User
     from . import auth, user
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .auth import TokenResponse
-    from .client import AsyncSeedAnyAuth, SeedAnyAuth
-    from .user import User
+    from .auth import AuthGetTokenRequestAudience, AuthGetTokenRequestGrantType
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedAnyAuth": ".client",
+    "AsyncSeedApi": ".client",
+    "AuthGetTokenRequestAudience": ".auth",
+    "AuthGetTokenRequestGrantType": ".auth",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "SeedAnyAuth": ".client",
-    "TokenResponse": ".auth",
-    "User": ".user",
+    "SeedApi": ".client",
+    "TokenResponse": ".types",
+    "User": ".types",
     "__version__": ".version",
     "auth": ".auth",
     "user": ".user",
@@ -47,10 +49,12 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedAnyAuth",
+    "AsyncSeedApi",
+    "AuthGetTokenRequestAudience",
+    "AuthGetTokenRequestGrantType",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
-    "SeedAnyAuth",
+    "SeedApi",
     "TokenResponse",
     "User",
     "__version__",

@@ -2,62 +2,66 @@
 
 # isort: skip_file
 
-from . import docs, enum, object, union
-from .docs import ObjectWithDocs
-from .enum import ErrorWithEnumBody, WeatherReport
-from .object import (
-    DocumentedUnknownType,
-    DoubleOptional,
-    MapOfDocumentedUnknownType,
-    NestedObjectWithOptionalField,
-    NestedObjectWithOptionalFieldError,
-    NestedObjectWithRequiredField,
-    NestedObjectWithRequiredFieldError,
-    ObjectWithDatetimeLikeString,
-    ObjectWithDocumentedUnknownType,
-    ObjectWithMapOfMap,
-    ObjectWithMixedRequiredAndOptionalFields,
-    ObjectWithOptionalField,
-    ObjectWithOptionalFieldError,
-    ObjectWithRequiredField,
-    ObjectWithRequiredFieldError,
-    ObjectWithRequiredNestedObject,
-    ObjectWithUnknownField,
-    OptionalAlias,
-)
-from .union import Animal, Animal_Cat, Animal_Dog, Cat, Dog, ErrorWithUnionBody, MixedType
+from .types_mixed_type import TypesMixedType
+from .types_cat import TypesCat
+from .types_dog import TypesDog
+from .types_animal import TypesAnimal
+from .types_animal_one import TypesAnimalOne
+from .types_animal_one_animal import TypesAnimalOneAnimal
+from .types_animal_zero import TypesAnimalZero
+from .types_animal_zero_animal import TypesAnimalZeroAnimal
+from .types_object_with_required_nested_object import TypesObjectWithRequiredNestedObject
+from .types_object_with_mixed_required_and_optional_fields import TypesObjectWithMixedRequiredAndOptionalFields
+from .types_map_of_documented_unknown_type import TypesMapOfDocumentedUnknownType
+from .types_documented_unknown_type import TypesDocumentedUnknownType
+from .types_object_with_documented_unknown_type import TypesObjectWithDocumentedUnknownType
+from .types_object_with_unknown_field import TypesObjectWithUnknownField
+from .types_object_with_datetime_like_string import TypesObjectWithDatetimeLikeString
+from .types_optional_alias import TypesOptionalAlias
+from .types_double_optional import TypesDoubleOptional
+from .types_nested_object_with_required_field import TypesNestedObjectWithRequiredField
+from .types_nested_object_with_optional_field import TypesNestedObjectWithOptionalField
+from .types_object_with_map_of_map import TypesObjectWithMapOfMap
+from .types_object_with_required_field import TypesObjectWithRequiredField
+from .types_object_with_optional_field import TypesObjectWithOptionalField
+from .types_weather_report import TypesWeatherReport
+from .types_object_with_docs import TypesObjectWithDocs
+from .bad_object_request_info import BadObjectRequestInfo
+from .endpoints_error import EndpointsError
+from .endpoints_error_category import EndpointsErrorCategory
+from .endpoints_error_code import EndpointsErrorCode
+from .endpoints_paginated_response import EndpointsPaginatedResponse
+from .endpoints_put_response import EndpointsPutResponse
 
 __all__ = [
-    "Animal",
-    "Animal_Cat",
-    "Animal_Dog",
-    "Cat",
-    "DocumentedUnknownType",
-    "Dog",
-    "DoubleOptional",
-    "ErrorWithEnumBody",
-    "ErrorWithUnionBody",
-    "MapOfDocumentedUnknownType",
-    "MixedType",
-    "NestedObjectWithOptionalField",
-    "NestedObjectWithOptionalFieldError",
-    "NestedObjectWithRequiredField",
-    "NestedObjectWithRequiredFieldError",
-    "ObjectWithDatetimeLikeString",
-    "ObjectWithDocs",
-    "ObjectWithDocumentedUnknownType",
-    "ObjectWithMapOfMap",
-    "ObjectWithMixedRequiredAndOptionalFields",
-    "ObjectWithOptionalField",
-    "ObjectWithOptionalFieldError",
-    "ObjectWithRequiredField",
-    "ObjectWithRequiredFieldError",
-    "ObjectWithRequiredNestedObject",
-    "ObjectWithUnknownField",
-    "OptionalAlias",
-    "WeatherReport",
-    "docs",
-    "enum",
-    "object",
-    "union",
+    "BadObjectRequestInfo",
+    "EndpointsError",
+    "EndpointsErrorCategory",
+    "EndpointsErrorCode",
+    "EndpointsPaginatedResponse",
+    "EndpointsPutResponse",
+    "TypesAnimal",
+    "TypesAnimalOne",
+    "TypesAnimalOneAnimal",
+    "TypesAnimalZero",
+    "TypesAnimalZeroAnimal",
+    "TypesCat",
+    "TypesDocumentedUnknownType",
+    "TypesDog",
+    "TypesDoubleOptional",
+    "TypesMapOfDocumentedUnknownType",
+    "TypesMixedType",
+    "TypesNestedObjectWithOptionalField",
+    "TypesNestedObjectWithRequiredField",
+    "TypesObjectWithDatetimeLikeString",
+    "TypesObjectWithDocs",
+    "TypesObjectWithDocumentedUnknownType",
+    "TypesObjectWithMapOfMap",
+    "TypesObjectWithMixedRequiredAndOptionalFields",
+    "TypesObjectWithOptionalField",
+    "TypesObjectWithRequiredField",
+    "TypesObjectWithRequiredNestedObject",
+    "TypesObjectWithUnknownField",
+    "TypesOptionalAlias",
+    "TypesWeatherReport",
 ]

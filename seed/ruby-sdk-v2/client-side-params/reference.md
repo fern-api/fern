@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">list_resources</a>() -> Internal::Types::Array[Seed::Types::Types::Resource]</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">listresources</a>() -> Internal::Types::Array[Seed::Types::Resource]</code></summary>
 <dl>
 <dd>
 
@@ -27,14 +27,12 @@ List resources with pagination
 <dd>
 
 ```ruby
-client.service.list_resources(
+client.service.listresources(
   page: 1,
   per_page: 1,
-  sort: "created_at",
-  order: "desc",
-  include_totals: true,
-  fields: "fields",
-  search: "search"
+  sort: "sort",
+  order: "order",
+  include_totals: true
 )
 ```
 </dd>
@@ -118,7 +116,7 @@ client.service.list_resources(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_resource</a>(resource_id) -> Seed::Types::Types::Resource</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">getresource</a>(resource_id) -> Seed::Types::Resource</code></summary>
 <dl>
 <dd>
 
@@ -145,10 +143,10 @@ Get a single resource
 <dd>
 
 ```ruby
-client.service.get_resource(
+client.service.getresource(
   resource_id: "resourceId",
   include_metadata: true,
-  format: "json"
+  format: "format"
 )
 ```
 </dd>
@@ -200,7 +198,7 @@ client.service.get_resource(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">search_resources</a>(request) -> Seed::Types::Types::SearchResponse</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">searchresources</a>(request) -> Seed::Types::SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -227,11 +225,9 @@ Search resources with complex parameters
 <dd>
 
 ```ruby
-client.service.search_resources(
+client.service.searchresources(
   limit: 1,
-  offset: 1,
-  query: "query",
-  filters: {}
+  offset: 1
 )
 ```
 </dd>
@@ -291,7 +287,7 @@ client.service.search_resources(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">list_users</a>() -> Seed::Types::Types::PaginatedUserResponse</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">listusers</a>() -> Seed::Types::PaginatedUserResponse</code></summary>
 <dl>
 <dd>
 
@@ -318,16 +314,7 @@ List or search for users
 <dd>
 
 ```ruby
-client.service.list_users(
-  page: 1,
-  per_page: 1,
-  include_totals: true,
-  sort: "sort",
-  connection: "connection",
-  q: "q",
-  search_engine: "search_engine",
-  fields: "fields"
-)
+client.service.listusers
 ```
 </dd>
 </dl>
@@ -418,7 +405,136 @@ client.service.list_users(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_user_by_id</a>(user_id) -> Seed::Types::Types::User</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">createuser</a>(request) -> Seed::Types::User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.service.createuser(
+  email: "email",
+  connection: "connection"
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**email:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email_verified:** `Internal::Types::Boolean` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**username:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone_number:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone_verified:** `Internal::Types::Boolean` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_metadata:** `Internal::Types::Hash[String, Object]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**app_metadata:** `Internal::Types::Hash[String, Object]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connection:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">getuserbyid</a>(user_id) -> Seed::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -445,11 +561,7 @@ Get a user by ID
 <dd>
 
 ```ruby
-client.service.get_user_by_id(
-  user_id: "userId",
-  fields: "fields",
-  include_fields: true
-)
+client.service.getuserbyid(user_id: "userId")
 ```
 </dd>
 </dl>
@@ -500,160 +612,7 @@ client.service.get_user_by_id(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">create_user</a>(request) -> Seed::Types::Types::User</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new user
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```ruby
-client.service.create_user(
-  email: "email",
-  email_verified: true,
-  username: "username",
-  password: "password",
-  phone_number: "phone_number",
-  phone_verified: true,
-  user_metadata: {},
-  app_metadata: {},
-  connection: "connection"
-)
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `Seed::Types::Types::CreateUserRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `Seed::Service::RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">update_user</a>(user_id, request) -> Seed::Types::Types::User</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a user
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```ruby
-client.service.update_user(
-  user_id: "userId",
-  email: "email",
-  email_verified: true,
-  username: "username",
-  phone_number: "phone_number",
-  phone_verified: true,
-  user_metadata: {},
-  app_metadata: {},
-  password: "password",
-  blocked: true
-)
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**user_id:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `Seed::Types::Types::UpdateUserRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `Seed::Service::RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">delete_user</a>(user_id) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">deleteuser</a>(user_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -680,7 +639,7 @@ Delete a user
 <dd>
 
 ```ruby
-client.service.delete_user(user_id: "userId")
+client.service.deleteuser(user_id: "userId")
 ```
 </dd>
 </dl>
@@ -715,7 +674,141 @@ client.service.delete_user(user_id: "userId")
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">list_connections</a>() -> Internal::Types::Array[Seed::Types::Types::Connection]</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">updateuser</a>(user_id, request) -> Seed::Types::User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.service.updateuser(user_id: "userId")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**user_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email_verified:** `Internal::Types::Boolean` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**username:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone_number:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone_verified:** `Internal::Types::Boolean` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_metadata:** `Internal::Types::Hash[String, Object]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**app_metadata:** `Internal::Types::Hash[String, Object]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**blocked:** `Internal::Types::Boolean` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">listconnections</a>() -> Internal::Types::Array[Seed::Types::Connection]</code></summary>
 <dl>
 <dd>
 
@@ -742,11 +835,7 @@ List all connections
 <dd>
 
 ```ruby
-client.service.list_connections(
-  strategy: "strategy",
-  name: "name",
-  fields: "fields"
-)
+client.service.listconnections
 ```
 </dd>
 </dl>
@@ -797,7 +886,7 @@ client.service.list_connections(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_connection</a>(connection_id) -> Seed::Types::Types::Connection</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">getconnection</a>(connection_id) -> Seed::Types::Connection</code></summary>
 <dl>
 <dd>
 
@@ -824,10 +913,7 @@ Get a connection by ID
 <dd>
 
 ```ruby
-client.service.get_connection(
-  connection_id: "connectionId",
-  fields: "fields"
-)
+client.service.getconnection(connection_id: "connectionId")
 ```
 </dd>
 </dl>
@@ -870,7 +956,7 @@ client.service.get_connection(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">list_clients</a>() -> Seed::Types::Types::PaginatedClientResponse</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">listclients</a>() -> Seed::Types::PaginatedClientResponse</code></summary>
 <dl>
 <dd>
 
@@ -897,16 +983,7 @@ List all clients/applications
 <dd>
 
 ```ruby
-client.service.list_clients(
-  fields: "fields",
-  include_fields: true,
-  page: 1,
-  per_page: 1,
-  include_totals: true,
-  is_global: true,
-  is_first_party: true,
-  app_type: %w[app_type app_type]
-)
+client.service.listclients
 ```
 </dd>
 </dl>
@@ -997,7 +1074,7 @@ client.service.list_clients(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_client</a>(client_id) -> Seed::Types::Types::Client</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">getclient</a>(client_id) -> Seed::Types::Client</code></summary>
 <dl>
 <dd>
 
@@ -1024,11 +1101,7 @@ Get a client by ID
 <dd>
 
 ```ruby
-client.service.get_client(
-  client_id: "clientId",
-  fields: "fields",
-  include_fields: true
-)
+client.service.getclient(client_id: "clientId")
 ```
 </dd>
 </dl>

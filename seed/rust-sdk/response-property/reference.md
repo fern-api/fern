@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie</a>(request: String) -> Result&lt;Response, ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">getmovie</a>(request: String) -> Result&lt;Response, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,15 +13,15 @@
 <dd>
 
 ```rust
-use seed_response_property::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ResponsePropertyClient::new(config).expect("Failed to build client");
-    client.service.get_movie(&"string".to_string(), None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.service.getmovie(&"string".to_string(), None).await;
 }
 ```
 </dd>
@@ -34,7 +34,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie_docs</a>(request: String) -> Result&lt;Response, ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">getmoviedocs</a>(request: String) -> Result&lt;Response, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -47,17 +47,17 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_response_property::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ResponsePropertyClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .service
-        .get_movie_docs(&"string".to_string(), None)
+        .getmoviedocs(&"string".to_string(), None)
         .await;
 }
 ```
@@ -71,7 +71,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie_name</a>(request: String) -> Result&lt;StringResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">getmoviename</a>(request: String) -> Result&lt;StringResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -84,17 +84,17 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_response_property::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ResponsePropertyClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .service
-        .get_movie_name(&"string".to_string(), None)
+        .getmoviename(&"string".to_string(), None)
         .await;
 }
 ```
@@ -108,7 +108,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie_metadata</a>(request: String) -> Result&lt;Response, ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">getmoviemetadata</a>(request: String) -> Result&lt;Response, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -121,17 +121,17 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_response_property::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ResponsePropertyClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .service
-        .get_movie_metadata(&"string".to_string(), None)
+        .getmoviemetadata(&"string".to_string(), None)
         .await;
 }
 ```
@@ -145,7 +145,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_optional_movie</a>(request: String) -> Result&lt;Option&lt;Response&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">getoptionalmovie</a>(request: String) -> Result&lt;Response, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -158,17 +158,17 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_response_property::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ResponsePropertyClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .service
-        .get_optional_movie(&"string".to_string(), None)
+        .getoptionalmovie(&"string".to_string(), None)
         .await;
 }
 ```
@@ -182,7 +182,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_optional_movie_docs</a>(request: String) -> Result&lt;OptionalWithDocs, ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">getoptionalmoviedocs</a>(request: String) -> Result&lt;OptionalWithDocs, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -195,17 +195,17 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_response_property::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ResponsePropertyClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .service
-        .get_optional_movie_docs(&"string".to_string(), None)
+        .getoptionalmoviedocs(&"string".to_string(), None)
         .await;
 }
 ```
@@ -219,7 +219,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_optional_movie_name</a>(request: String) -> Result&lt;OptionalStringResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">getoptionalmoviename</a>(request: String) -> Result&lt;OptionalStringResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -232,17 +232,17 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_response_property::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ResponsePropertyClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .service
-        .get_optional_movie_name(&"string".to_string(), None)
+        .getoptionalmoviename(&"string".to_string(), None)
         .await;
 }
 ```

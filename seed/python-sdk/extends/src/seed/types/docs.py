@@ -7,16 +7,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Docs(UniversalBaseModel):
-    """
-    Examples
-    --------
-    from seed import Docs
-
-    Docs(
-        docs="Types extend this type to include a docs property.",
-    )
-    """
-
     docs: str
 
     if IS_PYDANTIC_V2:

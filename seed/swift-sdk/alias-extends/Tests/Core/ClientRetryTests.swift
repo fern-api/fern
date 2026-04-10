@@ -1,4 +1,4 @@
-import AliasExtends
+import Api
 import Foundation
 import Testing
 
@@ -14,13 +14,13 @@ import Testing
             ),
         ])
 
-        let client = AliasExtendsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.extendedInlineRequestBody(
+            _ = try await client..extendedInlineRequestBody(
                 request: .init(
                     parent: "parent",
                     child: "child"
@@ -44,13 +44,13 @@ import Testing
             ),
         ])
 
-        let client = AliasExtendsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.extendedInlineRequestBody(
+            _ = try await client..extendedInlineRequestBody(
                 request: .init(
                     parent: "parent",
                     child: "child"
@@ -74,13 +74,13 @@ import Testing
             ),
         ])
 
-        let client = AliasExtendsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.extendedInlineRequestBody(
+            _ = try await client..extendedInlineRequestBody(
                 request: .init(
                     parent: "parent",
                     child: "child"
@@ -103,13 +103,13 @@ import Testing
             ),
         ])
 
-        let client = AliasExtendsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.extendedInlineRequestBody(
+            _ = try await client..extendedInlineRequestBody(
                 request: .init(
                     parent: "parent",
                     child: "child"
@@ -131,13 +131,13 @@ import Testing
             )
         ])
 
-        let client = AliasExtendsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.extendedInlineRequestBody(
+            _ = try await client..extendedInlineRequestBody(
                 request: .init(
                     parent: "parent",
                     child: "child"
@@ -160,13 +160,13 @@ import Testing
             )
         ])
 
-        let client = AliasExtendsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.extendedInlineRequestBody(
+            _ = try await client..extendedInlineRequestBody(
                 request: .init(
                     parent: "parent",
                     child: "child"
@@ -189,13 +189,13 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = AliasExtendsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.extendedInlineRequestBody(
+            _ = try await client..extendedInlineRequestBody(
                 request: .init(
                     parent: "parent",
                     child: "child"
@@ -222,14 +222,14 @@ import Testing
             ),
         ])
 
-        let client = AliasExtendsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.extendedInlineRequestBody(
+            _ = try await client..extendedInlineRequestBody(
                 request: .init(
                     parent: "parent",
                     child: "child"
@@ -266,14 +266,14 @@ import Testing
             ),
         ])
 
-        let client = AliasExtendsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.extendedInlineRequestBody(
+            _ = try await client..extendedInlineRequestBody(
                 request: .init(
                     parent: "parent",
                     child: "child"
@@ -306,14 +306,14 @@ import Testing
             ),
         ])
 
-        let client = AliasExtendsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.extendedInlineRequestBody(
+            _ = try await client..extendedInlineRequestBody(
                 request: .init(
                     parent: "parent",
                     child: "child"
@@ -358,13 +358,13 @@ import Testing
             ),
         ])
 
-        let client = AliasExtendsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.extendedInlineRequestBody(
+            _ = try await client..extendedInlineRequestBody(
                 request: .init(
                     parent: "parent",
                     child: "child"
@@ -383,13 +383,13 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = AliasExtendsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.extendedInlineRequestBody(
+            _ = try await client..extendedInlineRequestBody(
                 request: .init(
                     parent: "parent",
                     child: "child"
@@ -412,13 +412,13 @@ import Testing
             )
         ])
 
-        let client = AliasExtendsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.extendedInlineRequestBody(
+            _ = try await client..extendedInlineRequestBody(
                 request: .init(
                     parent: "parent",
                     child: "child"

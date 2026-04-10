@@ -6,6 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.send_response import SendResponse
 from .raw_client import AsyncRawHeadersClient, RawHeadersClient
+from .types.headers_send_request_x_endpoint_version import HeadersSendRequestXEndpointVersion
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -26,10 +27,21 @@ class HeadersClient:
         """
         return self._raw_client
 
-    def send(self, *, query: str, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
+    def send(
+        self,
+        *,
+        endpoint_version: HeadersSendRequestXEndpointVersion,
+        async_: bool,
+        query: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SendResponse:
         """
         Parameters
         ----------
+        endpoint_version : HeadersSendRequestXEndpointVersion
+
+        async_ : bool
+
         query : str
 
         request_options : typing.Optional[RequestOptions]
@@ -39,18 +51,23 @@ class HeadersClient:
         -------
         SendResponse
 
+
         Examples
         --------
-        from seed import SeedLiteral
+        from seed import SeedApi
 
-        client = SeedLiteral(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
         client.headers.send(
-            query="What is the weather today",
+            endpoint_version="02-12-2024",
+            async_=True,
+            query="query",
         )
         """
-        _response = self._raw_client.send(query=query, request_options=request_options)
+        _response = self._raw_client.send(
+            endpoint_version=endpoint_version, async_=async_, query=query, request_options=request_options
+        )
         return _response.data
 
 
@@ -69,10 +86,21 @@ class AsyncHeadersClient:
         """
         return self._raw_client
 
-    async def send(self, *, query: str, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
+    async def send(
+        self,
+        *,
+        endpoint_version: HeadersSendRequestXEndpointVersion,
+        async_: bool,
+        query: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SendResponse:
         """
         Parameters
         ----------
+        endpoint_version : HeadersSendRequestXEndpointVersion
+
+        async_ : bool
+
         query : str
 
         request_options : typing.Optional[RequestOptions]
@@ -82,24 +110,29 @@ class AsyncHeadersClient:
         -------
         SendResponse
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedLiteral
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedLiteral(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.headers.send(
-                query="What is the weather today",
+                endpoint_version="02-12-2024",
+                async_=True,
+                query="query",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.send(query=query, request_options=request_options)
+        _response = await self._raw_client.send(
+            endpoint_version=endpoint_version, async_=async_, query=query, request_options=request_options
+        )
         return _response.data

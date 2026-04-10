@@ -6,11 +6,11 @@
             "id": {
                 "path": "/movie",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getMovie"
+                "identifier_override": "endpoint_service.getmovie"
             },
             "snippet": {
-                "sync_client": "from seed import SeedResponseProperty\n\nclient = SeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.get_movie(\n    request=\"string\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedResponseProperty\n\nclient = AsyncSeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.get_movie(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.getmovie(\n    request=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.getmovie(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -19,11 +19,11 @@
             "id": {
                 "path": "/movie/docs",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getMovieDocs"
+                "identifier_override": "endpoint_service.getmoviedocs"
             },
             "snippet": {
-                "sync_client": "from seed import SeedResponseProperty\n\nclient = SeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.get_movie_docs(\n    request=\"string\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedResponseProperty\n\nclient = AsyncSeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.get_movie_docs(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.getmoviedocs(\n    request=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.getmoviedocs(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -32,11 +32,11 @@
             "id": {
                 "path": "/movie/name",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getMovieName"
+                "identifier_override": "endpoint_service.getmoviename"
             },
             "snippet": {
-                "sync_client": "from seed import SeedResponseProperty\n\nclient = SeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.get_movie_name(\n    request=\"string\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedResponseProperty\n\nclient = AsyncSeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.get_movie_name(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.getmoviename(\n    request=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.getmoviename(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -45,11 +45,11 @@
             "id": {
                 "path": "/movie/metadata",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getMovieMetadata"
+                "identifier_override": "endpoint_service.getmoviemetadata"
             },
             "snippet": {
-                "sync_client": "from seed import SeedResponseProperty\n\nclient = SeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.get_movie_metadata(\n    request=\"string\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedResponseProperty\n\nclient = AsyncSeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.get_movie_metadata(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.getmoviemetadata(\n    request=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.getmoviemetadata(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -58,11 +58,11 @@
             "id": {
                 "path": "/movie/optional",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getOptionalMovie"
+                "identifier_override": "endpoint_service.getoptionalmovie"
             },
             "snippet": {
-                "sync_client": "from seed import SeedResponseProperty\n\nclient = SeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.get_optional_movie(\n    request=\"string\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedResponseProperty\n\nclient = AsyncSeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.get_optional_movie(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.getoptionalmovie(\n    request=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.getoptionalmovie(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -71,11 +71,11 @@
             "id": {
                 "path": "/movie/optional/docs",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getOptionalMovieDocs"
+                "identifier_override": "endpoint_service.getoptionalmoviedocs"
             },
             "snippet": {
-                "sync_client": "from seed import SeedResponseProperty\n\nclient = SeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.get_optional_movie_docs(\n    request=\"string\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedResponseProperty\n\nclient = AsyncSeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.get_optional_movie_docs(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.getoptionalmoviedocs(\n    request=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.getoptionalmoviedocs(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -84,11 +84,11 @@
             "id": {
                 "path": "/movie/optional/name",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getOptionalMovieName"
+                "identifier_override": "endpoint_service.getoptionalmoviename"
             },
             "snippet": {
-                "sync_client": "from seed import SeedResponseProperty\n\nclient = SeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.get_optional_movie_name(\n    request=\"string\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedResponseProperty\n\nclient = AsyncSeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.get_optional_movie_name(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.getoptionalmoviename(\n    request=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.getoptionalmoviename(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

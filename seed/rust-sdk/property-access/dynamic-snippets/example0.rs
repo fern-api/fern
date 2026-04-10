@@ -1,4 +1,4 @@
-use seed_property_access::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,9 +6,9 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = PropertyAccessClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .create_user(
+        ..create_user(
             &User {
                 id: "id".to_string(),
                 email: "email".to_string(),

@@ -12,7 +12,9 @@ describe("UserClient", () => {
 
         server.mockEndpoint().get("/users/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.user.get("id");
+        const response = await client.user.get({
+            id: "id",
+        });
         expect(response).toEqual(rawResponseBody);
     });
 });

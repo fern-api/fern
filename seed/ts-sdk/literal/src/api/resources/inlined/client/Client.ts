@@ -2,11 +2,11 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedLiteral from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace InlinedClient {
     export type Options = BaseClientOptions;
@@ -22,41 +22,34 @@ export class InlinedClient {
     }
 
     /**
-     * @param {SeedLiteral.SendLiteralsInlinedRequest} request
+     * @param {SeedApi.InlinedSendRequest} request
      * @param {InlinedClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.inlined.send({
-     *         temperature: 10.1,
-     *         context: "You're super wise",
-     *         maybeContext: "You're super wise",
+     *         prompt: "You are a helpful assistant",
+     *         query: "query",
+     *         stream: true,
+     *         aliasedContext: "You're super wise",
      *         objectWithLiteral: {
      *             nestedLiteral: {
      *                 myLiteral: "How super cool"
      *             }
-     *         },
-     *         query: "What is the weather today"
+     *         }
      *     })
      */
     public send(
-        request: SeedLiteral.SendLiteralsInlinedRequest,
+        request: SeedApi.InlinedSendRequest,
         requestOptions?: InlinedClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+    ): core.HttpResponsePromise<SeedApi.SendResponse> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
-        request: SeedLiteral.SendLiteralsInlinedRequest,
+        request: SeedApi.InlinedSendRequest,
         requestOptions?: InlinedClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-API-Version": requestOptions?.version ?? "02-02-2024",
-                "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? true).toString(),
-            }),
-            requestOptions?.headers,
-        );
+    ): Promise<core.WithRawResponse<SeedApi.SendResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -68,12 +61,7 @@ export class InlinedClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: {
-                ...request,
-                prompt: "You are a helpful assistant",
-                stream: false,
-                aliasedContext: "You're super wise",
-            },
+            body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -81,11 +69,11 @@ export class InlinedClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedLiteral.SendResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.SendResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedLiteralError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

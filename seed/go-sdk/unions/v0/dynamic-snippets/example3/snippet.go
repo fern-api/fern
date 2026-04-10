@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/unions/fern"
     client "github.com/unions/fern/client"
     option "github.com/unions/fern/option"
 )
@@ -13,8 +14,14 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Union.Get(
+    request := &fern.BigUnion{
+        BigUnionZero: &fern.BigUnionZero{
+            Type: fern.BigUnionZeroTypeNormalSweet,
+            Value: "value",
+        },
+    }
+    client.Bigunion.Update(
         context.TODO(),
-        "id",
+        request,
     )
 }

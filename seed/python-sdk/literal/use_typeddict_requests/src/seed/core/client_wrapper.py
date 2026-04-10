@@ -15,15 +15,11 @@ class BaseClientWrapper:
         base_url: str,
         timeout: typing.Optional[float] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        version: typing.Optional[str] = None,
-        audit_logging: typing.Optional[str] = None,
     ):
         self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
         self._logging = logging
-        self._version = version
-        self._audit_logging = audit_logging
 
     def get_headers(self) -> typing.Dict[str, str]:
         import platform
@@ -37,8 +33,6 @@ class BaseClientWrapper:
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
         }
-        headers["X-API-Version"] = self._version if self._version is not None else "02-02-2024"
-        headers["X-API-Enable-Audit-Logging"] = self._audit_logging if self._audit_logging is not None else "True"
         return headers
 
     def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
@@ -59,18 +53,9 @@ class SyncClientWrapper(BaseClientWrapper):
         base_url: str,
         timeout: typing.Optional[float] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        version: typing.Optional[str] = None,
-        audit_logging: typing.Optional[str] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(
-            headers=headers,
-            base_url=base_url,
-            timeout=timeout,
-            logging=logging,
-            version=version,
-            audit_logging=audit_logging,
-        )
+        super().__init__(headers=headers, base_url=base_url, timeout=timeout, logging=logging)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -88,19 +73,10 @@ class AsyncClientWrapper(BaseClientWrapper):
         base_url: str,
         timeout: typing.Optional[float] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        version: typing.Optional[str] = None,
-        audit_logging: typing.Optional[str] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(
-            headers=headers,
-            base_url=base_url,
-            timeout=timeout,
-            logging=logging,
-            version=version,
-            audit_logging=audit_logging,
-        )
+        super().__init__(headers=headers, base_url=base_url, timeout=timeout, logging=logging)
         self._async_token = async_token
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,

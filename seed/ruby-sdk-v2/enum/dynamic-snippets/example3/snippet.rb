@@ -2,7 +2,9 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.path_param.send_(
+client.inlinedrequest.send_(
   operand: ">",
-  operand_or_color: "red"
+  maybe_operand: ">",
+  operand_or_color: "red",
+  maybe_operand_or_color: "red"
 )

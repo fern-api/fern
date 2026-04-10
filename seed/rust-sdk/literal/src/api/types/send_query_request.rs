@@ -3,17 +3,19 @@ pub use crate::prelude::*;
 /// Query parameters for send
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct SendQueryRequest {
-    pub prompt: String,
+    pub prompt: QuerySendRequestPrompt,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub optional_prompt: Option<String>,
+    pub optional_prompt: Option<QuerySendRequestOptionalPrompt>,
     pub alias_prompt: AliasToPrompt,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub alias_optional_prompt: Option<AliasToPrompt>,
     #[serde(default)]
     pub query: String,
+    #[serde(default)]
     pub stream: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_stream: Option<bool>,
+    #[serde(default)]
     pub alias_stream: AliasToStream,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub alias_optional_stream: Option<AliasToStream>,
@@ -28,8 +30,8 @@ impl SendQueryRequest {
 #[derive(Clone, PartialEq, Default, Debug)]
 #[non_exhaustive]
 pub struct SendQueryRequestBuilder {
-    prompt: Option<String>,
-    optional_prompt: Option<String>,
+    prompt: Option<QuerySendRequestPrompt>,
+    optional_prompt: Option<QuerySendRequestOptionalPrompt>,
     alias_prompt: Option<AliasToPrompt>,
     alias_optional_prompt: Option<AliasToPrompt>,
     query: Option<String>,
@@ -40,13 +42,13 @@ pub struct SendQueryRequestBuilder {
 }
 
 impl SendQueryRequestBuilder {
-    pub fn prompt(mut self, value: impl Into<String>) -> Self {
-        self.prompt = Some(value.into());
+    pub fn prompt(mut self, value: QuerySendRequestPrompt) -> Self {
+        self.prompt = Some(value);
         self
     }
 
-    pub fn optional_prompt(mut self, value: impl Into<String>) -> Self {
-        self.optional_prompt = Some(value.into());
+    pub fn optional_prompt(mut self, value: QuerySendRequestOptionalPrompt) -> Self {
+        self.optional_prompt = Some(value);
         self
     }
 

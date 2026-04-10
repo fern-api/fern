@@ -14,11 +14,9 @@ func do() {
         ),
     )
     request := map[string]any{
-        "string": map[string]any{
-            "key": "value",
-        },
+        "key": "value",
     }
-    client.Optional.SendOptionalBody(
+    client.Optional.Sendoptionalbody(
         context.TODO(),
         request,
     )

@@ -1,19 +1,19 @@
-using SeedMixedFileDirectory;
+using SeedApi;
 
 namespace Usage;
 
 public class Example1
 {
     public async Task Do() {
-        var client = new SeedMixedFileDirectoryClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.User.ListAsync(
-            new ListUsersRequest {
-                Limit = 1
+        await client.Organization.CreateAsync(
+            new CreateOrganizationRequest {
+                Name = "name"
             }
         );
     }

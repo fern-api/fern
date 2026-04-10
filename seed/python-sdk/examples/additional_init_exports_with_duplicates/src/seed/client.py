@@ -7,21 +7,17 @@ import typing
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
-from .core.request_options import RequestOptions
-from .environment import SeedExamplesEnvironment
-from .raw_client import AsyncRawSeedExamples, RawSeedExamples
-from .types.identifier import Identifier
-from .types.type import Type
+from .environment import SeedApiEnvironment
 
 if typing.TYPE_CHECKING:
-    from .file.client import AsyncFileClient, FileClient
-    from .health.client import AsyncHealthClient, HealthClient
+    from ._.client import AsyncClient, Client
+    from .file_notification_service.client import AsyncFileNotificationServiceClient, FileNotificationServiceClient
+    from .file_service.client import AsyncFileServiceClient, FileServiceClient
+    from .health_service.client import AsyncHealthServiceClient, HealthServiceClient
     from .service.client import AsyncServiceClient, ServiceClient
-# this is used as the default value for optional parameters
-OMIT = typing.cast(typing.Any, ...)
 
 
-class SeedExamples:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -30,8 +26,14 @@ class SeedExamples:
     base_url : typing.Optional[str]
         The base url to use for requests from the client.
 
-    environment : typing.Optional[SeedExamplesEnvironment]
-        The environment to use for requests from the client.
+    environment : SeedApiEnvironment
+        The environment to use for requests from the client. from .environment import SeedApiEnvironment
+
+
+
+        Defaults to SeedApiEnvironment.PRODUCTION
+
+
 
     token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     headers : typing.Optional[typing.Dict[str, str]]
@@ -51,12 +53,10 @@ class SeedExamples:
 
     Examples
     --------
-    from seed import SeedExamples
-    from seed.environment import SeedExamplesEnvironment
+    from seed import SeedApi
 
-    client = SeedExamples(
+    client = SeedApi(
         token="YOUR_TOKEN",
-        environment=SeedExamplesEnvironment.PRODUCTION,
     )
     """
 
@@ -64,7 +64,7 @@ class SeedExamples:
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: typing.Optional[SeedExamplesEnvironment] = None,
+        environment: SeedApiEnvironment = SeedApiEnvironment.PRODUCTION,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
@@ -87,95 +87,43 @@ class SeedExamples:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._raw_client = RawSeedExamples(client_wrapper=self._client_wrapper)
-        self._file: typing.Optional[FileClient] = None
-        self._health: typing.Optional[HealthClient] = None
+        self.__: typing.Optional[Client] = None
+        self._file_notification_service: typing.Optional[FileNotificationServiceClient] = None
+        self._file_service: typing.Optional[FileServiceClient] = None
+        self._health_service: typing.Optional[HealthServiceClient] = None
         self._service: typing.Optional[ServiceClient] = None
 
     @property
-    def with_raw_response(self) -> RawSeedExamples:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
+    def _(self):
+        if self.__ is None:
+            from ._.client import Client  # noqa: E402
 
-        Returns
-        -------
-        RawSeedExamples
-        """
-        return self._raw_client
-
-    def echo(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
-        """
-        Parameters
-        ----------
-        request : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        str
-
-        Examples
-        --------
-        from seed import SeedExamples
-        from seed.environment import SeedExamplesEnvironment
-
-        client = SeedExamples(
-            token="YOUR_TOKEN",
-            environment=SeedExamplesEnvironment.PRODUCTION,
-        )
-        client.echo(
-            request="Hello world!\\n\\nwith\\n\\tnewlines",
-        )
-        """
-        _response = self._raw_client.echo(request=request, request_options=request_options)
-        return _response.data
-
-    def create_type(self, *, request: Type, request_options: typing.Optional[RequestOptions] = None) -> Identifier:
-        """
-        Parameters
-        ----------
-        request : Type
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Identifier
-
-        Examples
-        --------
-        from seed import SeedExamples
-        from seed.environment import SeedExamplesEnvironment
-
-        client = SeedExamples(
-            token="YOUR_TOKEN",
-            environment=SeedExamplesEnvironment.PRODUCTION,
-        )
-        client.create_type(
-            request="primitive",
-        )
-        """
-        _response = self._raw_client.create_type(request=request, request_options=request_options)
-        return _response.data
+            self.__ = Client(client_wrapper=self._client_wrapper)
+        return self.__
 
     @property
-    def file(self):
-        if self._file is None:
-            from .file.client import FileClient  # noqa: E402
+    def file_notification_service(self):
+        if self._file_notification_service is None:
+            from .file_notification_service.client import FileNotificationServiceClient  # noqa: E402
 
-            self._file = FileClient(client_wrapper=self._client_wrapper)
-        return self._file
+            self._file_notification_service = FileNotificationServiceClient(client_wrapper=self._client_wrapper)
+        return self._file_notification_service
 
     @property
-    def health(self):
-        if self._health is None:
-            from .health.client import HealthClient  # noqa: E402
+    def file_service(self):
+        if self._file_service is None:
+            from .file_service.client import FileServiceClient  # noqa: E402
 
-            self._health = HealthClient(client_wrapper=self._client_wrapper)
-        return self._health
+            self._file_service = FileServiceClient(client_wrapper=self._client_wrapper)
+        return self._file_service
+
+    @property
+    def health_service(self):
+        if self._health_service is None:
+            from .health_service.client import HealthServiceClient  # noqa: E402
+
+            self._health_service = HealthServiceClient(client_wrapper=self._client_wrapper)
+        return self._health_service
 
     @property
     def service(self):
@@ -204,7 +152,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedExamples:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -213,8 +161,14 @@ class AsyncSeedExamples:
     base_url : typing.Optional[str]
         The base url to use for requests from the client.
 
-    environment : typing.Optional[SeedExamplesEnvironment]
-        The environment to use for requests from the client.
+    environment : SeedApiEnvironment
+        The environment to use for requests from the client. from .environment import SeedApiEnvironment
+
+
+
+        Defaults to SeedApiEnvironment.PRODUCTION
+
+
 
     token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     headers : typing.Optional[typing.Dict[str, str]]
@@ -237,12 +191,10 @@ class AsyncSeedExamples:
 
     Examples
     --------
-    from seed import AsyncSeedExamples
-    from seed.environment import SeedExamplesEnvironment
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedExamples(
+    client = AsyncSeedApi(
         token="YOUR_TOKEN",
-        environment=SeedExamplesEnvironment.PRODUCTION,
     )
     """
 
@@ -250,7 +202,7 @@ class AsyncSeedExamples:
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: typing.Optional[SeedExamplesEnvironment] = None,
+        environment: SeedApiEnvironment = SeedApiEnvironment.PRODUCTION,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
@@ -273,113 +225,43 @@ class AsyncSeedExamples:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._raw_client = AsyncRawSeedExamples(client_wrapper=self._client_wrapper)
-        self._file: typing.Optional[AsyncFileClient] = None
-        self._health: typing.Optional[AsyncHealthClient] = None
+        self.__: typing.Optional[AsyncClient] = None
+        self._file_notification_service: typing.Optional[AsyncFileNotificationServiceClient] = None
+        self._file_service: typing.Optional[AsyncFileServiceClient] = None
+        self._health_service: typing.Optional[AsyncHealthServiceClient] = None
         self._service: typing.Optional[AsyncServiceClient] = None
 
     @property
-    def with_raw_response(self) -> AsyncRawSeedExamples:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
+    def _(self):
+        if self.__ is None:
+            from ._.client import AsyncClient  # noqa: E402
 
-        Returns
-        -------
-        AsyncRawSeedExamples
-        """
-        return self._raw_client
-
-    async def echo(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
-        """
-        Parameters
-        ----------
-        request : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        str
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedExamples
-        from seed.environment import SeedExamplesEnvironment
-
-        client = AsyncSeedExamples(
-            token="YOUR_TOKEN",
-            environment=SeedExamplesEnvironment.PRODUCTION,
-        )
-
-
-        async def main() -> None:
-            await client.echo(
-                request="Hello world!\\n\\nwith\\n\\tnewlines",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.echo(request=request, request_options=request_options)
-        return _response.data
-
-    async def create_type(
-        self, *, request: Type, request_options: typing.Optional[RequestOptions] = None
-    ) -> Identifier:
-        """
-        Parameters
-        ----------
-        request : Type
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Identifier
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedExamples
-        from seed.environment import SeedExamplesEnvironment
-
-        client = AsyncSeedExamples(
-            token="YOUR_TOKEN",
-            environment=SeedExamplesEnvironment.PRODUCTION,
-        )
-
-
-        async def main() -> None:
-            await client.create_type(
-                request="primitive",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.create_type(request=request, request_options=request_options)
-        return _response.data
+            self.__ = AsyncClient(client_wrapper=self._client_wrapper)
+        return self.__
 
     @property
-    def file(self):
-        if self._file is None:
-            from .file.client import AsyncFileClient  # noqa: E402
+    def file_notification_service(self):
+        if self._file_notification_service is None:
+            from .file_notification_service.client import AsyncFileNotificationServiceClient  # noqa: E402
 
-            self._file = AsyncFileClient(client_wrapper=self._client_wrapper)
-        return self._file
+            self._file_notification_service = AsyncFileNotificationServiceClient(client_wrapper=self._client_wrapper)
+        return self._file_notification_service
 
     @property
-    def health(self):
-        if self._health is None:
-            from .health.client import AsyncHealthClient  # noqa: E402
+    def file_service(self):
+        if self._file_service is None:
+            from .file_service.client import AsyncFileServiceClient  # noqa: E402
 
-            self._health = AsyncHealthClient(client_wrapper=self._client_wrapper)
-        return self._health
+            self._file_service = AsyncFileServiceClient(client_wrapper=self._client_wrapper)
+        return self._file_service
+
+    @property
+    def health_service(self):
+        if self._health_service is None:
+            from .health_service.client import AsyncHealthServiceClient  # noqa: E402
+
+            self._health_service = AsyncHealthServiceClient(client_wrapper=self._client_wrapper)
+        return self._health_service
 
     @property
     def service(self):
@@ -390,9 +272,7 @@ class AsyncSeedExamples:
         return self._service
 
 
-def _get_base_url(
-    *, base_url: typing.Optional[str] = None, environment: typing.Optional[SeedExamplesEnvironment] = None
-) -> str:
+def _get_base_url(*, base_url: typing.Optional[str] = None, environment: SeedApiEnvironment) -> str:
     if base_url is not None:
         return base_url
     elif environment is not None:

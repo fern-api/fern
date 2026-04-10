@@ -1,17 +1,13 @@
 package com.snippets;
 
-import com.seed.contentTypes.SeedContentTypesClient;
-import com.seed.contentTypes.resources.service.requests.PatchProxyRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.service.requests.ServicePatchRequest;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedContentTypesClient client =
-                SeedContentTypesClient.builder().url("https://api.fern.com").build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.service()
-                .patch(PatchProxyRequest.builder()
-                        .application("application")
-                        .requireAuth(true)
-                        .build());
+        client.service().patch(ServicePatchRequest.builder().build());
     }
 }

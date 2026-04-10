@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.Completions.Stream(request) -> sse.StreamedCompletion</code></summary>
+<details><summary><code>client.Completions.Stream(request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,8 @@
 <dd>
 
 ```go
-request := &sse.StreamCompletionRequest{
-        Query: "foo",
+request := &sse.CompletionsStreamRequest{
+        Query: "query",
     }
 client.Completions.Stream(
         context.TODO(),
@@ -47,7 +47,7 @@ client.Completions.Stream(
 </dl>
 </details>
 
-<details><summary><code>client.Completions.StreamEvents(request) -> sse.StreamEvent</code></summary>
+<details><summary><code>client.Completions.Streamevents(request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -60,10 +60,10 @@ client.Completions.Stream(
 <dd>
 
 ```go
-request := &sse.StreamEventsRequest{
+request := &sse.CompletionsStreamEventsRequest{
         Query: "query",
     }
-client.Completions.StreamEvents(
+client.Completions.Streamevents(
         context.TODO(),
         request,
     )
@@ -94,7 +94,7 @@ client.Completions.StreamEvents(
 </dl>
 </details>
 
-<details><summary><code>client.Completions.StreamEventsContextProtocol(request) -> sse.StreamEventContextProtocol</code></summary>
+<details><summary><code>client.Completions.Streameventscontextprotocol(request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -107,10 +107,10 @@ client.Completions.StreamEvents(
 <dd>
 
 ```go
-request := &sse.StreamEventsContextProtocolRequest{
+request := &sse.CompletionsStreamEventsContextProtocolRequest{
         Query: "query",
     }
-client.Completions.StreamEventsContextProtocol(
+client.Completions.Streameventscontextprotocol(
         context.TODO(),
         request,
     )

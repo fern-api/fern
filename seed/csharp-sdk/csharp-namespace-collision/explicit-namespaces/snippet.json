@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.CreateUserAsync(\n    new global::Contoso.Net.User\n    {\n        Id = \"id\",\n        Name = \"name\",\n        Email = \"email\",\n        Password = \"password\",\n    }\n);\n"
+                "client": "using global::Contoso.Net;\n\nvar client = new global::Contoso.Net.Contoso();\nawait client._.CreateUserAsync(\n    new User\n    {\n        Id = \"id\",\n        Name = \"name\",\n        Email = \"email\",\n        Password = \"password\",\n    }\n);\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.CreateTaskAsync(\n    new global::Contoso.Net.Task\n    {\n        Id = \"id\",\n        Name = \"name\",\n        Email = \"email\",\n        Password = \"password\",\n    }\n);\n"
+                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client._.CreateTaskAsync(\n    new global::Contoso.Net.Task\n    {\n        Id = \"id\",\n        Name = \"name\",\n        Email = \"email\",\n        Password = \"password\",\n    }\n);\n"
             }
         },
         {
@@ -30,11 +30,11 @@
             "id": {
                 "path": "/scim-configuration",
                 "method": "GET",
-                "identifier_override": "endpoint_ScimConfiguration.getConfiguration"
+                "identifier_override": "endpoint_scimconfiguration.getconfiguration"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.ScimConfiguration.GetConfigurationAsync();\n"
+                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.Scimconfiguration.GetconfigurationAsync();\n"
             }
         },
         {
@@ -42,11 +42,11 @@
             "id": {
                 "path": "/scim-configuration/tokens",
                 "method": "POST",
-                "identifier_override": "endpoint_ScimConfiguration.createToken"
+                "identifier_override": "endpoint_scimconfiguration.createtoken"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using global::Contoso.Net.ScimConfiguration;\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.ScimConfiguration.CreateTokenAsync(\n    new ScimToken\n    {\n        TokenId = \"tokenId\",\n        Token = \"token\",\n        Scopes = new List<string>() { \"scopes\", \"scopes\" },\n        CreatedAt = \"createdAt\",\n    }\n);\n"
+                "client": "using global::Contoso.Net;\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.Scimconfiguration.CreatetokenAsync(\n    new ScimConfigurationScimToken { TokenId = \"tokenId\", CreatedAt = \"createdAt\" }\n);\n"
             }
         },
         {
@@ -54,11 +54,11 @@
             "id": {
                 "path": "/scim-configuration/users",
                 "method": "GET",
-                "identifier_override": "endpoint_ScimConfiguration.listUsers"
+                "identifier_override": "endpoint_scimconfiguration.listusers"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.ScimConfiguration.ListUsersAsync();\n"
+                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.Scimconfiguration.ListusersAsync();\n"
             }
         },
         {
@@ -66,11 +66,11 @@
             "id": {
                 "path": "/users",
                 "method": "POST",
-                "identifier_override": "endpoint_System.createUser"
+                "identifier_override": "endpoint_system.createuser"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.System.CreateUserAsync(\n    new global::Contoso.Net.System.User\n    {\n        Line1 = \"line1\",\n        Line2 = \"line2\",\n        City = \"city\",\n        State = \"state\",\n        Zip = \"zip\",\n        Country = \"USA\",\n    }\n);\n"
+                "client": "using global::Contoso.Net;\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.System.CreateuserAsync(\n    new SystemUser\n    {\n        Line1 = \"line1\",\n        City = \"city\",\n        State = \"state\",\n        Zip = \"zip\",\n        Country = SystemUserCountry.Usa,\n    }\n);\n"
             }
         },
         {
@@ -78,11 +78,11 @@
             "id": {
                 "path": "/users/tasks",
                 "method": "POST",
-                "identifier_override": "endpoint_System.createTask"
+                "identifier_override": "endpoint_system.createtask"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.System.CreateTaskAsync(\n    new global::Contoso.Net.System.Task\n    {\n        Name = \"name\",\n        User = new global::Contoso.Net.System.User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n        Owner = new global::Contoso.Net.System.User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n    }\n);\n"
+                "client": "using global::Contoso.Net;\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.System.CreatetaskAsync(\n    new SystemTask\n    {\n        Name = \"name\",\n        User = new SystemUser\n        {\n            Line1 = \"line1\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = SystemUserCountry.Usa,\n        },\n        Owner = new SystemUser\n        {\n            Line1 = \"line1\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = SystemUserCountry.Usa,\n        },\n    }\n);\n"
             }
         },
         {
@@ -90,11 +90,11 @@
             "id": {
                 "path": "/users/{userId}",
                 "method": "GET",
-                "identifier_override": "endpoint_System.getUser"
+                "identifier_override": "endpoint_system.getuser"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.System.GetUserAsync(\"userId\");\n"
+                "client": "using global::Contoso.Net.System;\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.System.GetuserAsync(new SystemGetUserRequest { UserId = \"userId\" });\n"
             }
         }
     ]

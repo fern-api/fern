@@ -1,6 +1,7 @@
-//! API client and types for the AliasExtends
+//! API client and types for the alias-extends
 //!
-//! A Test Definition for extending an alias
+//! This module contains all the API definitions including request/response types
+//! and client implementations for interacting with the API.
 //!
 //! ## Modules
 //!
@@ -10,5 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::AliasExtendsClient;
-pub use types::*;
+pub use resources::{Client, ApiClient};
+pub use types::{*};
+

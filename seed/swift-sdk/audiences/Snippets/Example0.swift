@@ -1,10 +1,10 @@
 import Foundation
-import Audiences
+import Api
 
 private func main() async throws {
-    let client = AudiencesClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.folderA.service.getDirectThread()
+    _ = try await client.folderAService.folderAServiceGetDirectThread()
 }
 
 try await main()

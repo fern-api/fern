@@ -13,9 +13,9 @@
 <dd>
 
 ```python
-from seed import SeedUndiscriminatedUnions
+from seed import SeedApi
 
-client = SeedUndiscriminatedUnions(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -57,7 +57,7 @@ client.union.get(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">get_metadata</a>() -> Metadata</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">getmetadata</a>() -> Metadata</code></summary>
 <dl>
 <dd>
 
@@ -70,13 +70,13 @@ client.union.get(
 <dd>
 
 ```python
-from seed import SeedUndiscriminatedUnions
+from seed import SeedApi
 
-client = SeedUndiscriminatedUnions(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.union.get_metadata()
+client.union.getmetadata()
 
 ```
 </dd>
@@ -104,7 +104,7 @@ client.union.get_metadata()
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">update_metadata</a>(...) -> bool</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">updatemetadata</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -117,15 +117,15 @@ client.union.get_metadata()
 <dd>
 
 ```python
-from seed import SeedUndiscriminatedUnions
+from seed import SeedApi
 
-client = SeedUndiscriminatedUnions(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.union.update_metadata(
+client.union.updatemetadata(
     request={
-        "string": {"key": "value"}
+        "key": "value"
     },
 )
 
@@ -176,17 +176,13 @@ client.union.update_metadata(
 <dd>
 
 ```python
-from seed import SeedUndiscriminatedUnions
+from seed import SeedApi
 
-client = SeedUndiscriminatedUnions(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.union.call(
-    union={
-        "string": {"key": "value"}
-    },
-)
+client.union.call()
 
 ```
 </dd>
@@ -202,7 +198,7 @@ client.union.call(
 <dl>
 <dd>
 
-**request:** `Request` 
+**union:** `typing.Optional[MetadataUnion]` 
     
 </dd>
 </dl>
@@ -222,7 +218,7 @@ client.union.call(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">duplicate_types_union</a>(...) -> UnionWithDuplicateTypes</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">duplicatetypesunion</a>(...) -> UnionWithDuplicateTypes</code></summary>
 <dl>
 <dd>
 
@@ -235,13 +231,13 @@ client.union.call(
 <dd>
 
 ```python
-from seed import SeedUndiscriminatedUnions
+from seed import SeedApi
 
-client = SeedUndiscriminatedUnions(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.union.duplicate_types_union(
+client.union.duplicatetypesunion(
     request="string",
 )
 
@@ -279,7 +275,7 @@ client.union.duplicate_types_union(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">nested_unions</a>(...) -> str</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">nestedunions</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -292,13 +288,13 @@ client.union.duplicate_types_union(
 <dd>
 
 ```python
-from seed import SeedUndiscriminatedUnions
+from seed import SeedApi
 
-client = SeedUndiscriminatedUnions(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.union.nested_unions(
+client.union.nestedunions(
     request="string",
 )
 
@@ -336,7 +332,7 @@ client.union.nested_unions(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">test_camel_case_properties</a>(...) -> str</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">testcamelcaseproperties</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -349,17 +345,16 @@ client.union.nested_unions(
 <dd>
 
 ```python
-from seed import SeedUndiscriminatedUnions
-from seed.union import TokenizeCard
+from seed import SeedApi, TokenizeCard
 
-client = SeedUndiscriminatedUnions(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.union.test_camel_case_properties(
+client.union.testcamelcaseproperties(
     payment_method=TokenizeCard(
-        method="card",
-        card_number="1234567890123456",
+        method="method",
+        card_number="cardNumber",
     ),
 )
 

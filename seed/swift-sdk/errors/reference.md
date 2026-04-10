@@ -1,6 +1,6 @@
 # Reference
 ## Simple
-<details><summary><code>client.simple.<a href="/Sources/Resources/Simple/SimpleClient.swift">fooWithoutEndpointError</a>(request: FooRequest, requestOptions: RequestOptions?) -> FooResponse</code></summary>
+<details><summary><code>client.simple.<a href="/Sources/Resources/Simple/SimpleClient.swift">foowithoutendpointerror</a>(request: FooRequest, requestOptions: RequestOptions?) -> FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,12 @@
 
 ```swift
 import Foundation
-import Errors
+import Api
 
 private func main() async throws {
-    let client = ErrorsClient()
+    let client = ApiClient()
 
-    _ = try await client.simple.fooWithoutEndpointError(request: FooRequest(
+    _ = try await client.simple.foowithoutendpointerror(request: FooRequest(
         bar: "bar"
     ))
 }
@@ -73,10 +73,10 @@ try await main()
 
 ```swift
 import Foundation
-import Errors
+import Api
 
 private func main() async throws {
-    let client = ErrorsClient()
+    let client = ApiClient()
 
     _ = try await client.simple.foo(request: FooRequest(
         bar: "bar"
@@ -118,7 +118,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="/Sources/Resources/Simple/SimpleClient.swift">fooWithExamples</a>(request: FooRequest, requestOptions: RequestOptions?) -> FooResponse</code></summary>
+<details><summary><code>client.simple.<a href="/Sources/Resources/Simple/SimpleClient.swift">foowithexamples</a>(request: FooRequest, requestOptions: RequestOptions?) -> FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -132,13 +132,13 @@ try await main()
 
 ```swift
 import Foundation
-import Errors
+import Api
 
 private func main() async throws {
-    let client = ErrorsClient()
+    let client = ApiClient()
 
-    _ = try await client.simple.fooWithExamples(request: FooRequest(
-        bar: "hello"
+    _ = try await client.simple.foowithexamples(request: FooRequest(
+        bar: "bar"
     ))
 }
 

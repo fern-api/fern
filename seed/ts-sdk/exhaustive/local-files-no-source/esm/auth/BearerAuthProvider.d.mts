@@ -9,7 +9,7 @@ export declare class BearerAuthProvider implements core.AuthProvider {
     }): Promise<core.AuthRequest>;
 }
 export declare namespace BearerAuthProvider {
-    const AUTH_SCHEME: "bearer";
+    const AUTH_SCHEME: "BearerAuth";
     const AUTH_CONFIG_ERROR_MESSAGE: string;
     type Options = AuthOptions;
     type AuthOptions = {

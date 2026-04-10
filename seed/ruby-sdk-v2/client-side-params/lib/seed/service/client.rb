@@ -27,8 +27,8 @@ module Seed
       # @option params [String, nil] :fields
       # @option params [String, nil] :search
       #
-      # @return [Array[Seed::Types::Types::Resource]]
-      def list_resources(request_options: {}, **params)
+      # @return [Array[Seed::Types::Resource]]
+      def listresources(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[page per_page sort order include_totals fields search]
         query_params = {}
@@ -44,7 +44,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/resources",
+          path: "api/resources",
           query: query_params,
           request_options: request_options
         )
@@ -73,8 +73,8 @@ module Seed
       # @option params [Boolean] :include_metadata
       # @option params [String] :format
       #
-      # @return [Seed::Types::Types::Resource]
-      def get_resource(request_options: {}, **params)
+      # @return [Seed::Types::Resource]
+      def getresource(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[include_metadata format]
         query_params = {}
@@ -85,7 +85,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/resources/#{URI.encode_uri_component(params[:resource_id].to_s)}",
+          path: "api/resources/#{URI.encode_uri_component(params[:resource_id].to_s)}",
           query: query_params,
           request_options: request_options
         )
@@ -96,7 +96,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::Resource.load(response.body)
+          Seed::Types::Resource.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -106,7 +106,7 @@ module Seed
       # Search resources with complex parameters
       #
       # @param request_options [Hash]
-      # @param params [Seed::Service::Types::SearchResourcesRequest]
+      # @param params [Seed::Service::Types::ServiceSearchResourcesRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -115,10 +115,10 @@ module Seed
       # @option params [Integer] :limit
       # @option params [Integer] :offset
       #
-      # @return [Seed::Types::Types::SearchResponse]
-      def search_resources(request_options: {}, **params)
+      # @return [Seed::Types::SearchResponse]
+      def searchresources(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request_data = Seed::Service::Types::SearchResourcesRequest.new(params).to_h
+        request_data = Seed::Service::Types::ServiceSearchResourcesRequest.new(params).to_h
         non_body_param_names = %w[limit offset]
         body = request_data.except(*non_body_param_names)
 
@@ -131,7 +131,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/api/resources/search",
+          path: "api/resources/search",
           query: query_params,
           body: body,
           request_options: request_options
@@ -143,7 +143,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::SearchResponse.load(response.body)
+          Seed::Types::SearchResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -168,8 +168,8 @@ module Seed
       # @option params [String, nil] :search_engine
       # @option params [String, nil] :fields
       #
-      # @return [Seed::Types::Types::PaginatedUserResponse]
-      def list_users(request_options: {}, **params)
+      # @return [Seed::Types::PaginatedUserResponse]
+      def listusers(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[page per_page include_totals sort connection q search_engine fields]
         query_params = {}
@@ -186,7 +186,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/users",
+          path: "api/users",
           query: query_params,
           request_options: request_options
         )
@@ -197,7 +197,41 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::PaginatedUserResponse.load(response.body)
+          Seed::Types::PaginatedUserResponse.load(response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # Create a new user
+      #
+      # @param request_options [Hash]
+      # @param params [Seed::Service::Types::CreateUserRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @return [Seed::Types::User]
+      def createuser(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "api/users",
+          body: Seed::Service::Types::CreateUserRequest.new(params).to_h,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          Seed::Types::User.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -217,8 +251,8 @@ module Seed
       # @option params [String, nil] :fields
       # @option params [Boolean, nil] :include_fields
       #
-      # @return [Seed::Types::Types::User]
-      def get_user_by_id(request_options: {}, **params)
+      # @return [Seed::Types::User]
+      def getuserbyid(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[fields include_fields]
         query_params = {}
@@ -229,7 +263,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
+          path: "api/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
           query: query_params,
           request_options: request_options
         )
@@ -240,76 +274,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::User.load(response.body)
-        else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
-        end
-      end
-
-      # Create a new user
-      #
-      # @param request_options [Hash]
-      # @param params [Seed::Types::Types::CreateUserRequest]
-      # @option request_options [String] :base_url
-      # @option request_options [Hash{String => Object}] :additional_headers
-      # @option request_options [Hash{String => Object}] :additional_query_parameters
-      # @option request_options [Hash{String => Object}] :additional_body_parameters
-      # @option request_options [Integer] :timeout_in_seconds
-      #
-      # @return [Seed::Types::Types::User]
-      def create_user(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url],
-          method: "POST",
-          path: "/api/users",
-          body: Seed::Types::Types::CreateUserRequest.new(params).to_h,
-          request_options: request_options
-        )
-        begin
-          response = @client.send(request)
-        rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
-        end
-        code = response.code.to_i
-        if code.between?(200, 299)
-          Seed::Types::Types::User.load(response.body)
-        else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
-        end
-      end
-
-      # Update a user
-      #
-      # @param request_options [Hash]
-      # @param params [Seed::Types::Types::UpdateUserRequest]
-      # @option request_options [String] :base_url
-      # @option request_options [Hash{String => Object}] :additional_headers
-      # @option request_options [Hash{String => Object}] :additional_query_parameters
-      # @option request_options [Hash{String => Object}] :additional_body_parameters
-      # @option request_options [Integer] :timeout_in_seconds
-      # @option params [String] :user_id
-      #
-      # @return [Seed::Types::Types::User]
-      def update_user(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url],
-          method: "PATCH",
-          path: "/api/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
-          body: Seed::Types::Types::UpdateUserRequest.new(params).to_h,
-          request_options: request_options
-        )
-        begin
-          response = @client.send(request)
-        rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
-        end
-        code = response.code.to_i
-        if code.between?(200, 299)
-          Seed::Types::Types::User.load(response.body)
+          Seed::Types::User.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -328,12 +293,12 @@ module Seed
       # @option params [String] :user_id
       #
       # @return [untyped]
-      def delete_user(request_options: {}, **params)
+      def deleteuser(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/api/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
+          path: "api/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
           request_options: request_options
         )
         begin
@@ -346,6 +311,45 @@ module Seed
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
+      end
+
+      # Update a user
+      #
+      # @param request_options [Hash]
+      # @param params [Seed::Service::Types::UpdateUserRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :user_id
+      #
+      # @return [Seed::Types::User]
+      def updateuser(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request_data = Seed::Service::Types::UpdateUserRequest.new(params).to_h
+        non_body_param_names = ["userId"]
+        body = request_data.except(*non_body_param_names)
+
+        request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "PATCH",
+          path: "api/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
+          body: body,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          Seed::Types::User.load(response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # List all connections
@@ -361,8 +365,8 @@ module Seed
       # @option params [String, nil] :name
       # @option params [String, nil] :fields
       #
-      # @return [Array[Seed::Types::Types::Connection]]
-      def list_connections(request_options: {}, **params)
+      # @return [Array[Seed::Types::Connection]]
+      def listconnections(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[strategy name fields]
         query_params = {}
@@ -374,7 +378,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/connections",
+          path: "api/connections",
           query: query_params,
           request_options: request_options
         )
@@ -402,8 +406,8 @@ module Seed
       # @option params [String] :connection_id
       # @option params [String, nil] :fields
       #
-      # @return [Seed::Types::Types::Connection]
-      def get_connection(request_options: {}, **params)
+      # @return [Seed::Types::Connection]
+      def getconnection(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[fields]
         query_params = {}
@@ -413,7 +417,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/connections/#{URI.encode_uri_component(params[:connection_id].to_s)}",
+          path: "api/connections/#{URI.encode_uri_component(params[:connection_id].to_s)}",
           query: query_params,
           request_options: request_options
         )
@@ -424,7 +428,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::Connection.load(response.body)
+          Seed::Types::Connection.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -449,8 +453,8 @@ module Seed
       # @option params [Boolean, nil] :is_first_party
       # @option params [Array[String], nil] :app_type
       #
-      # @return [Seed::Types::Types::PaginatedClientResponse]
-      def list_clients(request_options: {}, **params)
+      # @return [Seed::Types::PaginatedClientResponse]
+      def listclients(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[fields include_fields page per_page include_totals is_global is_first_party app_type]
         query_params = {}
@@ -467,7 +471,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/clients",
+          path: "api/clients",
           query: query_params,
           request_options: request_options
         )
@@ -478,7 +482,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::PaginatedClientResponse.load(response.body)
+          Seed::Types::PaginatedClientResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -498,8 +502,8 @@ module Seed
       # @option params [String, nil] :fields
       # @option params [Boolean, nil] :include_fields
       #
-      # @return [Seed::Types::Types::Client]
-      def get_client(request_options: {}, **params)
+      # @return [Seed::Types::Client]
+      def getclient(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[fields include_fields]
         query_params = {}
@@ -510,7 +514,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/clients/#{URI.encode_uri_component(params[:client_id].to_s)}",
+          path: "api/clients/#{URI.encode_uri_component(params[:client_id].to_s)}",
           query: query_params,
           request_options: request_options
         )
@@ -521,7 +525,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::Client.load(response.body)
+          Seed::Types::Client.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

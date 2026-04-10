@@ -6,11 +6,11 @@
             "id": {
                 "path": "/folder-a",
                 "method": "GET",
-                "identifier_override": "endpoint_folder-a/service.getDirectThread"
+                "identifier_override": "endpoint_folderAService.folderA_service_getDirectThread"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedCrossPackageTypeNames;\n\nvar client = new SeedCrossPackageTypeNamesClient();\nawait client.FolderA.Service.GetDirectThreadAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.FolderAService.FolderAServiceGetDirectThreadAsync();\n"
             }
         },
         {
@@ -18,11 +18,11 @@
             "id": {
                 "path": "/folder-d",
                 "method": "GET",
-                "identifier_override": "endpoint_folder-d/service.getDirectThread"
+                "identifier_override": "endpoint_folderDService.folderD_service_getDirectThread"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedCrossPackageTypeNames;\n\nvar client = new SeedCrossPackageTypeNamesClient();\nawait client.FolderD.Service.GetDirectThreadAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.FolderDService.FolderDServiceGetDirectThreadAsync();\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedCrossPackageTypeNames;\n\nvar client = new SeedCrossPackageTypeNamesClient();\nawait client.Foo.FindAsync(\n    new FindRequest\n    {\n        OptionalString = \"optionalString\",\n        PublicProperty = \"publicProperty\",\n        PrivateProperty = 1,\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Foo.FindAsync(new FooFindRequest());\n"
             }
         }
     ]

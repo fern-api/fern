@@ -22,7 +22,7 @@ export class BearerAuthProvider {
         return __awaiter(this, arguments, void 0, function* ({ endpointMetadata, } = {}) {
             const token = yield core.Supplier.get(this.options[TOKEN_PARAM]);
             if (token == null) {
-                throw new errors.SeedExhaustiveError({
+                throw new errors.SeedApiError({
                     message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
                 });
             }
@@ -33,7 +33,7 @@ export class BearerAuthProvider {
     }
 }
 (function (BearerAuthProvider) {
-    BearerAuthProvider.AUTH_SCHEME = "bearer";
+    BearerAuthProvider.AUTH_SCHEME = "BearerAuth";
     BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE = `Please provide '${TOKEN_PARAM}' when initializing the client`;
     function createInstance(options) {
         return new BearerAuthProvider(options);

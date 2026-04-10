@@ -1,20 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "1eb0a3ea",
-            "id": {
-                "method": "POST",
-                "path": "/generate-stream",
-                "identifier_override": "endpoint_dummy.generate-stream"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.streaming.SeedStreamingClient;\nimport com.seed.streaming.resources.dummy.requests.GenerateStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStreamingClient client = SeedStreamingClient\n            .builder()\n            .build();\n\n        client.dummy().generateStream(\n            GenerateStreamRequest\n                .builder()\n                .numEvents(1)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.streaming.SeedStreamingClient;\nimport com.seed.streaming.resources.dummy.requests.GenerateStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStreamingClient client = SeedStreamingClient\n            .builder()\n            .build();\n\n        client.dummy().generateStream(\n            GenerateStreamRequest\n                .builder()\n                .numEvents(1)\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "Default",
+            "example_identifier": "1bb85d68",
             "id": {
                 "method": "POST",
                 "path": "/generate",
@@ -22,12 +9,12 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.streaming.SeedStreamingClient;\nimport com.seed.streaming.resources.dummy.requests.Generateequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStreamingClient client = SeedStreamingClient\n            .builder()\n            .build();\n\n        client.dummy().generate(\n            Generateequest\n                .builder()\n                .numEvents(5)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.streaming.SeedStreamingClient;\nimport com.seed.streaming.resources.dummy.requests.Generateequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStreamingClient client = SeedStreamingClient\n            .builder()\n            .build();\n\n        client.dummy().generate(\n            Generateequest\n                .builder()\n                .numEvents(5)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.dummy.requests.DummyGenerateRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.dummy().generate(\n            DummyGenerateRequest\n                .builder()\n                .stream(true)\n                .numEvents(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.dummy.requests.DummyGenerateRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.dummy().generate(\n            DummyGenerateRequest\n                .builder()\n                .stream(true)\n                .numEvents(1)\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "3bf980ef",
+            "example_identifier": "dfbbfc51",
             "id": {
                 "method": "POST",
                 "path": "/generate",
@@ -35,8 +22,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.streaming.SeedStreamingClient;\nimport com.seed.streaming.resources.dummy.requests.Generateequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStreamingClient client = SeedStreamingClient\n            .builder()\n            .build();\n\n        client.dummy().generate(\n            Generateequest\n                .builder()\n                .numEvents(1)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.streaming.SeedStreamingClient;\nimport com.seed.streaming.resources.dummy.requests.Generateequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStreamingClient client = SeedStreamingClient\n            .builder()\n            .build();\n\n        client.dummy().generate(\n            Generateequest\n                .builder()\n                .numEvents(1)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.dummy.requests.DummyGenerateRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.dummy().generate(\n            DummyGenerateRequest\n                .builder()\n                .stream(true)\n                .numEvents(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.dummy.requests.DummyGenerateRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.dummy().generate(\n            DummyGenerateRequest\n                .builder()\n                .stream(true)\n                .numEvents(1)\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],

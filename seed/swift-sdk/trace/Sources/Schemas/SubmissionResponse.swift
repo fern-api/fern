@@ -1,63 +1,50 @@
 import Foundation
 
 public enum SubmissionResponse: Codable, Hashable, Sendable {
-    case codeExecutionUpdate(CodeExecutionUpdate)
-    case problemInitialized(ProblemId)
-    case serverErrored(ExceptionInfo)
-    case serverInitialized
-    case terminated(TerminatedResponse)
-    case workspaceInitialized
+    case submissionResponseFive(SubmissionResponseFive)
+    case submissionResponseFour(SubmissionResponseFour)
+    case submissionResponseOne(SubmissionResponseOne)
+    case submissionResponseThree(SubmissionResponseThree)
+    case submissionResponseTwo(SubmissionResponseTwo)
+    case submissionResponseZero(SubmissionResponseZero)
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let discriminant = try container.decode(String.self, forKey: .type)
-        switch discriminant {
-        case "codeExecutionUpdate":
-            self = .codeExecutionUpdate(try container.decode(CodeExecutionUpdate.self, forKey: .value))
-        case "problemInitialized":
-            self = .problemInitialized(try container.decode(ProblemId.self, forKey: .value))
-        case "serverErrored":
-            self = .serverErrored(try ExceptionInfo(from: decoder))
-        case "serverInitialized":
-            self = .serverInitialized
-        case "terminated":
-            self = .terminated(try TerminatedResponse(from: decoder))
-        case "workspaceInitialized":
-            self = .workspaceInitialized
-        default:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: decoder.codingPath,
-                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
-                )
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(SubmissionResponseFive.self) {
+            self = .submissionResponseFive(value)
+        } else if let value = try? container.decode(SubmissionResponseFour.self) {
+            self = .submissionResponseFour(value)
+        } else if let value = try? container.decode(SubmissionResponseOne.self) {
+            self = .submissionResponseOne(value)
+        } else if let value = try? container.decode(SubmissionResponseThree.self) {
+            self = .submissionResponseThree(value)
+        } else if let value = try? container.decode(SubmissionResponseTwo.self) {
+            self = .submissionResponseTwo(value)
+        } else if let value = try? container.decode(SubmissionResponseZero.self) {
+            self = .submissionResponseZero(value)
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unexpected value."
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.singleValueContainer()
         switch self {
-        case .codeExecutionUpdate(let data):
-            try container.encode("codeExecutionUpdate", forKey: .type)
-            try container.encode(data, forKey: .value)
-        case .problemInitialized(let data):
-            try container.encode("problemInitialized", forKey: .type)
-            try container.encode(data, forKey: .value)
-        case .serverErrored(let data):
-            try container.encode("serverErrored", forKey: .type)
-            try data.encode(to: encoder)
-        case .serverInitialized:
-            try container.encode("serverInitialized", forKey: .type)
-        case .terminated(let data):
-            try container.encode("terminated", forKey: .type)
-            try data.encode(to: encoder)
-        case .workspaceInitialized:
-            try container.encode("workspaceInitialized", forKey: .type)
+        case .submissionResponseFive(let value):
+            try container.encode(value)
+        case .submissionResponseFour(let value):
+            try container.encode(value)
+        case .submissionResponseOne(let value):
+            try container.encode(value)
+        case .submissionResponseThree(let value):
+            try container.encode(value)
+        case .submissionResponseTwo(let value):
+            try container.encode(value)
+        case .submissionResponseZero(let value):
+            try container.encode(value)
         }
-    }
-
-    enum CodingKeys: String, CodingKey, CaseIterable {
-        case type
-        case value
     }
 }

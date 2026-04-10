@@ -13,7 +13,7 @@ impl ServiceClient {
         })
     }
 
-    pub async fn get_movie(
+    pub async fn getmovie(
         &self,
         request: &str,
         options: Option<RequestOptions>,
@@ -29,7 +29,7 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn get_movie_docs(
+    pub async fn getmoviedocs(
         &self,
         request: &str,
         options: Option<RequestOptions>,
@@ -45,7 +45,7 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn get_movie_name(
+    pub async fn getmoviename(
         &self,
         request: &str,
         options: Option<RequestOptions>,
@@ -61,7 +61,7 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn get_movie_metadata(
+    pub async fn getmoviemetadata(
         &self,
         request: &str,
         options: Option<RequestOptions>,
@@ -77,11 +77,11 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn get_optional_movie(
+    pub async fn getoptionalmovie(
         &self,
         request: &str,
         options: Option<RequestOptions>,
-    ) -> Result<Option<Response>, ApiError> {
+    ) -> Result<Response, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -93,7 +93,7 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn get_optional_movie_docs(
+    pub async fn getoptionalmoviedocs(
         &self,
         request: &str,
         options: Option<RequestOptions>,
@@ -109,7 +109,7 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn get_optional_movie_name(
+    pub async fn getoptionalmoviename(
         &self,
         request: &str,
         options: Option<RequestOptions>,

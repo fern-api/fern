@@ -10,6 +10,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
@@ -39,10 +40,25 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedVersionClient } from "@fern/version";
+import { SeedApiClient } from "@fern/version";
 
-const client = new SeedVersionClient({ environment: "YOUR_BASE_URL" });
-await client.user.getUser("userId");
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+await client.user.getuser({
+    userId: "userId"
+});
+```
+
+## Request and Response Types
+
+The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+following namespace:
+
+```typescript
+import { SeedApi } from "@fern/version";
+
+const request: SeedApi.UserGetUserRequest = {
+    ...
+};
 ```
 
 ## Exception Handling
@@ -51,12 +67,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedVersionError } from "@fern/version";
+import { SeedApiError } from "@fern/version";
 
 try {
-    await client.user.getUser(...);
+    await client.user.getuser(...);
 } catch (err) {
-    if (err instanceof SeedVersionError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -82,16 +98,16 @@ const client = new UserClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedVersionClient } from "@fern/version";
+import { SeedApiClient } from "@fern/version";
 
-const client = new SeedVersionClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.user.getUser(..., {
+const response = await client.user.getuser(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -103,7 +119,7 @@ const response = await client.user.getUser(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.user.getUser(..., {
+const response = await client.user.getuser(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -125,7 +141,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.user.getUser(..., {
+const response = await client.user.getuser(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -135,7 +151,7 @@ const response = await client.user.getUser(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.user.getUser(..., {
+const response = await client.user.getuser(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -146,7 +162,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.user.getUser(..., {
+const response = await client.user.getuser(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -158,7 +174,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.user.getUser(...).withRawResponse();
+const { data, rawResponse } = await client.user.getuser(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -169,9 +185,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedVersionClient, logging } from "@fern/version";
+import { SeedApiClient, logging } from "@fern/version";
 
-const client = new SeedVersionClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

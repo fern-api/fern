@@ -13,9 +13,9 @@
 <dd>
 
 ```python
-from seed import SeedAccept
+from seed import SeedApi
 
-client = SeedAccept(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )

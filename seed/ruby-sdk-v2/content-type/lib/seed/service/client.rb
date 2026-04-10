@@ -11,7 +11,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Service::Types::PatchProxyRequest]
+      # @param params [Seed::Service::Types::ServicePatchRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -25,7 +25,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "",
-          body: Seed::Service::Types::PatchProxyRequest.new(params).to_h,
+          body: Seed::Service::Types::ServicePatchRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -46,7 +46,7 @@ module Seed
       # - optional<nullable<T>> fields (can be present, absent, or null)
       #
       # @param request_options [Hash]
-      # @param params [Seed::Service::Types::PatchComplexRequest]
+      # @param params [Seed::Service::Types::ServicePatchComplexRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -55,9 +55,9 @@ module Seed
       # @option params [String] :id
       #
       # @return [untyped]
-      def patch_complex(request_options: {}, **params)
+      def patchcomplex(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request_data = Seed::Service::Types::PatchComplexRequest.new(params).to_h
+        request_data = Seed::Service::Types::ServicePatchComplexRequest.new(params).to_h
         non_body_param_names = ["id"]
         body = request_data.except(*non_body_param_names)
 
@@ -84,7 +84,7 @@ module Seed
       # This should trigger the NPE issue when optional fields aren't initialized.
       #
       # @param request_options [Hash]
-      # @param params [Seed::Service::Types::NamedMixedPatchRequest]
+      # @param params [Seed::Service::Types::ServiceNamedPatchWithMixedRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -93,9 +93,9 @@ module Seed
       # @option params [String] :id
       #
       # @return [untyped]
-      def named_patch_with_mixed(request_options: {}, **params)
+      def namedpatchwithmixed(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request_data = Seed::Service::Types::NamedMixedPatchRequest.new(params).to_h
+        request_data = Seed::Service::Types::ServiceNamedPatchWithMixedRequest.new(params).to_h
         non_body_param_names = ["id"]
         body = request_data.except(*non_body_param_names)
 
@@ -124,7 +124,7 @@ module Seed
       # 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
       #
       # @param request_options [Hash]
-      # @param params [Seed::Service::Types::OptionalMergePatchRequest]
+      # @param params [Seed::Service::Types::ServiceOptionalMergePatchTestRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -132,13 +132,13 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def optional_merge_patch_test(request_options: {}, **params)
+      def optionalmergepatchtest(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "optional-merge-patch-test",
-          body: Seed::Service::Types::OptionalMergePatchRequest.new(params).to_h,
+          body: Seed::Service::Types::ServiceOptionalMergePatchTestRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -156,7 +156,7 @@ module Seed
       # Regular PATCH endpoint without merge-patch semantics
       #
       # @param request_options [Hash]
-      # @param params [Seed::Service::Types::RegularPatchRequest]
+      # @param params [Seed::Service::Types::ServiceRegularPatchRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -165,9 +165,9 @@ module Seed
       # @option params [String] :id
       #
       # @return [untyped]
-      def regular_patch(request_options: {}, **params)
+      def regularpatch(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request_data = Seed::Service::Types::RegularPatchRequest.new(params).to_h
+        request_data = Seed::Service::Types::ServiceRegularPatchRequest.new(params).to_h
         non_body_param_names = ["id"]
         body = request_data.except(*non_body_param_names)
 

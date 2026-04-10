@@ -1,2 +1,2 @@
-export { SeedEmptyClientsError } from "./SeedEmptyClientsError.js";
-export { SeedEmptyClientsTimeoutError } from "./SeedEmptyClientsTimeoutError.js";
+export { SeedApiError } from "./SeedApiError.js";
+export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";

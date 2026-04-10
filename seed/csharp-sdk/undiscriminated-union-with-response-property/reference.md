@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedUndiscriminatedUnionWithResponseProperty/SeedUndiscriminatedUnionWithResponsePropertyClient.cs">GetUnionAsync</a>() -> WithRawResponseTask&lt;UnionResponse&gt;</code></summary>
+## _
+<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">GetUnionAsync</a>() -> WithRawResponseTask&lt;UnionResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.GetUnionAsync();
+await client._.GetUnionAsync();
 ```
 </dd>
 </dl>
@@ -24,7 +25,7 @@ await client.GetUnionAsync();
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedUndiscriminatedUnionWithResponseProperty/SeedUndiscriminatedUnionWithResponsePropertyClient.cs">ListUnionsAsync</a>() -> WithRawResponseTask&lt;UnionListResponse&gt;</code></summary>
+<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">ListUnionsAsync</a>() -> WithRawResponseTask&lt;UnionListResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -37,7 +38,7 @@ await client.GetUnionAsync();
 <dd>
 
 ```csharp
-await client.ListUnionsAsync();
+await client._.ListUnionsAsync();
 ```
 </dd>
 </dl>

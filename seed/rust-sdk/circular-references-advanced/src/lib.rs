@@ -1,6 +1,6 @@
-//! # Api SDK
+//! # circular-references-advanced SDK
 //!
-//! The official Rust SDK for the Api.
+//! The official Rust SDK for the circular-references-advanced.
 //!
 //! ## Getting Started
 //!

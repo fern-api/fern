@@ -3,8 +3,8 @@
 import typing
 
 import pydantic
+from .a import A
 from .core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .resources.a.a import A
 
 
 class ImportingA(UniversalBaseModel):

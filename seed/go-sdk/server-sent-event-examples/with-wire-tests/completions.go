@@ -4,209 +4,47 @@ package sse
 
 import (
 	json "encoding/json"
-	fmt "fmt"
 	internal "github.com/fern-api/sse-examples-go/internal"
 	big "math/big"
 )
 
 var (
-	streamCompletionRequestFieldQuery = big.NewInt(1 << 0)
+	completionsStreamRequestFieldQuery = big.NewInt(1 << 0)
 )
 
-type StreamCompletionRequest struct {
+type CompletionsStreamRequest struct {
 	Query string `json:"query" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (s *StreamCompletionRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
-	}
-	s.explicitFields.Or(s.explicitFields, field)
-}
-
-// SetQuery sets the Query field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamCompletionRequest) SetQuery(query string) {
-	s.Query = query
-	s.require(streamCompletionRequestFieldQuery)
-}
-
-func (s *StreamCompletionRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler StreamCompletionRequest
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*s = StreamCompletionRequest(body)
-	return nil
-}
-
-func (s *StreamCompletionRequest) MarshalJSON() ([]byte, error) {
-	type embed StreamCompletionRequest
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*s),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	streamEventsRequestFieldQuery = big.NewInt(1 << 0)
-)
-
-type StreamEventsRequest struct {
-	Query string `json:"query" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (s *StreamEventsRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
-	}
-	s.explicitFields.Or(s.explicitFields, field)
-}
-
-// SetQuery sets the Query field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamEventsRequest) SetQuery(query string) {
-	s.Query = query
-	s.require(streamEventsRequestFieldQuery)
-}
-
-func (s *StreamEventsRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler StreamEventsRequest
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*s = StreamEventsRequest(body)
-	return nil
-}
-
-func (s *StreamEventsRequest) MarshalJSON() ([]byte, error) {
-	type embed StreamEventsRequest
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*s),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	streamEventsContextProtocolRequestFieldQuery = big.NewInt(1 << 0)
-)
-
-type StreamEventsContextProtocolRequest struct {
-	Query string `json:"query" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (s *StreamEventsContextProtocolRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
-	}
-	s.explicitFields.Or(s.explicitFields, field)
-}
-
-// SetQuery sets the Query field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamEventsContextProtocolRequest) SetQuery(query string) {
-	s.Query = query
-	s.require(streamEventsContextProtocolRequestFieldQuery)
-}
-
-func (s *StreamEventsContextProtocolRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler StreamEventsContextProtocolRequest
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*s = StreamEventsContextProtocolRequest(body)
-	return nil
-}
-
-func (s *StreamEventsContextProtocolRequest) MarshalJSON() ([]byte, error) {
-	type embed StreamEventsContextProtocolRequest
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*s),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	completionEventFieldContent = big.NewInt(1 << 0)
-)
-
-type CompletionEvent struct {
-	Content string `json:"content" url:"content"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (c *CompletionEvent) GetContent() string {
-	if c == nil {
-		return ""
-	}
-	return c.Content
-}
-
-func (c *CompletionEvent) GetExtraProperties() map[string]interface{} {
-	if c == nil {
-		return nil
-	}
-	return c.extraProperties
-}
-
-func (c *CompletionEvent) require(field *big.Int) {
+func (c *CompletionsStreamRequest) require(field *big.Int) {
 	if c.explicitFields == nil {
 		c.explicitFields = big.NewInt(0)
 	}
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetContent sets the Content field and marks it as non-optional;
+// SetQuery sets the Query field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CompletionEvent) SetContent(content string) {
-	c.Content = content
-	c.require(completionEventFieldContent)
+func (c *CompletionsStreamRequest) SetQuery(query string) {
+	c.Query = query
+	c.require(completionsStreamRequestFieldQuery)
 }
 
-func (c *CompletionEvent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CompletionEvent
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+func (c *CompletionsStreamRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler CompletionsStreamRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*c = CompletionEvent(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-	c.rawJSON = json.RawMessage(data)
+	*c = CompletionsStreamRequest(body)
 	return nil
 }
 
-func (c *CompletionEvent) MarshalJSON() ([]byte, error) {
-	type embed CompletionEvent
+func (c *CompletionsStreamRequest) MarshalJSON() ([]byte, error) {
+	type embed CompletionsStreamRequest
 	var marshaler = struct {
 		embed
 	}{
@@ -216,575 +54,94 @@ func (c *CompletionEvent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (c *CompletionEvent) String() string {
-	if c == nil {
-		return "<nil>"
-	}
-	if len(c.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
-}
-
 var (
-	errorEventFieldError = big.NewInt(1 << 0)
-	errorEventFieldCode  = big.NewInt(1 << 1)
+	completionsStreamEventsRequestFieldQuery = big.NewInt(1 << 0)
 )
 
-type ErrorEvent struct {
-	Error string `json:"error" url:"error"`
-	Code  *int   `json:"code,omitempty" url:"code,omitempty"`
+type CompletionsStreamEventsRequest struct {
+	Query string `json:"query" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
 }
 
-func (e *ErrorEvent) GetError() string {
-	if e == nil {
-		return ""
+func (c *CompletionsStreamEventsRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	return e.Error
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
-func (e *ErrorEvent) GetCode() *int {
-	if e == nil {
-		return nil
-	}
-	return e.Code
-}
-
-func (e *ErrorEvent) GetExtraProperties() map[string]interface{} {
-	if e == nil {
-		return nil
-	}
-	return e.extraProperties
-}
-
-func (e *ErrorEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
-	}
-	e.explicitFields.Or(e.explicitFields, field)
-}
-
-// SetError sets the Error field and marks it as non-optional;
+// SetQuery sets the Query field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ErrorEvent) SetError(error_ string) {
-	e.Error = error_
-	e.require(errorEventFieldError)
+func (c *CompletionsStreamEventsRequest) SetQuery(query string) {
+	c.Query = query
+	c.require(completionsStreamEventsRequestFieldQuery)
 }
 
-// SetCode sets the Code field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ErrorEvent) SetCode(code *int) {
-	e.Code = code
-	e.require(errorEventFieldCode)
-}
-
-func (e *ErrorEvent) UnmarshalJSON(data []byte) error {
-	type unmarshaler ErrorEvent
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+func (c *CompletionsStreamEventsRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler CompletionsStreamEventsRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*e = ErrorEvent(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-	e.rawJSON = json.RawMessage(data)
+	*c = CompletionsStreamEventsRequest(body)
 	return nil
 }
 
-func (e *ErrorEvent) MarshalJSON() ([]byte, error) {
-	type embed ErrorEvent
+func (c *CompletionsStreamEventsRequest) MarshalJSON() ([]byte, error) {
+	type embed CompletionsStreamEventsRequest
 	var marshaler = struct {
 		embed
 	}{
-		embed: embed(*e),
+		embed: embed(*c),
 	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
 	return json.Marshal(explicitMarshaler)
-}
-
-func (e *ErrorEvent) String() string {
-	if e == nil {
-		return "<nil>"
-	}
-	if len(e.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
 }
 
 var (
-	eventEventFieldEvent = big.NewInt(1 << 0)
-	eventEventFieldName  = big.NewInt(1 << 1)
+	completionsStreamEventsContextProtocolRequestFieldQuery = big.NewInt(1 << 0)
 )
 
-type EventEvent struct {
-	Event string `json:"event" url:"event"`
-	Name  string `json:"name" url:"name"`
+type CompletionsStreamEventsContextProtocolRequest struct {
+	Query string `json:"query" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
 }
 
-func (e *EventEvent) GetEvent() string {
-	if e == nil {
-		return ""
+func (c *CompletionsStreamEventsContextProtocolRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	return e.Event
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
-func (e *EventEvent) GetName() string {
-	if e == nil {
-		return ""
-	}
-	return e.Name
-}
-
-func (e *EventEvent) GetExtraProperties() map[string]interface{} {
-	if e == nil {
-		return nil
-	}
-	return e.extraProperties
-}
-
-func (e *EventEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
-	}
-	e.explicitFields.Or(e.explicitFields, field)
-}
-
-// SetEvent sets the Event field and marks it as non-optional;
+// SetQuery sets the Query field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventEvent) SetEvent(event string) {
-	e.Event = event
-	e.require(eventEventFieldEvent)
+func (c *CompletionsStreamEventsContextProtocolRequest) SetQuery(query string) {
+	c.Query = query
+	c.require(completionsStreamEventsContextProtocolRequestFieldQuery)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventEvent) SetName(name string) {
-	e.Name = name
-	e.require(eventEventFieldName)
-}
-
-func (e *EventEvent) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventEvent
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+func (c *CompletionsStreamEventsContextProtocolRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler CompletionsStreamEventsContextProtocolRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*e = EventEvent(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-	e.rawJSON = json.RawMessage(data)
+	*c = CompletionsStreamEventsContextProtocolRequest(body)
 	return nil
 }
 
-func (e *EventEvent) MarshalJSON() ([]byte, error) {
-	type embed EventEvent
+func (c *CompletionsStreamEventsContextProtocolRequest) MarshalJSON() ([]byte, error) {
+	type embed CompletionsStreamEventsContextProtocolRequest
 	var marshaler = struct {
 		embed
 	}{
-		embed: embed(*e),
+		embed: embed(*c),
 	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
 	return json.Marshal(explicitMarshaler)
-}
-
-func (e *EventEvent) String() string {
-	if e == nil {
-		return "<nil>"
-	}
-	if len(e.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type StreamEvent struct {
-	Event      string
-	Completion *CompletionEvent
-	Error      *ErrorEvent
-}
-
-func (s *StreamEvent) GetEvent() string {
-	if s == nil {
-		return ""
-	}
-	return s.Event
-}
-
-func (s *StreamEvent) GetCompletion() *CompletionEvent {
-	if s == nil {
-		return nil
-	}
-	return s.Completion
-}
-
-func (s *StreamEvent) GetError() *ErrorEvent {
-	if s == nil {
-		return nil
-	}
-	return s.Error
-}
-
-func (s *StreamEvent) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Event string `json:"event"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	s.Event = unmarshaler.Event
-	if unmarshaler.Event == "" {
-		return fmt.Errorf("%T did not include discriminant event", s)
-	}
-	switch unmarshaler.Event {
-	case "completion":
-		value := new(CompletionEvent)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		s.Completion = value
-	case "error":
-		value := new(ErrorEvent)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		s.Error = value
-	}
-	return nil
-}
-
-func (s StreamEvent) MarshalJSON() ([]byte, error) {
-	if err := s.validate(); err != nil {
-		return nil, err
-	}
-	if s.Completion != nil {
-		return internal.MarshalJSONWithExtraProperty(s.Completion, "event", "completion")
-	}
-	if s.Error != nil {
-		return internal.MarshalJSONWithExtraProperty(s.Error, "event", "error")
-	}
-	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
-}
-
-type StreamEventVisitor interface {
-	VisitCompletion(*CompletionEvent) error
-	VisitError(*ErrorEvent) error
-}
-
-func (s *StreamEvent) Accept(visitor StreamEventVisitor) error {
-	if s.Completion != nil {
-		return visitor.VisitCompletion(s.Completion)
-	}
-	if s.Error != nil {
-		return visitor.VisitError(s.Error)
-	}
-	return fmt.Errorf("type %T does not define a non-empty union type", s)
-}
-
-func (s *StreamEvent) validate() error {
-	if s == nil {
-		return fmt.Errorf("type %T is nil", s)
-	}
-	var fields []string
-	if s.Completion != nil {
-		fields = append(fields, "completion")
-	}
-	if s.Error != nil {
-		fields = append(fields, "error")
-	}
-	if len(fields) == 0 {
-		if s.Event != "" {
-			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Event)
-		}
-		return fmt.Errorf("type %T is empty", s)
-	}
-	if len(fields) > 1 {
-		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
-	}
-	if s.Event != "" {
-		field := fields[0]
-		if s.Event != field {
-			return fmt.Errorf(
-				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
-				s,
-				s.Event,
-				s,
-			)
-		}
-	}
-	return nil
-}
-
-type StreamEventContextProtocol struct {
-	Event      string
-	Completion *CompletionEvent
-	Error      *ErrorEvent
-	Event      *EventEvent
-}
-
-func (s *StreamEventContextProtocol) GetEvent() string {
-	if s == nil {
-		return ""
-	}
-	return s.Event
-}
-
-func (s *StreamEventContextProtocol) GetCompletion() *CompletionEvent {
-	if s == nil {
-		return nil
-	}
-	return s.Completion
-}
-
-func (s *StreamEventContextProtocol) GetError() *ErrorEvent {
-	if s == nil {
-		return nil
-	}
-	return s.Error
-}
-
-func (s *StreamEventContextProtocol) GetEvent() *EventEvent {
-	if s == nil {
-		return nil
-	}
-	return s.Event
-}
-
-func (s *StreamEventContextProtocol) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Event string `json:"event"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	s.Event = unmarshaler.Event
-	if unmarshaler.Event == "" {
-		return fmt.Errorf("%T did not include discriminant event", s)
-	}
-	switch unmarshaler.Event {
-	case "completion":
-		value := new(CompletionEvent)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		s.Completion = value
-	case "error":
-		value := new(ErrorEvent)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		s.Error = value
-	case "event":
-		value := new(EventEvent)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		s.Event = value
-	}
-	return nil
-}
-
-func (s StreamEventContextProtocol) MarshalJSON() ([]byte, error) {
-	if err := s.validate(); err != nil {
-		return nil, err
-	}
-	if s.Completion != nil {
-		return internal.MarshalJSONWithExtraProperty(s.Completion, "event", "completion")
-	}
-	if s.Error != nil {
-		return internal.MarshalJSONWithExtraProperty(s.Error, "event", "error")
-	}
-	if s.Event != nil {
-		return internal.MarshalJSONWithExtraProperty(s.Event, "event", "event")
-	}
-	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
-}
-
-type StreamEventContextProtocolVisitor interface {
-	VisitCompletion(*CompletionEvent) error
-	VisitError(*ErrorEvent) error
-	VisitEvent(*EventEvent) error
-}
-
-func (s *StreamEventContextProtocol) Accept(visitor StreamEventContextProtocolVisitor) error {
-	if s.Completion != nil {
-		return visitor.VisitCompletion(s.Completion)
-	}
-	if s.Error != nil {
-		return visitor.VisitError(s.Error)
-	}
-	if s.Event != nil {
-		return visitor.VisitEvent(s.Event)
-	}
-	return fmt.Errorf("type %T does not define a non-empty union type", s)
-}
-
-func (s *StreamEventContextProtocol) validate() error {
-	if s == nil {
-		return fmt.Errorf("type %T is nil", s)
-	}
-	var fields []string
-	if s.Completion != nil {
-		fields = append(fields, "completion")
-	}
-	if s.Error != nil {
-		fields = append(fields, "error")
-	}
-	if s.Event != nil {
-		fields = append(fields, "event")
-	}
-	if len(fields) == 0 {
-		if s.Event != "" {
-			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Event)
-		}
-		return fmt.Errorf("type %T is empty", s)
-	}
-	if len(fields) > 1 {
-		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
-	}
-	if s.Event != "" {
-		field := fields[0]
-		if s.Event != field {
-			return fmt.Errorf(
-				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
-				s,
-				s.Event,
-				s,
-			)
-		}
-	}
-	return nil
-}
-
-var (
-	streamedCompletionFieldDelta  = big.NewInt(1 << 0)
-	streamedCompletionFieldTokens = big.NewInt(1 << 1)
-)
-
-type StreamedCompletion struct {
-	Delta  string `json:"delta" url:"delta"`
-	Tokens *int   `json:"tokens,omitempty" url:"tokens,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (s *StreamedCompletion) GetDelta() string {
-	if s == nil {
-		return ""
-	}
-	return s.Delta
-}
-
-func (s *StreamedCompletion) GetTokens() *int {
-	if s == nil {
-		return nil
-	}
-	return s.Tokens
-}
-
-func (s *StreamedCompletion) GetExtraProperties() map[string]interface{} {
-	if s == nil {
-		return nil
-	}
-	return s.extraProperties
-}
-
-func (s *StreamedCompletion) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
-	}
-	s.explicitFields.Or(s.explicitFields, field)
-}
-
-// SetDelta sets the Delta field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamedCompletion) SetDelta(delta string) {
-	s.Delta = delta
-	s.require(streamedCompletionFieldDelta)
-}
-
-// SetTokens sets the Tokens field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamedCompletion) SetTokens(tokens *int) {
-	s.Tokens = tokens
-	s.require(streamedCompletionFieldTokens)
-}
-
-func (s *StreamedCompletion) UnmarshalJSON(data []byte) error {
-	type unmarshaler StreamedCompletion
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*s = StreamedCompletion(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *s)
-	if err != nil {
-		return err
-	}
-	s.extraProperties = extraProperties
-	s.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (s *StreamedCompletion) MarshalJSON() ([]byte, error) {
-	type embed StreamedCompletion
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*s),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (s *StreamedCompletion) String() string {
-	if s == nil {
-		return "<nil>"
-	}
-	if len(s.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
 }

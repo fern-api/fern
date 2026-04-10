@@ -17,12 +17,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsersMixedTypeCursorPaginationRequest{
-        Cursor: fern.String(
-            "cursor",
-        ),
-    }
-    client.Users.ListWithMixedTypeCursorPagination(
+    request := &fern.InlineUsersInlineUsersListWithOffsetStepPaginationRequest{}
+    client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetStepPagination(
         context.TODO(),
         request,
     )

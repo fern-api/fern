@@ -1,13 +1,18 @@
 import Foundation
-import Trace
+import Api
 
 private func main() async throws {
-    let client = TraceClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.submission.stopExecutionSession(sessionId: "sessionId")
+    _ = try await client.playlist.getplaylists(
+        serviceParam: 1,
+        limit: .value(1),
+        otherField: "otherField",
+        multiLineDocs: "multiLineDocs"
+    )
 }
 
 try await main()

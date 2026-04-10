@@ -1,16 +1,14 @@
 require "seed"
 
 client = Seed::Client.new(
-  client_id: "<clientId>",
-  client_secret: "<clientSecret>",
+  token: "<token>",
   base_url: "https://api.fern.com"
 )
 
-client.auth.refresh_token(
+client.auth.gettokenwithclientcredentials(
   client_id: "client_id",
   client_secret: "client_secret",
-  refresh_token: "refresh_token",
   audience: "https://api.example.com",
-  grant_type: "refresh_token",
+  grant_type: "client_credentials",
   scope: "scope"
 )

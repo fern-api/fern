@@ -1,0 +1,127 @@
+using NUnit.Framework;
+using SeedApi;
+using SeedApi.Test.Unit.MockServer;
+using SeedApi.Test.Utils;
+
+namespace SeedApi.Test.Unit.MockServer.Nullableoptional;
+
+[TestFixture]
+[Parallelizable(ParallelScope.Self)]
+public class FilterbyroleTest : BaseMockServerTest
+{
+    [NUnit.Framework.Test]
+    public async Task MockServerTest_1()
+    {
+        const string mockResponse = """
+            [
+              {
+                "id": "id",
+                "username": "username",
+                "email": "email",
+                "phone": "phone",
+                "createdAt": "2024-01-15T09:30:00.000Z",
+                "updatedAt": "2024-01-15T09:30:00.000Z",
+                "address": {
+                  "street": "street",
+                  "city": "city",
+                  "state": "state",
+                  "zipCode": "zipCode",
+                  "country": "country",
+                  "buildingId": "buildingId",
+                  "tenantId": "tenantId"
+                }
+              },
+              {
+                "id": "id",
+                "username": "username",
+                "email": "email",
+                "phone": "phone",
+                "createdAt": "2024-01-15T09:30:00.000Z",
+                "updatedAt": "2024-01-15T09:30:00.000Z",
+                "address": {
+                  "street": "street",
+                  "city": "city",
+                  "state": "state",
+                  "zipCode": "zipCode",
+                  "country": "country",
+                  "buildingId": "buildingId",
+                  "tenantId": "tenantId"
+                }
+              }
+            ]
+            """;
+
+        Server
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/api/users/filter")
+                    .WithParam("role", "ADMIN")
+                    .WithParam("status", "active")
+                    .WithParam("secondaryRole", "ADMIN")
+                    .UsingGet()
+            )
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(200)
+                    .WithBody(mockResponse)
+            );
+
+        var response = await Client.Nullableoptional.FilterbyroleAsync(
+            new NullableOptionalFilterByRoleRequest
+            {
+                Role = UserRole.Admin,
+                Status = UserStatus.Active,
+                SecondaryRole = UserRole.Admin,
+            }
+        );
+        JsonAssert.AreEqual(response, mockResponse);
+    }
+
+    [NUnit.Framework.Test]
+    public async Task MockServerTest_2()
+    {
+        const string mockResponse = """
+            [
+              {
+                "id": "id",
+                "username": "username",
+                "email": "email",
+                "phone": "phone",
+                "createdAt": "2024-01-15T09:30:00.000Z",
+                "updatedAt": "2024-01-15T09:30:00.000Z",
+                "address": {
+                  "street": "street",
+                  "city": "city",
+                  "state": "state",
+                  "zipCode": "zipCode",
+                  "country": "country",
+                  "buildingId": "buildingId",
+                  "tenantId": "tenantId"
+                }
+              }
+            ]
+            """;
+
+        Server
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/api/users/filter")
+                    .WithParam("role", "ADMIN")
+                    .UsingGet()
+            )
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(200)
+                    .WithBody(mockResponse)
+            );
+
+        var response = await Client.Nullableoptional.FilterbyroleAsync(
+            new NullableOptionalFilterByRoleRequest { Role = UserRole.Admin }
+        );
+        JsonAssert.AreEqual(response, mockResponse);
+    }
+}

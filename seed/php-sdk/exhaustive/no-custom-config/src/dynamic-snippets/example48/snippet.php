@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Types\TypesObjectWithMixedRequiredAndOptionalFields;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,6 +11,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->primitive->getAndReturnDouble(
-    1.1,
+$client->endpointsObject->endpointsObjectGetAndReturnWithMixedRequiredAndOptionalFields(
+    new TypesObjectWithMixedRequiredAndOptionalFields([
+        'requiredString' => 'requiredString',
+        'requiredInteger' => 1,
+        'requiredLong' => 1000000,
+    ]),
 );

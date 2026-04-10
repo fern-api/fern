@@ -1,4 +1,4 @@
-//! API client and types for the OauthClientCredentials
+//! API client and types for the oauth-client-credentials-custom
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,7 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{
-    AuthClient, NestedClient, NestedNoAuthClient, OauthClientCredentialsClient, SimpleClient,
-};
+pub use resources::{ApiClient, AuthClient, NestedApiClient, NestedNoAuthApiClient, SimpleClient};
 pub use types::*;

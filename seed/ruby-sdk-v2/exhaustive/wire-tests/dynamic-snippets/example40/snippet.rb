@@ -5,7 +5,8 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.params.modify_with_inline_path(
-  param: "param",
-  body: "string"
+client.endpoints_object.endpoints_object_get_and_return_nested_with_required_field(
+  string: "string",
+  string: "string",
+  nested_object: {}
 )

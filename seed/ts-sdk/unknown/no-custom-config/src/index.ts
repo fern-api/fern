@@ -1,5 +1,5 @@
-export * as SeedUnknownAsAny from "./api/index.js";
+export * as SeedApi from "./api/index.js";
 export type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-export { SeedUnknownAsAnyClient } from "./Client.js";
-export { SeedUnknownAsAnyError, SeedUnknownAsAnyTimeoutError } from "./errors/index.js";
+export { SeedApiClient } from "./Client.js";
+export { SeedApiError, SeedApiTimeoutError } from "./errors/index.js";
 export * from "./exports.js";

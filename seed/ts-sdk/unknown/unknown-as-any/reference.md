@@ -51,7 +51,7 @@ await client.unknown.post({
 </dl>
 </details>
 
-<details><summary><code>client.unknown.<a href="/src/api/resources/unknown/client/Client.ts">postObject</a>({ ...params }) -> any[]</code></summary>
+<details><summary><code>client.unknown.<a href="/src/api/resources/unknown/client/Client.ts">postobject</a>({ ...params }) -> any[]</code></summary>
 <dl>
 <dd>
 
@@ -64,7 +64,7 @@ await client.unknown.post({
 <dd>
 
 ```typescript
-await client.unknown.postObject({
+await client.unknown.postobject({
     unknown: {
         "key": "value"
     }
@@ -84,7 +84,7 @@ await client.unknown.postObject({
 <dl>
 <dd>
 
-**request:** `SeedUnknownAsAny.MyObject` 
+**request:** `SeedApi.MyObject` 
     
 </dd>
 </dl>

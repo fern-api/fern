@@ -21,7 +21,7 @@ module Seed
       # @option params [String, nil] :starting_after
       #
       # @return [Seed::Types::UsersListResponse]
-      def list_with_custom_pager(request_options: {}, **params)
+      def listwithcustompager(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[limit starting_after]
         query_params = {}
@@ -32,7 +32,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/users",
+          path: "users",
           query: query_params,
           request_options: request_options
         )
@@ -43,17 +43,11 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          parsed_response = Seed::Types::UsersListResponse.load(response.body)
+          Seed::Types::UsersListResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
-
-        Seed::Internal::FooPager.new(
-          parsed_response,
-          item_field: :data,
-          raw_client: @client
-        )
       end
     end
   end

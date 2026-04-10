@@ -3,13 +3,13 @@ import Foundation
 public struct ListType: Codable, Hashable, Sendable {
     public let valueType: VariableType
     /// Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
-    public let isFixedLength: Bool?
+    public let isFixedLength: Nullable<Bool>?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         valueType: VariableType,
-        isFixedLength: Bool? = nil,
+        isFixedLength: Nullable<Bool>? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.valueType = valueType
@@ -20,7 +20,7 @@ public struct ListType: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.valueType = try container.decode(VariableType.self, forKey: .valueType)
-        self.isFixedLength = try container.decodeIfPresent(Bool.self, forKey: .isFixedLength)
+        self.isFixedLength = try container.decodeNullableIfPresent(Bool.self, forKey: .isFixedLength)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -28,7 +28,7 @@ public struct ListType: Codable, Hashable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.valueType, forKey: .valueType)
-        try container.encodeIfPresent(self.isFixedLength, forKey: .isFixedLength)
+        try container.encodeNullableIfPresent(self.isFixedLength, forKey: .isFixedLength)
     }
 
     /// Keys for encoding/decoding struct properties.

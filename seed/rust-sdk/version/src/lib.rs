@@ -1,21 +1,21 @@
-//! # Version SDK
+//! # version SDK
 //!
-//! The official Rust SDK for the Version.
+//! The official Rust SDK for the version.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_version::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = VersionClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .user
-//!         .get_user(&UserId("userId".to_string()), None)
+//!         .getuser(&UserId("userId".to_string()), None)
 //!         .await;
 //! }
 //! ```

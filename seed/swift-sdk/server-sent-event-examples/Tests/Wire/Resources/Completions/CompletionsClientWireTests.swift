@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import ServerSentEvents
+import Api
 
 @Suite("CompletionsClient Wire Tests") struct CompletionsClientWireTests {
 }

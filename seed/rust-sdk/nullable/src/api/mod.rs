@@ -1,4 +1,4 @@
-//! API client and types for the Nullable
+//! API client and types for the nullable
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,5 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{NullableClient, NullableClient2};
+pub use resources::{ApiClient, NullableClient};
 pub use types::*;

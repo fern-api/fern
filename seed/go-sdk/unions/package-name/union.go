@@ -10,6 +10,31 @@ import (
 )
 
 var (
+	unionGetRequestFieldID = big.NewInt(1 << 0)
+)
+
+type UnionGetRequest struct {
+	ID string `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UnionGetRequest) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnionGetRequest) SetID(id string) {
+	u.ID = id
+	u.require(unionGetRequestFieldID)
+}
+
+var (
 	circleFieldRadius = big.NewInt(1 << 0)
 )
 
@@ -93,12 +118,76 @@ func (c *Circle) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+type Shape struct {
+	ShapeZero *ShapeZero
+	ShapeOne  *ShapeOne
+
+	typ string
+}
+
+func (s *Shape) GetShapeZero() *ShapeZero {
+	if s == nil {
+		return nil
+	}
+	return s.ShapeZero
+}
+
+func (s *Shape) GetShapeOne() *ShapeOne {
+	if s == nil {
+		return nil
+	}
+	return s.ShapeOne
+}
+
+func (s *Shape) UnmarshalJSON(data []byte) error {
+	valueShapeZero := new(ShapeZero)
+	if err := json.Unmarshal(data, &valueShapeZero); err == nil {
+		s.typ = "ShapeZero"
+		s.ShapeZero = valueShapeZero
+		return nil
+	}
+	valueShapeOne := new(ShapeOne)
+	if err := json.Unmarshal(data, &valueShapeOne); err == nil {
+		s.typ = "ShapeOne"
+		s.ShapeOne = valueShapeOne
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, s)
+}
+
+func (s Shape) MarshalJSON() ([]byte, error) {
+	if s.typ == "ShapeZero" || s.ShapeZero != nil {
+		return json.Marshal(s.ShapeZero)
+	}
+	if s.typ == "ShapeOne" || s.ShapeOne != nil {
+		return json.Marshal(s.ShapeOne)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", s)
+}
+
+type ShapeVisitor interface {
+	VisitShapeZero(*ShapeZero) error
+	VisitShapeOne(*ShapeOne) error
+}
+
+func (s *Shape) Accept(visitor ShapeVisitor) error {
+	if s.typ == "ShapeZero" || s.ShapeZero != nil {
+		return visitor.VisitShapeZero(s.ShapeZero)
+	}
+	if s.typ == "ShapeOne" || s.ShapeOne != nil {
+		return visitor.VisitShapeOne(s.ShapeOne)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", s)
+}
+
 var (
-	getShapeRequestFieldID = big.NewInt(1 << 0)
+	shapeOneFieldLength = big.NewInt(1 << 0)
+	shapeOneFieldType   = big.NewInt(1 << 1)
 )
 
-type GetShapeRequest struct {
-	ID string `json:"id" url:"id"`
+type ShapeOne struct {
+	Length float64      `json:"length" url:"length"`
+	Type   ShapeOneType `json:"type" url:"type"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -107,211 +196,226 @@ type GetShapeRequest struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetShapeRequest) GetID() string {
-	if g == nil {
-		return ""
+func (s *ShapeOne) GetLength() float64 {
+	if s == nil {
+		return 0
 	}
-	return g.ID
+	return s.Length
 }
 
-func (g *GetShapeRequest) GetExtraProperties() map[string]interface{} {
-	if g == nil {
-		return nil
-	}
-	return g.extraProperties
-}
-
-func (g *GetShapeRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
-	}
-	g.explicitFields.Or(g.explicitFields, field)
-}
-
-// SetID sets the ID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetShapeRequest) SetID(id string) {
-	g.ID = id
-	g.require(getShapeRequestFieldID)
-}
-
-func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler GetShapeRequest
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*g = GetShapeRequest(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *g)
-	if err != nil {
-		return err
-	}
-	g.extraProperties = extraProperties
-	g.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (g *GetShapeRequest) MarshalJSON() ([]byte, error) {
-	type embed GetShapeRequest
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*g),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (g *GetShapeRequest) String() string {
-	if g == nil {
-		return "<nil>"
-	}
-	if len(g.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(g); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", g)
-}
-
-type Shape struct {
-	Type   string
-	Name   string
-	ID     string
-	Circle *Circle
-	Square *Square
-}
-
-func (s *Shape) GetType() string {
+func (s *ShapeOne) GetType() ShapeOneType {
 	if s == nil {
 		return ""
 	}
 	return s.Type
 }
 
-func (s *Shape) GetName() string {
-	if s == nil {
-		return ""
-	}
-	return s.Name
-}
-
-func (s *Shape) GetID() string {
-	if s == nil {
-		return ""
-	}
-	return s.ID
-}
-
-func (s *Shape) GetCircle() *Circle {
+func (s *ShapeOne) GetExtraProperties() map[string]interface{} {
 	if s == nil {
 		return nil
 	}
-	return s.Circle
+	return s.extraProperties
 }
 
-func (s *Shape) GetSquare() *Square {
-	if s == nil {
-		return nil
+func (s *ShapeOne) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	return s.Square
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
-func (s *Shape) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-		Name string `json:"name" url:"name"`
-		ID   string `json:"id"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+// SetLength sets the Length field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *ShapeOne) SetLength(length float64) {
+	s.Length = length
+	s.require(shapeOneFieldLength)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *ShapeOne) SetType(type_ ShapeOneType) {
+	s.Type = type_
+	s.require(shapeOneFieldType)
+}
+
+func (s *ShapeOne) UnmarshalJSON(data []byte) error {
+	type unmarshaler ShapeOne
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	s.Type = unmarshaler.Type
-	s.Name = unmarshaler.Name
-	s.ID = unmarshaler.ID
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", s)
+	*s = ShapeOne(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
 	}
-	switch unmarshaler.Type {
-	case "circle":
-		value := new(Circle)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		s.Circle = value
-	case "square":
-		value := new(Square)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		s.Square = value
-	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
-func (s Shape) MarshalJSON() ([]byte, error) {
-	if err := s.validate(); err != nil {
-		return nil, err
+func (s *ShapeOne) MarshalJSON() ([]byte, error) {
+	type embed ShapeOne
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
 	}
-	if s.Circle != nil {
-		return internal.MarshalJSONWithExtraProperty(s.Circle, "type", "circle")
-	}
-	if s.Square != nil {
-		return internal.MarshalJSONWithExtraProperty(s.Square, "type", "square")
-	}
-	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
-type ShapeVisitor interface {
-	VisitCircle(*Circle) error
-	VisitSquare(*Square) error
-}
-
-func (s *Shape) Accept(visitor ShapeVisitor) error {
-	if s.Circle != nil {
-		return visitor.VisitCircle(s.Circle)
-	}
-	if s.Square != nil {
-		return visitor.VisitSquare(s.Square)
-	}
-	return fmt.Errorf("type %T does not define a non-empty union type", s)
-}
-
-func (s *Shape) validate() error {
+func (s *ShapeOne) String() string {
 	if s == nil {
-		return fmt.Errorf("type %T is nil", s)
+		return "<nil>"
 	}
-	var fields []string
-	if s.Circle != nil {
-		fields = append(fields, "circle")
-	}
-	if s.Square != nil {
-		fields = append(fields, "square")
-	}
-	if len(fields) == 0 {
-		if s.Type != "" {
-			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
-		}
-		return fmt.Errorf("type %T is empty", s)
-	}
-	if len(fields) > 1 {
-		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
-	}
-	if s.Type != "" {
-		field := fields[0]
-		if s.Type != field {
-			return fmt.Errorf(
-				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
-				s,
-				s.Type,
-				s,
-			)
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
 		}
 	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+type ShapeOneType string
+
+const (
+	ShapeOneTypeSquare ShapeOneType = "square"
+)
+
+func NewShapeOneTypeFromString(s string) (ShapeOneType, error) {
+	switch s {
+	case "square":
+		return ShapeOneTypeSquare, nil
+	}
+	var t ShapeOneType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s ShapeOneType) Ptr() *ShapeOneType {
+	return &s
+}
+
+var (
+	shapeZeroFieldRadius = big.NewInt(1 << 0)
+	shapeZeroFieldType   = big.NewInt(1 << 1)
+)
+
+type ShapeZero struct {
+	Radius float64       `json:"radius" url:"radius"`
+	Type   ShapeZeroType `json:"type" url:"type"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *ShapeZero) GetRadius() float64 {
+	if s == nil {
+		return 0
+	}
+	return s.Radius
+}
+
+func (s *ShapeZero) GetType() ShapeZeroType {
+	if s == nil {
+		return ""
+	}
+	return s.Type
+}
+
+func (s *ShapeZero) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *ShapeZero) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetRadius sets the Radius field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *ShapeZero) SetRadius(radius float64) {
+	s.Radius = radius
+	s.require(shapeZeroFieldRadius)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *ShapeZero) SetType(type_ ShapeZeroType) {
+	s.Type = type_
+	s.require(shapeZeroFieldType)
+}
+
+func (s *ShapeZero) UnmarshalJSON(data []byte) error {
+	type unmarshaler ShapeZero
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = ShapeZero(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (s *ShapeZero) MarshalJSON() ([]byte, error) {
+	type embed ShapeZero
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *ShapeZero) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+type ShapeZeroType string
+
+const (
+	ShapeZeroTypeCircle ShapeZeroType = "circle"
+)
+
+func NewShapeZeroTypeFromString(s string) (ShapeZeroType, error) {
+	switch s {
+	case "circle":
+		return ShapeZeroTypeCircle, nil
+	}
+	var t ShapeZeroType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s ShapeZeroType) Ptr() *ShapeZeroType {
+	return &s
 }
 
 var (
@@ -396,88 +500,4 @@ func (s *Square) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
-}
-
-var (
-	withNameFieldName = big.NewInt(1 << 0)
-)
-
-type WithName struct {
-	Name string `json:"name" url:"name"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (w *WithName) GetName() string {
-	if w == nil {
-		return ""
-	}
-	return w.Name
-}
-
-func (w *WithName) GetExtraProperties() map[string]interface{} {
-	if w == nil {
-		return nil
-	}
-	return w.extraProperties
-}
-
-func (w *WithName) require(field *big.Int) {
-	if w.explicitFields == nil {
-		w.explicitFields = big.NewInt(0)
-	}
-	w.explicitFields.Or(w.explicitFields, field)
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (w *WithName) SetName(name string) {
-	w.Name = name
-	w.require(withNameFieldName)
-}
-
-func (w *WithName) UnmarshalJSON(data []byte) error {
-	type unmarshaler WithName
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*w = WithName(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *w)
-	if err != nil {
-		return err
-	}
-	w.extraProperties = extraProperties
-	w.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (w *WithName) MarshalJSON() ([]byte, error) {
-	type embed WithName
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*w),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, w.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (w *WithName) String() string {
-	if w == nil {
-		return "<nil>"
-	}
-	if len(w.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(w); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", w)
 }

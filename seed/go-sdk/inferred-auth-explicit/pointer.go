@@ -1,4 +1,4 @@
-package inferredauthexplicit
+package api
 
 import (
 	"time"

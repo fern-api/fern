@@ -1,4 +1,4 @@
-use seed_examples::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,6 +7,6 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExamplesClient::new(config).expect("Failed to build client");
-    client.echo(&"string".to_string(), None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client..echo(&"string".to_string(), None).await;
 }

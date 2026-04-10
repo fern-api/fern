@@ -4,7 +4,7 @@ namespace Seed\Headers;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Headers\Requests\SendLiteralsInHeadersRequest;
+use Seed\Headers\Requests\HeadersSendRequest;
 use Seed\Types\SendResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -50,7 +50,7 @@ class HeadersClient
     }
 
     /**
-     * @param SendLiteralsInHeadersRequest $request
+     * @param HeadersSendRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -63,12 +63,12 @@ class HeadersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function send(SendLiteralsInHeadersRequest $request, ?array $options = null): ?SendResponse
+    public function send(HeadersSendRequest $request, ?array $options = null): ?SendResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
-        $headers['X-Endpoint-Version'] = '02-12-2024';
-        $headers['X-Async'] = 'true';
+        $headers['X-Endpoint-Version'] = $request->endpointVersion;
+        $headers['X-Async'] = $request->async;
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(

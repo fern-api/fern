@@ -5,10 +5,11 @@ import typing
 import pydantic
 from .base_resource import BaseResource
 from .core.pydantic_utilities import IS_PYDANTIC_V2
+from .script_resource_type import ScriptResourceType
 
 
 class Script(BaseResource):
-    resource_type: typing.Literal["Script"] = "Script"
+    resource_type: ScriptResourceType
     name: str
 
     if IS_PYDANTIC_V2:

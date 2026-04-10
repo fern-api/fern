@@ -1,124 +1,25 @@
 package com.snippets;
 
-import com.seed.trace.SeedTraceClient;
-import com.seed.trace.resources.commons.types.DebugVariableValue;
-import com.seed.trace.resources.submission.types.ExpressionLocation;
-import com.seed.trace.resources.submission.types.Scope;
-import com.seed.trace.resources.submission.types.StackFrame;
-import com.seed.trace.resources.submission.types.StackInformation;
-import com.seed.trace.resources.submission.types.TraceResponseV2;
-import com.seed.trace.resources.submission.types.TracedFile;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.admin.requests.AdminUpdateWorkspaceSubmissionStatusRequest;
+import com.seed.api.types.WorkspaceSubmissionStatus;
+import com.seed.api.types.WorkspaceSubmissionStatusZero;
+import com.seed.api.types.WorkspaceSubmissionStatusZeroType;
 
 public class Example6 {
     public static void main(String[] args) {
-        SeedTraceClient client = SeedTraceClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.admin()
-                .storeTracedTestCaseV2(
-                        UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                        "testCaseId",
-                        Arrays.asList(
-                                TraceResponseV2.builder()
-                                        .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-                                        .lineNumber(1)
-                                        .file(TracedFile.builder()
-                                                .filename("filename")
-                                                .directory("directory")
-                                                .build())
-                                        .stack(StackInformation.builder()
-                                                .numStackFrames(1)
-                                                .topStackFrame(StackFrame.builder()
-                                                        .methodName("methodName")
-                                                        .lineNumber(1)
-                                                        .scopes(Arrays.asList(
-                                                                Scope.builder()
-                                                                        .variables(
-                                                                                new HashMap<
-                                                                                        String, DebugVariableValue>() {
-                                                                                    {
-                                                                                        put(
-                                                                                                "variables",
-                                                                                                DebugVariableValue
-                                                                                                        .integerValue(
-                                                                                                                1));
-                                                                                    }
-                                                                                })
-                                                                        .build(),
-                                                                Scope.builder()
-                                                                        .variables(
-                                                                                new HashMap<
-                                                                                        String, DebugVariableValue>() {
-                                                                                    {
-                                                                                        put(
-                                                                                                "variables",
-                                                                                                DebugVariableValue
-                                                                                                        .integerValue(
-                                                                                                                1));
-                                                                                    }
-                                                                                })
-                                                                        .build()))
-                                                        .build())
-                                                .build())
-                                        .returnValue(DebugVariableValue.integerValue(1))
-                                        .expressionLocation(ExpressionLocation.builder()
-                                                .start(1)
-                                                .offset(1)
-                                                .build())
-                                        .stdout("stdout")
-                                        .build(),
-                                TraceResponseV2.builder()
-                                        .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-                                        .lineNumber(1)
-                                        .file(TracedFile.builder()
-                                                .filename("filename")
-                                                .directory("directory")
-                                                .build())
-                                        .stack(StackInformation.builder()
-                                                .numStackFrames(1)
-                                                .topStackFrame(StackFrame.builder()
-                                                        .methodName("methodName")
-                                                        .lineNumber(1)
-                                                        .scopes(Arrays.asList(
-                                                                Scope.builder()
-                                                                        .variables(
-                                                                                new HashMap<
-                                                                                        String, DebugVariableValue>() {
-                                                                                    {
-                                                                                        put(
-                                                                                                "variables",
-                                                                                                DebugVariableValue
-                                                                                                        .integerValue(
-                                                                                                                1));
-                                                                                    }
-                                                                                })
-                                                                        .build(),
-                                                                Scope.builder()
-                                                                        .variables(
-                                                                                new HashMap<
-                                                                                        String, DebugVariableValue>() {
-                                                                                    {
-                                                                                        put(
-                                                                                                "variables",
-                                                                                                DebugVariableValue
-                                                                                                        .integerValue(
-                                                                                                                1));
-                                                                                    }
-                                                                                })
-                                                                        .build()))
-                                                        .build())
-                                                .build())
-                                        .returnValue(DebugVariableValue.integerValue(1))
-                                        .expressionLocation(ExpressionLocation.builder()
-                                                .start(1)
-                                                .offset(1)
-                                                .build())
-                                        .stdout("stdout")
-                                        .build()));
+                .updateworkspacesubmissionstatus(
+                        "submissionId",
+                        AdminUpdateWorkspaceSubmissionStatusRequest.builder()
+                                .body(WorkspaceSubmissionStatus.of(WorkspaceSubmissionStatusZero.builder()
+                                        .type(WorkspaceSubmissionStatusZeroType.STOPPED)
+                                        .build()))
+                                .build());
     }
 }

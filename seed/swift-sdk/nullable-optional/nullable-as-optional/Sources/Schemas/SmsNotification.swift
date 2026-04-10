@@ -3,14 +3,14 @@ import Foundation
 public struct SmsNotification: Codable, Hashable, Sendable {
     public let phoneNumber: String
     public let message: String
-    public let shortCode: String?
+    public let shortCode: Nullable<String>?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         phoneNumber: String,
         message: String,
-        shortCode: String? = nil,
+        shortCode: Nullable<String>? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.phoneNumber = phoneNumber
@@ -23,7 +23,7 @@ public struct SmsNotification: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.phoneNumber = try container.decode(String.self, forKey: .phoneNumber)
         self.message = try container.decode(String.self, forKey: .message)
-        self.shortCode = try container.decodeIfPresent(String.self, forKey: .shortCode)
+        self.shortCode = try container.decodeNullableIfPresent(String.self, forKey: .shortCode)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -32,7 +32,7 @@ public struct SmsNotification: Codable, Hashable, Sendable {
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.phoneNumber, forKey: .phoneNumber)
         try container.encode(self.message, forKey: .message)
-        try container.encodeIfPresent(self.shortCode, forKey: .shortCode)
+        try container.encodeNullableIfPresent(self.shortCode, forKey: .shortCode)
     }
 
     /// Keys for encoding/decoding struct properties.

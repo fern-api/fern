@@ -31,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) MultipartForm(
+func (r *RawClient) Multipartform(
 	ctx context.Context,
-	request *fern.MultipartFormRequest,
+	request *fern.MultipartFormMultipartFormRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -48,8 +48,10 @@ func (r *RawClient) MultipartForm(
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
-	if err := writer.WriteJSON("color", string(request.Color)); err != nil {
-		return nil, err
+	if request.Color != nil {
+		if err := writer.WriteJSON("color", string(*request.Color)); err != nil {
+			return nil, err
+		}
 	}
 	if request.MaybeColor != nil {
 		if err := writer.WriteJSON("maybeColor", string(*request.MaybeColor)); err != nil {

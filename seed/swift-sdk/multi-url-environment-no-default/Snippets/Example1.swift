@@ -1,10 +1,13 @@
 import Foundation
-import MultiUrlEnvironmentNoDefault
+import Api
 
 private func main() async throws {
-    let client = MultiUrlEnvironmentNoDefaultClient(token: "<token>")
+    let client = ApiClient(
+        baseURL: "https://api.fern.com",
+        token: "<token>"
+    )
 
-    _ = try await client.s3.getPresignedUrl(request: .init(s3Key: "s3Key"))
+    _ = try await client.ec2.bootinstance(request: .init(size: "size"))
 }
 
 try await main()

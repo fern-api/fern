@@ -25,7 +25,7 @@ impl UserClient {
     /// # Returns
     ///
     /// Empty response
-    pub async fn get_user(
+    pub async fn getuser(
         &self,
         user_id: &str,
         options: Option<RequestOptions>,
@@ -51,9 +51,9 @@ impl UserClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn create_user(
+    pub async fn createuser(
         &self,
-        request: &CreateUserRequest,
+        request: &UserCreateUserRequest,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
         self.http_client

@@ -40,27 +40,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedNullableOptional;
+using SeedApi;
 
-var client = new SeedNullableOptionalClient();
-await client.NullableOptional.CreateUserAsync(
-    new CreateUserRequest
-    {
-        Username = "username",
-        Email = "email",
-        Phone = "phone",
-        Address = new Address
-        {
-            Street = "street",
-            City = "city",
-            State = "state",
-            ZipCode = "zipCode",
-            Country = "country",
-            BuildingId = "buildingId",
-            TenantId = "tenantId",
-        },
-    }
-);
+var client = new SeedApiClient();
+await client.Nullableoptional.CreateuserAsync(new CreateUserRequest { Username = "username" });
 ```
 
 ## Exception Handling
@@ -69,11 +52,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedNullableOptional;
+using SeedApi;
 
 try {
-    var response = await client.NullableOptional.CreateUserAsync(...);
-} catch (SeedNullableOptionalApiException e) {
+    var response = await client.Nullableoptional.CreateuserAsync(...);
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -96,7 +79,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.NullableOptional.CreateUserAsync(
+var response = await client.Nullableoptional.CreateuserAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -109,7 +92,7 @@ var response = await client.NullableOptional.CreateUserAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.NullableOptional.CreateUserAsync(
+var response = await client.Nullableoptional.CreateuserAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -122,10 +105,10 @@ var response = await client.NullableOptional.CreateUserAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedNullableOptional;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.NullableOptional.CreateUserAsync(...).WithRawResponse();
+var result = await client.Nullableoptional.CreateuserAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -142,7 +125,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.NullableOptional.CreateUserAsync(...);
+var data = await client.Nullableoptional.CreateuserAsync(...);
 ```
 
 ### Additional Headers
@@ -150,7 +133,7 @@ var data = await client.NullableOptional.CreateUserAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.NullableOptional.CreateUserAsync(
+var response = await client.Nullableoptional.CreateuserAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -166,7 +149,7 @@ var response = await client.NullableOptional.CreateUserAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.NullableOptional.CreateUserAsync(
+var response = await client.Nullableoptional.CreateuserAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>
@@ -182,7 +165,7 @@ var response = await client.NullableOptional.CreateUserAsync(
 This SDK uses forward-compatible enums that can handle unknown values gracefully.
 
 ```csharp
-using SeedNullableOptional;
+using SeedApi;
 
 // Using a built-in value
 var userRole = UserRole.Admin;

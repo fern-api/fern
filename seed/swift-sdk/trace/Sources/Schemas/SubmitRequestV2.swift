@@ -5,8 +5,8 @@ public struct SubmitRequestV2: Codable, Hashable, Sendable {
     public let language: Language
     public let submissionFiles: [SubmissionFileInfo]
     public let problemId: ProblemId
-    public let problemVersion: Int?
-    public let userId: String?
+    public let problemVersion: Nullable<Int>?
+    public let userId: Nullable<String>?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -15,8 +15,8 @@ public struct SubmitRequestV2: Codable, Hashable, Sendable {
         language: Language,
         submissionFiles: [SubmissionFileInfo],
         problemId: ProblemId,
-        problemVersion: Int? = nil,
-        userId: String? = nil,
+        problemVersion: Nullable<Int>? = nil,
+        userId: Nullable<String>? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.submissionId = submissionId
@@ -34,8 +34,8 @@ public struct SubmitRequestV2: Codable, Hashable, Sendable {
         self.language = try container.decode(Language.self, forKey: .language)
         self.submissionFiles = try container.decode([SubmissionFileInfo].self, forKey: .submissionFiles)
         self.problemId = try container.decode(ProblemId.self, forKey: .problemId)
-        self.problemVersion = try container.decodeIfPresent(Int.self, forKey: .problemVersion)
-        self.userId = try container.decodeIfPresent(String.self, forKey: .userId)
+        self.problemVersion = try container.decodeNullableIfPresent(Int.self, forKey: .problemVersion)
+        self.userId = try container.decodeNullableIfPresent(String.self, forKey: .userId)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -46,8 +46,8 @@ public struct SubmitRequestV2: Codable, Hashable, Sendable {
         try container.encode(self.language, forKey: .language)
         try container.encode(self.submissionFiles, forKey: .submissionFiles)
         try container.encode(self.problemId, forKey: .problemId)
-        try container.encodeIfPresent(self.problemVersion, forKey: .problemVersion)
-        try container.encodeIfPresent(self.userId, forKey: .userId)
+        try container.encodeNullableIfPresent(self.problemVersion, forKey: .problemVersion)
+        try container.encodeNullableIfPresent(self.userId, forKey: .userId)
     }
 
     /// Keys for encoding/decoding struct properties.

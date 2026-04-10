@@ -1,42 +1,81 @@
 {
     "endpoints": [
         {
-            "example_identifier": "6fab11ee",
+            "example_identifier": "d1ea3dd2",
             "id": {
                 "method": "POST",
                 "path": "/send-optional-body",
-                "identifier_override": "endpoint_optional.sendOptionalBody"
+                "identifier_override": "endpoint_optional.sendoptionalbody"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.objectsWithImports.SeedObjectsWithImportsClient;\nimport java.util.HashMap;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient\n            .builder()\n            .build();\n\n        client.optional().sendOptionalBody(\n            Optional.of(\n                new HashMap<String, Object>() {{\n                    put(\"string\", new \n                    HashMap<String, Object>() {{put(\"key\", \"value\");\n                    }});\n                }}\n            )\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.objectsWithImports.SeedObjectsWithImportsClient;\nimport java.util.HashMap;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient\n            .builder()\n            .build();\n\n        client.optional().sendOptionalBody(\n            Optional.of(\n                new HashMap<String, Object>() {{\n                    put(\"string\", new \n                    HashMap<String, Object>() {{put(\"key\", \"value\");\n                    }});\n                }}\n            )\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.optional().sendoptionalbody(\n            new HashMap<String, Object>() {{\n                put(\"key\", \"value\");\n            }}\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.optional().sendoptionalbody(\n            new HashMap<String, Object>() {{\n                put(\"key\", \"value\");\n            }}\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "4d44a9aa",
+            "example_identifier": "722e100c",
+            "id": {
+                "method": "POST",
+                "path": "/send-optional-body",
+                "identifier_override": "endpoint_optional.sendoptionalbody"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.optional().sendoptionalbody(\n            new HashMap<String, Object>() {{\n                put(\"string\", new \n                HashMap<String, Object>() {{put(\"key\", \"value\");\n                }});\n            }}\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.optional().sendoptionalbody(\n            new HashMap<String, Object>() {{\n                put(\"string\", new \n                HashMap<String, Object>() {{put(\"key\", \"value\");\n                }});\n            }}\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "d171d680",
             "id": {
                 "method": "POST",
                 "path": "/send-optional-typed-body",
-                "identifier_override": "endpoint_optional.sendOptionalTypedBody"
+                "identifier_override": "endpoint_optional.sendoptionaltypedbody"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.objectsWithImports.SeedObjectsWithImportsClient;\nimport com.seed.objectsWithImports.resources.optional.types.SendOptionalBodyRequest;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient\n            .builder()\n            .build();\n\n        client.optional().sendOptionalTypedBody(\n            Optional.of(\n                SendOptionalBodyRequest\n                    .builder()\n                    .message(\"message\")\n                    .build()\n            )\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.objectsWithImports.SeedObjectsWithImportsClient;\nimport com.seed.objectsWithImports.resources.optional.types.SendOptionalBodyRequest;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient\n            .builder()\n            .build();\n\n        client.optional().sendOptionalTypedBody(\n            Optional.of(\n                SendOptionalBodyRequest\n                    .builder()\n                    .message(\"message\")\n                    .build()\n            )\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.optional.requests.SendOptionalBodyRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.optional().sendoptionaltypedbody(\n            SendOptionalBodyRequest\n                .builder()\n                .message(\"message\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.optional.requests.SendOptionalBodyRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.optional().sendoptionaltypedbody(\n            SendOptionalBodyRequest\n                .builder()\n                .message(\"message\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "6c2b5482",
+            "example_identifier": "5d74b684",
             "id": {
                 "method": "POST",
-                "path": "/deploy/{actionId}/versions/{id}",
-                "identifier_override": "endpoint_optional.sendOptionalNullableWithAllOptionalProperties"
+                "path": "/send-optional-typed-body",
+                "identifier_override": "endpoint_optional.sendoptionaltypedbody"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.objectsWithImports.SeedObjectsWithImportsClient;\nimport com.seed.objectsWithImports.resources.optional.types.DeployParams;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient\n            .builder()\n            .build();\n\n        client.optional().sendOptionalNullableWithAllOptionalProperties(\n            \"actionId\",\n            \"id\",\n            DeployParams\n                .builder()\n                .updateDraft(true)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.objectsWithImports.SeedObjectsWithImportsClient;\nimport com.seed.objectsWithImports.resources.optional.types.DeployParams;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient\n            .builder()\n            .build();\n\n        client.optional().sendOptionalNullableWithAllOptionalProperties(\n            \"actionId\",\n            \"id\",\n            DeployParams\n                .builder()\n                .updateDraft(true)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.optional.requests.SendOptionalBodyRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.optional().sendoptionaltypedbody(\n            SendOptionalBodyRequest\n                .builder()\n                .message(\"message\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.optional.requests.SendOptionalBodyRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.optional().sendoptionaltypedbody(\n            SendOptionalBodyRequest\n                .builder()\n                .message(\"message\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "2b79ab78",
+            "id": {
+                "method": "POST",
+                "path": "/deploy/{actionId}/versions/{id}",
+                "identifier_override": "endpoint_optional.sendoptionalnullablewithalloptionalproperties"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.optional.requests.DeployParams;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.optional().sendoptionalnullablewithalloptionalproperties(\n            \"actionId\",\n            \"id\",\n            DeployParams\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.optional.requests.DeployParams;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.optional().sendoptionalnullablewithalloptionalproperties(\n            \"actionId\",\n            \"id\",\n            DeployParams\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "9a49db35",
+            "id": {
+                "method": "POST",
+                "path": "/deploy/{actionId}/versions/{id}",
+                "identifier_override": "endpoint_optional.sendoptionalnullablewithalloptionalproperties"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.optional.requests.DeployParams;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.optional().sendoptionalnullablewithalloptionalproperties(\n            \"actionId\",\n            \"id\",\n            DeployParams\n                .builder()\n                .updateDraft(true)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.optional.requests.DeployParams;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.optional().sendoptionalnullablewithalloptionalproperties(\n            \"actionId\",\n            \"id\",\n            DeployParams\n                .builder()\n                .updateDraft(true)\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],

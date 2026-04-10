@@ -1,4 +1,4 @@
-import FileUpload
+import Api
 import Foundation
 
 final class HTTPStub {

@@ -13,14 +13,7 @@
 <dd>
 
 ```python
-from seed import SeedBytesUpload
-
-client = SeedBytesUpload(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.service.upload()
-
+client.service.upload(...)
 ```
 </dd>
 </dl>
@@ -55,7 +48,7 @@ client.service.upload()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">upload_with_query_params</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">uploadwithqueryparams</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -68,16 +61,7 @@ client.service.upload()
 <dd>
 
 ```python
-from seed import SeedBytesUpload
-
-client = SeedBytesUpload(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.service.upload_with_query_params(
-    model="nova-2",
-)
-
+client.service.uploadwithqueryparams(...)
 ```
 </dd>
 </dl>

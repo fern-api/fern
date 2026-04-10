@@ -1,18 +1,18 @@
-//! # FileDownload SDK
+//! # file-download SDK
 //!
-//! The official Rust SDK for the FileDownload.
+//! The official Rust SDK for the file-download.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_file_download::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = FileDownloadClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client.service.simple(None).await;
 //! }
 //! ```

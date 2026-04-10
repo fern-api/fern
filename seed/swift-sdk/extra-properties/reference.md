@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">createUser</a>(request: Requests.CreateUserRequest, requestOptions: RequestOptions?) -> User</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">createuser</a>(request: Requests.UserCreateUserRequest, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
 
@@ -14,15 +14,15 @@
 
 ```swift
 import Foundation
-import ExtraProperties
+import Api
 
 private func main() async throws {
-    let client = ExtraPropertiesClient()
+    let client = ApiClient()
 
-    _ = try await client.user.createUser(request: .init(
+    _ = try await client.user.createuser(request: .init(
         type: .createUserRequest,
         version: .v1,
-        name: "Alice"
+        name: "name"
     ))
 }
 
@@ -41,7 +41,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.CreateUserRequest` 
+**request:** `Requests.UserCreateUserRequest` 
     
 </dd>
 </dl>

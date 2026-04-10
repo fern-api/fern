@@ -49,12 +49,12 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Array[Object]]
-      def post_object(request_options: {}, **params)
+      def postobject(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/with-object",
+          path: "with-object",
           body: Seed::Unknown::Types::MyObject.new(params).to_h,
           request_options: request_options
         )

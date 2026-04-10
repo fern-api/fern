@@ -15,9 +15,9 @@ module Seed
       )
     end
 
-    # @return [Seed::NullableOptional::Client]
-    def nullable_optional
-      @nullable_optional ||= Seed::NullableOptional::Client.new(client: @raw_client)
+    # @return [Seed::Nullableoptional::Client]
+    def nullableoptional
+      @nullableoptional ||= Seed::Nullableoptional::Client.new(client: @raw_client)
     end
   end
 end

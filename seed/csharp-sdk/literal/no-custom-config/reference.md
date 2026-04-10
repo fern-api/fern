@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.Headers.<a href="/src/SeedLiteral/Headers/HeadersClient.cs">SendAsync</a>(SendLiteralsInHeadersRequest { ... }) -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
+<details><summary><code>client.Headers.<a href="/src/SeedApi/Headers/HeadersClient.cs">SendAsync</a>(HeadersSendRequest { ... }) -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -14,11 +14,11 @@
 
 ```csharp
 await client.Headers.SendAsync(
-    new SendLiteralsInHeadersRequest
+    new HeadersSendRequest
     {
-        EndpointVersion = "02-12-2024",
+        EndpointVersion = HeadersSendRequestXEndpointVersion.Two122024,
         Async = true,
-        Query = "What is the weather today",
+        Query = "query",
     }
 );
 ```
@@ -35,7 +35,7 @@ await client.Headers.SendAsync(
 <dl>
 <dd>
 
-**request:** `SendLiteralsInHeadersRequest` 
+**request:** `HeadersSendRequest` 
     
 </dd>
 </dl>
@@ -48,7 +48,7 @@ await client.Headers.SendAsync(
 </details>
 
 ## Inlined
-<details><summary><code>client.Inlined.<a href="/src/SeedLiteral/Inlined/InlinedClient.cs">SendAsync</a>(SendLiteralsInlinedRequest { ... }) -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
+<details><summary><code>client.Inlined.<a href="/src/SeedApi/Inlined/InlinedClient.cs">SendAsync</a>(InlinedSendRequest { ... }) -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -62,19 +62,16 @@ await client.Headers.SendAsync(
 
 ```csharp
 await client.Inlined.SendAsync(
-    new SendLiteralsInlinedRequest
+    new InlinedSendRequest
     {
-        Temperature = 10.1,
-        Prompt = "You are a helpful assistant",
-        Context = "You're super wise",
-        AliasedContext = "You're super wise",
-        MaybeContext = "You're super wise",
+        Prompt = InlinedSendRequestPrompt.YouAreAHelpfulAssistant,
+        Query = "query",
+        Stream = true,
+        AliasedContext = SomeAliasedLiteral.YoureSuperWise,
         ObjectWithLiteral = new ATopLevelLiteral
         {
-            NestedLiteral = new ANestedLiteral { MyLiteral = "How super cool" },
+            NestedLiteral = new ANestedLiteral { MyLiteral = ANestedLiteralMyLiteral.HowSuperCool },
         },
-        Stream = false,
-        Query = "What is the weather today",
     }
 );
 ```
@@ -91,7 +88,7 @@ await client.Inlined.SendAsync(
 <dl>
 <dd>
 
-**request:** `SendLiteralsInlinedRequest` 
+**request:** `InlinedSendRequest` 
     
 </dd>
 </dl>
@@ -104,7 +101,7 @@ await client.Inlined.SendAsync(
 </details>
 
 ## Path
-<details><summary><code>client.Path.<a href="/src/SeedLiteral/Path/PathClient.cs">SendAsync</a>(id) -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
+<details><summary><code>client.Path.<a href="/src/SeedApi/Path/PathClient.cs">SendAsync</a>(PathSendRequest { ... }) -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -117,7 +114,7 @@ await client.Inlined.SendAsync(
 <dd>
 
 ```csharp
-await client.Path.SendAsync("123");
+await client.Path.SendAsync(new PathSendRequest { Id = PathSendRequestId.OneHundredTwentyThree });
 ```
 </dd>
 </dl>
@@ -132,7 +129,7 @@ await client.Path.SendAsync("123");
 <dl>
 <dd>
 
-**id:** `string` 
+**request:** `PathSendRequest` 
     
 </dd>
 </dl>
@@ -145,7 +142,7 @@ await client.Path.SendAsync("123");
 </details>
 
 ## Query
-<details><summary><code>client.Query.<a href="/src/SeedLiteral/Query/QueryClient.cs">SendAsync</a>(SendLiteralsInQueryRequest { ... }) -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
+<details><summary><code>client.Query.<a href="/src/SeedApi/Query/QueryClient.cs">SendAsync</a>(QuerySendRequest { ... }) -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -159,17 +156,13 @@ await client.Path.SendAsync("123");
 
 ```csharp
 await client.Query.SendAsync(
-    new SendLiteralsInQueryRequest
+    new QuerySendRequest
     {
-        Prompt = "You are a helpful assistant",
-        OptionalPrompt = "You are a helpful assistant",
-        AliasPrompt = "You are a helpful assistant",
-        AliasOptionalPrompt = "You are a helpful assistant",
-        Stream = false,
-        OptionalStream = false,
-        AliasStream = false,
-        AliasOptionalStream = false,
-        Query = "What is the weather today",
+        Prompt = QuerySendRequestPrompt.YouAreAHelpfulAssistant,
+        AliasPrompt = AliasToPrompt.YouAreAHelpfulAssistant,
+        Query = "query",
+        Stream = true,
+        AliasStream = true,
     }
 );
 ```
@@ -186,7 +179,7 @@ await client.Query.SendAsync(
 <dl>
 <dd>
 
-**request:** `SendLiteralsInQueryRequest` 
+**request:** `QuerySendRequest` 
     
 </dd>
 </dl>
@@ -199,7 +192,7 @@ await client.Query.SendAsync(
 </details>
 
 ## Reference
-<details><summary><code>client.Reference.<a href="/src/SeedLiteral/Reference/ReferenceClient.cs">SendAsync</a>(SendRequest { ... }) -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
+<details><summary><code>client.Reference.<a href="/src/SeedApi/Reference/ReferenceClient.cs">SendAsync</a>(SendRequest { ... }) -> WithRawResponseTask&lt;SendResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -215,18 +208,19 @@ await client.Query.SendAsync(
 await client.Reference.SendAsync(
     new SendRequest
     {
-        Prompt = "You are a helpful assistant",
-        Stream = false,
-        Context = "You're super wise",
-        Query = "What is the weather today",
+        Prompt = SendRequestPrompt.YouAreAHelpfulAssistant,
+        Query = "query",
+        Stream = true,
+        Ending = SendRequestEnding.Ending,
+        Context = SomeLiteral.YoureSuperWise,
         ContainerObject = new ContainerObject
         {
             NestedObjects = new List<NestedObjectWithLiterals>()
             {
                 new NestedObjectWithLiterals
                 {
-                    Literal1 = "literal1",
-                    Literal2 = "literal2",
+                    Literal1 = NestedObjectWithLiteralsLiteral1.Literal1,
+                    Literal2 = NestedObjectWithLiteralsLiteral2.Literal2,
                     StrProp = "strProp",
                 },
             },

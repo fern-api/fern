@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/Client.ts">create</a>({ ...params }) -> SeedValidation.Type</code></summary>
+## 
+<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">create</a>({ ...params }) -> SeedApi.Type</code></summary>
 <dl>
 <dd>
 
@@ -12,10 +13,10 @@
 <dd>
 
 ```typescript
-await client.create({
-    decimal: 2.2,
-    even: 100,
-    name: "fern",
+await client..create({
+    decimal: 1.1,
+    even: 1,
+    name: "name",
     shape: "SQUARE"
 });
 
@@ -33,7 +34,7 @@ await client.create({
 <dl>
 <dd>
 
-**request:** `SeedValidation.CreateRequest` 
+**request:** `SeedApi.CreateRequest` 
     
 </dd>
 </dl>
@@ -41,7 +42,7 @@ await client.create({
 <dl>
 <dd>
 
-**requestOptions:** `SeedValidationClient.RequestOptions` 
+**requestOptions:** `Client.RequestOptions` 
     
 </dd>
 </dl>
@@ -53,7 +54,7 @@ await client.create({
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/Client.ts">get</a>({ ...params }) -> SeedValidation.Type</code></summary>
+<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">get</a>({ ...params }) -> SeedApi.Type</code></summary>
 <dl>
 <dd>
 
@@ -66,10 +67,10 @@ await client.create({
 <dd>
 
 ```typescript
-await client.get({
-    decimal: 2.2,
-    even: 100,
-    name: "fern"
+await client..get({
+    decimal: 1.1,
+    even: 1,
+    name: "name"
 });
 
 ```
@@ -86,7 +87,7 @@ await client.get({
 <dl>
 <dd>
 
-**request:** `SeedValidation.GetRequest` 
+**request:** `SeedApi.GetRequest` 
     
 </dd>
 </dl>
@@ -94,7 +95,7 @@ await client.get({
 <dl>
 <dd>
 
-**requestOptions:** `SeedValidationClient.RequestOptions` 
+**requestOptions:** `Client.RequestOptions` 
     
 </dd>
 </dl>

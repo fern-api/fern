@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .simple.client import AsyncSimpleClient, SimpleClient
 
 
-class SeedErrors:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -38,9 +38,9 @@ class SeedErrors:
 
     Examples
     --------
-    from seed import SeedErrors
+    from seed import SeedApi
 
-    client = SeedErrors(
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -98,7 +98,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedErrors:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -124,9 +124,9 @@ class AsyncSeedErrors:
 
     Examples
     --------
-    from seed import AsyncSeedErrors
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedErrors(
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """

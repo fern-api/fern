@@ -29,16 +29,13 @@ impl UnionClient {
             .await
     }
 
-    pub async fn get_metadata(
-        &self,
-        options: Option<RequestOptions>,
-    ) -> Result<Metadata, ApiError> {
+    pub async fn getmetadata(&self, options: Option<RequestOptions>) -> Result<Metadata, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "/metadata", None, None, options)
+            .execute_request(Method::GET, "metadata", None, None, options)
             .await
     }
 
-    pub async fn update_metadata(
+    pub async fn updatemetadata(
         &self,
         request: &MetadataUnion,
         options: Option<RequestOptions>,
@@ -46,7 +43,7 @@ impl UnionClient {
         self.http_client
             .execute_request(
                 Method::PUT,
-                "/metadata",
+                "metadata",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -62,7 +59,7 @@ impl UnionClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/call",
+                "call",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -70,7 +67,7 @@ impl UnionClient {
             .await
     }
 
-    pub async fn duplicate_types_union(
+    pub async fn duplicatetypesunion(
         &self,
         request: &UnionWithDuplicateTypes,
         options: Option<RequestOptions>,
@@ -78,7 +75,7 @@ impl UnionClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/duplicate",
+                "duplicate",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -86,7 +83,7 @@ impl UnionClient {
             .await
     }
 
-    pub async fn nested_unions(
+    pub async fn nestedunions(
         &self,
         request: &NestedUnionRoot,
         options: Option<RequestOptions>,
@@ -94,7 +91,7 @@ impl UnionClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/nested",
+                "nested",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -102,15 +99,15 @@ impl UnionClient {
             .await
     }
 
-    pub async fn test_camel_case_properties(
+    pub async fn testcamelcaseproperties(
         &self,
-        request: &PaymentRequest,
+        request: &UnionTestCamelCasePropertiesRequest,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/camel-case",
+                "camel-case",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

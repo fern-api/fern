@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.headers.<a href="/src/api/resources/headers/client/Client.ts">send</a>({ ...params }) -> SeedLiteral.SendResponse</code></summary>
+<details><summary><code>client.headers.<a href="/src/api/resources/headers/client/Client.ts">send</a>({ ...params }) -> SeedApi.SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,9 @@
 
 ```typescript
 await client.headers.send({
-    query: "What is the weather today"
+    "X-Endpoint-Version": "02-12-2024",
+    "X-Async": true,
+    query: "query"
 });
 
 ```
@@ -31,7 +33,7 @@ await client.headers.send({
 <dl>
 <dd>
 
-**request:** `SeedLiteral.SendLiteralsInHeadersRequest` 
+**request:** `SeedApi.HeadersSendRequest` 
     
 </dd>
 </dl>
@@ -52,7 +54,7 @@ await client.headers.send({
 </details>
 
 ## Inlined
-<details><summary><code>client.inlined.<a href="/src/api/resources/inlined/client/Client.ts">send</a>({ ...params }) -> SeedLiteral.SendResponse</code></summary>
+<details><summary><code>client.inlined.<a href="/src/api/resources/inlined/client/Client.ts">send</a>({ ...params }) -> SeedApi.SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -66,15 +68,15 @@ await client.headers.send({
 
 ```typescript
 await client.inlined.send({
-    temperature: 10.1,
-    context: "You're super wise",
-    maybeContext: "You're super wise",
+    prompt: "You are a helpful assistant",
+    query: "query",
+    stream: true,
+    aliasedContext: "You're super wise",
     objectWithLiteral: {
         nestedLiteral: {
             myLiteral: "How super cool"
         }
-    },
-    query: "What is the weather today"
+    }
 });
 
 ```
@@ -91,7 +93,7 @@ await client.inlined.send({
 <dl>
 <dd>
 
-**request:** `SeedLiteral.SendLiteralsInlinedRequest` 
+**request:** `SeedApi.InlinedSendRequest` 
     
 </dd>
 </dl>
@@ -112,7 +114,7 @@ await client.inlined.send({
 </details>
 
 ## Path
-<details><summary><code>client.path.<a href="/src/api/resources/path/client/Client.ts">send</a>(id) -> SeedLiteral.SendResponse</code></summary>
+<details><summary><code>client.path.<a href="/src/api/resources/path/client/Client.ts">send</a>({ ...params }) -> SeedApi.SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -125,7 +127,9 @@ await client.inlined.send({
 <dd>
 
 ```typescript
-await client.path.send("123");
+await client.path.send({
+    id: "123"
+});
 
 ```
 </dd>
@@ -141,7 +145,7 @@ await client.path.send("123");
 <dl>
 <dd>
 
-**id:** `"123"` 
+**request:** `SeedApi.PathSendRequest` 
     
 </dd>
 </dl>
@@ -162,7 +166,7 @@ await client.path.send("123");
 </details>
 
 ## Query
-<details><summary><code>client.query.<a href="/src/api/resources/query/client/Client.ts">send</a>({ ...params }) -> SeedLiteral.SendResponse</code></summary>
+<details><summary><code>client.query.<a href="/src/api/resources/query/client/Client.ts">send</a>({ ...params }) -> SeedApi.SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -177,14 +181,10 @@ await client.path.send("123");
 ```typescript
 await client.query.send({
     prompt: "You are a helpful assistant",
-    optional_prompt: "You are a helpful assistant",
     alias_prompt: "You are a helpful assistant",
-    alias_optional_prompt: "You are a helpful assistant",
-    stream: false,
-    optional_stream: false,
-    alias_stream: false,
-    alias_optional_stream: false,
-    query: "What is the weather today"
+    query: "query",
+    stream: true,
+    alias_stream: true
 });
 
 ```
@@ -201,7 +201,7 @@ await client.query.send({
 <dl>
 <dd>
 
-**request:** `SeedLiteral.SendLiteralsInQueryRequest` 
+**request:** `SeedApi.QuerySendRequest` 
     
 </dd>
 </dl>
@@ -222,7 +222,7 @@ await client.query.send({
 </details>
 
 ## Reference
-<details><summary><code>client.reference.<a href="/src/api/resources/reference/client/Client.ts">send</a>({ ...params }) -> SeedLiteral.SendResponse</code></summary>
+<details><summary><code>client.reference.<a href="/src/api/resources/reference/client/Client.ts">send</a>({ ...params }) -> SeedApi.SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -237,9 +237,10 @@ await client.query.send({
 ```typescript
 await client.reference.send({
     prompt: "You are a helpful assistant",
-    stream: false,
+    query: "query",
+    stream: true,
+    ending: "\\$ending",
     context: "You're super wise",
-    query: "What is the weather today",
     containerObject: {
         nestedObjects: [{
                 literal1: "literal1",
@@ -263,7 +264,7 @@ await client.reference.send({
 <dl>
 <dd>
 
-**request:** `SeedLiteral.SendRequest` 
+**request:** `SeedApi.SendRequest` 
     
 </dd>
 </dl>

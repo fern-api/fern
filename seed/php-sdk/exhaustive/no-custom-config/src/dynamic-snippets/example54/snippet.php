@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\EndpointsPagination\Requests\EndpointsPaginationListItemsRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,6 +11,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->put->add(
-    'id',
+$client->endpointsPagination->endpointsPaginationListItems(
+    new EndpointsPaginationListItemsRequest([]),
 );

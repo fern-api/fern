@@ -1,8 +1,10 @@
-export * as commons from "./commons/index.js";
-export * as file from "./file/index.js";
-export * as health from "./health/index.js";
+export * from "./client/index.js";
+export * from "./fileNotificationService/client/requests/index.js";
+export * as fileNotificationService from "./fileNotificationService/index.js";
+export * from "./fileService/client/requests/index.js";
+export * as fileService from "./fileService/index.js";
+export * from "./healthService/client/requests/index.js";
+export * as healthService from "./healthService/index.js";
+export * as  from "./index.js";
 export * from "./service/client/requests/index.js";
 export * as service from "./service/index.js";
-export * from "./types/errors/index.js";
-export * as types from "./types/index.js";
-export * from "./types/types/index.js";

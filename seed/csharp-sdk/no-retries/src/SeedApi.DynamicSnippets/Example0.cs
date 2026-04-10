@@ -1,17 +1,17 @@
-using SeedNoRetries;
+using SeedApi;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedNoRetriesClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Retries.GetUsersAsync();
+        await client.Retries.GetusersAsync();
     }
 
 }

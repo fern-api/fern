@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">upload_json_document</a>(request) -> Seed::Types::UploadDocumentResponse</code></summary>
+## 
+<details><summary><code>client..<a href="/lib/seed/client.rb">upload_json_document</a>(request) -> Seed::Types::UploadDocumentResponse</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +13,7 @@
 <dd>
 
 ```ruby
-client.upload_json_document
+client..upload_json_document
 ```
 </dd>
 </dl>
@@ -51,7 +52,7 @@ client.upload_json_document
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `Seed::::RequestOptions` 
     
 </dd>
 </dl>

@@ -38,9 +38,7 @@ impl ExampleTypeBuilder {
     /// - [`name`](ExampleTypeBuilder::name)
     pub fn build(self) -> Result<ExampleType, BuildError> {
         Ok(ExampleType {
-            docs_fields: self
-                .docs_fields
-                .ok_or_else(|| BuildError::missing_field("docs_fields"))?,
+            docs_fields: self.docs_fields.ok_or_else(|| BuildError::missing_field("docs_fields"))?,
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
         })
     }

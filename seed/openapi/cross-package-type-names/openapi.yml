@@ -5,7 +5,7 @@ info:
 paths:
   /folder-a:
     get:
-      operationId: folderA_service_getDirectThread
+      operationId: folderAService_folderA_service_getDirectThread
       tags:
         - FolderAService
       parameters: []
@@ -15,10 +15,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/folder-aResponse'
+                $ref: '#/components/schemas/FolderAResponse'
+              examples:
+                Example1:
+                  value:
+                    foo:
+                      foo:
+                        bar_property: bar_property
   /folder-d:
     get:
-      operationId: folderD_service_getDirectThread
+      operationId: folderDService_folderD_service_getDirectThread
       tags:
         - FolderDService
       parameters: []
@@ -28,7 +34,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/folder-dResponse'
+                $ref: '#/components/schemas/FolderDResponse'
+              examples:
+                Example1:
+                  value:
+                    foo:
+                      foo:
+                        bar_property: bar_property
   /:
     post:
       operationId: foo_find
@@ -40,6 +52,7 @@ paths:
           required: false
           schema:
             $ref: '#/components/schemas/OptionalString'
+            nullable: true
       responses:
         '200':
           description: ''
@@ -47,6 +60,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ImportingType'
+              examples:
+                Example1:
+                  value:
+                    imported: imported
       requestBody:
         required: true
         content:
@@ -60,27 +77,30 @@ paths:
                 privateProperty:
                   type: integer
                   nullable: true
+            examples:
+              Example1:
+                value: {}
 components:
   schemas:
     Imported:
       title: Imported
       type: string
-    folder-aResponse:
-      title: folder-aResponse
+    FolderAResponse:
+      title: FolderAResponse
       type: object
       properties:
         foo:
-          $ref: '#/components/schemas/folder-bFoo'
+          $ref: '#/components/schemas/FolderBFoo'
           nullable: true
-    folder-bFoo:
-      title: folder-bFoo
+    FolderBFoo:
+      title: FolderBFoo
       type: object
       properties:
         foo:
-          $ref: '#/components/schemas/folder-cFoo'
+          $ref: '#/components/schemas/FolderCFoo'
           nullable: true
-    folder-cFoo:
-      title: folder-cFoo
+    FolderCFoo:
+      title: FolderCFoo
       type: object
       properties:
         bar_property:
@@ -88,12 +108,12 @@ components:
           format: uuid
       required:
         - bar_property
-    folder-dResponse:
-      title: folder-dResponse
+    FolderDResponse:
+      title: FolderDResponse
       type: object
       properties:
         foo:
-          $ref: '#/components/schemas/folder-bFoo'
+          $ref: '#/components/schemas/FolderBFoo'
           nullable: true
     ImportingType:
       title: ImportingType

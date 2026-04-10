@@ -13,14 +13,14 @@
 <dd>
 
 ```rust
-use seed_api_wide_base_path::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiWideBasePathClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .service
         .post(

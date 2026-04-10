@@ -14,7 +14,7 @@ if typing.TYPE_CHECKING:
     from .union.client import AsyncUnionClient, UnionClient
 
 
-class SeedUnions:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -40,9 +40,9 @@ class SeedUnions:
 
     Examples
     --------
-    from seed import SeedUnions
+    from seed import SeedApi
 
-    client = SeedUnions(
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -118,7 +118,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedUnions:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -144,9 +144,9 @@ class AsyncSeedUnions:
 
     Examples
     --------
-    from seed import AsyncSeedUnions
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedUnions(
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """

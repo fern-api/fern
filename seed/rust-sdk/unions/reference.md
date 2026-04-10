@@ -13,14 +13,14 @@
 <dd>
 
 ```rust
-use seed_unions::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = UnionsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client.bigunion.get(&"id".to_string(), None).await;
 }
 ```
@@ -62,23 +62,24 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_unions::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = UnionsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .bigunion
         .update(
-            &BigUnion::NormalSweet {
-                data: NormalSweet {
+            &BigUnion::BigUnionZero(BigUnionZero {
+                normal_sweet_fields: NormalSweet {
                     value: "value".to_string(),
                     ..Default::default()
                 },
-            },
+                r#type: BigUnionZeroType::NormalSweet,
+            }),
             None,
         )
         .await;
@@ -107,31 +108,24 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_unions::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = UnionsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .bigunion
         .update_many(
-            &vec![
-                BigUnion::NormalSweet {
-                    data: NormalSweet {
-                        value: "value".to_string(),
-                        ..Default::default()
-                    },
+            &vec![BigUnion::BigUnionZero(BigUnionZero {
+                normal_sweet_fields: NormalSweet {
+                    value: "value".to_string(),
+                    ..Default::default()
                 },
-                BigUnion::NormalSweet {
-                    data: NormalSweet {
-                        value: "value".to_string(),
-                        ..Default::default()
-                    },
-                },
-            ],
+                r#type: BigUnionZeroType::NormalSweet,
+            })],
             None,
         )
         .await;
@@ -161,14 +155,14 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_unions::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = UnionsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client.union_.get(&"id".to_string(), None).await;
 }
 ```
@@ -210,23 +204,24 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_unions::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = UnionsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .union_
         .update(
-            &Shape::Circle {
-                data: Circle {
+            &Shape::ShapeZero(ShapeZero {
+                circle_fields: Circle {
                     radius: 1.1,
                     ..Default::default()
                 },
-            },
+                r#type: ShapeZeroType::Circle,
+            }),
             None,
         )
         .await;

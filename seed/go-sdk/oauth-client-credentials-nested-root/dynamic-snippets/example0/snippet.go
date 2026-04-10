@@ -4,7 +4,6 @@ import (
     context "context"
 
     fern "github.com/oauth-client-credentials-nested-root/fern"
-    auth "github.com/oauth-client-credentials-nested-root/fern/auth"
     client "github.com/oauth-client-credentials-nested-root/fern/client"
     option "github.com/oauth-client-credentials-nested-root/fern/option"
 )
@@ -14,19 +13,17 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        option.WithClientCredentials(
-            "<clientId>",
-            "<clientSecret>",
+        option.WithToken(
+            "<token>",
         ),
     )
-    request := &auth.GetTokenRequest{
+    request := &fern.AuthGetTokenRequest{
         ClientID: "client_id",
         ClientSecret: "client_secret",
-        Scope: fern.String(
-            "scope",
-        ),
+        Audience: fern.AuthGetTokenRequestAudienceHttpsApiExampleCom,
+        GrantType: fern.AuthGetTokenRequestGrantTypeClientCredentials,
     }
-    client.Auth.GetToken(
+    client.Auth.Gettoken(
         context.TODO(),
         request,
     )

@@ -1,12 +1,12 @@
 import Foundation
-import PathParameters
+import Api
 
 private func main() async throws {
-    let client = PathParametersClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.user.searchUsers(
-        userId: "user_id",
-        limit: 1
+    _ = try await client.user.getuser(
+        tenantId: "tenant_id",
+        userId: "user_id"
     )
 }
 

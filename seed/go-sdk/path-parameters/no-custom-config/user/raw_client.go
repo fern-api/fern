@@ -31,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetUser(
+func (r *RawClient) Getuser(
 	ctx context.Context,
-	request *fern.GetUsersRequest,
+	request *fern.UserGetUserRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
 	options := core.NewRequestOptions(opts...)
@@ -75,54 +75,9 @@ func (r *RawClient) GetUser(
 	}, nil
 }
 
-func (r *RawClient) CreateUser(
+func (r *RawClient) Updateuser(
 	ctx context.Context,
-	tenantID string,
-	request *fern.User,
-	opts ...option.RequestOption,
-) (*core.Response[*fern.User], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		r.baseURL,
-		"",
-	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/%v/user/",
-		tenantID,
-	)
-	headers := internal.MergeHeaders(
-		r.options.ToHeader(),
-		options.ToHeader(),
-	)
-	var response *fern.User
-	raw, err := r.caller.Call(
-		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	)
-	if err != nil {
-		return nil, err
-	}
-	return &core.Response[*fern.User]{
-		StatusCode: raw.StatusCode,
-		Header:     raw.Header,
-		Body:       response,
-	}, nil
-}
-
-func (r *RawClient) UpdateUser(
-	ctx context.Context,
-	request *fern.UpdateUserRequest,
+	request *fern.UserUpdateUserRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
 	options := core.NewRequestOptions(opts...)
@@ -140,6 +95,7 @@ func (r *RawClient) UpdateUser(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response *fern.User
 	raw, err := r.caller.Call(
 		ctx,
@@ -165,9 +121,54 @@ func (r *RawClient) UpdateUser(
 	}, nil
 }
 
-func (r *RawClient) SearchUsers(
+func (r *RawClient) Createuser(
 	ctx context.Context,
-	request *fern.SearchUsersRequest,
+	request *fern.UserCreateUserRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*fern.User], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/%v/user/",
+		request.TenantID,
+	)
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Content-Type", "application/json")
+	var response *fern.User
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*fern.User]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) Searchusers(
+	ctx context.Context,
+	request *fern.UserSearchUsersRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {
 	options := core.NewRequestOptions(opts...)
@@ -216,9 +217,9 @@ func (r *RawClient) SearchUsers(
 	}, nil
 }
 
-func (r *RawClient) GetUserMetadata(
+func (r *RawClient) Getusermetadata(
 	ctx context.Context,
-	request *fern.GetUserMetadataRequest,
+	request *fern.UserGetUserMetadataRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
 	options := core.NewRequestOptions(opts...)
@@ -261,9 +262,9 @@ func (r *RawClient) GetUserMetadata(
 	}, nil
 }
 
-func (r *RawClient) GetUserSpecifics(
+func (r *RawClient) Getuserspecifics(
 	ctx context.Context,
-	request *fern.GetUserSpecificsRequest,
+	request *fern.UserGetUserSpecificsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
 	options := core.NewRequestOptions(opts...)

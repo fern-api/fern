@@ -9,9 +9,11 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
+from ..types.alias_to_prompt import AliasToPrompt
+from ..types.alias_to_stream import AliasToStream
 from ..types.send_response import SendResponse
-from .types.alias_to_prompt import AliasToPrompt
-from .types.alias_to_stream import AliasToStream
+from .types.query_send_request_optional_prompt import QuerySendRequestOptionalPrompt
+from .types.query_send_request_prompt import QuerySendRequestPrompt
 from pydantic import ValidationError
 
 
@@ -22,23 +24,35 @@ class RawQueryClient:
     def send(
         self,
         *,
+        prompt: QuerySendRequestPrompt,
+        alias_prompt: AliasToPrompt,
         query: str,
-        optional_prompt: typing.Optional[typing.Literal["You are a helpful assistant"]] = None,
+        stream: bool,
+        alias_stream: AliasToStream,
+        optional_prompt: typing.Optional[QuerySendRequestOptionalPrompt] = None,
         alias_optional_prompt: typing.Optional[AliasToPrompt] = None,
-        optional_stream: typing.Optional[typing.Literal[False]] = None,
+        optional_stream: typing.Optional[bool] = None,
         alias_optional_stream: typing.Optional[AliasToStream] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SendResponse]:
         """
         Parameters
         ----------
+        prompt : QuerySendRequestPrompt
+
+        alias_prompt : AliasToPrompt
+
         query : str
 
-        optional_prompt : typing.Optional[typing.Literal["You are a helpful assistant"]]
+        stream : bool
+
+        alias_stream : AliasToStream
+
+        optional_prompt : typing.Optional[QuerySendRequestOptionalPrompt]
 
         alias_optional_prompt : typing.Optional[AliasToPrompt]
 
-        optional_stream : typing.Optional[typing.Literal[False]]
+        optional_stream : typing.Optional[bool]
 
         alias_optional_stream : typing.Optional[AliasToStream]
 
@@ -48,19 +62,20 @@ class RawQueryClient:
         Returns
         -------
         HttpResponse[SendResponse]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "query",
             method="POST",
             params={
-                "prompt": "You are a helpful assistant",
+                "prompt": prompt,
                 "optional_prompt": optional_prompt,
-                "alias_prompt": "You are a helpful assistant",
+                "alias_prompt": alias_prompt,
                 "alias_optional_prompt": alias_optional_prompt,
                 "query": query,
-                "stream": False,
+                "stream": stream,
                 "optional_stream": optional_stream,
-                "alias_stream": False,
+                "alias_stream": alias_stream,
                 "alias_optional_stream": alias_optional_stream,
             },
             request_options=request_options,
@@ -92,23 +107,35 @@ class AsyncRawQueryClient:
     async def send(
         self,
         *,
+        prompt: QuerySendRequestPrompt,
+        alias_prompt: AliasToPrompt,
         query: str,
-        optional_prompt: typing.Optional[typing.Literal["You are a helpful assistant"]] = None,
+        stream: bool,
+        alias_stream: AliasToStream,
+        optional_prompt: typing.Optional[QuerySendRequestOptionalPrompt] = None,
         alias_optional_prompt: typing.Optional[AliasToPrompt] = None,
-        optional_stream: typing.Optional[typing.Literal[False]] = None,
+        optional_stream: typing.Optional[bool] = None,
         alias_optional_stream: typing.Optional[AliasToStream] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SendResponse]:
         """
         Parameters
         ----------
+        prompt : QuerySendRequestPrompt
+
+        alias_prompt : AliasToPrompt
+
         query : str
 
-        optional_prompt : typing.Optional[typing.Literal["You are a helpful assistant"]]
+        stream : bool
+
+        alias_stream : AliasToStream
+
+        optional_prompt : typing.Optional[QuerySendRequestOptionalPrompt]
 
         alias_optional_prompt : typing.Optional[AliasToPrompt]
 
-        optional_stream : typing.Optional[typing.Literal[False]]
+        optional_stream : typing.Optional[bool]
 
         alias_optional_stream : typing.Optional[AliasToStream]
 
@@ -118,19 +145,20 @@ class AsyncRawQueryClient:
         Returns
         -------
         AsyncHttpResponse[SendResponse]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "query",
             method="POST",
             params={
-                "prompt": "You are a helpful assistant",
+                "prompt": prompt,
                 "optional_prompt": optional_prompt,
-                "alias_prompt": "You are a helpful assistant",
+                "alias_prompt": alias_prompt,
                 "alias_optional_prompt": alias_optional_prompt,
                 "query": query,
-                "stream": False,
+                "stream": stream,
                 "optional_stream": optional_stream,
-                "alias_stream": False,
+                "alias_stream": alias_stream,
                 "alias_optional_stream": alias_optional_stream,
             },
             request_options=request_options,

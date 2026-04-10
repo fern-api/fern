@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.organizations.<a href="/Sources/Resources/Organizations/OrganizationsClient.swift">getOrganization</a>(tenantId: String, organizationId: String, requestOptions: RequestOptions?) -> Organization</code></summary>
+<details><summary><code>client.organizations.<a href="/Sources/Resources/Organizations/OrganizationsClient.swift">getorganization</a>(tenantId: String, organizationId: String, requestOptions: RequestOptions?) -> Organization</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,12 @@
 
 ```swift
 import Foundation
-import PathParameters
+import Api
 
 private func main() async throws {
-    let client = PathParametersClient()
+    let client = ApiClient()
 
-    _ = try await client.organizations.getOrganization(
+    _ = try await client.organizations.getorganization(
         tenantId: "tenant_id",
         organizationId: "organization_id"
     )
@@ -68,7 +68,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="/Sources/Resources/Organizations/OrganizationsClient.swift">getOrganizationUser</a>(tenantId: String, organizationId: String, userId: String, requestOptions: RequestOptions?) -> User</code></summary>
+<details><summary><code>client.organizations.<a href="/Sources/Resources/Organizations/OrganizationsClient.swift">getorganizationuser</a>(tenantId: String, organizationId: String, userId: String, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
 
@@ -82,12 +82,13 @@ try await main()
 
 ```swift
 import Foundation
-import PathParameters
+import Api
 
 private func main() async throws {
-    let client = PathParametersClient()
+    let client = ApiClient()
 
-    _ = try await client.organizations.getOrganizationUser(
+    _ = try await client.organizations.getorganizationuser(
+        tenantId: "tenant_id",
         organizationId: "organization_id",
         userId: "user_id"
     )
@@ -144,7 +145,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="/Sources/Resources/Organizations/OrganizationsClient.swift">searchOrganizations</a>(tenantId: String, organizationId: String, limit: Int?, requestOptions: RequestOptions?) -> [Organization]</code></summary>
+<details><summary><code>client.organizations.<a href="/Sources/Resources/Organizations/OrganizationsClient.swift">searchorganizations</a>(tenantId: String, organizationId: String, limit: Nullable&lt;Int&gt;?, requestOptions: RequestOptions?) -> [Organization]</code></summary>
 <dl>
 <dd>
 
@@ -158,14 +159,14 @@ try await main()
 
 ```swift
 import Foundation
-import PathParameters
+import Api
 
 private func main() async throws {
-    let client = PathParametersClient()
+    let client = ApiClient()
 
-    _ = try await client.organizations.searchOrganizations(
-        organizationId: "organization_id",
-        limit: 1
+    _ = try await client.organizations.searchorganizations(
+        tenantId: "tenant_id",
+        organizationId: "organization_id"
     )
 }
 
@@ -200,7 +201,7 @@ try await main()
 <dl>
 <dd>
 
-**limit:** `Int?` 
+**limit:** `Nullable<Int>?` 
     
 </dd>
 </dl>
@@ -221,7 +222,7 @@ try await main()
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getUser</a>(tenantId: String, userId: String, requestOptions: RequestOptions?) -> User</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getuser</a>(tenantId: String, userId: String, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
 
@@ -235,12 +236,15 @@ try await main()
 
 ```swift
 import Foundation
-import PathParameters
+import Api
 
 private func main() async throws {
-    let client = PathParametersClient()
+    let client = ApiClient()
 
-    _ = try await client.user.getUser(userId: "user_id")
+    _ = try await client.user.getuser(
+        tenantId: "tenant_id",
+        userId: "user_id"
+    )
 }
 
 try await main()
@@ -286,7 +290,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">createUser</a>(tenantId: String, request: User, requestOptions: RequestOptions?) -> User</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">updateuser</a>(tenantId: String, userId: String, request: User, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
 
@@ -300,91 +304,17 @@ try await main()
 
 ```swift
 import Foundation
-import PathParameters
+import Api
 
 private func main() async throws {
-    let client = PathParametersClient()
+    let client = ApiClient()
 
-    _ = try await client.user.createUser(
+    _ = try await client.user.updateuser(
         tenantId: "tenant_id",
-        request: User(
-            name: "name",
-            tags: [
-                "tags",
-                "tags"
-            ]
-        )
-    )
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**tenantId:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `User` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">updateUser</a>(tenantId: String, userId: String, request: User, requestOptions: RequestOptions?) -> User</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import PathParameters
-
-private func main() async throws {
-    let client = PathParametersClient()
-
-    _ = try await client.user.updateUser(
         userId: "user_id",
         request: .init(body: User(
             name: "name",
             tags: [
-                "tags",
                 "tags"
             ]
         ))
@@ -442,7 +372,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">searchUsers</a>(tenantId: String, userId: String, limit: Int?, requestOptions: RequestOptions?) -> [User]</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">createuser</a>(tenantId: String, request: User, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
 
@@ -456,14 +386,87 @@ try await main()
 
 ```swift
 import Foundation
-import PathParameters
+import Api
 
 private func main() async throws {
-    let client = PathParametersClient()
+    let client = ApiClient()
 
-    _ = try await client.user.searchUsers(
-        userId: "user_id",
-        limit: 1
+    _ = try await client.user.createuser(
+        tenantId: "tenant_id",
+        request: .init(body: User(
+            name: "name",
+            tags: [
+                "tags"
+            ]
+        ))
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `User` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">searchusers</a>(tenantId: String, userId: String, limit: Nullable&lt;Int&gt;?, requestOptions: RequestOptions?) -> [User]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Api
+
+private func main() async throws {
+    let client = ApiClient()
+
+    _ = try await client.user.searchusers(
+        tenantId: "tenant_id",
+        userId: "user_id"
     )
 }
 
@@ -498,7 +501,7 @@ try await main()
 <dl>
 <dd>
 
-**limit:** `Int?` 
+**limit:** `Nullable<Int>?` 
     
 </dd>
 </dl>
@@ -518,7 +521,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getUserMetadata</a>(tenantId: String, userId: String, version: String, requestOptions: RequestOptions?) -> User</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getusermetadata</a>(tenantId: String, userId: String, version: String, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
 
@@ -546,12 +549,13 @@ Test endpoint with path parameter that has a text prefix (v{version})
 
 ```swift
 import Foundation
-import PathParameters
+import Api
 
 private func main() async throws {
-    let client = PathParametersClient()
+    let client = ApiClient()
 
-    _ = try await client.user.getUserMetadata(
+    _ = try await client.user.getusermetadata(
+        tenantId: "tenant_id",
         userId: "user_id",
         version: 1
     )
@@ -608,7 +612,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getUserSpecifics</a>(tenantId: String, userId: String, version: String, thought: String, requestOptions: RequestOptions?) -> User</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getuserspecifics</a>(tenantId: String, userId: String, version: String, thought: String, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
 
@@ -636,12 +640,13 @@ Test endpoint with path parameters listed in different order than found in path
 
 ```swift
 import Foundation
-import PathParameters
+import Api
 
 private func main() async throws {
-    let client = PathParametersClient()
+    let client = ApiClient()
 
-    _ = try await client.user.getUserSpecifics(
+    _ = try await client.user.getuserspecifics(
+        tenantId: "tenant_id",
         userId: "user_id",
         version: 1,
         thought: "thought"

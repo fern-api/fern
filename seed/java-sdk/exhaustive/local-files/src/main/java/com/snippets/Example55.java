@@ -1,25 +1,22 @@
 package com.snippets;
 
-import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.types.union.types.Animal;
-import com.fern.sdk.resources.types.union.types.Dog;
+import com.fern.sdk.SeedApiClient;
+import com.fern.sdk.resources.endpointspagination.requests.EndpointsPaginationListItemsRequest;
 
 public class Example55 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().union().getAndReturnUnion(
-            Animal.dog(
-                Dog
-                    .builder()
-                    .name("name")
-                    .likesToWoof(true)
-                    .build()
-            )
+        client.endpointsPagination().endpointsPaginationListItems(
+            EndpointsPaginationListItemsRequest
+                .builder()
+                .cursor("cursor")
+                .limit(1)
+                .build()
         );
     }
 }

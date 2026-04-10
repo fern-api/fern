@@ -1,20 +1,33 @@
 {
     "endpoints": [
         {
-            "example_identifier": "692a5a2c",
+            "example_identifier": "d45e19f",
             "id": {
                 "method": "POST",
                 "path": "/token",
-                "identifier_override": "endpoint_auth.getToken"
+                "identifier_override": "endpoint_auth.gettoken"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.anyAuth.SeedAnyAuthClient;\nimport com.seed.anyAuth.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAnyAuthClient client = SeedAnyAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.anyAuth.SeedAnyAuthClient;\nimport com.seed.anyAuth.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAnyAuthClient client = SeedAnyAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthGetTokenRequest;\nimport com.seed.api.resources.auth.types.AuthGetTokenRequestAudience;\nimport com.seed.api.resources.auth.types.AuthGetTokenRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .apiKey(\"<X-API-Key>\")\n            .build();\n\n        client.auth().gettoken(\n            AuthGetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(AuthGetTokenRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthGetTokenRequestGrantType.CLIENT_CREDENTIALS)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthGetTokenRequest;\nimport com.seed.api.resources.auth.types.AuthGetTokenRequestAudience;\nimport com.seed.api.resources.auth.types.AuthGetTokenRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .apiKey(\"<X-API-Key>\")\n            .build();\n\n        client.auth().gettoken(\n            AuthGetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(AuthGetTokenRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthGetTokenRequestGrantType.CLIENT_CREDENTIALS)\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "a12635e3",
+            "example_identifier": "85ea0eb6",
+            "id": {
+                "method": "POST",
+                "path": "/token",
+                "identifier_override": "endpoint_auth.gettoken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthGetTokenRequest;\nimport com.seed.api.resources.auth.types.AuthGetTokenRequestAudience;\nimport com.seed.api.resources.auth.types.AuthGetTokenRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .apiKey(\"<X-API-Key>\")\n            .build();\n\n        client.auth().gettoken(\n            AuthGetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(AuthGetTokenRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthGetTokenRequestGrantType.CLIENT_CREDENTIALS)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthGetTokenRequest;\nimport com.seed.api.resources.auth.types.AuthGetTokenRequestAudience;\nimport com.seed.api.resources.auth.types.AuthGetTokenRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .apiKey(\"<X-API-Key>\")\n            .build();\n\n        client.auth().gettoken(\n            AuthGetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(AuthGetTokenRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthGetTokenRequestGrantType.CLIENT_CREDENTIALS)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "6c53a44e",
             "id": {
                 "method": "POST",
                 "path": "/users",
@@ -22,21 +35,47 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.anyAuth.SeedAnyAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAnyAuthClient client = SeedAnyAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().get();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.anyAuth.SeedAnyAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAnyAuthClient client = SeedAnyAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().get();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .apiKey(\"<X-API-Key>\")\n            .build();\n\n        client.user().get();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .apiKey(\"<X-API-Key>\")\n            .build();\n\n        client.user().get();\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "a12635e3",
+            "example_identifier": "86b84d02",
             "id": {
-                "method": "GET",
-                "path": "/admins",
-                "identifier_override": "endpoint_user.getAdmins"
+                "method": "POST",
+                "path": "/users",
+                "identifier_override": "endpoint_user.get"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.anyAuth.SeedAnyAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAnyAuthClient client = SeedAnyAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getAdmins();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.anyAuth.SeedAnyAuthClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAnyAuthClient client = SeedAnyAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.user().getAdmins();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .apiKey(\"<X-API-Key>\")\n            .build();\n\n        client.user().get();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .apiKey(\"<X-API-Key>\")\n            .build();\n\n        client.user().get();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "6c53a44e",
+            "id": {
+                "method": "GET",
+                "path": "/admins",
+                "identifier_override": "endpoint_user.getadmins"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .apiKey(\"<X-API-Key>\")\n            .build();\n\n        client.user().getadmins();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .apiKey(\"<X-API-Key>\")\n            .build();\n\n        client.user().getadmins();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "86b84d02",
+            "id": {
+                "method": "GET",
+                "path": "/admins",
+                "identifier_override": "endpoint_user.getadmins"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .apiKey(\"<X-API-Key>\")\n            .build();\n\n        client.user().getadmins();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .apiKey(\"<X-API-Key>\")\n            .build();\n\n        client.user().getadmins();\n    }\n}\n"
             }
         }
     ],

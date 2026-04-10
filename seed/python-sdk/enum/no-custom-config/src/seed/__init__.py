@@ -14,14 +14,14 @@ if typing.TYPE_CHECKING:
         ForwardCompatibleEnum,
         Operand,
         SpecialEnum,
+        Status,
     )
-    from . import headers, inlined_request, multipart_form, path_param, query_param, unknown
+    from . import headers, inlinedrequest, multipartform, pathparam, queryparam
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedEnum, SeedEnum
-    from .unknown import Status
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedEnum": ".client",
+    "AsyncSeedApi": ".client",
     "Color": ".types",
     "ColorOrOperand": ".types",
     "DefaultAioHttpClient": "._default_clients",
@@ -30,16 +30,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EnumWithSpecialCharacters": ".types",
     "ForwardCompatibleEnum": ".types",
     "Operand": ".types",
-    "SeedEnum": ".client",
+    "SeedApi": ".client",
     "SpecialEnum": ".types",
-    "Status": ".unknown",
+    "Status": ".types",
     "__version__": ".version",
     "headers": ".headers",
-    "inlined_request": ".inlined_request",
-    "multipart_form": ".multipart_form",
-    "path_param": ".path_param",
-    "query_param": ".query_param",
-    "unknown": ".unknown",
+    "inlinedrequest": ".inlinedrequest",
+    "multipartform": ".multipartform",
+    "pathparam": ".pathparam",
+    "queryparam": ".queryparam",
 }
 
 
@@ -65,7 +64,7 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedEnum",
+    "AsyncSeedApi",
     "Color",
     "ColorOrOperand",
     "DefaultAioHttpClient",
@@ -74,14 +73,13 @@ __all__ = [
     "EnumWithSpecialCharacters",
     "ForwardCompatibleEnum",
     "Operand",
-    "SeedEnum",
+    "SeedApi",
     "SpecialEnum",
     "Status",
     "__version__",
     "headers",
-    "inlined_request",
-    "multipart_form",
-    "path_param",
-    "query_param",
-    "unknown",
+    "inlinedrequest",
+    "multipartform",
+    "pathparam",
+    "queryparam",
 ]

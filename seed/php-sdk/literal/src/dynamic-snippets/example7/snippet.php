@@ -3,7 +3,10 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Query\Requests\SendLiteralsInQueryRequest;
+use Seed\Query\Requests\QuerySendRequest;
+use Seed\Query\Types\QuerySendRequestPrompt;
+use Seed\Query\Types\QuerySendRequestOptionalPrompt;
+use Seed\Types\AliasToPrompt;
 
 $client = new SeedClient(
     options: [
@@ -11,15 +14,15 @@ $client = new SeedClient(
     ],
 );
 $client->query->send(
-    new SendLiteralsInQueryRequest([
-        'prompt' => 'You are a helpful assistant',
-        'optionalPrompt' => 'You are a helpful assistant',
-        'aliasPrompt' => 'You are a helpful assistant',
-        'aliasOptionalPrompt' => 'You are a helpful assistant',
+    new QuerySendRequest([
+        'prompt' => QuerySendRequestPrompt::YouAreAHelpfulAssistant->value,
+        'optionalPrompt' => QuerySendRequestOptionalPrompt::YouAreAHelpfulAssistant->value,
+        'aliasPrompt' => AliasToPrompt::YouAreAHelpfulAssistant->value,
+        'aliasOptionalPrompt' => AliasToPrompt::YouAreAHelpfulAssistant->value,
         'query' => 'query',
-        'stream' => false,
-        'optionalStream' => false,
-        'aliasStream' => false,
-        'aliasOptionalStream' => false,
+        'stream' => true,
+        'optionalStream' => true,
+        'aliasStream' => true,
+        'aliasOptionalStream' => true,
     ]),
 );

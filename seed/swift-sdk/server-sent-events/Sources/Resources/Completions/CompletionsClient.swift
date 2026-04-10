@@ -7,23 +7,23 @@ public final class CompletionsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func stream(request: Requests.StreamCompletionRequest, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
+    public func stream(request: Requests.CompletionsStreamRequest, requestOptions: RequestOptions? = nil) async throws -> Data {
         return try await httpClient.performRequest(
             method: .post,
             path: "/stream",
             body: request,
             requestOptions: requestOptions,
-            responseType: JSONValue.self
+            responseType: Data.self
         )
     }
 
-    public func streamWithoutTerminator(request: Requests.StreamCompletionRequestWithoutTerminator, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
+    public func streamwithoutterminator(request: Requests.CompletionsStreamWithoutTerminatorRequest, requestOptions: RequestOptions? = nil) async throws -> Data {
         return try await httpClient.performRequest(
             method: .post,
             path: "/stream-no-terminator",
             body: request,
             requestOptions: requestOptions,
-            responseType: JSONValue.self
+            responseType: Data.self
         )
     }
 }

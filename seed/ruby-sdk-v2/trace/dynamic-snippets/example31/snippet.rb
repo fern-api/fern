@@ -5,4 +5,9 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.v2.problem.get_problems
+client.playlist.updateplaylist(
+  service_param: 1,
+  playlist_id: "playlistId",
+  name: "name",
+  problems: ["problems"]
+)

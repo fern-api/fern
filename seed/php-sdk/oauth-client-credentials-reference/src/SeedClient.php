@@ -6,7 +6,6 @@ use Seed\Auth\AuthClient;
 use Seed\Simple\SimpleClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Core\OAuthTokenProvider;
 
 class SeedClient
 {
@@ -37,13 +36,7 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @var OAuthTokenProvider $oauthTokenProvider
-     */
-    private OAuthTokenProvider $oauthTokenProvider;
-
-    /**
-     * @param ?string $clientId The client ID for OAuth authentication.
-     * @param ?string $clientSecret The client secret for OAuth authentication.
+     * @param ?string $token The token to use for authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -53,8 +46,7 @@ class SeedClient
      * } $options
      */
     public function __construct(
-        ?string $clientId = null,
-        ?string $clientSecret = null,
+        ?string $token = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
@@ -63,20 +55,16 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
+        if ($token != null) {
+            $defaultHeaders['Authorization'] = "Bearer $token";
+        }
 
         $this->options = $options ?? [];
-
-        $authRawClient = new RawClient(['headers' => []]);
-        $authClient = new AuthClient($authRawClient);
-        $this->oauthTokenProvider = new OAuthTokenProvider($clientId ?? '', $clientSecret ?? '', $authClient);
 
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-
-        $this->options['getAuthHeaders'] = fn () =>
-            ['Authorization' => "Bearer " . $this->oauthTokenProvider->getToken()];
 
         $this->client = new RawClient(
             options: $this->options,

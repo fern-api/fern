@@ -6,10 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import service
-    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedFileUpload, SeedFileUpload
-    from .service import (
+    from .types import (
         Id,
         ModelType,
         MyAliasObject,
@@ -20,21 +17,24 @@ if typing.TYPE_CHECKING:
         ObjectType,
         OpenEnumType,
     )
+    from . import service
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedFileUpload": ".client",
+    "AsyncSeedApi": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "Id": ".service",
-    "ModelType": ".service",
-    "MyAliasObject": ".service",
-    "MyCollectionAliasObject": ".service",
-    "MyInlineType": ".service",
-    "MyObject": ".service",
-    "MyObjectWithOptional": ".service",
-    "ObjectType": ".service",
-    "OpenEnumType": ".service",
-    "SeedFileUpload": ".client",
+    "Id": ".types",
+    "ModelType": ".types",
+    "MyAliasObject": ".types",
+    "MyCollectionAliasObject": ".types",
+    "MyInlineType": ".types",
+    "MyObject": ".types",
+    "MyObjectWithOptional": ".types",
+    "ObjectType": ".types",
+    "OpenEnumType": ".types",
+    "SeedApi": ".client",
     "__version__": ".version",
     "service": ".service",
 }
@@ -62,7 +62,7 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedFileUpload",
+    "AsyncSeedApi",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "Id",
@@ -74,7 +74,7 @@ __all__ = [
     "MyObjectWithOptional",
     "ObjectType",
     "OpenEnumType",
-    "SeedFileUpload",
+    "SeedApi",
     "__version__",
     "service",
 ]

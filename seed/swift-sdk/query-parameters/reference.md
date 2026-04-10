@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getUsername</a>(limit: Int, id: UUID, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: [User], optionalDeadline: Date?, keyValue: [String: String], optionalString: String?, nestedUser: NestedUser, optionalUser: User?, excludeUser: User, filter: String, requestOptions: RequestOptions?) -> User</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getusername</a>(limit: Int, id: String, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: User?, optionalDeadline: Nullable&lt;Date&gt;?, keyValue: [String: String], optionalString: Nullable&lt;String&gt;?, nestedUser: NestedUser, optionalUser: User?, excludeUser: User?, filter: String?, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
 
@@ -14,17 +14,17 @@
 
 ```swift
 import Foundation
-import QueryParameters
+import Api
 
 private func main() async throws {
-    let client = QueryParametersClient()
+    let client = ApiClient()
 
-    _ = try await client.user.getUsername(
+    _ = try await client.user.getusername(
         limit: 1,
-        id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        id: "id",
         date: CalendarDate("2023-01-15")!,
         deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-        bytes: "SGVsbG8gd29ybGQh",
+        bytes: "bytes",
         user: User(
             name: "name",
             tags: [
@@ -32,27 +32,11 @@ private func main() async throws {
                 "tags"
             ]
         ),
-        userList: [
-            User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            )
-        ],
-        optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+        optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
         keyValue: [
             "keyValue": "keyValue"
         ],
-        optionalString: "optionalString",
+        optionalString: .value("optionalString"),
         nestedUser: NestedUser(
             name: "name",
             user: User(
@@ -96,7 +80,7 @@ try await main()
 <dl>
 <dd>
 
-**id:** `UUID` 
+**id:** `String` 
     
 </dd>
 </dl>
@@ -136,7 +120,7 @@ try await main()
 <dl>
 <dd>
 
-**userList:** `[User]` 
+**userList:** `User?` 
     
 </dd>
 </dl>
@@ -144,7 +128,7 @@ try await main()
 <dl>
 <dd>
 
-**optionalDeadline:** `Date?` 
+**optionalDeadline:** `Nullable<Date>?` 
     
 </dd>
 </dl>
@@ -160,7 +144,7 @@ try await main()
 <dl>
 <dd>
 
-**optionalString:** `String?` 
+**optionalString:** `Nullable<String>?` 
     
 </dd>
 </dl>
@@ -184,7 +168,7 @@ try await main()
 <dl>
 <dd>
 
-**excludeUser:** `User` 
+**excludeUser:** `User?` 
     
 </dd>
 </dl>
@@ -192,7 +176,7 @@ try await main()
 <dl>
 <dd>
 
-**filter:** `String` 
+**filter:** `String?` 
     
 </dd>
 </dl>

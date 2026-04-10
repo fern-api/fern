@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedObjectsWithImports from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace OptionalClient {
     export type Options = BaseClientOptions;
@@ -22,25 +22,23 @@ export class OptionalClient {
     }
 
     /**
-     * @param {Record<string, unknown>} request
+     * @param {Record<string, unknown> | null} request
      * @param {OptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.optional.sendOptionalBody({
-     *         "string": {
-     *             "key": "value"
-     *         }
+     *     await client.optional.sendoptionalbody({
+     *         "key": "value"
      *     })
      */
-    public sendOptionalBody(
-        request?: Record<string, unknown>,
+    public sendoptionalbody(
+        request: Record<string, unknown> | null,
         requestOptions?: OptionalClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__sendOptionalBody(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__sendoptionalbody(request, requestOptions));
     }
 
-    private async __sendOptionalBody(
-        request?: Record<string, unknown>,
+    private async __sendoptionalbody(
+        request: Record<string, unknown> | null,
         requestOptions?: OptionalClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -67,7 +65,7 @@ export class OptionalClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedObjectsWithImportsError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -78,23 +76,23 @@ export class OptionalClient {
     }
 
     /**
-     * @param {SeedObjectsWithImports.SendOptionalBodyRequest} request
+     * @param {SeedApi.SendOptionalBodyRequest} request
      * @param {OptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.optional.sendOptionalTypedBody({
+     *     await client.optional.sendoptionaltypedbody({
      *         message: "message"
      *     })
      */
-    public sendOptionalTypedBody(
-        request?: SeedObjectsWithImports.SendOptionalBodyRequest,
+    public sendoptionaltypedbody(
+        request: SeedApi.SendOptionalBodyRequest,
         requestOptions?: OptionalClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__sendOptionalTypedBody(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__sendoptionaltypedbody(request, requestOptions));
     }
 
-    private async __sendOptionalTypedBody(
-        request?: SeedObjectsWithImports.SendOptionalBodyRequest,
+    private async __sendoptionaltypedbody(
+        request: SeedApi.SendOptionalBodyRequest,
         requestOptions?: OptionalClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -121,7 +119,7 @@ export class OptionalClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedObjectsWithImportsError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -135,33 +133,29 @@ export class OptionalClient {
      * Tests optional(nullable(T)) where T has only optional properties.
      * This should not generate wire tests expecting {} when Optional.empty() is passed.
      *
-     * @param {string} actionId
-     * @param {string} id
-     * @param {SeedObjectsWithImports.DeployParams | null} request
+     * @param {SeedApi.DeployParams} request
      * @param {OptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.optional.sendOptionalNullableWithAllOptionalProperties("actionId", "id", {
-     *         updateDraft: true
+     *     await client.optional.sendoptionalnullablewithalloptionalproperties({
+     *         actionId: "actionId",
+     *         id: "id"
      *     })
      */
-    public sendOptionalNullableWithAllOptionalProperties(
-        actionId: string,
-        id: string,
-        request?: SeedObjectsWithImports.DeployParams | null,
+    public sendoptionalnullablewithalloptionalproperties(
+        request: SeedApi.DeployParams,
         requestOptions?: OptionalClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedObjectsWithImports.DeployResponse> {
+    ): core.HttpResponsePromise<SeedApi.DeployResponse> {
         return core.HttpResponsePromise.fromPromise(
-            this.__sendOptionalNullableWithAllOptionalProperties(actionId, id, request, requestOptions),
+            this.__sendoptionalnullablewithalloptionalproperties(request, requestOptions),
         );
     }
 
-    private async __sendOptionalNullableWithAllOptionalProperties(
-        actionId: string,
-        id: string,
-        request?: SeedObjectsWithImports.DeployParams | null,
+    private async __sendoptionalnullablewithalloptionalproperties(
+        request: SeedApi.DeployParams,
         requestOptions?: OptionalClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedObjectsWithImports.DeployResponse>> {
+    ): Promise<core.WithRawResponse<SeedApi.DeployResponse>> {
+        const { actionId, id, ..._body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -174,7 +168,7 @@ export class OptionalClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -182,14 +176,11 @@ export class OptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedObjectsWithImports.DeployResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedApi.DeployResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedObjectsWithImportsError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

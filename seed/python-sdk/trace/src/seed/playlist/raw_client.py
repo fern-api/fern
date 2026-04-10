@@ -4,7 +4,6 @@ import datetime as dt
 import typing
 from json.decoder import JSONDecodeError
 
-from ..commons.types.problem_id import ProblemId
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.datetime_utils import serialize_datetime
@@ -13,13 +12,12 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..core.serialization import convert_and_respect_annotation_metadata
-from .errors.playlist_id_not_found_error import PlaylistIdNotFoundError
-from .errors.unauthorized_error import UnauthorizedError
-from .types.playlist import Playlist
-from .types.playlist_id import PlaylistId
-from .types.playlist_id_not_found_error_body import PlaylistIdNotFoundErrorBody
-from .types.update_playlist_request import UpdatePlaylistRequest
+from ..errors.not_found_error import NotFoundError
+from ..errors.unauthorized_error import UnauthorizedError
+from ..types.playlist import Playlist
+from ..types.playlist_id import PlaylistId
+from ..types.problem_id import ProblemId
+from ..types.unauthorized_error_body import UnauthorizedErrorBody
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -30,7 +28,7 @@ class RawPlaylistClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def create_playlist(
+    def createplaylist(
         self,
         service_param: int,
         *,
@@ -61,6 +59,7 @@ class RawPlaylistClient:
         Returns
         -------
         HttpResponse[Playlist]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v2/playlist/{encode_path_param(service_param)}/create",
@@ -73,10 +72,22 @@ class RawPlaylistClient:
                 "name": name,
                 "problems": problems,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Playlist,
+                    parse_obj_as(
+                        type_=Playlist,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -84,31 +95,17 @@ class RawPlaylistClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    Playlist,
-                    parse_obj_as(
-                        type_=Playlist,  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_playlists(
+    def getplaylists(
         self,
         service_param: int,
         *,
         other_field: str,
         multi_line_docs: str,
-        multiple_field: typing.Union[str, typing.Sequence[str]],
         limit: typing.Optional[int] = None,
         optional_multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.List[Playlist]]:
         """
@@ -125,11 +122,11 @@ class RawPlaylistClient:
             I'm a multiline
             description
 
-        multiple_field : typing.Union[str, typing.Sequence[str]]
-
         limit : typing.Optional[int]
 
         optional_multiple_field : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        multiple_field : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -137,6 +134,7 @@ class RawPlaylistClient:
         Returns
         -------
         HttpResponse[typing.List[Playlist]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v2/playlist/{encode_path_param(service_param)}/all",
@@ -151,6 +149,15 @@ class RawPlaylistClient:
             request_options=request_options,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[Playlist],
+                    parse_obj_as(
+                        type_=typing.List[Playlist],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -158,23 +165,9 @@ class RawPlaylistClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    typing.List[Playlist],
-                    parse_obj_as(
-                        type_=typing.List[Playlist],  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_playlist(
+    def getplaylist(
         self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Playlist]:
         """
@@ -192,6 +185,7 @@ class RawPlaylistClient:
         Returns
         -------
         HttpResponse[Playlist]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v2/playlist/{encode_path_param(service_param)}/{encode_path_param(playlist_id)}",
@@ -199,6 +193,37 @@ class RawPlaylistClient:
             request_options=request_options,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Playlist,
+                    parse_obj_as(
+                        type_=Playlist,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        UnauthorizedErrorBody,
+                        parse_obj_as(
+                            type_=UnauthorizedErrorBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -206,44 +231,17 @@ class RawPlaylistClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    Playlist,
-                    parse_obj_as(
-                        type_=Playlist,  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
-        if "errorName" in _response_json:
-            if _response_json["errorName"] == "PlaylistIdNotFoundError":
-                raise PlaylistIdNotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        PlaylistIdNotFoundErrorBody,
-                        parse_obj_as(
-                            type_=PlaylistIdNotFoundErrorBody,  # type: ignore
-                            object_=_response_json["content"],
-                        ),
-                    ),
-                )
-            if _response_json["errorName"] == "UnauthorizedError":
-                raise UnauthorizedError(headers=dict(_response.headers))
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def update_playlist(
+    def updateplaylist(
         self,
         service_param: int,
         playlist_id: PlaylistId,
         *,
-        request: typing.Optional[UpdatePlaylistRequest] = None,
+        name: str,
+        problems: typing.Sequence[ProblemId],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[typing.Optional[Playlist]]:
+    ) -> HttpResponse[Playlist]:
         """
         Updates a playlist
 
@@ -253,25 +251,53 @@ class RawPlaylistClient:
 
         playlist_id : PlaylistId
 
-        request : typing.Optional[UpdatePlaylistRequest]
+        name : str
+
+        problems : typing.Sequence[ProblemId]
+            The problems that make up the playlist.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[typing.Optional[Playlist]]
+        HttpResponse[Playlist]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v2/playlist/{encode_path_param(service_param)}/{encode_path_param(playlist_id)}",
             method="PUT",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=UpdatePlaylistRequest, direction="write"
-            ),
+            json={
+                "name": name,
+                "problems": problems,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Playlist,
+                    parse_obj_as(
+                        type_=Playlist,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -279,35 +305,9 @@ class RawPlaylistClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    typing.Optional[Playlist],
-                    parse_obj_as(
-                        type_=typing.Optional[Playlist],  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
-        if "errorName" in _response_json:
-            if _response_json["errorName"] == "PlaylistIdNotFoundError":
-                raise PlaylistIdNotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        PlaylistIdNotFoundErrorBody,
-                        parse_obj_as(
-                            type_=PlaylistIdNotFoundErrorBody,  # type: ignore
-                            object_=_response_json["content"],
-                        ),
-                    ),
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def delete_playlist(
+    def deleteplaylist(
         self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
@@ -331,9 +331,9 @@ class RawPlaylistClient:
             method="DELETE",
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            return HttpResponse(response=_response, data=None)
         try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -348,7 +348,7 @@ class AsyncRawPlaylistClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def create_playlist(
+    async def createplaylist(
         self,
         service_param: int,
         *,
@@ -379,6 +379,7 @@ class AsyncRawPlaylistClient:
         Returns
         -------
         AsyncHttpResponse[Playlist]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v2/playlist/{encode_path_param(service_param)}/create",
@@ -391,10 +392,22 @@ class AsyncRawPlaylistClient:
                 "name": name,
                 "problems": problems,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Playlist,
+                    parse_obj_as(
+                        type_=Playlist,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -402,31 +415,17 @@ class AsyncRawPlaylistClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    Playlist,
-                    parse_obj_as(
-                        type_=Playlist,  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def get_playlists(
+    async def getplaylists(
         self,
         service_param: int,
         *,
         other_field: str,
         multi_line_docs: str,
-        multiple_field: typing.Union[str, typing.Sequence[str]],
         limit: typing.Optional[int] = None,
         optional_multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.List[Playlist]]:
         """
@@ -443,11 +442,11 @@ class AsyncRawPlaylistClient:
             I'm a multiline
             description
 
-        multiple_field : typing.Union[str, typing.Sequence[str]]
-
         limit : typing.Optional[int]
 
         optional_multiple_field : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        multiple_field : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -455,6 +454,7 @@ class AsyncRawPlaylistClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[Playlist]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v2/playlist/{encode_path_param(service_param)}/all",
@@ -469,6 +469,15 @@ class AsyncRawPlaylistClient:
             request_options=request_options,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[Playlist],
+                    parse_obj_as(
+                        type_=typing.List[Playlist],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -476,23 +485,9 @@ class AsyncRawPlaylistClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    typing.List[Playlist],
-                    parse_obj_as(
-                        type_=typing.List[Playlist],  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def get_playlist(
+    async def getplaylist(
         self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Playlist]:
         """
@@ -510,6 +505,7 @@ class AsyncRawPlaylistClient:
         Returns
         -------
         AsyncHttpResponse[Playlist]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v2/playlist/{encode_path_param(service_param)}/{encode_path_param(playlist_id)}",
@@ -517,6 +513,37 @@ class AsyncRawPlaylistClient:
             request_options=request_options,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Playlist,
+                    parse_obj_as(
+                        type_=Playlist,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        UnauthorizedErrorBody,
+                        parse_obj_as(
+                            type_=UnauthorizedErrorBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -524,44 +551,17 @@ class AsyncRawPlaylistClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    Playlist,
-                    parse_obj_as(
-                        type_=Playlist,  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
-        if "errorName" in _response_json:
-            if _response_json["errorName"] == "PlaylistIdNotFoundError":
-                raise PlaylistIdNotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        PlaylistIdNotFoundErrorBody,
-                        parse_obj_as(
-                            type_=PlaylistIdNotFoundErrorBody,  # type: ignore
-                            object_=_response_json["content"],
-                        ),
-                    ),
-                )
-            if _response_json["errorName"] == "UnauthorizedError":
-                raise UnauthorizedError(headers=dict(_response.headers))
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def update_playlist(
+    async def updateplaylist(
         self,
         service_param: int,
         playlist_id: PlaylistId,
         *,
-        request: typing.Optional[UpdatePlaylistRequest] = None,
+        name: str,
+        problems: typing.Sequence[ProblemId],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[typing.Optional[Playlist]]:
+    ) -> AsyncHttpResponse[Playlist]:
         """
         Updates a playlist
 
@@ -571,25 +571,53 @@ class AsyncRawPlaylistClient:
 
         playlist_id : PlaylistId
 
-        request : typing.Optional[UpdatePlaylistRequest]
+        name : str
+
+        problems : typing.Sequence[ProblemId]
+            The problems that make up the playlist.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[typing.Optional[Playlist]]
+        AsyncHttpResponse[Playlist]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v2/playlist/{encode_path_param(service_param)}/{encode_path_param(playlist_id)}",
             method="PUT",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=UpdatePlaylistRequest, direction="write"
-            ),
+            json={
+                "name": name,
+                "problems": problems,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Playlist,
+                    parse_obj_as(
+                        type_=Playlist,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -597,35 +625,9 @@ class AsyncRawPlaylistClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    typing.Optional[Playlist],
-                    parse_obj_as(
-                        type_=typing.Optional[Playlist],  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
-        if "errorName" in _response_json:
-            if _response_json["errorName"] == "PlaylistIdNotFoundError":
-                raise PlaylistIdNotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        PlaylistIdNotFoundErrorBody,
-                        parse_obj_as(
-                            type_=PlaylistIdNotFoundErrorBody,  # type: ignore
-                            object_=_response_json["content"],
-                        ),
-                    ),
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def delete_playlist(
+    async def deleteplaylist(
         self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
@@ -649,9 +651,9 @@ class AsyncRawPlaylistClient:
             method="DELETE",
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            return AsyncHttpResponse(response=_response, data=None)
         try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

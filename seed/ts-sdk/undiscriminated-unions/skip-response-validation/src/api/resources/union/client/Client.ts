@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedUndiscriminatedUnions from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace UnionClient {
     export type Options = BaseClientOptions;
@@ -22,23 +22,23 @@ export class UnionClient {
     }
 
     /**
-     * @param {SeedUndiscriminatedUnions.MyUnion} request
+     * @param {SeedApi.MyUnion} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.union.get("string")
      */
     public get(
-        request: SeedUndiscriminatedUnions.MyUnion,
+        request: SeedApi.MyUnion,
         requestOptions?: UnionClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedUndiscriminatedUnions.MyUnion> {
+    ): core.HttpResponsePromise<SeedApi.MyUnion> {
         return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
     }
 
     private async __get(
-        request: SeedUndiscriminatedUnions.MyUnion,
+        request: SeedApi.MyUnion,
         requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.MyUnion>> {
+    ): Promise<core.WithRawResponse<SeedApi.MyUnion>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
@@ -57,11 +57,11 @@ export class UnionClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedUndiscriminatedUnions.MyUnion, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.MyUnion, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedUndiscriminatedUnionsError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -75,23 +75,21 @@ export class UnionClient {
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.union.getMetadata()
+     *     await client.union.getmetadata()
      */
-    public getMetadata(
-        requestOptions?: UnionClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedUndiscriminatedUnions.Metadata> {
-        return core.HttpResponsePromise.fromPromise(this.__getMetadata(requestOptions));
+    public getmetadata(requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<SeedApi.Metadata> {
+        return core.HttpResponsePromise.fromPromise(this.__getmetadata(requestOptions));
     }
 
-    private async __getMetadata(
+    private async __getmetadata(
         requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.Metadata>> {
+    ): Promise<core.WithRawResponse<SeedApi.Metadata>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/metadata",
+                "metadata",
             ),
             method: "GET",
             headers: _headers,
@@ -103,11 +101,11 @@ export class UnionClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedUndiscriminatedUnions.Metadata, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.Metadata, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedUndiscriminatedUnionsError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -118,25 +116,23 @@ export class UnionClient {
     }
 
     /**
-     * @param {SeedUndiscriminatedUnions.MetadataUnion} request
+     * @param {SeedApi.MetadataUnion} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.union.updateMetadata({
-     *         "string": {
-     *             "key": "value"
-     *         }
+     *     await client.union.updatemetadata({
+     *         "key": "value"
      *     })
      */
-    public updateMetadata(
-        request: SeedUndiscriminatedUnions.MetadataUnion,
+    public updatemetadata(
+        request: SeedApi.MetadataUnion,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromPromise(this.__updateMetadata(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__updatemetadata(request, requestOptions));
     }
 
-    private async __updateMetadata(
-        request: SeedUndiscriminatedUnions.MetadataUnion,
+    private async __updatemetadata(
+        request: SeedApi.MetadataUnion,
         requestOptions?: UnionClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -144,7 +140,7 @@ export class UnionClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/metadata",
+                "metadata",
             ),
             method: "PUT",
             headers: _headers,
@@ -163,7 +159,7 @@ export class UnionClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedUndiscriminatedUnionsError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -174,27 +170,21 @@ export class UnionClient {
     }
 
     /**
-     * @param {SeedUndiscriminatedUnions.Request} request
+     * @param {SeedApi.Request} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.union.call({
-     *         union: {
-     *             "string": {
-     *                 "key": "value"
-     *             }
-     *         }
-     *     })
+     *     await client.union.call()
      */
     public call(
-        request: SeedUndiscriminatedUnions.Request,
+        request: SeedApi.Request = {},
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__call(request, requestOptions));
     }
 
     private async __call(
-        request: SeedUndiscriminatedUnions.Request,
+        request: SeedApi.Request = {},
         requestOptions?: UnionClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -202,7 +192,7 @@ export class UnionClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/call",
+                "call",
             ),
             method: "POST",
             headers: _headers,
@@ -221,7 +211,7 @@ export class UnionClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedUndiscriminatedUnionsError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -232,29 +222,29 @@ export class UnionClient {
     }
 
     /**
-     * @param {SeedUndiscriminatedUnions.UnionWithDuplicateTypes} request
+     * @param {SeedApi.UnionWithDuplicateTypes} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.union.duplicateTypesUnion("string")
+     *     await client.union.duplicatetypesunion("string")
      */
-    public duplicateTypesUnion(
-        request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
+    public duplicatetypesunion(
+        request: SeedApi.UnionWithDuplicateTypes,
         requestOptions?: UnionClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedUndiscriminatedUnions.UnionWithDuplicateTypes> {
-        return core.HttpResponsePromise.fromPromise(this.__duplicateTypesUnion(request, requestOptions));
+    ): core.HttpResponsePromise<SeedApi.UnionWithDuplicateTypes> {
+        return core.HttpResponsePromise.fromPromise(this.__duplicatetypesunion(request, requestOptions));
     }
 
-    private async __duplicateTypesUnion(
-        request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
+    private async __duplicatetypesunion(
+        request: SeedApi.UnionWithDuplicateTypes,
         requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.UnionWithDuplicateTypes>> {
+    ): Promise<core.WithRawResponse<SeedApi.UnionWithDuplicateTypes>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/duplicate",
+                "duplicate",
             ),
             method: "POST",
             headers: _headers,
@@ -269,14 +259,11 @@ export class UnionClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedApi.UnionWithDuplicateTypes, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedUndiscriminatedUnionsError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -287,21 +274,21 @@ export class UnionClient {
     }
 
     /**
-     * @param {SeedUndiscriminatedUnions.NestedUnionRoot} request
+     * @param {SeedApi.NestedUnionRoot} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.union.nestedUnions("string")
+     *     await client.union.nestedunions("string")
      */
-    public nestedUnions(
-        request: SeedUndiscriminatedUnions.NestedUnionRoot,
+    public nestedunions(
+        request: SeedApi.NestedUnionRoot,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__nestedUnions(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__nestedunions(request, requestOptions));
     }
 
-    private async __nestedUnions(
-        request: SeedUndiscriminatedUnions.NestedUnionRoot,
+    private async __nestedunions(
+        request: SeedApi.NestedUnionRoot,
         requestOptions?: UnionClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -309,7 +296,7 @@ export class UnionClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/nested",
+                "nested",
             ),
             method: "POST",
             headers: _headers,
@@ -328,7 +315,7 @@ export class UnionClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedUndiscriminatedUnionsError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -339,26 +326,26 @@ export class UnionClient {
     }
 
     /**
-     * @param {SeedUndiscriminatedUnions.PaymentRequest} request
+     * @param {SeedApi.UnionTestCamelCasePropertiesRequest} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.union.testCamelCaseProperties({
+     *     await client.union.testcamelcaseproperties({
      *         paymentMethod: {
-     *             method: "card",
-     *             cardNumber: "1234567890123456"
+     *             method: "method",
+     *             cardNumber: "cardNumber"
      *         }
      *     })
      */
-    public testCamelCaseProperties(
-        request: SeedUndiscriminatedUnions.PaymentRequest,
+    public testcamelcaseproperties(
+        request: SeedApi.UnionTestCamelCasePropertiesRequest,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__testCamelCaseProperties(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__testcamelcaseproperties(request, requestOptions));
     }
 
-    private async __testCamelCaseProperties(
-        request: SeedUndiscriminatedUnions.PaymentRequest,
+    private async __testcamelcaseproperties(
+        request: SeedApi.UnionTestCamelCasePropertiesRequest,
         requestOptions?: UnionClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -366,7 +353,7 @@ export class UnionClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/camel-case",
+                "camel-case",
             ),
             method: "POST",
             headers: _headers,
@@ -385,7 +372,7 @@ export class UnionClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedUndiscriminatedUnionsError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

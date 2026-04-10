@@ -1,18 +1,15 @@
 package com.snippets;
 
-import com.seed.objectsWithImports.SeedObjectsWithImportsClient;
-import com.seed.objectsWithImports.resources.optional.types.DeployParams;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.optional.requests.SendOptionalBodyRequest;
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient.builder()
-                .url("https://api.fern.com")
-                .build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
         client.optional()
-                .sendOptionalNullableWithAllOptionalProperties(
-                        "actionId",
-                        "id",
-                        DeployParams.builder().updateDraft(true).build());
+                .sendoptionaltypedbody(
+                        SendOptionalBodyRequest.builder().message("message").build());
     }
 }

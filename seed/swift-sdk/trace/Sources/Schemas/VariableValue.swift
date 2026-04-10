@@ -1,94 +1,75 @@
 import Foundation
 
 public indirect enum VariableValue: Codable, Hashable, Sendable {
-    case binaryTreeValue(BinaryTreeValue)
-    case booleanValue(Bool)
-    case charValue(String)
-    case doubleValue(Double)
-    case doublyLinkedListValue(DoublyLinkedListValue)
-    case integerValue(Int)
-    case listValue([VariableValue])
-    case mapValue(MapValue)
-    case nullValue
-    case singlyLinkedListValue(SinglyLinkedListValue)
-    case stringValue(String)
+    case variableValueEight(VariableValueEight)
+    case variableValueFive(VariableValueFive)
+    case variableValueFour(VariableValueFour)
+    case variableValueNine(VariableValueNine)
+    case variableValueOne(VariableValueOne)
+    case variableValueSeven(VariableValueSeven)
+    case variableValueSix(VariableValueSix)
+    case variableValueThree(VariableValueThree)
+    case variableValueTwo(VariableValueTwo)
+    case variableValueType(VariableValueType)
+    case variableValueZero(VariableValueZero)
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let discriminant = try container.decode(String.self, forKey: .type)
-        switch discriminant {
-        case "binaryTreeValue":
-            self = .binaryTreeValue(try BinaryTreeValue(from: decoder))
-        case "booleanValue":
-            self = .booleanValue(try container.decode(Bool.self, forKey: .value))
-        case "charValue":
-            self = .charValue(try container.decode(String.self, forKey: .value))
-        case "doubleValue":
-            self = .doubleValue(try container.decode(Double.self, forKey: .value))
-        case "doublyLinkedListValue":
-            self = .doublyLinkedListValue(try DoublyLinkedListValue(from: decoder))
-        case "integerValue":
-            self = .integerValue(try container.decode(Int.self, forKey: .value))
-        case "listValue":
-            self = .listValue(try container.decode([VariableValue].self, forKey: .value))
-        case "mapValue":
-            self = .mapValue(try MapValue(from: decoder))
-        case "nullValue":
-            self = .nullValue
-        case "singlyLinkedListValue":
-            self = .singlyLinkedListValue(try SinglyLinkedListValue(from: decoder))
-        case "stringValue":
-            self = .stringValue(try container.decode(String.self, forKey: .value))
-        default:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: decoder.codingPath,
-                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
-                )
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(VariableValueEight.self) {
+            self = .variableValueEight(value)
+        } else if let value = try? container.decode(VariableValueFive.self) {
+            self = .variableValueFive(value)
+        } else if let value = try? container.decode(VariableValueFour.self) {
+            self = .variableValueFour(value)
+        } else if let value = try? container.decode(VariableValueNine.self) {
+            self = .variableValueNine(value)
+        } else if let value = try? container.decode(VariableValueOne.self) {
+            self = .variableValueOne(value)
+        } else if let value = try? container.decode(VariableValueSeven.self) {
+            self = .variableValueSeven(value)
+        } else if let value = try? container.decode(VariableValueSix.self) {
+            self = .variableValueSix(value)
+        } else if let value = try? container.decode(VariableValueThree.self) {
+            self = .variableValueThree(value)
+        } else if let value = try? container.decode(VariableValueTwo.self) {
+            self = .variableValueTwo(value)
+        } else if let value = try? container.decode(VariableValueType.self) {
+            self = .variableValueType(value)
+        } else if let value = try? container.decode(VariableValueZero.self) {
+            self = .variableValueZero(value)
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unexpected value."
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.singleValueContainer()
         switch self {
-        case .binaryTreeValue(let data):
-            try container.encode("binaryTreeValue", forKey: .type)
-            try data.encode(to: encoder)
-        case .booleanValue(let data):
-            try container.encode("booleanValue", forKey: .type)
-            try container.encode(data, forKey: .value)
-        case .charValue(let data):
-            try container.encode("charValue", forKey: .type)
-            try container.encode(data, forKey: .value)
-        case .doubleValue(let data):
-            try container.encode("doubleValue", forKey: .type)
-            try container.encode(data, forKey: .value)
-        case .doublyLinkedListValue(let data):
-            try container.encode("doublyLinkedListValue", forKey: .type)
-            try data.encode(to: encoder)
-        case .integerValue(let data):
-            try container.encode("integerValue", forKey: .type)
-            try container.encode(data, forKey: .value)
-        case .listValue(let data):
-            try container.encode("listValue", forKey: .type)
-            try container.encode(data, forKey: .value)
-        case .mapValue(let data):
-            try container.encode("mapValue", forKey: .type)
-            try data.encode(to: encoder)
-        case .nullValue:
-            try container.encode("nullValue", forKey: .type)
-        case .singlyLinkedListValue(let data):
-            try container.encode("singlyLinkedListValue", forKey: .type)
-            try data.encode(to: encoder)
-        case .stringValue(let data):
-            try container.encode("stringValue", forKey: .type)
-            try container.encode(data, forKey: .value)
+        case .variableValueEight(let value):
+            try container.encode(value)
+        case .variableValueFive(let value):
+            try container.encode(value)
+        case .variableValueFour(let value):
+            try container.encode(value)
+        case .variableValueNine(let value):
+            try container.encode(value)
+        case .variableValueOne(let value):
+            try container.encode(value)
+        case .variableValueSeven(let value):
+            try container.encode(value)
+        case .variableValueSix(let value):
+            try container.encode(value)
+        case .variableValueThree(let value):
+            try container.encode(value)
+        case .variableValueTwo(let value):
+            try container.encode(value)
+        case .variableValueType(let value):
+            try container.encode(value)
+        case .variableValueZero(let value):
+            try container.encode(value)
         }
-    }
-
-    enum CodingKeys: String, CodingKey, CaseIterable {
-        case type
-        case value
     }
 }

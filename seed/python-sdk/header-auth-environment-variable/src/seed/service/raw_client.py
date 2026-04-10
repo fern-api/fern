@@ -16,7 +16,7 @@ class RawServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_with_bearer_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[str]:
+    def getwithbearertoken(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[str]:
         """
         GET request with custom api key
 
@@ -28,6 +28,7 @@ class RawServiceClient:
         Returns
         -------
         HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "apiKey",
@@ -58,7 +59,7 @@ class AsyncRawServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_with_bearer_token(
+    async def getwithbearertoken(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[str]:
         """
@@ -72,6 +73,7 @@ class AsyncRawServiceClient:
         Returns
         -------
         AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "apiKey",

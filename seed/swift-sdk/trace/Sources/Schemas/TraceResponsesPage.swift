@@ -3,13 +3,13 @@ import Foundation
 public struct TraceResponsesPage: Codable, Hashable, Sendable {
     /// If present, use this to load subsequent pages.
     /// The offset is the id of the next trace response to load.
-    public let offset: Int?
+    public let offset: Nullable<Int>?
     public let traceResponses: [TraceResponse]
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        offset: Int? = nil,
+        offset: Nullable<Int>? = nil,
         traceResponses: [TraceResponse],
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -20,7 +20,7 @@ public struct TraceResponsesPage: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.offset = try container.decodeIfPresent(Int.self, forKey: .offset)
+        self.offset = try container.decodeNullableIfPresent(Int.self, forKey: .offset)
         self.traceResponses = try container.decode([TraceResponse].self, forKey: .traceResponses)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
@@ -28,7 +28,7 @@ public struct TraceResponsesPage: Codable, Hashable, Sendable {
     public func encode(to encoder: Encoder) throws -> Void {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
-        try container.encodeIfPresent(self.offset, forKey: .offset)
+        try container.encodeNullableIfPresent(self.offset, forKey: .offset)
         try container.encode(self.traceResponses, forKey: .traceResponses)
     }
 

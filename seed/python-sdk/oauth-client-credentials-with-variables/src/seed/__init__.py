@@ -6,21 +6,31 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import auth, nested, nested_no_auth, service, simple
+    from .types import TokenResponse
+    from . import auth, nested_api, nested_no_auth_api, service, simple
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .auth import TokenResponse
-    from .client import AsyncSeedOauthClientCredentialsWithVariables, SeedOauthClientCredentialsWithVariables
+    from .auth import (
+        AuthGetTokenWithClientCredentialsRequestAudience,
+        AuthGetTokenWithClientCredentialsRequestGrantType,
+        AuthRefreshTokenRequestAudience,
+        AuthRefreshTokenRequestGrantType,
+    )
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedOauthClientCredentialsWithVariables": ".client",
+    "AsyncSeedApi": ".client",
+    "AuthGetTokenWithClientCredentialsRequestAudience": ".auth",
+    "AuthGetTokenWithClientCredentialsRequestGrantType": ".auth",
+    "AuthRefreshTokenRequestAudience": ".auth",
+    "AuthRefreshTokenRequestGrantType": ".auth",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "SeedOauthClientCredentialsWithVariables": ".client",
-    "TokenResponse": ".auth",
+    "SeedApi": ".client",
+    "TokenResponse": ".types",
     "__version__": ".version",
     "auth": ".auth",
-    "nested": ".nested",
-    "nested_no_auth": ".nested_no_auth",
+    "nested_api": ".nested_api",
+    "nested_no_auth_api": ".nested_no_auth_api",
     "service": ".service",
     "simple": ".simple",
 }
@@ -48,15 +58,19 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedOauthClientCredentialsWithVariables",
+    "AsyncSeedApi",
+    "AuthGetTokenWithClientCredentialsRequestAudience",
+    "AuthGetTokenWithClientCredentialsRequestGrantType",
+    "AuthRefreshTokenRequestAudience",
+    "AuthRefreshTokenRequestGrantType",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
-    "SeedOauthClientCredentialsWithVariables",
+    "SeedApi",
     "TokenResponse",
     "__version__",
     "auth",
-    "nested",
-    "nested_no_auth",
+    "nested_api",
+    "nested_no_auth_api",
     "service",
     "simple",
 ]

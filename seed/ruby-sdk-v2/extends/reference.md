@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">extended_inline_request_body</a>(request) -> </code></summary>
+## 
+<details><summary><code>client..<a href="/lib/seed/client.rb">extended_inline_request_body</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -12,9 +13,9 @@
 <dd>
 
 ```ruby
-client.extended_inline_request_body(
-  name: "name",
+client..extended_inline_request_body(
   docs: "docs",
+  name: "name",
   unique: "unique"
 )
 ```
@@ -39,7 +40,7 @@ client.extended_inline_request_body(
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `Seed::::RequestOptions` 
     
 </dd>
 </dl>

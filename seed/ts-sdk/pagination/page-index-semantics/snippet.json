@@ -8,342 +8,315 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.complex.search(\"index\", {\n    pagination: {\n        per_page: 1,\n        starting_after: \"starting_after\"\n    },\n    query: {\n        field: \"field\",\n        operator: \"=\",\n        value: \"value\"\n    }\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.complex.search(\"index\", {\n    pagination: {\n        per_page: 1,\n        starting_after: \"starting_after\"\n    },\n    query: {\n        field: \"field\",\n        operator: \"=\",\n        value: \"value\"\n    }\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.complex.search({\n    index: \"index\",\n    query: {}\n});\n"
             }
         },
         {
             "id": {
                 "path": "/inline-users/cursor",
                 "method": "GET",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithCursorPagination"
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithCursorPagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.inlineUsers.inlineUsers.listWithCursorPagination({\n    page: 1,\n    per_page: 1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.inlineUsers.listWithCursorPagination({\n    page: 1,\n    per_page: 1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithCursorPagination();\n"
             }
         },
         {
             "id": {
                 "path": "/inline-users/mixed-type-cursor",
                 "method": "POST",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithMixedTypeCursorPagination"
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithMixedTypeCursorPagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination({\n    cursor: \"cursor\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination({\n    cursor: \"cursor\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithMixedTypeCursorPagination();\n"
             }
         },
         {
             "id": {
                 "path": "/inline-users/body-cursor",
                 "method": "POST",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithBodyCursorPagination"
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithBodyCursorPagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.inlineUsers.inlineUsers.listWithBodyCursorPagination({\n    pagination: {\n        cursor: \"cursor\"\n    }\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.inlineUsers.listWithBodyCursorPagination({\n    pagination: {\n        cursor: \"cursor\"\n    }\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithBodyCursorPagination();\n"
             }
         },
         {
             "id": {
                 "path": "/inline-users/offset",
                 "method": "GET",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithOffsetPagination"
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithOffsetPagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.inlineUsers.inlineUsers.listWithOffsetPagination({\n    page: 1,\n    per_page: 1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.inlineUsers.listWithOffsetPagination({\n    page: 1,\n    per_page: 1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithOffsetPagination();\n"
             }
         },
         {
             "id": {
                 "path": "/inline-users/double-offset",
                 "method": "GET",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithDoubleOffsetPagination"
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithDoubleOffsetPagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.inlineUsers.inlineUsers.listWithDoubleOffsetPagination({\n    page: 1.1,\n    per_page: 1.1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.inlineUsers.listWithDoubleOffsetPagination({\n    page: 1.1,\n    per_page: 1.1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithDoubleOffsetPagination();\n"
             }
         },
         {
             "id": {
                 "path": "/inline-users/body-offset",
                 "method": "POST",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithBodyOffsetPagination"
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithBodyOffsetPagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.inlineUsers.inlineUsers.listWithBodyOffsetPagination({\n    pagination: {\n        page: 1\n    }\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.inlineUsers.listWithBodyOffsetPagination({\n    pagination: {\n        page: 1\n    }\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithBodyOffsetPagination();\n"
             }
         },
         {
             "id": {
                 "path": "/inline-users/offset-step",
                 "method": "GET",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithOffsetStepPagination"
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithOffsetStepPagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.inlineUsers.inlineUsers.listWithOffsetStepPagination({\n    page: 1,\n    limit: 1,\n    order: \"asc\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.inlineUsers.listWithOffsetStepPagination({\n    page: 1,\n    limit: 1,\n    order: \"asc\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithOffsetStepPagination();\n"
             }
         },
         {
             "id": {
                 "path": "/inline-users/offset-has-next-page",
                 "method": "GET",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithOffsetPaginationHasNextPage"
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithOffsetPaginationHasNextPage"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextPage({\n    page: 1,\n    limit: 1,\n    order: \"asc\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextPage({\n    page: 1,\n    limit: 1,\n    order: \"asc\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithOffsetPaginationHasNextPage();\n"
             }
         },
         {
             "id": {
                 "path": "/inline-users/extended",
                 "method": "GET",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithExtendedResults"
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithExtendedResults"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.inlineUsers.inlineUsers.listWithExtendedResults({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.inlineUsers.listWithExtendedResults({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithExtendedResults();\n"
             }
         },
         {
             "id": {
                 "path": "/inline-users/extended-optional",
                 "method": "GET",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithExtendedResultsAndOptionalData"
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithExtendedResultsAndOptionalData"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithExtendedResultsAndOptionalData();\n"
             }
         },
         {
             "id": {
                 "path": "/inline-users/usernames",
                 "method": "GET",
-                "identifier_override": "endpoint_inline-users/inline-users.listUsernames"
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listUsernames"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.inlineUsers.inlineUsers.listUsernames({\n    starting_after: \"starting_after\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.inlineUsers.listUsernames({\n    starting_after: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlineUsersInlineUsers.inlineUsersInlineUsersListUsernames();\n"
             }
         },
         {
             "id": {
                 "path": "/inline-users/global-config",
                 "method": "GET",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithGlobalConfig"
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithGlobalConfig"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.inlineUsers.inlineUsers.listWithGlobalConfig({\n    offset: 1\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.inlineUsers.listWithGlobalConfig({\n    offset: 1\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithGlobalConfig();\n"
             }
         },
         {
             "id": {
                 "path": "/users/cursor",
                 "method": "GET",
-                "identifier_override": "endpoint_users.listWithCursorPagination"
+                "identifier_override": "endpoint_users.listwithcursorpagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithCursorPagination({\n    page: 1,\n    per_page: 1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithCursorPagination({\n    page: 1,\n    per_page: 1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listwithcursorpagination();\n"
             }
         },
         {
             "id": {
                 "path": "/users/mixed-type-cursor",
                 "method": "POST",
-                "identifier_override": "endpoint_users.listWithMixedTypeCursorPagination"
+                "identifier_override": "endpoint_users.listwithmixedtypecursorpagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithMixedTypeCursorPagination({\n    cursor: \"cursor\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithMixedTypeCursorPagination({\n    cursor: \"cursor\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listwithmixedtypecursorpagination();\n"
             }
         },
         {
             "id": {
                 "path": "/users/body-cursor",
                 "method": "POST",
-                "identifier_override": "endpoint_users.listWithBodyCursorPagination"
+                "identifier_override": "endpoint_users.listwithbodycursorpagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithBodyCursorPagination({\n    pagination: {\n        cursor: \"cursor\"\n    }\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithBodyCursorPagination({\n    pagination: {\n        cursor: \"cursor\"\n    }\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listwithbodycursorpagination();\n"
             }
         },
         {
             "id": {
                 "path": "/users/top-level-cursor",
                 "method": "POST",
-                "identifier_override": "endpoint_users.listWithTopLevelBodyCursorPagination"
+                "identifier_override": "endpoint_users.listwithtoplevelbodycursorpagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithTopLevelBodyCursorPagination({\n    cursor: \"initial_cursor\",\n    filter: \"active\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithTopLevelBodyCursorPagination({\n    cursor: \"initial_cursor\",\n    filter: \"active\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
-            },
-            "example_identifier": "WithCursor"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listwithtoplevelbodycursorpagination();\n"
+            }
         },
         {
             "id": {
                 "path": "/users/offset",
                 "method": "GET",
-                "identifier_override": "endpoint_users.listWithOffsetPagination"
+                "identifier_override": "endpoint_users.listwithoffsetpagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithOffsetPagination({\n    page: 1,\n    per_page: 1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithOffsetPagination({\n    page: 1,\n    per_page: 1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listwithoffsetpagination();\n"
             }
         },
         {
             "id": {
                 "path": "/users/double-offset",
                 "method": "GET",
-                "identifier_override": "endpoint_users.listWithDoubleOffsetPagination"
+                "identifier_override": "endpoint_users.listwithdoubleoffsetpagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithDoubleOffsetPagination({\n    page: 1.1,\n    per_page: 1.1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithDoubleOffsetPagination({\n    page: 1.1,\n    per_page: 1.1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listwithdoubleoffsetpagination();\n"
             }
         },
         {
             "id": {
                 "path": "/users/body-offset",
                 "method": "POST",
-                "identifier_override": "endpoint_users.listWithBodyOffsetPagination"
+                "identifier_override": "endpoint_users.listwithbodyoffsetpagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithBodyOffsetPagination({\n    pagination: {\n        page: 1\n    }\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithBodyOffsetPagination({\n    pagination: {\n        page: 1\n    }\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listwithbodyoffsetpagination();\n"
             }
         },
         {
             "id": {
                 "path": "/users/offset-step",
                 "method": "GET",
-                "identifier_override": "endpoint_users.listWithOffsetStepPagination"
+                "identifier_override": "endpoint_users.listwithoffsetsteppagination"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithOffsetStepPagination({\n    page: 1,\n    limit: 1,\n    order: \"asc\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithOffsetStepPagination({\n    page: 1,\n    limit: 1,\n    order: \"asc\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listwithoffsetsteppagination();\n"
             }
         },
         {
             "id": {
                 "path": "/users/offset-has-next-page",
                 "method": "GET",
-                "identifier_override": "endpoint_users.listWithOffsetPaginationHasNextPage"
+                "identifier_override": "endpoint_users.listwithoffsetpaginationhasnextpage"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithOffsetPaginationHasNextPage({\n    page: 1,\n    limit: 3,\n    order: \"asc\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithOffsetPaginationHasNextPage({\n    page: 1,\n    limit: 3,\n    order: \"asc\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
-            },
-            "example_identifier": "HasNextPage"
-        },
-        {
-            "id": {
-                "path": "/users/offset-has-next-page",
-                "method": "GET",
-                "identifier_override": "endpoint_users.listWithOffsetPaginationHasNextPage"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithOffsetPaginationHasNextPage({\n    page: 1,\n    limit: 10,\n    order: \"asc\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithOffsetPaginationHasNextPage({\n    page: 1,\n    limit: 10,\n    order: \"asc\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
-            },
-            "example_identifier": "NoNextPage"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listwithoffsetpaginationhasnextpage();\n"
+            }
         },
         {
             "id": {
                 "path": "/users/extended",
                 "method": "GET",
-                "identifier_override": "endpoint_users.listWithExtendedResults"
+                "identifier_override": "endpoint_users.listwithextendedresults"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithExtendedResults({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithExtendedResults({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listwithextendedresults();\n"
             }
         },
         {
             "id": {
                 "path": "/users/extended-optional",
                 "method": "GET",
-                "identifier_override": "endpoint_users.listWithExtendedResultsAndOptionalData"
+                "identifier_override": "endpoint_users.listwithextendedresultsandoptionaldata"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithExtendedResultsAndOptionalData({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithExtendedResultsAndOptionalData({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listwithextendedresultsandoptionaldata();\n"
             }
         },
         {
             "id": {
                 "path": "/users/usernames",
                 "method": "GET",
-                "identifier_override": "endpoint_users.listUsernames"
+                "identifier_override": "endpoint_users.listusernames"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listUsernames({\n    starting_after: \"starting_after\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listUsernames({\n    starting_after: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listusernames();\n"
             }
         },
         {
             "id": {
                 "path": "/users/usernames-optional",
                 "method": "GET",
-                "identifier_override": "endpoint_users.listUsernamesWithOptionalResponse"
+                "identifier_override": "endpoint_users.listusernameswithoptionalresponse"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listUsernamesWithOptionalResponse({\n    starting_after: \"starting_after\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listUsernamesWithOptionalResponse({\n    starting_after: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listusernameswithoptionalresponse();\n"
             }
         },
         {
             "id": {
                 "path": "/users/global-config",
                 "method": "GET",
-                "identifier_override": "endpoint_users.listWithGlobalConfig"
+                "identifier_override": "endpoint_users.listwithglobalconfig"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithGlobalConfig({\n    offset: 1\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithGlobalConfig({\n    offset: 1\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listwithglobalconfig();\n"
             }
         },
         {
             "id": {
                 "path": "/users/optional-data",
                 "method": "GET",
-                "identifier_override": "endpoint_users.listWithOptionalData"
+                "identifier_override": "endpoint_users.listwithoptionaldata"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithOptionalData({\n    page: 1\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithOptionalData({\n    page: 1\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
-            },
-            "example_identifier": "WithData"
-        },
-        {
-            "id": {
-                "path": "/users/optional-data",
-                "method": "GET",
-                "identifier_override": "endpoint_users.listWithOptionalData"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithOptionalData({\n    page: 1\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithOptionalData({\n    page: 1\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
-            },
-            "example_identifier": "WithoutData"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listwithoptionaldata();\n"
+            }
         },
         {
             "id": {
                 "path": "/users/aliased-data",
                 "method": "GET",
-                "identifier_override": "endpoint_users.listWithAliasedData"
+                "identifier_override": "endpoint_users.listwithaliaseddata"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithAliasedData({\n    page: 1,\n    per_page: 1,\n    starting_after: \"starting_after\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithAliasedData({\n    page: 1,\n    per_page: 1,\n    starting_after: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/pagination\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listwithaliaseddata();\n"
             }
         }
     ],

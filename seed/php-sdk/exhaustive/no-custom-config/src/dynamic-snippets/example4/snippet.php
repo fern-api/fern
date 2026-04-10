@@ -10,8 +10,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->container->getAndReturnMapPrimToPrim(
+$client->endpointsContainer->endpointsContainerGetAndReturnSetOfPrimitives(
     [
-        'string' => 'string',
+        'string',
     ],
 );

@@ -30,7 +30,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetWithBearerToken(
+func (r *RawClient) Getwithbearertoken(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {

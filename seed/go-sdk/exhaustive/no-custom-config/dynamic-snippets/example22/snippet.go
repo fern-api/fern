@@ -3,9 +3,9 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -17,12 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.ObjectWithUnknownField{
-        Unknown: map[string]any{
-            "$ref": "https://example.com/schema",
-        },
+    request := &fern.EndpointsHTTPMethodsTestGetRequest{
+        ID: "id",
     }
-    client.Endpoints.Object.GetAndReturnWithUnknownField(
+    client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestGet(
         context.TODO(),
         request,
     )

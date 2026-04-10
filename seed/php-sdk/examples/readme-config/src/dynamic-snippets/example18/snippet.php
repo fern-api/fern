@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Service\Requests\GetMetadataRequest;
+use Seed\Service\Requests\ServiceGetMetadataRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,12 +11,12 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->getMetadata(
-    new GetMetadataRequest([
+$client->service->getmetadata(
+    new ServiceGetMetadataRequest([
         'shallow' => true,
         'tag' => [
             'tag',
         ],
-        'xApiVersion' => 'X-API-Version',
+        'apiVersion' => 'apiVersion',
     ]),
 );

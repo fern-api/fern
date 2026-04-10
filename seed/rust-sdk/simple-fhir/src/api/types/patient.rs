@@ -4,7 +4,7 @@ pub use crate::prelude::*;
 pub struct Patient {
     #[serde(flatten)]
     pub base_resource_fields: BaseResource,
-    pub resource_type: String,
+    pub resource_type: PatientResourceType,
     #[serde(default)]
     pub name: String,
     #[serde(default)]
@@ -21,7 +21,7 @@ impl Patient {
 #[non_exhaustive]
 pub struct PatientBuilder {
     base_resource_fields: Option<BaseResource>,
-    resource_type: Option<String>,
+    resource_type: Option<PatientResourceType>,
     name: Option<String>,
     scripts: Option<Vec<Script>>,
 }
@@ -32,8 +32,8 @@ impl PatientBuilder {
         self
     }
 
-    pub fn resource_type(mut self, value: impl Into<String>) -> Self {
-        self.resource_type = Some(value.into());
+    pub fn resource_type(mut self, value: PatientResourceType) -> Self {
+        self.resource_type = Some(value);
         self
     }
 
@@ -55,16 +55,10 @@ impl PatientBuilder {
     /// - [`scripts`](PatientBuilder::scripts)
     pub fn build(self) -> Result<Patient, BuildError> {
         Ok(Patient {
-            base_resource_fields: self
-                .base_resource_fields
-                .ok_or_else(|| BuildError::missing_field("base_resource_fields"))?,
-            resource_type: self
-                .resource_type
-                .ok_or_else(|| BuildError::missing_field("resource_type"))?,
+            base_resource_fields: self.base_resource_fields.ok_or_else(|| BuildError::missing_field("base_resource_fields"))?,
+            resource_type: self.resource_type.ok_or_else(|| BuildError::missing_field("resource_type"))?,
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
-            scripts: self
-                .scripts
-                .ok_or_else(|| BuildError::missing_field("scripts"))?,
+            scripts: self.scripts.ok_or_else(|| BuildError::missing_field("scripts"))?,
         })
     }
 }

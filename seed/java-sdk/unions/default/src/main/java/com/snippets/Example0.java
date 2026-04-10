@@ -1,12 +1,13 @@
 package com.snippets;
 
-import com.seed.unions.SeedUnionsClient;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.bigunion.requests.BigunionGetRequest;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedUnionsClient client =
-                SeedUnionsClient.builder().url("https://api.fern.com").build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.bigunion().get("id");
+        client.bigunion().get("id", BigunionGetRequest.builder().build());
     }
 }

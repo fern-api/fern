@@ -4,8 +4,8 @@ public struct User: Codable, Hashable, Sendable {
     public let name: String
     public let id: UserId
     public let tags: Nullable<[String]>
-    public let metadata: Nullable<Metadata>?
-    public let email: Email
+    public let metadata: Metadata?
+    public let email: Nullable<Email>
     public let favoriteNumber: WeirdNumber
     public let numbers: Nullable<[Int]>?
     public let strings: Nullable<[String: JSONValue]>?
@@ -16,8 +16,8 @@ public struct User: Codable, Hashable, Sendable {
         name: String,
         id: UserId,
         tags: Nullable<[String]>,
-        metadata: Nullable<Metadata>? = nil,
-        email: Email,
+        metadata: Metadata? = nil,
+        email: Nullable<Email>,
         favoriteNumber: WeirdNumber,
         numbers: Nullable<[Int]>? = nil,
         strings: Nullable<[String: JSONValue]>? = nil,
@@ -39,8 +39,8 @@ public struct User: Codable, Hashable, Sendable {
         self.name = try container.decode(String.self, forKey: .name)
         self.id = try container.decode(UserId.self, forKey: .id)
         self.tags = try container.decode(Nullable<[String]>.self, forKey: .tags)
-        self.metadata = try container.decodeNullableIfPresent(Metadata.self, forKey: .metadata)
-        self.email = try container.decode(Email.self, forKey: .email)
+        self.metadata = try container.decodeIfPresent(Metadata.self, forKey: .metadata)
+        self.email = try container.decode(Nullable<Email>.self, forKey: .email)
         self.favoriteNumber = try container.decode(WeirdNumber.self, forKey: .favoriteNumber)
         self.numbers = try container.decodeNullableIfPresent([Int].self, forKey: .numbers)
         self.strings = try container.decodeNullableIfPresent([String: JSONValue].self, forKey: .strings)
@@ -53,7 +53,7 @@ public struct User: Codable, Hashable, Sendable {
         try container.encode(self.name, forKey: .name)
         try container.encode(self.id, forKey: .id)
         try container.encode(self.tags, forKey: .tags)
-        try container.encodeNullableIfPresent(self.metadata, forKey: .metadata)
+        try container.encodeIfPresent(self.metadata, forKey: .metadata)
         try container.encode(self.email, forKey: .email)
         try container.encode(self.favoriteNumber, forKey: .favoriteNumber)
         try container.encodeNullableIfPresent(self.numbers, forKey: .numbers)

@@ -1,4 +1,4 @@
-use seed_literal::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,12 +6,12 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = LiteralClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .headers
         .send(
-            &SendLiteralsInHeadersRequest {
-                query: "What is the weather today".to_string(),
+            &HeadersSendRequest {
+                query: "query".to_string(),
             },
             Some(
                 RequestOptions::new()

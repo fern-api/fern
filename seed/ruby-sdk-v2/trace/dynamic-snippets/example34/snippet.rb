@@ -5,4 +5,7 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.v2.v3.problem.get_lightweight_problems
+client.playlist.deleteplaylist(
+  service_param: 1,
+  playlist_id: "playlist_id"
+)

@@ -5,4 +5,7 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.no_req_body.post_with_no_request_body
+client.endpoints_params.endpoints_params_get_with_query(
+  query: "query",
+  number: 1
+)

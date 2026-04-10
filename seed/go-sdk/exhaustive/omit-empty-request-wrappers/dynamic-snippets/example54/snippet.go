@@ -3,8 +3,8 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
-    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
 )
 
@@ -17,10 +17,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.PutRequest{
-        ID: "id",
-    }
-    client.Endpoints.Put.Add(
+    request := &fern.EndpointsPaginationListItemsRequest{}
+    client.EndpointsPagination.EndpointsPaginationListItems(
         context.TODO(),
         request,
     )

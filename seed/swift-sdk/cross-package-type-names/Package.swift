@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "CrossPackageTypeNames",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "CrossPackageTypeNames",
-            targets: ["CrossPackageTypeNames"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "CrossPackageTypeNames",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "CrossPackageTypeNamesTests",
-            dependencies: ["CrossPackageTypeNames"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

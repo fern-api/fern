@@ -6,18 +6,18 @@ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import * as core from "./core/index.js";
 
-export declare namespace SeedPathParametersClient {
+export declare namespace SeedApiClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class SeedPathParametersClient {
-    protected readonly _options: NormalizedClientOptions<SeedPathParametersClient.Options>;
+export class SeedApiClient {
+    protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
     protected _organizations: OrganizationsClient | undefined;
     protected _user: UserClient | undefined;
 
-    constructor(options: SeedPathParametersClient.Options) {
+    constructor(options: SeedApiClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 

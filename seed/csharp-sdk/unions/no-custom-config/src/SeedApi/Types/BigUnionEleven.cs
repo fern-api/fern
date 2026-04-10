@@ -1,0 +1,31 @@
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
+using SeedApi.Core;
+
+namespace SeedApi;
+
+[Serializable]
+public record BigUnionEleven : IJsonOnDeserialized
+{
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
+    [JsonPropertyName("type")]
+    public required BigUnionElevenType Type { get; set; }
+
+    [JsonPropertyName("value")]
+    public required string Value { get; set; }
+
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

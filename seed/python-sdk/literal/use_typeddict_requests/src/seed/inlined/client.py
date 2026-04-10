@@ -4,10 +4,12 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..requests.a_top_level_literal import ATopLevelLiteralParams
 from ..types.send_response import SendResponse
+from ..types.some_aliased_literal import SomeAliasedLiteral
 from .raw_client import AsyncRawInlinedClient, RawInlinedClient
-from .requests.a_top_level_literal import ATopLevelLiteralParams
-from .types.some_aliased_literal import SomeAliasedLiteral
+from .types.inlined_send_request_context import InlinedSendRequestContext
+from .types.inlined_send_request_prompt import InlinedSendRequestPrompt
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -31,9 +33,12 @@ class InlinedClient:
     def send(
         self,
         *,
+        prompt: InlinedSendRequestPrompt,
         query: str,
+        stream: bool,
+        aliased_context: SomeAliasedLiteral,
         object_with_literal: ATopLevelLiteralParams,
-        context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
+        context: typing.Optional[InlinedSendRequestContext] = OMIT,
         temperature: typing.Optional[float] = OMIT,
         maybe_context: typing.Optional[SomeAliasedLiteral] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -41,11 +46,17 @@ class InlinedClient:
         """
         Parameters
         ----------
+        prompt : InlinedSendRequestPrompt
+
         query : str
+
+        stream : bool
+
+        aliased_context : SomeAliasedLiteral
 
         object_with_literal : ATopLevelLiteralParams
 
-        context : typing.Optional[typing.Literal["You're super wise"]]
+        context : typing.Optional[InlinedSendRequestContext]
 
         temperature : typing.Optional[float]
 
@@ -58,23 +69,27 @@ class InlinedClient:
         -------
         SendResponse
 
+
         Examples
         --------
-        from seed import SeedLiteral
+        from seed import SeedApi
 
-        client = SeedLiteral(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
         client.inlined.send(
-            temperature=10.1,
-            context="You're super wise",
-            maybe_context="You're super wise",
+            prompt="You are a helpful assistant",
+            query="query",
+            stream=True,
+            aliased_context="You're super wise",
             object_with_literal={"nested_literal": {"my_literal": "How super cool"}},
-            query="What is the weather today",
         )
         """
         _response = self._raw_client.send(
+            prompt=prompt,
             query=query,
+            stream=stream,
+            aliased_context=aliased_context,
             object_with_literal=object_with_literal,
             context=context,
             temperature=temperature,
@@ -102,9 +117,12 @@ class AsyncInlinedClient:
     async def send(
         self,
         *,
+        prompt: InlinedSendRequestPrompt,
         query: str,
+        stream: bool,
+        aliased_context: SomeAliasedLiteral,
         object_with_literal: ATopLevelLiteralParams,
-        context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
+        context: typing.Optional[InlinedSendRequestContext] = OMIT,
         temperature: typing.Optional[float] = OMIT,
         maybe_context: typing.Optional[SomeAliasedLiteral] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -112,11 +130,17 @@ class AsyncInlinedClient:
         """
         Parameters
         ----------
+        prompt : InlinedSendRequestPrompt
+
         query : str
+
+        stream : bool
+
+        aliased_context : SomeAliasedLiteral
 
         object_with_literal : ATopLevelLiteralParams
 
-        context : typing.Optional[typing.Literal["You're super wise"]]
+        context : typing.Optional[InlinedSendRequestContext]
 
         temperature : typing.Optional[float]
 
@@ -129,33 +153,37 @@ class AsyncInlinedClient:
         -------
         SendResponse
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedLiteral
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedLiteral(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.inlined.send(
-                temperature=10.1,
-                context="You're super wise",
-                maybe_context="You're super wise",
+                prompt="You are a helpful assistant",
+                query="query",
+                stream=True,
+                aliased_context="You're super wise",
                 object_with_literal={
                     "nested_literal": {"my_literal": "How super cool"}
                 },
-                query="What is the weather today",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.send(
+            prompt=prompt,
             query=query,
+            stream=stream,
+            aliased_context=aliased_context,
             object_with_literal=object_with_literal,
             context=context,
             temperature=temperature,

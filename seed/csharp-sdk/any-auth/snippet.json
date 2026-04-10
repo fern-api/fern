@@ -6,11 +6,11 @@
             "id": {
                 "path": "/token",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.getToken"
+                "identifier_override": "endpoint_auth.gettoken"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedAnyAuth;\n\nvar client = new SeedAnyAuthClient(\"TOKEN\", \"API_KEY\", \"client_id\", \"client_secret\", \"USERNAME\", \"PASSWORD\");\nawait client.Auth.GetTokenAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\", \"API_KEY\");\nawait client.Auth.GettokenAsync(\n    new AuthGetTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = AuthGetTokenRequestAudience.HttpsApiExampleCom,\n        GrantType = AuthGetTokenRequestGrantType.ClientCredentials,\n    }\n);\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedAnyAuth;\n\nvar client = new SeedAnyAuthClient(\"TOKEN\", \"API_KEY\", \"client_id\", \"client_secret\", \"USERNAME\", \"PASSWORD\");\nawait client.User.GetAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\", \"API_KEY\");\nawait client.User.GetAsync();\n"
             }
         },
         {
@@ -30,11 +30,11 @@
             "id": {
                 "path": "/admins",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getAdmins"
+                "identifier_override": "endpoint_user.getadmins"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedAnyAuth;\n\nvar client = new SeedAnyAuthClient(\"TOKEN\", \"API_KEY\", \"client_id\", \"client_secret\", \"USERNAME\", \"PASSWORD\");\nawait client.User.GetAdminsAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\", \"API_KEY\");\nawait client.User.GetadminsAsync();\n"
             }
         }
     ]

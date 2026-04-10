@@ -3,7 +3,6 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Commons\Types\Language;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,7 +10,7 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->sysprop->setNumWarmInstances(
-    Language::Java->value,
+$client->playlist->getplaylist(
     1,
+    'playlistId',
 );

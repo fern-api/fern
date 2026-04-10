@@ -1,6 +1,6 @@
-//! # Api SDK
+//! # folders SDK
 //!
-//! The official Rust SDK for the Api.
+//! The official Rust SDK for the folders.
 //!
 //! ## Getting Started
 //!
@@ -13,7 +13,7 @@
 //!         ..Default::default()
 //!     };
 //!     let client = ApiClient::new(config).expect("Failed to build client");
-//!     client.foo(None).await;
+//!     client..foo(None).await;
 //! }
 //! ```
 //!
@@ -27,14 +27,15 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod client;
-pub mod config;
-pub mod core;
 pub mod error;
+pub mod core;
+pub mod config;
+pub mod client;
 pub mod prelude;
 
-pub use api::*;
-pub use client::*;
-pub use config::*;
-pub use core::*;
 pub use error::{ApiError, BuildError};
+pub use api::{*};
+pub use core::{*};
+pub use config::{*};
+pub use client::{*};
+

@@ -11,7 +11,7 @@ public class Example4
             }
         );
 
-        await client.ScimConfiguration.ListUsersAsync();
+        await client.Scimconfiguration.GetconfigurationAsync();
     }
 
 }

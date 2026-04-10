@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>client.optional.<a href="/lib/seed/optional/client.rb">send_optional_body</a>(request) -> String</code></summary>
+<details><summary><code>client.optional.<a href="/lib/seed/optional/client.rb">sendoptionalbody</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.optional.send_optional_body(request: {})
+client.optional.sendoptionalbody(request: {})
 ```
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.optional.send_optional_body(request: {})
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="/lib/seed/optional/client.rb">send_optional_typed_body</a>(request) -> String</code></summary>
+<details><summary><code>client.optional.<a href="/lib/seed/optional/client.rb">sendoptionaltypedbody</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -61,9 +61,7 @@ client.optional.send_optional_body(request: {})
 <dd>
 
 ```ruby
-client.optional.send_optional_typed_body(request: {
-  message: "message"
-})
+client.optional.sendoptionaltypedbody(message: "message")
 ```
 </dd>
 </dl>
@@ -78,7 +76,7 @@ client.optional.send_optional_typed_body(request: {
 <dl>
 <dd>
 
-**request:** `Seed::Optional::Types::SendOptionalBodyRequest` 
+**message:** `String` 
     
 </dd>
 </dl>
@@ -98,7 +96,7 @@ client.optional.send_optional_typed_body(request: {
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="/lib/seed/optional/client.rb">send_optional_nullable_with_all_optional_properties</a>(action_id, id, request) -> Seed::Optional::Types::DeployResponse</code></summary>
+<details><summary><code>client.optional.<a href="/lib/seed/optional/client.rb">sendoptionalnullablewithalloptionalproperties</a>(action_id, id, request) -> Seed::Types::DeployResponse</code></summary>
 <dl>
 <dd>
 
@@ -126,12 +124,9 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 <dd>
 
 ```ruby
-client.optional.send_optional_nullable_with_all_optional_properties(
+client.optional.sendoptionalnullablewithalloptionalproperties(
   action_id: "actionId",
-  id: "id",
-  request: {
-    update_draft: true
-  }
+  id: "id"
 )
 ```
 </dd>
@@ -163,7 +158,7 @@ client.optional.send_optional_nullable_with_all_optional_properties(
 <dl>
 <dd>
 
-**request:** `Seed::Optional::Types::DeployParams` 
+**update_draft:** `Internal::Types::Boolean` 
     
 </dd>
 </dl>

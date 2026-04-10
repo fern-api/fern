@@ -3,15 +3,15 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Completions\Requests\StreamCompletionRequest;
+use Seed\Completions\Requests\CompletionsStreamEventsContextProtocolRequest;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->completions->stream(
-    new StreamCompletionRequest([
+$client->completions->streameventscontextprotocol(
+    new CompletionsStreamEventsContextProtocolRequest([
         'query' => 'query',
     ]),
 );

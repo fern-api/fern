@@ -1,10 +1,10 @@
-use seed_exhaustive::prelude::*;
+use seed_api::prelude::*;
 
 mod wire_test_utils;
 
 #[tokio::test]
 #[allow(unused_variables, unreachable_code)]
-async fn test_endpoints_put_add_with_wiremock() {
+async fn test_endpoints_put_endpoints_put_add_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
     let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
@@ -14,9 +14,12 @@ async fn test_endpoints_put_add_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
-    let result = client.endpoints.put.add(&"id".to_string(), None).await;
+    let result = client
+        .endpoints_put
+        .endpoints_put_add(&"id".to_string(), None)
+        .await;
 
     assert!(result.is_ok(), "Client method call should succeed");
 

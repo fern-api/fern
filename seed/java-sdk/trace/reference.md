@@ -26,7 +26,7 @@ client.v2().test();
 </details>
 
 ## Admin
-<details><summary><code>client.admin.updateTestSubmissionStatus(submissionId, request)</code></summary>
+<details><summary><code>client.admin.updatetestsubmissionstatus(submissionId, request)</code></summary>
 <dl>
 <dd>
 
@@ -39,346 +39,14 @@ client.v2().test();
 <dd>
 
 ```java
-client.admin().updateTestSubmissionStatus(
-    UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    TestSubmissionStatus.stopped()
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**submissionId:** `UUID` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `TestSubmissionStatus` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.admin.sendTestSubmissionUpdate(submissionId, request)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```java
-client.admin().sendTestSubmissionUpdate(
-    UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    TestSubmissionUpdate
+client.admin().updatetestsubmissionstatus(
+    "submissionId",
+    AdminUpdateTestSubmissionStatusRequest
         .builder()
-        .updateTime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-        .updateInfo(
-            TestSubmissionUpdateInfo.running(RunningSubmissionState.QUEUEING_SUBMISSION)
-        )
-        .build()
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**submissionId:** `UUID` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `TestSubmissionUpdate` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.admin.updateWorkspaceSubmissionStatus(submissionId, request)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```java
-client.admin().updateWorkspaceSubmissionStatus(
-    UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    WorkspaceSubmissionStatus.stopped()
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**submissionId:** `UUID` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `WorkspaceSubmissionStatus` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.admin.sendWorkspaceSubmissionUpdate(submissionId, request)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```java
-client.admin().sendWorkspaceSubmissionUpdate(
-    UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    WorkspaceSubmissionUpdate
-        .builder()
-        .updateTime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-        .updateInfo(
-            WorkspaceSubmissionUpdateInfo.running(RunningSubmissionState.QUEUEING_SUBMISSION)
-        )
-        .build()
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**submissionId:** `UUID` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `WorkspaceSubmissionUpdate` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.admin.storeTracedTestCase(submissionId, testCaseId, request)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```java
-client.admin().storeTracedTestCase(
-    UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    "testCaseId",
-    StoreTracedTestCaseRequest
-        .builder()
-        .result(
-            TestCaseResultWithStdout
-                .builder()
-                .result(
-                    TestCaseResult
-                        .builder()
-                        .expectedResult(
-                            VariableValue.integerValue(1)
-                        )
-                        .actualResult(
-                            ActualResult.value(
-                                VariableValue.integerValue(1)
-                            )
-                        )
-                        .passed(true)
-                        .build()
-                )
-                .stdout("stdout")
-                .build()
-        )
-        .traceResponses(
-            Arrays.asList(
-                TraceResponse
+        .body(
+            TestSubmissionStatus.stopped(
+                TestSubmissionStatusStopped
                     .builder()
-                    .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-                    .lineNumber(1)
-                    .stack(
-                        StackInformation
-                            .builder()
-                            .numStackFrames(1)
-                            .topStackFrame(
-                                StackFrame
-                                    .builder()
-                                    .methodName("methodName")
-                                    .lineNumber(1)
-                                    .scopes(
-                                        Arrays.asList(
-                                            Scope
-                                                .builder()
-                                                .variables(
-                                                    new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue(1));
-                                                    }}
-                                                )
-                                                .build(),
-                                            Scope
-                                                .builder()
-                                                .variables(
-                                                    new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue(1));
-                                                    }}
-                                                )
-                                                .build()
-                                        )
-                                    )
-                                    .build()
-                            )
-                            .build()
-                    )
-                    .returnValue(
-                        DebugVariableValue.integerValue(1)
-                    )
-                    .expressionLocation(
-                        ExpressionLocation
-                            .builder()
-                            .start(1)
-                            .offset(1)
-                            .build()
-                    )
-                    .stdout("stdout")
-                    .build(),
-                TraceResponse
-                    .builder()
-                    .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-                    .lineNumber(1)
-                    .stack(
-                        StackInformation
-                            .builder()
-                            .numStackFrames(1)
-                            .topStackFrame(
-                                StackFrame
-                                    .builder()
-                                    .methodName("methodName")
-                                    .lineNumber(1)
-                                    .scopes(
-                                        Arrays.asList(
-                                            Scope
-                                                .builder()
-                                                .variables(
-                                                    new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue(1));
-                                                    }}
-                                                )
-                                                .build(),
-                                            Scope
-                                                .builder()
-                                                .variables(
-                                                    new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue(1));
-                                                    }}
-                                                )
-                                                .build()
-                                        )
-                                    )
-                                    .build()
-                            )
-                            .build()
-                    )
-                    .returnValue(
-                        DebugVariableValue.integerValue(1)
-                    )
-                    .expressionLocation(
-                        ExpressionLocation
-                            .builder()
-                            .start(1)
-                            .offset(1)
-                            .build()
-                    )
-                    .stdout("stdout")
                     .build()
             )
         )
@@ -398,7 +66,299 @@ client.admin().storeTracedTestCase(
 <dl>
 <dd>
 
-**submissionId:** `UUID` 
+**submissionId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `TestSubmissionStatus` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.admin.sendtestsubmissionupdate(submissionId, request)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.admin().sendtestsubmissionupdate(
+    "submissionId",
+    AdminSendTestSubmissionUpdateRequest
+        .builder()
+        .body(
+            TestSubmissionUpdate
+                .builder()
+                .updateTime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                .updateInfo(
+                    TestSubmissionUpdateInfo.of(
+                        TestSubmissionUpdateInfoZero
+                            .builder()
+                            .type(TestSubmissionUpdateInfoZeroType.RUNNING)
+                            .build()
+                    )
+                )
+                .build()
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**submissionId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `TestSubmissionUpdate` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.admin.updateworkspacesubmissionstatus(submissionId, request)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.admin().updateworkspacesubmissionstatus(
+    "submissionId",
+    AdminUpdateWorkspaceSubmissionStatusRequest
+        .builder()
+        .body(
+            WorkspaceSubmissionStatus.of(
+                WorkspaceSubmissionStatusZero
+                    .builder()
+                    .type(WorkspaceSubmissionStatusZeroType.STOPPED)
+                    .build()
+            )
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**submissionId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `WorkspaceSubmissionStatus` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.admin.sendworkspacesubmissionupdate(submissionId, request)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.admin().sendworkspacesubmissionupdate(
+    "submissionId",
+    AdminSendWorkspaceSubmissionUpdateRequest
+        .builder()
+        .body(
+            WorkspaceSubmissionUpdate
+                .builder()
+                .updateTime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                .updateInfo(
+                    WorkspaceSubmissionUpdateInfo.of(
+                        WorkspaceSubmissionUpdateInfoZero
+                            .builder()
+                            .type(WorkspaceSubmissionUpdateInfoZeroType.RUNNING)
+                            .build()
+                    )
+                )
+                .build()
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**submissionId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `WorkspaceSubmissionUpdate` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.admin.storetracedtestcase(submissionId, testCaseId, request)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.admin().storetracedtestcase(
+    "submissionId",
+    "testCaseId",
+    AdminStoreTracedTestCaseRequest
+        .builder()
+        .result(
+            TestCaseResultWithStdout
+                .builder()
+                .result(
+                    TestCaseResult
+                        .builder()
+                        .expectedResult(
+                            VariableValue.of(
+                                VariableValueZero
+                                    .builder()
+                                    .type(VariableValueZeroType.INTEGER_VALUE)
+                                    .build()
+                            )
+                        )
+                        .actualResult(
+                            ActualResult.of(
+                                ActualResultZero
+                                    .builder()
+                                    .type(ActualResultZeroType.VALUE)
+                                    .build()
+                            )
+                        )
+                        .passed(true)
+                        .build()
+                )
+                .stdout("stdout")
+                .build()
+        )
+        .traceResponses(
+            Arrays.asList(
+                TraceResponse
+                    .builder()
+                    .submissionId("submissionId")
+                    .lineNumber(1)
+                    .stack(
+                        StackInformation
+                            .builder()
+                            .numStackFrames(1)
+                            .build()
+                    )
+                    .build()
+            )
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**submissionId:** `String` 
     
 </dd>
 </dl>
@@ -434,7 +394,7 @@ client.admin().storeTracedTestCase(
 </dl>
 </details>
 
-<details><summary><code>client.admin.storeTracedTestCaseV2(submissionId, testCaseId, request)</code></summary>
+<details><summary><code>client.admin.storetracedtestcasev2(submissionId, testCaseId, request)</code></summary>
 <dl>
 <dd>
 
@@ -447,123 +407,34 @@ client.admin().storeTracedTestCase(
 <dd>
 
 ```java
-client.admin().storeTracedTestCaseV2(
-    UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+client.admin().storetracedtestcasev2(
+    "submissionId",
     "testCaseId",
-    Arrays.asList(
-        TraceResponseV2
-            .builder()
-            .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-            .lineNumber(1)
-            .file(
-                TracedFile
+    AdminStoreTracedTestCaseV2Request
+        .builder()
+        .body(
+            Arrays.asList(
+                TraceResponseV2
                     .builder()
-                    .filename("filename")
-                    .directory("directory")
-                    .build()
-            )
-            .stack(
-                StackInformation
-                    .builder()
-                    .numStackFrames(1)
-                    .topStackFrame(
-                        StackFrame
+                    .submissionId("submissionId")
+                    .lineNumber(1)
+                    .file(
+                        TracedFile
                             .builder()
-                            .methodName("methodName")
-                            .lineNumber(1)
-                            .scopes(
-                                Arrays.asList(
-                                    Scope
-                                        .builder()
-                                        .variables(
-                                            new HashMap<String, DebugVariableValue>() {{
-                                                put("variables", DebugVariableValue.integerValue(1));
-                                            }}
-                                        )
-                                        .build(),
-                                    Scope
-                                        .builder()
-                                        .variables(
-                                            new HashMap<String, DebugVariableValue>() {{
-                                                put("variables", DebugVariableValue.integerValue(1));
-                                            }}
-                                        )
-                                        .build()
-                                )
-                            )
+                            .filename("filename")
+                            .directory("directory")
+                            .build()
+                    )
+                    .stack(
+                        StackInformation
+                            .builder()
+                            .numStackFrames(1)
                             .build()
                     )
                     .build()
             )
-            .returnValue(
-                DebugVariableValue.integerValue(1)
-            )
-            .expressionLocation(
-                ExpressionLocation
-                    .builder()
-                    .start(1)
-                    .offset(1)
-                    .build()
-            )
-            .stdout("stdout")
-            .build(),
-        TraceResponseV2
-            .builder()
-            .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-            .lineNumber(1)
-            .file(
-                TracedFile
-                    .builder()
-                    .filename("filename")
-                    .directory("directory")
-                    .build()
-            )
-            .stack(
-                StackInformation
-                    .builder()
-                    .numStackFrames(1)
-                    .topStackFrame(
-                        StackFrame
-                            .builder()
-                            .methodName("methodName")
-                            .lineNumber(1)
-                            .scopes(
-                                Arrays.asList(
-                                    Scope
-                                        .builder()
-                                        .variables(
-                                            new HashMap<String, DebugVariableValue>() {{
-                                                put("variables", DebugVariableValue.integerValue(1));
-                                            }}
-                                        )
-                                        .build(),
-                                    Scope
-                                        .builder()
-                                        .variables(
-                                            new HashMap<String, DebugVariableValue>() {{
-                                                put("variables", DebugVariableValue.integerValue(1));
-                                            }}
-                                        )
-                                        .build()
-                                )
-                            )
-                            .build()
-                    )
-                    .build()
-            )
-            .returnValue(
-                DebugVariableValue.integerValue(1)
-            )
-            .expressionLocation(
-                ExpressionLocation
-                    .builder()
-                    .start(1)
-                    .offset(1)
-                    .build()
-            )
-            .stdout("stdout")
-            .build()
-    )
+        )
+        .build()
 );
 ```
 </dd>
@@ -579,7 +450,7 @@ client.admin().storeTracedTestCaseV2(
 <dl>
 <dd>
 
-**submissionId:** `UUID` 
+**submissionId:** `String` 
     
 </dd>
 </dl>
@@ -607,7 +478,7 @@ client.admin().storeTracedTestCaseV2(
 </dl>
 </details>
 
-<details><summary><code>client.admin.storeTracedWorkspace(submissionId, request)</code></summary>
+<details><summary><code>client.admin.storetracedworkspace(submissionId, request)</code></summary>
 <dl>
 <dd>
 
@@ -620,133 +491,28 @@ client.admin().storeTracedTestCaseV2(
 <dd>
 
 ```java
-client.admin().storeTracedWorkspace(
-    UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    StoreTracedWorkspaceRequest
+client.admin().storetracedworkspace(
+    "submissionId",
+    AdminStoreTracedWorkspaceRequest
         .builder()
         .workspaceRunDetails(
             WorkspaceRunDetails
                 .builder()
                 .stdout("stdout")
-                .exceptionV2(
-                    ExceptionV2.generic(
-                        ExceptionInfo
-                            .builder()
-                            .exceptionType("exceptionType")
-                            .exceptionMessage("exceptionMessage")
-                            .exceptionStacktrace("exceptionStacktrace")
-                            .build()
-                    )
-                )
-                .exception(
-                    ExceptionInfo
-                        .builder()
-                        .exceptionType("exceptionType")
-                        .exceptionMessage("exceptionMessage")
-                        .exceptionStacktrace("exceptionStacktrace")
-                        .build()
-                )
                 .build()
         )
         .traceResponses(
             Arrays.asList(
                 TraceResponse
                     .builder()
-                    .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+                    .submissionId("submissionId")
                     .lineNumber(1)
                     .stack(
                         StackInformation
                             .builder()
                             .numStackFrames(1)
-                            .topStackFrame(
-                                StackFrame
-                                    .builder()
-                                    .methodName("methodName")
-                                    .lineNumber(1)
-                                    .scopes(
-                                        Arrays.asList(
-                                            Scope
-                                                .builder()
-                                                .variables(
-                                                    new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue(1));
-                                                    }}
-                                                )
-                                                .build(),
-                                            Scope
-                                                .builder()
-                                                .variables(
-                                                    new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue(1));
-                                                    }}
-                                                )
-                                                .build()
-                                        )
-                                    )
-                                    .build()
-                            )
                             .build()
                     )
-                    .returnValue(
-                        DebugVariableValue.integerValue(1)
-                    )
-                    .expressionLocation(
-                        ExpressionLocation
-                            .builder()
-                            .start(1)
-                            .offset(1)
-                            .build()
-                    )
-                    .stdout("stdout")
-                    .build(),
-                TraceResponse
-                    .builder()
-                    .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-                    .lineNumber(1)
-                    .stack(
-                        StackInformation
-                            .builder()
-                            .numStackFrames(1)
-                            .topStackFrame(
-                                StackFrame
-                                    .builder()
-                                    .methodName("methodName")
-                                    .lineNumber(1)
-                                    .scopes(
-                                        Arrays.asList(
-                                            Scope
-                                                .builder()
-                                                .variables(
-                                                    new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue(1));
-                                                    }}
-                                                )
-                                                .build(),
-                                            Scope
-                                                .builder()
-                                                .variables(
-                                                    new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue(1));
-                                                    }}
-                                                )
-                                                .build()
-                                        )
-                                    )
-                                    .build()
-                            )
-                            .build()
-                    )
-                    .returnValue(
-                        DebugVariableValue.integerValue(1)
-                    )
-                    .expressionLocation(
-                        ExpressionLocation
-                            .builder()
-                            .start(1)
-                            .offset(1)
-                            .build()
-                    )
-                    .stdout("stdout")
                     .build()
             )
         )
@@ -766,7 +532,7 @@ client.admin().storeTracedWorkspace(
 <dl>
 <dd>
 
-**submissionId:** `UUID` 
+**submissionId:** `String` 
     
 </dd>
 </dl>
@@ -794,7 +560,7 @@ client.admin().storeTracedWorkspace(
 </dl>
 </details>
 
-<details><summary><code>client.admin.storeTracedWorkspaceV2(submissionId, request)</code></summary>
+<details><summary><code>client.admin.storetracedworkspacev2(submissionId, request)</code></summary>
 <dl>
 <dd>
 
@@ -807,122 +573,33 @@ client.admin().storeTracedWorkspace(
 <dd>
 
 ```java
-client.admin().storeTracedWorkspaceV2(
-    UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    Arrays.asList(
-        TraceResponseV2
-            .builder()
-            .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-            .lineNumber(1)
-            .file(
-                TracedFile
+client.admin().storetracedworkspacev2(
+    "submissionId",
+    AdminStoreTracedWorkspaceV2Request
+        .builder()
+        .body(
+            Arrays.asList(
+                TraceResponseV2
                     .builder()
-                    .filename("filename")
-                    .directory("directory")
-                    .build()
-            )
-            .stack(
-                StackInformation
-                    .builder()
-                    .numStackFrames(1)
-                    .topStackFrame(
-                        StackFrame
+                    .submissionId("submissionId")
+                    .lineNumber(1)
+                    .file(
+                        TracedFile
                             .builder()
-                            .methodName("methodName")
-                            .lineNumber(1)
-                            .scopes(
-                                Arrays.asList(
-                                    Scope
-                                        .builder()
-                                        .variables(
-                                            new HashMap<String, DebugVariableValue>() {{
-                                                put("variables", DebugVariableValue.integerValue(1));
-                                            }}
-                                        )
-                                        .build(),
-                                    Scope
-                                        .builder()
-                                        .variables(
-                                            new HashMap<String, DebugVariableValue>() {{
-                                                put("variables", DebugVariableValue.integerValue(1));
-                                            }}
-                                        )
-                                        .build()
-                                )
-                            )
+                            .filename("filename")
+                            .directory("directory")
+                            .build()
+                    )
+                    .stack(
+                        StackInformation
+                            .builder()
+                            .numStackFrames(1)
                             .build()
                     )
                     .build()
             )
-            .returnValue(
-                DebugVariableValue.integerValue(1)
-            )
-            .expressionLocation(
-                ExpressionLocation
-                    .builder()
-                    .start(1)
-                    .offset(1)
-                    .build()
-            )
-            .stdout("stdout")
-            .build(),
-        TraceResponseV2
-            .builder()
-            .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-            .lineNumber(1)
-            .file(
-                TracedFile
-                    .builder()
-                    .filename("filename")
-                    .directory("directory")
-                    .build()
-            )
-            .stack(
-                StackInformation
-                    .builder()
-                    .numStackFrames(1)
-                    .topStackFrame(
-                        StackFrame
-                            .builder()
-                            .methodName("methodName")
-                            .lineNumber(1)
-                            .scopes(
-                                Arrays.asList(
-                                    Scope
-                                        .builder()
-                                        .variables(
-                                            new HashMap<String, DebugVariableValue>() {{
-                                                put("variables", DebugVariableValue.integerValue(1));
-                                            }}
-                                        )
-                                        .build(),
-                                    Scope
-                                        .builder()
-                                        .variables(
-                                            new HashMap<String, DebugVariableValue>() {{
-                                                put("variables", DebugVariableValue.integerValue(1));
-                                            }}
-                                        )
-                                        .build()
-                                )
-                            )
-                            .build()
-                    )
-                    .build()
-            )
-            .returnValue(
-                DebugVariableValue.integerValue(1)
-            )
-            .expressionLocation(
-                ExpressionLocation
-                    .builder()
-                    .start(1)
-                    .offset(1)
-                    .build()
-            )
-            .stdout("stdout")
-            .build()
-    )
+        )
+        .build()
 );
 ```
 </dd>
@@ -938,7 +615,7 @@ client.admin().storeTracedWorkspaceV2(
 <dl>
 <dd>
 
-**submissionId:** `UUID` 
+**submissionId:** `String` 
     
 </dd>
 </dl>
@@ -959,7 +636,7 @@ client.admin().storeTracedWorkspaceV2(
 </details>
 
 ## Homepage
-<details><summary><code>client.homepage.getHomepageProblems() -> List&amp;lt;String&amp;gt;</code></summary>
+<details><summary><code>client.homepage.gethomepageproblems() -> List&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -972,7 +649,7 @@ client.admin().storeTracedWorkspaceV2(
 <dd>
 
 ```java
-client.homepage().getHomepageProblems();
+client.homepage().gethomepageproblems();
 ```
 </dd>
 </dl>
@@ -984,7 +661,7 @@ client.homepage().getHomepageProblems();
 </dl>
 </details>
 
-<details><summary><code>client.homepage.setHomepageProblems(request)</code></summary>
+<details><summary><code>client.homepage.sethomepageproblems(request)</code></summary>
 <dl>
 <dd>
 
@@ -997,8 +674,8 @@ client.homepage().getHomepageProblems();
 <dd>
 
 ```java
-client.homepage().setHomepageProblems(
-    Arrays.asList("string", "string")
+client.homepage().sethomepageproblems(
+    Arrays.asList("string")
 );
 ```
 </dd>
@@ -1027,7 +704,7 @@ client.homepage().setHomepageProblems(
 </details>
 
 ## Migration
-<details><summary><code>client.migration.getAttemptedMigrations() -> List&amp;lt;Migration&amp;gt;</code></summary>
+<details><summary><code>client.migration.getattemptedmigrations() -> List&amp;lt;Migration&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1040,8 +717,8 @@ client.homepage().setHomepageProblems(
 <dd>
 
 ```java
-client.migration().getAttemptedMigrations(
-    GetAttemptedMigrationsRequest
+client.migration().getattemptedmigrations(
+    MigrationGetAttemptedMigrationsRequest
         .builder()
         .adminKeyHeader("admin-key-header")
         .build()
@@ -1073,7 +750,7 @@ client.migration().getAttemptedMigrations(
 </details>
 
 ## Playlist
-<details><summary><code>client.playlist.createPlaylist(serviceParam, request) -> Playlist</code></summary>
+<details><summary><code>client.playlist.createplaylist(serviceParam, request) -> Playlist</code></summary>
 <dl>
 <dd>
 
@@ -1100,9 +777,9 @@ Create a new playlist
 <dd>
 
 ```java
-client.playlist().createPlaylist(
+client.playlist().createplaylist(
     1,
-    CreatePlaylistRequest
+    PlaylistCreatePlaylistRequest
         .builder()
         .datetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
         .body(
@@ -1110,11 +787,10 @@ client.playlist().createPlaylist(
                 .builder()
                 .name("name")
                 .problems(
-                    Arrays.asList("problems", "problems")
+                    Arrays.asList("problems")
                 )
                 .build()
         )
-        .optionalDatetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
         .build()
 );
 ```
@@ -1167,7 +843,7 @@ client.playlist().createPlaylist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.getPlaylists(serviceParam) -> List&amp;lt;Playlist&amp;gt;</code></summary>
+<details><summary><code>client.playlist.getplaylists(serviceParam) -> List&amp;lt;Playlist&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1194,14 +870,14 @@ Returns the user's playlists
 <dd>
 
 ```java
-client.playlist().getPlaylists(
+client.playlist().getplaylists(
     1,
-    GetPlaylistsRequest
+    PlaylistGetPlaylistsRequest
         .builder()
         .otherField("otherField")
         .multiLineDocs("multiLineDocs")
         .optionalMultipleField(
-            Arrays.asList("optionalMultipleField")
+            Arrays.asList(Optional.of("optionalMultipleField"))
         )
         .multipleField(
             Arrays.asList("multipleField")
@@ -1266,7 +942,7 @@ description
 <dl>
 <dd>
 
-**multipleField:** `String` 
+**multipleField:** `Optional<String>` 
     
 </dd>
 </dl>
@@ -1278,7 +954,7 @@ description
 </dl>
 </details>
 
-<details><summary><code>client.playlist.getPlaylist(serviceParam, playlistId) -> Playlist</code></summary>
+<details><summary><code>client.playlist.getplaylist(serviceParam, playlistId) -> Playlist</code></summary>
 <dl>
 <dd>
 
@@ -1305,7 +981,13 @@ Returns a playlist
 <dd>
 
 ```java
-client.playlist().getPlaylist(1, "playlistId");
+client.playlist().getplaylist(
+    1,
+    "playlistId",
+    PlaylistGetPlaylistRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -1340,7 +1022,7 @@ client.playlist().getPlaylist(1, "playlistId");
 </dl>
 </details>
 
-<details><summary><code>client.playlist.updatePlaylist(serviceParam, playlistId, request) -> Optional&amp;lt;Playlist&amp;gt;</code></summary>
+<details><summary><code>client.playlist.updateplaylist(serviceParam, playlistId, request) -> Playlist</code></summary>
 <dl>
 <dd>
 
@@ -1367,18 +1049,16 @@ Updates a playlist
 <dd>
 
 ```java
-client.playlist().updatePlaylist(
+client.playlist().updateplaylist(
     1,
     "playlistId",
-    Optional.of(
-        UpdatePlaylistRequest
-            .builder()
-            .name("name")
-            .problems(
-                Arrays.asList("problems", "problems")
-            )
-            .build()
-    )
+    UpdatePlaylistRequest
+        .builder()
+        .name("name")
+        .problems(
+            Arrays.asList("problems")
+        )
+        .build()
 );
 ```
 </dd>
@@ -1410,7 +1090,15 @@ client.playlist().updatePlaylist(
 <dl>
 <dd>
 
-**request:** `Optional<UpdatePlaylistRequest>` 
+**name:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**problems:** `List<String>` — The problems that make up the playlist.
     
 </dd>
 </dl>
@@ -1422,7 +1110,7 @@ client.playlist().updatePlaylist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.deletePlaylist(serviceParam, playlistId)</code></summary>
+<details><summary><code>client.playlist.deleteplaylist(serviceParam, playlistId)</code></summary>
 <dl>
 <dd>
 
@@ -1449,7 +1137,13 @@ Deletes a playlist
 <dd>
 
 ```java
-client.playlist().deletePlaylist(1, "playlist_id");
+client.playlist().deleteplaylist(
+    1,
+    "playlist_id",
+    PlaylistDeletePlaylistRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -1485,7 +1179,7 @@ client.playlist().deletePlaylist(1, "playlist_id");
 </details>
 
 ## Problem
-<details><summary><code>client.problem.createProblem(request) -> CreateProblemResponse</code></summary>
+<details><summary><code>client.problem.createproblem(request) -> CreateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1512,7 +1206,7 @@ Creates a problem
 <dd>
 
 ```java
-client.problem().createProblem(
+client.problem().createproblem(
     CreateProblemRequest
         .builder()
         .problemName("problemName")
@@ -1521,19 +1215,27 @@ client.problem().createProblem(
                 .builder()
                 .boards(
                     Arrays.asList(
-                        ProblemDescriptionBoard.html("boards"),
-                        ProblemDescriptionBoard.html("boards")
+                        ProblemDescriptionBoard.html(
+                            ProblemDescriptionBoardHtml
+                                .builder()
+                                .build()
+                        )
                     )
                 )
                 .build()
         )
         .outputType(
-            VariableType.integerType()
+            VariableType.of(
+                VariableTypeZero
+                    .builder()
+                    .type(VariableTypeZeroType.INTEGER_TYPE)
+                    .build()
+            )
         )
         .methodName("methodName")
         .files(
-            new HashMap<Language, ProblemFiles>() {{
-                put(Language.JAVA, ProblemFiles
+            new HashMap<String, ProblemFiles>() {{
+                put("key", ProblemFiles
                     .builder()
                     .solutionFile(
                         FileInfo
@@ -1544,11 +1246,6 @@ client.problem().createProblem(
                     )
                     .readOnlyFiles(
                         Arrays.asList(
-                            FileInfo
-                                .builder()
-                                .filename("filename")
-                                .contents("contents")
-                                .build(),
                             FileInfo
                                 .builder()
                                 .filename("filename")
@@ -1564,14 +1261,12 @@ client.problem().createProblem(
                 VariableTypeAndName
                     .builder()
                     .variableType(
-                        VariableType.integerType()
-                    )
-                    .name("name")
-                    .build(),
-                VariableTypeAndName
-                    .builder()
-                    .variableType(
-                        VariableType.integerType()
+                        VariableType.of(
+                            VariableTypeZero
+                                .builder()
+                                .type(VariableTypeZeroType.INTEGER_TYPE)
+                                .build()
+                        )
                     )
                     .name("name")
                     .build()
@@ -1587,32 +1282,23 @@ client.problem().createProblem(
                             .id("id")
                             .params(
                                 Arrays.asList(
-                                    VariableValue.integerValue(1),
-                                    VariableValue.integerValue(1)
+                                    VariableValue.of(
+                                        VariableValueZero
+                                            .builder()
+                                            .type(VariableValueZeroType.INTEGER_VALUE)
+                                            .build()
+                                    )
                                 )
                             )
                             .build()
                     )
                     .expectedResult(
-                        VariableValue.integerValue(1)
-                    )
-                    .build(),
-                TestCaseWithExpectedResult
-                    .builder()
-                    .testCase(
-                        TestCase
-                            .builder()
-                            .id("id")
-                            .params(
-                                Arrays.asList(
-                                    VariableValue.integerValue(1),
-                                    VariableValue.integerValue(1)
-                                )
-                            )
-                            .build()
-                    )
-                    .expectedResult(
-                        VariableValue.integerValue(1)
+                        VariableValue.of(
+                            VariableValueZero
+                                .builder()
+                                .type(VariableValueZeroType.INTEGER_VALUE)
+                                .build()
+                        )
                     )
                     .build()
             )
@@ -1645,7 +1331,7 @@ client.problem().createProblem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.updateProblem(problemId, request) -> UpdateProblemResponse</code></summary>
+<details><summary><code>client.problem.updateproblem(problemId, request) -> UpdateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1672,111 +1358,108 @@ Updates a problem
 <dd>
 
 ```java
-client.problem().updateProblem(
+client.problem().updateproblem(
     "problemId",
-    CreateProblemRequest
+    ProblemUpdateProblemRequest
         .builder()
-        .problemName("problemName")
-        .problemDescription(
-            ProblemDescription
+        .body(
+            CreateProblemRequest
                 .builder()
-                .boards(
+                .problemName("problemName")
+                .problemDescription(
+                    ProblemDescription
+                        .builder()
+                        .boards(
+                            Arrays.asList(
+                                ProblemDescriptionBoard.html(
+                                    ProblemDescriptionBoardHtml
+                                        .builder()
+                                        .build()
+                                )
+                            )
+                        )
+                        .build()
+                )
+                .outputType(
+                    VariableType.of(
+                        VariableTypeZero
+                            .builder()
+                            .type(VariableTypeZeroType.INTEGER_TYPE)
+                            .build()
+                    )
+                )
+                .methodName("methodName")
+                .files(
+                    new HashMap<String, ProblemFiles>() {{
+                        put("key", ProblemFiles
+                            .builder()
+                            .solutionFile(
+                                FileInfo
+                                    .builder()
+                                    .filename("filename")
+                                    .contents("contents")
+                                    .build()
+                            )
+                            .readOnlyFiles(
+                                Arrays.asList(
+                                    FileInfo
+                                        .builder()
+                                        .filename("filename")
+                                        .contents("contents")
+                                        .build()
+                                )
+                            )
+                            .build());
+                    }}
+                )
+                .inputParams(
                     Arrays.asList(
-                        ProblemDescriptionBoard.html("boards"),
-                        ProblemDescriptionBoard.html("boards")
+                        VariableTypeAndName
+                            .builder()
+                            .variableType(
+                                VariableType.of(
+                                    VariableTypeZero
+                                        .builder()
+                                        .type(VariableTypeZeroType.INTEGER_TYPE)
+                                        .build()
+                                )
+                            )
+                            .name("name")
+                            .build()
+                    )
+                )
+                .testcases(
+                    Arrays.asList(
+                        TestCaseWithExpectedResult
+                            .builder()
+                            .testCase(
+                                TestCase
+                                    .builder()
+                                    .id("id")
+                                    .params(
+                                        Arrays.asList(
+                                            VariableValue.of(
+                                                VariableValueZero
+                                                    .builder()
+                                                    .type(VariableValueZeroType.INTEGER_VALUE)
+                                                    .build()
+                                            )
+                                        )
+                                    )
+                                    .build()
+                            )
+                            .expectedResult(
+                                VariableValue.of(
+                                    VariableValueZero
+                                        .builder()
+                                        .type(VariableValueZeroType.INTEGER_VALUE)
+                                        .build()
+                                )
+                            )
+                            .build()
                     )
                 )
                 .build()
-        )
-        .outputType(
-            VariableType.integerType()
-        )
-        .methodName("methodName")
-        .files(
-            new HashMap<Language, ProblemFiles>() {{
-                put(Language.JAVA, ProblemFiles
-                    .builder()
-                    .solutionFile(
-                        FileInfo
-                            .builder()
-                            .filename("filename")
-                            .contents("contents")
-                            .build()
-                    )
-                    .readOnlyFiles(
-                        Arrays.asList(
-                            FileInfo
-                                .builder()
-                                .filename("filename")
-                                .contents("contents")
-                                .build(),
-                            FileInfo
-                                .builder()
-                                .filename("filename")
-                                .contents("contents")
-                                .build()
-                        )
-                    )
-                    .build());
-            }}
-        )
-        .inputParams(
-            Arrays.asList(
-                VariableTypeAndName
-                    .builder()
-                    .variableType(
-                        VariableType.integerType()
-                    )
-                    .name("name")
-                    .build(),
-                VariableTypeAndName
-                    .builder()
-                    .variableType(
-                        VariableType.integerType()
-                    )
-                    .name("name")
-                    .build()
-            )
-        )
-        .testcases(
-            Arrays.asList(
-                TestCaseWithExpectedResult
-                    .builder()
-                    .testCase(
-                        TestCase
-                            .builder()
-                            .id("id")
-                            .params(
-                                Arrays.asList(
-                                    VariableValue.integerValue(1),
-                                    VariableValue.integerValue(1)
-                                )
-                            )
-                            .build()
-                    )
-                    .expectedResult(
-                        VariableValue.integerValue(1)
-                    )
-                    .build(),
-                TestCaseWithExpectedResult
-                    .builder()
-                    .testCase(
-                        TestCase
-                            .builder()
-                            .id("id")
-                            .params(
-                                Arrays.asList(
-                                    VariableValue.integerValue(1),
-                                    VariableValue.integerValue(1)
-                                )
-                            )
-                            .build()
-                    )
-                    .expectedResult(
-                        VariableValue.integerValue(1)
-                    )
-                    .build()
-            )
         )
         .build()
 );
@@ -1814,7 +1497,7 @@ client.problem().updateProblem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.deleteProblem(problemId)</code></summary>
+<details><summary><code>client.problem.deleteproblem(problemId)</code></summary>
 <dl>
 <dd>
 
@@ -1841,7 +1524,12 @@ Soft deletes a problem
 <dd>
 
 ```java
-client.problem().deleteProblem("problemId");
+client.problem().deleteproblem(
+    "problemId",
+    ProblemDeleteProblemRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -1868,7 +1556,7 @@ client.problem().deleteProblem("problemId");
 </dl>
 </details>
 
-<details><summary><code>client.problem.getDefaultStarterFiles(request) -> GetDefaultStarterFilesResponse</code></summary>
+<details><summary><code>client.problem.getdefaultstarterfiles(request) -> GetDefaultStarterFilesResponse</code></summary>
 <dl>
 <dd>
 
@@ -1895,11 +1583,16 @@ Returns default starter files for problem
 <dd>
 
 ```java
-client.problem().getDefaultStarterFiles(
-    GetDefaultStarterFilesRequest
+client.problem().getdefaultstarterfiles(
+    ProblemGetDefaultStarterFilesRequest
         .builder()
         .outputType(
-            VariableType.integerType()
+            VariableType.of(
+                VariableTypeZero
+                    .builder()
+                    .type(VariableTypeZeroType.INTEGER_TYPE)
+                    .build()
+            )
         )
         .methodName("methodName")
         .inputParams(
@@ -1907,14 +1600,12 @@ client.problem().getDefaultStarterFiles(
                 VariableTypeAndName
                     .builder()
                     .variableType(
-                        VariableType.integerType()
-                    )
-                    .name("name")
-                    .build(),
-                VariableTypeAndName
-                    .builder()
-                    .variableType(
-                        VariableType.integerType()
+                        VariableType.of(
+                            VariableTypeZero
+                                .builder()
+                                .type(VariableTypeZeroType.INTEGER_TYPE)
+                                .build()
+                        )
                     )
                     .name("name")
                     .build()
@@ -1972,7 +1663,7 @@ The method name cannot include the following characters:
 </details>
 
 ## Submission
-<details><summary><code>client.submission.createExecutionSession(language) -> ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.createexecutionsession(language) -> ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1999,7 +1690,12 @@ Returns sessionId and execution server URL for session. Spins up server.
 <dd>
 
 ```java
-client.submission().createExecutionSession(Language.JAVA);
+client.submission().createexecutionsession(
+    Language.JAVA,
+    SubmissionCreateExecutionSessionRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -2026,7 +1722,7 @@ client.submission().createExecutionSession(Language.JAVA);
 </dl>
 </details>
 
-<details><summary><code>client.submission.getExecutionSession(sessionId) -> Optional&amp;lt;ExecutionSessionResponse&amp;gt;</code></summary>
+<details><summary><code>client.submission.getexecutionsession(sessionId) -> ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -2053,7 +1749,12 @@ Returns execution server URL for session. Returns empty if session isn't registe
 <dd>
 
 ```java
-client.submission().getExecutionSession("sessionId");
+client.submission().getexecutionsession(
+    "sessionId",
+    SubmissionGetExecutionSessionRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -2080,7 +1781,7 @@ client.submission().getExecutionSession("sessionId");
 </dl>
 </details>
 
-<details><summary><code>client.submission.stopExecutionSession(sessionId)</code></summary>
+<details><summary><code>client.submission.stopexecutionsession(sessionId)</code></summary>
 <dl>
 <dd>
 
@@ -2107,7 +1808,12 @@ Stops execution session.
 <dd>
 
 ```java
-client.submission().stopExecutionSession("sessionId");
+client.submission().stopexecutionsession(
+    "sessionId",
+    SubmissionStopExecutionSessionRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -2134,7 +1840,7 @@ client.submission().stopExecutionSession("sessionId");
 </dl>
 </details>
 
-<details><summary><code>client.submission.getExecutionSessionsState() -> GetExecutionSessionStateResponse</code></summary>
+<details><summary><code>client.submission.getexecutionsessionsstate() -> GetExecutionSessionStateResponse</code></summary>
 <dl>
 <dd>
 
@@ -2147,7 +1853,7 @@ client.submission().stopExecutionSession("sessionId");
 <dd>
 
 ```java
-client.submission().getExecutionSessionsState();
+client.submission().getexecutionsessionsstate();
 ```
 </dd>
 </dl>
@@ -2160,7 +1866,7 @@ client.submission().getExecutionSessionsState();
 </details>
 
 ## Sysprop
-<details><summary><code>client.sysprop.setNumWarmInstances(language, numWarmInstances)</code></summary>
+<details><summary><code>client.sysprop.setnumwarminstances(language, numWarmInstances)</code></summary>
 <dl>
 <dd>
 
@@ -2173,7 +1879,13 @@ client.submission().getExecutionSessionsState();
 <dd>
 
 ```java
-client.sysprop().setNumWarmInstances(Language.JAVA, 1);
+client.sysprop().setnumwarminstances(
+    Language.JAVA,
+    1,
+    SyspropSetNumWarmInstancesRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -2208,7 +1920,7 @@ client.sysprop().setNumWarmInstances(Language.JAVA, 1);
 </dl>
 </details>
 
-<details><summary><code>client.sysprop.getNumWarmInstances() -> Map&amp;lt;Language, Integer&amp;gt;</code></summary>
+<details><summary><code>client.sysprop.getnumwarminstances() -> Map&amp;lt;String, Integer&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -2221,7 +1933,7 @@ client.sysprop().setNumWarmInstances(Language.JAVA, 1);
 <dd>
 
 ```java
-client.sysprop().getNumWarmInstances();
+client.sysprop().getnumwarminstances();
 ```
 </dd>
 </dl>
@@ -2233,8 +1945,8 @@ client.sysprop().getNumWarmInstances();
 </dl>
 </details>
 
-## V2 Problem
-<details><summary><code>client.v2.problem.getLightweightProblems() -> List&amp;lt;LightweightProblemInfoV2&amp;gt;</code></summary>
+## V2Problem
+<details><summary><code>client.v2Problem.v2ProblemGetLightweightProblems() -> List&amp;lt;V2LightweightProblemInfoV2&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -2261,7 +1973,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```java
-client.v2().problem().getLightweightProblems();
+client.v2Problem().v2ProblemGetLightweightProblems();
 ```
 </dd>
 </dl>
@@ -2273,7 +1985,7 @@ client.v2().problem().getLightweightProblems();
 </dl>
 </details>
 
-<details><summary><code>client.v2.problem.getProblems() -> List&amp;lt;ProblemInfoV2&amp;gt;</code></summary>
+<details><summary><code>client.v2Problem.v2ProblemGetProblems() -> List&amp;lt;V2ProblemInfoV2&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -2300,7 +2012,7 @@ Returns latest versions of all problems
 <dd>
 
 ```java
-client.v2().problem().getProblems();
+client.v2Problem().v2ProblemGetProblems();
 ```
 </dd>
 </dl>
@@ -2312,7 +2024,7 @@ client.v2().problem().getProblems();
 </dl>
 </details>
 
-<details><summary><code>client.v2.problem.getLatestProblem(problemId) -> ProblemInfoV2</code></summary>
+<details><summary><code>client.v2Problem.v2ProblemGetLatestProblem(problemId) -> V2ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2339,7 +2051,12 @@ Returns latest version of a problem
 <dd>
 
 ```java
-client.v2().problem().getLatestProblem("problemId");
+client.v2Problem().v2ProblemGetLatestProblem(
+    "problemId",
+    V2ProblemGetLatestProblemRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -2366,7 +2083,7 @@ client.v2().problem().getLatestProblem("problemId");
 </dl>
 </details>
 
-<details><summary><code>client.v2.problem.getProblemVersion(problemId, problemVersion) -> ProblemInfoV2</code></summary>
+<details><summary><code>client.v2Problem.v2ProblemGetProblemVersion(problemId, problemVersion) -> V2ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2393,7 +2110,13 @@ Returns requested version of a problem
 <dd>
 
 ```java
-client.v2().problem().getProblemVersion("problemId", 1);
+client.v2Problem().v2ProblemGetProblemVersion(
+    "problemId",
+    1,
+    V2ProblemGetProblemVersionRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -2428,8 +2151,8 @@ client.v2().problem().getProblemVersion("problemId", 1);
 </dl>
 </details>
 
-## V2 V3 Problem
-<details><summary><code>client.v2.v3.problem.getLightweightProblems() -> List&amp;lt;LightweightProblemInfoV2&amp;gt;</code></summary>
+## V2V3Problem
+<details><summary><code>client.v2V3Problem.v2V3ProblemGetLightweightProblems() -> List&amp;lt;V2V3LightweightProblemInfoV2&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -2456,7 +2179,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```java
-client.v2().v3().problem().getLightweightProblems();
+client.v2V3Problem().v2V3ProblemGetLightweightProblems();
 ```
 </dd>
 </dl>
@@ -2468,7 +2191,7 @@ client.v2().v3().problem().getLightweightProblems();
 </dl>
 </details>
 
-<details><summary><code>client.v2.v3.problem.getProblems() -> List&amp;lt;ProblemInfoV2&amp;gt;</code></summary>
+<details><summary><code>client.v2V3Problem.v2V3ProblemGetProblems() -> List&amp;lt;V2V3ProblemInfoV2&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -2495,7 +2218,7 @@ Returns latest versions of all problems
 <dd>
 
 ```java
-client.v2().v3().problem().getProblems();
+client.v2V3Problem().v2V3ProblemGetProblems();
 ```
 </dd>
 </dl>
@@ -2507,7 +2230,7 @@ client.v2().v3().problem().getProblems();
 </dl>
 </details>
 
-<details><summary><code>client.v2.v3.problem.getLatestProblem(problemId) -> ProblemInfoV2</code></summary>
+<details><summary><code>client.v2V3Problem.v2V3ProblemGetLatestProblem(problemId) -> V2V3ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2534,7 +2257,12 @@ Returns latest version of a problem
 <dd>
 
 ```java
-client.v2().v3().problem().getLatestProblem("problemId");
+client.v2V3Problem().v2V3ProblemGetLatestProblem(
+    "problemId",
+    V2V3ProblemGetLatestProblemRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -2561,7 +2289,7 @@ client.v2().v3().problem().getLatestProblem("problemId");
 </dl>
 </details>
 
-<details><summary><code>client.v2.v3.problem.getProblemVersion(problemId, problemVersion) -> ProblemInfoV2</code></summary>
+<details><summary><code>client.v2V3Problem.v2V3ProblemGetProblemVersion(problemId, problemVersion) -> V2V3ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2588,7 +2316,13 @@ Returns requested version of a problem
 <dd>
 
 ```java
-client.v2().v3().problem().getProblemVersion("problemId", 1);
+client.v2V3Problem().v2V3ProblemGetProblemVersion(
+    "problemId",
+    1,
+    V2V3ProblemGetProblemVersionRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>

@@ -4,7 +4,7 @@ module Seed
   module Union
     module Types
       class Request < Internal::Types::Model
-        field :union, -> { Seed::Union::Types::MetadataUnion }, optional: true, nullable: false
+        field :union, -> { Seed::Types::MetadataUnion }, optional: true, nullable: false
       end
     end
   end

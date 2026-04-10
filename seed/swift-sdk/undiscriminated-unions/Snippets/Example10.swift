@@ -1,15 +1,12 @@
 import Foundation
-import UndiscriminatedUnions
+import Api
 
 private func main() async throws {
-    let client = UndiscriminatedUnionsClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.union.testCamelCaseProperties(request: .init(paymentMethod: PaymentMethodUnion.tokenizeCard(
-        TokenizeCard(
-            method: "method",
-            cardNumber: "cardNumber"
-        )
-    )))
+    _ = try await client.union.nestedunions(request: NestedUnionRoot.string(
+        "string"
+    ))
 }
 
 try await main()

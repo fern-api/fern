@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "PropertyAccess",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "PropertyAccess",
-            targets: ["PropertyAccess"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "PropertyAccess",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "PropertyAccessTests",
-            dependencies: ["PropertyAccess"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

@@ -4,77 +4,77 @@
             "id": {
                 "path": "/movie",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getMovie"
+                "identifier_override": "endpoint_service.getmovie"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getMovie(\"string\");\n"
+                "client": "import { SeedApiClient } from \"@fern/response-property\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getmovie(\"string\");\n"
             }
         },
         {
             "id": {
                 "path": "/movie/docs",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getMovieDocs"
+                "identifier_override": "endpoint_service.getmoviedocs"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getMovieDocs(\"string\");\n"
+                "client": "import { SeedApiClient } from \"@fern/response-property\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getmoviedocs(\"string\");\n"
             }
         },
         {
             "id": {
                 "path": "/movie/name",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getMovieName"
+                "identifier_override": "endpoint_service.getmoviename"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getMovieName(\"string\");\n"
+                "client": "import { SeedApiClient } from \"@fern/response-property\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getmoviename(\"string\");\n"
             }
         },
         {
             "id": {
                 "path": "/movie/metadata",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getMovieMetadata"
+                "identifier_override": "endpoint_service.getmoviemetadata"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getMovieMetadata(\"string\");\n"
+                "client": "import { SeedApiClient } from \"@fern/response-property\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getmoviemetadata(\"string\");\n"
             }
         },
         {
             "id": {
                 "path": "/movie/optional",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getOptionalMovie"
+                "identifier_override": "endpoint_service.getoptionalmovie"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getOptionalMovie(\"string\");\n"
+                "client": "import { SeedApiClient } from \"@fern/response-property\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getoptionalmovie(\"string\");\n"
             }
         },
         {
             "id": {
                 "path": "/movie/optional/docs",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getOptionalMovieDocs"
+                "identifier_override": "endpoint_service.getoptionalmoviedocs"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getOptionalMovieDocs(\"string\");\n"
+                "client": "import { SeedApiClient } from \"@fern/response-property\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getoptionalmoviedocs(\"string\");\n"
             }
         },
         {
             "id": {
                 "path": "/movie/optional/name",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getOptionalMovieName"
+                "identifier_override": "endpoint_service.getoptionalmoviename"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedResponsePropertyClient } from \"@fern/response-property\";\n\nconst client = new SeedResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getOptionalMovieName(\"string\");\n"
+                "client": "import { SeedApiClient } from \"@fern/response-property\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getoptionalmoviename(\"string\");\n"
             }
         }
     ],

@@ -17,16 +17,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListWithOffsetPaginationHasNextPageRequest{
-        Page: fern.Int(
-            1,
-        ),
-        Limit: fern.Int(
-            3,
-        ),
-        Order: fern.OrderAsc.Ptr(),
-    }
-    client.Users.ListWithOffsetPaginationHasNextPage(
+    request := &fern.InlineUsersInlineUsersListUsernamesRequest{}
+    client.InlineUsersInlineUsers.InlineUsersInlineUsersListUsernames(
         context.TODO(),
         request,
     )

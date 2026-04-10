@@ -69,7 +69,7 @@ func (r *RawClient) Simple(
 	}, nil
 }
 
-func (r *RawClient) DownloadFile(
+func (r *RawClient) Downloadfile(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[io.Reader], error) {

@@ -35,9 +35,9 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import SeedBytesDownload
+        from seed import SeedApi
 
-        client = SeedBytesDownload(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
         client.service.simple()
@@ -45,21 +45,22 @@ class ServiceClient:
         _response = self._raw_client.simple(request_options=request_options)
         return _response.data
 
-    def download(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bytes:
+    def download(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Iterator[bytes]:
         """
         Parameters
         ----------
         id : str
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Returns
         -------
-        bytes
+        typing.Iterator[bytes]
+
         """
-        _response = self._raw_client.download(id, request_options=request_options)
-        return _response.data
+        with self._raw_client.download(id, request_options=request_options) as r:
+            yield from r.data
 
 
 class AsyncServiceClient:
@@ -92,9 +93,9 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedBytesDownload
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedBytesDownload(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -108,18 +109,22 @@ class AsyncServiceClient:
         _response = await self._raw_client.simple(request_options=request_options)
         return _response.data
 
-    async def download(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bytes:
+    async def download(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[bytes]:
         """
         Parameters
         ----------
         id : str
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Returns
         -------
-        bytes
+        typing.AsyncIterator[bytes]
+
         """
-        _response = await self._raw_client.download(id, request_options=request_options)
-        return _response.data
+        async with self._raw_client.download(id, request_options=request_options) as r:
+            async for _chunk in r.data:
+                yield _chunk

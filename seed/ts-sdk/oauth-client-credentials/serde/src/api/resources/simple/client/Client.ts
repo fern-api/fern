@@ -24,13 +24,13 @@ export class SimpleClient {
      * @param {SimpleClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.simple.getSomething()
+     *     await client.simple.getsomething()
      */
-    public getSomething(requestOptions?: SimpleClient.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__getSomething(requestOptions));
+    public getsomething(requestOptions?: SimpleClient.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__getsomething(requestOptions));
     }
 
-    private async __getSomething(requestOptions?: SimpleClient.RequestOptions): Promise<core.WithRawResponse<void>> {
+    private async __getsomething(requestOptions?: SimpleClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -41,7 +41,7 @@ export class SimpleClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/get-something",
+                "get-something",
             ),
             method: "GET",
             headers: _headers,
@@ -57,7 +57,7 @@ export class SimpleClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedOauthClientCredentialsError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

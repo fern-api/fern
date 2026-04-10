@@ -1,20 +1,25 @@
 package com.snippets;
 
-import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
-import com.seed.oauthClientCredentials.resources.auth.requests.RefreshTokenRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.auth.requests.AuthGetTokenWithClientCredentialsRequest;
+import com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestAudience;
+import com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestGrantType;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.withCredentials(
-                        "<clientId>", "<clientSecret>")
+        SeedApiClient client = SeedApiClient.builder()
+                .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.auth()
-                .refreshToken(RefreshTokenRequest.builder()
-                        .clientId("client_id")
-                        .clientSecret("client_secret")
-                        .refreshToken("refresh_token")
+                .gettokenwithclientcredentials(AuthGetTokenWithClientCredentialsRequest.builder()
+                        .cid("cid")
+                        .csr("csr")
+                        .scp("scp")
+                        .entityId("entity_id")
+                        .audience(AuthGetTokenWithClientCredentialsRequestAudience.HTTPS_API_EXAMPLE_COM)
+                        .grantType(AuthGetTokenWithClientCredentialsRequestGrantType.CLIENT_CREDENTIALS)
                         .scope("scope")
                         .build());
     }

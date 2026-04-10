@@ -5,7 +5,7 @@ info:
 paths:
   /users:
     get:
-      operationId: nullable_getUsers
+      operationId: nullable_getusers
       tags:
         - Nullable
       parameters:
@@ -54,8 +54,28 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    - name: name
+                      id: id
+                      tags:
+                        - tags
+                      metadata:
+                        createdAt: '2024-01-15T09:30:00Z'
+                        updatedAt: '2024-01-15T09:30:00Z'
+                        avatar: avatar
+                        activated: true
+                        status:
+                          type: active
+                      email: email
+                      favorite-number: 1
+                      numbers:
+                        - 1
+                      strings:
+                        key: value
     post:
-      operationId: nullable_createUser
+      operationId: nullable_createuser
       tags:
         - Nullable
       parameters: []
@@ -66,6 +86,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    name: name
+                    id: id
+                    tags:
+                      - tags
+                    metadata:
+                      createdAt: '2024-01-15T09:30:00Z'
+                      updatedAt: '2024-01-15T09:30:00Z'
+                      avatar: avatar
+                      activated: true
+                      status:
+                        type: active
+                      values:
+                        key: value
+                    email: email
+                    favorite-number: 1
+                    numbers:
+                      - 1
+                    strings:
+                      key: value
       requestBody:
         required: true
         content:
@@ -75,6 +117,7 @@ paths:
               properties:
                 username:
                   type: string
+                  example: username
                 tags:
                   type: array
                   items:
@@ -88,8 +131,12 @@ paths:
                   nullable: true
               required:
                 - username
+            examples:
+              Example1:
+                value:
+                  username: username
     delete:
-      operationId: nullable_deleteUser
+      operationId: nullable_deleteuser
       tags:
         - Nullable
       parameters: []
@@ -100,6 +147,9 @@ paths:
             application/json:
               schema:
                 type: boolean
+              examples:
+                Example1:
+                  value: true
       requestBody:
         required: true
         content:
@@ -109,10 +159,11 @@ paths:
               properties:
                 username:
                   type: string
-                  minLength: 2
-                  maxLength: 1024
                   nullable: true
                   description: The user to delete.
+            examples:
+              Example1:
+                value: {}
 components:
   schemas:
     Email:
@@ -139,6 +190,7 @@ components:
       properties:
         name:
           type: string
+          example: name
         id:
           $ref: '#/components/schemas/UserId'
         tags:
@@ -151,6 +203,7 @@ components:
           nullable: true
         email:
           $ref: '#/components/schemas/Email'
+          nullable: true
         favorite-number:
           $ref: '#/components/schemas/WeirdNumber'
         numbers:
@@ -168,39 +221,60 @@ components:
         - tags
         - email
         - favorite-number
+    StatusActive:
+      title: StatusActive
+      type: object
+      properties: {}
+    StatusArchived:
+      title: StatusArchived
+      type: object
+      properties:
+        value:
+          type: string
+          format: date-time
+          nullable: true
+    StatusSoftDeleted:
+      title: StatusSoftDeleted
+      type: object
+      properties:
+        value:
+          type: string
+          format: date-time
+          nullable: true
     Status:
       title: Status
       oneOf:
         - type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - active
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - active
+            - $ref: '#/components/schemas/StatusActive'
           required:
             - type
         - type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - archived
-            value:
-              type: string
-              format: date-time
-              nullable: true
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - archived
+            - $ref: '#/components/schemas/StatusArchived'
           required:
             - type
         - type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - soft-deleted
-            value:
-              type: string
-              format: date-time
-              nullable: true
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - soft-deleted
+            - $ref: '#/components/schemas/StatusSoftDeleted'
           required:
             - type
     Metadata:

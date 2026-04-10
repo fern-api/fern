@@ -1,15 +1,18 @@
 package com.snippets;
 
-import com.fern.sdk.SeedExhaustiveClient;
+import com.fern.sdk.SeedApiClient;
+import java.util.HashMap;
 
 public class Example46 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().primitive().getAndReturnInt(1);
+        client.endpointsObject().endpointsObjectGetAndReturnMapOfDocumentedUnknownType(
+            new HashMap<String, Object>()
+        );
     }
 }

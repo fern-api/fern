@@ -4,27 +4,18 @@ namespace Seed\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
-use Seed\Core\Types\Union;
 
 class UnionResponse extends JsonSerializableType
 {
     /**
-     * @var (
-     *    VariantA
-     *   |VariantB
-     *   |VariantC
-     * ) $data
+     * @var MyUnion $data
      */
-    #[JsonProperty('data'), Union(VariantA::class, VariantB::class, VariantC::class)]
-    public VariantA|VariantB|VariantC $data;
+    #[JsonProperty('data')]
+    public MyUnion $data;
 
     /**
      * @param array{
-     *   data: (
-     *    VariantA
-     *   |VariantB
-     *   |VariantC
-     * ),
+     *   data: MyUnion,
      * } $values
      */
     public function __construct(

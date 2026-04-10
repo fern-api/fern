@@ -3,23 +3,23 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\User\Requests\GetUsersRequest;
+use Seed\User\Requests\UserGetUsernameRequest;
 use DateTime;
-use Seed\User\Types\User;
-use Seed\User\Types\NestedUser;
+use Seed\Types\User;
+use Seed\Types\NestedUser;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->user->getUsername(
-    new GetUsersRequest([
+$client->user->getusername(
+    new UserGetUsernameRequest([
         'limit' => 1,
-        'id' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+        'id' => 'id',
         'date' => new DateTime('2023-01-15'),
         'deadline' => new DateTime('2024-01-15T09:30:00Z'),
-        'bytes' => 'SGVsbG8gd29ybGQh',
+        'bytes' => 'bytes',
         'user' => new User([
             'name' => 'name',
             'tags' => [
@@ -28,13 +28,6 @@ $client->user->getUsername(
             ],
         ]),
         'userList' => [
-            new User([
-                'name' => 'name',
-                'tags' => [
-                    'tags',
-                    'tags',
-                ],
-            ]),
             new User([
                 'name' => 'name',
                 'tags' => [

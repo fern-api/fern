@@ -11,7 +11,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Dummy::Types::GenerateStreamRequest]
+      # @param params [Seed::Dummy::Types::DummyGenerateStreamRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -25,7 +25,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "generate-stream",
-          body: Seed::Dummy::Types::GenerateStreamRequest.new(params).to_h,
+          body: Seed::Dummy::Types::DummyGenerateStreamRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -41,21 +41,21 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Dummy::Types::Generateequest]
+      # @param params [Seed::Dummy::Types::DummyGenerateRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Seed::Dummy::Types::StreamResponse]
+      # @return [Seed::Types::StreamResponse]
       def generate(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "generate",
-          body: Seed::Dummy::Types::Generateequest.new(params).to_h,
+          body: Seed::Dummy::Types::DummyGenerateRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -65,7 +65,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Dummy::Types::StreamResponse.load(response.body)
+          Seed::Types::StreamResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

@@ -1,58 +1,45 @@
 import Foundation
 
 public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
-    case errored(ErrorInfo)
-    case ran(WorkspaceRunDetails)
-    case running(RunningSubmissionState)
-    case stopped
-    case traced(WorkspaceRunDetails)
+    case workspaceSubmissionStatusFour(WorkspaceSubmissionStatusFour)
+    case workspaceSubmissionStatusOne(WorkspaceSubmissionStatusOne)
+    case workspaceSubmissionStatusThree(WorkspaceSubmissionStatusThree)
+    case workspaceSubmissionStatusType(WorkspaceSubmissionStatusType)
+    case workspaceSubmissionStatusZero(WorkspaceSubmissionStatusZero)
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let discriminant = try container.decode(String.self, forKey: .type)
-        switch discriminant {
-        case "errored":
-            self = .errored(try container.decode(ErrorInfo.self, forKey: .value))
-        case "ran":
-            self = .ran(try WorkspaceRunDetails(from: decoder))
-        case "running":
-            self = .running(try container.decode(RunningSubmissionState.self, forKey: .value))
-        case "stopped":
-            self = .stopped
-        case "traced":
-            self = .traced(try WorkspaceRunDetails(from: decoder))
-        default:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: decoder.codingPath,
-                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
-                )
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(WorkspaceSubmissionStatusFour.self) {
+            self = .workspaceSubmissionStatusFour(value)
+        } else if let value = try? container.decode(WorkspaceSubmissionStatusOne.self) {
+            self = .workspaceSubmissionStatusOne(value)
+        } else if let value = try? container.decode(WorkspaceSubmissionStatusThree.self) {
+            self = .workspaceSubmissionStatusThree(value)
+        } else if let value = try? container.decode(WorkspaceSubmissionStatusType.self) {
+            self = .workspaceSubmissionStatusType(value)
+        } else if let value = try? container.decode(WorkspaceSubmissionStatusZero.self) {
+            self = .workspaceSubmissionStatusZero(value)
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unexpected value."
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.singleValueContainer()
         switch self {
-        case .errored(let data):
-            try container.encode("errored", forKey: .type)
-            try container.encode(data, forKey: .value)
-        case .ran(let data):
-            try container.encode("ran", forKey: .type)
-            try data.encode(to: encoder)
-        case .running(let data):
-            try container.encode("running", forKey: .type)
-            try container.encode(data, forKey: .value)
-        case .stopped:
-            try container.encode("stopped", forKey: .type)
-        case .traced(let data):
-            try container.encode("traced", forKey: .type)
-            try data.encode(to: encoder)
+        case .workspaceSubmissionStatusFour(let value):
+            try container.encode(value)
+        case .workspaceSubmissionStatusOne(let value):
+            try container.encode(value)
+        case .workspaceSubmissionStatusThree(let value):
+            try container.encode(value)
+        case .workspaceSubmissionStatusType(let value):
+            try container.encode(value)
+        case .workspaceSubmissionStatusZero(let value):
+            try container.encode(value)
         }
-    }
-
-    enum CodingKeys: String, CodingKey, CaseIterable {
-        case type
-        case value
     }
 }

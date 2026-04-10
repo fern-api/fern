@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Headers\Requests\SendEnumAsHeaderRequest;
+use Seed\Headers\Requests\HeadersSendRequest;
 use Seed\Types\Operand;
 use Seed\Types\Color;
 
@@ -13,9 +13,8 @@ $client = new SeedClient(
     ],
 );
 $client->headers->send(
-    new SendEnumAsHeaderRequest([
+    new HeadersSendRequest([
         'operand' => Operand::GreaterThan->value,
-        'maybeOperand' => Operand::GreaterThan->value,
         'operandOrColor' => Color::Red->value,
     ]),
 );

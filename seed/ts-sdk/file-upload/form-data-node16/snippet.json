@@ -2,24 +2,101 @@
     "endpoints": [
         {
             "id": {
-                "path": "/just-file",
+                "path": "/",
                 "method": "POST",
-                "identifier_override": "endpoint_service.justFile"
+                "identifier_override": "endpoint_service.post"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { createReadStream } from \"fs\";\nimport * as fs from \"fs\";\nimport { SeedFileUploadClient } from \"@fern/file-upload\";\n\nconst client = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.justFile({\n    file: fs.createReadStream(\"/path/to/your/file\")\n});\n"
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedApiClient } from \"@fern/file-upload\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.post({});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/just-file",
+                "method": "POST",
+                "identifier_override": "endpoint_service.justfile"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedApiClient } from \"@fern/file-upload\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.justfile({});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/just-file-with-optional-query-params",
+                "method": "POST",
+                "identifier_override": "endpoint_service.justfilewithoptionalqueryparams"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedApiClient } from \"@fern/file-upload\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.justfilewithoptionalqueryparams({});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/with-content-type",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withcontenttype"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedApiClient } from \"@fern/file-upload\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.withcontenttype({});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/with-form-encoding",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withformencoding"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedApiClient } from \"@fern/file-upload\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.withformencoding({});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/form-encoded",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withformencodedcontainers"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedApiClient } from \"@fern/file-upload\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.withformencodedcontainers({});\n"
             }
         },
         {
             "id": {
                 "path": "/optional-args",
                 "method": "POST",
-                "identifier_override": "endpoint_service.optionalArgs"
+                "identifier_override": "endpoint_service.optionalargs"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { createReadStream } from \"fs\";\nimport { SeedFileUploadClient } from \"@fern/file-upload\";\n\nconst client = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.optionalArgs({});\n"
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedApiClient } from \"@fern/file-upload\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.optionalargs({});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline-type",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withinlinetype"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedApiClient } from \"@fern/file-upload\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.withinlinetype({});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/with-json-property",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withjsonproperty"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedApiClient } from \"@fern/file-upload\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.withjsonproperty({});\n"
             }
         },
         {
@@ -30,7 +107,18 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedFileUploadClient } from \"@fern/file-upload\";\n\nconst client = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.simple();\n"
+                "client": "import { SeedApiClient } from \"@fern/file-upload\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.simple();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/with-literal-enum",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withliteralandenumtypes"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedApiClient } from \"@fern/file-upload\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.withliteralandenumtypes({});\n"
             }
         }
     ],

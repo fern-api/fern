@@ -6,18 +6,20 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import organization, user
+    from . import organization, user, user_events, user_events_metadata
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedMixedFileDirectory, SeedMixedFileDirectory
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedMixedFileDirectory": ".client",
+    "AsyncSeedApi": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "SeedMixedFileDirectory": ".client",
+    "SeedApi": ".client",
     "__version__": ".version",
     "organization": ".organization",
     "user": ".user",
+    "user_events": ".user_events",
+    "user_events_metadata": ".user_events_metadata",
 }
 
 
@@ -43,11 +45,13 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedMixedFileDirectory",
+    "AsyncSeedApi",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
-    "SeedMixedFileDirectory",
+    "SeedApi",
     "__version__",
     "organization",
     "user",
+    "user_events",
+    "user_events_metadata",
 ]

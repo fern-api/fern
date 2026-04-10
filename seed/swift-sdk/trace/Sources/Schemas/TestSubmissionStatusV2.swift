@@ -4,7 +4,7 @@ public struct TestSubmissionStatusV2: Codable, Hashable, Sendable {
     public let updates: [TestSubmissionUpdate]
     public let problemId: ProblemId
     public let problemVersion: Int
-    public let problemInfo: ProblemInfoV2
+    public let problemInfo: V2ProblemInfoV2
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -12,7 +12,7 @@ public struct TestSubmissionStatusV2: Codable, Hashable, Sendable {
         updates: [TestSubmissionUpdate],
         problemId: ProblemId,
         problemVersion: Int,
-        problemInfo: ProblemInfoV2,
+        problemInfo: V2ProblemInfoV2,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.updates = updates
@@ -27,7 +27,7 @@ public struct TestSubmissionStatusV2: Codable, Hashable, Sendable {
         self.updates = try container.decode([TestSubmissionUpdate].self, forKey: .updates)
         self.problemId = try container.decode(ProblemId.self, forKey: .problemId)
         self.problemVersion = try container.decode(Int.self, forKey: .problemVersion)
-        self.problemInfo = try container.decode(ProblemInfoV2.self, forKey: .problemInfo)
+        self.problemInfo = try container.decode(V2ProblemInfoV2.self, forKey: .problemInfo)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

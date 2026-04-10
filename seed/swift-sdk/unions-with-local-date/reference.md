@@ -14,10 +14,10 @@
 
 ```swift
 import Foundation
-import Unions
+import Api
 
 private func main() async throws {
-    let client = UnionsClient()
+    let client = ApiClient()
 
     _ = try await client.bigunion.get(id: "id")
 }
@@ -71,14 +71,15 @@ try await main()
 
 ```swift
 import Foundation
-import Unions
+import Api
 
 private func main() async throws {
-    let client = UnionsClient()
+    let client = ApiClient()
 
-    _ = try await client.bigunion.update(request: BigUnion.normalSweet(
-        NormalSweet(
-            value: "value"
+    _ = try await client.bigunion.update(request: BigUnion.bigUnionZero(
+        BigUnionZero(
+            value: "value",
+            type: .normalSweet
         )
     ))
 }
@@ -132,20 +133,16 @@ try await main()
 
 ```swift
 import Foundation
-import Unions
+import Api
 
 private func main() async throws {
-    let client = UnionsClient()
+    let client = ApiClient()
 
     _ = try await client.bigunion.updateMany(request: [
-        BigUnion.normalSweet(
-            NormalSweet(
-                value: "value"
-            )
-        ),
-        BigUnion.normalSweet(
-            NormalSweet(
-                value: "value"
+        BigUnion.bigUnionZero(
+            BigUnionZero(
+                value: "value",
+                type: .normalSweet
             )
         )
     ])
@@ -201,12 +198,12 @@ try await main()
 
 ```swift
 import Foundation
-import Unions
+import Api
 
 private func main() async throws {
-    let client = UnionsClient()
+    let client = ApiClient()
 
-    _ = try await client.types.get(id: "date-example")
+    _ = try await client.types.get(id: "id")
 }
 
 try await main()
@@ -258,13 +255,15 @@ try await main()
 
 ```swift
 import Foundation
-import Unions
+import Api
 
 private func main() async throws {
-    let client = UnionsClient()
+    let client = ApiClient()
 
-    _ = try await client.types.update(request: UnionWithTime.date(
+    _ = try await client.types.update(request: UnionWithTime.value(
+        UnionWithTimeValue(
 
+        )
     ))
 }
 
@@ -318,10 +317,10 @@ try await main()
 
 ```swift
 import Foundation
-import Unions
+import Api
 
 private func main() async throws {
-    let client = UnionsClient()
+    let client = ApiClient()
 
     _ = try await client.union.get(id: "id")
 }
@@ -375,14 +374,15 @@ try await main()
 
 ```swift
 import Foundation
-import Unions
+import Api
 
 private func main() async throws {
-    let client = UnionsClient()
+    let client = ApiClient()
 
-    _ = try await client.union.update(request: Shape.circle(
-        Circle(
-            radius: 1.1
+    _ = try await client.union.update(request: Shape.shapeZero(
+        ShapeZero(
+            radius: 1.1,
+            type: .circle
         )
     ))
 }

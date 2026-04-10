@@ -2,40 +2,100 @@
 
 namespace Seed;
 
-use Seed\Endpoints\EndpointsClient;
-use Seed\InlinedRequests\InlinedRequestsClient;
-use Seed\NoAuth\NoAuthClient;
-use Seed\NoReqBody\NoReqBodyClient;
-use Seed\ReqWithHeaders\ReqWithHeadersClient;
+use Seed\EndpointsContainer\EndpointsContainerClient;
+use Seed\EndpointsContentType\EndpointsContentTypeClient;
+use Seed\EndpointsEnum\EndpointsEnumClient;
+use Seed\EndpointsHttpMethods\EndpointsHttpMethodsClient;
+use Seed\EndpointsObject\EndpointsObjectClient;
+use Seed\EndpointsPagination\EndpointsPaginationClient;
+use Seed\EndpointsParams\EndpointsParamsClient;
+use Seed\EndpointsPrimitive\EndpointsPrimitiveClient;
+use Seed\EndpointsPut\EndpointsPutClient;
+use Seed\EndpointsUnion\EndpointsUnionClient;
+use Seed\EndpointsUrLs\EndpointsUrLsClient;
+use Seed\Inlinedrequests\InlinedrequestsClient;
+use Seed\Noauth\NoauthClient;
+use Seed\Noreqbody\NoreqbodyClient;
+use Seed\Reqwithheaders\ReqwithheadersClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
     /**
-     * @var EndpointsClient $endpoints
+     * @var EndpointsContainerClient $endpointsContainer
      */
-    public EndpointsClient $endpoints;
+    public EndpointsContainerClient $endpointsContainer;
 
     /**
-     * @var InlinedRequestsClient $inlinedRequests
+     * @var EndpointsContentTypeClient $endpointsContentType
      */
-    public InlinedRequestsClient $inlinedRequests;
+    public EndpointsContentTypeClient $endpointsContentType;
 
     /**
-     * @var NoAuthClient $noAuth
+     * @var EndpointsEnumClient $endpointsEnum
      */
-    public NoAuthClient $noAuth;
+    public EndpointsEnumClient $endpointsEnum;
 
     /**
-     * @var NoReqBodyClient $noReqBody
+     * @var EndpointsHttpMethodsClient $endpointsHttpMethods
      */
-    public NoReqBodyClient $noReqBody;
+    public EndpointsHttpMethodsClient $endpointsHttpMethods;
 
     /**
-     * @var ReqWithHeadersClient $reqWithHeaders
+     * @var EndpointsObjectClient $endpointsObject
      */
-    public ReqWithHeadersClient $reqWithHeaders;
+    public EndpointsObjectClient $endpointsObject;
+
+    /**
+     * @var EndpointsPaginationClient $endpointsPagination
+     */
+    public EndpointsPaginationClient $endpointsPagination;
+
+    /**
+     * @var EndpointsParamsClient $endpointsParams
+     */
+    public EndpointsParamsClient $endpointsParams;
+
+    /**
+     * @var EndpointsPrimitiveClient $endpointsPrimitive
+     */
+    public EndpointsPrimitiveClient $endpointsPrimitive;
+
+    /**
+     * @var EndpointsPutClient $endpointsPut
+     */
+    public EndpointsPutClient $endpointsPut;
+
+    /**
+     * @var EndpointsUnionClient $endpointsUnion
+     */
+    public EndpointsUnionClient $endpointsUnion;
+
+    /**
+     * @var EndpointsUrLsClient $endpointsUrLs
+     */
+    public EndpointsUrLsClient $endpointsUrLs;
+
+    /**
+     * @var InlinedrequestsClient $inlinedrequests
+     */
+    public InlinedrequestsClient $inlinedrequests;
+
+    /**
+     * @var NoauthClient $noauth
+     */
+    public NoauthClient $noauth;
+
+    /**
+     * @var NoreqbodyClient $noreqbody
+     */
+    public NoreqbodyClient $noreqbody;
+
+    /**
+     * @var ReqwithheadersClient $reqwithheaders
+     */
+    public ReqwithheadersClient $reqwithheaders;
 
     /**
      * @var array{
@@ -88,10 +148,20 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->endpoints = new EndpointsClient($this->client, $this->options);
-        $this->inlinedRequests = new InlinedRequestsClient($this->client, $this->options);
-        $this->noAuth = new NoAuthClient($this->client, $this->options);
-        $this->noReqBody = new NoReqBodyClient($this->client, $this->options);
-        $this->reqWithHeaders = new ReqWithHeadersClient($this->client, $this->options);
+        $this->endpointsContainer = new EndpointsContainerClient($this->client, $this->options);
+        $this->endpointsContentType = new EndpointsContentTypeClient($this->client, $this->options);
+        $this->endpointsEnum = new EndpointsEnumClient($this->client, $this->options);
+        $this->endpointsHttpMethods = new EndpointsHttpMethodsClient($this->client, $this->options);
+        $this->endpointsObject = new EndpointsObjectClient($this->client, $this->options);
+        $this->endpointsPagination = new EndpointsPaginationClient($this->client, $this->options);
+        $this->endpointsParams = new EndpointsParamsClient($this->client, $this->options);
+        $this->endpointsPrimitive = new EndpointsPrimitiveClient($this->client, $this->options);
+        $this->endpointsPut = new EndpointsPutClient($this->client, $this->options);
+        $this->endpointsUnion = new EndpointsUnionClient($this->client, $this->options);
+        $this->endpointsUrLs = new EndpointsUrLsClient($this->client, $this->options);
+        $this->inlinedrequests = new InlinedrequestsClient($this->client, $this->options);
+        $this->noauth = new NoauthClient($this->client, $this->options);
+        $this->noreqbody = new NoreqbodyClient($this->client, $this->options);
+        $this->reqwithheaders = new ReqwithheadersClient($this->client, $this->options);
     }
 }

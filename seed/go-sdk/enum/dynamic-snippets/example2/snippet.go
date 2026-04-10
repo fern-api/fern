@@ -14,17 +14,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.SendEnumInlinedRequest{
+    request := &fern.InlinedRequestSendRequest{
         Operand: fern.OperandGreaterThan,
-        MaybeOperand: fern.OperandGreaterThan.Ptr(),
         OperandOrColor: &fern.ColorOrOperand{
             Color: fern.ColorRed,
         },
-        MaybeOperandOrColor: &fern.ColorOrOperand{
-            Color: fern.ColorRed,
-        },
     }
-    client.InlinedRequest.Send(
+    client.Inlinedrequest.Send(
         context.TODO(),
         request,
     )

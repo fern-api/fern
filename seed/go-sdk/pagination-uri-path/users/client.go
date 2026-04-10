@@ -33,11 +33,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) ListWithUriPagination(
+func (c *Client) Listwithuripagination(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*fern.ListUsersUriPaginationResponse, error) {
-	response, err := c.WithRawResponse.ListWithUriPagination(
+) (*fern.ListUsersURIPaginationResponse, error) {
+	response, err := c.WithRawResponse.Listwithuripagination(
 		ctx,
 		opts...,
 	)
@@ -47,11 +47,11 @@ func (c *Client) ListWithUriPagination(
 	return response.Body, nil
 }
 
-func (c *Client) ListWithPathPagination(
+func (c *Client) Listwithpathpagination(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*fern.ListUsersPathPaginationResponse, error) {
-	response, err := c.WithRawResponse.ListWithPathPagination(
+	response, err := c.WithRawResponse.Listwithpathpagination(
 		ctx,
 		opts...,
 	)

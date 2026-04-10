@@ -1,2 +1,2 @@
 pub mod service;
-pub use service::ServiceClient4;
+pub use service::ServiceClient;

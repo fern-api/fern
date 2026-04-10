@@ -1,2 +1,2 @@
-export { SeedWebsocketBearerAuthError } from "./SeedWebsocketBearerAuthError.js";
-export { SeedWebsocketBearerAuthTimeoutError } from "./SeedWebsocketBearerAuthTimeoutError.js";
+export { SeedApiError } from "./SeedApiError.js";
+export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";

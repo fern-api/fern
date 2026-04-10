@@ -6,8 +6,12 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .user import User
-_dynamic_imports: typing.Dict[str, str] = {"User": ".user"}
+    from .user_create_user_request_type import UserCreateUserRequestType
+    from .user_create_user_request_version import UserCreateUserRequestVersion
+_dynamic_imports: typing.Dict[str, str] = {
+    "UserCreateUserRequestType": ".user_create_user_request_type",
+    "UserCreateUserRequestVersion": ".user_create_user_request_version",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["User"]
+__all__ = ["UserCreateUserRequestType", "UserCreateUserRequestVersion"]

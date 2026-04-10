@@ -5,4 +5,6 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.http_methods.test_post(string: "string")
+client.endpoints_container.endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union(request: {
+  key: 1.1
+})

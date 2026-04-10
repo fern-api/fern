@@ -1,4 +1,4 @@
-use seed_pagination::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,12 +7,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = PaginationClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_extended_results_and_optional_data(
-            &UsersListWithExtendedResultsAndOptionalDataQueryRequest {
-                cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+        .listwithcursorpagination(
+            &ListwithcursorpaginationQueryRequest {
                 ..Default::default()
             },
             None,

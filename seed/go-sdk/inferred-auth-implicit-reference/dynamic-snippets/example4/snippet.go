@@ -12,14 +12,8 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        option.WithClientID(
-            "client_id",
-        ),
-        option.WithClientSecret(
-            "client_secret",
-        ),
     )
-    client.Simple.GetSomething(
+    client.NestedNoAuthAPI.NestedNoAuthAPIGetSomething(
         context.TODO(),
     )
 }

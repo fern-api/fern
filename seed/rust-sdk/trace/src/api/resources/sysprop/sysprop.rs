@@ -14,7 +14,7 @@ impl SyspropClient {
         })
     }
 
-    pub async fn set_num_warm_instances(
+    pub async fn setnumwarminstances(
         &self,
         language: &Language,
         num_warm_instances: i64,
@@ -24,7 +24,7 @@ impl SyspropClient {
             .execute_request(
                 Method::PUT,
                 &format!(
-                    "/sysprop/num-warm-instances/{}/{}",
+                    "sysprop/num-warm-instances/{}/{}",
                     language, num_warm_instances
                 ),
                 None,
@@ -34,14 +34,14 @@ impl SyspropClient {
             .await
     }
 
-    pub async fn get_num_warm_instances(
+    pub async fn getnumwarminstances(
         &self,
         options: Option<RequestOptions>,
-    ) -> Result<HashMap<Language, i64>, ApiError> {
+    ) -> Result<HashMap<String, i64>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/sysprop/num-warm-instances",
+                "sysprop/num-warm-instances",
                 None,
                 None,
                 options,

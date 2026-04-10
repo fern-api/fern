@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) GetWithCustomHeader(
+func (c *Client) Getwithcustomheader(
 	ctx context.Context,
-	request *fern.ReqWithHeaders,
+	request *fern.ReqWithHeadersGetWithCustomHeaderRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.GetWithCustomHeader(
+	_, err := c.WithRawResponse.Getwithcustomheader(
 		ctx,
 		request,
 		opts...,

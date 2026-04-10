@@ -1,4 +1,4 @@
-package websocket
+package api
 
 import (
 	"testing"

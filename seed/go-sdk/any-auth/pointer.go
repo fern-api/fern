@@ -1,4 +1,4 @@
-package anyauth
+package api
 
 import (
 	"time"

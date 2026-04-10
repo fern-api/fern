@@ -1,4 +1,4 @@
-package undiscriminatedunions
+package api
 
 import (
 	"time"

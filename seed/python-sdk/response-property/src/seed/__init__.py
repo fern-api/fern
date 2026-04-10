@@ -6,23 +6,22 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import OptionalStringResponse, StringResponse, WithMetadata
+    from .types import Movie, OptionalStringResponse, OptionalWithDocs, Response, StringResponse, WithDocs, WithMetadata
     from . import service
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedResponseProperty, SeedResponseProperty
-    from .service import Movie, OptionalWithDocs, Response, WithDocs
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedResponseProperty": ".client",
+    "AsyncSeedApi": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "Movie": ".service",
+    "Movie": ".types",
     "OptionalStringResponse": ".types",
-    "OptionalWithDocs": ".service",
-    "Response": ".service",
-    "SeedResponseProperty": ".client",
+    "OptionalWithDocs": ".types",
+    "Response": ".types",
+    "SeedApi": ".client",
     "StringResponse": ".types",
-    "WithDocs": ".service",
+    "WithDocs": ".types",
     "WithMetadata": ".types",
     "__version__": ".version",
     "service": ".service",
@@ -51,14 +50,14 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedResponseProperty",
+    "AsyncSeedApi",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "Movie",
     "OptionalStringResponse",
     "OptionalWithDocs",
     "Response",
-    "SeedResponseProperty",
+    "SeedApi",
     "StringResponse",
     "WithDocs",
     "WithMetadata",

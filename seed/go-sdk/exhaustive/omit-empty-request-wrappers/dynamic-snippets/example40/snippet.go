@@ -3,8 +3,8 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
-    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
 )
 
@@ -17,11 +17,14 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.ModifyResourceAtInlinedPath{
-        Param: "param",
-        Body: "string",
+    request := &fern.EndpointsObjectGetAndReturnNestedWithRequiredFieldRequest{
+        String: "string",
+        Body: &fern.TypesNestedObjectWithRequiredField{
+            FieldString: "string",
+            NestedObject: &fern.TypesObjectWithOptionalField{},
+        },
     }
-    client.Endpoints.Params.ModifyWithInlinePath(
+    client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithRequiredField(
         context.TODO(),
         request,
     )

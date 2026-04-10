@@ -7,12 +7,12 @@
 use crate::{ApiError, ClientConfig};
 
 pub mod optional;
-pub struct ObjectsWithImportsClient {
+pub struct ApiClient {
     pub config: ClientConfig,
     pub optional: OptionalClient,
 }
 
-impl ObjectsWithImportsClient {
+impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),

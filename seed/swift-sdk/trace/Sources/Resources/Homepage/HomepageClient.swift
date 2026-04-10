@@ -7,7 +7,7 @@ public final class HomepageClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getHomepageProblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemId] {
+    public func gethomepageproblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemId] {
         return try await httpClient.performRequest(
             method: .get,
             path: "/homepage-problems",
@@ -16,7 +16,7 @@ public final class HomepageClient: Sendable {
         )
     }
 
-    public func setHomepageProblems(request: [ProblemId], requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func sethomepageproblems(request: [ProblemId], requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/homepage-problems",

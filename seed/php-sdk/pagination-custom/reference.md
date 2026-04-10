@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>$client-&gt;users-&gt;listWithCustomPager($request) -> ?UsersListResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithcustompager($request) -> ?UsersListResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,11 +13,8 @@
 <dd>
 
 ```php
-$client->users->listWithCustomPager(
-    new ListWithCustomPagerRequest([
-        'limit' => 1,
-        'startingAfter' => 'starting_after',
-    ]),
+$client->users->listwithcustompager(
+    new UsersListWithCustomPagerRequest([]),
 );
 ```
 </dd>

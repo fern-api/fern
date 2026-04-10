@@ -1,4 +1,4 @@
-//! API client and types for the Api
+//! API client and types for the folders
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,5 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{AClient, ApiClient, FolderClient};
-pub use types::*;
+pub use resources::{Client, AbClient, AcClient, FolderClient, FolderServiceClient, ApiClient};
+pub use types::{*};
+

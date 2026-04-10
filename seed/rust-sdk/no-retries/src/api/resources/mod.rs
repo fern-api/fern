@@ -7,12 +7,12 @@
 use crate::{ApiError, ClientConfig};
 
 pub mod retries;
-pub struct NoRetriesClient {
+pub struct ApiClient {
     pub config: ClientConfig,
     pub retries: RetriesClient,
 }
 
-impl NoRetriesClient {
+impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),

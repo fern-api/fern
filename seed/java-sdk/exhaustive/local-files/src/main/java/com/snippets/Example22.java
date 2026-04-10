@@ -1,23 +1,20 @@
 package com.snippets;
 
-import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.types.object.types.ObjectWithUnknownField;
-import java.util.HashMap;
+import com.fern.sdk.SeedApiClient;
+import com.fern.sdk.resources.endpointshttpmethods.requests.EndpointsHttpMethodsTestGetRequest;
 
 public class Example22 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().object().getAndReturnWithUnknownField(
-            ObjectWithUnknownField
+        client.endpointsHttpMethods().endpointsHttpMethodsTestGet(
+            EndpointsHttpMethodsTestGetRequest
                 .builder()
-                .unknown(new 
-                    HashMap<String, Object>() {{put("$ref", "https://example.com/schema");
-                    }})
+                .id("id")
                 .build()
         );
     }

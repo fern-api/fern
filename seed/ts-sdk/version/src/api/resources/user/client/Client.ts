@@ -2,11 +2,11 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedVersion from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace UserClient {
     export type Options = BaseClientOptions;
@@ -22,33 +22,32 @@ export class UserClient {
     }
 
     /**
-     * @param {SeedVersion.UserId} userId
+     * @param {SeedApi.UserGetUserRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.getUser("userId")
+     *     await client.user.getuser({
+     *         userId: "userId"
+     *     })
      */
-    public getUser(
-        userId: SeedVersion.UserId,
+    public getuser(
+        request: SeedApi.UserGetUserRequest,
         requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedVersion.User> {
-        return core.HttpResponsePromise.fromPromise(this.__getUser(userId, requestOptions));
+    ): core.HttpResponsePromise<SeedApi.User> {
+        return core.HttpResponsePromise.fromPromise(this.__getuser(request, requestOptions));
     }
 
-    private async __getUser(
-        userId: SeedVersion.UserId,
+    private async __getuser(
+        request: SeedApi.UserGetUserRequest,
         requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedVersion.User>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.xApiVersion }),
-            requestOptions?.headers,
-        );
+    ): Promise<core.WithRawResponse<SeedApi.User>> {
+        const { userId } = request;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/users/${core.url.encodePathParam(userId)}`,
+                `users/${core.url.encodePathParam(userId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -60,11 +59,11 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedVersion.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedVersionError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

@@ -3,9 +3,8 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\Object\Types\ObjectWithRequiredNestedObject;
-use Seed\Types\Object\Types\NestedObjectWithRequiredField;
-use Seed\Types\Object\Types\ObjectWithOptionalField;
+use Seed\EndpointsHttpMethods\Requests\EndpointsHttpMethodsTestPatchRequest;
+use Seed\Types\TypesObjectWithOptionalField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -13,12 +12,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->object->getAndReturnWithRequiredNestedObject(
-    new ObjectWithRequiredNestedObject([
-        'requiredString' => 'hello',
-        'requiredObject' => new NestedObjectWithRequiredField([
-            'string' => 'nested',
-            'nestedObject' => new ObjectWithOptionalField([]),
-        ]),
+$client->endpointsHttpMethods->endpointsHttpMethodsTestPatch(
+    'id',
+    new EndpointsHttpMethodsTestPatchRequest([
+        'body' => new TypesObjectWithOptionalField([]),
     ]),
 );

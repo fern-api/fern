@@ -1,4 +1,4 @@
-package contenttypes
+package api
 
 import (
 	"io"

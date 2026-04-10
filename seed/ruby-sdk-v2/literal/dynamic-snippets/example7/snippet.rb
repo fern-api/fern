@@ -8,8 +8,8 @@ client.query.send_(
   alias_prompt: "You are a helpful assistant",
   alias_optional_prompt: "You are a helpful assistant",
   query: "query",
-  stream: false,
-  optional_stream: false,
-  alias_stream: false,
-  alias_optional_stream: false
+  stream: true,
+  optional_stream: true,
+  alias_stream: true,
+  alias_optional_stream: true
 )

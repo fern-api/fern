@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.exhaustive.Best;
+import com.seed.api.Best;
 import java.util.Arrays;
 
 public class Example0 {
@@ -8,6 +8,6 @@ public class Example0 {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpoints().container().getAndReturnListOfPrimitives(Arrays.asList("string", "string"));
+        client.endpointsContainer().endpointsContainerGetAndReturnListOfPrimitives(Arrays.asList("string"));
     }
 }

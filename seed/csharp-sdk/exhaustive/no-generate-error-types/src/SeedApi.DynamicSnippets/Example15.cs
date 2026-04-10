@@ -1,19 +1,21 @@
-using SeedExhaustive;
+using SeedApi;
 
 namespace Usage;
 
 public class Example15
 {
     public async Task Do() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.HttpMethods.TestDeleteAsync(
-            "id"
+        await client.EndpointsContainer.EndpointsContainerGetAndReturnOptionalAsync(
+            new TypesObjectWithRequiredField {
+                String = "string"
+            }
         );
     }
 

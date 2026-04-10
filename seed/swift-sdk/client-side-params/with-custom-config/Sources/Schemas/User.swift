@@ -5,24 +5,24 @@ public struct User: Codable, Hashable, Sendable {
     public let userId: String
     public let email: String
     public let emailVerified: Bool
-    public let username: String?
-    public let phoneNumber: String?
-    public let phoneVerified: Bool?
+    public let username: Nullable<String>?
+    public let phoneNumber: Nullable<String>?
+    public let phoneVerified: Nullable<Bool>?
     public let createdAt: Date
     public let updatedAt: Date
-    public let identities: [Identity]?
-    public let appMetadata: [String: JSONValue]?
-    public let userMetadata: [String: JSONValue]?
-    public let picture: String?
-    public let name: String?
-    public let nickname: String?
-    public let multifactor: [String]?
-    public let lastIp: String?
-    public let lastLogin: Date?
-    public let loginsCount: Int?
-    public let blocked: Bool?
-    public let givenName: String?
-    public let familyName: String?
+    public let identities: Nullable<[Identity]>?
+    public let appMetadata: Nullable<[String: JSONValue]>?
+    public let userMetadata: Nullable<[String: JSONValue]>?
+    public let picture: Nullable<String>?
+    public let name: Nullable<String>?
+    public let nickname: Nullable<String>?
+    public let multifactor: Nullable<[String]>?
+    public let lastIp: Nullable<String>?
+    public let lastLogin: Nullable<Date>?
+    public let loginsCount: Nullable<Int>?
+    public let blocked: Nullable<Bool>?
+    public let givenName: Nullable<String>?
+    public let familyName: Nullable<String>?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -30,24 +30,24 @@ public struct User: Codable, Hashable, Sendable {
         userId: String,
         email: String,
         emailVerified: Bool,
-        username: String? = nil,
-        phoneNumber: String? = nil,
-        phoneVerified: Bool? = nil,
+        username: Nullable<String>? = nil,
+        phoneNumber: Nullable<String>? = nil,
+        phoneVerified: Nullable<Bool>? = nil,
         createdAt: Date,
         updatedAt: Date,
-        identities: [Identity]? = nil,
-        appMetadata: [String: JSONValue]? = nil,
-        userMetadata: [String: JSONValue]? = nil,
-        picture: String? = nil,
-        name: String? = nil,
-        nickname: String? = nil,
-        multifactor: [String]? = nil,
-        lastIp: String? = nil,
-        lastLogin: Date? = nil,
-        loginsCount: Int? = nil,
-        blocked: Bool? = nil,
-        givenName: String? = nil,
-        familyName: String? = nil,
+        identities: Nullable<[Identity]>? = nil,
+        appMetadata: Nullable<[String: JSONValue]>? = nil,
+        userMetadata: Nullable<[String: JSONValue]>? = nil,
+        picture: Nullable<String>? = nil,
+        name: Nullable<String>? = nil,
+        nickname: Nullable<String>? = nil,
+        multifactor: Nullable<[String]>? = nil,
+        lastIp: Nullable<String>? = nil,
+        lastLogin: Nullable<Date>? = nil,
+        loginsCount: Nullable<Int>? = nil,
+        blocked: Nullable<Bool>? = nil,
+        givenName: Nullable<String>? = nil,
+        familyName: Nullable<String>? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.userId = userId
@@ -79,24 +79,24 @@ public struct User: Codable, Hashable, Sendable {
         self.userId = try container.decode(String.self, forKey: .userId)
         self.email = try container.decode(String.self, forKey: .email)
         self.emailVerified = try container.decode(Bool.self, forKey: .emailVerified)
-        self.username = try container.decodeIfPresent(String.self, forKey: .username)
-        self.phoneNumber = try container.decodeIfPresent(String.self, forKey: .phoneNumber)
-        self.phoneVerified = try container.decodeIfPresent(Bool.self, forKey: .phoneVerified)
+        self.username = try container.decodeNullableIfPresent(String.self, forKey: .username)
+        self.phoneNumber = try container.decodeNullableIfPresent(String.self, forKey: .phoneNumber)
+        self.phoneVerified = try container.decodeNullableIfPresent(Bool.self, forKey: .phoneVerified)
         self.createdAt = try container.decode(Date.self, forKey: .createdAt)
         self.updatedAt = try container.decode(Date.self, forKey: .updatedAt)
-        self.identities = try container.decodeIfPresent([Identity].self, forKey: .identities)
-        self.appMetadata = try container.decodeIfPresent([String: JSONValue].self, forKey: .appMetadata)
-        self.userMetadata = try container.decodeIfPresent([String: JSONValue].self, forKey: .userMetadata)
-        self.picture = try container.decodeIfPresent(String.self, forKey: .picture)
-        self.name = try container.decodeIfPresent(String.self, forKey: .name)
-        self.nickname = try container.decodeIfPresent(String.self, forKey: .nickname)
-        self.multifactor = try container.decodeIfPresent([String].self, forKey: .multifactor)
-        self.lastIp = try container.decodeIfPresent(String.self, forKey: .lastIp)
-        self.lastLogin = try container.decodeIfPresent(Date.self, forKey: .lastLogin)
-        self.loginsCount = try container.decodeIfPresent(Int.self, forKey: .loginsCount)
-        self.blocked = try container.decodeIfPresent(Bool.self, forKey: .blocked)
-        self.givenName = try container.decodeIfPresent(String.self, forKey: .givenName)
-        self.familyName = try container.decodeIfPresent(String.self, forKey: .familyName)
+        self.identities = try container.decodeNullableIfPresent([Identity].self, forKey: .identities)
+        self.appMetadata = try container.decodeNullableIfPresent([String: JSONValue].self, forKey: .appMetadata)
+        self.userMetadata = try container.decodeNullableIfPresent([String: JSONValue].self, forKey: .userMetadata)
+        self.picture = try container.decodeNullableIfPresent(String.self, forKey: .picture)
+        self.name = try container.decodeNullableIfPresent(String.self, forKey: .name)
+        self.nickname = try container.decodeNullableIfPresent(String.self, forKey: .nickname)
+        self.multifactor = try container.decodeNullableIfPresent([String].self, forKey: .multifactor)
+        self.lastIp = try container.decodeNullableIfPresent(String.self, forKey: .lastIp)
+        self.lastLogin = try container.decodeNullableIfPresent(Date.self, forKey: .lastLogin)
+        self.loginsCount = try container.decodeNullableIfPresent(Int.self, forKey: .loginsCount)
+        self.blocked = try container.decodeNullableIfPresent(Bool.self, forKey: .blocked)
+        self.givenName = try container.decodeNullableIfPresent(String.self, forKey: .givenName)
+        self.familyName = try container.decodeNullableIfPresent(String.self, forKey: .familyName)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -106,24 +106,24 @@ public struct User: Codable, Hashable, Sendable {
         try container.encode(self.userId, forKey: .userId)
         try container.encode(self.email, forKey: .email)
         try container.encode(self.emailVerified, forKey: .emailVerified)
-        try container.encodeIfPresent(self.username, forKey: .username)
-        try container.encodeIfPresent(self.phoneNumber, forKey: .phoneNumber)
-        try container.encodeIfPresent(self.phoneVerified, forKey: .phoneVerified)
+        try container.encodeNullableIfPresent(self.username, forKey: .username)
+        try container.encodeNullableIfPresent(self.phoneNumber, forKey: .phoneNumber)
+        try container.encodeNullableIfPresent(self.phoneVerified, forKey: .phoneVerified)
         try container.encode(self.createdAt, forKey: .createdAt)
         try container.encode(self.updatedAt, forKey: .updatedAt)
-        try container.encodeIfPresent(self.identities, forKey: .identities)
-        try container.encodeIfPresent(self.appMetadata, forKey: .appMetadata)
-        try container.encodeIfPresent(self.userMetadata, forKey: .userMetadata)
-        try container.encodeIfPresent(self.picture, forKey: .picture)
-        try container.encodeIfPresent(self.name, forKey: .name)
-        try container.encodeIfPresent(self.nickname, forKey: .nickname)
-        try container.encodeIfPresent(self.multifactor, forKey: .multifactor)
-        try container.encodeIfPresent(self.lastIp, forKey: .lastIp)
-        try container.encodeIfPresent(self.lastLogin, forKey: .lastLogin)
-        try container.encodeIfPresent(self.loginsCount, forKey: .loginsCount)
-        try container.encodeIfPresent(self.blocked, forKey: .blocked)
-        try container.encodeIfPresent(self.givenName, forKey: .givenName)
-        try container.encodeIfPresent(self.familyName, forKey: .familyName)
+        try container.encodeNullableIfPresent(self.identities, forKey: .identities)
+        try container.encodeNullableIfPresent(self.appMetadata, forKey: .appMetadata)
+        try container.encodeNullableIfPresent(self.userMetadata, forKey: .userMetadata)
+        try container.encodeNullableIfPresent(self.picture, forKey: .picture)
+        try container.encodeNullableIfPresent(self.name, forKey: .name)
+        try container.encodeNullableIfPresent(self.nickname, forKey: .nickname)
+        try container.encodeNullableIfPresent(self.multifactor, forKey: .multifactor)
+        try container.encodeNullableIfPresent(self.lastIp, forKey: .lastIp)
+        try container.encodeNullableIfPresent(self.lastLogin, forKey: .lastLogin)
+        try container.encodeNullableIfPresent(self.loginsCount, forKey: .loginsCount)
+        try container.encodeNullableIfPresent(self.blocked, forKey: .blocked)
+        try container.encodeNullableIfPresent(self.givenName, forKey: .givenName)
+        try container.encodeNullableIfPresent(self.familyName, forKey: .familyName)
     }
 
     /// Keys for encoding/decoding struct properties.

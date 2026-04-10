@@ -13,14 +13,14 @@
 <dd>
 
 ```rust
-use seed_undiscriminated_unions::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .union_
         .get(&MyUnion::String("string".to_string()), None)
@@ -37,7 +37,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get_metadata</a>() -> Result&lt;Metadata, ApiError&gt;</code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">getmetadata</a>() -> Result&lt;Metadata, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -50,15 +50,15 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_undiscriminated_unions::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
-    client.union_.get_metadata(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.union_.getmetadata(None).await;
 }
 ```
 </dd>
@@ -71,7 +71,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">update_metadata</a>(request: MetadataUnion) -> Result&lt;bool, ApiError&gt;</code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">updatemetadata</a>(request: MetadataUnion) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -84,21 +84,20 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_undiscriminated_unions::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .union_
-        .update_metadata(
-            &MetadataUnion::OptionalMetadata(OptionalMetadata(Some(HashMap::from([(
-                "string".to_string(),
-                serde_json::json!({"key":"value"}),
-            )])))),
+        .updatemetadata(
+            &MetadataUnion::NullableOptionalMetadata(Some(OptionalMetadata(Some(HashMap::from(
+                [("key".to_string(), serde_json::json!("value"))],
+            ))))),
             None,
         )
         .await;
@@ -127,21 +126,18 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_undiscriminated_unions::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .union_
         .call(
             &Request {
-                union: Some(MetadataUnion::OptionalMetadata(OptionalMetadata(Some(
-                    HashMap::from([("string".to_string(), serde_json::json!({"key":"value"}))]),
-                )))),
                 ..Default::default()
             },
             None,
@@ -154,12 +150,27 @@ async fn main() {
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**union_:** `Option<MetadataUnion>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">duplicate_types_union</a>(request: UnionWithDuplicateTypes) -> Result&lt;UnionWithDuplicateTypes, ApiError&gt;</code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">duplicatetypesunion</a>(request: UnionWithDuplicateTypes) -> Result&lt;UnionWithDuplicateTypes, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -172,17 +183,17 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_undiscriminated_unions::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .union_
-        .duplicate_types_union(&UnionWithDuplicateTypes::String("string".to_string()), None)
+        .duplicatetypesunion(&UnionWithDuplicateTypes::String("string".to_string()), None)
         .await;
 }
 ```
@@ -196,7 +207,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">nested_unions</a>(request: NestedUnionRoot) -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">nestedunions</a>(request: NestedUnionRoot) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -209,17 +220,17 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_undiscriminated_unions::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .union_
-        .nested_unions(&NestedUnionRoot::String("string".to_string()), None)
+        .nestedunions(&NestedUnionRoot::String("string".to_string()), None)
         .await;
 }
 ```
@@ -233,7 +244,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">test_camel_case_properties</a>(request: PaymentRequest) -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">testcamelcaseproperties</a>(request: UnionTestCamelCasePropertiesRequest) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -246,21 +257,21 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_undiscriminated_unions::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .union_
-        .test_camel_case_properties(
-            &PaymentRequest {
+        .testcamelcaseproperties(
+            &UnionTestCamelCasePropertiesRequest {
                 payment_method: PaymentMethodUnion::TokenizeCard(TokenizeCard {
-                    method: "card".to_string(),
-                    card_number: "1234567890123456".to_string(),
+                    method: "method".to_string(),
+                    card_number: "cardNumber".to_string(),
                     ..Default::default()
                 }),
             },

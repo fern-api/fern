@@ -14,10 +14,10 @@
 
 ```swift
 import Foundation
-import Enum
+import Api
 
 private func main() async throws {
-    let client = EnumClient()
+    let client = ApiClient()
 
     _ = try await client.headers.send()
 }
@@ -49,8 +49,8 @@ try await main()
 </dl>
 </details>
 
-## InlinedRequest
-<details><summary><code>client.inlinedRequest.<a href="/Sources/Resources/InlinedRequest/InlinedRequestClient.swift">send</a>(request: Requests.SendEnumInlinedRequest, requestOptions: RequestOptions?) -> Void</code></summary>
+## Inlinedrequest
+<details><summary><code>client.inlinedrequest.<a href="/Sources/Resources/Inlinedrequest/InlinedrequestClient.swift">send</a>(request: Requests.InlinedRequestSendRequest, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -64,12 +64,12 @@ try await main()
 
 ```swift
 import Foundation
-import Enum
+import Api
 
 private func main() async throws {
-    let client = EnumClient()
+    let client = ApiClient()
 
-    _ = try await client.inlinedRequest.send(request: .init(
+    _ = try await client.inlinedrequest.send(request: .init(
         operand: .greaterThan,
         operandOrColor: ColorOrOperand.color(
             .red
@@ -92,7 +92,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.SendEnumInlinedRequest` 
+**request:** `Requests.InlinedRequestSendRequest` 
     
 </dd>
 </dl>
@@ -112,9 +112,8 @@ try await main()
 </dl>
 </details>
 
-## MultipartForm
-## PathParam
-<details><summary><code>client.pathParam.<a href="/Sources/Resources/PathParam/PathParamClient.swift">send</a>(operand: String, operandOrColor: String, requestOptions: RequestOptions?) -> Void</code></summary>
+## Multipartform
+<details><summary><code>client.multipartform.<a href="/Sources/Resources/Multipartform/MultipartformClient.swift">multipartform</a>(request: Requests.MultipartFormMultipartFormRequest, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -128,12 +127,70 @@ try await main()
 
 ```swift
 import Foundation
-import Enum
+import Api
 
 private func main() async throws {
-    let client = EnumClient()
+    let client = ApiClient()
 
-    _ = try await client.pathParam.send(
+    _ = try await client.multipartform.multipartform(request: .init())
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Requests.MultipartFormMultipartFormRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Pathparam
+<details><summary><code>client.pathparam.<a href="/Sources/Resources/Pathparam/PathparamClient.swift">send</a>(operand: String, operandOrColor: String, requestOptions: RequestOptions?) -> Void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Api
+
+private func main() async throws {
+    let client = ApiClient()
+
+    _ = try await client.pathparam.send(
         operand: .greaterThan,
         operandOrColor: ColorOrOperand.color(
             .red
@@ -184,8 +241,8 @@ try await main()
 </dl>
 </details>
 
-## QueryParam
-<details><summary><code>client.queryParam.<a href="/Sources/Resources/QueryParam/QueryParamClient.swift">send</a>(operand: Operand, maybeOperand: Operand?, operandOrColor: ColorOrOperand, maybeOperandOrColor: ColorOrOperand?, requestOptions: RequestOptions?) -> Void</code></summary>
+## Queryparam
+<details><summary><code>client.queryparam.<a href="/Sources/Resources/Queryparam/QueryparamClient.swift">send</a>(operand: Operand, maybeOperand: Operand?, operandOrColor: Color, maybeOperandOrColor: ColorOrOperand?, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -199,16 +256,14 @@ try await main()
 
 ```swift
 import Foundation
-import Enum
+import Api
 
 private func main() async throws {
-    let client = EnumClient()
+    let client = ApiClient()
 
-    _ = try await client.queryParam.send(
+    _ = try await client.queryparam.send(
         operand: .greaterThan,
-        operandOrColor: ColorOrOperand.color(
-            .red
-        )
+        operandOrColor: .red
     )
 }
 
@@ -243,7 +298,7 @@ try await main()
 <dl>
 <dd>
 
-**operandOrColor:** `ColorOrOperand` 
+**operandOrColor:** `Color` 
     
 </dd>
 </dl>
@@ -271,7 +326,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.queryParam.<a href="/Sources/Resources/QueryParam/QueryParamClient.swift">sendList</a>(operand: Operand, maybeOperand: Operand?, operandOrColor: ColorOrOperand, maybeOperandOrColor: ColorOrOperand?, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.queryparam.<a href="/Sources/Resources/Queryparam/QueryparamClient.swift">sendlist</a>(operand: Operand?, maybeOperand: Operand?, operandOrColor: ColorOrOperand?, maybeOperandOrColor: ColorOrOperand?, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -285,12 +340,12 @@ try await main()
 
 ```swift
 import Foundation
-import Enum
+import Api
 
 private func main() async throws {
-    let client = EnumClient()
+    let client = ApiClient()
 
-    _ = try await client.queryParam.sendList()
+    _ = try await client.queryparam.sendlist()
 }
 
 try await main()
@@ -308,7 +363,7 @@ try await main()
 <dl>
 <dd>
 
-**operand:** `Operand` 
+**operand:** `Operand?` 
     
 </dd>
 </dl>
@@ -324,7 +379,7 @@ try await main()
 <dl>
 <dd>
 
-**operandOrColor:** `ColorOrOperand` 
+**operandOrColor:** `ColorOrOperand?` 
     
 </dd>
 </dl>

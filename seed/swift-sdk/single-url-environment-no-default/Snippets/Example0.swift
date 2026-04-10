@@ -1,13 +1,13 @@
 import Foundation
-import SingleUrlEnvironmentNoDefault
+import Api
 
 private func main() async throws {
-    let client = SingleUrlEnvironmentNoDefaultClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.dummy.getDummy()
+    _ = try await client.dummy.getdummy()
 }
 
 try await main()

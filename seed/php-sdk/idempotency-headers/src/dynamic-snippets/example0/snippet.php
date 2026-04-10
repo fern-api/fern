@@ -3,8 +3,8 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Payment\Requests\CreatePaymentRequest;
-use Seed\Payment\Types\Currency;
+use Seed\Payment\Requests\PaymentCreateRequest;
+use Seed\Types\Currency;
 
 $client = new SeedClient(
     token: '<token>',
@@ -13,7 +13,7 @@ $client = new SeedClient(
     ],
 );
 $client->payment->create(
-    new CreatePaymentRequest([
+    new PaymentCreateRequest([
         'amount' => 1,
         'currency' => Currency::Usd->value,
     ]),

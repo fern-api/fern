@@ -1,21 +1,24 @@
 package com.snippets;
 
-import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.types.union.types.MixedType;
-import java.util.HashMap;
+import com.fern.sdk.SeedApiClient;
+import com.fern.sdk.types.TypesObjectWithRequiredField;
+import java.util.Arrays;
 
 public class Example6 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().container().getAndReturnMapOfPrimToUndiscriminatedUnion(
-            new HashMap<String, MixedType>() {{
-                put("string", MixedType.of(1.1));
-            }}
+        client.endpointsContainer().endpointsContainerGetAndReturnSetOfObjects(
+            Arrays.asList(
+                TypesObjectWithRequiredField
+                    .builder()
+                    .string("string")
+                    .build()
+            )
         );
     }
 }

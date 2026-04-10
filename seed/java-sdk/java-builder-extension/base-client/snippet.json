@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "9d37c6d8",
+            "example_identifier": "60aa1882",
             "id": {
                 "method": "GET",
                 "path": "/api/hello",
@@ -9,8 +9,21 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.builderExtension.BaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        BaseClient client = BaseClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().hello();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.builderExtension.BaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        BaseClient client = BaseClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().hello();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.BaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        BaseClient client = BaseClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().hello();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.BaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        BaseClient client = BaseClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().hello();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "2d1368ce",
+            "id": {
+                "method": "GET",
+                "path": "/api/hello",
+                "identifier_override": "endpoint_service.hello"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.BaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        BaseClient client = BaseClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().hello();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.BaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        BaseClient client = BaseClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().hello();\n    }\n}\n"
             }
         }
     ],

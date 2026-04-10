@@ -1,0 +1,10 @@
+import type * as SeedApi from "../index.mjs";
+/**
+ * Tests that dynamic snippets recursively construct default objects for
+ * required properties whose type is a named object. The nested object's
+ * own required properties should also be filled with defaults.
+ */
+export interface TypesObjectWithRequiredNestedObject {
+    requiredString: string;
+    requiredObject: SeedApi.TypesNestedObjectWithRequiredField;
+}

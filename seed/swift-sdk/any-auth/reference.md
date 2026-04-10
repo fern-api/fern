@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">getToken</a>(request: Requests.GetTokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">gettoken</a>(request: Requests.AuthGetTokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,15 @@
 
 ```swift
 import Foundation
-import AnyAuth
+import Api
 
 private func main() async throws {
-    let client = AnyAuthClient(token: "<token>")
+    let client = ApiClient(
+        token: "<token>",
+        apiKey: "<X-API-Key>"
+    )
 
-    _ = try await client.auth.getToken(request: .init(
+    _ = try await client.auth.gettoken(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
         audience: .httpsApiExampleCom,
@@ -42,7 +45,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.GetTokenRequest` 
+**request:** `Requests.AuthGetTokenRequest` 
     
 </dd>
 </dl>
@@ -77,10 +80,13 @@ try await main()
 
 ```swift
 import Foundation
-import AnyAuth
+import Api
 
 private func main() async throws {
-    let client = AnyAuthClient(token: "<token>")
+    let client = ApiClient(
+        token: "<token>",
+        apiKey: "<X-API-Key>"
+    )
 
     _ = try await client.user.get()
 }
@@ -112,7 +118,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getAdmins</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getadmins</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
 <dl>
 <dd>
 
@@ -126,12 +132,15 @@ try await main()
 
 ```swift
 import Foundation
-import AnyAuth
+import Api
 
 private func main() async throws {
-    let client = AnyAuthClient(token: "<token>")
+    let client = ApiClient(
+        token: "<token>",
+        apiKey: "<X-API-Key>"
+    )
 
-    _ = try await client.user.getAdmins()
+    _ = try await client.user.getadmins()
 }
 
 try await main()

@@ -3,5 +3,5 @@
 export interface PaymentInfo {
     amount: string;
     currency: string;
-    description?: string | undefined;
+    description?: (string | null) | undefined;
 }

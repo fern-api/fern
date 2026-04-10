@@ -5,7 +5,7 @@ info:
 paths:
   /movie:
     post:
-      operationId: service_getMovie
+      operationId: service_getmovie
       tags:
         - Service
       parameters: []
@@ -16,15 +16,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Response'
+              examples:
+                Example1:
+                  value:
+                    docs: docs
+                    metadata:
+                      key: value
+                    data:
+                      id: id
+                      name: name
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: string
+            examples:
+              Example1:
+                value: string
   /movie/docs:
     post:
-      operationId: service_getMovieDocs
+      operationId: service_getmoviedocs
       tags:
         - Service
       parameters: []
@@ -35,15 +47,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Response'
+              examples:
+                Example1:
+                  value:
+                    docs: docs
+                    metadata:
+                      key: value
+                    data:
+                      id: id
+                      name: name
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: string
+            examples:
+              Example1:
+                value: string
   /movie/name:
     post:
-      operationId: service_getMovieName
+      operationId: service_getmoviename
       tags:
         - Service
       parameters: []
@@ -54,15 +78,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StringResponse'
+              examples:
+                Example1:
+                  value:
+                    data: data
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: string
+            examples:
+              Example1:
+                value: string
   /movie/metadata:
     post:
-      operationId: service_getMovieMetadata
+      operationId: service_getmoviemetadata
       tags:
         - Service
       parameters: []
@@ -73,15 +104,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Response'
+              examples:
+                Example1:
+                  value:
+                    docs: docs
+                    metadata:
+                      key: value
+                    data:
+                      id: id
+                      name: name
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: string
+            examples:
+              Example1:
+                value: string
   /movie/optional:
     post:
-      operationId: service_getOptionalMovie
+      operationId: service_getoptionalmovie
       tags:
         - Service
       parameters: []
@@ -92,16 +135,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Response'
-                nullable: true
+              examples:
+                Example1:
+                  value:
+                    docs: docs
+                    metadata:
+                      key: value
+                    data:
+                      id: id
+                      name: name
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: string
+            examples:
+              Example1:
+                value: string
   /movie/optional/docs:
     post:
-      operationId: service_getOptionalMovieDocs
+      operationId: service_getoptionalmoviedocs
       tags:
         - Service
       parameters: []
@@ -112,15 +166,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OptionalWithDocs'
+              examples:
+                Example1:
+                  value:
+                    docs: docs
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: string
+            examples:
+              Example1:
+                value: string
   /movie/optional/name:
     post:
-      operationId: service_getOptionalMovieName
+      operationId: service_getoptionalmoviename
       tags:
         - Service
       parameters: []
@@ -131,12 +192,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OptionalStringResponse'
+              examples:
+                Example1:
+                  value:
+                    data: data
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: string
+            examples:
+              Example1:
+                value: string
 components:
   schemas:
     StringResponse:
@@ -145,12 +213,12 @@ components:
       properties:
         data:
           type: string
+          example: data
       required:
         - data
     OptionalStringResponse:
       title: OptionalStringResponse
       $ref: '#/components/schemas/StringResponse'
-      nullable: true
     WithMetadata:
       title: WithMetadata
       type: object
@@ -172,7 +240,6 @@ components:
     OptionalWithDocs:
       title: OptionalWithDocs
       $ref: '#/components/schemas/WithDocs'
-      nullable: true
     Movie:
       title: Movie
       type: object

@@ -35,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Send(
 	ctx context.Context,
-	request *fern.SendEnumAsHeaderRequest,
+	request *fern.HeadersSendRequest,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Send(

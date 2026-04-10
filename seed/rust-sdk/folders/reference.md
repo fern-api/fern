@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">foo</a>() -> Result&lt;(), ApiError&gt;</code></summary>
+## 
+<details><summary><code>client.<a href="/src/api/resources//client.rs">foo</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -20,7 +21,7 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client.foo(None).await;
+    client..foo(None).await;
 }
 ```
 </dd>
@@ -33,8 +34,8 @@ async fn main() {
 </dl>
 </details>
 
-## A B
-<details><summary><code>client.a().b.<a href="/src/api/resources/a/b/client.rs">foo</a>() -> Result&lt;(), ApiError&gt;</code></summary>
+## Ab
+<details><summary><code>client.ab.<a href="/src/api/resources/ab/client.rs">a_b_foo</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -55,7 +56,7 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client.a.b.foo(None).await;
+    client.ab.a_b_foo(None).await;
 }
 ```
 </dd>
@@ -68,8 +69,8 @@ async fn main() {
 </dl>
 </details>
 
-## A C
-<details><summary><code>client.a().c.<a href="/src/api/resources/a/c/client.rs">foo</a>() -> Result&lt;(), ApiError&gt;</code></summary>
+## Ac
+<details><summary><code>client.ac.<a href="/src/api/resources/ac/client.rs">a_c_foo</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -90,7 +91,7 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client.a.c.foo(None).await;
+    client.ac.a_c_foo(None).await;
 }
 ```
 </dd>
@@ -138,8 +139,8 @@ async fn main() {
 </dl>
 </details>
 
-## Folder Service
-<details><summary><code>client.folder().service.<a href="/src/api/resources/folder/service/client.rs">endpoint</a>() -> Result&lt;(), ApiError&gt;</code></summary>
+## FolderService
+<details><summary><code>client.folder_service.<a href="/src/api/resources/folder_service/client.rs">folder_service_endpoint</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -160,7 +161,7 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client.folder.service.endpoint(None).await;
+    client.folder_service.folder_service_endpoint(None).await;
 }
 ```
 </dd>
@@ -173,7 +174,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.folder().service.<a href="/src/api/resources/folder/service/client.rs">unknown_request</a>(request: serde_json::Value) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.folder_service.<a href="/src/api/resources/folder_service/client.rs">folder_service_unknown_request</a>(request: serde_json::Value) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -195,9 +196,8 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .folder
-        .service
-        .unknown_request(&serde_json::json!({"key":"value"}), None)
+        .folder_service
+        .folder_service_unknown_request(&serde_json::json!({"key":"value"}), None)
         .await;
 }
 ```

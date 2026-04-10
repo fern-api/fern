@@ -4,664 +4,649 @@
             "id": {
                 "path": "/container/list-of-primitives",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
+                "identifier_override": "endpoint_endpointsContainer.endpoints_container_getAndReturnListOfPrimitives"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.container.getAndReturnListOfPrimitives([\"string\", \"string\"]);\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsContainer.endpointsContainerGetAndReturnListOfPrimitives([\"string\"]);\n"
             }
         },
         {
             "id": {
                 "path": "/container/list-of-objects",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/container.getAndReturnListOfObjects"
+                "identifier_override": "endpoint_endpointsContainer.endpoints_container_getAndReturnListOfObjects"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.container.getAndReturnListOfObjects([{\n        string: \"string\"\n    }, {\n        string: \"string\"\n    }]);\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsContainer.endpointsContainerGetAndReturnListOfObjects([{\n        string: \"string\"\n    }]);\n"
             }
         },
         {
             "id": {
                 "path": "/container/set-of-primitives",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/container.getAndReturnSetOfPrimitives"
+                "identifier_override": "endpoint_endpointsContainer.endpoints_container_getAndReturnSetOfPrimitives"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.container.getAndReturnSetOfPrimitives(new Set([\"string\"]));\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsContainer.endpointsContainerGetAndReturnSetOfPrimitives([\"string\"]);\n"
             }
         },
         {
             "id": {
                 "path": "/container/set-of-objects",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/container.getAndReturnSetOfObjects"
+                "identifier_override": "endpoint_endpointsContainer.endpoints_container_getAndReturnSetOfObjects"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.container.getAndReturnSetOfObjects([{\n        string: \"string\"\n    }]);\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsContainer.endpointsContainerGetAndReturnSetOfObjects([{\n        string: \"string\"\n    }]);\n"
             }
         },
         {
             "id": {
                 "path": "/container/map-prim-to-prim",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/container.getAndReturnMapPrimToPrim"
+                "identifier_override": "endpoint_endpointsContainer.endpoints_container_getAndReturnMapPrimToPrim"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.container.getAndReturnMapPrimToPrim({\n    \"string\": \"string\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsContainer.endpointsContainerGetAndReturnMapPrimToPrim({\n    \"key\": \"value\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/container/map-prim-to-object",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject"
+                "identifier_override": "endpoint_endpointsContainer.endpoints_container_getAndReturnMapOfPrimToObject"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.container.getAndReturnMapOfPrimToObject({\n    \"string\": {\n        string: \"string\"\n    }\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsContainer.endpointsContainerGetAndReturnMapOfPrimToObject({\n    \"key\": {\n        string: \"string\"\n    }\n});\n"
             }
         },
         {
             "id": {
                 "path": "/container/map-prim-to-union",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/container.getAndReturnMapOfPrimToUndiscriminatedUnion"
+                "identifier_override": "endpoint_endpointsContainer.endpoints_container_getAndReturnMapOfPrimToUndiscriminatedUnion"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({\n    \"string\": 1.1\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsContainer.endpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion({\n    \"key\": 1.1\n});\n"
             }
         },
         {
             "id": {
                 "path": "/container/opt-objects",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/container.getAndReturnOptional"
+                "identifier_override": "endpoint_endpointsContainer.endpoints_container_getAndReturnOptional"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.container.getAndReturnOptional({\n    string: \"string\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsContainer.endpointsContainerGetAndReturnOptional({\n    string: \"string\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/foo/bar",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/content-type.postJsonPatchContentType"
+                "identifier_override": "endpoint_endpointsContentType.endpoints_contentType_postJsonPatchContentType"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.contentType.postJsonPatchContentType({\n    string: \"string\",\n    integer: 1,\n    long: BigInt(\"1000000\"),\n    double: 1.1,\n    bool: true,\n    datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    date: \"2023-01-15\",\n    uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    base64: \"SGVsbG8gd29ybGQh\",\n    list: [\"list\", \"list\"],\n    set: new Set([\"set\"]),\n    map: {\n        1: \"map\"\n    },\n    bigint: BigInt(\"1000000\")\n});\n"
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsContentType.endpointsContentTypePostJsonPatchContentType({});\n"
             }
         },
         {
             "id": {
                 "path": "/foo/baz",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType"
+                "identifier_override": "endpoint_endpointsContentType.endpoints_contentType_postJsonPatchContentWithCharsetType"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.contentType.postJsonPatchContentWithCharsetType({\n    string: \"string\",\n    integer: 1,\n    long: BigInt(\"1000000\"),\n    double: 1.1,\n    bool: true,\n    datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    date: \"2023-01-15\",\n    uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    base64: \"SGVsbG8gd29ybGQh\",\n    list: [\"list\", \"list\"],\n    set: new Set([\"set\"]),\n    map: {\n        1: \"map\"\n    },\n    bigint: BigInt(\"1000000\")\n});\n"
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsContentType.endpointsContentTypePostJsonPatchContentWithCharsetType({});\n"
             }
         },
         {
             "id": {
                 "path": "/enum",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/enum.getAndReturnEnum"
+                "identifier_override": "endpoint_endpointsEnum.endpoints_enum_getAndReturnEnum"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.enum.getAndReturnEnum(\"SUNNY\");\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsEnum.endpointsEnumGetAndReturnEnum(\"SUNNY\");\n"
             }
         },
         {
             "id": {
                 "path": "/http-methods/{id}",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/http-methods.testGet"
+                "identifier_override": "endpoint_endpointsHttpMethods.endpoints_httpMethods_testGet"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.httpMethods.testGet(\"id\");\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/http-methods",
-                "method": "POST",
-                "identifier_override": "endpoint_endpoints/http-methods.testPost"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.httpMethods.testPost({\n    string: \"string\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsHttpMethods.endpointsHttpMethodsTestGet({\n    id: \"id\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/http-methods/{id}",
                 "method": "PUT",
-                "identifier_override": "endpoint_endpoints/http-methods.testPut"
+                "identifier_override": "endpoint_endpointsHttpMethods.endpoints_httpMethods_testPut"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.httpMethods.testPut(\"id\", {\n    string: \"string\"\n});\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/http-methods/{id}",
-                "method": "PATCH",
-                "identifier_override": "endpoint_endpoints/http-methods.testPatch"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.httpMethods.testPatch(\"id\", {\n    string: \"string\",\n    integer: 1,\n    long: BigInt(\"1000000\"),\n    double: 1.1,\n    bool: true,\n    datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    date: \"2023-01-15\",\n    uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    base64: \"SGVsbG8gd29ybGQh\",\n    list: [\"list\", \"list\"],\n    set: new Set([\"set\"]),\n    map: {\n        1: \"map\"\n    },\n    bigint: BigInt(\"1000000\")\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsHttpMethods.endpointsHttpMethodsTestPut({\n    id: \"id\",\n    body: {\n        string: \"string\"\n    }\n});\n"
             }
         },
         {
             "id": {
                 "path": "/http-methods/{id}",
                 "method": "DELETE",
-                "identifier_override": "endpoint_endpoints/http-methods.testDelete"
+                "identifier_override": "endpoint_endpointsHttpMethods.endpoints_httpMethods_testDelete"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.httpMethods.testDelete(\"id\");\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsHttpMethods.endpointsHttpMethodsTestDelete({\n    id: \"id\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_endpointsHttpMethods.endpoints_httpMethods_testPatch"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsHttpMethods.endpointsHttpMethodsTestPatch({\n    id: \"id\",\n    body: {}\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods",
+                "method": "POST",
+                "identifier_override": "endpoint_endpointsHttpMethods.endpoints_httpMethods_testPost"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsHttpMethods.endpointsHttpMethodsTestPost({\n    string: \"string\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-with-optional-field",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithOptionalField"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnWithOptionalField"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithOptionalField({\n    string: \"string\",\n    integer: 1,\n    long: BigInt(\"1000000\"),\n    double: 1.1,\n    bool: true,\n    datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    date: \"2023-01-15\",\n    uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    base64: \"SGVsbG8gd29ybGQh\",\n    list: [\"list\", \"list\"],\n    set: new Set([\"set\"]),\n    map: {\n        1: \"map\"\n    },\n    bigint: BigInt(\"1000000\")\n});\n"
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsObject.endpointsObjectGetAndReturnWithOptionalField({});\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-with-required-field",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithRequiredField"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnWithRequiredField"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithRequiredField({\n    string: \"string\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsObject.endpointsObjectGetAndReturnWithRequiredField({\n    string: \"string\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-with-map-of-map",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithMapOfMap"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnWithMapOfMap"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithMapOfMap({\n    map: {\n        \"map\": {\n            \"map\": \"map\"\n        }\n    }\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsObject.endpointsObjectGetAndReturnWithMapOfMap({\n    map: {\n        \"key\": {\n            \"key\": \"value\"\n        }\n    }\n});\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-nested-with-optional-field",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnNestedWithOptionalField"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnNestedWithOptionalField({\n    string: \"string\",\n    nestedObject: {\n        string: \"string\",\n        integer: 1,\n        long: BigInt(\"1000000\"),\n        double: 1.1,\n        bool: true,\n        datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n        date: \"2023-01-15\",\n        uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        base64: \"SGVsbG8gd29ybGQh\",\n        list: [\"list\", \"list\"],\n        set: new Set([\"set\"]),\n        map: {\n            1: \"map\"\n        },\n        bigint: BigInt(\"1000000\")\n    }\n});\n"
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsObject.endpointsObjectGetAndReturnNestedWithOptionalField({});\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-nested-with-required-field/{string}",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnNestedWithRequiredField"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnNestedWithRequiredField(\"string\", {\n    string: \"string\",\n    nestedObject: {\n        string: \"string\",\n        integer: 1,\n        long: BigInt(\"1000000\"),\n        double: 1.1,\n        bool: true,\n        datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n        date: \"2023-01-15\",\n        uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        base64: \"SGVsbG8gd29ybGQh\",\n        list: [\"list\", \"list\"],\n        set: new Set([\"set\"]),\n        map: {\n            1: \"map\"\n        },\n        bigint: BigInt(\"1000000\")\n    }\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsObject.endpointsObjectGetAndReturnNestedWithRequiredField({\n    string: \"string\",\n    body: {\n        string: \"string\",\n        nestedObject: {}\n    }\n});\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-nested-with-required-field-list",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnNestedWithRequiredFieldAsList"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{\n        string: \"string\",\n        nestedObject: {\n            string: \"string\",\n            integer: 1,\n            long: BigInt(\"1000000\"),\n            double: 1.1,\n            bool: true,\n            datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n            date: \"2023-01-15\",\n            uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            base64: \"SGVsbG8gd29ybGQh\",\n            list: [\"list\", \"list\"],\n            set: new Set([\"set\"]),\n            map: {\n                1: \"map\"\n            },\n            bigint: BigInt(\"1000000\")\n        }\n    }, {\n        string: \"string\",\n        nestedObject: {\n            string: \"string\",\n            integer: 1,\n            long: BigInt(\"1000000\"),\n            double: 1.1,\n            bool: true,\n            datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n            date: \"2023-01-15\",\n            uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            base64: \"SGVsbG8gd29ybGQh\",\n            list: [\"list\", \"list\"],\n            set: new Set([\"set\"]),\n            map: {\n                1: \"map\"\n            },\n            bigint: BigInt(\"1000000\")\n        }\n    }]);\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsObject.endpointsObjectGetAndReturnNestedWithRequiredFieldAsList([{\n        string: \"string\",\n        nestedObject: {}\n    }]);\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-with-unknown-field",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithUnknownField"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnWithUnknownField"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithUnknownField({\n    unknown: {\n        \"$ref\": \"https://example.com/schema\"\n    }\n});\n"
-            },
-            "example_identifier": "BackslashExample"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsObject.endpointsObjectGetAndReturnWithUnknownField({\n    unknown: {\n        \"key\": \"value\"\n    }\n});\n"
+            }
         },
         {
             "id": {
                 "path": "/object/get-and-return-with-documented-unknown-type",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithDocumentedUnknownType"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnWithDocumentedUnknownType"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithDocumentedUnknownType({\n    documentedUnknownType: {\n        \"key\": \"value\"\n    }\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsObject.endpointsObjectGetAndReturnWithDocumentedUnknownType({\n    documentedUnknownType: {\n        \"key\": \"value\"\n    }\n});\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-map-of-documented-unknown-type",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnMapOfDocumentedUnknownType"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnMapOfDocumentedUnknownType"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnMapOfDocumentedUnknownType({\n    \"string\": {\n        \"key\": \"value\"\n    }\n});\n"
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsObject.endpointsObjectGetAndReturnMapOfDocumentedUnknownType({});\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-with-mixed-required-and-optional-fields",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithMixedRequiredAndOptionalFields"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnWithMixedRequiredAndOptionalFields"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields({\n    requiredString: \"hello\",\n    requiredInteger: 0,\n    optionalString: \"world\",\n    requiredLong: BigInt(\"0\")\n});\n"
-            },
-            "example_identifier": "PartialRequiredFields"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsObject.endpointsObjectGetAndReturnWithMixedRequiredAndOptionalFields({\n    requiredString: \"requiredString\",\n    requiredInteger: 1,\n    requiredLong: BigInt(\"1000000\")\n});\n"
+            }
         },
         {
             "id": {
                 "path": "/object/get-and-return-with-required-nested-object",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithRequiredNestedObject"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnWithRequiredNestedObject"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithRequiredNestedObject({\n    requiredString: \"hello\",\n    requiredObject: {\n        string: \"nested\",\n        nestedObject: {}\n    }\n});\n"
-            },
-            "example_identifier": "NestedObjectMissing"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsObject.endpointsObjectGetAndReturnWithRequiredNestedObject({\n    requiredString: \"requiredString\",\n    requiredObject: {\n        string: \"string\",\n        nestedObject: {}\n    }\n});\n"
+            }
         },
         {
             "id": {
                 "path": "/object/get-and-return-with-datetime-like-string",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithDatetimeLikeString"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnWithDatetimeLikeString"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithDatetimeLikeString({\n    datetimeLikeString: \"2023-08-31T14:15:22Z\",\n    actualDatetime: new Date(\"2023-08-31T14:15:22.000Z\")\n});\n"
-            },
-            "example_identifier": "DatetimeLikeStringExample"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsObject.endpointsObjectGetAndReturnWithDatetimeLikeString({\n    datetimeLikeString: \"datetimeLikeString\",\n    actualDatetime: new Date(\"2024-01-15T09:30:00.000Z\")\n});\n"
+            }
         },
         {
             "id": {
                 "path": "/pagination",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/pagination.listItems"
+                "identifier_override": "endpoint_endpointsPagination.endpoints_pagination_listItems"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.endpoints.pagination.listItems({\n    cursor: \"cursor\",\n    limit: 1\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.endpoints.pagination.listItems({\n    cursor: \"cursor\",\n    limit: 1\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsPagination.endpointsPaginationListItems();\n"
             }
         },
         {
             "id": {
                 "path": "/params/path/{param}",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithPath"
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_getWithPath"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.getWithPath(\"param\");\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsParams.endpointsParamsGetWithPath({\n    param: \"param\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "PUT",
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_modifyWithPath"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsParams.endpointsParamsModifyWithPath({\n    param: \"param\",\n    body: \"string\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/params/inline-path/{param}",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithInlinePath"
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_getWithInlinePath"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.getWithInlinePath({\n    param: \"param\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsParams.endpointsParamsGetWithInlinePath({\n    param: \"param\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/inline-path/{param}",
+                "method": "PUT",
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_modifyWithInlinePath"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsParams.endpointsParamsModifyWithInlinePath({\n    param: \"param\",\n    body: \"string\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/params",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithQuery"
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_getWithQuery"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.getWithQuery({\n    query: \"query\",\n    number: 1\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsParams.endpointsParamsGetWithQuery({\n    query: \"query\",\n    number: 1\n});\n"
             }
         },
         {
             "id": {
                 "path": "/params/allow-multiple",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithAllowMultipleQuery"
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_getWithAllowMultipleQuery"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.getWithAllowMultipleQuery({\n    query: \"query\",\n    number: 1\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsParams.endpointsParamsGetWithAllowMultipleQuery({\n    query: \"query\",\n    number: 1\n});\n"
             }
         },
         {
             "id": {
                 "path": "/params/path-query/{param}",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithPathAndQuery"
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_getWithPathAndQuery"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.getWithPathAndQuery(\"param\", {\n    query: \"query\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsParams.endpointsParamsGetWithPathAndQuery({\n    param: \"param\",\n    query: \"query\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/params/inline-path-query/{param}",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithInlinePathAndQuery"
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_getWithInlinePathAndQuery"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.getWithInlinePathAndQuery({\n    param: \"param\",\n    query: \"query\"\n});\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/params/path/{param}",
-                "method": "PUT",
-                "identifier_override": "endpoint_endpoints/params.modifyWithPath"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.modifyWithPath(\"param\", \"string\");\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/params/inline-path/{param}",
-                "method": "PUT",
-                "identifier_override": "endpoint_endpoints/params.modifyWithInlinePath"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.modifyWithInlinePath({\n    param: \"param\",\n    body: \"string\"\n});\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/params/path/{param}",
-                "method": "POST",
-                "identifier_override": "endpoint_endpoints/params.uploadWithPath"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { createReadStream } from \"fs\";\nimport { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.uploadWithPath(createReadStream(\"path/to/file\"), \"upload-path\");\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsParams.endpointsParamsGetWithInlinePathAndQuery({\n    param: \"param\",\n    query: \"query\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/params/path-bool/{param}",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithBooleanPath"
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_getWithBooleanPath"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.getWithBooleanPath(true);\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsParams.endpointsParamsGetWithBooleanPath({\n    param: true\n});\n"
             }
         },
         {
             "id": {
                 "path": "/params/path-with-errors/{param}",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithPathAndErrors"
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_getWithPathAndErrors"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.getWithPathAndErrors(\"param\");\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsParams.endpointsParamsGetWithPathAndErrors({\n    param: \"param\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/string",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnString"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnString"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.primitive.getAndReturnString(\"string\");\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsPrimitive.endpointsPrimitiveGetAndReturnString(\"string\");\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/integer",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnInt"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnInt"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.primitive.getAndReturnInt(1);\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsPrimitive.endpointsPrimitiveGetAndReturnInt(1);\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/long",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnLong"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnLong"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.primitive.getAndReturnLong(BigInt(\"1000000\"));\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsPrimitive.endpointsPrimitiveGetAndReturnLong(BigInt(\"1000000\"));\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/double",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnDouble"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnDouble"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.primitive.getAndReturnDouble(1.1);\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsPrimitive.endpointsPrimitiveGetAndReturnDouble(1.1);\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/boolean",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnBool"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnBool"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.primitive.getAndReturnBool(true);\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsPrimitive.endpointsPrimitiveGetAndReturnBool(true);\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/datetime",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnDatetime"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnDatetime"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.primitive.getAndReturnDatetime(new Date(\"2024-01-15T09:30:00.000Z\"));\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsPrimitive.endpointsPrimitiveGetAndReturnDatetime(new Date(\"2024-01-15T09:30:00.000Z\"));\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/date",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnDate"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnDate"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.primitive.getAndReturnDate(\"2023-01-15\");\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsPrimitive.endpointsPrimitiveGetAndReturnDate(\"2023-01-15\");\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/uuid",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnUUID"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnUUID"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.primitive.getAndReturnUuid(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\");\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsPrimitive.endpointsPrimitiveGetAndReturnUuid(\"string\");\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/base64",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnBase64"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnBase64"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.primitive.getAndReturnBase64(\"SGVsbG8gd29ybGQh\");\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsPrimitive.endpointsPrimitiveGetAndReturnBase64(\"string\");\n"
             }
         },
         {
             "id": {
                 "path": "/{id}",
                 "method": "PUT",
-                "identifier_override": "endpoint_endpoints/put.add"
+                "identifier_override": "endpoint_endpointsPut.endpoints_put_add"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.put.add({\n    id: \"id\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsPut.endpointsPutAdd({\n    id: \"id\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/union",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/union.getAndReturnUnion"
+                "identifier_override": "endpoint_endpointsUnion.endpoints_union_getAndReturnUnion"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.union.getAndReturnUnion({\n    animal: \"dog\",\n    name: \"name\",\n    likesToWoof: true\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsUnion.endpointsUnionGetAndReturnUnion({\n    name: \"name\",\n    likesToWoof: true,\n    animal: \"dog\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/urls/MixedCase",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/urls.withMixedCase"
+                "identifier_override": "endpoint_endpointsUrLs.endpoints_urls_withMixedCase"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.urls.withMixedCase();\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsUrLs.endpointsUrlsWithMixedCase();\n"
             }
         },
         {
             "id": {
                 "path": "/urls/no-ending-slash",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/urls.noEndingSlash"
+                "identifier_override": "endpoint_endpointsUrLs.endpoints_urls_noEndingSlash"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.urls.noEndingSlash();\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsUrLs.endpointsUrlsNoEndingSlash();\n"
             }
         },
         {
             "id": {
                 "path": "/urls/with-ending-slash/",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/urls.withEndingSlash"
+                "identifier_override": "endpoint_endpointsUrLs.endpoints_urls_withEndingSlash"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.urls.withEndingSlash();\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsUrLs.endpointsUrlsWithEndingSlash();\n"
             }
         },
         {
             "id": {
                 "path": "/urls/with_underscores",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/urls.withUnderscores"
+                "identifier_override": "endpoint_endpointsUrLs.endpoints_urls_withUnderscores"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.urls.withUnderscores();\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpointsUrLs.endpointsUrlsWithUnderscores();\n"
             }
         },
         {
             "id": {
                 "path": "/req-bodies/object",
                 "method": "POST",
-                "identifier_override": "endpoint_inlined-requests.postWithObjectBodyandResponse"
+                "identifier_override": "endpoint_inlinedrequests.postwithobjectbodyandresponse"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlinedRequests.postWithObjectBodyandResponse({\n    string: \"string\",\n    integer: 1,\n    nestedObject: {\n        string: \"string\",\n        integer: 1,\n        long: BigInt(\"1000000\"),\n        double: 1.1,\n        bool: true,\n        datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n        date: \"2023-01-15\",\n        uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        base64: \"SGVsbG8gd29ybGQh\",\n        list: [\"list\", \"list\"],\n        set: new Set([\"set\"]),\n        map: {\n            1: \"map\"\n        },\n        bigint: BigInt(\"1000000\")\n    }\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlinedrequests.postwithobjectbodyandresponse({\n    string: \"string\",\n    integer: 1,\n    nestedObject: {}\n});\n"
             }
         },
         {
             "id": {
                 "path": "/no-auth",
                 "method": "POST",
-                "identifier_override": "endpoint_no-auth.postWithNoAuth"
+                "identifier_override": "endpoint_noauth.postwithnoauth"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.noAuth.postWithNoAuth({\n    \"key\": \"value\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.noauth.postwithnoauth({\n    \"key\": \"value\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/no-req-body",
                 "method": "GET",
-                "identifier_override": "endpoint_no-req-body.getWithNoRequestBody"
+                "identifier_override": "endpoint_noreqbody.getwithnorequestbody"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.noReqBody.getWithNoRequestBody();\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.noreqbody.getwithnorequestbody();\n"
             }
         },
         {
             "id": {
                 "path": "/no-req-body",
                 "method": "POST",
-                "identifier_override": "endpoint_no-req-body.postWithNoRequestBody"
+                "identifier_override": "endpoint_noreqbody.postwithnorequestbody"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.noReqBody.postWithNoRequestBody();\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.noreqbody.postwithnorequestbody();\n"
             }
         },
         {
             "id": {
                 "path": "/test-headers/custom-header",
                 "method": "POST",
-                "identifier_override": "endpoint_req-with-headers.getWithCustomHeader"
+                "identifier_override": "endpoint_reqwithheaders.getwithcustomheader"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.reqWithHeaders.getWithCustomHeader({\n    xTestServiceHeader: \"X-TEST-SERVICE-HEADER\",\n    xTestEndpointHeader: \"X-TEST-ENDPOINT-HEADER\",\n    body: \"string\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/exhaustive\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.reqwithheaders.getwithcustomheader({\n    testEndpointHeader: \"X-TEST-ENDPOINT-HEADER\",\n    body: \"string\"\n});\n"
             }
         }
     ],

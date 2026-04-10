@@ -1,4 +1,4 @@
-//! API client and types for the AnyAuth
+//! API client and types for the any-auth
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,5 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{AnyAuthClient, AuthClient, UserClient};
+pub use resources::{ApiClient, AuthClient, UserClient};
 pub use types::*;

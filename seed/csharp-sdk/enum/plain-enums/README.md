@@ -39,17 +39,11 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedEnum;
+using SeedApi;
 
-var client = new SeedEnumClient();
+var client = new SeedApiClient();
 await client.Headers.SendAsync(
-    new SendEnumAsHeaderRequest
-    {
-        Operand = Operand.GreaterThan,
-        MaybeOperand = Operand.GreaterThan,
-        OperandOrColor = Color.Red,
-        MaybeOperandOrColor = null,
-    }
+    new HeadersSendRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
 );
 ```
 
@@ -59,11 +53,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedEnum;
+using SeedApi;
 
 try {
     var response = await client.Headers.SendAsync(...);
-} catch (SeedEnumApiException e) {
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -112,7 +106,7 @@ var response = await client.Headers.SendAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedEnum;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
 var result = await client.Headers.SendAsync(...).WithRawResponse();

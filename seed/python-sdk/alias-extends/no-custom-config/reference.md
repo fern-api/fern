@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">extended_inline_request_body</a>(...)</code></summary>
+## _
+<details><summary><code>client._.<a href="src/seed/_/client.py">extended_inline_request_body</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -12,13 +13,13 @@
 <dd>
 
 ```python
-from seed import SeedAliasExtends
+from seed import SeedApi
 
-client = SeedAliasExtends(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.extended_inline_request_body(
+client._.extended_inline_request_body(
     parent="parent",
     child="child",
 )

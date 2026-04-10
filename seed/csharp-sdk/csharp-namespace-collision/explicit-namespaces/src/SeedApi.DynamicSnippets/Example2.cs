@@ -11,7 +11,14 @@ public class Example2
             }
         );
 
-        await client.ScimConfiguration.GetConfigurationAsync();
+        await client._.CreateTaskAsync(
+            new Contoso.Net.Task {
+                Id = "id",
+                Name = "name",
+                Email = "email",
+                Password = "password"
+            }
+        );
     }
 
 }

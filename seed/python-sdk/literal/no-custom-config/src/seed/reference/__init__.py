@@ -6,13 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ContainerObject, NestedObjectWithLiterals, SendRequest, SomeLiteral
-_dynamic_imports: typing.Dict[str, str] = {
-    "ContainerObject": ".types",
-    "NestedObjectWithLiterals": ".types",
-    "SendRequest": ".types",
-    "SomeLiteral": ".types",
-}
+    from .types import SendRequestEnding, SendRequestPrompt
+_dynamic_imports: typing.Dict[str, str] = {"SendRequestEnding": ".types", "SendRequestPrompt": ".types"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -36,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ContainerObject", "NestedObjectWithLiterals", "SendRequest", "SomeLiteral"]
+__all__ = ["SendRequestEnding", "SendRequestPrompt"]

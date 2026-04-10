@@ -12,14 +12,14 @@ class EndpointsParamsWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_params_get_with_path_with_wiremock
-    test_id = "endpoints.params.get_with_path.0"
+  def test_endpoints_params_endpoints_params_get_with_path_with_wiremock
+    test_id = "endpoints_params.endpoints_params_get_with_path.0"
 
-    @client.endpoints.params.get_with_path(
+    @client.endpoints_params.endpoints_params_get_with_path(
       param: "param",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.params.get_with_path.0"
+          "X-Test-Id" => "endpoints_params.endpoints_params_get_with_path.0"
         }
       }
     )
@@ -33,14 +33,36 @@ class EndpointsParamsWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_params_get_with_inline_path_with_wiremock
-    test_id = "endpoints.params.get_with_inline_path.0"
+  def test_endpoints_params_endpoints_params_modify_with_path_with_wiremock
+    test_id = "endpoints_params.endpoints_params_modify_with_path.0"
 
-    @client.endpoints.params.get_with_inline_path(
+    @client.endpoints_params.endpoints_params_modify_with_path(
+      param: "param",
+      body: "string",
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints_params.endpoints_params_modify_with_path.0"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "PUT",
+      url_path: "/params/path/param",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
+  def test_endpoints_params_endpoints_params_get_with_inline_path_with_wiremock
+    test_id = "endpoints_params.endpoints_params_get_with_inline_path.0"
+
+    @client.endpoints_params.endpoints_params_get_with_inline_path(
       param: "param",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.params.get_with_inline_path.0"
+          "X-Test-Id" => "endpoints_params.endpoints_params_get_with_inline_path.0"
         }
       }
     )
@@ -54,15 +76,37 @@ class EndpointsParamsWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_params_get_with_query_with_wiremock
-    test_id = "endpoints.params.get_with_query.0"
+  def test_endpoints_params_endpoints_params_modify_with_inline_path_with_wiremock
+    test_id = "endpoints_params.endpoints_params_modify_with_inline_path.0"
 
-    @client.endpoints.params.get_with_query(
+    @client.endpoints_params.endpoints_params_modify_with_inline_path(
+      param: "param",
+      body: "string",
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints_params.endpoints_params_modify_with_inline_path.0"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "PUT",
+      url_path: "/params/inline-path/param",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
+  def test_endpoints_params_endpoints_params_get_with_query_with_wiremock
+    test_id = "endpoints_params.endpoints_params_get_with_query.0"
+
+    @client.endpoints_params.endpoints_params_get_with_query(
       query: "query",
       number: 1,
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.params.get_with_query.0"
+          "X-Test-Id" => "endpoints_params.endpoints_params_get_with_query.0"
         }
       }
     )
@@ -76,33 +120,33 @@ class EndpointsParamsWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_params_get_with_allow_multiple_query_with_wiremock
-    test_id = "endpoints.params.get_with_allow_multiple_query.0"
+  def test_endpoints_params_endpoints_params_get_with_allow_multiple_query_with_wiremock
+    test_id = "endpoints_params.endpoints_params_get_with_allow_multiple_query.0"
 
-    @client.endpoints.params.get_with_allow_multiple_query(request_options: {
-                                                             additional_headers: {
-                                                               "X-Test-Id" => "endpoints.params.get_with_allow_multiple_query.0"
-                                                             }
-                                                           })
+    @client.endpoints_params.endpoints_params_get_with_allow_multiple_query(request_options: {
+                                                                              additional_headers: {
+                                                                                "X-Test-Id" => "endpoints_params.endpoints_params_get_with_allow_multiple_query.0"
+                                                                              }
+                                                                            })
 
     verify_request_count(
       test_id: test_id,
       method: "GET",
       url_path: "/params/allow-multiple",
-      query_params: { "query" => "query", "number" => "1" },
+      query_params: nil,
       expected: 1
     )
   end
 
-  def test_endpoints_params_get_with_path_and_query_with_wiremock
-    test_id = "endpoints.params.get_with_path_and_query.0"
+  def test_endpoints_params_endpoints_params_get_with_path_and_query_with_wiremock
+    test_id = "endpoints_params.endpoints_params_get_with_path_and_query.0"
 
-    @client.endpoints.params.get_with_path_and_query(
+    @client.endpoints_params.endpoints_params_get_with_path_and_query(
       param: "param",
       query: "query",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.params.get_with_path_and_query.0"
+          "X-Test-Id" => "endpoints_params.endpoints_params_get_with_path_and_query.0"
         }
       }
     )
@@ -116,15 +160,15 @@ class EndpointsParamsWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_params_get_with_inline_path_and_query_with_wiremock
-    test_id = "endpoints.params.get_with_inline_path_and_query.0"
+  def test_endpoints_params_endpoints_params_get_with_inline_path_and_query_with_wiremock
+    test_id = "endpoints_params.endpoints_params_get_with_inline_path_and_query.0"
 
-    @client.endpoints.params.get_with_inline_path_and_query(
+    @client.endpoints_params.endpoints_params_get_with_inline_path_and_query(
       param: "param",
       query: "query",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.params.get_with_inline_path_and_query.0"
+          "X-Test-Id" => "endpoints_params.endpoints_params_get_with_inline_path_and_query.0"
         }
       }
     )
@@ -138,79 +182,14 @@ class EndpointsParamsWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_params_modify_with_path_with_wiremock
-    test_id = "endpoints.params.modify_with_path.0"
+  def test_endpoints_params_endpoints_params_get_with_boolean_path_with_wiremock
+    test_id = "endpoints_params.endpoints_params_get_with_boolean_path.0"
 
-    @client.endpoints.params.modify_with_path(
-      param: "param",
-      request: "string",
-      request_options: {
-        additional_headers: {
-          "X-Test-Id" => "endpoints.params.modify_with_path.0"
-        }
-      }
-    )
-
-    verify_request_count(
-      test_id: test_id,
-      method: "PUT",
-      url_path: "/params/path/param",
-      query_params: nil,
-      expected: 1
-    )
-  end
-
-  def test_endpoints_params_modify_with_inline_path_with_wiremock
-    test_id = "endpoints.params.modify_with_inline_path.0"
-
-    @client.endpoints.params.modify_with_inline_path(
-      param: "param",
-      body: "string",
-      request_options: {
-        additional_headers: {
-          "X-Test-Id" => "endpoints.params.modify_with_inline_path.0"
-        }
-      }
-    )
-
-    verify_request_count(
-      test_id: test_id,
-      method: "PUT",
-      url_path: "/params/inline-path/param",
-      query_params: nil,
-      expected: 1
-    )
-  end
-
-  def test_endpoints_params_upload_with_path_with_wiremock
-    test_id = "endpoints.params.upload_with_path.0"
-
-    @client.endpoints.params.upload_with_path(
-      param: "upload-path",
-      request_options: {
-        additional_headers: {
-          "X-Test-Id" => "endpoints.params.upload_with_path.0"
-        }
-      }
-    )
-
-    verify_request_count(
-      test_id: test_id,
-      method: "POST",
-      url_path: "/params/path/{param}",
-      query_params: nil,
-      expected: 1
-    )
-  end
-
-  def test_endpoints_params_get_with_boolean_path_with_wiremock
-    test_id = "endpoints.params.get_with_boolean_path.0"
-
-    @client.endpoints.params.get_with_boolean_path(
+    @client.endpoints_params.endpoints_params_get_with_boolean_path(
       param: true,
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.params.get_with_boolean_path.0"
+          "X-Test-Id" => "endpoints_params.endpoints_params_get_with_boolean_path.0"
         }
       }
     )
@@ -224,14 +203,14 @@ class EndpointsParamsWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_params_get_with_path_and_errors_with_wiremock
-    test_id = "endpoints.params.get_with_path_and_errors.0"
+  def test_endpoints_params_endpoints_params_get_with_path_and_errors_with_wiremock
+    test_id = "endpoints_params.endpoints_params_get_with_path_and_errors.0"
 
-    @client.endpoints.params.get_with_path_and_errors(
+    @client.endpoints_params.endpoints_params_get_with_path_and_errors(
       param: "param",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.params.get_with_path_and_errors.0"
+          "X-Test-Id" => "endpoints_params.endpoints_params_get_with_path_and_errors.0"
         }
       }
     )

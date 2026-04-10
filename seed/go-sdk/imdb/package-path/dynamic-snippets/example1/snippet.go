@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    inhereplease "github.com/imdb/fern/inhereplease"
     client "github.com/imdb/fern/inhereplease/client"
     option "github.com/imdb/fern/inhereplease/option"
 )
@@ -16,8 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    client.Imdb.GetMovie(
+    request := &inhereplease.CreateMovieRequest{
+        Title: "title",
+        Rating: 1.1,
+    }
+    client.Imdb.Createmovie(
         context.TODO(),
-        "movieId",
+        request,
     )
 }

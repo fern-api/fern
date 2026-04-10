@@ -34,12 +34,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Add a movie to the database
-func (c *Client) CreateMovie(
+func (c *Client) Createmovie(
 	ctx context.Context,
 	request *fern.CreateMovieRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.CreateMovie(
+	response, err := c.WithRawResponse.Createmovie(
 		ctx,
 		request,
 		opts...,

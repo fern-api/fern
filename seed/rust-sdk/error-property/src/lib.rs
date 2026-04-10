@@ -1,19 +1,19 @@
-//! # ErrorProperty SDK
+//! # error-property SDK
 //!
-//! The official Rust SDK for the ErrorProperty.
+//! The official Rust SDK for the error-property.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_error_property::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ErrorPropertyClient::new(config).expect("Failed to build client");
-//!     client.property_based_error.throw_error(None).await;
+//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     client.propertybasederror.throwerror(None).await;
 //! }
 //! ```
 //!

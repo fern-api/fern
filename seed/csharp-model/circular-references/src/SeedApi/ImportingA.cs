@@ -12,7 +12,7 @@ public record ImportingA : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("a")]
-    public A? A { get; set; }
+    public RootType? A { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

@@ -1,11 +1,11 @@
-using SeedLiteral;
+using SeedApi;
 
 namespace Usage;
 
 public class Example8
 {
     public async Task Do() {
-        var client = new SeedLiteralClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
@@ -13,21 +13,21 @@ public class Example8
 
         await client.Reference.SendAsync(
             new SendRequest {
-                Prompt = "You are a helpful assistant",
-                Stream = false,
-                Context = "You're super wise",
-                Query = "What is the weather today",
+                Prompt = SendRequestPrompt.YouAreAHelpfulAssistant,
+                Query = "query",
+                Stream = true,
+                Ending = SendRequestEnding.Ending,
+                Context = SomeLiteral.YoureSuperWise,
                 ContainerObject = new ContainerObject {
                     NestedObjects = new List<NestedObjectWithLiterals>(){
                         new NestedObjectWithLiterals {
-                            Literal1 = "literal1",
-                            Literal2 = "literal2",
+                            Literal1 = NestedObjectWithLiteralsLiteral1.Literal1,
+                            Literal2 = NestedObjectWithLiteralsLiteral2.Literal2,
                             StrProp = "strProp"
                         },
                     }
 
-                },
-                Ending = "$ending"
+                }
             }
         );
     }

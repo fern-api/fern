@@ -6,8 +6,6 @@ SpecialEnum = typing.Union[
     typing.Literal[
         "",
         'Hello \\"World\\"',
-        "Hello 'World'",
-        "Hello\\\\World",
         "Hello\\nWorld",
         "Hello\\rWorld",
         "Hello\\tWorld",
@@ -35,7 +33,6 @@ SpecialEnum = typing.Union[
         "\\\\d{3}-\\\\d{2}-\\\\d{4}",
         "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}",
         'transcript[transcriptType="final"]',
-        "transcript[transcriptType='final']",
     ],
     typing.Any,
 ]

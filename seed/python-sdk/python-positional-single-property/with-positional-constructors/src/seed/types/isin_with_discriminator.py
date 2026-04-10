@@ -4,22 +4,12 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .isin_with_discriminator_type import IsinWithDiscriminatorType
 
 
 class IsinWithDiscriminator(UniversalBaseModel):
     isin: str
-    type: typing.Literal["ISIN"] = "ISIN"
-
-    @typing.overload
-    def __init__(self, isin: str) -> None: ...
-    @typing.overload
-    def __init__(self, *, isin: str) -> None: ...
-    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
-        if args:
-            kwargs.pop("isin", None)
-            super().__init__(isin=args[0], **kwargs)
-        else:
-            super().__init__(**kwargs)
+    type: IsinWithDiscriminatorType
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

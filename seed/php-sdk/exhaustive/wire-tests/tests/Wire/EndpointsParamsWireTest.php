@@ -4,11 +4,12 @@ namespace Seed\Tests;
 
 use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
-use Seed\Endpoints\Params\Requests\GetWithQuery;
-use Seed\Endpoints\Params\Requests\GetWithMultipleQuery;
-use Seed\Endpoints\Params\Requests\GetWithPathAndQuery;
-use Seed\Endpoints\Params\Requests\GetWithInlinePathAndQuery;
-use Seed\Endpoints\Params\Requests\ModifyResourceAtInlinedPath;
+use Seed\EndpointsParams\Requests\EndpointsParamsModifyWithPathRequest;
+use Seed\EndpointsParams\Requests\EndpointsParamsModifyWithInlinePathRequest;
+use Seed\EndpointsParams\Requests\EndpointsParamsGetWithQueryRequest;
+use Seed\EndpointsParams\Requests\EndpointsParamsGetWithAllowMultipleQueryRequest;
+use Seed\EndpointsParams\Requests\EndpointsParamsGetWithPathAndQueryRequest;
+use Seed\EndpointsParams\Requests\EndpointsParamsGetWithInlinePathAndQueryRequest;
 
 class EndpointsParamsWireTest extends WireMockTestCase
 {
@@ -19,13 +20,13 @@ class EndpointsParamsWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetWithPath(): void {
-        $testId = 'endpoints.params.get_with_path.0';
-        $this->client->endpoints->params->getWithPath(
+    public function testEndpointsParamsGetWithPath(): void {
+        $testId = 'endpoints_params.endpoints_params_get_with_path.0';
+        $this->client->endpointsParams->endpointsParamsGetWithPath(
             'param',
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.params.get_with_path.0',
+                    'X-Test-Id' => 'endpoints_params.endpoints_params_get_with_path.0',
                 ],
             ],
         );
@@ -40,13 +41,37 @@ class EndpointsParamsWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetWithInlinePath(): void {
-        $testId = 'endpoints.params.get_with_inline_path.0';
-        $this->client->endpoints->params->getWithInlinePath(
+    public function testEndpointsParamsModifyWithPath(): void {
+        $testId = 'endpoints_params.endpoints_params_modify_with_path.0';
+        $this->client->endpointsParams->endpointsParamsModifyWithPath(
+            'param',
+            new EndpointsParamsModifyWithPathRequest([
+                'body' => 'string',
+            ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints_params.endpoints_params_modify_with_path.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "PUT",
+            "/params/path/param",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
+    public function testEndpointsParamsGetWithInlinePath(): void {
+        $testId = 'endpoints_params.endpoints_params_get_with_inline_path.0';
+        $this->client->endpointsParams->endpointsParamsGetWithInlinePath(
             'param',
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.params.get_with_inline_path.0',
+                    'X-Test-Id' => 'endpoints_params.endpoints_params_get_with_inline_path.0',
                 ],
             ],
         );
@@ -61,16 +86,40 @@ class EndpointsParamsWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetWithQuery(): void {
-        $testId = 'endpoints.params.get_with_query.0';
-        $this->client->endpoints->params->getWithQuery(
-            new GetWithQuery([
+    public function testEndpointsParamsModifyWithInlinePath(): void {
+        $testId = 'endpoints_params.endpoints_params_modify_with_inline_path.0';
+        $this->client->endpointsParams->endpointsParamsModifyWithInlinePath(
+            'param',
+            new EndpointsParamsModifyWithInlinePathRequest([
+                'body' => 'string',
+            ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints_params.endpoints_params_modify_with_inline_path.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "PUT",
+            "/params/inline-path/param",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
+    public function testEndpointsParamsGetWithQuery(): void {
+        $testId = 'endpoints_params.endpoints_params_get_with_query.0';
+        $this->client->endpointsParams->endpointsParamsGetWithQuery(
+            new EndpointsParamsGetWithQueryRequest([
                 'query' => 'query',
                 'number' => 1,
             ]),
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.params.get_with_query.0',
+                    'X-Test-Id' => 'endpoints_params.endpoints_params_get_with_query.0',
                 ],
             ],
         );
@@ -85,10 +134,10 @@ class EndpointsParamsWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetWithAllowMultipleQuery(): void {
-        $testId = 'endpoints.params.get_with_allow_multiple_query.0';
-        $this->client->endpoints->params->getWithAllowMultipleQuery(
-            new GetWithMultipleQuery([
+    public function testEndpointsParamsGetWithAllowMultipleQuery(): void {
+        $testId = 'endpoints_params.endpoints_params_get_with_allow_multiple_query.0';
+        $this->client->endpointsParams->endpointsParamsGetWithAllowMultipleQuery(
+            new EndpointsParamsGetWithAllowMultipleQueryRequest([
                 'query' => [
                     'query',
                 ],
@@ -98,7 +147,7 @@ class EndpointsParamsWireTest extends WireMockTestCase
             ]),
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.params.get_with_allow_multiple_query.0',
+                    'X-Test-Id' => 'endpoints_params.endpoints_params_get_with_allow_multiple_query.0',
                 ],
             ],
         );
@@ -113,16 +162,16 @@ class EndpointsParamsWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetWithPathAndQuery(): void {
-        $testId = 'endpoints.params.get_with_path_and_query.0';
-        $this->client->endpoints->params->getWithPathAndQuery(
+    public function testEndpointsParamsGetWithPathAndQuery(): void {
+        $testId = 'endpoints_params.endpoints_params_get_with_path_and_query.0';
+        $this->client->endpointsParams->endpointsParamsGetWithPathAndQuery(
             'param',
-            new GetWithPathAndQuery([
+            new EndpointsParamsGetWithPathAndQueryRequest([
                 'query' => 'query',
             ]),
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.params.get_with_path_and_query.0',
+                    'X-Test-Id' => 'endpoints_params.endpoints_params_get_with_path_and_query.0',
                 ],
             ],
         );
@@ -137,16 +186,16 @@ class EndpointsParamsWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetWithInlinePathAndQuery(): void {
-        $testId = 'endpoints.params.get_with_inline_path_and_query.0';
-        $this->client->endpoints->params->getWithInlinePathAndQuery(
+    public function testEndpointsParamsGetWithInlinePathAndQuery(): void {
+        $testId = 'endpoints_params.endpoints_params_get_with_inline_path_and_query.0';
+        $this->client->endpointsParams->endpointsParamsGetWithInlinePathAndQuery(
             'param',
-            new GetWithInlinePathAndQuery([
+            new EndpointsParamsGetWithInlinePathAndQueryRequest([
                 'query' => 'query',
             ]),
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.params.get_with_inline_path_and_query.0',
+                    'X-Test-Id' => 'endpoints_params.endpoints_params_get_with_inline_path_and_query.0',
                 ],
             ],
         );
@@ -161,81 +210,13 @@ class EndpointsParamsWireTest extends WireMockTestCase
 
     /**
      */
-    public function testModifyWithPath(): void {
-        $testId = 'endpoints.params.modify_with_path.0';
-        $this->client->endpoints->params->modifyWithPath(
-            'param',
-            'string',
-            [
-                'headers' => [
-                    'X-Test-Id' => 'endpoints.params.modify_with_path.0',
-                ],
-            ],
-        );
-        $this->verifyRequestCount(
-            $testId,
-            "PUT",
-            "/params/path/param",
-            null,
-            1
-        );
-    }
-
-    /**
-     */
-    public function testModifyWithInlinePath(): void {
-        $testId = 'endpoints.params.modify_with_inline_path.0';
-        $this->client->endpoints->params->modifyWithInlinePath(
-            'param',
-            new ModifyResourceAtInlinedPath([
-                'body' => 'string',
-            ]),
-            [
-                'headers' => [
-                    'X-Test-Id' => 'endpoints.params.modify_with_inline_path.0',
-                ],
-            ],
-        );
-        $this->verifyRequestCount(
-            $testId,
-            "PUT",
-            "/params/inline-path/param",
-            null,
-            1
-        );
-    }
-
-    /**
-     */
-    public function testUploadWithPath(): void {
-        $testId = 'endpoints.params.upload_with_path.0';
-        $this->client->endpoints->params->uploadWithPath(
-            'upload-path',
-            ,
-            [
-                'headers' => [
-                    'X-Test-Id' => 'endpoints.params.upload_with_path.0',
-                ],
-            ],
-        );
-        $this->verifyRequestCount(
-            $testId,
-            "POST",
-            "/params/path/{param}",
-            null,
-            1
-        );
-    }
-
-    /**
-     */
-    public function testGetWithBooleanPath(): void {
-        $testId = 'endpoints.params.get_with_boolean_path.0';
-        $this->client->endpoints->params->getWithBooleanPath(
+    public function testEndpointsParamsGetWithBooleanPath(): void {
+        $testId = 'endpoints_params.endpoints_params_get_with_boolean_path.0';
+        $this->client->endpointsParams->endpointsParamsGetWithBooleanPath(
             true,
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.params.get_with_boolean_path.0',
+                    'X-Test-Id' => 'endpoints_params.endpoints_params_get_with_boolean_path.0',
                 ],
             ],
         );
@@ -250,13 +231,13 @@ class EndpointsParamsWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetWithPathAndErrors(): void {
-        $testId = 'endpoints.params.get_with_path_and_errors.0';
-        $this->client->endpoints->params->getWithPathAndErrors(
+    public function testEndpointsParamsGetWithPathAndErrors(): void {
+        $testId = 'endpoints_params.endpoints_params_get_with_path_and_errors.0';
+        $this->client->endpointsParams->endpointsParamsGetWithPathAndErrors(
             'param',
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.params.get_with_path_and_errors.0',
+                    'X-Test-Id' => 'endpoints_params.endpoints_params_get_with_path_and_errors.0',
                 ],
             ],
         );

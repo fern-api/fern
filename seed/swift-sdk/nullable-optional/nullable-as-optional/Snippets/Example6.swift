@@ -1,10 +1,13 @@
 import Foundation
-import NullableOptional
+import Api
 
 private func main() async throws {
-    let client = NullableOptionalClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.nullableOptional.getComplexProfile(profileId: "profileId")
+    _ = try await client.nullableoptional.createuser(request: .init(
+        username: "username",
+        email: .null
+    ))
 }
 
 try await main()

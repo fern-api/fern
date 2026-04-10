@@ -1,7 +1,5 @@
 {
-    "types": {
-        "type_union:Metadata": "{\"name\": \"exampleName\", \"value\": \"exampleValue\"}\n"
-    },
+    "types": {},
     "endpoints": [
         {
             "example_identifier": "default",
@@ -11,8 +9,8 @@
                 "identifier_override": "endpoint_union.get"
             },
             "snippet": {
-                "sync_client": "from seed import SeedUndiscriminatedUnions\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.get(\n    request=\"string\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUndiscriminatedUnions\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.get(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.get(\n    request=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.get(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -21,11 +19,11 @@
             "id": {
                 "path": "/metadata",
                 "method": "GET",
-                "identifier_override": "endpoint_union.getMetadata"
+                "identifier_override": "endpoint_union.getmetadata"
             },
             "snippet": {
-                "sync_client": "from seed import SeedUndiscriminatedUnions\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.get_metadata()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUndiscriminatedUnions\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.get_metadata()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.getmetadata()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.getmetadata()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -34,11 +32,11 @@
             "id": {
                 "path": "/metadata",
                 "method": "PUT",
-                "identifier_override": "endpoint_union.updateMetadata"
+                "identifier_override": "endpoint_union.updatemetadata"
             },
             "snippet": {
-                "sync_client": "from seed import SeedUndiscriminatedUnions\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.update_metadata(\n    request={\"string\": {\"key\": \"value\"}},\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUndiscriminatedUnions\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.update_metadata(\n        request={\"string\": {\"key\": \"value\"}},\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.updatemetadata(\n    request={\"key\": \"value\"},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.updatemetadata(\n        request={\"key\": \"value\"},\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -50,8 +48,8 @@
                 "identifier_override": "endpoint_union.call"
             },
             "snippet": {
-                "sync_client": "from seed import SeedUndiscriminatedUnions\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.call(\n    union={\"string\": {\"key\": \"value\"}},\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUndiscriminatedUnions\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.call(\n        union={\"string\": {\"key\": \"value\"}},\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.call()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.call()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -60,11 +58,11 @@
             "id": {
                 "path": "/duplicate",
                 "method": "POST",
-                "identifier_override": "endpoint_union.duplicateTypesUnion"
+                "identifier_override": "endpoint_union.duplicatetypesunion"
             },
             "snippet": {
-                "sync_client": "from seed import SeedUndiscriminatedUnions\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.duplicate_types_union(\n    request=\"string\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUndiscriminatedUnions\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.duplicate_types_union(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.duplicatetypesunion(\n    request=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.duplicatetypesunion(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -73,11 +71,11 @@
             "id": {
                 "path": "/nested",
                 "method": "POST",
-                "identifier_override": "endpoint_union.nestedUnions"
+                "identifier_override": "endpoint_union.nestedunions"
             },
             "snippet": {
-                "sync_client": "from seed import SeedUndiscriminatedUnions\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.nested_unions(\n    request=\"string\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUndiscriminatedUnions\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.nested_unions(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.nestedunions(\n    request=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.nestedunions(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -86,11 +84,11 @@
             "id": {
                 "path": "/camel-case",
                 "method": "POST",
-                "identifier_override": "endpoint_union.testCamelCaseProperties"
+                "identifier_override": "endpoint_union.testcamelcaseproperties"
             },
             "snippet": {
-                "sync_client": "from seed import SeedUndiscriminatedUnions\nfrom seed.union import TokenizeCard\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.test_camel_case_properties(\n    payment_method=TokenizeCard(\n        method=\"card\",\n        card_number=\"1234567890123456\",\n    ),\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUndiscriminatedUnions\nfrom seed.union import TokenizeCard\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.test_camel_case_properties(\n        payment_method=TokenizeCard(\n            method=\"card\",\n            card_number=\"1234567890123456\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi, TokenizeCard\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.testcamelcaseproperties(\n    payment_method=TokenizeCard(\n        method=\"method\",\n        card_number=\"cardNumber\",\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi, TokenizeCard\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.testcamelcaseproperties(\n        payment_method=TokenizeCard(\n            method=\"method\",\n            card_number=\"cardNumber\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

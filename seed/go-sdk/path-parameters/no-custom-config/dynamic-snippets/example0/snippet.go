@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/path-parameters/fern"
     client "github.com/path-parameters/fern/client"
     option "github.com/path-parameters/fern/option"
 )
@@ -13,9 +14,12 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Organizations.GetOrganization(
+    request := &fern.OrganizationsGetOrganizationRequest{
+        TenantID: "tenant_id",
+        OrganizationID: "organization_id",
+    }
+    client.Organizations.Getorganization(
         context.TODO(),
-        "tenant_id",
-        "organization_id",
+        request,
     )
 }

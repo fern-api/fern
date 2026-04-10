@@ -15,13 +15,16 @@ func do() {
         ),
     )
     request := &fern.SendRequest{
-        Context: fern.SomeLiteral(
-            "You're super wise",
-        ),
-        Query: "What is the weather today",
+        Prompt: fern.SendRequestPromptYouAreAHelpfulAssistant,
+        Query: "query",
+        Stream: true,
+        Ending: fern.SendRequestEndingEnding,
+        Context: fern.SomeLiteralYoureSuperWise,
         ContainerObject: &fern.ContainerObject{
             NestedObjects: []*fern.NestedObjectWithLiterals{
                 &fern.NestedObjectWithLiterals{
+                    Literal1: fern.NestedObjectWithLiteralsLiteral1Literal1,
+                    Literal2: fern.NestedObjectWithLiteralsLiteral2Literal2,
                     StrProp: "strProp",
                 },
             },

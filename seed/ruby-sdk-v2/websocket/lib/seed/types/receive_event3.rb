@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+module Seed
+  module Types
+    class ReceiveEvent3 < Internal::Types::Model
+      field :receive_text3, -> { String }, optional: false, nullable: false, api_name: "receiveText3"
+    end
+  end
+end

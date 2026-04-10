@@ -1,4 +1,4 @@
-package mixedcase
+package api
 
 import (
 	"time"

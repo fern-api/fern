@@ -1,12 +1,14 @@
 package com.snippets;
 
-import com.seed.mixedCase.SeedMixedCaseClient;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.service.requests.ServiceGetResourceRequest;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedMixedCaseClient client =
-                SeedMixedCaseClient.builder().url("https://api.fern.com").build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.service().getResource("ResourceID");
+        client.service()
+                .getresource("ResourceID", ServiceGetResourceRequest.builder().build());
     }
 }

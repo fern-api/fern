@@ -1,6 +1,4 @@
-using SeedApi.A;
 using SeedApi.Core;
-using SeedApi.Folder;
 
 namespace SeedApi;
 
@@ -28,53 +26,20 @@ public partial class SeedApiClient : ISeedApiClient
             }
         }
         _client = new RawClient(clientOptions);
-        A = new AClient(_client);
+        _ = new Client(_client);
+        Ab = new AbClient(_client);
+        Ac = new AcClient(_client);
         Folder = new FolderClient(_client);
+        FolderService = new FolderServiceClient(_client);
     }
 
-    public IAClient A { get; }
+    public IClient _ { get; }
+
+    public IAbClient Ab { get; }
+
+    public IAcClient Ac { get; }
 
     public IFolderClient Folder { get; }
 
-    /// <example><code>
-    /// await client.FooAsync();
-    /// </code></example>
-    public async Task FooAsync(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = "",
-                    Headers = _headers,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedApiApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
-    }
+    public IFolderServiceClient FolderService { get; }
 }

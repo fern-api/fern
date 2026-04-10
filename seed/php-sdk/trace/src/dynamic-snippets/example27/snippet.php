@@ -10,4 +10,7 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->submission->getExecutionSessionsState();
+$client->playlist->getplaylist(
+    1,
+    'playlistId',
+);

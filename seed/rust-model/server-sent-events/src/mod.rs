@@ -1,4 +1,4 @@
-//! Request and response types for the ServerSentEvents
+//! Request and response types for the server-sent-events
 //!
 //! This module contains all data structures used for API communication,
 //! including request bodies, response types, and shared models.
@@ -8,11 +8,11 @@
 //! - **Request/Response Types**: 2 types for API operations
 //! - **Model Types**: 1 types for data representation
 
-pub mod completions_streamed_completion;
-pub mod stream_completion_request;
-pub mod stream_completion_request_without_terminator;
+pub mod streamed_completion;
+pub mod completions_stream_request;
+pub mod completions_stream_without_terminator_request;
 
-pub use completions_streamed_completion::StreamedCompletion;
-pub use stream_completion_request::StreamCompletionRequest;
-pub use stream_completion_request_without_terminator::StreamCompletionRequestWithoutTerminator;
+pub use streamed_completion::StreamedCompletion;
+pub use completions_stream_request::CompletionsStreamRequest;
+pub use completions_stream_without_terminator_request::CompletionsStreamWithoutTerminatorRequest;
 

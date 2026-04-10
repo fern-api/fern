@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import DocumentMetadata, DocumentUploadResult, UploadDocumentResponse
+    from . import _
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedApi, SeedApi
     from .environment import SeedApiEnvironment
@@ -20,6 +21,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SeedApi": ".client",
     "SeedApiEnvironment": ".environment",
     "UploadDocumentResponse": ".types",
+    "_": "._",
     "__version__": ".version",
 }
 
@@ -54,5 +56,6 @@ __all__ = [
     "SeedApi",
     "SeedApiEnvironment",
     "UploadDocumentResponse",
+    "_",
     "__version__",
 ]

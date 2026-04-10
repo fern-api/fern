@@ -1,18 +1,20 @@
-using SeedMixedCase;
+using SeedApi;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedMixedCaseClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Service.GetResourceAsync(
-            "rsc-xyz"
+        await client.Service.GetresourceAsync(
+            new ServiceGetResourceRequest {
+                ResourceId = "ResourceID"
+            }
         );
     }
 

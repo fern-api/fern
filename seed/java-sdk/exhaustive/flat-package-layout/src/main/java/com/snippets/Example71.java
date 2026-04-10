@@ -1,0 +1,17 @@
+package com.snippets;
+
+import com.seed.api.SeedApiClient;
+import com.seed.api.types.EndpointsParamsGetWithBooleanPathRequest;
+
+public class Example71 {
+    public static void main(String[] args) {
+        SeedApiClient client = SeedApiClient.builder()
+                .token("<token>")
+                .url("https://api.fern.com")
+                .build();
+
+        client.endpointsParams()
+                .endpointsParamsGetWithBooleanPath(
+                        true, EndpointsParamsGetWithBooleanPathRequest.builder().build());
+    }
+}

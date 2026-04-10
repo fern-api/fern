@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Send(
 	ctx context.Context,
-	request *fern.SendEnumAsQueryParamRequest,
+	request *fern.QueryParamSendRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -76,9 +76,9 @@ func (r *RawClient) Send(
 	}, nil
 }
 
-func (r *RawClient) SendList(
+func (r *RawClient) Sendlist(
 	ctx context.Context,
-	request *fern.SendEnumListAsQueryParamRequest,
+	request *fern.QueryParamSendListRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)

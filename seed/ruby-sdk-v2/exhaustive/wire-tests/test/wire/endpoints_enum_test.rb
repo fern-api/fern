@@ -12,14 +12,14 @@ class EndpointsEnumWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_enum_get_and_return_enum_with_wiremock
-    test_id = "endpoints.enum.get_and_return_enum.0"
+  def test_endpoints_enum_endpoints_enum_get_and_return_enum_with_wiremock
+    test_id = "endpoints_enum.endpoints_enum_get_and_return_enum.0"
 
-    @client.endpoints.enum.get_and_return_enum(
+    @client.endpoints_enum.endpoints_enum_get_and_return_enum(
       request: "SUNNY",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.enum.get_and_return_enum.0"
+          "X-Test-Id" => "endpoints_enum.endpoints_enum_get_and_return_enum.0"
         }
       }
     )

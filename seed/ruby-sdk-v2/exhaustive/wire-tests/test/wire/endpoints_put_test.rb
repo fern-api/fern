@@ -12,14 +12,14 @@ class EndpointsPutWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_put_add_with_wiremock
-    test_id = "endpoints.put.add.0"
+  def test_endpoints_put_endpoints_put_add_with_wiremock
+    test_id = "endpoints_put.endpoints_put_add.0"
 
-    @client.endpoints.put.add(
+    @client.endpoints_put.endpoints_put_add(
       id: "id",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.put.add.0"
+          "X-Test-Id" => "endpoints_put.endpoints_put_add.0"
         }
       }
     )

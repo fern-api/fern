@@ -3,6 +3,8 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Types\TypesNestedObjectWithRequiredField;
+use Seed\Types\TypesObjectWithOptionalField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,6 +12,11 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->params->getWithBooleanPath(
-    true,
+$client->endpointsObject->endpointsObjectGetAndReturnNestedWithRequiredFieldAsList(
+    [
+        new TypesNestedObjectWithRequiredField([
+            'string' => 'string',
+            'nestedObject' => new TypesObjectWithOptionalField([]),
+        ]),
+    ],
 );

@@ -5,4 +5,7 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.submission.get_execution_sessions_state
+client.playlist.getplaylist(
+  service_param: 1,
+  playlist_id: "playlistId"
+)

@@ -2,8 +2,5 @@
 
 /**
  * An alias for type IDs.
- *
- * @example
- *     "type-kaljhv87"
  */
 export type TypeId = string;

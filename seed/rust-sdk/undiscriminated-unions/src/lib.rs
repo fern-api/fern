@@ -1,18 +1,18 @@
-//! # UndiscriminatedUnions SDK
+//! # undiscriminated-unions SDK
 //!
-//! The official Rust SDK for the UndiscriminatedUnions.
+//! The official Rust SDK for the undiscriminated-unions.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_undiscriminated_unions::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .union_
 //!         .get(&MyUnion::String("string".to_string()), None)

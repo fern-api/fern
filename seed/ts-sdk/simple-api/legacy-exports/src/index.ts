@@ -1,6 +1,6 @@
-export * as SeedSimpleApi from "./api";
+export * as SeedApi from "./api";
 export type { BaseClientOptions, BaseRequestOptions } from "./BaseClient";
-export { SeedSimpleApiClient } from "./Client";
-export { SeedSimpleApiEnvironment } from "./environments";
-export { SeedSimpleApiError, SeedSimpleApiTimeoutError } from "./errors";
+export { SeedApiClient } from "./Client";
+export { SeedApiEnvironment } from "./environments";
+export { SeedApiError, SeedApiTimeoutError } from "./errors";
 export * from "./exports";

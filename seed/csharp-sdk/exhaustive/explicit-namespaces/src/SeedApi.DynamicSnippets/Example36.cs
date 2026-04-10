@@ -1,26 +1,24 @@
-using SeedExhaustive;
-using SeedExhaustive.Endpoints.Params;
+using SeedApi;
 
 namespace Usage;
 
 public class Example36
 {
     public async Task Do() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
-            new GetWithMultipleQuery {
-                Query = new List<string>(){
-                    "query",
-                }
-                ,
-                Number = new List<int>(){
-                    1,
+        await client.EndpointsObject.EndpointsObjectGetAndReturnWithMapOfMapAsync(
+            new TypesObjectWithMapOfMap {
+                Map = new Dictionary<string, Dictionary<string, string>>(){
+                    ["key"] = new Dictionary<string, string>(){
+                        ["key"] = "value",
+                    }
+                    ,
                 }
 
             }

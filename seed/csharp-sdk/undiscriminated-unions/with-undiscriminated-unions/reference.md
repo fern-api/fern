@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetAsync</a>(MyUnion { ... }) -> WithRawResponseTask&lt;MyUnion&gt;</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedApi/Union/UnionClient.cs">GetAsync</a>(MyUnion { ... }) -> WithRawResponseTask&lt;MyUnion&gt;</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ await client.Union.GetAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetMetadataAsync</a>() -> WithRawResponseTask&lt;Dictionary&lt;Key, string&gt;&gt;</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedApi/Union/UnionClient.cs">GetmetadataAsync</a>() -> WithRawResponseTask&lt;Dictionary&lt;string, string&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +53,7 @@ await client.Union.GetAsync("string");
 <dd>
 
 ```csharp
-await client.Union.GetMetadataAsync();
+await client.Union.GetmetadataAsync();
 ```
 </dd>
 </dl>
@@ -65,7 +65,7 @@ await client.Union.GetMetadataAsync();
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">UpdateMetadataAsync</a>(MetadataUnion { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedApi/Union/UnionClient.cs">UpdatemetadataAsync</a>(MetadataUnion { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 
@@ -78,15 +78,7 @@ await client.Union.GetMetadataAsync();
 <dd>
 
 ```csharp
-await client.Union.UpdateMetadataAsync(
-    new Dictionary<string, object?>()
-    {
-        {
-            "string",
-            new Dictionary<object, object?>() { { "key", "value" } }
-        },
-    }
-);
+await client.Union.UpdatemetadataAsync(new Dictionary<string, object?>() { { "key", "value" } });
 ```
 </dd>
 </dl>
@@ -113,7 +105,7 @@ await client.Union.UpdateMetadataAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">CallAsync</a>(Request { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedApi/Union/UnionClient.cs">CallAsync</a>(Request { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 
@@ -126,18 +118,7 @@ await client.Union.UpdateMetadataAsync(
 <dd>
 
 ```csharp
-await client.Union.CallAsync(
-    new Request
-    {
-        Union = new Dictionary<string, object?>()
-        {
-            {
-                "string",
-                new Dictionary<object, object?>() { { "key", "value" } }
-            },
-        },
-    }
-);
+await client.Union.CallAsync(new Request());
 ```
 </dd>
 </dl>
@@ -164,7 +145,7 @@ await client.Union.CallAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">DuplicateTypesUnionAsync</a>(UnionWithDuplicateTypes { ... }) -> WithRawResponseTask&lt;UnionWithDuplicateTypes&gt;</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedApi/Union/UnionClient.cs">DuplicatetypesunionAsync</a>(UnionWithDuplicateTypes { ... }) -> WithRawResponseTask&lt;UnionWithDuplicateTypes&gt;</code></summary>
 <dl>
 <dd>
 
@@ -177,7 +158,7 @@ await client.Union.CallAsync(
 <dd>
 
 ```csharp
-await client.Union.DuplicateTypesUnionAsync("string");
+await client.Union.DuplicatetypesunionAsync("string");
 ```
 </dd>
 </dl>
@@ -204,7 +185,7 @@ await client.Union.DuplicateTypesUnionAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">NestedUnionsAsync</a>(NestedUnionRoot { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedApi/Union/UnionClient.cs">NestedunionsAsync</a>(NestedUnionRoot { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -217,7 +198,7 @@ await client.Union.DuplicateTypesUnionAsync("string");
 <dd>
 
 ```csharp
-await client.Union.NestedUnionsAsync("string");
+await client.Union.NestedunionsAsync("string");
 ```
 </dd>
 </dl>
@@ -244,7 +225,7 @@ await client.Union.NestedUnionsAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">TestCamelCasePropertiesAsync</a>(PaymentRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedApi/Union/UnionClient.cs">TestcamelcasepropertiesAsync</a>(UnionTestCamelCasePropertiesRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -257,10 +238,10 @@ await client.Union.NestedUnionsAsync("string");
 <dd>
 
 ```csharp
-await client.Union.TestCamelCasePropertiesAsync(
-    new PaymentRequest
+await client.Union.TestcamelcasepropertiesAsync(
+    new UnionTestCamelCasePropertiesRequest
     {
-        PaymentMethod = new TokenizeCard { Method = "card", CardNumber = "1234567890123456" },
+        PaymentMethod = new TokenizeCard { Method = "method", CardNumber = "cardNumber" },
     }
 );
 ```
@@ -277,7 +258,7 @@ await client.Union.TestCamelCasePropertiesAsync(
 <dl>
 <dd>
 
-**request:** `PaymentRequest` 
+**request:** `UnionTestCamelCasePropertiesRequest` 
     
 </dd>
 </dl>

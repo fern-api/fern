@@ -1,4 +1,4 @@
-use crate::api::resources::AliasClient;
+use crate::api::resources::Client;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -99,8 +99,8 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<AliasClient, ApiError> {
-        AliasClient::new(self.config)
+    pub fn build(self) -> Result<Client, ApiError> {
+        Client::new(self.config)
     }
 }
 #[cfg(test)]

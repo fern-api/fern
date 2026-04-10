@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\EndpointsParams\Requests\EndpointsParamsModifyWithInlinePathRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,8 +11,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->noAuth->postWithNoAuth(
-    [
-        'key' => "value",
-    ],
+$client->endpointsParams->endpointsParamsModifyWithInlinePath(
+    'param',
+    new EndpointsParamsModifyWithInlinePathRequest([
+        'body' => 'string',
+    ]),
 );

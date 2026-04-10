@@ -1,4 +1,4 @@
-use seed_literal::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,22 +6,20 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = LiteralClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .query
         .send(
             &SendQueryRequest {
-                prompt: "You are a helpful assistant".to_string(),
-                optional_prompt: Some("You are a helpful assistant".to_string()),
-                alias_prompt: AliasToPrompt("You are a helpful assistant".to_string()),
-                alias_optional_prompt: Some(AliasToPrompt(
-                    "You are a helpful assistant".to_string(),
-                )),
+                prompt: QuerySendRequestPrompt::YouAreAHelpfulAssistant,
+                optional_prompt: Some(QuerySendRequestOptionalPrompt::YouAreAHelpfulAssistant),
+                alias_prompt: AliasToPrompt::YouAreAHelpfulAssistant,
+                alias_optional_prompt: Some(AliasToPrompt::YouAreAHelpfulAssistant),
                 query: "query".to_string(),
-                stream: false,
-                optional_stream: Some(false),
-                alias_stream: AliasToStream(false),
-                alias_optional_stream: Some(AliasToStream(false)),
+                stream: true,
+                optional_stream: Some(true),
+                alias_stream: AliasToStream(true),
+                alias_optional_stream: Some(AliasToStream(true)),
             },
             None,
         )

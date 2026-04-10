@@ -6,46 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        ANestedLiteral,
-        ATopLevelLiteral,
-        DiscriminatedLiteral,
-        DiscriminatedLiteral_CustomName,
-        DiscriminatedLiteral_DefaultName,
-        DiscriminatedLiteral_George,
-        DiscriminatedLiteral_LiteralGeorge,
-        SomeAliasedLiteral,
-        UndiscriminatedLiteral,
-    )
-    from .requests import (
-        ANestedLiteralParams,
-        ATopLevelLiteralParams,
-        DiscriminatedLiteralParams,
-        DiscriminatedLiteral_CustomNameParams,
-        DiscriminatedLiteral_DefaultNameParams,
-        DiscriminatedLiteral_GeorgeParams,
-        DiscriminatedLiteral_LiteralGeorgeParams,
-        UndiscriminatedLiteralParams,
-    )
-_dynamic_imports: typing.Dict[str, str] = {
-    "ANestedLiteral": ".types",
-    "ANestedLiteralParams": ".requests",
-    "ATopLevelLiteral": ".types",
-    "ATopLevelLiteralParams": ".requests",
-    "DiscriminatedLiteral": ".types",
-    "DiscriminatedLiteralParams": ".requests",
-    "DiscriminatedLiteral_CustomName": ".types",
-    "DiscriminatedLiteral_CustomNameParams": ".requests",
-    "DiscriminatedLiteral_DefaultName": ".types",
-    "DiscriminatedLiteral_DefaultNameParams": ".requests",
-    "DiscriminatedLiteral_George": ".types",
-    "DiscriminatedLiteral_GeorgeParams": ".requests",
-    "DiscriminatedLiteral_LiteralGeorge": ".types",
-    "DiscriminatedLiteral_LiteralGeorgeParams": ".requests",
-    "SomeAliasedLiteral": ".types",
-    "UndiscriminatedLiteral": ".types",
-    "UndiscriminatedLiteralParams": ".requests",
-}
+    from .types import InlinedSendRequestContext, InlinedSendRequestPrompt
+_dynamic_imports: typing.Dict[str, str] = {"InlinedSendRequestContext": ".types", "InlinedSendRequestPrompt": ".types"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -69,22 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "ANestedLiteral",
-    "ANestedLiteralParams",
-    "ATopLevelLiteral",
-    "ATopLevelLiteralParams",
-    "DiscriminatedLiteral",
-    "DiscriminatedLiteralParams",
-    "DiscriminatedLiteral_CustomName",
-    "DiscriminatedLiteral_CustomNameParams",
-    "DiscriminatedLiteral_DefaultName",
-    "DiscriminatedLiteral_DefaultNameParams",
-    "DiscriminatedLiteral_George",
-    "DiscriminatedLiteral_GeorgeParams",
-    "DiscriminatedLiteral_LiteralGeorge",
-    "DiscriminatedLiteral_LiteralGeorgeParams",
-    "SomeAliasedLiteral",
-    "UndiscriminatedLiteral",
-    "UndiscriminatedLiteralParams",
-]
+__all__ = ["InlinedSendRequestContext", "InlinedSendRequestPrompt"]

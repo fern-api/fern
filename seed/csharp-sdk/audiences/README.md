@@ -40,17 +40,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedAudiences;
+using SeedApi;
 
-var client = new SeedAudiencesClient();
-await client.Foo.FindAsync(
-    new FindRequest
-    {
-        OptionalString = "optionalString",
-        PublicProperty = "publicProperty",
-        PrivateProperty = 1,
-    }
-);
+var client = new SeedApiClient();
+await client.Foo.FindAsync(new FooFindRequest());
 ```
 
 ## Environments
@@ -58,11 +51,11 @@ await client.Foo.FindAsync(
 This SDK allows you to configure different environments for API requests.
 
 ```csharp
-using SeedAudiences;
+using SeedApi;
 
-var client = new SeedAudiencesClient(new ClientOptions
+var client = new SeedApiClient(new ClientOptions
 {
-    BaseUrl = SeedAudiencesEnvironment.EnvironmentA
+    BaseUrl = SeedApiEnvironment.Default
 });
 ```
 
@@ -72,11 +65,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedAudiences;
+using SeedApi;
 
 try {
     var response = await client.Foo.FindAsync(...);
-} catch (SeedAudiencesApiException e) {
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -125,7 +118,7 @@ var response = await client.Foo.FindAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedAudiences;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
 var result = await client.Foo.FindAsync(...).WithRawResponse();

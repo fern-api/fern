@@ -1,4 +1,4 @@
-//! API client and types for the Errors
+//! API client and types for the errors
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,5 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{CommonsClient, ErrorsClient, SimpleClient};
+pub use resources::{ApiClient, SimpleClient};
 pub use types::*;

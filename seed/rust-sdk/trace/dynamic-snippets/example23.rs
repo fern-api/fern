@@ -1,4 +1,4 @@
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,25 +7,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .problem
-        .get_default_starter_files(
-            &GetDefaultStarterFilesRequest {
-                input_params: vec![
-                    VariableTypeAndName {
-                        variable_type: VariableType::IntegerType,
-                        name: "name".to_string(),
-                    },
-                    VariableTypeAndName {
-                        variable_type: VariableType::IntegerType,
-                        name: "name".to_string(),
-                    },
-                ],
-                output_type: VariableType::IntegerType,
-                method_name: "methodName".to_string(),
-            },
-            None,
-        )
+        .migration
+        .getattemptedmigrations(Some(
+            RequestOptions::new().additional_header("admin-key-header", "adminKeyHeader"),
+        ))
         .await;
 }

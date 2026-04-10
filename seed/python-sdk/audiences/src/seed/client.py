@@ -7,15 +7,15 @@ import typing
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
-from .environment import SeedAudiencesEnvironment
+from .environment import SeedApiEnvironment
 
 if typing.TYPE_CHECKING:
-    from .folder_a.client import AsyncFolderAClient, FolderAClient
-    from .folder_d.client import AsyncFolderDClient, FolderDClient
+    from .folder_a_service.client import AsyncFolderAServiceClient, FolderAServiceClient
+    from .folder_d_service.client import AsyncFolderDServiceClient, FolderDServiceClient
     from .foo.client import AsyncFooClient, FooClient
 
 
-class SeedAudiences:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -24,8 +24,14 @@ class SeedAudiences:
     base_url : typing.Optional[str]
         The base url to use for requests from the client.
 
-    environment : typing.Optional[SeedAudiencesEnvironment]
-        The environment to use for requests from the client.
+    environment : SeedApiEnvironment
+        The environment to use for requests from the client. from .environment import SeedApiEnvironment
+
+
+
+        Defaults to SeedApiEnvironment.DEFAULT
+
+
 
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
@@ -44,19 +50,16 @@ class SeedAudiences:
 
     Examples
     --------
-    from seed import SeedAudiences
-    from seed.environment import SeedAudiencesEnvironment
+    from seed import SeedApi
 
-    client = SeedAudiences(
-        environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
-    )
+    client = SeedApi()
     """
 
     def __init__(
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: typing.Optional[SeedAudiencesEnvironment] = None,
+        environment: SeedApiEnvironment = SeedApiEnvironment.DEFAULT,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -77,25 +80,17 @@ class SeedAudiences:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._folder_a: typing.Optional[FolderAClient] = None
-        self._folder_d: typing.Optional[FolderDClient] = None
+        self._folder_a_service: typing.Optional[FolderAServiceClient] = None
         self._foo: typing.Optional[FooClient] = None
+        self._folder_d_service: typing.Optional[FolderDServiceClient] = None
 
     @property
-    def folder_a(self):
-        if self._folder_a is None:
-            from .folder_a.client import FolderAClient  # noqa: E402
+    def folder_a_service(self):
+        if self._folder_a_service is None:
+            from .folder_a_service.client import FolderAServiceClient  # noqa: E402
 
-            self._folder_a = FolderAClient(client_wrapper=self._client_wrapper)
-        return self._folder_a
-
-    @property
-    def folder_d(self):
-        if self._folder_d is None:
-            from .folder_d.client import FolderDClient  # noqa: E402
-
-            self._folder_d = FolderDClient(client_wrapper=self._client_wrapper)
-        return self._folder_d
+            self._folder_a_service = FolderAServiceClient(client_wrapper=self._client_wrapper)
+        return self._folder_a_service
 
     @property
     def foo(self):
@@ -104,6 +99,14 @@ class SeedAudiences:
 
             self._foo = FooClient(client_wrapper=self._client_wrapper)
         return self._foo
+
+    @property
+    def folder_d_service(self):
+        if self._folder_d_service is None:
+            from .folder_d_service.client import FolderDServiceClient  # noqa: E402
+
+            self._folder_d_service = FolderDServiceClient(client_wrapper=self._client_wrapper)
+        return self._folder_d_service
 
 
 def _make_default_async_client(
@@ -124,7 +127,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedAudiences:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -133,8 +136,14 @@ class AsyncSeedAudiences:
     base_url : typing.Optional[str]
         The base url to use for requests from the client.
 
-    environment : typing.Optional[SeedAudiencesEnvironment]
-        The environment to use for requests from the client.
+    environment : SeedApiEnvironment
+        The environment to use for requests from the client. from .environment import SeedApiEnvironment
+
+
+
+        Defaults to SeedApiEnvironment.DEFAULT
+
+
 
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
@@ -153,19 +162,16 @@ class AsyncSeedAudiences:
 
     Examples
     --------
-    from seed import AsyncSeedAudiences
-    from seed.environment import SeedAudiencesEnvironment
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedAudiences(
-        environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
-    )
+    client = AsyncSeedApi()
     """
 
     def __init__(
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: typing.Optional[SeedAudiencesEnvironment] = None,
+        environment: SeedApiEnvironment = SeedApiEnvironment.DEFAULT,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -184,25 +190,17 @@ class AsyncSeedAudiences:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._folder_a: typing.Optional[AsyncFolderAClient] = None
-        self._folder_d: typing.Optional[AsyncFolderDClient] = None
+        self._folder_a_service: typing.Optional[AsyncFolderAServiceClient] = None
         self._foo: typing.Optional[AsyncFooClient] = None
+        self._folder_d_service: typing.Optional[AsyncFolderDServiceClient] = None
 
     @property
-    def folder_a(self):
-        if self._folder_a is None:
-            from .folder_a.client import AsyncFolderAClient  # noqa: E402
+    def folder_a_service(self):
+        if self._folder_a_service is None:
+            from .folder_a_service.client import AsyncFolderAServiceClient  # noqa: E402
 
-            self._folder_a = AsyncFolderAClient(client_wrapper=self._client_wrapper)
-        return self._folder_a
-
-    @property
-    def folder_d(self):
-        if self._folder_d is None:
-            from .folder_d.client import AsyncFolderDClient  # noqa: E402
-
-            self._folder_d = AsyncFolderDClient(client_wrapper=self._client_wrapper)
-        return self._folder_d
+            self._folder_a_service = AsyncFolderAServiceClient(client_wrapper=self._client_wrapper)
+        return self._folder_a_service
 
     @property
     def foo(self):
@@ -212,10 +210,16 @@ class AsyncSeedAudiences:
             self._foo = AsyncFooClient(client_wrapper=self._client_wrapper)
         return self._foo
 
+    @property
+    def folder_d_service(self):
+        if self._folder_d_service is None:
+            from .folder_d_service.client import AsyncFolderDServiceClient  # noqa: E402
 
-def _get_base_url(
-    *, base_url: typing.Optional[str] = None, environment: typing.Optional[SeedAudiencesEnvironment] = None
-) -> str:
+            self._folder_d_service = AsyncFolderDServiceClient(client_wrapper=self._client_wrapper)
+        return self._folder_d_service
+
+
+def _get_base_url(*, base_url: typing.Optional[str] = None, environment: SeedApiEnvironment) -> str:
     if base_url is not None:
         return base_url
     elif environment is not None:

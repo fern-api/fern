@@ -5,9 +5,9 @@ namespace Example;
 use Seed\SeedClient;
 
 $client = new SeedClient(
-    apiKey: '<token>',
+    token: '<token>',
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->getWithBearerToken();
+$client->service->getwithbearertoken();

@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="/src/SeedVersion/User/UserClient.cs">GetUserAsync</a>(userId) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetuserAsync</a>(UserGetUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.User.GetUserAsync("userId");
+await client.User.GetuserAsync(new UserGetUserRequest { UserId = "userId" });
 ```
 </dd>
 </dl>
@@ -28,7 +28,7 @@ await client.User.GetUserAsync("userId");
 <dl>
 <dd>
 
-**userId:** `string` 
+**request:** `UserGetUserRequest` 
     
 </dd>
 </dl>

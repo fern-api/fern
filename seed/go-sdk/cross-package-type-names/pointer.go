@@ -1,4 +1,4 @@
-package crosspackagetypenames
+package api
 
 import (
 	"time"

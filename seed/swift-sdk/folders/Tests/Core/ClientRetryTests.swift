@@ -20,7 +20,7 @@ import Testing
         )
 
         do {
-            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         } catch {
         }
@@ -44,7 +44,7 @@ import Testing
         )
 
         do {
-            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         } catch {
         }
@@ -68,7 +68,7 @@ import Testing
         )
 
         do {
-            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         } catch {
         }
@@ -91,7 +91,7 @@ import Testing
         )
 
         do {
-            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         } catch {
         }
@@ -113,7 +113,7 @@ import Testing
         )
 
         do {
-            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -136,7 +136,7 @@ import Testing
         )
 
         do {
-            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -159,7 +159,7 @@ import Testing
         )
 
         do {
-            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -187,7 +187,7 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         } catch {
         }
@@ -225,7 +225,7 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         } catch {
         }
@@ -259,7 +259,7 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         } catch {
         }
@@ -304,7 +304,7 @@ import Testing
         )
 
         do {
-            _ = try await client.foo(requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers))
+            _ = try await client..foo(requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers))
 
         } catch {
         }
@@ -323,7 +323,7 @@ import Testing
         )
 
         do {
-            _ = try await client.foo(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
+            _ = try await client..foo(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -346,7 +346,7 @@ import Testing
         )
 
         do {
-            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         } catch {
         }

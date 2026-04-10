@@ -1,94 +1,22 @@
 import Foundation
-import Trace
+import Api
 
 private func main() async throws {
-    let client = TraceClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.admin.storeTracedWorkspaceV2(
-        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-        request: [
-            TraceResponseV2(
-                submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-                lineNumber: 1,
-                file: TracedFile(
-                    filename: "filename",
-                    directory: "directory"
-                ),
-                returnValue: DebugVariableValue.integerValue(
-
-                ),
-                expressionLocation: ExpressionLocation(
-                    start: 1,
-                    offset: 1
-                ),
-                stack: StackInformation(
-                    numStackFrames: 1,
-                    topStackFrame: StackFrame(
-                        methodName: "methodName",
-                        lineNumber: 1,
-                        scopes: [
-                            Scope(
-                                variables: [
-                                    "variables": DebugVariableValue.integerValue(
-
-                                    )
-                                ]
-                            ),
-                            Scope(
-                                variables: [
-                                    "variables": DebugVariableValue.integerValue(
-
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                ),
-                stdout: "stdout"
-            ),
-            TraceResponseV2(
-                submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-                lineNumber: 1,
-                file: TracedFile(
-                    filename: "filename",
-                    directory: "directory"
-                ),
-                returnValue: DebugVariableValue.integerValue(
-
-                ),
-                expressionLocation: ExpressionLocation(
-                    start: 1,
-                    offset: 1
-                ),
-                stack: StackInformation(
-                    numStackFrames: 1,
-                    topStackFrame: StackFrame(
-                        methodName: "methodName",
-                        lineNumber: 1,
-                        scopes: [
-                            Scope(
-                                variables: [
-                                    "variables": DebugVariableValue.integerValue(
-
-                                    )
-                                ]
-                            ),
-                            Scope(
-                                variables: [
-                                    "variables": DebugVariableValue.integerValue(
-
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                ),
-                stdout: "stdout"
+    _ = try await client.admin.sendworkspacesubmissionupdate(
+        submissionId: "submissionId",
+        request: .init(body: WorkspaceSubmissionUpdate(
+            updateTime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+            updateInfo: WorkspaceSubmissionUpdateInfo.workspaceSubmissionUpdateInfoZero(
+                WorkspaceSubmissionUpdateInfoZero(
+                    type: .running
+                )
             )
-        ]
+        ))
     )
 }
 

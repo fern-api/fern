@@ -1,19 +1,15 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
-import java.util.HashMap;
+import com.seed.api.SeedApiClient;
+import java.util.Arrays;
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints().container().getAndReturnMapPrimToPrim(new HashMap<String, String>() {
-            {
-                put("string", "string");
-            }
-        });
+        client.endpointsContainer().endpointsContainerGetAndReturnSetOfPrimitives(Arrays.asList("string"));
     }
 }

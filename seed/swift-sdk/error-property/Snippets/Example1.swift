@@ -1,10 +1,10 @@
 import Foundation
-import ErrorProperty
+import Api
 
 private func main() async throws {
-    let client = ErrorPropertyClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.propertyBasedError.throwError()
+    _ = try await client.propertybasederror.throwerror()
 }
 
 try await main()

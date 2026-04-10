@@ -1,12 +1,21 @@
 package com.snippets;
 
-import com.seed.exhaustive.Best;
+import com.seed.api.Best;
+import com.seed.api.types.TypesNestedObjectWithRequiredField;
+import com.seed.api.types.TypesObjectWithOptionalField;
+import java.util.Arrays;
 
 public class Example42 {
     public static void main(String[] args) {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpoints().params().getWithBooleanPath(true);
+        client.endpointsObject()
+                .endpointsObjectGetAndReturnNestedWithRequiredFieldAsList(
+                        Arrays.asList(TypesNestedObjectWithRequiredField.builder()
+                                .string("string")
+                                .nestedObject(
+                                        TypesObjectWithOptionalField.builder().build())
+                                .build()));
     }
 }

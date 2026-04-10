@@ -1,11 +1,11 @@
-//! # Trace SDK
+//! # trace SDK
 //!
-//! The official Rust SDK for the Trace.
+//! The official Rust SDK for the trace.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_trace::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -13,7 +13,7 @@
 //!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = TraceClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client.v2.test(None).await;
 //! }
 //! ```

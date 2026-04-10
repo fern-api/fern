@@ -1,0 +1,10 @@
+# frozen_string_literal: true
+
+module Seed
+  module Types
+    class StreamEventContextProtocolTwo < Internal::Types::Model
+      field :event, -> { Seed::Types::StreamEventContextProtocolTwoEvent }, optional: false, nullable: false
+      field :name, -> { String }, optional: false, nullable: false
+    end
+  end
+end

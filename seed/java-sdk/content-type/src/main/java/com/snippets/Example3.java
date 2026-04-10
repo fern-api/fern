@@ -1,20 +1,46 @@
 package com.snippets;
 
-import com.seed.contentTypes.SeedContentTypesClient;
-import com.seed.contentTypes.resources.service.requests.OptionalMergePatchRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.service.requests.ServicePatchComplexRequest;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Optional;
 
 public class Example3 {
     public static void main(String[] args) {
-        SeedContentTypesClient client =
-                SeedContentTypesClient.builder().url("https://api.fern.com").build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
         client.service()
-                .optionalMergePatchTest(OptionalMergePatchRequest.builder()
-                        .requiredField("requiredField")
-                        .nullableString("nullableString")
-                        .optionalString("optionalString")
-                        .optionalInteger(1)
-                        .optionalBoolean(true)
-                        .build());
+                .patchcomplex(
+                        "id",
+                        ServicePatchComplexRequest.builder()
+                                .name("name")
+                                .age(1)
+                                .active(true)
+                                .metadata(new HashMap<String, Object>() {
+                                    {
+                                        put("metadata", new HashMap<String, Object>() {
+                                            {
+                                                put("key", "value");
+                                            }
+                                        });
+                                    }
+                                })
+                                .tags(Optional.of(Arrays.asList("tags", "tags")))
+                                .email("email")
+                                .nickname("nickname")
+                                .bio("bio")
+                                .profileImageUrl("profileImageUrl")
+                                .settings(new HashMap<String, Object>() {
+                                    {
+                                        put("settings", new HashMap<String, Object>() {
+                                            {
+                                                put("key", "value");
+                                            }
+                                        });
+                                    }
+                                })
+                                .build());
     }
 }

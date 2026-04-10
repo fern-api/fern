@@ -9,10 +9,11 @@ import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.MediaTypes;
 import com.seed.unions.core.ObjectMappers;
 import com.seed.unions.core.RequestOptions;
-import com.seed.unions.core.SeedUnionsApiException;
-import com.seed.unions.core.SeedUnionsException;
-import com.seed.unions.core.SeedUnionsHttpResponse;
-import com.seed.unions.resources.bigunion.types.BigUnion;
+import com.seed.unions.core.SeedApiApiException;
+import com.seed.unions.core.SeedApiException;
+import com.seed.unions.core.SeedApiHttpResponse;
+import com.seed.unions.resources.bigunion.requests.BigunionGetRequest;
+import com.seed.unions.types.BigUnion;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -31,11 +32,19 @@ public class RawBigunionClient {
         this.clientOptions = clientOptions;
     }
 
-    public SeedUnionsHttpResponse<BigUnion> get(String id) {
-        return get(id, null);
+    public SeedApiHttpResponse<BigUnion> get(String id) {
+        return get(id, BigunionGetRequest.builder().build());
     }
 
-    public SeedUnionsHttpResponse<BigUnion> get(String id, RequestOptions requestOptions) {
+    public SeedApiHttpResponse<BigUnion> get(String id, RequestOptions requestOptions) {
+        return get(id, BigunionGetRequest.builder().build(), requestOptions);
+    }
+
+    public SeedApiHttpResponse<BigUnion> get(String id, BigunionGetRequest request) {
+        return get(id, request, null);
+    }
+
+    public SeedApiHttpResponse<BigUnion> get(String id, BigunionGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("bigunion")
@@ -45,12 +54,12 @@ public class RawBigunionClient {
                 httpUrl.addQueryParameter(_key, _value);
             });
         }
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -59,22 +68,22 @@ public class RawBigunionClient {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
-                return new SeedUnionsHttpResponse<>(
+                return new SeedApiHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BigUnion.class), response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new SeedUnionsApiException(
+            throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
-            throw new SeedUnionsException("Network error executing HTTP request", e);
+            throw new SeedApiException("Network error executing HTTP request", e);
         }
     }
 
-    public SeedUnionsHttpResponse<Boolean> update(BigUnion request) {
+    public SeedApiHttpResponse<Boolean> update(BigUnion request) {
         return update(request, null);
     }
 
-    public SeedUnionsHttpResponse<Boolean> update(BigUnion request, RequestOptions requestOptions) {
+    public SeedApiHttpResponse<Boolean> update(BigUnion request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("bigunion");
@@ -88,7 +97,7 @@ public class RawBigunionClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedUnionsException("Failed to serialize request", e);
+            throw new SeedApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
@@ -105,27 +114,25 @@ public class RawBigunionClient {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
-                return new SeedUnionsHttpResponse<>(
+                return new SeedApiHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new SeedUnionsApiException(
+            throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
-            throw new SeedUnionsException("Network error executing HTTP request", e);
+            throw new SeedApiException("Network error executing HTTP request", e);
         }
     }
 
-    public SeedUnionsHttpResponse<Map<String, Boolean>> updateMany(List<BigUnion> request) {
+    public SeedApiHttpResponse<Map<String, Boolean>> updateMany(List<BigUnion> request) {
         return updateMany(request, null);
     }
 
-    public SeedUnionsHttpResponse<Map<String, Boolean>> updateMany(
-            List<BigUnion> request, RequestOptions requestOptions) {
+    public SeedApiHttpResponse<Map<String, Boolean>> updateMany(List<BigUnion> request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("bigunion")
-                .addPathSegments("many");
+                .addPathSegments("bigunion/many");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -136,7 +143,7 @@ public class RawBigunionClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedUnionsException("Failed to serialize request", e);
+            throw new SeedApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
@@ -153,16 +160,16 @@ public class RawBigunionClient {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
-                return new SeedUnionsHttpResponse<>(
+                return new SeedApiHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
                                 responseBodyString, new TypeReference<Map<String, Boolean>>() {}),
                         response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new SeedUnionsApiException(
+            throw new SeedApiApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
-            throw new SeedUnionsException("Network error executing HTTP request", e);
+            throw new SeedApiException("Network error executing HTTP request", e);
         }
     }
 }

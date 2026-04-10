@@ -1,4 +1,4 @@
-//! API client and types for the HeaderTokenEnvironmentVariable
+//! API client and types for the header-auth-environment-variable
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -9,4 +9,4 @@
 
 pub mod resources;
 
-pub use resources::{HeaderTokenEnvironmentVariableClient, ServiceClient};
+pub use resources::{ApiClient, ServiceClient};

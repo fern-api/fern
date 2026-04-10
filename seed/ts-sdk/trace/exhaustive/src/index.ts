@@ -1,5 +1,5 @@
-export * as SeedTrace from "./api/index.js";
+export * as SeedApi from "./api/index.js";
 export type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-export { SeedTraceClient } from "./Client.js";
-export { SeedTraceEnvironment } from "./environments.js";
+export { SeedApiClient } from "./Client.js";
+export { SeedApiEnvironment } from "./environments.js";
 export * from "./exports.js";

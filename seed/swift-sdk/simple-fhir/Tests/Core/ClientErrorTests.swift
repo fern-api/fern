@@ -19,7 +19,7 @@ import Testing
         )
 
         do {
-            _ = try await client.getAccount(
+            _ = try await client..getAccount(
                 accountId: "account_id",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -52,7 +52,7 @@ import Testing
         )
 
         do {
-            _ = try await client.getAccount(
+            _ = try await client..getAccount(
                 accountId: "account_id",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -85,7 +85,7 @@ import Testing
         )
 
         do {
-            _ = try await client.getAccount(
+            _ = try await client..getAccount(
                 accountId: "account_id",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -120,7 +120,7 @@ import Testing
         )
 
         do {
-            _ = try await client.getAccount(
+            _ = try await client..getAccount(
                 accountId: "account_id",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -153,7 +153,7 @@ import Testing
         )
 
         do {
-            _ = try await client.getAccount(
+            _ = try await client..getAccount(
                 accountId: "account_id",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -188,7 +188,7 @@ import Testing
         )
 
         do {
-            _ = try await client.getAccount(
+            _ = try await client..getAccount(
                 accountId: "account_id",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -221,7 +221,7 @@ import Testing
         )
 
         do {
-            _ = try await client.getAccount(
+            _ = try await client..getAccount(
                 accountId: "account_id",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )

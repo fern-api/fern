@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>$client-&gt;auth-&gt;getToken($request) -> ?TokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;gettoken($request) -> ?TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,11 +13,11 @@
 <dd>
 
 ```php
-$client->auth->getToken(
-    new GetTokenRequest([
+$client->auth->gettoken(
+    new AuthGetTokenRequest([
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
-        'grantType' => 'client_credentials',
+        'grantType' => AuthGetTokenRequestGrantType::ClientCredentials->value,
     ]),
 );
 ```
@@ -62,8 +62,8 @@ $client->auth->getToken(
 </dl>
 </details>
 
-## NestedNoAuth Api
-<details><summary><code>$client-&gt;nestedNoAuth-&gt;api-&gt;getSomething()</code></summary>
+## NestedNoAuthApi
+<details><summary><code>$client-&gt;nestedNoAuthApi-&gt;nestedNoAuthApiGetSomething()</code></summary>
 <dl>
 <dd>
 
@@ -76,7 +76,7 @@ $client->auth->getToken(
 <dd>
 
 ```php
-$client->nestedNoAuth->api->getSomething();
+$client->nestedNoAuthApi->nestedNoAuthApiGetSomething();
 ```
 </dd>
 </dl>
@@ -88,8 +88,8 @@ $client->nestedNoAuth->api->getSomething();
 </dl>
 </details>
 
-## Nested Api
-<details><summary><code>$client-&gt;nested-&gt;api-&gt;getSomething()</code></summary>
+## NestedApi
+<details><summary><code>$client-&gt;nestedApi-&gt;nestedApiGetSomething()</code></summary>
 <dl>
 <dd>
 
@@ -102,7 +102,7 @@ $client->nestedNoAuth->api->getSomething();
 <dd>
 
 ```php
-$client->nested->api->getSomething();
+$client->nestedApi->nestedApiGetSomething();
 ```
 </dd>
 </dl>
@@ -115,7 +115,7 @@ $client->nested->api->getSomething();
 </details>
 
 ## Simple
-<details><summary><code>$client-&gt;simple-&gt;getSomething()</code></summary>
+<details><summary><code>$client-&gt;simple-&gt;getsomething()</code></summary>
 <dl>
 <dd>
 
@@ -128,7 +128,7 @@ $client->nested->api->getSomething();
 <dd>
 
 ```php
-$client->simple->getSomething();
+$client->simple->getsomething();
 ```
 </dd>
 </dl>

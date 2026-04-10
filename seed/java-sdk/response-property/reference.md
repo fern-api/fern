@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.getMovie(request) -> Response</code></summary>
+<details><summary><code>client.service.getmovie(request) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```java
-client.service().getMovie("string");
+client.service().getmovie("string");
 ```
 </dd>
 </dl>
@@ -40,7 +40,7 @@ client.service().getMovie("string");
 </dl>
 </details>
 
-<details><summary><code>client.service.getMovieDocs(request) -> Response</code></summary>
+<details><summary><code>client.service.getmoviedocs(request) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +53,7 @@ client.service().getMovie("string");
 <dd>
 
 ```java
-client.service().getMovieDocs("string");
+client.service().getmoviedocs("string");
 ```
 </dd>
 </dl>
@@ -80,7 +80,7 @@ client.service().getMovieDocs("string");
 </dl>
 </details>
 
-<details><summary><code>client.service.getMovieName(request) -> StringResponse</code></summary>
+<details><summary><code>client.service.getmoviename(request) -> StringResponse</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +93,7 @@ client.service().getMovieDocs("string");
 <dd>
 
 ```java
-client.service().getMovieName("string");
+client.service().getmoviename("string");
 ```
 </dd>
 </dl>
@@ -120,7 +120,7 @@ client.service().getMovieName("string");
 </dl>
 </details>
 
-<details><summary><code>client.service.getMovieMetadata(request) -> Response</code></summary>
+<details><summary><code>client.service.getmoviemetadata(request) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -133,7 +133,7 @@ client.service().getMovieName("string");
 <dd>
 
 ```java
-client.service().getMovieMetadata("string");
+client.service().getmoviemetadata("string");
 ```
 </dd>
 </dl>
@@ -160,7 +160,7 @@ client.service().getMovieMetadata("string");
 </dl>
 </details>
 
-<details><summary><code>client.service.getOptionalMovie(request) -> Optional&amp;lt;Response&amp;gt;</code></summary>
+<details><summary><code>client.service.getoptionalmovie(request) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -173,7 +173,7 @@ client.service().getMovieMetadata("string");
 <dd>
 
 ```java
-client.service().getOptionalMovie("string");
+client.service().getoptionalmovie("string");
 ```
 </dd>
 </dl>
@@ -200,7 +200,7 @@ client.service().getOptionalMovie("string");
 </dl>
 </details>
 
-<details><summary><code>client.service.getOptionalMovieDocs(request) -> Optional&amp;lt;WithDocs&amp;gt;</code></summary>
+<details><summary><code>client.service.getoptionalmoviedocs(request) -> WithDocs</code></summary>
 <dl>
 <dd>
 
@@ -213,7 +213,7 @@ client.service().getOptionalMovie("string");
 <dd>
 
 ```java
-client.service().getOptionalMovieDocs("string");
+client.service().getoptionalmoviedocs("string");
 ```
 </dd>
 </dl>
@@ -240,7 +240,7 @@ client.service().getOptionalMovieDocs("string");
 </dl>
 </details>
 
-<details><summary><code>client.service.getOptionalMovieName(request) -> Optional&amp;lt;StringResponse&amp;gt;</code></summary>
+<details><summary><code>client.service.getoptionalmoviename(request) -> StringResponse</code></summary>
 <dl>
 <dd>
 
@@ -253,7 +253,7 @@ client.service().getOptionalMovieDocs("string");
 <dd>
 
 ```java
-client.service().getOptionalMovieName("string");
+client.service().getoptionalmoviename("string");
 ```
 </dd>
 </dl>

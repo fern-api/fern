@@ -1,2 +1,2 @@
-export { StoreTracedTestCaseRequest } from "./StoreTracedTestCaseRequest.js";
-export { StoreTracedWorkspaceRequest } from "./StoreTracedWorkspaceRequest.js";
+export { AdminStoreTracedTestCaseRequest } from "./AdminStoreTracedTestCaseRequest.js";
+export { AdminStoreTracedWorkspaceRequest } from "./AdminStoreTracedWorkspaceRequest.js";

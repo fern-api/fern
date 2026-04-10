@@ -1,4 +1,4 @@
-//! API client and types for the LiteralsUnions
+//! API client and types for the literals-unions
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,5 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{LiteralsClient, LiteralsUnionsClient};
+pub use resources::ApiClient;
 pub use types::*;

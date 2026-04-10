@@ -4,8 +4,10 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.user import User
 from .raw_client import AsyncRawUserClient, RawUserClient
-from .types.user import User
+from .types.user_create_user_request_type import UserCreateUserRequestType
+from .types.user_create_user_request_version import UserCreateUserRequestVersion
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -26,10 +28,21 @@ class UserClient:
         """
         return self._raw_client
 
-    def create_user(self, *, name: str, request_options: typing.Optional[RequestOptions] = None) -> User:
+    def createuser(
+        self,
+        *,
+        type: UserCreateUserRequestType,
+        version: UserCreateUserRequestVersion,
+        name: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> User:
         """
         Parameters
         ----------
+        type : UserCreateUserRequestType
+
+        version : UserCreateUserRequestVersion
+
         name : str
 
         request_options : typing.Optional[RequestOptions]
@@ -39,18 +52,21 @@ class UserClient:
         -------
         User
 
+
         Examples
         --------
-        from seed import SeedExtraProperties
+        from seed import SeedApi
 
-        client = SeedExtraProperties(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.user.create_user(
-            name="Alice",
+        client.user.createuser(
+            type="CreateUserRequest",
+            version="v1",
+            name="name",
         )
         """
-        _response = self._raw_client.create_user(name=name, request_options=request_options)
+        _response = self._raw_client.createuser(type=type, version=version, name=name, request_options=request_options)
         return _response.data
 
 
@@ -69,10 +85,21 @@ class AsyncUserClient:
         """
         return self._raw_client
 
-    async def create_user(self, *, name: str, request_options: typing.Optional[RequestOptions] = None) -> User:
+    async def createuser(
+        self,
+        *,
+        type: UserCreateUserRequestType,
+        version: UserCreateUserRequestVersion,
+        name: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> User:
         """
         Parameters
         ----------
+        type : UserCreateUserRequestType
+
+        version : UserCreateUserRequestVersion
+
         name : str
 
         request_options : typing.Optional[RequestOptions]
@@ -82,24 +109,29 @@ class AsyncUserClient:
         -------
         User
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedExtraProperties
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExtraProperties(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.user.create_user(
-                name="Alice",
+            await client.user.createuser(
+                type="CreateUserRequest",
+                version="v1",
+                name="name",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_user(name=name, request_options=request_options)
+        _response = await self._raw_client.createuser(
+            type=type, version=version, name=name, request_options=request_options
+        )
         return _response.data

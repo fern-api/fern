@@ -136,21 +136,41 @@ func (b *BaseResource) String() string {
 }
 
 type ResourceList struct {
-	Account      *Account
-	Patient      *Patient
-	Practitioner *Practitioner
-	Script       *Script
+	ResourceType string
+	Account      Account
+	Patient      Patient
+	Practitioner Practitioner
+	Script       Script
+}
+
+type AccountResourceType string
+
+const (
+	AccountResourceTypeAccount = "Account"
+)
+
+func NewAccountResourceTypeFromString(s string) (AccountResourceType, error) {
+	switch s {
+	case "Account":
+		return AccountResourceTypeAccount, nil
+	}
+	var t AccountResourceType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a AccountResourceType) Ptr() *AccountResourceType {
+	return &a
 }
 
 type Account struct {
-	ID               string          `json:"id" url:"id"`
-	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
-	Memo             *Memo           `json:"memo" url:"memo"`
-	Name             string          `json:"name" url:"name"`
-	Patient          *Patient        `json:"patient,omitempty" url:"patient,omitempty"`
-	Practitioner     *Practitioner   `json:"practitioner,omitempty" url:"practitioner,omitempty"`
+	ID               string               `json:"id" url:"id"`
+	RelatedResources []*ResourceList      `json:"related_resources" url:"related_resources"`
+	Memo             *Memo                `json:"memo" url:"memo"`
+	ResourceType     *AccountResourceType `json:"resource_type" url:"resource_type"`
+	Name             string               `json:"name" url:"name"`
+	Patient          *Patient             `json:"patient,omitempty" url:"patient,omitempty"`
+	Practitioner     *Practitioner        `json:"practitioner,omitempty" url:"practitioner,omitempty"`
 
-	resourceType    string
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
@@ -176,11 +196,11 @@ func (a *Account) GetMemo() *Memo {
 	return a.Memo
 }
 
-func (a *Account) GetResourceType() string {
+func (a *Account) GetResourceType() *AccountResourceType {
 	if a == nil {
-		return ""
+		return nil
 	}
-	return a.resourceType
+	return a.ResourceType
 }
 
 func (a *Account) GetName() string {
@@ -214,40 +234,19 @@ func (a *Account) GetExtraProperties() map[string]any {
 func (a *Account) UnmarshalJSON(
 	data []byte,
 ) error {
-	type embed Account
-	var unmarshaler = struct {
-		embed
-		ResourceType string `json:"resource_type"`
-	}{
-		embed: embed(*a),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+	type unmarshaler Account
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*a = Account(unmarshaler.embed)
-	if unmarshaler.ResourceType != "Account" {
-		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "Account", unmarshaler.ResourceType)
-	}
-	a.resourceType = unmarshaler.ResourceType
-	extraProperties, err := internal.ExtractExtraProperties(data, *a, "resourceType")
+	*a = Account(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
 	}
 	a.extraProperties = extraProperties
 	a.rawJSON = json.RawMessage(data)
 	return nil
-}
-
-func (a *Account) MarshalJSON() ([]byte, error) {
-	type embed Account
-	var marshaler = struct {
-		embed
-		ResourceType string `json:"resource_type"`
-	}{
-		embed:        embed(*a),
-		ResourceType: "Account",
-	}
-	return json.Marshal(marshaler)
 }
 
 func (a *Account) String() string {
@@ -262,14 +261,33 @@ func (a *Account) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
-type Patient struct {
-	ID               string          `json:"id" url:"id"`
-	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
-	Memo             *Memo           `json:"memo" url:"memo"`
-	Name             string          `json:"name" url:"name"`
-	Scripts          []*Script       `json:"scripts" url:"scripts"`
+type PatientResourceType string
 
-	resourceType    string
+const (
+	PatientResourceTypePatient = "Patient"
+)
+
+func NewPatientResourceTypeFromString(s string) (PatientResourceType, error) {
+	switch s {
+	case "Patient":
+		return PatientResourceTypePatient, nil
+	}
+	var t PatientResourceType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PatientResourceType) Ptr() *PatientResourceType {
+	return &p
+}
+
+type Patient struct {
+	ID               string               `json:"id" url:"id"`
+	RelatedResources []*ResourceList      `json:"related_resources" url:"related_resources"`
+	Memo             *Memo                `json:"memo" url:"memo"`
+	ResourceType     *PatientResourceType `json:"resource_type" url:"resource_type"`
+	Name             string               `json:"name" url:"name"`
+	Scripts          []*Script            `json:"scripts" url:"scripts"`
+
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
@@ -295,11 +313,11 @@ func (p *Patient) GetMemo() *Memo {
 	return p.Memo
 }
 
-func (p *Patient) GetResourceType() string {
+func (p *Patient) GetResourceType() *PatientResourceType {
 	if p == nil {
-		return ""
+		return nil
 	}
-	return p.resourceType
+	return p.ResourceType
 }
 
 func (p *Patient) GetName() string {
@@ -326,40 +344,19 @@ func (p *Patient) GetExtraProperties() map[string]any {
 func (p *Patient) UnmarshalJSON(
 	data []byte,
 ) error {
-	type embed Patient
-	var unmarshaler = struct {
-		embed
-		ResourceType string `json:"resource_type"`
-	}{
-		embed: embed(*p),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+	type unmarshaler Patient
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*p = Patient(unmarshaler.embed)
-	if unmarshaler.ResourceType != "Patient" {
-		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", p, "Patient", unmarshaler.ResourceType)
-	}
-	p.resourceType = unmarshaler.ResourceType
-	extraProperties, err := internal.ExtractExtraProperties(data, *p, "resourceType")
+	*p = Patient(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
 	p.rawJSON = json.RawMessage(data)
 	return nil
-}
-
-func (p *Patient) MarshalJSON() ([]byte, error) {
-	type embed Patient
-	var marshaler = struct {
-		embed
-		ResourceType string `json:"resource_type"`
-	}{
-		embed:        embed(*p),
-		ResourceType: "Patient",
-	}
-	return json.Marshal(marshaler)
 }
 
 func (p *Patient) String() string {
@@ -374,13 +371,32 @@ func (p *Patient) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
-type Practitioner struct {
-	ID               string          `json:"id" url:"id"`
-	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
-	Memo             *Memo           `json:"memo" url:"memo"`
-	Name             string          `json:"name" url:"name"`
+type PractitionerResourceType string
 
-	resourceType    string
+const (
+	PractitionerResourceTypePractitioner = "Practitioner"
+)
+
+func NewPractitionerResourceTypeFromString(s string) (PractitionerResourceType, error) {
+	switch s {
+	case "Practitioner":
+		return PractitionerResourceTypePractitioner, nil
+	}
+	var t PractitionerResourceType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PractitionerResourceType) Ptr() *PractitionerResourceType {
+	return &p
+}
+
+type Practitioner struct {
+	ID               string                    `json:"id" url:"id"`
+	RelatedResources []*ResourceList           `json:"related_resources" url:"related_resources"`
+	Memo             *Memo                     `json:"memo" url:"memo"`
+	ResourceType     *PractitionerResourceType `json:"resource_type" url:"resource_type"`
+	Name             string                    `json:"name" url:"name"`
+
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
@@ -406,11 +422,11 @@ func (p *Practitioner) GetMemo() *Memo {
 	return p.Memo
 }
 
-func (p *Practitioner) GetResourceType() string {
+func (p *Practitioner) GetResourceType() *PractitionerResourceType {
 	if p == nil {
-		return ""
+		return nil
 	}
-	return p.resourceType
+	return p.ResourceType
 }
 
 func (p *Practitioner) GetName() string {
@@ -430,40 +446,19 @@ func (p *Practitioner) GetExtraProperties() map[string]any {
 func (p *Practitioner) UnmarshalJSON(
 	data []byte,
 ) error {
-	type embed Practitioner
-	var unmarshaler = struct {
-		embed
-		ResourceType string `json:"resource_type"`
-	}{
-		embed: embed(*p),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+	type unmarshaler Practitioner
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*p = Practitioner(unmarshaler.embed)
-	if unmarshaler.ResourceType != "Practitioner" {
-		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", p, "Practitioner", unmarshaler.ResourceType)
-	}
-	p.resourceType = unmarshaler.ResourceType
-	extraProperties, err := internal.ExtractExtraProperties(data, *p, "resourceType")
+	*p = Practitioner(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
 	p.rawJSON = json.RawMessage(data)
 	return nil
-}
-
-func (p *Practitioner) MarshalJSON() ([]byte, error) {
-	type embed Practitioner
-	var marshaler = struct {
-		embed
-		ResourceType string `json:"resource_type"`
-	}{
-		embed:        embed(*p),
-		ResourceType: "Practitioner",
-	}
-	return json.Marshal(marshaler)
 }
 
 func (p *Practitioner) String() string {
@@ -478,13 +473,32 @@ func (p *Practitioner) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
-type Script struct {
-	ID               string          `json:"id" url:"id"`
-	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
-	Memo             *Memo           `json:"memo" url:"memo"`
-	Name             string          `json:"name" url:"name"`
+type ScriptResourceType string
 
-	resourceType    string
+const (
+	ScriptResourceTypeScript = "Script"
+)
+
+func NewScriptResourceTypeFromString(s string) (ScriptResourceType, error) {
+	switch s {
+	case "Script":
+		return ScriptResourceTypeScript, nil
+	}
+	var t ScriptResourceType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s ScriptResourceType) Ptr() *ScriptResourceType {
+	return &s
+}
+
+type Script struct {
+	ID               string              `json:"id" url:"id"`
+	RelatedResources []*ResourceList     `json:"related_resources" url:"related_resources"`
+	Memo             *Memo               `json:"memo" url:"memo"`
+	ResourceType     *ScriptResourceType `json:"resource_type" url:"resource_type"`
+	Name             string              `json:"name" url:"name"`
+
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
@@ -510,11 +524,11 @@ func (s *Script) GetMemo() *Memo {
 	return s.Memo
 }
 
-func (s *Script) GetResourceType() string {
+func (s *Script) GetResourceType() *ScriptResourceType {
 	if s == nil {
-		return ""
+		return nil
 	}
-	return s.resourceType
+	return s.ResourceType
 }
 
 func (s *Script) GetName() string {
@@ -534,40 +548,19 @@ func (s *Script) GetExtraProperties() map[string]any {
 func (s *Script) UnmarshalJSON(
 	data []byte,
 ) error {
-	type embed Script
-	var unmarshaler = struct {
-		embed
-		ResourceType string `json:"resource_type"`
-	}{
-		embed: embed(*s),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+	type unmarshaler Script
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*s = Script(unmarshaler.embed)
-	if unmarshaler.ResourceType != "Script" {
-		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, "Script", unmarshaler.ResourceType)
-	}
-	s.resourceType = unmarshaler.ResourceType
-	extraProperties, err := internal.ExtractExtraProperties(data, *s, "resourceType")
+	*s = Script(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
 	s.rawJSON = json.RawMessage(data)
 	return nil
-}
-
-func (s *Script) MarshalJSON() ([]byte, error) {
-	type embed Script
-	var marshaler = struct {
-		embed
-		ResourceType string `json:"resource_type"`
-	}{
-		embed:        embed(*s),
-		ResourceType: "Script",
-	}
-	return json.Marshal(marshaler)
 }
 
 func (s *Script) String() string {

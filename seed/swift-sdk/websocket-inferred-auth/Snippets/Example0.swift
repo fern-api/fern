@@ -1,15 +1,17 @@
 import Foundation
-import WebsocketAuth
+import Api
 
 private func main() async throws {
-    let client = WebsocketAuthClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(
+        baseURL: "https://api.fern.com",
+        apiKey: "<X-Api-Key>"
+    )
 
-    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
+    _ = try await client.auth.gettokenwithclientcredentials(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
         audience: .httpsApiExampleCom,
-        grantType: .clientCredentials,
-        scope: "scope"
+        grantType: .clientCredentials
     ))
 }
 

@@ -1,18 +1,18 @@
-using SeedAliasExtends;
+using SeedApi;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedAliasExtendsClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.ExtendedInlineRequestBodyAsync(
-            new InlinedChildRequest {
+        await client._.ExtendedInlineRequestBodyAsync(
+            new ExtendedInlineRequestBodyRequest {
                 Parent = "parent",
                 Child = "child"
             }

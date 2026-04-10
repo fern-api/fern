@@ -32,7 +32,7 @@ classifiers = [
     "Typing :: Typed"
 ]
 packages = [
-    { include = "seed/package_yml", from = "src"}
+    { include = "seed/api", from = "src"}
 ]
 
 [tool.poetry.urls]
@@ -42,7 +42,6 @@ Repository = 'https://github.com/package-yml/fern'
 
 [tool.poetry.dependencies]
 python = "^3.10"
-pydantic = ">= 1.9.2"
 pydantic-core = ">=2.18.2,<2.44.0"
 
 [tool.poetry.group.dev.dependencies]

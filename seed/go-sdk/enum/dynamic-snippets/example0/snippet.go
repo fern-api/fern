@@ -14,9 +14,8 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.SendEnumAsHeaderRequest{
+    request := &fern.HeadersSendRequest{
         Operand: fern.OperandGreaterThan,
-        MaybeOperand: fern.OperandGreaterThan.Ptr(),
         OperandOrColor: &fern.ColorOrOperand{
             Color: fern.ColorRed,
         },

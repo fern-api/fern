@@ -1,7 +1,7 @@
 # Seed Rust Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRust)
-[![crates.io shield](https://img.shields.io/crates/v/seed_literal)](https://crates.io/crates/seed_literal)
+[![crates.io shield](https://img.shields.io/crates/v/seed_api)](https://crates.io/crates/seed_api)
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
@@ -25,13 +25,13 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_literal = "0.0.1"
+seed_api = "0.0.1"
 ```
 
 Or install via cargo:
 
 ```sh
-cargo add seed_literal
+cargo add seed_api
 ```
 
 ## Reference
@@ -43,19 +43,19 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```rust
-use seed_literal::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = LiteralClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .headers
         .send(
-            &SendLiteralsInHeadersRequest {
-                query: "What is the weather today".to_string(),
+            &HeadersSendRequest {
+                query: "query".to_string(),
             },
             Some(
                 RequestOptions::new()
@@ -90,9 +90,9 @@ match client.headers.send(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_literal::prelude::{*};
+use seed_api::prelude::{*};
 
-let request = SendLiteralsInHeadersRequest {
+let request = HeadersSendRequest {
     ...
 };
 ```

@@ -9,7 +9,7 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from .types.user import User
+from ..types.user import User
 from pydantic import ValidationError
 
 
@@ -27,6 +27,7 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[typing.List[User]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -52,7 +53,7 @@ class RawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_admins(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[typing.List[User]]:
+    def getadmins(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[typing.List[User]]:
         """
         Parameters
         ----------
@@ -62,6 +63,7 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[typing.List[User]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "admins",
@@ -104,6 +106,7 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[User]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -129,7 +132,7 @@ class AsyncRawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def get_admins(
+    async def getadmins(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[User]]:
         """
@@ -141,6 +144,7 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[User]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "admins",

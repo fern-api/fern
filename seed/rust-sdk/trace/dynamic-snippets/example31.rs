@@ -1,4 +1,4 @@
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,6 +7,17 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
-    client.v2.problem.get_problems(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .playlist
+        .updateplaylist(
+            1,
+            &PlaylistId("playlistId".to_string()),
+            &UpdatePlaylistRequest {
+                name: "name".to_string(),
+                problems: vec![ProblemId("problems".to_string())],
+            },
+            None,
+        )
+        .await;
 }

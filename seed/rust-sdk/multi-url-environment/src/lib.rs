@@ -1,11 +1,11 @@
-//! # MultiUrlEnvironment SDK
+//! # multi-url-environment SDK
 //!
-//! The official Rust SDK for the MultiUrlEnvironment.
+//! The official Rust SDK for the multi-url-environment.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_multi_url_environment::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -13,11 +13,11 @@
 //!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = MultiUrlEnvironmentClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .ec2
-//!         .boot_instance(
-//!             &BootInstanceRequest {
+//!         .bootinstance(
+//!             &Ec2BootInstanceRequest {
 //!                 size: "size".to_string(),
 //!             },
 //!             None,
@@ -39,7 +39,6 @@ pub mod api;
 pub mod client;
 pub mod config;
 pub mod core;
-pub mod environment;
 pub mod error;
 pub mod prelude;
 
@@ -47,5 +46,4 @@ pub use api::*;
 pub use client::*;
 pub use config::*;
 pub use core::*;
-pub use environment::*;
 pub use error::{ApiError, BuildError};

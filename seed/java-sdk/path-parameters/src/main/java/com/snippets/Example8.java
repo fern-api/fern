@@ -1,20 +1,24 @@
 package com.snippets;
 
-import com.seed.pathParameters.SeedPathParametersClient;
-import com.seed.pathParameters.resources.user.requests.GetUserSpecificsRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.user.requests.UserUpdateUserRequest;
+import com.seed.api.types.User;
+import java.util.Arrays;
 
 public class Example8 {
     public static void main(String[] args) {
-        SeedPathParametersClient client = SeedPathParametersClient.builder()
-                .url("https://api.fern.com")
-                .tenantId("tenant_id")
-                .build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
         client.user()
-                .getUserSpecifics(
+                .updateuser(
+                        "tenant_id",
                         "user_id",
-                        1,
-                        "thought",
-                        GetUserSpecificsRequest.builder().build());
+                        UserUpdateUserRequest.builder()
+                                .body(User.builder()
+                                        .name("name")
+                                        .tags(Arrays.asList("tags"))
+                                        .build())
+                                .build());
     }
 }

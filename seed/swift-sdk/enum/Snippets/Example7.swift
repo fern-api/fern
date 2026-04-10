@@ -1,10 +1,13 @@
 import Foundation
-import Enum
+import Api
 
 private func main() async throws {
-    let client = EnumClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.queryParam.sendList()
+    _ = try await client.queryparam.send(
+        operand: .greaterThan,
+        operandOrColor: .red
+    )
 }
 
 try await main()

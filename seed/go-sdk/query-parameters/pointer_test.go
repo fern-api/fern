@@ -1,4 +1,4 @@
-package queryparameters
+package api
 
 import (
 	"testing"

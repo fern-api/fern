@@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace ServiceClient {
     export type Options = BaseClientOptions;
@@ -21,26 +22,33 @@ export class ServiceClient {
     }
 
     /**
-     * @param {string} nestedId
+     * @param {SeedApi.ServiceNopRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.nop("id-219xca8")
+     *     await client.service.nop({
+     *         id: "id",
+     *         nestedId: "nestedId"
+     *     })
      */
-    public nop(nestedId: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__nop(nestedId, requestOptions));
+    public nop(
+        request: SeedApi.ServiceNopRequest,
+        requestOptions?: ServiceClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__nop(request, requestOptions));
     }
 
     private async __nop(
-        nestedId: string,
+        request: SeedApi.ServiceNopRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
+        const { id, nestedId } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.id)}//${core.url.encodePathParam(nestedId)}`,
+                `${core.url.encodePathParam(id)}//${core.url.encodePathParam(nestedId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -56,7 +64,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedPackageYmlError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

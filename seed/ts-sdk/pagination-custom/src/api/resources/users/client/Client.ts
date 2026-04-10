@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedPagination from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace UsersClient {
     export type Options = BaseClientOptions;
@@ -22,30 +22,34 @@ export class UsersClient {
     }
 
     /**
-     * @param {SeedPagination.ListWithCustomPagerRequest} request
+     * @param {SeedApi.UsersListWithCustomPagerRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.users.listWithCustomPager({
-     *         limit: 1,
-     *         starting_after: "starting_after"
-     *     })
+     *     await client.users.listwithcustompager()
      */
-    public async listWithCustomPager(
-        request: SeedPagination.ListWithCustomPagerRequest = {},
+    public listwithcustompager(
+        request: SeedApi.UsersListWithCustomPagerRequest = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.MyPager<string, SeedPagination.UsersListResponse>> {
+    ): core.HttpResponsePromise<SeedApi.UsersListResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listwithcustompager(request, requestOptions));
+    }
+
+    private async __listwithcustompager(
+        request: SeedApi.UsersListWithCustomPagerRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.UsersListResponse>> {
         const { limit, starting_after: startingAfter } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
             starting_after: startingAfter,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _request = {
+        const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/users",
+                "users",
             ),
             method: "GET",
             headers: _headers,
@@ -55,26 +59,19 @@ export class UsersClient {
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
             logging: this._options.logging,
-        };
-        const _sendRequest = async (request: core.Fetcher.Args) => {
-            const _response = await core.fetcher<SeedPagination.UsersListResponse>(request);
-            if (_response.ok) {
-                return _response;
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedPaginationError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
-        };
-        return core.createMyPager<string, SeedPagination.UsersListResponse>({
-            sendRequest: _sendRequest,
-            initialHttpRequest: _request,
-            clientOptions: this._options,
-            requestOptions: requestOptions,
         });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.UsersListResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
     }
 }

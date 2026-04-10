@@ -4,8 +4,9 @@ client = Seed::Client.new(base_url: "https://api.fern.com")
 
 client.reference.send_(
   prompt: "You are a helpful assistant",
-  query: "What is the weather today",
-  stream: false,
+  query: "query",
+  stream: true,
+  ending: "$ending",
   context: "You're super wise",
   container_object: {
     nested_objects: [{

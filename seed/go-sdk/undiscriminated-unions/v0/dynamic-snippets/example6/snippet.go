@@ -14,15 +14,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.Request{
-        Union: &fern.MetadataUnion{
-            OptionalMetadata: map[string]any{
-                "union": map[string]any{
-                    "key": "value",
-                },
-            },
-        },
-    }
+    request := &fern.Request{}
     client.Union.Call(
         context.TODO(),
         request,

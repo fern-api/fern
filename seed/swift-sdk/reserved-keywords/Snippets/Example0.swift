@@ -1,8 +1,8 @@
 import Foundation
-import NurseryApi
+import Api
 
 private func main() async throws {
-    let client = NurseryApiClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
     _ = try await client.package.test(for: "for")
 }

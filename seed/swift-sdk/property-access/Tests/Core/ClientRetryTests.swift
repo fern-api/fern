@@ -1,4 +1,4 @@
-import PropertyAccess
+import Api
 import Foundation
 import Testing
 
@@ -14,13 +14,13 @@ import Testing
             ),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.createUser(
+            _ = try await client..createUser(
                 request: User(
                     id: "id",
                     email: "email",
@@ -52,13 +52,13 @@ import Testing
             ),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.createUser(
+            _ = try await client..createUser(
                 request: User(
                     id: "id",
                     email: "email",
@@ -90,13 +90,13 @@ import Testing
             ),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.createUser(
+            _ = try await client..createUser(
                 request: User(
                     id: "id",
                     email: "email",
@@ -127,13 +127,13 @@ import Testing
             ),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.createUser(
+            _ = try await client..createUser(
                 request: User(
                     id: "id",
                     email: "email",
@@ -163,13 +163,13 @@ import Testing
             )
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.createUser(
+            _ = try await client..createUser(
                 request: User(
                     id: "id",
                     email: "email",
@@ -200,13 +200,13 @@ import Testing
             )
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.createUser(
+            _ = try await client..createUser(
                 request: User(
                     id: "id",
                     email: "email",
@@ -237,13 +237,13 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.createUser(
+            _ = try await client..createUser(
                 request: User(
                     id: "id",
                     email: "email",
@@ -278,14 +278,14 @@ import Testing
             ),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.createUser(
+            _ = try await client..createUser(
                 request: User(
                     id: "id",
                     email: "email",
@@ -330,14 +330,14 @@ import Testing
             ),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.createUser(
+            _ = try await client..createUser(
                 request: User(
                     id: "id",
                     email: "email",
@@ -378,14 +378,14 @@ import Testing
             ),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.createUser(
+            _ = try await client..createUser(
                 request: User(
                     id: "id",
                     email: "email",
@@ -438,13 +438,13 @@ import Testing
             ),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.createUser(
+            _ = try await client..createUser(
                 request: User(
                     id: "id",
                     email: "email",
@@ -471,13 +471,13 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.createUser(
+            _ = try await client..createUser(
                 request: User(
                     id: "id",
                     email: "email",
@@ -508,13 +508,13 @@ import Testing
             )
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.createUser(
+            _ = try await client..createUser(
                 request: User(
                     id: "id",
                     email: "email",

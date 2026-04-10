@@ -6,11 +6,11 @@
             "id": {
                 "path": "/apiKey",
                 "method": "GET",
-                "identifier_override": "endpoint_service.getWithBearerToken"
+                "identifier_override": "endpoint_service.getwithbearertoken"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedBearerTokenEnvironmentVariable;\n\nvar client = new SeedBearerTokenEnvironmentVariableClient(\"API_KEY\");\nawait client.Service.GetWithBearerTokenAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Service.GetwithbearertokenAsync();\n"
             }
         }
     ]

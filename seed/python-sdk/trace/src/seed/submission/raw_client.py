@@ -3,7 +3,6 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from ..commons.types.language import Language
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
@@ -11,8 +10,9 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from .types.execution_session_response import ExecutionSessionResponse
-from .types.get_execution_session_state_response import GetExecutionSessionStateResponse
+from ..types.execution_session_response import ExecutionSessionResponse
+from ..types.get_execution_session_state_response import GetExecutionSessionStateResponse
+from ..types.language import Language
 from pydantic import ValidationError
 
 
@@ -20,7 +20,7 @@ class RawSubmissionClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def create_execution_session(
+    def createexecutionsession(
         self, language: Language, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ExecutionSessionResponse]:
         """
@@ -36,6 +36,7 @@ class RawSubmissionClient:
         Returns
         -------
         HttpResponse[ExecutionSessionResponse]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             f"sessions/create-session/{encode_path_param(language)}",
@@ -43,6 +44,15 @@ class RawSubmissionClient:
             request_options=request_options,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ExecutionSessionResponse,
+                    parse_obj_as(
+                        type_=ExecutionSessionResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -50,25 +60,11 @@ class RawSubmissionClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    ExecutionSessionResponse,
-                    parse_obj_as(
-                        type_=ExecutionSessionResponse,  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_execution_session(
+    def getexecutionsession(
         self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.Optional[ExecutionSessionResponse]]:
+    ) -> HttpResponse[ExecutionSessionResponse]:
         """
         Returns execution server URL for session. Returns empty if session isn't registered.
 
@@ -81,7 +77,8 @@ class RawSubmissionClient:
 
         Returns
         -------
-        HttpResponse[typing.Optional[ExecutionSessionResponse]]
+        HttpResponse[ExecutionSessionResponse]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             f"sessions/{encode_path_param(session_id)}",
@@ -89,6 +86,15 @@ class RawSubmissionClient:
             request_options=request_options,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ExecutionSessionResponse,
+                    parse_obj_as(
+                        type_=ExecutionSessionResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -96,23 +102,9 @@ class RawSubmissionClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    typing.Optional[ExecutionSessionResponse],
-                    parse_obj_as(
-                        type_=typing.Optional[ExecutionSessionResponse],  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def stop_execution_session(
+    def stopexecutionsession(
         self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
@@ -134,9 +126,9 @@ class RawSubmissionClient:
             method="DELETE",
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            return HttpResponse(response=_response, data=None)
         try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -146,7 +138,7 @@ class RawSubmissionClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_execution_sessions_state(
+    def getexecutionsessionsstate(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetExecutionSessionStateResponse]:
         """
@@ -158,6 +150,7 @@ class RawSubmissionClient:
         Returns
         -------
         HttpResponse[GetExecutionSessionStateResponse]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "sessions/execution-sessions-state",
@@ -165,6 +158,15 @@ class RawSubmissionClient:
             request_options=request_options,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetExecutionSessionStateResponse,
+                    parse_obj_as(
+                        type_=GetExecutionSessionStateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -172,20 +174,6 @@ class RawSubmissionClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    GetExecutionSessionStateResponse,
-                    parse_obj_as(
-                        type_=GetExecutionSessionStateResponse,  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -193,7 +181,7 @@ class AsyncRawSubmissionClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def create_execution_session(
+    async def createexecutionsession(
         self, language: Language, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ExecutionSessionResponse]:
         """
@@ -209,6 +197,7 @@ class AsyncRawSubmissionClient:
         Returns
         -------
         AsyncHttpResponse[ExecutionSessionResponse]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"sessions/create-session/{encode_path_param(language)}",
@@ -216,6 +205,15 @@ class AsyncRawSubmissionClient:
             request_options=request_options,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ExecutionSessionResponse,
+                    parse_obj_as(
+                        type_=ExecutionSessionResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -223,25 +221,11 @@ class AsyncRawSubmissionClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    ExecutionSessionResponse,
-                    parse_obj_as(
-                        type_=ExecutionSessionResponse,  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def get_execution_session(
+    async def getexecutionsession(
         self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.Optional[ExecutionSessionResponse]]:
+    ) -> AsyncHttpResponse[ExecutionSessionResponse]:
         """
         Returns execution server URL for session. Returns empty if session isn't registered.
 
@@ -254,7 +238,8 @@ class AsyncRawSubmissionClient:
 
         Returns
         -------
-        AsyncHttpResponse[typing.Optional[ExecutionSessionResponse]]
+        AsyncHttpResponse[ExecutionSessionResponse]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"sessions/{encode_path_param(session_id)}",
@@ -262,6 +247,15 @@ class AsyncRawSubmissionClient:
             request_options=request_options,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ExecutionSessionResponse,
+                    parse_obj_as(
+                        type_=ExecutionSessionResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -269,23 +263,9 @@ class AsyncRawSubmissionClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    typing.Optional[ExecutionSessionResponse],
-                    parse_obj_as(
-                        type_=typing.Optional[ExecutionSessionResponse],  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def stop_execution_session(
+    async def stopexecutionsession(
         self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
@@ -307,9 +287,9 @@ class AsyncRawSubmissionClient:
             method="DELETE",
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            return AsyncHttpResponse(response=_response, data=None)
         try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -319,7 +299,7 @@ class AsyncRawSubmissionClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def get_execution_sessions_state(
+    async def getexecutionsessionsstate(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetExecutionSessionStateResponse]:
         """
@@ -331,6 +311,7 @@ class AsyncRawSubmissionClient:
         Returns
         -------
         AsyncHttpResponse[GetExecutionSessionStateResponse]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "sessions/execution-sessions-state",
@@ -338,6 +319,15 @@ class AsyncRawSubmissionClient:
             request_options=request_options,
         )
         try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetExecutionSessionStateResponse,
+                    parse_obj_as(
+                        type_=GetExecutionSessionStateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -345,18 +335,4 @@ class AsyncRawSubmissionClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-        if 200 <= _response.status_code < 300:
-            try:
-                _data = typing.cast(
-                    GetExecutionSessionStateResponse,
-                    parse_obj_as(
-                        type_=GetExecutionSessionStateResponse,  # type: ignore
-                        object_=_response_json,
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            except ValidationError as e:
-                raise ParsingError(
-                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

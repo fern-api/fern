@@ -13,9 +13,8 @@
 <dd>
 
 ```go
-request := &fern.SendEnumAsHeaderRequest{
+request := &fern.HeadersSendRequest{
         Operand: fern.OperandGreaterThan,
-        MaybeOperand: fern.OperandGreaterThan.Ptr(),
         OperandOrColor: &fern.ColorOrOperand{
             Color: fern.ColorRed,
         },
@@ -75,8 +74,8 @@ client.Headers.Send(
 </dl>
 </details>
 
-## InlinedRequest
-<details><summary><code>client.InlinedRequest.Send(request) -> error</code></summary>
+## Inlinedrequest
+<details><summary><code>client.Inlinedrequest.Send(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -89,13 +88,13 @@ client.Headers.Send(
 <dd>
 
 ```go
-request := &fern.SendEnumInlinedRequest{
+request := &fern.InlinedRequestSendRequest{
         Operand: fern.OperandGreaterThan,
         OperandOrColor: &fern.ColorOrOperand{
             Color: fern.ColorRed,
         },
     }
-client.InlinedRequest.Send(
+client.Inlinedrequest.Send(
         context.TODO(),
         request,
     )
@@ -150,9 +149,8 @@ client.InlinedRequest.Send(
 </dl>
 </details>
 
-## MultipartForm
-## PathParam
-<details><summary><code>client.PathParam.Send(Operand, OperandOrColor) -> error</code></summary>
+## Multipartform
+<details><summary><code>client.Multipartform.Multipartform(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -165,12 +163,46 @@ client.InlinedRequest.Send(
 <dd>
 
 ```go
-client.PathParam.Send(
+request := &fern.MultipartFormMultipartFormRequest{}
+client.Multipartform.Multipartform(
         context.TODO(),
-        fern.OperandGreaterThan.Ptr(),
-        &fern.ColorOrOperand{
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Pathparam
+<details><summary><code>client.Pathparam.Send(Operand, OperandOrColor) -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.PathParamSendRequest{
+        Operand: fern.OperandGreaterThan.Ptr(),
+        OperandOrColor: &fern.ColorOrOperand{
             Color: fern.ColorRed,
         },
+    }
+client.Pathparam.Send(
+        context.TODO(),
+        request,
     )
 }
 ```
@@ -207,8 +239,8 @@ client.PathParam.Send(
 </dl>
 </details>
 
-## QueryParam
-<details><summary><code>client.QueryParam.Send() -> error</code></summary>
+## Queryparam
+<details><summary><code>client.Queryparam.Send() -> error</code></summary>
 <dl>
 <dd>
 
@@ -221,13 +253,11 @@ client.PathParam.Send(
 <dd>
 
 ```go
-request := &fern.SendEnumAsQueryParamRequest{
+request := &fern.QueryParamSendRequest{
         Operand: fern.OperandGreaterThan,
-        OperandOrColor: &fern.ColorOrOperand{
-            Color: fern.ColorRed,
-        },
+        OperandOrColor: fern.ColorRed,
     }
-client.QueryParam.Send(
+client.Queryparam.Send(
         context.TODO(),
         request,
     )
@@ -262,7 +292,7 @@ client.QueryParam.Send(
 <dl>
 <dd>
 
-**operandOrColor:** `*fern.ColorOrOperand` 
+**operandOrColor:** `*fern.Color` 
     
 </dd>
 </dl>
@@ -282,7 +312,7 @@ client.QueryParam.Send(
 </dl>
 </details>
 
-<details><summary><code>client.QueryParam.SendList() -> error</code></summary>
+<details><summary><code>client.Queryparam.Sendlist() -> error</code></summary>
 <dl>
 <dd>
 
@@ -295,9 +325,9 @@ client.QueryParam.Send(
 <dd>
 
 ```go
-request := &fern.SendEnumListAsQueryParamRequest{
-        Operand: []fern.Operand{
-            fern.OperandGreaterThan,
+request := &fern.QueryParamSendListRequest{
+        Operand: []*fern.Operand{
+            fern.OperandGreaterThan.Ptr(),
         },
         MaybeOperand: []*fern.Operand{
             fern.OperandGreaterThan.Ptr(),
@@ -313,7 +343,7 @@ request := &fern.SendEnumListAsQueryParamRequest{
             },
         },
     }
-client.QueryParam.SendList(
+client.Queryparam.Sendlist(
         context.TODO(),
         request,
     )

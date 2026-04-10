@@ -1,4 +1,4 @@
-//! API client and types for the MultiLineDocs
+//! API client and types for the multi-line-docs
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,5 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{MultiLineDocsClient, UserClient};
+pub use resources::{ApiClient, UserClient};
 pub use types::*;

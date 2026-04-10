@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\EndpointsParams\Requests\EndpointsParamsGetWithQueryRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,4 +11,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->noReqBody->postWithNoRequestBody();
+$client->endpointsParams->endpointsParamsGetWithQuery(
+    new EndpointsParamsGetWithQueryRequest([
+        'query' => 'query',
+        'number' => 1,
+    ]),
+);

@@ -4,6 +4,7 @@ namespace Seed\Path;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
+use Seed\Path\Types\PathSendRequestId;
 use Seed\Types\SendResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -49,7 +50,7 @@ class PathClient
     }
 
     /**
-     * @param '123' $id
+     * @param value-of<PathSendRequestId> $id
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

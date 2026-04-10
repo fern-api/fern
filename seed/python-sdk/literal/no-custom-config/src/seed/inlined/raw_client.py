@@ -10,9 +10,11 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
+from ..types.a_top_level_literal import ATopLevelLiteral
 from ..types.send_response import SendResponse
-from .types.a_top_level_literal import ATopLevelLiteral
-from .types.some_aliased_literal import SomeAliasedLiteral
+from ..types.some_aliased_literal import SomeAliasedLiteral
+from .types.inlined_send_request_context import InlinedSendRequestContext
+from .types.inlined_send_request_prompt import InlinedSendRequestPrompt
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -26,9 +28,12 @@ class RawInlinedClient:
     def send(
         self,
         *,
+        prompt: InlinedSendRequestPrompt,
         query: str,
+        stream: bool,
+        aliased_context: SomeAliasedLiteral,
         object_with_literal: ATopLevelLiteral,
-        context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
+        context: typing.Optional[InlinedSendRequestContext] = OMIT,
         temperature: typing.Optional[float] = OMIT,
         maybe_context: typing.Optional[SomeAliasedLiteral] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -36,11 +41,17 @@ class RawInlinedClient:
         """
         Parameters
         ----------
+        prompt : InlinedSendRequestPrompt
+
         query : str
+
+        stream : bool
+
+        aliased_context : SomeAliasedLiteral
 
         object_with_literal : ATopLevelLiteral
 
-        context : typing.Optional[typing.Literal["You're super wise"]]
+        context : typing.Optional[InlinedSendRequestContext]
 
         temperature : typing.Optional[float]
 
@@ -52,21 +63,25 @@ class RawInlinedClient:
         Returns
         -------
         HttpResponse[SendResponse]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "inlined",
             method="POST",
             json={
+                "prompt": prompt,
                 "context": context,
                 "query": query,
                 "temperature": temperature,
+                "stream": stream,
+                "aliasedContext": aliased_context,
                 "maybeContext": maybe_context,
                 "objectWithLiteral": convert_and_respect_annotation_metadata(
                     object_=object_with_literal, annotation=ATopLevelLiteral, direction="write"
                 ),
-                "prompt": "You are a helpful assistant",
-                "stream": False,
-                "aliasedContext": "You're super wise",
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -98,9 +113,12 @@ class AsyncRawInlinedClient:
     async def send(
         self,
         *,
+        prompt: InlinedSendRequestPrompt,
         query: str,
+        stream: bool,
+        aliased_context: SomeAliasedLiteral,
         object_with_literal: ATopLevelLiteral,
-        context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
+        context: typing.Optional[InlinedSendRequestContext] = OMIT,
         temperature: typing.Optional[float] = OMIT,
         maybe_context: typing.Optional[SomeAliasedLiteral] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -108,11 +126,17 @@ class AsyncRawInlinedClient:
         """
         Parameters
         ----------
+        prompt : InlinedSendRequestPrompt
+
         query : str
+
+        stream : bool
+
+        aliased_context : SomeAliasedLiteral
 
         object_with_literal : ATopLevelLiteral
 
-        context : typing.Optional[typing.Literal["You're super wise"]]
+        context : typing.Optional[InlinedSendRequestContext]
 
         temperature : typing.Optional[float]
 
@@ -124,21 +148,25 @@ class AsyncRawInlinedClient:
         Returns
         -------
         AsyncHttpResponse[SendResponse]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "inlined",
             method="POST",
             json={
+                "prompt": prompt,
                 "context": context,
                 "query": query,
                 "temperature": temperature,
+                "stream": stream,
+                "aliasedContext": aliased_context,
                 "maybeContext": maybe_context,
                 "objectWithLiteral": convert_and_respect_annotation_metadata(
                     object_=object_with_literal, annotation=ATopLevelLiteral, direction="write"
                 ),
-                "prompt": "You are a helpful assistant",
-                "stream": False,
-                "aliasedContext": "You're super wise",
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

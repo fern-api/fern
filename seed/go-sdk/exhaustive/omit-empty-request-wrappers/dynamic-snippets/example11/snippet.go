@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
 )
@@ -16,8 +17,13 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.HTTPMethods.TestGet(
+    request := map[string]*fern.TypesObjectWithRequiredField{
+        "string": &fern.TypesObjectWithRequiredField{
+            FieldString: "string",
+        },
+    }
+    client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToObject(
         context.TODO(),
-        "id",
+        request,
     )
 }

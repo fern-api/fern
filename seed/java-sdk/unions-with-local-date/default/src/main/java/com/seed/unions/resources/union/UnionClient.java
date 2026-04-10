@@ -5,7 +5,8 @@ package com.seed.unions.resources.union;
 
 import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.RequestOptions;
-import com.seed.unions.resources.union.types.Shape;
+import com.seed.unions.resources.union.requests.UnionGetRequest;
+import com.seed.unions.types.Shape;
 
 public class UnionClient {
     protected final ClientOptions clientOptions;
@@ -30,6 +31,14 @@ public class UnionClient {
 
     public Shape get(String id, RequestOptions requestOptions) {
         return this.rawClient.get(id, requestOptions).body();
+    }
+
+    public Shape get(String id, UnionGetRequest request) {
+        return this.rawClient.get(id, request).body();
+    }
+
+    public Shape get(String id, UnionGetRequest request, RequestOptions requestOptions) {
+        return this.rawClient.get(id, request, requestOptions).body();
     }
 
     public boolean update(Shape request) {

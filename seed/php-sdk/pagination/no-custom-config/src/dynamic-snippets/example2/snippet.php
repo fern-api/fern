@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\InlineUsers\InlineUsers\Requests\ListUsersMixedTypeCursorPaginationRequest;
+use Seed\InlineUsersInlineUsers\Requests\InlineUsersInlineUsersListWithCursorPaginationRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,8 +11,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->inlineUsers->inlineUsers->listWithMixedTypeCursorPagination(
-    new ListUsersMixedTypeCursorPaginationRequest([
-        'cursor' => 'cursor',
-    ]),
+$client->inlineUsersInlineUsers->inlineUsersInlineUsersListWithCursorPagination(
+    new InlineUsersInlineUsersListWithCursorPaginationRequest([]),
 );

@@ -13,7 +13,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Union.GetMetadata(
+    client.Union.Getmetadata(
         context.TODO(),
     )
 }

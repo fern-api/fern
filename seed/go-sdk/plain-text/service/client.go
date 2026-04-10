@@ -32,11 +32,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) GetText(
+func (c *Client) Gettext(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.GetText(
+	response, err := c.WithRawResponse.Gettext(
 		ctx,
 		opts...,
 	)

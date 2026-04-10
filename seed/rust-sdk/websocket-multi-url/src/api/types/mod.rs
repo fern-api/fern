@@ -1,5 +1,5 @@
-pub mod realtime_receive_event;
-pub mod realtime_send_event;
+pub mod receive_event;
+pub mod send_event;
 
-pub use realtime_receive_event::ReceiveEvent;
-pub use realtime_send_event::SendEvent;
+pub use receive_event::ReceiveEvent;
+pub use send_event::SendEvent;

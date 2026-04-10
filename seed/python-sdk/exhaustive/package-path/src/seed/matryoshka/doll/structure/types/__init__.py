@@ -6,63 +6,67 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import docs, enum, object, union
-    from .docs import ObjectWithDocs
-    from .enum import ErrorWithEnumBody, WeatherReport
-    from .object import (
-        DocumentedUnknownType,
-        DoubleOptional,
-        MapOfDocumentedUnknownType,
-        NestedObjectWithOptionalField,
-        NestedObjectWithOptionalFieldError,
-        NestedObjectWithRequiredField,
-        NestedObjectWithRequiredFieldError,
-        ObjectWithDatetimeLikeString,
-        ObjectWithDocumentedUnknownType,
-        ObjectWithMapOfMap,
-        ObjectWithMixedRequiredAndOptionalFields,
-        ObjectWithOptionalField,
-        ObjectWithOptionalFieldError,
-        ObjectWithRequiredField,
-        ObjectWithRequiredFieldError,
-        ObjectWithRequiredNestedObject,
-        ObjectWithUnknownField,
-        OptionalAlias,
-    )
-    from .union import Animal, Animal_Cat, Animal_Dog, Cat, Dog, ErrorWithUnionBody, MixedType
+    from .types_mixed_type import TypesMixedType
+    from .types_cat import TypesCat
+    from .types_dog import TypesDog
+    from .types_animal import TypesAnimal
+    from .types_animal_one import TypesAnimalOne
+    from .types_animal_one_animal import TypesAnimalOneAnimal
+    from .types_animal_zero import TypesAnimalZero
+    from .types_animal_zero_animal import TypesAnimalZeroAnimal
+    from .types_object_with_required_nested_object import TypesObjectWithRequiredNestedObject
+    from .types_object_with_mixed_required_and_optional_fields import TypesObjectWithMixedRequiredAndOptionalFields
+    from .types_map_of_documented_unknown_type import TypesMapOfDocumentedUnknownType
+    from .types_documented_unknown_type import TypesDocumentedUnknownType
+    from .types_object_with_documented_unknown_type import TypesObjectWithDocumentedUnknownType
+    from .types_object_with_unknown_field import TypesObjectWithUnknownField
+    from .types_object_with_datetime_like_string import TypesObjectWithDatetimeLikeString
+    from .types_optional_alias import TypesOptionalAlias
+    from .types_double_optional import TypesDoubleOptional
+    from .types_nested_object_with_required_field import TypesNestedObjectWithRequiredField
+    from .types_nested_object_with_optional_field import TypesNestedObjectWithOptionalField
+    from .types_object_with_map_of_map import TypesObjectWithMapOfMap
+    from .types_object_with_required_field import TypesObjectWithRequiredField
+    from .types_object_with_optional_field import TypesObjectWithOptionalField
+    from .types_weather_report import TypesWeatherReport
+    from .types_object_with_docs import TypesObjectWithDocs
+    from .bad_object_request_info import BadObjectRequestInfo
+    from .endpoints_error import EndpointsError
+    from .endpoints_error_category import EndpointsErrorCategory
+    from .endpoints_error_code import EndpointsErrorCode
+    from .endpoints_paginated_response import EndpointsPaginatedResponse
+    from .endpoints_put_response import EndpointsPutResponse
 _dynamic_imports: typing.Dict[str, str] = {
-    "Animal": ".union",
-    "Animal_Cat": ".union",
-    "Animal_Dog": ".union",
-    "Cat": ".union",
-    "DocumentedUnknownType": ".object",
-    "Dog": ".union",
-    "DoubleOptional": ".object",
-    "ErrorWithEnumBody": ".enum",
-    "ErrorWithUnionBody": ".union",
-    "MapOfDocumentedUnknownType": ".object",
-    "MixedType": ".union",
-    "NestedObjectWithOptionalField": ".object",
-    "NestedObjectWithOptionalFieldError": ".object",
-    "NestedObjectWithRequiredField": ".object",
-    "NestedObjectWithRequiredFieldError": ".object",
-    "ObjectWithDatetimeLikeString": ".object",
-    "ObjectWithDocs": ".docs",
-    "ObjectWithDocumentedUnknownType": ".object",
-    "ObjectWithMapOfMap": ".object",
-    "ObjectWithMixedRequiredAndOptionalFields": ".object",
-    "ObjectWithOptionalField": ".object",
-    "ObjectWithOptionalFieldError": ".object",
-    "ObjectWithRequiredField": ".object",
-    "ObjectWithRequiredFieldError": ".object",
-    "ObjectWithRequiredNestedObject": ".object",
-    "ObjectWithUnknownField": ".object",
-    "OptionalAlias": ".object",
-    "WeatherReport": ".enum",
-    "docs": ".docs",
-    "enum": ".enum",
-    "object": ".object",
-    "union": ".union",
+    "BadObjectRequestInfo": ".bad_object_request_info",
+    "EndpointsError": ".endpoints_error",
+    "EndpointsErrorCategory": ".endpoints_error_category",
+    "EndpointsErrorCode": ".endpoints_error_code",
+    "EndpointsPaginatedResponse": ".endpoints_paginated_response",
+    "EndpointsPutResponse": ".endpoints_put_response",
+    "TypesAnimal": ".types_animal",
+    "TypesAnimalOne": ".types_animal_one",
+    "TypesAnimalOneAnimal": ".types_animal_one_animal",
+    "TypesAnimalZero": ".types_animal_zero",
+    "TypesAnimalZeroAnimal": ".types_animal_zero_animal",
+    "TypesCat": ".types_cat",
+    "TypesDocumentedUnknownType": ".types_documented_unknown_type",
+    "TypesDog": ".types_dog",
+    "TypesDoubleOptional": ".types_double_optional",
+    "TypesMapOfDocumentedUnknownType": ".types_map_of_documented_unknown_type",
+    "TypesMixedType": ".types_mixed_type",
+    "TypesNestedObjectWithOptionalField": ".types_nested_object_with_optional_field",
+    "TypesNestedObjectWithRequiredField": ".types_nested_object_with_required_field",
+    "TypesObjectWithDatetimeLikeString": ".types_object_with_datetime_like_string",
+    "TypesObjectWithDocs": ".types_object_with_docs",
+    "TypesObjectWithDocumentedUnknownType": ".types_object_with_documented_unknown_type",
+    "TypesObjectWithMapOfMap": ".types_object_with_map_of_map",
+    "TypesObjectWithMixedRequiredAndOptionalFields": ".types_object_with_mixed_required_and_optional_fields",
+    "TypesObjectWithOptionalField": ".types_object_with_optional_field",
+    "TypesObjectWithRequiredField": ".types_object_with_required_field",
+    "TypesObjectWithRequiredNestedObject": ".types_object_with_required_nested_object",
+    "TypesObjectWithUnknownField": ".types_object_with_unknown_field",
+    "TypesOptionalAlias": ".types_optional_alias",
+    "TypesWeatherReport": ".types_weather_report",
 }
 
 
@@ -88,36 +92,34 @@ def __dir__():
 
 
 __all__ = [
-    "Animal",
-    "Animal_Cat",
-    "Animal_Dog",
-    "Cat",
-    "DocumentedUnknownType",
-    "Dog",
-    "DoubleOptional",
-    "ErrorWithEnumBody",
-    "ErrorWithUnionBody",
-    "MapOfDocumentedUnknownType",
-    "MixedType",
-    "NestedObjectWithOptionalField",
-    "NestedObjectWithOptionalFieldError",
-    "NestedObjectWithRequiredField",
-    "NestedObjectWithRequiredFieldError",
-    "ObjectWithDatetimeLikeString",
-    "ObjectWithDocs",
-    "ObjectWithDocumentedUnknownType",
-    "ObjectWithMapOfMap",
-    "ObjectWithMixedRequiredAndOptionalFields",
-    "ObjectWithOptionalField",
-    "ObjectWithOptionalFieldError",
-    "ObjectWithRequiredField",
-    "ObjectWithRequiredFieldError",
-    "ObjectWithRequiredNestedObject",
-    "ObjectWithUnknownField",
-    "OptionalAlias",
-    "WeatherReport",
-    "docs",
-    "enum",
-    "object",
-    "union",
+    "BadObjectRequestInfo",
+    "EndpointsError",
+    "EndpointsErrorCategory",
+    "EndpointsErrorCode",
+    "EndpointsPaginatedResponse",
+    "EndpointsPutResponse",
+    "TypesAnimal",
+    "TypesAnimalOne",
+    "TypesAnimalOneAnimal",
+    "TypesAnimalZero",
+    "TypesAnimalZeroAnimal",
+    "TypesCat",
+    "TypesDocumentedUnknownType",
+    "TypesDog",
+    "TypesDoubleOptional",
+    "TypesMapOfDocumentedUnknownType",
+    "TypesMixedType",
+    "TypesNestedObjectWithOptionalField",
+    "TypesNestedObjectWithRequiredField",
+    "TypesObjectWithDatetimeLikeString",
+    "TypesObjectWithDocs",
+    "TypesObjectWithDocumentedUnknownType",
+    "TypesObjectWithMapOfMap",
+    "TypesObjectWithMixedRequiredAndOptionalFields",
+    "TypesObjectWithOptionalField",
+    "TypesObjectWithRequiredField",
+    "TypesObjectWithRequiredNestedObject",
+    "TypesObjectWithUnknownField",
+    "TypesOptionalAlias",
+    "TypesWeatherReport",
 ]

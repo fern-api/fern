@@ -3,9 +3,9 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -17,14 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.ObjectWithRequiredNestedObject{
-        RequiredString: "hello",
-        RequiredObject: &types.NestedObjectWithRequiredField{
-            FieldString: "nested",
-            NestedObject: &types.ObjectWithOptionalField{},
-        },
+    request := &fern.EndpointsHTTPMethodsTestPatchRequest{
+        ID: "id",
+        Body: &fern.TypesObjectWithOptionalField{},
     }
-    client.Endpoints.Object.GetAndReturnWithRequiredNestedObject(
+    client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPatch(
         context.TODO(),
         request,
     )

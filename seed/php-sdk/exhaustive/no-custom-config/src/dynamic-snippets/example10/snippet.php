@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\Enum\Types\WeatherReport;
+use Seed\Types\TypesObjectWithRequiredField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,6 +11,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->enum->getAndReturnEnum(
-    WeatherReport::Sunny->value,
+$client->endpointsContainer->endpointsContainerGetAndReturnMapOfPrimToObject(
+    [
+        'key' => new TypesObjectWithRequiredField([
+            'string' => 'string',
+        ]),
+    ],
 );

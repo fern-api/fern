@@ -12,9 +12,6 @@ type RequestOption interface {
 	applyRequestOptions(*RequestOptions)
 }
 
-// TokenGetter is a function that returns an access token.
-type TokenGetter func() (string, error)
-
 // RequestOptions defines all of the possible request options.
 //
 // This type is primarily used by the generated code and is not meant
@@ -27,8 +24,6 @@ type RequestOptions struct {
 	QueryParameters url.Values
 	MaxAttempts     uint
 	MaxBufSize      int
-	tokenGetter     TokenGetter
-	APIKey          string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -49,15 +44,7 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 
 // ToHeader maps the configured request options into a http.Header used
 // for the request(s).
-func (r *RequestOptions) ToHeader() http.Header {
-	header := r.cloneHeader()
-	if r.tokenGetter != nil {
-		if token, err := r.tokenGetter(); err == nil && token != "" {
-			header.Set("Authorization", "Bearer "+token)
-		}
-	}
-	return header
-}
+func (r *RequestOptions) ToHeader() http.Header { return r.cloneHeader() }
 
 func (r *RequestOptions) cloneHeader() http.Header {
 	headers := r.HTTPHeader.Clone()
@@ -129,19 +116,4 @@ type MaxBufSizeOption struct {
 
 func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
-}
-
-// APIKeyOption implements the RequestOption interface.
-type APIKeyOption struct {
-	APIKey string
-}
-
-func (a *APIKeyOption) applyRequestOptions(opts *RequestOptions) {
-	opts.APIKey = a.APIKey
-}
-
-// SetTokenGetter sets the token getter function for inferred auth.
-// This is an internal method and should not be called directly.
-func (r *RequestOptions) SetTokenGetter(getter TokenGetter) {
-	r.tokenGetter = getter
 }

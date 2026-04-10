@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/unions-with-local-date/fern"
     client "github.com/unions-with-local-date/fern/client"
     option "github.com/unions-with-local-date/fern/option"
 )
@@ -13,8 +14,15 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Union.Get(
+    request := &fern.UnionWithTime{
+        Value: &fern.UnionWithTimeValue{
+            Value: fern.Int(
+                1,
+            ),
+        },
+    }
+    client.Types.Update(
         context.TODO(),
-        "id",
+        request,
     )
 }

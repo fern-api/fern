@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "AliasExtends",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "AliasExtends",
-            targets: ["AliasExtends"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "AliasExtends",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "AliasExtendsTests",
-            dependencies: ["AliasExtends"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

@@ -1,23 +1,20 @@
 package com.snippets;
 
-import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.types.object.types.ObjectWithMixedRequiredAndOptionalFields;
+import com.fern.sdk.SeedApiClient;
+import com.fern.sdk.resources.endpointshttpmethods.requests.EndpointsHttpMethodsTestDeleteRequest;
 
 public class Example27 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().object().getAndReturnWithMixedRequiredAndOptionalFields(
-            ObjectWithMixedRequiredAndOptionalFields
+        client.endpointsHttpMethods().endpointsHttpMethodsTestDelete(
+            EndpointsHttpMethodsTestDeleteRequest
                 .builder()
-                .requiredString("requiredString")
-                .requiredInteger(1)
-                .requiredLong(1000000L)
-                .optionalString("optionalString")
+                .id("id")
                 .build()
         );
     }

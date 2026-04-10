@@ -63,7 +63,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithBearerToken(?array $options = null): ?string
+    public function getwithbearertoken(?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {

@@ -6,7 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .my_union import MyUnion
+    from .my_union import MyUnion, MyUnion_A, MyUnion_B, MyUnion_C
     from .union_list_response import UnionListResponse
     from .union_response import UnionResponse
     from .variant_a import VariantA
@@ -14,6 +14,9 @@ if typing.TYPE_CHECKING:
     from .variant_c import VariantC
 _dynamic_imports: typing.Dict[str, str] = {
     "MyUnion": ".my_union",
+    "MyUnion_A": ".my_union",
+    "MyUnion_B": ".my_union",
+    "MyUnion_C": ".my_union",
     "UnionListResponse": ".union_list_response",
     "UnionResponse": ".union_response",
     "VariantA": ".variant_a",
@@ -43,4 +46,14 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["MyUnion", "UnionListResponse", "UnionResponse", "VariantA", "VariantB", "VariantC"]
+__all__ = [
+    "MyUnion",
+    "MyUnion_A",
+    "MyUnion_B",
+    "MyUnion_C",
+    "UnionListResponse",
+    "UnionResponse",
+    "VariantA",
+    "VariantB",
+    "VariantC",
+]

@@ -1,19 +1,23 @@
-using SeedObjectsWithImports;
+using SeedApi;
 
 namespace Usage;
 
 public class Example1
 {
     public async Task Do() {
-        var client = new SeedObjectsWithImportsClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Optional.SendOptionalTypedBodyAsync(
-            new SendOptionalBodyRequest {
-                Message = "message"
+        await client.Optional.SendoptionalbodyAsync(
+            new Dictionary<string, object?>(){
+                ["string"] = new Dictionary<string, object>()
+                {
+                    ["key"] = "value",
+                }
+                ,
             }
         );
     }

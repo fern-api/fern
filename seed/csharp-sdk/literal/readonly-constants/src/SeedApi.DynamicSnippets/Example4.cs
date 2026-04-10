@@ -1,18 +1,20 @@
-using SeedLiteral;
+using SeedApi;
 
 namespace Usage;
 
 public class Example4
 {
     public async Task Do() {
-        var client = new SeedLiteralClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Path.SendAsync(
-            "123"
+            new PathSendRequest {
+                Id = PathSendRequestId.OneHundredTwentyThree
+            }
         );
     }
 

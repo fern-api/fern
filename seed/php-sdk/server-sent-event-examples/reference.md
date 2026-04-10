@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>$client-&gt;completions-&gt;stream($request)</code></summary>
+<details><summary><code>$client-&gt;completions-&gt;stream($request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -14,51 +14,7 @@
 
 ```php
 $client->completions->stream(
-    new StreamCompletionRequest([
-        'query' => 'foo',
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$query:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;completions-&gt;streamEvents($request)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->completions->streamEvents(
-    new StreamEventsRequest([
+    new CompletionsStreamRequest([
         'query' => 'query',
     ]),
 );
@@ -88,7 +44,7 @@ $client->completions->streamEvents(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;completions-&gt;streamEventsContextProtocol($request)</code></summary>
+<details><summary><code>$client-&gt;completions-&gt;streamevents($request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -101,8 +57,52 @@ $client->completions->streamEvents(
 <dd>
 
 ```php
-$client->completions->streamEventsContextProtocol(
-    new StreamEventsContextProtocolRequest([
+$client->completions->streamevents(
+    new CompletionsStreamEventsRequest([
+        'query' => 'query',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$query:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;completions-&gt;streameventscontextprotocol($request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->completions->streameventscontextprotocol(
+    new CompletionsStreamEventsContextProtocolRequest([
         'query' => 'query',
     ]),
 );

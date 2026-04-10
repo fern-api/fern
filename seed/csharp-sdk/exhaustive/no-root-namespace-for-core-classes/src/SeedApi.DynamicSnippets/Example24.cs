@@ -1,26 +1,24 @@
-using SeedExhaustive;
-using SeedExhaustive.Core;
-using SeedExhaustive.Types;
+using SeedApi;
+using SeedApi.Core;
 
 namespace Usage;
 
 public class Example24
 {
     public async Task Do() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.Object.GetAndReturnWithDocumentedUnknownTypeAsync(
-            new ObjectWithDocumentedUnknownType {
-                DocumentedUnknownType = new Dictionary<string, object>()
-                {
-                    ["key"] = "value",
+        await client.EndpointsHttpMethods.EndpointsHttpMethodsTestPutAsync(
+            new EndpointsHttpMethodsTestPutRequest {
+                Id = "id",
+                Body = new TypesObjectWithRequiredField {
+                    String = "string"
                 }
-
             }
         );
     }

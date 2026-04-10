@@ -8,7 +8,8 @@ components:
     LiteralString:
       title: LiteralString
       type: string
-      const: literally
+      enum:
+        - literally
       description: A string literal.
     UnionOverLiteral:
       title: UnionOverLiteral

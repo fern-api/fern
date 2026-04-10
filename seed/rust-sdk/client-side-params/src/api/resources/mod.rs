@@ -3,18 +3,16 @@
 //! This module contains client implementations for:
 //!
 //! - **Service**
-//! - **Types**
 
 use crate::{ApiError, ClientConfig};
 
 pub mod service;
-pub mod types;
-pub struct ClientSideParamsClient {
+pub struct ApiClient {
     pub config: ClientConfig,
     pub service: ServiceClient,
 }
 
-impl ClientSideParamsClient {
+impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
@@ -24,4 +22,3 @@ impl ClientSideParamsClient {
 }
 
 pub use service::ServiceClient;
-pub use types::TypesClient;

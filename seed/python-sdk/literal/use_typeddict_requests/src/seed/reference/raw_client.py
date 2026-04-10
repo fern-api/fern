@@ -10,9 +10,11 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
+from ..requests.container_object import ContainerObjectParams
 from ..types.send_response import SendResponse
-from .requests.container_object import ContainerObjectParams
-from .types.some_literal import SomeLiteral
+from ..types.some_literal import SomeLiteral
+from .types.send_request_ending import SendRequestEnding
+from .types.send_request_prompt import SendRequestPrompt
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -26,7 +28,11 @@ class RawReferenceClient:
     def send(
         self,
         *,
+        prompt: SendRequestPrompt,
         query: str,
+        stream: bool,
+        ending: SendRequestEnding,
+        context: SomeLiteral,
         container_object: ContainerObjectParams,
         maybe_context: typing.Optional[SomeLiteral] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -34,7 +40,15 @@ class RawReferenceClient:
         """
         Parameters
         ----------
+        prompt : SendRequestPrompt
+
         query : str
+
+        stream : bool
+
+        ending : SendRequestEnding
+
+        context : SomeLiteral
 
         container_object : ContainerObjectParams
 
@@ -46,20 +60,24 @@ class RawReferenceClient:
         Returns
         -------
         HttpResponse[SendResponse]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "reference",
             method="POST",
             json={
+                "prompt": prompt,
                 "query": query,
+                "stream": stream,
+                "ending": ending,
+                "context": context,
                 "maybeContext": maybe_context,
                 "containerObject": convert_and_respect_annotation_metadata(
                     object_=container_object, annotation=ContainerObjectParams, direction="write"
                 ),
-                "prompt": "You are a helpful assistant",
-                "stream": False,
-                "ending": "$ending",
-                "context": "You're super wise",
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -91,7 +109,11 @@ class AsyncRawReferenceClient:
     async def send(
         self,
         *,
+        prompt: SendRequestPrompt,
         query: str,
+        stream: bool,
+        ending: SendRequestEnding,
+        context: SomeLiteral,
         container_object: ContainerObjectParams,
         maybe_context: typing.Optional[SomeLiteral] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -99,7 +121,15 @@ class AsyncRawReferenceClient:
         """
         Parameters
         ----------
+        prompt : SendRequestPrompt
+
         query : str
+
+        stream : bool
+
+        ending : SendRequestEnding
+
+        context : SomeLiteral
 
         container_object : ContainerObjectParams
 
@@ -111,20 +141,24 @@ class AsyncRawReferenceClient:
         Returns
         -------
         AsyncHttpResponse[SendResponse]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "reference",
             method="POST",
             json={
+                "prompt": prompt,
                 "query": query,
+                "stream": stream,
+                "ending": ending,
+                "context": context,
                 "maybeContext": maybe_context,
                 "containerObject": convert_and_respect_annotation_metadata(
                     object_=container_object, annotation=ContainerObjectParams, direction="write"
                 ),
-                "prompt": "You are a helpful assistant",
-                "stream": False,
-                "ending": "$ending",
-                "context": "You're super wise",
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

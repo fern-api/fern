@@ -5,7 +5,6 @@ namespace Seed;
 use Seed\Auth\AuthClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Core\InferredAuthProvider;
 
 class SeedClient
 {
@@ -31,15 +30,7 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @var InferredAuthProvider $inferredAuthProvider
-     */
-    private InferredAuthProvider $inferredAuthProvider;
-
-    /**
-     * @param ?string $clientId
-     * @param ?string $clientSecret
-     * @param ?string $scope
-     * @param ?string $xApiKey
+     * @param string $apiKey
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -49,43 +40,23 @@ class SeedClient
      * } $options
      */
     public function __construct(
-        ?string $clientId = null,
-        ?string $clientSecret = null,
-        ?string $scope = null,
-        ?string $xApiKey = null,
+        string $apiKey,
         ?array $options = null,
     ) {
         $defaultHeaders = [
+            'X-Api-Key' => $apiKey,
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        if ($xApiKey != null) {
-            $defaultHeaders['X-Api-Key'] = $xApiKey;
-        }
 
         $this->options = $options ?? [];
-
-        $authRawClient = new RawClient(['headers' => []]);
-        $authClient = new AuthClient($authRawClient);
-        $inferredAuthOptions = [
-            'clientId' => $clientId ?? '',
-            'clientSecret' => $clientSecret ?? '',
-            'audience' => 'https://api.example.com',
-            'grantType' => 'client_credentials',
-            'scope' => $scope ?? '',
-            'xApiKey' => $xApiKey ?? '',
-        ];
-        $this->inferredAuthProvider = new InferredAuthProvider($authClient, $inferredAuthOptions);
 
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-
-        $this->options['getAuthHeaders'] = fn () =>
-            $this->inferredAuthProvider->getAuthHeaders();
 
         $this->client = new RawClient(
             options: $this->options,

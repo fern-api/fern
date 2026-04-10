@@ -1,19 +1,26 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.endpointsobject.requests.EndpointsObjectGetAndReturnNestedWithRequiredFieldRequest;
+import com.seed.api.types.TypesNestedObjectWithRequiredField;
+import com.seed.api.types.TypesObjectWithOptionalField;
 
 public class Example40 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints()
-                .params()
-                .modifyWithInlinePath(
-                        "param",
-                        ModifyResourceAtInlinedPath.builder().body("string").build());
+        client.endpointsObject()
+                .endpointsObjectGetAndReturnNestedWithRequiredField(
+                        "string",
+                        EndpointsObjectGetAndReturnNestedWithRequiredFieldRequest.builder()
+                                .body(TypesNestedObjectWithRequiredField.builder()
+                                        .string("string")
+                                        .nestedObject(TypesObjectWithOptionalField.builder()
+                                                .build())
+                                        .build())
+                                .build());
     }
 }

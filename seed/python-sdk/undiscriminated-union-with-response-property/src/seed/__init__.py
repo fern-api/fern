@@ -6,21 +6,36 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import MyUnion, UnionListResponse, UnionResponse, VariantA, VariantB, VariantC
+    from .types import (
+        MyUnion,
+        MyUnion_A,
+        MyUnion_B,
+        MyUnion_C,
+        UnionListResponse,
+        UnionResponse,
+        VariantA,
+        VariantB,
+        VariantC,
+    )
+    from . import _
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedUndiscriminatedUnionWithResponseProperty, SeedUndiscriminatedUnionWithResponseProperty
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedUndiscriminatedUnionWithResponseProperty": ".client",
+    "AsyncSeedApi": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "MyUnion": ".types",
-    "SeedUndiscriminatedUnionWithResponseProperty": ".client",
+    "MyUnion_A": ".types",
+    "MyUnion_B": ".types",
+    "MyUnion_C": ".types",
+    "SeedApi": ".client",
     "UnionListResponse": ".types",
     "UnionResponse": ".types",
     "VariantA": ".types",
     "VariantB": ".types",
     "VariantC": ".types",
+    "_": "._",
     "__version__": ".version",
 }
 
@@ -47,15 +62,19 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedUndiscriminatedUnionWithResponseProperty",
+    "AsyncSeedApi",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "MyUnion",
-    "SeedUndiscriminatedUnionWithResponseProperty",
+    "MyUnion_A",
+    "MyUnion_B",
+    "MyUnion_C",
+    "SeedApi",
     "UnionListResponse",
     "UnionResponse",
     "VariantA",
     "VariantB",
     "VariantC",
+    "_",
     "__version__",
 ]

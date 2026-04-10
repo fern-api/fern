@@ -1,25 +1,25 @@
-using SeedExamples;
+using SeedApi;
 
 namespace Usage;
 
 public class Example16
 {
     public async Task Do() {
-        var client = new SeedExamplesClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Service.CreateMovieAsync(
+        await client.Service.CreatemovieAsync(
             new Movie {
                 Id = "id",
                 Prequel = "prequel",
                 Title = "title",
                 From = "from",
                 Rating = 1.1,
-                Type = "movie",
+                Type = MovieType.Movie,
                 Tag = "tag",
                 Book = "book",
                 Metadata = new Dictionary<string, object?>(){

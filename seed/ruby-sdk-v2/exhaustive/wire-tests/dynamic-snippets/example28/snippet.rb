@@ -5,10 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.object.get_and_return_with_required_nested_object(
-  required_string: "hello",
-  required_object: {
-    string: "nested",
-    nested_object: {}
-  }
-)
+client.endpoints_http_methods.endpoints_http_methods_test_patch(id: "id")

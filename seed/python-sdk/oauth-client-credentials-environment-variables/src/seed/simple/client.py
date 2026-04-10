@@ -22,7 +22,7 @@ class SimpleClient:
         """
         return self._raw_client
 
-    def get_something(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def getsomething(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -35,16 +35,15 @@ class SimpleClient:
 
         Examples
         --------
-        from seed import SeedOauthClientCredentialsEnvironmentVariables
+        from seed import SeedApi
 
-        client = SeedOauthClientCredentialsEnvironmentVariables(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = SeedApi(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
-        client.simple.get_something()
+        client.simple.getsomething()
         """
-        _response = self._raw_client.get_something(request_options=request_options)
+        _response = self._raw_client.getsomething(request_options=request_options)
         return _response.data
 
 
@@ -63,7 +62,7 @@ class AsyncSimpleClient:
         """
         return self._raw_client
 
-    async def get_something(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def getsomething(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -78,20 +77,19 @@ class AsyncSimpleClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedOauthClientCredentialsEnvironmentVariables
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedOauthClientCredentialsEnvironmentVariables(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = AsyncSeedApi(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.simple.get_something()
+            await client.simple.getsomething()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_something(request_options=request_options)
+        _response = await self._raw_client.getsomething(request_options=request_options)
         return _response.data

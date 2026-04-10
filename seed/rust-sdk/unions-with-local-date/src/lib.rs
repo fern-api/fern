@@ -1,18 +1,18 @@
-//! # Unions SDK
+//! # unions-with-local-date SDK
 //!
-//! The official Rust SDK for the Unions.
+//! The official Rust SDK for the unions-with-local-date.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_unions::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = UnionsClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client.bigunion.get(&"id".to_string(), None).await;
 //! }
 //! ```

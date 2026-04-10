@@ -1,17 +1,24 @@
-using SeedFileUpload;
+using SeedApi;
+using System.Text;
 
 namespace Usage;
 
 public class Example2
 {
     public async Task Do() {
-        var client = new SeedFileUploadClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Service.SimpleAsync();
+        await client.Service.JustfilewithoptionalqueryparamsAsync(
+            new ServiceJustFileWithOptionalQueryParamsRequest {
+                File = new FileParameter(){
+                    Stream = new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+                }
+            }
+        );
     }
 
 }

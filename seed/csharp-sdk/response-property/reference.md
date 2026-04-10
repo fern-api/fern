@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetMovieAsync</a>(string { ... }) -> WithRawResponseTask&lt;Response&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">GetmovieAsync</a>(string { ... }) -> WithRawResponseTask&lt;Response&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.Service.GetMovieAsync("string");
+await client.Service.GetmovieAsync("string");
 ```
 </dd>
 </dl>
@@ -40,7 +40,7 @@ await client.Service.GetMovieAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetMovieDocsAsync</a>(string { ... }) -> WithRawResponseTask&lt;Response&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">GetmoviedocsAsync</a>(string { ... }) -> WithRawResponseTask&lt;Response&gt;</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +53,7 @@ await client.Service.GetMovieAsync("string");
 <dd>
 
 ```csharp
-await client.Service.GetMovieDocsAsync("string");
+await client.Service.GetmoviedocsAsync("string");
 ```
 </dd>
 </dl>
@@ -80,7 +80,7 @@ await client.Service.GetMovieDocsAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetMovieNameAsync</a>(string { ... }) -> WithRawResponseTask&lt;StringResponse&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">GetmovienameAsync</a>(string { ... }) -> WithRawResponseTask&lt;StringResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +93,7 @@ await client.Service.GetMovieDocsAsync("string");
 <dd>
 
 ```csharp
-await client.Service.GetMovieNameAsync("string");
+await client.Service.GetmovienameAsync("string");
 ```
 </dd>
 </dl>
@@ -120,7 +120,7 @@ await client.Service.GetMovieNameAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetMovieMetadataAsync</a>(string { ... }) -> WithRawResponseTask&lt;Response&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">GetmoviemetadataAsync</a>(string { ... }) -> WithRawResponseTask&lt;Response&gt;</code></summary>
 <dl>
 <dd>
 
@@ -133,7 +133,7 @@ await client.Service.GetMovieNameAsync("string");
 <dd>
 
 ```csharp
-await client.Service.GetMovieMetadataAsync("string");
+await client.Service.GetmoviemetadataAsync("string");
 ```
 </dd>
 </dl>
@@ -160,7 +160,7 @@ await client.Service.GetMovieMetadataAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetOptionalMovieAsync</a>(string { ... }) -> WithRawResponseTask&lt;Response?&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">GetoptionalmovieAsync</a>(string { ... }) -> WithRawResponseTask&lt;Response&gt;</code></summary>
 <dl>
 <dd>
 
@@ -173,7 +173,7 @@ await client.Service.GetMovieMetadataAsync("string");
 <dd>
 
 ```csharp
-await client.Service.GetOptionalMovieAsync("string");
+await client.Service.GetoptionalmovieAsync("string");
 ```
 </dd>
 </dl>
@@ -200,7 +200,7 @@ await client.Service.GetOptionalMovieAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetOptionalMovieDocsAsync</a>(string { ... }) -> WithRawResponseTask&lt;WithDocs?&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">GetoptionalmoviedocsAsync</a>(string { ... }) -> WithRawResponseTask&lt;WithDocs&gt;</code></summary>
 <dl>
 <dd>
 
@@ -213,7 +213,7 @@ await client.Service.GetOptionalMovieAsync("string");
 <dd>
 
 ```csharp
-await client.Service.GetOptionalMovieDocsAsync("string");
+await client.Service.GetoptionalmoviedocsAsync("string");
 ```
 </dd>
 </dl>
@@ -240,7 +240,7 @@ await client.Service.GetOptionalMovieDocsAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedResponseProperty/Service/ServiceClient.cs">GetOptionalMovieNameAsync</a>(string { ... }) -> WithRawResponseTask&lt;StringResponse?&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">GetoptionalmovienameAsync</a>(string { ... }) -> WithRawResponseTask&lt;StringResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -253,7 +253,7 @@ await client.Service.GetOptionalMovieDocsAsync("string");
 <dd>
 
 ```csharp
-await client.Service.GetOptionalMovieNameAsync("string");
+await client.Service.GetoptionalmovienameAsync("string");
 ```
 </dd>
 </dl>

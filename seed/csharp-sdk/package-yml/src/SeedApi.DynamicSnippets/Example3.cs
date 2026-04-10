@@ -1,19 +1,21 @@
-using SeedPackageYml;
+using SeedApi;
 
 namespace Usage;
 
 public class Example3
 {
     public async Task Do() {
-        var client = new SeedPackageYmlClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Service.NopAsync(
-            "id",
-            "nestedId"
+            new ServiceNopRequest {
+                Id = "id",
+                NestedId = "nestedId"
+            }
         );
     }
 

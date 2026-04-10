@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">create_user</a>(request: User) -> Result&lt;User, ApiError&gt;</code></summary>
+## 
+<details><summary><code>client.<a href="/src/api/resources//client.rs">create_user</a>(request: User) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -12,16 +13,16 @@
 <dd>
 
 ```rust
-use seed_property_access::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = PropertyAccessClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .create_user(
+        ..create_user(
             &User {
                 id: "id".to_string(),
                 email: "email".to_string(),

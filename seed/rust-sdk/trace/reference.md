@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -21,7 +21,7 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client.v2.test(None).await;
 }
 ```
@@ -36,7 +36,7 @@ async fn main() {
 </details>
 
 ## Admin
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">update_test_submission_status</a>(submission_id: SubmissionId, request: TestSubmissionStatus) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">updatetestsubmissionstatus</a>(submission_id: SubmissionId, request: TestSubmissionStatus) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -49,7 +49,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -57,12 +57,12 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .admin
-        .update_test_submission_status(
-            &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-            &TestSubmissionStatus::Stopped,
+        .updatetestsubmissionstatus(
+            &SubmissionId("submissionId".to_string()),
+            &TestSubmissionStatus::stopped(),
             None,
         )
         .await;
@@ -93,7 +93,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">send_test_submission_update</a>(submission_id: SubmissionId, request: TestSubmissionUpdate) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">sendtestsubmissionupdate</a>(submission_id: SubmissionId, request: TestSubmissionUpdate) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -106,7 +106,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -114,16 +114,19 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .admin
-        .send_test_submission_update(
-            &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+        .sendtestsubmissionupdate(
+            &SubmissionId("submissionId".to_string()),
             &TestSubmissionUpdate {
                 update_time: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-                update_info: TestSubmissionUpdateInfo::Running {
-                    value: Default::default(),
-                },
+                update_info: TestSubmissionUpdateInfo::TestSubmissionUpdateInfoZero(
+                    TestSubmissionUpdateInfoZero {
+                        r#type: TestSubmissionUpdateInfoZeroType::Running,
+                        value: None,
+                    },
+                ),
             },
             None,
         )
@@ -155,7 +158,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">update_workspace_submission_status</a>(submission_id: SubmissionId, request: WorkspaceSubmissionStatus) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">updateworkspacesubmissionstatus</a>(submission_id: SubmissionId, request: WorkspaceSubmissionStatus) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -168,7 +171,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -176,12 +179,16 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .admin
-        .update_workspace_submission_status(
-            &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-            &WorkspaceSubmissionStatus::Stopped,
+        .updateworkspacesubmissionstatus(
+            &SubmissionId("submissionId".to_string()),
+            &WorkspaceSubmissionStatus::WorkspaceSubmissionStatusZero(
+                WorkspaceSubmissionStatusZero {
+                    r#type: WorkspaceSubmissionStatusZeroType::Stopped,
+                },
+            ),
             None,
         )
         .await;
@@ -212,7 +219,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">send_workspace_submission_update</a>(submission_id: SubmissionId, request: WorkspaceSubmissionUpdate) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">sendworkspacesubmissionupdate</a>(submission_id: SubmissionId, request: WorkspaceSubmissionUpdate) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -225,7 +232,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -233,16 +240,19 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .admin
-        .send_workspace_submission_update(
-            &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+        .sendworkspacesubmissionupdate(
+            &SubmissionId("submissionId".to_string()),
             &WorkspaceSubmissionUpdate {
                 update_time: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-                update_info: WorkspaceSubmissionUpdateInfo::Running {
-                    value: Default::default(),
-                },
+                update_info: WorkspaceSubmissionUpdateInfo::WorkspaceSubmissionUpdateInfoZero(
+                    WorkspaceSubmissionUpdateInfoZero {
+                        r#type: WorkspaceSubmissionUpdateInfoZeroType::Running,
+                        value: None,
+                    },
+                ),
             },
             None,
         )
@@ -274,7 +284,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">store_traced_test_case</a>(submission_id: SubmissionId, test_case_id: String, request: StoreTracedTestCaseRequest) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">storetracedtestcase</a>(submission_id: SubmissionId, test_case_id: String, request: AdminStoreTracedTestCaseRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -287,7 +297,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -295,103 +305,36 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .admin
-        .store_traced_test_case(
-            &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+        .storetracedtestcase(
+            &SubmissionId("submissionId".to_string()),
             &"testCaseId".to_string(),
-            &StoreTracedTestCaseRequest {
+            &AdminStoreTracedTestCaseRequest {
                 result: TestCaseResultWithStdout {
                     result: TestCaseResult {
-                        expected_result: VariableValue::IntegerValue { value: 0 },
-                        actual_result: ActualResult::Value {
-                            value: VariableValue::IntegerValue { value: 0 },
-                        },
+                        expected_result: VariableValue::VariableValueZero(VariableValueZero {
+                            r#type: VariableValueZeroType::IntegerValue,
+                            value: None,
+                        }),
+                        actual_result: ActualResult::ActualResultZero(ActualResultZero {
+                            r#type: ActualResultZeroType::Value,
+                            value: None,
+                        }),
                         passed: true,
                     },
                     stdout: "stdout".to_string(),
                 },
-                trace_responses: vec![
-                    TraceResponse {
-                        submission_id: SubmissionId(
-                            Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
-                        ),
-                        line_number: 1,
-                        return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
-                        expression_location: Some(ExpressionLocation {
-                            start: 1,
-                            offset: 1,
-                            ..Default::default()
-                        }),
-                        stack: StackInformation {
-                            num_stack_frames: 1,
-                            top_stack_frame: Some(StackFrame {
-                                method_name: "methodName".to_string(),
-                                line_number: 1,
-                                scopes: vec![
-                                    Scope {
-                                        variables: HashMap::from([(
-                                            "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: 0 },
-                                        )]),
-                                        ..Default::default()
-                                    },
-                                    Scope {
-                                        variables: HashMap::from([(
-                                            "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: 0 },
-                                        )]),
-                                        ..Default::default()
-                                    },
-                                ],
-                                ..Default::default()
-                            }),
-                            ..Default::default()
-                        },
-                        stdout: Some("stdout".to_string()),
+                trace_responses: vec![TraceResponse {
+                    submission_id: SubmissionId("submissionId".to_string()),
+                    line_number: 1,
+                    stack: StackInformation {
+                        num_stack_frames: 1,
                         ..Default::default()
                     },
-                    TraceResponse {
-                        submission_id: SubmissionId(
-                            Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
-                        ),
-                        line_number: 1,
-                        return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
-                        expression_location: Some(ExpressionLocation {
-                            start: 1,
-                            offset: 1,
-                            ..Default::default()
-                        }),
-                        stack: StackInformation {
-                            num_stack_frames: 1,
-                            top_stack_frame: Some(StackFrame {
-                                method_name: "methodName".to_string(),
-                                line_number: 1,
-                                scopes: vec![
-                                    Scope {
-                                        variables: HashMap::from([(
-                                            "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: 0 },
-                                        )]),
-                                        ..Default::default()
-                                    },
-                                    Scope {
-                                        variables: HashMap::from([(
-                                            "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: 0 },
-                                        )]),
-                                        ..Default::default()
-                                    },
-                                ],
-                                ..Default::default()
-                            }),
-                            ..Default::default()
-                        },
-                        stdout: Some("stdout".to_string()),
-                        ..Default::default()
-                    },
-                ],
+                    ..Default::default()
+                }],
             },
             None,
         )
@@ -447,7 +390,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">store_traced_test_case_v2</a>(submission_id: SubmissionId, test_case_id: TestCaseId, request: Vec&lt;TraceResponseV2&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">storetracedtestcasev2</a>(submission_id: SubmissionId, test_case_id: V2TestCaseId, request: Vec&lt;TraceResponseV2&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -460,7 +403,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -468,102 +411,26 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .admin
-        .store_traced_test_case_v2(
-            &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-            &TestCaseId("testCaseId".to_string()),
-            &vec![
-                TraceResponseV2 {
-                    submission_id: SubmissionId(
-                        Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
-                    ),
-                    line_number: 1,
-                    file: TracedFile {
-                        filename: "filename".to_string(),
-                        directory: "directory".to_string(),
-                        ..Default::default()
-                    },
-                    return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
-                    expression_location: Some(ExpressionLocation {
-                        start: 1,
-                        offset: 1,
-                        ..Default::default()
-                    }),
-                    stack: StackInformation {
-                        num_stack_frames: 1,
-                        top_stack_frame: Some(StackFrame {
-                            method_name: "methodName".to_string(),
-                            line_number: 1,
-                            scopes: vec![
-                                Scope {
-                                    variables: HashMap::from([(
-                                        "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: 0 },
-                                    )]),
-                                    ..Default::default()
-                                },
-                                Scope {
-                                    variables: HashMap::from([(
-                                        "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: 0 },
-                                    )]),
-                                    ..Default::default()
-                                },
-                            ],
-                            ..Default::default()
-                        }),
-                        ..Default::default()
-                    },
-                    stdout: Some("stdout".to_string()),
+        .storetracedtestcasev2(
+            &SubmissionId("submissionId".to_string()),
+            &V2TestCaseId("testCaseId".to_string()),
+            &vec![TraceResponseV2 {
+                submission_id: SubmissionId("submissionId".to_string()),
+                line_number: 1,
+                file: TracedFile {
+                    filename: "filename".to_string(),
+                    directory: "directory".to_string(),
                     ..Default::default()
                 },
-                TraceResponseV2 {
-                    submission_id: SubmissionId(
-                        Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
-                    ),
-                    line_number: 1,
-                    file: TracedFile {
-                        filename: "filename".to_string(),
-                        directory: "directory".to_string(),
-                        ..Default::default()
-                    },
-                    return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
-                    expression_location: Some(ExpressionLocation {
-                        start: 1,
-                        offset: 1,
-                        ..Default::default()
-                    }),
-                    stack: StackInformation {
-                        num_stack_frames: 1,
-                        top_stack_frame: Some(StackFrame {
-                            method_name: "methodName".to_string(),
-                            line_number: 1,
-                            scopes: vec![
-                                Scope {
-                                    variables: HashMap::from([(
-                                        "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: 0 },
-                                    )]),
-                                    ..Default::default()
-                                },
-                                Scope {
-                                    variables: HashMap::from([(
-                                        "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: 0 },
-                                    )]),
-                                    ..Default::default()
-                                },
-                            ],
-                            ..Default::default()
-                        }),
-                        ..Default::default()
-                    },
-                    stdout: Some("stdout".to_string()),
+                stack: StackInformation {
+                    num_stack_frames: 1,
                     ..Default::default()
                 },
-            ],
+                ..Default::default()
+            }],
             None,
         )
         .await;
@@ -590,7 +457,7 @@ async fn main() {
 <dl>
 <dd>
 
-**test_case_id:** `TestCaseId` 
+**test_case_id:** `V2TestCaseId` 
     
 </dd>
 </dl>
@@ -602,7 +469,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">store_traced_workspace</a>(submission_id: SubmissionId, request: StoreTracedWorkspaceRequest) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">storetracedworkspace</a>(submission_id: SubmissionId, request: AdminStoreTracedWorkspaceRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -615,7 +482,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -623,110 +490,25 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .admin
-        .store_traced_workspace(
-            &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-            &StoreTracedWorkspaceRequest {
+        .storetracedworkspace(
+            &SubmissionId("submissionId".to_string()),
+            &AdminStoreTracedWorkspaceRequest {
                 workspace_run_details: WorkspaceRunDetails {
-                    exception_v2: Some(ExceptionV2::Generic {
-                        data: ExceptionInfo {
-                            exception_type: "exceptionType".to_string(),
-                            exception_message: "exceptionMessage".to_string(),
-                            exception_stacktrace: "exceptionStacktrace".to_string(),
-                            ..Default::default()
-                        },
-                    }),
-                    exception: Some(ExceptionInfo {
-                        exception_type: "exceptionType".to_string(),
-                        exception_message: "exceptionMessage".to_string(),
-                        exception_stacktrace: "exceptionStacktrace".to_string(),
-                        ..Default::default()
-                    }),
                     stdout: "stdout".to_string(),
                     ..Default::default()
                 },
-                trace_responses: vec![
-                    TraceResponse {
-                        submission_id: SubmissionId(
-                            Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
-                        ),
-                        line_number: 1,
-                        return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
-                        expression_location: Some(ExpressionLocation {
-                            start: 1,
-                            offset: 1,
-                            ..Default::default()
-                        }),
-                        stack: StackInformation {
-                            num_stack_frames: 1,
-                            top_stack_frame: Some(StackFrame {
-                                method_name: "methodName".to_string(),
-                                line_number: 1,
-                                scopes: vec![
-                                    Scope {
-                                        variables: HashMap::from([(
-                                            "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: 0 },
-                                        )]),
-                                        ..Default::default()
-                                    },
-                                    Scope {
-                                        variables: HashMap::from([(
-                                            "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: 0 },
-                                        )]),
-                                        ..Default::default()
-                                    },
-                                ],
-                                ..Default::default()
-                            }),
-                            ..Default::default()
-                        },
-                        stdout: Some("stdout".to_string()),
+                trace_responses: vec![TraceResponse {
+                    submission_id: SubmissionId("submissionId".to_string()),
+                    line_number: 1,
+                    stack: StackInformation {
+                        num_stack_frames: 1,
                         ..Default::default()
                     },
-                    TraceResponse {
-                        submission_id: SubmissionId(
-                            Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
-                        ),
-                        line_number: 1,
-                        return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
-                        expression_location: Some(ExpressionLocation {
-                            start: 1,
-                            offset: 1,
-                            ..Default::default()
-                        }),
-                        stack: StackInformation {
-                            num_stack_frames: 1,
-                            top_stack_frame: Some(StackFrame {
-                                method_name: "methodName".to_string(),
-                                line_number: 1,
-                                scopes: vec![
-                                    Scope {
-                                        variables: HashMap::from([(
-                                            "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: 0 },
-                                        )]),
-                                        ..Default::default()
-                                    },
-                                    Scope {
-                                        variables: HashMap::from([(
-                                            "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: 0 },
-                                        )]),
-                                        ..Default::default()
-                                    },
-                                ],
-                                ..Default::default()
-                            }),
-                            ..Default::default()
-                        },
-                        stdout: Some("stdout".to_string()),
-                        ..Default::default()
-                    },
-                ],
+                    ..Default::default()
+                }],
             },
             None,
         )
@@ -774,7 +556,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">store_traced_workspace_v2</a>(submission_id: SubmissionId, request: Vec&lt;TraceResponseV2&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">storetracedworkspacev2</a>(submission_id: SubmissionId, request: Vec&lt;TraceResponseV2&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -787,7 +569,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -795,101 +577,25 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .admin
-        .store_traced_workspace_v2(
-            &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-            &vec![
-                TraceResponseV2 {
-                    submission_id: SubmissionId(
-                        Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
-                    ),
-                    line_number: 1,
-                    file: TracedFile {
-                        filename: "filename".to_string(),
-                        directory: "directory".to_string(),
-                        ..Default::default()
-                    },
-                    return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
-                    expression_location: Some(ExpressionLocation {
-                        start: 1,
-                        offset: 1,
-                        ..Default::default()
-                    }),
-                    stack: StackInformation {
-                        num_stack_frames: 1,
-                        top_stack_frame: Some(StackFrame {
-                            method_name: "methodName".to_string(),
-                            line_number: 1,
-                            scopes: vec![
-                                Scope {
-                                    variables: HashMap::from([(
-                                        "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: 0 },
-                                    )]),
-                                    ..Default::default()
-                                },
-                                Scope {
-                                    variables: HashMap::from([(
-                                        "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: 0 },
-                                    )]),
-                                    ..Default::default()
-                                },
-                            ],
-                            ..Default::default()
-                        }),
-                        ..Default::default()
-                    },
-                    stdout: Some("stdout".to_string()),
+        .storetracedworkspacev2(
+            &SubmissionId("submissionId".to_string()),
+            &vec![TraceResponseV2 {
+                submission_id: SubmissionId("submissionId".to_string()),
+                line_number: 1,
+                file: TracedFile {
+                    filename: "filename".to_string(),
+                    directory: "directory".to_string(),
                     ..Default::default()
                 },
-                TraceResponseV2 {
-                    submission_id: SubmissionId(
-                        Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
-                    ),
-                    line_number: 1,
-                    file: TracedFile {
-                        filename: "filename".to_string(),
-                        directory: "directory".to_string(),
-                        ..Default::default()
-                    },
-                    return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
-                    expression_location: Some(ExpressionLocation {
-                        start: 1,
-                        offset: 1,
-                        ..Default::default()
-                    }),
-                    stack: StackInformation {
-                        num_stack_frames: 1,
-                        top_stack_frame: Some(StackFrame {
-                            method_name: "methodName".to_string(),
-                            line_number: 1,
-                            scopes: vec![
-                                Scope {
-                                    variables: HashMap::from([(
-                                        "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: 0 },
-                                    )]),
-                                    ..Default::default()
-                                },
-                                Scope {
-                                    variables: HashMap::from([(
-                                        "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: 0 },
-                                    )]),
-                                    ..Default::default()
-                                },
-                            ],
-                            ..Default::default()
-                        }),
-                        ..Default::default()
-                    },
-                    stdout: Some("stdout".to_string()),
+                stack: StackInformation {
+                    num_stack_frames: 1,
                     ..Default::default()
                 },
-            ],
+                ..Default::default()
+            }],
             None,
         )
         .await;
@@ -921,7 +627,7 @@ async fn main() {
 </details>
 
 ## Homepage
-<details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client.rs">get_homepage_problems</a>() -> Result&lt;Vec&lt;ProblemId&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client.rs">gethomepageproblems</a>() -> Result&lt;Vec&lt;ProblemId&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -934,7 +640,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -942,8 +648,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
-    client.homepage.get_homepage_problems(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.homepage.gethomepageproblems(None).await;
 }
 ```
 </dd>
@@ -956,7 +662,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client.rs">set_homepage_problems</a>(request: Vec&lt;ProblemId&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client.rs">sethomepageproblems</a>(request: Vec&lt;ProblemId&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -969,7 +675,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -977,16 +683,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .homepage
-        .set_homepage_problems(
-            &vec![
-                ProblemId("string".to_string()),
-                ProblemId("string".to_string()),
-            ],
-            None,
-        )
+        .sethomepageproblems(&vec![ProblemId("string".to_string())], None)
         .await;
 }
 ```
@@ -1001,7 +701,7 @@ async fn main() {
 </details>
 
 ## Migration
-<details><summary><code>client.migration.<a href="/src/api/resources/migration/client.rs">get_attempted_migrations</a>() -> Result&lt;Vec&lt;Migration&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.migration.<a href="/src/api/resources/migration/client.rs">getattemptedmigrations</a>() -> Result&lt;Vec&lt;Migration&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1014,7 +714,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1022,10 +722,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .migration
-        .get_attempted_migrations(Some(
+        .getattemptedmigrations(Some(
             RequestOptions::new().additional_header("admin-key-header", "admin-key-header"),
         ))
         .await;
@@ -1042,7 +742,7 @@ async fn main() {
 </details>
 
 ## Playlist
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">create_playlist</a>(service_param: i64, request: PlaylistCreateRequest, datetime: Option&lt;String&gt;, optional_datetime: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;Playlist, ApiError&gt;</code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">createplaylist</a>(service_param: i64, request: PlaylistCreateRequest, datetime: Option&lt;String&gt;, optional_datetime: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;Playlist, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1069,7 +769,7 @@ Create a new playlist
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1077,24 +777,19 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .playlist
-        .create_playlist(
+        .createplaylist(
             1,
-            &CreatePlaylistRequest {
+            &CreateplaylistRequest {
                 datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-                optional_datetime: Some(
-                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-                ),
                 body: PlaylistCreateRequest {
                     name: "name".to_string(),
-                    problems: vec![
-                        ProblemId("problems".to_string()),
-                        ProblemId("problems".to_string()),
-                    ],
+                    problems: vec![ProblemId("problems".to_string())],
                     ..Default::default()
                 },
+                optional_datetime: None,
             },
             None,
         )
@@ -1130,7 +825,7 @@ async fn main() {
 <dl>
 <dd>
 
-**optional_datetime:** `Option<String>` 
+**optional_datetime:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -1142,7 +837,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">get_playlists</a>(service_param: i64, limit: Option&lt;Option&lt;i64&gt;&gt;, other_field: Option&lt;String&gt;, multi_line_docs: Option&lt;String&gt;) -> Result&lt;Vec&lt;Playlist&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">getplaylists</a>(service_param: i64, limit: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, other_field: Option&lt;String&gt;, multi_line_docs: Option&lt;String&gt;) -> Result&lt;Vec&lt;Playlist&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1169,7 +864,7 @@ Returns the user's playlists
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1177,17 +872,17 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .playlist
-        .get_playlists(
+        .getplaylists(
             1,
-            &GetPlaylistsQueryRequest {
+            &GetplaylistsQueryRequest {
                 limit: Some(1),
                 other_field: "otherField".to_string(),
                 multi_line_docs: "multiLineDocs".to_string(),
                 optional_multiple_field: vec![Some("optionalMultipleField".to_string())],
-                multiple_field: vec!["multipleField".to_string()],
+                multiple_field: vec![Some("multipleField".to_string())],
             },
             None,
         )
@@ -1215,7 +910,7 @@ async fn main() {
 <dl>
 <dd>
 
-**limit:** `Option<i64>` 
+**limit:** `Option<Option<i64>>` 
     
 </dd>
 </dl>
@@ -1242,7 +937,7 @@ description
 <dl>
 <dd>
 
-**optional_multiple_field:** `Option<String>` 
+**optional_multiple_field:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -1250,7 +945,7 @@ description
 <dl>
 <dd>
 
-**multiple_field:** `String` 
+**multiple_field:** `Option<String>` 
     
 </dd>
 </dl>
@@ -1262,7 +957,7 @@ description
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">get_playlist</a>(service_param: i64, playlist_id: PlaylistId) -> Result&lt;Playlist, ApiError&gt;</code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">getplaylist</a>(service_param: i64, playlist_id: PlaylistId) -> Result&lt;Playlist, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1289,7 +984,7 @@ Returns a playlist
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1297,10 +992,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .playlist
-        .get_playlist(1, &PlaylistId("playlistId".to_string()), None)
+        .getplaylist(1, &PlaylistId("playlistId".to_string()), None)
         .await;
 }
 ```
@@ -1337,7 +1032,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">update_playlist</a>(service_param: i64, playlist_id: PlaylistId, request: Option&lt;UpdatePlaylistRequest&gt;) -> Result&lt;Option&lt;Playlist&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">updateplaylist</a>(service_param: i64, playlist_id: PlaylistId, request: UpdatePlaylistRequest) -> Result&lt;Playlist, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1364,7 +1059,7 @@ Updates a playlist
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1372,20 +1067,16 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .playlist
-        .update_playlist(
+        .updateplaylist(
             1,
             &PlaylistId("playlistId".to_string()),
-            &Some(UpdatePlaylistRequest {
+            &UpdatePlaylistRequest {
                 name: "name".to_string(),
-                problems: vec![
-                    ProblemId("problems".to_string()),
-                    ProblemId("problems".to_string()),
-                ],
-                ..Default::default()
-            }),
+                problems: vec![ProblemId("problems".to_string())],
+            },
             None,
         )
         .await;
@@ -1416,6 +1107,22 @@ async fn main() {
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**name:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**problems:** `Vec<ProblemId>` — The problems that make up the playlist.
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1424,7 +1131,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">delete_playlist</a>(service_param: i64, playlist_id: PlaylistId) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">deleteplaylist</a>(service_param: i64, playlist_id: PlaylistId) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1451,7 +1158,7 @@ Deletes a playlist
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1459,10 +1166,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .playlist
-        .delete_playlist(1, &PlaylistId("playlist_id".to_string()), None)
+        .deleteplaylist(1, &PlaylistId("playlist_id".to_string()), None)
         .await;
 }
 ```
@@ -1500,7 +1207,7 @@ async fn main() {
 </details>
 
 ## Problem
-<details><summary><code>client.problem.<a href="/src/api/resources/problem/client.rs">create_problem</a>(request: CreateProblemRequest) -> Result&lt;CreateProblemResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.problem.<a href="/src/api/resources/problem/client.rs">createproblem</a>(request: CreateProblemRequest) -> Result&lt;CreateProblemResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1527,7 +1234,7 @@ Creates a problem
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1535,81 +1242,59 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .problem
-        .create_problem(
+        .createproblem(
             &CreateProblemRequest {
                 problem_name: "problemName".to_string(),
                 problem_description: ProblemDescription {
-                    boards: vec![
-                        ProblemDescriptionBoard::Html {
-                            value: "value".to_string(),
+                    boards: vec![ProblemDescriptionBoard::Html {
+                        data: ProblemDescriptionBoardHtml {
+                            ..Default::default()
                         },
-                        ProblemDescriptionBoard::Html {
-                            value: "value".to_string(),
-                        },
-                    ],
+                    }],
                     ..Default::default()
                 },
                 files: HashMap::from([(
-                    Language::Java,
+                    "key".to_string(),
                     ProblemFiles {
                         solution_file: FileInfo {
                             filename: "filename".to_string(),
                             contents: "contents".to_string(),
                             ..Default::default()
                         },
-                        read_only_files: vec![
-                            FileInfo {
-                                filename: "filename".to_string(),
-                                contents: "contents".to_string(),
-                                ..Default::default()
-                            },
-                            FileInfo {
-                                filename: "filename".to_string(),
-                                contents: "contents".to_string(),
-                                ..Default::default()
-                            },
-                        ],
+                        read_only_files: vec![FileInfo {
+                            filename: "filename".to_string(),
+                            contents: "contents".to_string(),
+                            ..Default::default()
+                        }],
                         ..Default::default()
                     },
                 )]),
-                input_params: vec![
-                    VariableTypeAndName {
-                        variable_type: VariableType::IntegerType,
-                        name: "name".to_string(),
+                input_params: vec![VariableTypeAndName {
+                    variable_type: VariableType::VariableTypeZero(VariableTypeZero {
+                        r#type: VariableTypeZeroType::IntegerType,
+                    }),
+                    name: "name".to_string(),
+                }],
+                output_type: VariableType::VariableTypeZero(VariableTypeZero {
+                    r#type: VariableTypeZeroType::IntegerType,
+                }),
+                testcases: vec![TestCaseWithExpectedResult {
+                    test_case: TestCase {
+                        id: "id".to_string(),
+                        params: vec![VariableValue::VariableValueZero(VariableValueZero {
+                            r#type: VariableValueZeroType::IntegerValue,
+                            value: None,
+                        })],
+                        ..Default::default()
                     },
-                    VariableTypeAndName {
-                        variable_type: VariableType::IntegerType,
-                        name: "name".to_string(),
-                    },
-                ],
-                output_type: VariableType::IntegerType,
-                testcases: vec![
-                    TestCaseWithExpectedResult {
-                        test_case: TestCase {
-                            id: "id".to_string(),
-                            params: vec![
-                                VariableValue::IntegerValue { value: 0 },
-                                VariableValue::IntegerValue { value: 0 },
-                            ],
-                            ..Default::default()
-                        },
-                        expected_result: VariableValue::IntegerValue { value: 0 },
-                    },
-                    TestCaseWithExpectedResult {
-                        test_case: TestCase {
-                            id: "id".to_string(),
-                            params: vec![
-                                VariableValue::IntegerValue { value: 0 },
-                                VariableValue::IntegerValue { value: 0 },
-                            ],
-                            ..Default::default()
-                        },
-                        expected_result: VariableValue::IntegerValue { value: 0 },
-                    },
-                ],
+                    expected_result: VariableValue::VariableValueZero(VariableValueZero {
+                        r#type: VariableValueZeroType::IntegerValue,
+                        value: None,
+                    }),
+                }],
                 method_name: "methodName".to_string(),
             },
             None,
@@ -1627,7 +1312,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/src/api/resources/problem/client.rs">update_problem</a>(problem_id: ProblemId, request: CreateProblemRequest) -> Result&lt;UpdateProblemResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.problem.<a href="/src/api/resources/problem/client.rs">updateproblem</a>(problem_id: ProblemId, request: CreateProblemRequest) -> Result&lt;UpdateProblemResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1654,7 +1339,7 @@ Updates a problem
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1662,82 +1347,60 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .problem
-        .update_problem(
+        .updateproblem(
             &ProblemId("problemId".to_string()),
             &CreateProblemRequest {
                 problem_name: "problemName".to_string(),
                 problem_description: ProblemDescription {
-                    boards: vec![
-                        ProblemDescriptionBoard::Html {
-                            value: "value".to_string(),
+                    boards: vec![ProblemDescriptionBoard::Html {
+                        data: ProblemDescriptionBoardHtml {
+                            ..Default::default()
                         },
-                        ProblemDescriptionBoard::Html {
-                            value: "value".to_string(),
-                        },
-                    ],
+                    }],
                     ..Default::default()
                 },
                 files: HashMap::from([(
-                    Language::Java,
+                    "key".to_string(),
                     ProblemFiles {
                         solution_file: FileInfo {
                             filename: "filename".to_string(),
                             contents: "contents".to_string(),
                             ..Default::default()
                         },
-                        read_only_files: vec![
-                            FileInfo {
-                                filename: "filename".to_string(),
-                                contents: "contents".to_string(),
-                                ..Default::default()
-                            },
-                            FileInfo {
-                                filename: "filename".to_string(),
-                                contents: "contents".to_string(),
-                                ..Default::default()
-                            },
-                        ],
+                        read_only_files: vec![FileInfo {
+                            filename: "filename".to_string(),
+                            contents: "contents".to_string(),
+                            ..Default::default()
+                        }],
                         ..Default::default()
                     },
                 )]),
-                input_params: vec![
-                    VariableTypeAndName {
-                        variable_type: VariableType::IntegerType,
-                        name: "name".to_string(),
+                input_params: vec![VariableTypeAndName {
+                    variable_type: VariableType::VariableTypeZero(VariableTypeZero {
+                        r#type: VariableTypeZeroType::IntegerType,
+                    }),
+                    name: "name".to_string(),
+                }],
+                output_type: VariableType::VariableTypeZero(VariableTypeZero {
+                    r#type: VariableTypeZeroType::IntegerType,
+                }),
+                testcases: vec![TestCaseWithExpectedResult {
+                    test_case: TestCase {
+                        id: "id".to_string(),
+                        params: vec![VariableValue::VariableValueZero(VariableValueZero {
+                            r#type: VariableValueZeroType::IntegerValue,
+                            value: None,
+                        })],
+                        ..Default::default()
                     },
-                    VariableTypeAndName {
-                        variable_type: VariableType::IntegerType,
-                        name: "name".to_string(),
-                    },
-                ],
-                output_type: VariableType::IntegerType,
-                testcases: vec![
-                    TestCaseWithExpectedResult {
-                        test_case: TestCase {
-                            id: "id".to_string(),
-                            params: vec![
-                                VariableValue::IntegerValue { value: 0 },
-                                VariableValue::IntegerValue { value: 0 },
-                            ],
-                            ..Default::default()
-                        },
-                        expected_result: VariableValue::IntegerValue { value: 0 },
-                    },
-                    TestCaseWithExpectedResult {
-                        test_case: TestCase {
-                            id: "id".to_string(),
-                            params: vec![
-                                VariableValue::IntegerValue { value: 0 },
-                                VariableValue::IntegerValue { value: 0 },
-                            ],
-                            ..Default::default()
-                        },
-                        expected_result: VariableValue::IntegerValue { value: 0 },
-                    },
-                ],
+                    expected_result: VariableValue::VariableValueZero(VariableValueZero {
+                        r#type: VariableValueZeroType::IntegerValue,
+                        value: None,
+                    }),
+                }],
                 method_name: "methodName".to_string(),
             },
             None,
@@ -1770,7 +1433,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/src/api/resources/problem/client.rs">delete_problem</a>(problem_id: ProblemId) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.problem.<a href="/src/api/resources/problem/client.rs">deleteproblem</a>(problem_id: ProblemId) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1797,7 +1460,7 @@ Soft deletes a problem
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1805,10 +1468,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .problem
-        .delete_problem(&ProblemId("problemId".to_string()), None)
+        .deleteproblem(&ProblemId("problemId".to_string()), None)
         .await;
 }
 ```
@@ -1837,7 +1500,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/src/api/resources/problem/client.rs">get_default_starter_files</a>(request: GetDefaultStarterFilesRequest) -> Result&lt;GetDefaultStarterFilesResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.problem.<a href="/src/api/resources/problem/client.rs">getdefaultstarterfiles</a>(request: ProblemGetDefaultStarterFilesRequest) -> Result&lt;GetDefaultStarterFilesResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1864,7 +1527,7 @@ Returns default starter files for problem
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1872,22 +1535,20 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .problem
-        .get_default_starter_files(
-            &GetDefaultStarterFilesRequest {
-                input_params: vec![
-                    VariableTypeAndName {
-                        variable_type: VariableType::IntegerType,
-                        name: "name".to_string(),
-                    },
-                    VariableTypeAndName {
-                        variable_type: VariableType::IntegerType,
-                        name: "name".to_string(),
-                    },
-                ],
-                output_type: VariableType::IntegerType,
+        .getdefaultstarterfiles(
+            &ProblemGetDefaultStarterFilesRequest {
+                input_params: vec![VariableTypeAndName {
+                    variable_type: VariableType::VariableTypeZero(VariableTypeZero {
+                        r#type: VariableTypeZeroType::IntegerType,
+                    }),
+                    name: "name".to_string(),
+                }],
+                output_type: VariableType::VariableTypeZero(VariableTypeZero {
+                    r#type: VariableTypeZeroType::IntegerType,
+                }),
                 method_name: "methodName".to_string(),
             },
             None,
@@ -1944,7 +1605,7 @@ The method name cannot include the following characters:
 </details>
 
 ## Submission
-<details><summary><code>client.submission.<a href="/src/api/resources/submission/client.rs">create_execution_session</a>(language: Language) -> Result&lt;ExecutionSessionResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.submission.<a href="/src/api/resources/submission/client.rs">createexecutionsession</a>(language: Language) -> Result&lt;ExecutionSessionResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1971,7 +1632,7 @@ Returns sessionId and execution server URL for session. Spins up server.
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1979,10 +1640,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .submission
-        .create_execution_session(&Language::Java, None)
+        .createexecutionsession(&Language::Java, None)
         .await;
 }
 ```
@@ -2011,7 +1672,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/src/api/resources/submission/client.rs">get_execution_session</a>(session_id: String) -> Result&lt;Option&lt;ExecutionSessionResponse&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.submission.<a href="/src/api/resources/submission/client.rs">getexecutionsession</a>(session_id: String) -> Result&lt;ExecutionSessionResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2038,7 +1699,7 @@ Returns execution server URL for session. Returns empty if session isn't registe
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2046,10 +1707,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .submission
-        .get_execution_session(&"sessionId".to_string(), None)
+        .getexecutionsession(&"sessionId".to_string(), None)
         .await;
 }
 ```
@@ -2078,7 +1739,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/src/api/resources/submission/client.rs">stop_execution_session</a>(session_id: String) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.submission.<a href="/src/api/resources/submission/client.rs">stopexecutionsession</a>(session_id: String) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2105,7 +1766,7 @@ Stops execution session.
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2113,10 +1774,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .submission
-        .stop_execution_session(&"sessionId".to_string(), None)
+        .stopexecutionsession(&"sessionId".to_string(), None)
         .await;
 }
 ```
@@ -2145,7 +1806,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/src/api/resources/submission/client.rs">get_execution_sessions_state</a>() -> Result&lt;GetExecutionSessionStateResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.submission.<a href="/src/api/resources/submission/client.rs">getexecutionsessionsstate</a>() -> Result&lt;GetExecutionSessionStateResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2158,7 +1819,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2166,8 +1827,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
-    client.submission.get_execution_sessions_state(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.submission.getexecutionsessionsstate(None).await;
 }
 ```
 </dd>
@@ -2181,7 +1842,7 @@ async fn main() {
 </details>
 
 ## Sysprop
-<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client.rs">set_num_warm_instances</a>(language: Language, num_warm_instances: i64) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client.rs">setnumwarminstances</a>(language: Language, num_warm_instances: i64) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2194,7 +1855,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2202,10 +1863,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .sysprop
-        .set_num_warm_instances(&Language::Java, 1, None)
+        .setnumwarminstances(&Language::Java, 1, None)
         .await;
 }
 ```
@@ -2242,7 +1903,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client.rs">get_num_warm_instances</a>() -> Result&lt;std::collections::HashMap&lt;Language, i64&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client.rs">getnumwarminstances</a>() -> Result&lt;std::collections::HashMap&lt;String, i64&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2255,7 +1916,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2263,8 +1924,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
-    client.sysprop.get_num_warm_instances(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.sysprop.getnumwarminstances(None).await;
 }
 ```
 </dd>
@@ -2277,8 +1938,8 @@ async fn main() {
 </dl>
 </details>
 
-## V2 Problem
-<details><summary><code>client.v2().problem.<a href="/src/api/resources/v2/problem/client.rs">get_lightweight_problems</a>() -> Result&lt;Vec&lt;LightweightProblemInfoV2&gt;, ApiError&gt;</code></summary>
+## V2Problem
+<details><summary><code>client.v2problem.<a href="/src/api/resources/v2problem/client.rs">v2problem_get_lightweight_problems</a>() -> Result&lt;Vec&lt;V2LightweightProblemInfoV2&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2305,7 +1966,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2313,8 +1974,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
-    client.v2.problem.get_lightweight_problems(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .v2problem
+        .v2problem_get_lightweight_problems(None)
+        .await;
 }
 ```
 </dd>
@@ -2327,7 +1991,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v2().problem.<a href="/src/api/resources/v2/problem/client.rs">get_problems</a>() -> Result&lt;Vec&lt;ProblemInfoV2&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.v2problem.<a href="/src/api/resources/v2problem/client.rs">v2problem_get_problems</a>() -> Result&lt;Vec&lt;V2ProblemInfoV2&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2354,7 +2018,7 @@ Returns latest versions of all problems
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2362,8 +2026,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
-    client.v2.problem.get_problems(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.v2problem.v2problem_get_problems(None).await;
 }
 ```
 </dd>
@@ -2376,7 +2040,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v2().problem.<a href="/src/api/resources/v2/problem/client.rs">get_latest_problem</a>(problem_id: ProblemId) -> Result&lt;ProblemInfoV2, ApiError&gt;</code></summary>
+<details><summary><code>client.v2problem.<a href="/src/api/resources/v2problem/client.rs">v2problem_get_latest_problem</a>(problem_id: ProblemId) -> Result&lt;V2ProblemInfoV2, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2403,7 +2067,7 @@ Returns latest version of a problem
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2411,11 +2075,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .v2
-        .problem
-        .get_latest_problem(&ProblemId("problemId".to_string()), None)
+        .v2problem
+        .v2problem_get_latest_problem(&ProblemId("problemId".to_string()), None)
         .await;
 }
 ```
@@ -2444,7 +2107,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v2().problem.<a href="/src/api/resources/v2/problem/client.rs">get_problem_version</a>(problem_id: ProblemId, problem_version: i64) -> Result&lt;ProblemInfoV2, ApiError&gt;</code></summary>
+<details><summary><code>client.v2problem.<a href="/src/api/resources/v2problem/client.rs">v2problem_get_problem_version</a>(problem_id: ProblemId, problem_version: i64) -> Result&lt;V2ProblemInfoV2, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2471,7 +2134,7 @@ Returns requested version of a problem
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2479,11 +2142,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .v2
-        .problem
-        .get_problem_version(&ProblemId("problemId".to_string()), 1, None)
+        .v2problem
+        .v2problem_get_problem_version(&ProblemId("problemId".to_string()), 1, None)
         .await;
 }
 ```
@@ -2520,8 +2182,8 @@ async fn main() {
 </dl>
 </details>
 
-## V2 V3 Problem
-<details><summary><code>client.v2().v3().problem.<a href="/src/api/resources/v2/v3/problem/client.rs">get_lightweight_problems</a>() -> Result&lt;Vec&lt;LightweightProblemInfoV2&gt;, ApiError&gt;</code></summary>
+## V2V3Problem
+<details><summary><code>client.v2v3problem.<a href="/src/api/resources/v2v3problem/client.rs">v2v3problem_get_lightweight_problems</a>() -> Result&lt;Vec&lt;V2V3LightweightProblemInfoV2&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2548,7 +2210,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2556,8 +2218,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
-    client.v2.v3.problem.get_lightweight_problems(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .v2v3problem
+        .v2v3problem_get_lightweight_problems(None)
+        .await;
 }
 ```
 </dd>
@@ -2570,7 +2235,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v2().v3().problem.<a href="/src/api/resources/v2/v3/problem/client.rs">get_problems</a>() -> Result&lt;Vec&lt;ProblemInfoV2&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.v2v3problem.<a href="/src/api/resources/v2v3problem/client.rs">v2v3problem_get_problems</a>() -> Result&lt;Vec&lt;V2V3ProblemInfoV2&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2597,7 +2262,7 @@ Returns latest versions of all problems
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2605,8 +2270,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
-    client.v2.v3.problem.get_problems(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.v2v3problem.v2v3problem_get_problems(None).await;
 }
 ```
 </dd>
@@ -2619,7 +2284,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v2().v3().problem.<a href="/src/api/resources/v2/v3/problem/client.rs">get_latest_problem</a>(problem_id: ProblemId) -> Result&lt;ProblemInfoV2, ApiError&gt;</code></summary>
+<details><summary><code>client.v2v3problem.<a href="/src/api/resources/v2v3problem/client.rs">v2v3problem_get_latest_problem</a>(problem_id: ProblemId) -> Result&lt;V2V3ProblemInfoV2, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2646,7 +2311,7 @@ Returns latest version of a problem
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2654,12 +2319,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .v2
-        .v3
-        .problem
-        .get_latest_problem(&ProblemId("problemId".to_string()), None)
+        .v2v3problem
+        .v2v3problem_get_latest_problem(&ProblemId("problemId".to_string()), None)
         .await;
 }
 ```
@@ -2688,7 +2351,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v2().v3().problem.<a href="/src/api/resources/v2/v3/problem/client.rs">get_problem_version</a>(problem_id: ProblemId, problem_version: i64) -> Result&lt;ProblemInfoV2, ApiError&gt;</code></summary>
+<details><summary><code>client.v2v3problem.<a href="/src/api/resources/v2v3problem/client.rs">v2v3problem_get_problem_version</a>(problem_id: ProblemId, problem_version: i64) -> Result&lt;V2V3ProblemInfoV2, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2715,7 +2378,7 @@ Returns requested version of a problem
 <dd>
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2723,12 +2386,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .v2
-        .v3
-        .problem
-        .get_problem_version(&ProblemId("problemId".to_string()), 1, None)
+        .v2v3problem
+        .v2v3problem_get_problem_version(&ProblemId("problemId".to_string()), 1, None)
         .await;
 }
 ```

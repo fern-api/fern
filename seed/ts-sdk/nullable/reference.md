@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client/Client.ts">getUsers</a>({ ...params }) -> SeedNullable.User[]</code></summary>
+<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client/Client.ts">getusers</a>({ ...params }) -> SeedApi.User[]</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,7 @@
 <dd>
 
 ```typescript
-await client.nullable.getUsers({
-    usernames: "usernames",
-    avatar: "avatar",
-    activated: true,
-    tags: "tags",
-    extra: true
-});
+await client.nullable.getusers();
 
 ```
 </dd>
@@ -35,7 +29,7 @@ await client.nullable.getUsers({
 <dl>
 <dd>
 
-**request:** `SeedNullable.GetUsersRequest` 
+**request:** `SeedApi.NullableGetUsersRequest` 
     
 </dd>
 </dl>
@@ -55,7 +49,7 @@ await client.nullable.getUsers({
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client/Client.ts">createUser</a>({ ...params }) -> SeedNullable.User</code></summary>
+<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client/Client.ts">createuser</a>({ ...params }) -> SeedApi.User</code></summary>
 <dl>
 <dd>
 
@@ -68,22 +62,8 @@ await client.nullable.getUsers({
 <dd>
 
 ```typescript
-await client.nullable.createUser({
-    username: "username",
-    tags: ["tags", "tags"],
-    metadata: {
-        createdAt: "2024-01-15T09:30:00Z",
-        updatedAt: "2024-01-15T09:30:00Z",
-        avatar: "avatar",
-        activated: true,
-        status: {
-            type: "active"
-        },
-        values: {
-            "values": "values"
-        }
-    },
-    avatar: "avatar"
+await client.nullable.createuser({
+    username: "username"
 });
 
 ```
@@ -100,7 +80,7 @@ await client.nullable.createUser({
 <dl>
 <dd>
 
-**request:** `SeedNullable.CreateUserRequest` 
+**request:** `SeedApi.NullableCreateUserRequest` 
     
 </dd>
 </dl>
@@ -120,7 +100,7 @@ await client.nullable.createUser({
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client/Client.ts">deleteUser</a>({ ...params }) -> boolean</code></summary>
+<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client/Client.ts">deleteuser</a>({ ...params }) -> boolean</code></summary>
 <dl>
 <dd>
 
@@ -133,9 +113,7 @@ await client.nullable.createUser({
 <dd>
 
 ```typescript
-await client.nullable.deleteUser({
-    username: "xy"
-});
+await client.nullable.deleteuser();
 
 ```
 </dd>
@@ -151,7 +129,7 @@ await client.nullable.deleteUser({
 <dl>
 <dd>
 
-**request:** `SeedNullable.DeleteUserRequest` 
+**request:** `SeedApi.NullableDeleteUserRequest` 
     
 </dd>
 </dl>

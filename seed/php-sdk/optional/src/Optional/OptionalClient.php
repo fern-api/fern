@@ -12,9 +12,9 @@ use Seed\Core\Json\JsonSerializer;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Optional\Types\SendOptionalBodyRequest;
-use Seed\Optional\Types\DeployParams;
-use Seed\Optional\Types\DeployResponse;
+use Seed\Optional\Requests\SendOptionalBodyRequest;
+use Seed\Optional\Requests\DeployParams;
+use Seed\Types\DeployResponse;
 
 class OptionalClient
 {
@@ -66,7 +66,7 @@ class OptionalClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function sendOptionalBody(?array $request = null, ?array $options = null): ?string
+    public function sendoptionalbody(?array $request = null, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -100,7 +100,7 @@ class OptionalClient
     }
 
     /**
-     * @param ?SendOptionalBodyRequest $request
+     * @param SendOptionalBodyRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -113,7 +113,7 @@ class OptionalClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function sendOptionalTypedBody(?SendOptionalBodyRequest $request = null, ?array $options = null): ?string
+    public function sendoptionaltypedbody(SendOptionalBodyRequest $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -152,7 +152,7 @@ class OptionalClient
      *
      * @param string $actionId
      * @param string $id
-     * @param ?DeployParams $request
+     * @param DeployParams $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -165,7 +165,7 @@ class OptionalClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function sendOptionalNullableWithAllOptionalProperties(string $actionId, string $id, ?DeployParams $request = null, ?array $options = null): ?DeployResponse
+    public function sendoptionalnullablewithalloptionalproperties(string $actionId, string $id, DeployParams $request = new DeployParams(), ?array $options = null): ?DeployResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

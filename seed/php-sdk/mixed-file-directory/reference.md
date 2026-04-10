@@ -46,7 +46,7 @@ $client->organization->create(
 <dl>
 <dd>
 
-**$request:** `CreateOrganizationRequest` 
+**$name:** `string` 
     
 </dd>
 </dl>
@@ -87,9 +87,7 @@ List all users.
 
 ```php
 $client->user->list(
-    new ListUsersRequest([
-        'limit' => 1,
-    ]),
+    new UserListRequest([]),
 );
 ```
 </dd>
@@ -117,8 +115,8 @@ $client->user->list(
 </dl>
 </details>
 
-## User Events
-<details><summary><code>$client-&gt;user-&gt;events-&gt;listEvents($request) -> ?array</code></summary>
+## UserEvents
+<details><summary><code>$client-&gt;userEvents-&gt;userEventsListEvents($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -145,10 +143,8 @@ List all user events.
 <dd>
 
 ```php
-$client->user->events->listEvents(
-    new ListUserEventsRequest([
-        'limit' => 1,
-    ]),
+$client->userEvents->userEventsListEvents(
+    new UserEventsListEventsRequest([]),
 );
 ```
 </dd>
@@ -176,8 +172,8 @@ $client->user->events->listEvents(
 </dl>
 </details>
 
-## User Events Metadata
-<details><summary><code>$client-&gt;user-&gt;events-&gt;metadata-&gt;getMetadata($request) -> ?Metadata</code></summary>
+## UserEventsMetadata
+<details><summary><code>$client-&gt;userEventsMetadata-&gt;userEventsMetadataGetMetadata($request) -> ?UsereventsMetadata</code></summary>
 <dl>
 <dd>
 
@@ -204,8 +200,8 @@ Get event metadata.
 <dd>
 
 ```php
-$client->user->events->metadata->getMetadata(
-    new GetEventMetadataRequest([
+$client->userEventsMetadata->userEventsMetadataGetMetadata(
+    new UserEventsMetadataGetMetadataRequest([
         'id' => 'id',
     ]),
 );

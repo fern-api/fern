@@ -1,0 +1,45 @@
+import Foundation
+
+public struct VariableTypeFive: Codable, Hashable, Sendable {
+    public let valueType: VariableType
+    /// Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
+    public let isFixedLength: Nullable<Bool>?
+    public let type: VariableTypeFiveType
+    /// Additional properties that are not explicitly defined in the schema
+    public let additionalProperties: [String: JSONValue]
+
+    public init(
+        valueType: VariableType,
+        isFixedLength: Nullable<Bool>? = nil,
+        type: VariableTypeFiveType,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
+        self.valueType = valueType
+        self.isFixedLength = isFixedLength
+        self.type = type
+        self.additionalProperties = additionalProperties
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.valueType = try container.decode(VariableType.self, forKey: .valueType)
+        self.isFixedLength = try container.decodeNullableIfPresent(Bool.self, forKey: .isFixedLength)
+        self.type = try container.decode(VariableTypeFiveType.self, forKey: .type)
+        self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try encoder.encodeAdditionalProperties(self.additionalProperties)
+        try container.encode(self.valueType, forKey: .valueType)
+        try container.encodeNullableIfPresent(self.isFixedLength, forKey: .isFixedLength)
+        try container.encode(self.type, forKey: .type)
+    }
+
+    /// Keys for encoding/decoding struct properties.
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case valueType
+        case isFixedLength
+        case type
+    }
+}

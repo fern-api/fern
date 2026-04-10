@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>$client-&gt;get()</code></summary>
+## 
+<details><summary><code>$client-&gt;-&gt;get()</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +13,7 @@
 <dd>
 
 ```php
-$client->get();
+$client->_->get();
 ```
 </dd>
 </dl>

@@ -1,7 +1,7 @@
 # Seed Rust Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRust)
-[![crates.io shield](https://img.shields.io/crates/v/seed_trace)](https://crates.io/crates/seed_trace)
+[![crates.io shield](https://img.shields.io/crates/v/seed_api)](https://crates.io/crates/seed_api)
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
@@ -26,13 +26,13 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_trace = "0.0.1"
+seed_api = "0.0.1"
 ```
 
 Or install via cargo:
 
 ```sh
-cargo add seed_trace
+cargo add seed_api
 ```
 
 ## Reference
@@ -44,7 +44,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```rust
-use seed_trace::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -52,12 +52,12 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = TraceClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .admin
-        .update_test_submission_status(
-            &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-            &TestSubmissionStatus::Stopped,
+        .updatetestsubmissionstatus(
+            &SubmissionId("submissionId".to_string()),
+            &TestSubmissionStatus::stopped(),
             None,
         )
         .await;
@@ -69,10 +69,10 @@ async fn main() {
 This SDK allows you to configure different environments for API requests.
 
 ```rust
-use seed_trace::prelude::{*};
+use seed_api::prelude::{*};
 
 let config = ClientConfig {
-    base_url: Environment::Prod.url().to_string(),
+    base_url: Environment::Default.url().to_string(),
     ..Default::default()
 };
 let client = Client::new(config).expect("Failed to build client");
@@ -83,7 +83,7 @@ let client = Client::new(config).expect("Failed to build client");
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-match client.admin.update_test_submission_status(None)?.await {
+match client.admin.updatetestsubmissionstatus(None)?.await {
     Ok(response) => {
         println!("Success: {:?}", response);
     },
@@ -101,9 +101,9 @@ match client.admin.update_test_submission_status(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_trace::prelude::{*};
+use seed_api::prelude::{*};
 
-let request = StoreTracedTestCaseRequest {
+let request = AdminStoreTracedTestCaseRequest {
     ...
 };
 ```
@@ -125,7 +125,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-let response = client.admin.update_test_submission_status(
+let response = client.admin.updatetestsubmissionstatus(
     Some(RequestOptions::new().max_retries(3))
 )?.await;
 ```
@@ -135,7 +135,7 @@ let response = client.admin.update_test_submission_status(
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-let response = client.admin.update_test_submission_status(
+let response = client.admin.updatetestsubmissionstatus(
     Some(RequestOptions::new().timeout_seconds(30))
 )?.await;
 ```
@@ -145,7 +145,7 @@ let response = client.admin.update_test_submission_status(
 You can add custom headers to requests using `RequestOptions`.
 
 ```rust
-let response = client.admin.update_test_submission_status(
+let response = client.admin.updatetestsubmissionstatus(
     Some(
         RequestOptions::new()
             .additional_header("X-Custom-Header", "custom-value")
@@ -160,7 +160,7 @@ let response = client.admin.update_test_submission_status(
 You can add custom query parameters to requests using `RequestOptions`.
 
 ```rust
-let response = client.admin.update_test_submission_status(
+let response = client.admin.updatetestsubmissionstatus(
     Some(
         RequestOptions::new()
             .additional_query_param("filter", "active")

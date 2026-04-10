@@ -10,12 +10,46 @@ import (
 )
 
 var (
-	getOrganizationUserRequestFieldTenantID       = big.NewInt(1 << 0)
-	getOrganizationUserRequestFieldOrganizationID = big.NewInt(1 << 1)
-	getOrganizationUserRequestFieldUserID         = big.NewInt(1 << 2)
+	organizationsGetOrganizationRequestFieldTenantID       = big.NewInt(1 << 0)
+	organizationsGetOrganizationRequestFieldOrganizationID = big.NewInt(1 << 1)
 )
 
-type GetOrganizationUserRequest struct {
+type OrganizationsGetOrganizationRequest struct {
+	TenantID       string `json:"-" url:"-"`
+	OrganizationID string `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (o *OrganizationsGetOrganizationRequest) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetTenantID sets the TenantID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationsGetOrganizationRequest) SetTenantID(tenantID string) {
+	o.TenantID = tenantID
+	o.require(organizationsGetOrganizationRequestFieldTenantID)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationsGetOrganizationRequest) SetOrganizationID(organizationID string) {
+	o.OrganizationID = organizationID
+	o.require(organizationsGetOrganizationRequestFieldOrganizationID)
+}
+
+var (
+	organizationsGetOrganizationUserRequestFieldTenantID       = big.NewInt(1 << 0)
+	organizationsGetOrganizationUserRequestFieldOrganizationID = big.NewInt(1 << 1)
+	organizationsGetOrganizationUserRequestFieldUserID         = big.NewInt(1 << 2)
+)
+
+type OrganizationsGetOrganizationUserRequest struct {
 	TenantID       string `json:"-" url:"-"`
 	OrganizationID string `json:"-" url:"-"`
 	UserID         string `json:"-" url:"-"`
@@ -24,57 +58,75 @@ type GetOrganizationUserRequest struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetOrganizationUserRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+func (o *OrganizationsGetOrganizationUserRequest) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetTenantID sets the TenantID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetOrganizationUserRequest) SetTenantID(tenantID string) {
-	g.TenantID = tenantID
-	g.require(getOrganizationUserRequestFieldTenantID)
+func (o *OrganizationsGetOrganizationUserRequest) SetTenantID(tenantID string) {
+	o.TenantID = tenantID
+	o.require(organizationsGetOrganizationUserRequestFieldTenantID)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetOrganizationUserRequest) SetOrganizationID(organizationID string) {
-	g.OrganizationID = organizationID
-	g.require(getOrganizationUserRequestFieldOrganizationID)
+func (o *OrganizationsGetOrganizationUserRequest) SetOrganizationID(organizationID string) {
+	o.OrganizationID = organizationID
+	o.require(organizationsGetOrganizationUserRequestFieldOrganizationID)
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetOrganizationUserRequest) SetUserID(userID string) {
-	g.UserID = userID
-	g.require(getOrganizationUserRequestFieldUserID)
+func (o *OrganizationsGetOrganizationUserRequest) SetUserID(userID string) {
+	o.UserID = userID
+	o.require(organizationsGetOrganizationUserRequestFieldUserID)
 }
 
 var (
-	searchOrganizationsRequestFieldLimit = big.NewInt(1 << 0)
+	organizationsSearchOrganizationsRequestFieldTenantID       = big.NewInt(1 << 0)
+	organizationsSearchOrganizationsRequestFieldOrganizationID = big.NewInt(1 << 1)
+	organizationsSearchOrganizationsRequestFieldLimit          = big.NewInt(1 << 2)
 )
 
-type SearchOrganizationsRequest struct {
-	Limit *int `json:"-" url:"limit,omitempty"`
+type OrganizationsSearchOrganizationsRequest struct {
+	TenantID       string `json:"-" url:"-"`
+	OrganizationID string `json:"-" url:"-"`
+	Limit          *int   `json:"-" url:"limit,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (s *SearchOrganizationsRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+func (o *OrganizationsSearchOrganizationsRequest) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetTenantID sets the TenantID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationsSearchOrganizationsRequest) SetTenantID(tenantID string) {
+	o.TenantID = tenantID
+	o.require(organizationsSearchOrganizationsRequestFieldTenantID)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationsSearchOrganizationsRequest) SetOrganizationID(organizationID string) {
+	o.OrganizationID = organizationID
+	o.require(organizationsSearchOrganizationsRequestFieldOrganizationID)
 }
 
 // SetLimit sets the Limit field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchOrganizationsRequest) SetLimit(limit *int) {
-	s.Limit = limit
-	s.require(searchOrganizationsRequestFieldLimit)
+func (o *OrganizationsSearchOrganizationsRequest) SetLimit(limit *int) {
+	o.Limit = limit
+	o.require(organizationsSearchOrganizationsRequestFieldLimit)
 }
 
 var (

@@ -5,7 +5,6 @@ import (
 
     fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
-    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
 )
 
@@ -18,15 +17,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.ListItemsRequest{
-        Cursor: fern.String(
-            "cursor",
-        ),
-        Limit: fern.Int(
-            1,
-        ),
-    }
-    client.Endpoints.Pagination.ListItems(
+    request := &fern.TypesObjectWithOptionalField{}
+    client.EndpointsObject.EndpointsObjectGetAndReturnWithOptionalField(
         context.TODO(),
         request,
     )

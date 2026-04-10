@@ -1,22 +1,20 @@
-using SeedExhaustive;
-using SeedExhaustive.Endpoints.Params;
+using SeedApi;
 
 namespace Usage;
 
 public class Example35
 {
     public async Task Do() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.Params.GetWithQueryAsync(
-            new GetWithQuery {
-                Query = "query",
-                Number = 1
+        await client.EndpointsObject.EndpointsObjectGetAndReturnWithRequiredFieldAsync(
+            new TypesObjectWithRequiredField {
+                String = "string"
             }
         );
     }

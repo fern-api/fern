@@ -1,17 +1,17 @@
 import Foundation
 
 public indirect enum ContainerValue: Codable, Hashable, Sendable {
-    case list([FieldValue])
-    case optional(FieldValue?)
+    case list(ContainerValueList)
+    case optional(ContainerValueOptional)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
         case "list":
-            self = .list(try container.decode([FieldValue].self, forKey: .value))
+            self = .list(try ContainerValueList(from: decoder))
         case "optional":
-            self = .optional(try container.decode(FieldValue?.self, forKey: .value))
+            self = .optional(try ContainerValueOptional(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -27,15 +27,14 @@ public indirect enum ContainerValue: Codable, Hashable, Sendable {
         switch self {
         case .list(let data):
             try container.encode("list", forKey: .type)
-            try container.encode(data, forKey: .value)
+            try data.encode(to: encoder)
         case .optional(let data):
             try container.encode("optional", forKey: .type)
-            try container.encode(data, forKey: .value)
+            try data.encode(to: encoder)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
-        case value
     }
 }

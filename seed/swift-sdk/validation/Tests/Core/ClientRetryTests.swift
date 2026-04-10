@@ -1,4 +1,4 @@
-import Validation
+import Api
 import Foundation
 import Testing
 
@@ -14,17 +14,17 @@ import Testing
             ),
         ])
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -46,17 +46,17 @@ import Testing
             ),
         ])
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -78,17 +78,17 @@ import Testing
             ),
         ])
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -109,17 +109,17 @@ import Testing
             ),
         ])
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -139,17 +139,17 @@ import Testing
             )
         ])
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -170,17 +170,17 @@ import Testing
             )
         ])
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -201,17 +201,17 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -236,18 +236,18 @@ import Testing
             ),
         ])
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -282,18 +282,18 @@ import Testing
             ),
         ])
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -324,18 +324,18 @@ import Testing
             ),
         ])
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -378,17 +378,17 @@ import Testing
             ),
         ])
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
@@ -405,17 +405,17 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
@@ -436,17 +436,17 @@ import Testing
             )
         ])
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)

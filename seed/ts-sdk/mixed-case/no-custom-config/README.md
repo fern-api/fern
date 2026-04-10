@@ -40,10 +40,12 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedMixedCaseClient } from "@fern/mixed-case";
+import { SeedApiClient } from "@fern/mixed-case";
 
-const client = new SeedMixedCaseClient({ environment: "YOUR_BASE_URL" });
-await client.service.getResource("rsc-xyz");
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+await client.service.getresource({
+    ResourceID: "ResourceID"
+});
 ```
 
 ## Request and Response Types
@@ -52,9 +54,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedMixedCase } from "@fern/mixed-case";
+import { SeedApi } from "@fern/mixed-case";
 
-const request: SeedMixedCase.ListResourcesRequest = {
+const request: SeedApi.ServiceGetResourceRequest = {
     ...
 };
 ```
@@ -65,12 +67,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedMixedCaseError } from "@fern/mixed-case";
+import { SeedApiError } from "@fern/mixed-case";
 
 try {
-    await client.service.getResource(...);
+    await client.service.getresource(...);
 } catch (err) {
-    if (err instanceof SeedMixedCaseError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -96,16 +98,16 @@ const client = new ServiceClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedMixedCaseClient } from "@fern/mixed-case";
+import { SeedApiClient } from "@fern/mixed-case";
 
-const client = new SeedMixedCaseClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.service.getResource(..., {
+const response = await client.service.getresource(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -117,7 +119,7 @@ const response = await client.service.getResource(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.service.getResource(..., {
+const response = await client.service.getresource(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -139,7 +141,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.service.getResource(..., {
+const response = await client.service.getresource(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -149,7 +151,7 @@ const response = await client.service.getResource(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.service.getResource(..., {
+const response = await client.service.getresource(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -160,7 +162,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.service.getResource(..., {
+const response = await client.service.getresource(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -172,7 +174,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.service.getResource(...).withRawResponse();
+const { data, rawResponse } = await client.service.getresource(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -183,9 +185,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedMixedCaseClient, logging } from "@fern/mixed-case";
+import { SeedApiClient, logging } from "@fern/mixed-case";
 
-const client = new SeedMixedCaseClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

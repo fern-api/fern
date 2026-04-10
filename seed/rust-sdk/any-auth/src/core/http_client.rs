@@ -256,7 +256,7 @@ impl HttpClient {
         if let Some(key) = api_key {
             let header_value = key.to_string();
             headers.insert(
-                "X-API-Key",
+                "api_key",
                 header_value.parse().map_err(|_| ApiError::InvalidHeader)?,
             );
         }

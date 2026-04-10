@@ -62,15 +62,9 @@ impl UserBuilder {
     pub fn build(self) -> Result<User, BuildError> {
         Ok(User {
             id: self.id.ok_or_else(|| BuildError::missing_field("id"))?,
-            email: self
-                .email
-                .ok_or_else(|| BuildError::missing_field("email"))?,
-            password: self
-                .password
-                .ok_or_else(|| BuildError::missing_field("password"))?,
-            profile: self
-                .profile
-                .ok_or_else(|| BuildError::missing_field("profile"))?,
+            email: self.email.ok_or_else(|| BuildError::missing_field("email"))?,
+            password: self.password.ok_or_else(|| BuildError::missing_field("password"))?,
+            profile: self.profile.ok_or_else(|| BuildError::missing_field("profile"))?,
         })
     }
 }

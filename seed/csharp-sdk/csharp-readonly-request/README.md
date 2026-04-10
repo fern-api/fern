@@ -39,22 +39,22 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedCsharpReadonlyRequest;
+using SeedApi;
 
-var client = new SeedCsharpReadonlyRequestClient();
-await client.BatchCreateAsync(
+var client = new SeedApiClient();
+await client._.BatchCreateAsync(
     new CreateVendorRequest
     {
         Vendors = new Dictionary<string, Vendor>()
         {
             {
-                "vendor-1",
+                "key",
                 new Vendor
                 {
-                    Id = "vendor-1",
-                    Name = "Acme Corp",
-                    CreatedAt = "2024-01-01T00:00:00Z",
-                    UpdatedAt = "2024-01-01T00:00:00Z",
+                    Id = "id",
+                    Name = "name",
+                    CreatedAt = "created_at",
+                    UpdatedAt = "updated_at",
                 }
             },
         },
@@ -68,11 +68,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedCsharpReadonlyRequest;
+using SeedApi;
 
 try {
-    var response = await client.BatchCreateAsync(...);
-} catch (SeedCsharpReadonlyRequestApiException e) {
+    var response = await client._.BatchCreateAsync(...);
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -95,7 +95,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.BatchCreateAsync(
+var response = await client._.BatchCreateAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -108,7 +108,7 @@ var response = await client.BatchCreateAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.BatchCreateAsync(
+var response = await client._.BatchCreateAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -121,10 +121,10 @@ var response = await client.BatchCreateAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedCsharpReadonlyRequest;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.BatchCreateAsync(...).WithRawResponse();
+var result = await client._.BatchCreateAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -141,7 +141,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.BatchCreateAsync(...);
+var data = await client._.BatchCreateAsync(...);
 ```
 
 ### Additional Headers
@@ -149,7 +149,7 @@ var data = await client.BatchCreateAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.BatchCreateAsync(
+var response = await client._.BatchCreateAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -165,7 +165,7 @@ var response = await client.BatchCreateAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.BatchCreateAsync(
+var response = await client._.BatchCreateAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>

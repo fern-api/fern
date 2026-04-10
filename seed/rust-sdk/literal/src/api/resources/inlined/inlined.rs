@@ -15,7 +15,7 @@ impl InlinedClient {
 
     pub async fn send(
         &self,
-        request: &SendLiteralsInlinedRequest,
+        request: &InlinedSendRequest,
         options: Option<RequestOptions>,
     ) -> Result<SendResponse, ApiError> {
         self.http_client

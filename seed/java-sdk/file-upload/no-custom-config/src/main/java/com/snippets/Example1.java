@@ -1,13 +1,13 @@
 package com.snippets;
 
-import com.seed.fileUpload.SeedFileUploadClient;
-import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.service.requests.ServiceJustFileRequest;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedFileUploadClient client =
-                SeedFileUploadClient.builder().url("https://api.fern.com").build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.service().optionalArgs(OptionalArgsRequest.builder().build());
+        client.service().justfile(ServiceJustFileRequest.builder().build());
     }
 }

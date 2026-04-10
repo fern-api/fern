@@ -9,10 +9,10 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 
 if typing.TYPE_CHECKING:
-    from .nullable_optional.client import AsyncNullableOptionalClient, NullableOptionalClient
+    from .nullableoptional.client import AsyncNullableoptionalClient, NullableoptionalClient
 
 
-class SeedNullableOptional:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -38,9 +38,9 @@ class SeedNullableOptional:
 
     Examples
     --------
-    from seed import SeedNullableOptional
+    from seed import SeedApi
 
-    client = SeedNullableOptional(
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -69,15 +69,15 @@ class SeedNullableOptional:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._nullable_optional: typing.Optional[NullableOptionalClient] = None
+        self._nullableoptional: typing.Optional[NullableoptionalClient] = None
 
     @property
-    def nullable_optional(self):
-        if self._nullable_optional is None:
-            from .nullable_optional.client import NullableOptionalClient  # noqa: E402
+    def nullableoptional(self):
+        if self._nullableoptional is None:
+            from .nullableoptional.client import NullableoptionalClient  # noqa: E402
 
-            self._nullable_optional = NullableOptionalClient(client_wrapper=self._client_wrapper)
-        return self._nullable_optional
+            self._nullableoptional = NullableoptionalClient(client_wrapper=self._client_wrapper)
+        return self._nullableoptional
 
 
 def _make_default_async_client(
@@ -98,7 +98,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedNullableOptional:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -124,9 +124,9 @@ class AsyncSeedNullableOptional:
 
     Examples
     --------
-    from seed import AsyncSeedNullableOptional
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedNullableOptional(
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -153,12 +153,12 @@ class AsyncSeedNullableOptional:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._nullable_optional: typing.Optional[AsyncNullableOptionalClient] = None
+        self._nullableoptional: typing.Optional[AsyncNullableoptionalClient] = None
 
     @property
-    def nullable_optional(self):
-        if self._nullable_optional is None:
-            from .nullable_optional.client import AsyncNullableOptionalClient  # noqa: E402
+    def nullableoptional(self):
+        if self._nullableoptional is None:
+            from .nullableoptional.client import AsyncNullableoptionalClient  # noqa: E402
 
-            self._nullable_optional = AsyncNullableOptionalClient(client_wrapper=self._client_wrapper)
-        return self._nullable_optional
+            self._nullableoptional = AsyncNullableoptionalClient(client_wrapper=self._client_wrapper)
+        return self._nullableoptional

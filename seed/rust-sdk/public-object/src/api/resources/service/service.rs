@@ -14,7 +14,7 @@ impl ServiceClient {
 
     pub async fn get(&self, options: Option<RequestOptions>) -> Result<ByteStream, ApiError> {
         self.http_client
-            .execute_stream_request(Method::GET, "/helloworld.txt", None, None, options)
+            .execute_stream_request(Method::GET, "helloworld.txt", None, None, options)
             .await
     }
 }

@@ -13,9 +13,9 @@
 <dd>
 
 ```python
-from seed import SeedFileDownload
+from seed import SeedApi
 
-client = SeedFileDownload(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -47,7 +47,7 @@ client.service.simple()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">download_file</a>() -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">downloadfile</a>() -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -60,7 +60,7 @@ client.service.simple()
 <dd>
 
 ```python
-client.service.download_file()
+client.service.downloadfile()
 ```
 </dd>
 </dl>

@@ -1,9 +1,9 @@
 package example
 
 import (
-    bytes "bytes"
     context "context"
 
+    fern "github.com/go-deterministic-ordering/fern"
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
 )
@@ -17,12 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    request := bytes.NewReader(
-        []byte(""),
-    )
-    client.Endpoints.Params.UploadWithPath(
+    request := &fern.EndpointsHTTPMethodsTestDeleteRequest{
+        ID: "id",
+    }
+    client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestDelete(
         context.TODO(),
-        "upload-path",
         request,
     )
 }

@@ -4,22 +4,22 @@
             "id": {
                 "path": "/basic-auth",
                 "method": "GET",
-                "identifier_override": "endpoint_basic-auth.getWithBasicAuth"
+                "identifier_override": "endpoint_basicauth.getwithbasicauth"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst client = new SeedBasicAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", accessToken: \"YOUR_ACCESS_TOKEN\" });\nawait client.basicAuth.getWithBasicAuth();\n"
+                "client": "import { SeedApiClient } from \"@fern/basic-auth-environment-variables\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait client.basicauth.getwithbasicauth();\n"
             }
         },
         {
             "id": {
                 "path": "/basic-auth",
                 "method": "POST",
-                "identifier_override": "endpoint_basic-auth.postWithBasicAuth"
+                "identifier_override": "endpoint_basicauth.postwithbasicauth"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst client = new SeedBasicAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", accessToken: \"YOUR_ACCESS_TOKEN\" });\nawait client.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/basic-auth-environment-variables\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait client.basicauth.postwithbasicauth({\n    \"key\": \"value\"\n});\n"
             }
         }
     ],

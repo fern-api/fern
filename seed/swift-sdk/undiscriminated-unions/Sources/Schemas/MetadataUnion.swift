@@ -2,14 +2,14 @@ import Foundation
 
 public enum MetadataUnion: Codable, Hashable, Sendable {
     case namedMetadata(NamedMetadata)
-    case optionalMetadata(OptionalMetadata)
+    case nullableOptionalMetadata(Nullable<OptionalMetadata>)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let value = try? container.decode(NamedMetadata.self) {
             self = .namedMetadata(value)
-        } else if let value = try? container.decode(OptionalMetadata.self) {
-            self = .optionalMetadata(value)
+        } else if let value = try? container.decode(Nullable<OptionalMetadata>.self) {
+            self = .nullableOptionalMetadata(value)
         } else {
             throw DecodingError.dataCorruptedError(
                 in: container,
@@ -23,7 +23,7 @@ public enum MetadataUnion: Codable, Hashable, Sendable {
         switch self {
         case .namedMetadata(let value):
             try container.encode(value)
-        case .optionalMetadata(let value):
+        case .nullableOptionalMetadata(let value):
             try container.encode(value)
         }
     }

@@ -2,13 +2,11 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import { ProblemClient } from "../resources/problem/client/Client.js";
-import { V3Client } from "../resources/v3/client/Client.js";
 
 export declare namespace V2Client {
     export type Options = BaseClientOptions;
@@ -18,19 +16,9 @@ export declare namespace V2Client {
 
 export class V2Client {
     protected readonly _options: NormalizedClientOptions<V2Client.Options>;
-    protected _problem: ProblemClient | undefined;
-    protected _v3: V3Client | undefined;
 
     constructor(options: V2Client.Options = {}) {
         this._options = normalizeClientOptions(options);
-    }
-
-    public get problem(): ProblemClient {
-        return (this._problem ??= new ProblemClient(this._options));
-    }
-
-    public get v3(): V3Client {
-        return (this._v3 ??= new V3Client(this._options));
     }
 
     /**
@@ -44,18 +32,12 @@ export class V2Client {
     }
 
     private async __test(requestOptions?: V2Client.RequestOptions): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)) ??
-                environments.SeedTraceEnvironment.Prod,
+                environments.SeedApiEnvironment.Default,
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -70,7 +52,7 @@ export class V2Client {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

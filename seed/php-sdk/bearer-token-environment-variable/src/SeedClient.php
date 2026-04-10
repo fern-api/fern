@@ -5,7 +5,6 @@ namespace Seed;
 use Seed\Service\ServiceClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Exception;
 
 class SeedClient
 {
@@ -31,8 +30,7 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param ?string $apiKey The apiKey to use for authentication.
-     * @param ?string $version
+     * @param string $token The token to use for authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -42,22 +40,16 @@ class SeedClient
      * } $options
      */
     public function __construct(
-        ?string $apiKey = null,
-        ?string $version = null,
+        string $token,
         ?array $options = null,
     ) {
-        $apiKey ??= $this->getFromEnvOrThrow('COURIER_API_KEY', 'Please pass in apiKey or set the environment variable COURIER_API_KEY.');
         $defaultHeaders = [
-            'Authorization' => "Bearer $apiKey",
-            'X-API-Version' => '1.0.0',
+            'Authorization' => "Bearer $token",
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        if ($version != null) {
-            $defaultHeaders['X-API-Version'] = $version;
-        }
 
         $this->options = $options ?? [];
 
@@ -71,16 +63,5 @@ class SeedClient
         );
 
         $this->service = new ServiceClient($this->client, $this->options);
-    }
-
-    /**
-     * @param string $env
-     * @param string $message
-     * @return string
-     */
-    private function getFromEnvOrThrow(string $env, string $message): string
-    {
-        $value = getenv($env);
-        return $value ? (string) $value : throw new Exception($message);
     }
 }

@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Migration\Requests\MigrationGetAttemptedMigrationsRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,6 +11,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->problem->deleteProblem(
-    'problemId',
+$client->migration->getattemptedmigrations(
+    new MigrationGetAttemptedMigrationsRequest([
+        'adminKeyHeader' => 'admin-key-header',
+    ]),
 );

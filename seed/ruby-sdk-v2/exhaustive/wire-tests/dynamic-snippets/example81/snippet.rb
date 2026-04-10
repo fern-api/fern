@@ -1,0 +1,8 @@
+require "seed"
+
+client = Seed::MyClient.new(
+  token: "<token>",
+  base_url: "https://api.fern.com"
+)
+
+client.endpoints_primitive.endpoints_primitive_get_and_return_long(request: 1000000)

@@ -14,10 +14,12 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.CreateUserRequest{
-        Name: "Alice",
+    request := &fern.UserCreateUserRequest{
+        Type: fern.UserCreateUserRequestTypeCreateUserRequest,
+        Version: fern.UserCreateUserRequestVersionV1,
+        Name: "name",
     }
-    client.User.CreateUser(
+    client.User.Createuser(
         context.TODO(),
         request,
     )

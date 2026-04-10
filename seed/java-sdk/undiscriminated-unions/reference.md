@@ -42,7 +42,7 @@ client.union().get(
 </dl>
 </details>
 
-<details><summary><code>client.union.getMetadata() -> Map&amp;lt;Key, String&amp;gt;</code></summary>
+<details><summary><code>client.union.getmetadata() -> Map&amp;lt;String, String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -55,7 +55,7 @@ client.union().get(
 <dd>
 
 ```java
-client.union().getMetadata();
+client.union().getmetadata();
 ```
 </dd>
 </dl>
@@ -67,7 +67,7 @@ client.union().getMetadata();
 </dl>
 </details>
 
-<details><summary><code>client.union.updateMetadata(request) -> Boolean</code></summary>
+<details><summary><code>client.union.updatemetadata(request) -> Boolean</code></summary>
 <dl>
 <dd>
 
@@ -80,13 +80,11 @@ client.union().getMetadata();
 <dd>
 
 ```java
-client.union().updateMetadata(
+client.union().updatemetadata(
     MetadataUnion.of(
         Optional.of(
             new HashMap<String, Object>() {{
-                put("string", new 
-                HashMap<String, Object>() {{put("key", "value");
-                }});
+                put("key", "value");
             }}
         )
     )
@@ -133,17 +131,6 @@ client.union().updateMetadata(
 client.union().call(
     Request
         .builder()
-        .union(
-            MetadataUnion.of(
-                Optional.of(
-                    new HashMap<String, Object>() {{
-                        put("string", new 
-                        HashMap<String, Object>() {{put("key", "value");
-                        }});
-                    }}
-                )
-            )
-        )
         .build()
 );
 ```
@@ -160,7 +147,7 @@ client.union().call(
 <dl>
 <dd>
 
-**request:** `Request` 
+**union:** `Optional<MetadataUnion>` 
     
 </dd>
 </dl>
@@ -172,7 +159,7 @@ client.union().call(
 </dl>
 </details>
 
-<details><summary><code>client.union.duplicateTypesUnion(request) -> UnionWithDuplicateTypes</code></summary>
+<details><summary><code>client.union.duplicatetypesunion(request) -> UnionWithDuplicateTypes</code></summary>
 <dl>
 <dd>
 
@@ -185,7 +172,7 @@ client.union().call(
 <dd>
 
 ```java
-client.union().duplicateTypesUnion(
+client.union().duplicatetypesunion(
     UnionWithDuplicateTypes.of("string")
 );
 ```
@@ -214,7 +201,7 @@ client.union().duplicateTypesUnion(
 </dl>
 </details>
 
-<details><summary><code>client.union.nestedUnions(request) -> String</code></summary>
+<details><summary><code>client.union.nestedunions(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -227,7 +214,7 @@ client.union().duplicateTypesUnion(
 <dd>
 
 ```java
-client.union().nestedUnions(
+client.union().nestedunions(
     NestedUnionRoot.of("string")
 );
 ```
@@ -256,7 +243,7 @@ client.union().nestedUnions(
 </dl>
 </details>
 
-<details><summary><code>client.union.testCamelCaseProperties(request) -> String</code></summary>
+<details><summary><code>client.union.testcamelcaseproperties(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -269,15 +256,15 @@ client.union().nestedUnions(
 <dd>
 
 ```java
-client.union().testCamelCaseProperties(
-    PaymentRequest
+client.union().testcamelcaseproperties(
+    UnionTestCamelCasePropertiesRequest
         .builder()
         .paymentMethod(
             PaymentMethodUnion.of(
                 TokenizeCard
                     .builder()
-                    .method("card")
-                    .cardNumber("1234567890123456")
+                    .method("method")
+                    .cardNumber("cardNumber")
                     .build()
             )
         )

@@ -10,17 +10,6 @@ from .shape import Shape
 class Type(UniversalBaseModel):
     """
     Defines properties with default values and validation rules.
-
-    Examples
-    --------
-    from seed import Type
-
-    Type(
-        decimal=1.1,
-        even=2,
-        name="rules",
-        shape="SQUARE",
-    )
     """
 
     decimal: float

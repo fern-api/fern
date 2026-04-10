@@ -1,22 +1,20 @@
-using SeedEnum;
+using SeedApi;
 
 namespace Usage;
 
 public class Example6
 {
     public async Task Do() {
-        var client = new SeedEnumClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.QueryParam.SendAsync(
-            new SendEnumAsQueryParamRequest {
+        await client.Pathparam.SendAsync(
+            new PathParamSendRequest {
                 Operand = Operand.GreaterThan,
-                MaybeOperand = Operand.GreaterThan,
-                OperandOrColor = Color.Red,
-                MaybeOperandOrColor = Color.Red
+                OperandOrColor = Color.Red
             }
         );
     }

@@ -15,13 +15,11 @@ func do() {
         ),
     )
     request := &fern.MetadataUnion{
-        OptionalMetadata: map[string]any{
-            "string": map[string]any{
-                "key": "value",
-            },
+        OptionalMetadataOptional: map[string]any{
+            "key": "value",
         },
     }
-    client.Union.UpdateMetadata(
+    client.Union.Updatemetadata(
         context.TODO(),
         request,
     )

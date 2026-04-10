@@ -1,23 +1,28 @@
 import Foundation
-import Trace
+import Api
 
 private func main() async throws {
-    let client = TraceClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.playlist.createPlaylist(
-        serviceParam: 1,
-        datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-        optionalDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-        request: .init(body: PlaylistCreateRequest(
-            name: "name",
-            problems: [
-                "problems",
-                "problems"
-            ]
-        ))
+    _ = try await client.admin.storetracedtestcasev2(
+        submissionId: "submissionId",
+        testCaseId: "testCaseId",
+        request: .init(body: [
+            TraceResponseV2(
+                submissionId: "submissionId",
+                lineNumber: 1,
+                file: TracedFile(
+                    filename: "filename",
+                    directory: "directory"
+                ),
+                stack: StackInformation(
+                    numStackFrames: 1
+                )
+            )
+        ])
     )
 }
 

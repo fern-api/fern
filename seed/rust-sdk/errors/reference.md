@@ -1,6 +1,6 @@
 # Reference
 ## Simple
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">foo_without_endpoint_error</a>(request: FooRequest) -> Result&lt;FooResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">foowithoutendpointerror</a>(request: FooRequest) -> Result&lt;FooResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,17 +13,17 @@
 <dd>
 
 ```rust
-use seed_errors::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ErrorsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .simple
-        .foo_without_endpoint_error(
+        .foowithoutendpointerror(
             &FooRequest {
                 bar: "bar".to_string(),
                 ..Default::default()
@@ -56,14 +56,14 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_errors::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ErrorsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .simple
         .foo(
@@ -86,7 +86,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">foo_with_examples</a>(request: FooRequest) -> Result&lt;FooResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">foowithexamples</a>(request: FooRequest) -> Result&lt;FooResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -99,19 +99,19 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_errors::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ErrorsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .simple
-        .foo_with_examples(
+        .foowithexamples(
             &FooRequest {
-                bar: "hello".to_string(),
+                bar: "bar".to_string(),
                 ..Default::default()
             },
             None,

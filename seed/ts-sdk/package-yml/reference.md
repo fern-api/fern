@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/Client.ts">echo</a>({ ...params }) -> string</code></summary>
+## 
+<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">echo</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -12,9 +13,10 @@
 <dd>
 
 ```typescript
-await client.echo({
-    name: "Hello world!",
-    size: 20
+await client..echo({
+    id: "id",
+    name: "name",
+    size: 1
 });
 
 ```
@@ -31,7 +33,7 @@ await client.echo({
 <dl>
 <dd>
 
-**request:** `SeedPackageYml.EchoRequest` 
+**request:** `SeedApi.EchoRequest` 
     
 </dd>
 </dl>
@@ -39,7 +41,7 @@ await client.echo({
 <dl>
 <dd>
 
-**requestOptions:** `SeedPackageYmlClient.RequestOptions` 
+**requestOptions:** `Client.RequestOptions` 
     
 </dd>
 </dl>
@@ -52,7 +54,7 @@ await client.echo({
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">nop</a>(nestedId) -> void</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">nop</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -65,7 +67,10 @@ await client.echo({
 <dd>
 
 ```typescript
-await client.service.nop("id-219xca8");
+await client.service.nop({
+    id: "id",
+    nestedId: "nestedId"
+});
 
 ```
 </dd>
@@ -81,7 +86,7 @@ await client.service.nop("id-219xca8");
 <dl>
 <dd>
 
-**nestedId:** `string` 
+**request:** `SeedApi.ServiceNopRequest` 
     
 </dd>
 </dl>

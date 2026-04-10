@@ -56,20 +56,30 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.trace.SeedTraceClient;
-import com.seed.trace.resources.submission.types.TestSubmissionStatus;
-import java.util.UUID;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.admin.requests.AdminUpdateTestSubmissionStatusRequest;
+import com.seed.api.types.TestSubmissionStatus;
+import com.seed.api.types.TestSubmissionStatusStopped;
 
 public class Example {
     public static void main(String[] args) {
-        SeedTraceClient client = SeedTraceClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .build();
 
-        client.admin().updateTestSubmissionStatus(
-            UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            TestSubmissionStatus.stopped()
+        client.admin().updatetestsubmissionstatus(
+            "submissionId",
+            AdminUpdateTestSubmissionStatusRequest
+                .builder()
+                .body(
+                    TestSubmissionStatus.stopped(
+                        TestSubmissionStatusStopped
+                            .builder()
+                            .build()
+                    )
+                )
+                .build()
         );
     }
 }
@@ -80,12 +90,12 @@ public class Example {
 This SDK allows you to configure different environments for API requests.
 
 ```java
-import com.seed.trace.SeedTraceClient;
-import com.seed.trace.core.Environment;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.Environment;
 
-SeedTraceClient client = SeedTraceClient
+SeedApiClient client = SeedApiClient
     .builder()
-    .environment(Environment.Prod)
+    .environment(Environment.Default)
     .build();
 ```
 
@@ -94,9 +104,9 @@ SeedTraceClient client = SeedTraceClient
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.trace.SeedTraceClient;
+import com.seed.api.SeedApiClient;
 
-SeedTraceClient client = SeedTraceClient
+SeedApiClient client = SeedApiClient
     .builder()
     .url("https://example.com")
     .build();
@@ -107,11 +117,11 @@ SeedTraceClient client = SeedTraceClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.trace.core.SeedTraceApiException;
+import com.seed.api.core.SeedApiApiException;
 
 try{
-    client.admin().updateTestSubmissionStatus(...);
-} catch (SeedTraceApiException e){
+    client.admin().updatetestsubmissionstatus(...);
+} catch (SeedApiApiException e){
     // Do something with the API exception...
 }
 ```
@@ -124,12 +134,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.trace.SeedTraceClient;
+import com.seed.api.SeedApiClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedTraceClient client = SeedTraceClient
+SeedApiClient client = SeedApiClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -152,9 +162,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.trace.SeedTraceClient;
+import com.seed.api.SeedApiClient;
 
-SeedTraceClient client = SeedTraceClient
+SeedApiClient client = SeedApiClient
     .builder()
     .maxRetries(1)
     .build();
@@ -164,17 +174,17 @@ SeedTraceClient client = SeedTraceClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.trace.SeedTraceClient;
-import com.seed.trace.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedTraceClient client = SeedTraceClient
+SeedApiClient client = SeedApiClient
     .builder()
     .timeout(60)
     .build();
 
 // Request level
-client.admin().updateTestSubmissionStatus(
+client.admin().updatetestsubmissionstatus(
     ...,
     RequestOptions
         .builder()
@@ -188,11 +198,11 @@ client.admin().updateTestSubmissionStatus(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.trace.SeedTraceClient;
-import com.seed.trace.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedTraceClient client = SeedTraceClient
+SeedApiClient client = SeedApiClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -200,7 +210,7 @@ SeedTraceClient client = SeedTraceClient
 ;
 
 // Request level
-client.admin().updateTestSubmissionStatus(
+client.admin().updatetestsubmissionstatus(
     ...,
     RequestOptions
         .builder()
@@ -216,7 +226,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedTraceHttpResponse response = client.admin().withRawResponse().updateTestSubmissionStatus(...);
+SeedApiHttpResponse response = client.admin().withRawResponse().updatetestsubmissionstatus(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

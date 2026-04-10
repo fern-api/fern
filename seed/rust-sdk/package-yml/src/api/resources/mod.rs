@@ -2,44 +2,29 @@
 //!
 //! This module contains client implementations for:
 //!
+//! - ****
 //! - **Service**
 
-use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
-use reqwest::Method;
+use crate::{ClientConfig, ApiError};
 
+pub mod ;
 pub mod service;
-pub struct PackageYmlClient {
+pub struct ApiClient {
     pub config: ClientConfig,
-    pub http_client: HttpClient,
+    pub : Client,
     pub service: ServiceClient,
 }
 
-impl PackageYmlClient {
+impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            http_client: HttpClient::new(config.clone())?,
-            service: ServiceClient::new(config.clone())?,
+            : Client::new(config.clone())?,
+            service: ServiceClient::new(config.clone())?
         })
     }
 
-    pub async fn echo(
-        &self,
-        id: &str,
-        request: &EchoRequest,
-        options: Option<RequestOptions>,
-    ) -> Result<String, ApiError> {
-        self.http_client
-            .execute_request(
-                Method::POST,
-                &format!("/{}/", id),
-                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
-                None,
-                options,
-            )
-            .await
-    }
 }
 
+pub use ::Client;
 pub use service::ServiceClient;

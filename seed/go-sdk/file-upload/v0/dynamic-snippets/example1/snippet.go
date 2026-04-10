@@ -4,7 +4,6 @@ import (
     context "context"
     strings "strings"
 
-    fern "github.com/file-upload/fern"
     client "github.com/file-upload/fern/client"
     option "github.com/file-upload/fern/option"
 )
@@ -15,12 +14,10 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.OptionalArgsRequest{}
-    client.Service.OptionalArgs(
+    client.Service.Justfile(
         context.TODO(),
         strings.NewReader(
             "",
         ),
-        request,
     )
 }

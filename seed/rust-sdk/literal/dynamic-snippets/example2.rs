@@ -1,4 +1,4 @@
-use seed_literal::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,23 +6,23 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = LiteralClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .inlined
         .send(
-            &SendLiteralsInlinedRequest {
-                prompt: "You are a helpful assistant".to_string(),
-                context: Some("You're super wise".to_string()),
-                query: "What is the weather today".to_string(),
-                temperature: Some(10.1),
-                stream: false,
-                aliased_context: SomeAliasedLiteral("You're super wise".to_string()),
-                maybe_context: Some(SomeAliasedLiteral("You're super wise".to_string())),
+            &InlinedSendRequest {
+                prompt: InlinedSendRequestPrompt::YouAreAHelpfulAssistant,
+                query: "query".to_string(),
+                stream: true,
+                aliased_context: SomeAliasedLiteral::YoureSuperWise,
                 object_with_literal: ATopLevelLiteral {
                     nested_literal: ANestedLiteral {
-                        my_literal: "How super cool".to_string(),
+                        my_literal: ANestedLiteralMyLiteral::HowSuperCool,
                     },
                 },
+                context: None,
+                temperature: None,
+                maybe_context: None,
             },
             None,
         )

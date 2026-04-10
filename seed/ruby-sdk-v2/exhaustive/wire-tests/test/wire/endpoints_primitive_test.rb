@@ -12,14 +12,14 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_primitive_get_and_return_string_with_wiremock
-    test_id = "endpoints.primitive.get_and_return_string.0"
+  def test_endpoints_primitive_endpoints_primitive_get_and_return_string_with_wiremock
+    test_id = "endpoints_primitive.endpoints_primitive_get_and_return_string.0"
 
-    @client.endpoints.primitive.get_and_return_string(
+    @client.endpoints_primitive.endpoints_primitive_get_and_return_string(
       request: "string",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.primitive.get_and_return_string.0"
+          "X-Test-Id" => "endpoints_primitive.endpoints_primitive_get_and_return_string.0"
         }
       }
     )
@@ -33,14 +33,14 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_primitive_get_and_return_int_with_wiremock
-    test_id = "endpoints.primitive.get_and_return_int.0"
+  def test_endpoints_primitive_endpoints_primitive_get_and_return_int_with_wiremock
+    test_id = "endpoints_primitive.endpoints_primitive_get_and_return_int.0"
 
-    @client.endpoints.primitive.get_and_return_int(
+    @client.endpoints_primitive.endpoints_primitive_get_and_return_int(
       request: 1,
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.primitive.get_and_return_int.0"
+          "X-Test-Id" => "endpoints_primitive.endpoints_primitive_get_and_return_int.0"
         }
       }
     )
@@ -54,14 +54,14 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_primitive_get_and_return_long_with_wiremock
-    test_id = "endpoints.primitive.get_and_return_long.0"
+  def test_endpoints_primitive_endpoints_primitive_get_and_return_long_with_wiremock
+    test_id = "endpoints_primitive.endpoints_primitive_get_and_return_long.0"
 
-    @client.endpoints.primitive.get_and_return_long(
+    @client.endpoints_primitive.endpoints_primitive_get_and_return_long(
       request: 1_000_000,
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.primitive.get_and_return_long.0"
+          "X-Test-Id" => "endpoints_primitive.endpoints_primitive_get_and_return_long.0"
         }
       }
     )
@@ -75,14 +75,14 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_primitive_get_and_return_double_with_wiremock
-    test_id = "endpoints.primitive.get_and_return_double.0"
+  def test_endpoints_primitive_endpoints_primitive_get_and_return_double_with_wiremock
+    test_id = "endpoints_primitive.endpoints_primitive_get_and_return_double.0"
 
-    @client.endpoints.primitive.get_and_return_double(
+    @client.endpoints_primitive.endpoints_primitive_get_and_return_double(
       request: 1.1,
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.primitive.get_and_return_double.0"
+          "X-Test-Id" => "endpoints_primitive.endpoints_primitive_get_and_return_double.0"
         }
       }
     )
@@ -96,14 +96,14 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_primitive_get_and_return_bool_with_wiremock
-    test_id = "endpoints.primitive.get_and_return_bool.0"
+  def test_endpoints_primitive_endpoints_primitive_get_and_return_bool_with_wiremock
+    test_id = "endpoints_primitive.endpoints_primitive_get_and_return_bool.0"
 
-    @client.endpoints.primitive.get_and_return_bool(
+    @client.endpoints_primitive.endpoints_primitive_get_and_return_bool(
       request: true,
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.primitive.get_and_return_bool.0"
+          "X-Test-Id" => "endpoints_primitive.endpoints_primitive_get_and_return_bool.0"
         }
       }
     )
@@ -117,14 +117,14 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_primitive_get_and_return_datetime_with_wiremock
-    test_id = "endpoints.primitive.get_and_return_datetime.0"
+  def test_endpoints_primitive_endpoints_primitive_get_and_return_datetime_with_wiremock
+    test_id = "endpoints_primitive.endpoints_primitive_get_and_return_datetime.0"
 
-    @client.endpoints.primitive.get_and_return_datetime(
+    @client.endpoints_primitive.endpoints_primitive_get_and_return_datetime(
       request: "2024-01-15T09:30:00Z",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.primitive.get_and_return_datetime.0"
+          "X-Test-Id" => "endpoints_primitive.endpoints_primitive_get_and_return_datetime.0"
         }
       }
     )
@@ -138,14 +138,14 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_primitive_get_and_return_date_with_wiremock
-    test_id = "endpoints.primitive.get_and_return_date.0"
+  def test_endpoints_primitive_endpoints_primitive_get_and_return_date_with_wiremock
+    test_id = "endpoints_primitive.endpoints_primitive_get_and_return_date.0"
 
-    @client.endpoints.primitive.get_and_return_date(
+    @client.endpoints_primitive.endpoints_primitive_get_and_return_date(
       request: "2023-01-15",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.primitive.get_and_return_date.0"
+          "X-Test-Id" => "endpoints_primitive.endpoints_primitive_get_and_return_date.0"
         }
       }
     )
@@ -159,14 +159,14 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_primitive_get_and_return_uuid_with_wiremock
-    test_id = "endpoints.primitive.get_and_return_uuid.0"
+  def test_endpoints_primitive_endpoints_primitive_get_and_return_uuid_with_wiremock
+    test_id = "endpoints_primitive.endpoints_primitive_get_and_return_uuid.0"
 
-    @client.endpoints.primitive.get_and_return_uuid(
-      request: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    @client.endpoints_primitive.endpoints_primitive_get_and_return_uuid(
+      request: "string",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.primitive.get_and_return_uuid.0"
+          "X-Test-Id" => "endpoints_primitive.endpoints_primitive_get_and_return_uuid.0"
         }
       }
     )
@@ -180,14 +180,14 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_primitive_get_and_return_base64_with_wiremock
-    test_id = "endpoints.primitive.get_and_return_base64.0"
+  def test_endpoints_primitive_endpoints_primitive_get_and_return_base64_with_wiremock
+    test_id = "endpoints_primitive.endpoints_primitive_get_and_return_base64.0"
 
-    @client.endpoints.primitive.get_and_return_base64(
-      request: "SGVsbG8gd29ybGQh",
+    @client.endpoints_primitive.endpoints_primitive_get_and_return_base64(
+      request: "string",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.primitive.get_and_return_base64.0"
+          "X-Test-Id" => "endpoints_primitive.endpoints_primitive_get_and_return_base64.0"
         }
       }
     )

@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RootType.Builder.class)
-public final class RootType implements IRootType {
+public final class RootType {
     private final String s;
 
     private final Map<String, Object> additionalProperties;
@@ -29,7 +29,6 @@ public final class RootType implements IRootType {
     }
 
     @JsonProperty("s")
-    @java.lang.Override
     public String getS() {
         return s;
     }

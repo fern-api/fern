@@ -37,14 +37,15 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Headers\Requests\SendLiteralsInHeadersRequest;
+use Seed\Headers\Requests\HeadersSendRequest;
+use Seed\Headers\Types\HeadersSendRequestXEndpointVersion;
 
 $client = new SeedClient();
 $client->headers->send(
-    new SendLiteralsInHeadersRequest([
-        'endpointVersion' => '02-12-2024',
+    new HeadersSendRequest([
+        'endpointVersion' => HeadersSendRequestXEndpointVersion::Two122024->value,
         'async' => true,
-        'query' => 'What is the weather today',
+        'query' => 'query',
     ]),
 );
 

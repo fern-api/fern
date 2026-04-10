@@ -1,7 +1,7 @@
 import Foundation
 
 public struct Foo: Codable, Hashable, Sendable {
-    public let bar: String?
+    public let bar: Nullable<String>?
     public let nullableBar: Nullable<String>?
     public let nullableRequiredBar: Nullable<String>
     public let requiredBar: String
@@ -9,7 +9,7 @@ public struct Foo: Codable, Hashable, Sendable {
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        bar: String? = nil,
+        bar: Nullable<String>? = nil,
         nullableBar: Nullable<String>? = nil,
         nullableRequiredBar: Nullable<String>,
         requiredBar: String,
@@ -24,7 +24,7 @@ public struct Foo: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.bar = try container.decodeIfPresent(String.self, forKey: .bar)
+        self.bar = try container.decodeNullableIfPresent(String.self, forKey: .bar)
         self.nullableBar = try container.decodeNullableIfPresent(String.self, forKey: .nullableBar)
         self.nullableRequiredBar = try container.decode(Nullable<String>.self, forKey: .nullableRequiredBar)
         self.requiredBar = try container.decode(String.self, forKey: .requiredBar)
@@ -34,7 +34,7 @@ public struct Foo: Codable, Hashable, Sendable {
     public func encode(to encoder: Encoder) throws -> Void {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
-        try container.encodeIfPresent(self.bar, forKey: .bar)
+        try container.encodeNullableIfPresent(self.bar, forKey: .bar)
         try container.encodeNullableIfPresent(self.nullableBar, forKey: .nullableBar)
         try container.encode(self.nullableRequiredBar, forKey: .nullableRequiredBar)
         try container.encode(self.requiredBar, forKey: .requiredBar)

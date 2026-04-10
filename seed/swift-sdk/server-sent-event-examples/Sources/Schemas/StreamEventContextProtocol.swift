@@ -1,46 +1,35 @@
 import Foundation
 
 public enum StreamEventContextProtocol: Codable, Hashable, Sendable {
-    case completion(CompletionEvent)
-    case error(ErrorEvent)
-    case event(EventEvent)
+    case streamEventContextProtocolOne(StreamEventContextProtocolOne)
+    case streamEventContextProtocolTwo(StreamEventContextProtocolTwo)
+    case streamEventContextProtocolZero(StreamEventContextProtocolZero)
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let discriminant = try container.decode(String.self, forKey: .event)
-        switch discriminant {
-        case "completion":
-            self = .completion(try CompletionEvent(from: decoder))
-        case "error":
-            self = .error(try ErrorEvent(from: decoder))
-        case "event":
-            self = .event(try EventEvent(from: decoder))
-        default:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: decoder.codingPath,
-                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
-                )
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(StreamEventContextProtocolOne.self) {
+            self = .streamEventContextProtocolOne(value)
+        } else if let value = try? container.decode(StreamEventContextProtocolTwo.self) {
+            self = .streamEventContextProtocolTwo(value)
+        } else if let value = try? container.decode(StreamEventContextProtocolZero.self) {
+            self = .streamEventContextProtocolZero(value)
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unexpected value."
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.singleValueContainer()
         switch self {
-        case .completion(let data):
-            try container.encode("completion", forKey: .event)
-            try data.encode(to: encoder)
-        case .error(let data):
-            try container.encode("error", forKey: .event)
-            try data.encode(to: encoder)
-        case .event(let data):
-            try container.encode("event", forKey: .event)
-            try data.encode(to: encoder)
+        case .streamEventContextProtocolOne(let value):
+            try container.encode(value)
+        case .streamEventContextProtocolTwo(let value):
+            try container.encode(value)
+        case .streamEventContextProtocolZero(let value):
+            try container.encode(value)
         }
-    }
-
-    enum CodingKeys: String, CodingKey, CaseIterable {
-        case event
     }
 }

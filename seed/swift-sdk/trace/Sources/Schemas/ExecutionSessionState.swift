@@ -1,21 +1,21 @@
 import Foundation
 
 public struct ExecutionSessionState: Codable, Hashable, Sendable {
-    public let lastTimeContacted: String?
+    public let lastTimeContacted: Nullable<String>?
     /// The auto-generated session id. Formatted as a uuid.
     public let sessionId: String
     public let isWarmInstance: Bool
-    public let awsTaskId: String?
+    public let awsTaskId: Nullable<String>?
     public let language: Language
     public let status: ExecutionSessionStatus
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        lastTimeContacted: String? = nil,
+        lastTimeContacted: Nullable<String>? = nil,
         sessionId: String,
         isWarmInstance: Bool,
-        awsTaskId: String? = nil,
+        awsTaskId: Nullable<String>? = nil,
         language: Language,
         status: ExecutionSessionStatus,
         additionalProperties: [String: JSONValue] = .init()
@@ -31,10 +31,10 @@ public struct ExecutionSessionState: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.lastTimeContacted = try container.decodeIfPresent(String.self, forKey: .lastTimeContacted)
+        self.lastTimeContacted = try container.decodeNullableIfPresent(String.self, forKey: .lastTimeContacted)
         self.sessionId = try container.decode(String.self, forKey: .sessionId)
         self.isWarmInstance = try container.decode(Bool.self, forKey: .isWarmInstance)
-        self.awsTaskId = try container.decodeIfPresent(String.self, forKey: .awsTaskId)
+        self.awsTaskId = try container.decodeNullableIfPresent(String.self, forKey: .awsTaskId)
         self.language = try container.decode(Language.self, forKey: .language)
         self.status = try container.decode(ExecutionSessionStatus.self, forKey: .status)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
@@ -43,10 +43,10 @@ public struct ExecutionSessionState: Codable, Hashable, Sendable {
     public func encode(to encoder: Encoder) throws -> Void {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
-        try container.encodeIfPresent(self.lastTimeContacted, forKey: .lastTimeContacted)
+        try container.encodeNullableIfPresent(self.lastTimeContacted, forKey: .lastTimeContacted)
         try container.encode(self.sessionId, forKey: .sessionId)
         try container.encode(self.isWarmInstance, forKey: .isWarmInstance)
-        try container.encodeIfPresent(self.awsTaskId, forKey: .awsTaskId)
+        try container.encodeNullableIfPresent(self.awsTaskId, forKey: .awsTaskId)
         try container.encode(self.language, forKey: .language)
         try container.encode(self.status, forKey: .status)
     }

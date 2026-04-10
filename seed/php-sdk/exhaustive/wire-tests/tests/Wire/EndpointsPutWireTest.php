@@ -14,13 +14,13 @@ class EndpointsPutWireTest extends WireMockTestCase
 
     /**
      */
-    public function testAdd(): void {
-        $testId = 'endpoints.put.add.0';
-        $this->client->endpoints->put->add(
+    public function testEndpointsPutAdd(): void {
+        $testId = 'endpoints_put.endpoints_put_add.0';
+        $this->client->endpointsPut->endpointsPutAdd(
             'id',
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.put.add.0',
+                    'X-Test-Id' => 'endpoints_put.endpoints_put_add.0',
                 ],
             ],
         );

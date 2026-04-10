@@ -4,7 +4,7 @@ namespace Seed\Sysprop;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Commons\Types\Language;
+use Seed\Types\Language;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -64,14 +64,14 @@ class SyspropClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function setNumWarmInstances(string $language, int $numWarmInstances, ?array $options = null): void
+    public function setnumwarminstances(string $language, int $numWarmInstances, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/sysprop/num-warm-instances/{$language}/{$numWarmInstances}",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "sysprop/num-warm-instances/{$language}/{$numWarmInstances}",
                     method: HttpMethod::PUT,
                 ),
                 $options,
@@ -99,18 +99,18 @@ class SyspropClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?array<value-of<Language>, int>
+     * @return ?array<string, int>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getNumWarmInstances(?array $options = null): ?array
+    public function getnumwarminstances(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/sysprop/num-warm-instances",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "sysprop/num-warm-instances",
                     method: HttpMethod::GET,
                 ),
                 $options,

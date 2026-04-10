@@ -42,7 +42,7 @@ HashMap<String, Object>() {{put("key", "value");
 </dl>
 </details>
 
-<details><summary><code>client.unknown.postObject(request) -> List&amp;lt;Object&amp;gt;</code></summary>
+<details><summary><code>client.unknown.postobject(request) -> List&amp;lt;Object&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -55,7 +55,7 @@ HashMap<String, Object>() {{put("key", "value");
 <dd>
 
 ```java
-client.unknown().postObject(
+client.unknown().postobject(
     MyObject
         .builder()
         .unknown(new 
@@ -77,7 +77,7 @@ client.unknown().postObject(
 <dl>
 <dd>
 
-**request:** `MyObject` 
+**unknown:** `Object` 
     
 </dd>
 </dl>

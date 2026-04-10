@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import * as SeedServerSentEvents from "../../../index.js";
+import * as SeedApi from "../../../index.js";
 
 export declare namespace CompletionsClient {
     export type Options = BaseClientOptions;
@@ -21,19 +21,22 @@ export class CompletionsClient {
         this._options = normalizeClientOptions(options);
     }
 
+    /**
+     * @throws {@link SeedApi.BadRequestError}
+     */
     public stream(
-        request: SeedServerSentEvents.StreamCompletionRequest,
+        request: SeedApi.CompletionsStreamRequest,
         requestOptions?: CompletionsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.Stream<SeedServerSentEvents.StreamedCompletion>> {
+    ): core.HttpResponsePromise<core.BinaryResponse> {
         return core.HttpResponsePromise.fromPromise(this.__stream(request, requestOptions));
     }
 
     private async __stream(
-        request: SeedServerSentEvents.StreamCompletionRequest,
+        request: SeedApi.CompletionsStreamRequest,
         requestOptions?: CompletionsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedCompletion>>> {
+    ): Promise<core.WithRawResponse<core.BinaryResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher<ReadableStream>({
+        const _response = await core.fetcher<core.BinaryResponse>({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
@@ -45,7 +48,7 @@ export class CompletionsClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            responseType: "sse",
+            responseType: "binary-response",
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -53,29 +56,15 @@ export class CompletionsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return {
-                data: new core.Stream({
-                    stream: _response.body,
-                    parse: (data) => data as any,
-                    signal: requestOptions?.abortSignal,
-                    eventShape: {
-                        type: "sse",
-                        streamTerminator: "[[DONE]]",
-                    },
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new SeedServerSentEvents.BadRequestError(
-                        _response.error.body as string,
-                        _response.rawResponse,
-                    );
+                    throw new SeedApi.BadRequestError(_response.error.body as string, _response.rawResponse);
                 default:
-                    throw new errors.SeedServerSentEventsError({
+                    throw new errors.SeedApiError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,
@@ -86,19 +75,22 @@ export class CompletionsClient {
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/stream");
     }
 
-    public streamEvents(
-        request: SeedServerSentEvents.StreamEventsRequest,
+    /**
+     * @throws {@link SeedApi.BadRequestError}
+     */
+    public streamevents(
+        request: SeedApi.CompletionsStreamEventsRequest,
         requestOptions?: CompletionsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.Stream<SeedServerSentEvents.StreamEvent>> {
-        return core.HttpResponsePromise.fromPromise(this.__streamEvents(request, requestOptions));
+    ): core.HttpResponsePromise<core.BinaryResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__streamevents(request, requestOptions));
     }
 
-    private async __streamEvents(
-        request: SeedServerSentEvents.StreamEventsRequest,
+    private async __streamevents(
+        request: SeedApi.CompletionsStreamEventsRequest,
         requestOptions?: CompletionsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamEvent>>> {
+    ): Promise<core.WithRawResponse<core.BinaryResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher<ReadableStream>({
+        const _response = await core.fetcher<core.BinaryResponse>({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
@@ -110,7 +102,7 @@ export class CompletionsClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            responseType: "sse",
+            responseType: "binary-response",
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -118,29 +110,15 @@ export class CompletionsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return {
-                data: new core.Stream({
-                    stream: _response.body,
-                    parse: (data) => data as any,
-                    signal: requestOptions?.abortSignal,
-                    eventShape: {
-                        type: "sse",
-                        streamTerminator: "[DONE]",
-                    },
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new SeedServerSentEvents.BadRequestError(
-                        _response.error.body as string,
-                        _response.rawResponse,
-                    );
+                    throw new SeedApi.BadRequestError(_response.error.body as string, _response.rawResponse);
                 default:
-                    throw new errors.SeedServerSentEventsError({
+                    throw new errors.SeedApiError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,
@@ -151,19 +129,22 @@ export class CompletionsClient {
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/stream-events");
     }
 
-    public streamEventsContextProtocol(
-        request: SeedServerSentEvents.StreamEventsContextProtocolRequest,
+    /**
+     * @throws {@link SeedApi.BadRequestError}
+     */
+    public streameventscontextprotocol(
+        request: SeedApi.CompletionsStreamEventsContextProtocolRequest,
         requestOptions?: CompletionsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.Stream<SeedServerSentEvents.StreamEventContextProtocol>> {
-        return core.HttpResponsePromise.fromPromise(this.__streamEventsContextProtocol(request, requestOptions));
+    ): core.HttpResponsePromise<core.BinaryResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__streameventscontextprotocol(request, requestOptions));
     }
 
-    private async __streamEventsContextProtocol(
-        request: SeedServerSentEvents.StreamEventsContextProtocolRequest,
+    private async __streameventscontextprotocol(
+        request: SeedApi.CompletionsStreamEventsContextProtocolRequest,
         requestOptions?: CompletionsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamEventContextProtocol>>> {
+    ): Promise<core.WithRawResponse<core.BinaryResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher<ReadableStream>({
+        const _response = await core.fetcher<core.BinaryResponse>({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
@@ -175,7 +156,7 @@ export class CompletionsClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            responseType: "sse",
+            responseType: "binary-response",
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -183,30 +164,15 @@ export class CompletionsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return {
-                data: new core.Stream({
-                    stream: _response.body,
-                    parse: (data) => data as any,
-                    signal: requestOptions?.abortSignal,
-                    eventShape: {
-                        type: "sse",
-                        streamTerminator: "[DONE]",
-                        eventDiscriminator: "event",
-                    },
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new SeedServerSentEvents.BadRequestError(
-                        _response.error.body as string,
-                        _response.rawResponse,
-                    );
+                    throw new SeedApi.BadRequestError(_response.error.body as string, _response.rawResponse);
                 default:
-                    throw new errors.SeedServerSentEventsError({
+                    throw new errors.SeedApiError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,

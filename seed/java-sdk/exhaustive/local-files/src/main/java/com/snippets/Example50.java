@@ -1,16 +1,34 @@
 package com.snippets;
 
-import com.fern.sdk.SeedExhaustiveClient;
-import java.time.OffsetDateTime;
+import com.fern.sdk.SeedApiClient;
+import com.fern.sdk.types.TypesNestedObjectWithRequiredField;
+import com.fern.sdk.types.TypesObjectWithOptionalField;
+import com.fern.sdk.types.TypesObjectWithRequiredNestedObject;
 
 public class Example50 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().primitive().getAndReturnDatetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"));
+        client.endpointsObject().endpointsObjectGetAndReturnWithRequiredNestedObject(
+            TypesObjectWithRequiredNestedObject
+                .builder()
+                .requiredString("requiredString")
+                .requiredObject(
+                    TypesNestedObjectWithRequiredField
+                        .builder()
+                        .string("string")
+                        .nestedObject(
+                            TypesObjectWithOptionalField
+                                .builder()
+                                .build()
+                        )
+                        .build()
+                )
+                .build()
+        );
     }
 }

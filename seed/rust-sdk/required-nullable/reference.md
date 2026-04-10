@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">get_foo</a>(optional_baz: Option&lt;Option&lt;String&gt;&gt;, optional_nullable_baz: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, required_baz: Option&lt;String&gt;, required_nullable_baz: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;Foo, ApiError&gt;</code></summary>
+## 
+<details><summary><code>client.<a href="/src/api/resources//client.rs">get_foo</a>(optional_baz: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, optional_nullable_baz: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, required_baz: Option&lt;String&gt;, required_nullable_baz: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;Foo, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -21,7 +22,7 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .get_foo(
+        ..get_foo(
             &GetFooQueryRequest {
                 required_baz: "required_baz".to_string(),
                 required_nullable_baz: Some("required_nullable_baz".to_string()),
@@ -46,7 +47,7 @@ async fn main() {
 <dl>
 <dd>
 
-**optional_baz:** `Option<String>` — An optional baz
+**optional_baz:** `Option<Option<String>>` — An optional baz
     
 </dd>
 </dl>
@@ -82,7 +83,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/client.rs">update_foo</a>(id: String, request: UpdateFooRequest) -> Result&lt;Foo, ApiError&gt;</code></summary>
+<details><summary><code>client.<a href="/src/api/resources//client.rs">update_foo</a>(id: String, request: UpdateFooRequest) -> Result&lt;Foo, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -104,12 +105,9 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .update_foo(
+        ..update_foo(
             &"id".to_string(),
             &UpdateFooRequest {
-                nullable_text: Some("nullable_text".to_string()),
-                nullable_number: Some(1.1),
-                non_nullable_text: Some("non_nullable_text".to_string()),
                 ..Default::default()
             },
             Some(RequestOptions::new().additional_header("X-Idempotency-Key", "X-Idempotency-Key")),
@@ -154,7 +152,7 @@ async fn main() {
 <dl>
 <dd>
 
-**non_nullable_text:** `Option<String>` — Regular non-nullable field
+**non_nullable_text:** `Option<Option<String>>` — Regular non-nullable field
     
 </dd>
 </dl>

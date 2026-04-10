@@ -39,9 +39,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedFileDownloadClient } from "@fern/file-download";
+import { SeedApiClient } from "@fern/file-download";
 
-const client = new SeedFileDownloadClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.service.simple();
 ```
 
@@ -51,12 +51,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedFileDownloadError } from "@fern/file-download";
+import { SeedApiError } from "@fern/file-download";
 
 try {
     await client.service.simple(...);
 } catch (err) {
-    if (err instanceof SeedFileDownloadError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -82,9 +82,9 @@ const client = new ServiceClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedFileDownloadClient } from "@fern/file-download";
+import { SeedApiClient } from "@fern/file-download";
 
-const client = new SeedFileDownloadClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -169,9 +169,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedFileDownloadClient, logging } from "@fern/file-download";
+import { SeedApiClient, logging } from "@fern/file-download";
 
-const client = new SeedFileDownloadClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

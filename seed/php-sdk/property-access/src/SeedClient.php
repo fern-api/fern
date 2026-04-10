@@ -2,18 +2,17 @@
 
 namespace Seed;
 
+use Seed\\Client;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Types\User;
-use Seed\Exceptions\SeedException;
-use Seed\Exceptions\SeedApiException;
-use Seed\Core\Json\JsonApiRequest;
-use Seed\Core\Client\HttpMethod;
-use JsonException;
-use Psr\Http\Client\ClientExceptionInterface;
 
-class SeedClient
+class SeedClient 
 {
+    /**
+     * @var Client $
+     */
+    public Client $;
+
     /**
      * @var array{
      *   baseUrl?: string,
@@ -41,70 +40,26 @@ class SeedClient
      */
     public function __construct(
         ?array $options = null,
-    ) {
+    )
+    {
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-
+        
         $this->options = $options ?? [];
-
+        
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-
+        
         $this->client = new RawClient(
             options: $this->options,
         );
-    }
-
-    /**
-     * @param User $request
-     * @param ?array{
-     *   baseUrl?: string,
-     *   maxRetries?: int,
-     *   timeout?: float,
-     *   headers?: array<string, string>,
-     *   queryParameters?: array<string, mixed>,
-     *   bodyProperties?: array<string, mixed>,
-     * } $options
-     * @return ?User
-     * @throws SeedException
-     * @throws SeedApiException
-     */
-    public function createUser(User $request, ?array $options = null): ?User
-    {
-        $options = array_merge($this->options, $options ?? []);
-        try {
-            $response = $this->client->sendRequest(
-                new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users",
-                    method: HttpMethod::POST,
-                    body: $request,
-                ),
-                $options,
-            );
-            $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
-                $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null;
-                }
-                return User::fromJson($json);
-            }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (ClientExceptionInterface $e) {
-            throw new SeedException(message: $e->getMessage(), previous: $e);
-        }
-        throw new SeedApiException(
-            message: 'API request failed',
-            statusCode: $statusCode,
-            body: $response->getBody()->getContents(),
-        );
+        
+        $this-> = new Client($this->client, $this->options);
     }
 }

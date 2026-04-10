@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/lib/seed/client.rb">echo</a>(request) -> String</code></summary>
+## 
+<details><summary><code>client..<a href="/lib/seed/client.rb">echo</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +13,7 @@
 <dd>
 
 ```ruby
-client.echo(request: "Hello world!\\n\\nwith\\n\\tnewlines")
+client..echo(request: "string")
 ```
 </dd>
 </dl>
@@ -35,7 +36,7 @@ client.echo(request: "Hello world!\\n\\nwith\\n\\tnewlines")
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `Seed::::RequestOptions` 
     
 </dd>
 </dl>
@@ -47,7 +48,7 @@ client.echo(request: "Hello world!\\n\\nwith\\n\\tnewlines")
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/lib/seed/client.rb">create_type</a>(request) -> Seed::Types::Identifier</code></summary>
+<details><summary><code>client..<a href="/lib/seed/client.rb">create_type</a>(request) -> Seed::Types::Identifier</code></summary>
 <dl>
 <dd>
 
@@ -60,7 +61,7 @@ client.echo(request: "Hello world!\\n\\nwith\\n\\tnewlines")
 <dd>
 
 ```ruby
-client.create_type(request: "primitive")
+client..create_type(request: "primitive")
 ```
 </dd>
 </dl>
@@ -83,7 +84,7 @@ client.create_type(request: "primitive")
 <dl>
 <dd>
 
-**request_options:** `Seed::RequestOptions` 
+**request_options:** `Seed::::RequestOptions` 
     
 </dd>
 </dl>
@@ -95,8 +96,8 @@ client.create_type(request: "primitive")
 </dl>
 </details>
 
-## File Notification Service
-<details><summary><code>client.file.notification.service.<a href="/lib/seed/file/notification/service/client.rb">get_exception</a>(notification_id) -> Seed::Types::Types::Exception</code></summary>
+## FileNotificationService
+<details><summary><code>client.file_notification_service.<a href="/lib/seed/file_notification_service/client.rb">file_notification_service_get_exception</a>(notification_id) -> Seed::Types::Exception</code></summary>
 <dl>
 <dd>
 
@@ -109,7 +110,7 @@ client.create_type(request: "primitive")
 <dd>
 
 ```ruby
-client.file.notification.service.get_exception(notification_id: "notification-hsy129x")
+client.file_notification_service.file_notification_service_get_exception(notification_id: "notificationId")
 ```
 </dd>
 </dl>
@@ -132,7 +133,7 @@ client.file.notification.service.get_exception(notification_id: "notification-hs
 <dl>
 <dd>
 
-**request_options:** `Seed::File::Notification::Service::RequestOptions` 
+**request_options:** `Seed::FileNotificationService::RequestOptions` 
     
 </dd>
 </dl>
@@ -144,8 +145,8 @@ client.file.notification.service.get_exception(notification_id: "notification-hs
 </dl>
 </details>
 
-## File Service
-<details><summary><code>client.file.service.<a href="/lib/seed/file/service/client.rb">get_file</a>(filename) -> Seed::Types::Types::File</code></summary>
+## FileService
+<details><summary><code>client.file_service.<a href="/lib/seed/file_service/client.rb">file_service_get_file</a>(filename) -> Seed::Types::File</code></summary>
 <dl>
 <dd>
 
@@ -172,10 +173,7 @@ This endpoint returns a file by its name.
 <dd>
 
 ```ruby
-client.file.service.get_file(
-  filename: "file.txt",
-  x_file_api_version: "0.0.2"
-)
+client.file_service.file_service_get_file(filename: "filename")
 ```
 </dd>
 </dl>
@@ -198,7 +196,7 @@ client.file.service.get_file(
 <dl>
 <dd>
 
-**request_options:** `Seed::File::Service::RequestOptions` 
+**request_options:** `Seed::FileService::RequestOptions` 
     
 </dd>
 </dl>
@@ -210,8 +208,8 @@ client.file.service.get_file(
 </dl>
 </details>
 
-## Health Service
-<details><summary><code>client.health.service.<a href="/lib/seed/health/service/client.rb">check</a>(id) -> </code></summary>
+## HealthService
+<details><summary><code>client.health_service.<a href="/lib/seed/health_service/client.rb">health_service_check</a>(id) -> </code></summary>
 <dl>
 <dd>
 
@@ -238,7 +236,7 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```ruby
-client.health.service.check(id: "id-2sdx82h")
+client.health_service.health_service_check(id: "id")
 ```
 </dd>
 </dl>
@@ -261,7 +259,7 @@ client.health.service.check(id: "id-2sdx82h")
 <dl>
 <dd>
 
-**request_options:** `Seed::Health::Service::RequestOptions` 
+**request_options:** `Seed::HealthService::RequestOptions` 
     
 </dd>
 </dl>
@@ -273,7 +271,7 @@ client.health.service.check(id: "id-2sdx82h")
 </dl>
 </details>
 
-<details><summary><code>client.health.service.<a href="/lib/seed/health/service/client.rb">ping</a>() -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.health_service.<a href="/lib/seed/health_service/client.rb">health_service_ping</a>() -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -300,7 +298,7 @@ This endpoint checks the health of the service.
 <dd>
 
 ```ruby
-client.health.service.ping
+client.health_service.health_service_ping
 ```
 </dd>
 </dl>
@@ -315,7 +313,7 @@ client.health.service.ping
 <dl>
 <dd>
 
-**request_options:** `Seed::Health::Service::RequestOptions` 
+**request_options:** `Seed::HealthService::RequestOptions` 
     
 </dd>
 </dl>
@@ -328,7 +326,7 @@ client.health.service.ping
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_movie</a>(movie_id) -> Seed::Types::Types::Movie</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">getmovie</a>(movie_id) -> Seed::Types::Movie</code></summary>
 <dl>
 <dd>
 
@@ -341,7 +339,7 @@ client.health.service.ping
 <dd>
 
 ```ruby
-client.service.get_movie(movie_id: "movie-c06a4ad7")
+client.service.getmovie(movie_id: "movieId")
 ```
 </dd>
 </dl>
@@ -376,7 +374,7 @@ client.service.get_movie(movie_id: "movie-c06a4ad7")
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">create_movie</a>(request) -> String</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">createmovie</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -389,14 +387,13 @@ client.service.get_movie(movie_id: "movie-c06a4ad7")
 <dd>
 
 ```ruby
-client.service.create_movie(
-  id: "movie-c06a4ad7",
-  prequel: "movie-cv9b914f",
-  title: "The Boy and the Heron",
-  from: "Hayao Miyazaki",
-  rating: 8,
+client.service.createmovie(
+  id: "id",
+  title: "title",
+  from: "from",
+  rating: 1.1,
   type: "movie",
-  tag: "tag-wf9as23d",
+  tag: "tag",
   metadata: {},
   revenue: 1000000
 )
@@ -414,7 +411,7 @@ client.service.create_movie(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Types::Movie` 
+**request:** `Seed::Types::Movie` 
     
 </dd>
 </dl>
@@ -434,7 +431,7 @@ client.service.create_movie(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_metadata</a>() -> Seed::Types::Types::Metadata</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">getmetadata</a>() -> Seed::Types::Metadata</code></summary>
 <dl>
 <dd>
 
@@ -447,10 +444,7 @@ client.service.create_movie(
 <dd>
 
 ```ruby
-client.service.get_metadata(
-  shallow: false,
-  x_api_version: "0.0.1"
-)
+client.service.getmetadata(api_version: "X-API-Version")
 ```
 </dd>
 </dl>
@@ -481,7 +475,7 @@ client.service.get_metadata(
 <dl>
 <dd>
 
-**x_api_version:** `String` 
+**api_version:** `String` 
     
 </dd>
 </dl>
@@ -501,7 +495,7 @@ client.service.get_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">create_big_entity</a>(request) -> Seed::Types::Types::Response</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">createbigentity</a>(request) -> Seed::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -514,136 +508,7 @@ client.service.get_metadata(
 <dd>
 
 ```ruby
-client.service.create_big_entity(
-  cast_member: {
-    name: "name",
-    id: "id"
-  },
-  extended_movie: {
-    cast: %w[cast cast],
-    id: "id",
-    prequel: "prequel",
-    title: "title",
-    from: "from",
-    rating: 1.1,
-    type: "movie",
-    tag: "tag",
-    book: "book",
-    metadata: {},
-    revenue: 1000000
-  },
-  entity: {
-    type: "primitive",
-    name: "name"
-  },
-  metadata: {},
-  common_metadata: {
-    id: "id",
-    data: {
-      data: "data"
-    },
-    json_string: "jsonString"
-  },
-  data: {},
-  migration: {
-    name: "name",
-    status: "RUNNING"
-  },
-  test: {},
-  node: {
-    name: "name",
-    nodes: [{
-      name: "name",
-      nodes: [{
-        name: "name"
-      }, {
-        name: "name"
-      }],
-      trees: [{
-        nodes: []
-      }, {
-        nodes: []
-      }]
-    }, {
-      name: "name",
-      nodes: [{
-        name: "name"
-      }, {
-        name: "name"
-      }],
-      trees: [{
-        nodes: []
-      }, {
-        nodes: []
-      }]
-    }],
-    trees: [{
-      nodes: [{
-        name: "name",
-        nodes: [],
-        trees: []
-      }, {
-        name: "name",
-        nodes: [],
-        trees: []
-      }]
-    }, {
-      nodes: [{
-        name: "name",
-        nodes: [],
-        trees: []
-      }, {
-        name: "name",
-        nodes: [],
-        trees: []
-      }]
-    }]
-  },
-  directory: {
-    name: "name",
-    files: [{
-      name: "name",
-      contents: "contents"
-    }, {
-      name: "name",
-      contents: "contents"
-    }],
-    directories: [{
-      name: "name",
-      files: [{
-        name: "name",
-        contents: "contents"
-      }, {
-        name: "name",
-        contents: "contents"
-      }],
-      directories: [{
-        name: "name"
-      }, {
-        name: "name"
-      }]
-    }, {
-      name: "name",
-      files: [{
-        name: "name",
-        contents: "contents"
-      }, {
-        name: "name",
-        contents: "contents"
-      }],
-      directories: [{
-        name: "name"
-      }, {
-        name: "name"
-      }]
-    }]
-  },
-  moment: {
-    id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    date: "2023-01-15",
-    datetime: "2024-01-15T09:30:00Z"
-  }
-)
+client.service.createbigentity
 ```
 </dd>
 </dl>
@@ -658,7 +523,103 @@ client.service.create_big_entity(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Types::BigEntity` 
+**cast_member:** `Seed::Types::CastMember` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extended_movie:** `Seed::Types::ExtendedMovie` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entity:** `Seed::Types::Entity` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata:** `Seed::Types::Metadata` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**common_metadata:** `Seed::Types::CommonsMetadata` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_info:** `Seed::Types::CommonsEventInfo` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**data:** `Seed::Types::CommonsData` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**migration:** `Seed::Types::Migration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**exception:** `Seed::Types::Exception` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**test:** `Seed::Types::Test` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**node:** `Seed::Types::Node` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**directory:** `Seed::Types::Directory` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**moment:** `Seed::Types::Moment` 
     
 </dd>
 </dl>
@@ -678,7 +639,7 @@ client.service.create_big_entity(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">refresh_token</a>(request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">refreshtoken</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -691,9 +652,7 @@ client.service.create_big_entity(
 <dd>
 
 ```ruby
-client.service.refresh_token(request: {
-  ttl: 420
-})
+client.service.refreshtoken(ttl: 1)
 ```
 </dd>
 </dl>
@@ -708,7 +667,7 @@ client.service.refresh_token(request: {
 <dl>
 <dd>
 
-**request:** `Seed::Types::Types::RefreshTokenRequest` 
+**ttl:** `Integer` 
     
 </dd>
 </dl>

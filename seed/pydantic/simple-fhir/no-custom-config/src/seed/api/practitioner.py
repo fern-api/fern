@@ -5,10 +5,11 @@ import typing
 import pydantic
 from .base_resource import BaseResource
 from .core.pydantic_utilities import IS_PYDANTIC_V2
+from .practitioner_resource_type import PractitionerResourceType
 
 
 class Practitioner(BaseResource):
-    resource_type: typing.Literal["Practitioner"] = "Practitioner"
+    resource_type: PractitionerResourceType
     name: str
 
     if IS_PYDANTIC_V2:

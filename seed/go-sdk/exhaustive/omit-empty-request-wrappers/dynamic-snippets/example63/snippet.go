@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
 )
@@ -16,10 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    request := map[string]any{
-        "key": "value",
+    request := &fern.EndpointsParamsModifyWithInlinePathRequest{
+        Param: "param",
+        Body: "string",
     }
-    client.NoAuth.PostWithNoAuth(
+    client.EndpointsParams.EndpointsParamsModifyWithInlinePath(
         context.TODO(),
         request,
     )

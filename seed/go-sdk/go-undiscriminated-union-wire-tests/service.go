@@ -9,6 +9,61 @@ import (
 	big "math/big"
 )
 
+var (
+	rerankRequestFieldDocuments = big.NewInt(1 << 0)
+	rerankRequestFieldQuery     = big.NewInt(1 << 1)
+)
+
+type RerankRequest struct {
+	Documents []*DocumentItem `json:"documents" url:"-"`
+	Query     string          `json:"query" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (r *RerankRequest) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetDocuments sets the Documents field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RerankRequest) SetDocuments(documents []*DocumentItem) {
+	r.Documents = documents
+	r.require(rerankRequestFieldDocuments)
+}
+
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RerankRequest) SetQuery(query string) {
+	r.Query = query
+	r.require(rerankRequestFieldQuery)
+}
+
+func (r *RerankRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler RerankRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*r = RerankRequest(body)
+	return nil
+}
+
+func (r *RerankRequest) MarshalJSON() ([]byte, error) {
+	type embed RerankRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 type DocumentItem struct {
 	String         string
 	DocumentObject *DocumentObject
@@ -153,106 +208,6 @@ func (d *DocumentObject) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
-}
-
-var (
-	rerankRequestFieldDocuments = big.NewInt(1 << 0)
-	rerankRequestFieldQuery     = big.NewInt(1 << 1)
-)
-
-type RerankRequest struct {
-	Documents []*DocumentItem `json:"documents" url:"documents"`
-	Query     string          `json:"query" url:"query"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (r *RerankRequest) GetDocuments() []*DocumentItem {
-	if r == nil {
-		return nil
-	}
-	return r.Documents
-}
-
-func (r *RerankRequest) GetQuery() string {
-	if r == nil {
-		return ""
-	}
-	return r.Query
-}
-
-func (r *RerankRequest) GetExtraProperties() map[string]interface{} {
-	if r == nil {
-		return nil
-	}
-	return r.extraProperties
-}
-
-func (r *RerankRequest) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
-	}
-	r.explicitFields.Or(r.explicitFields, field)
-}
-
-// SetDocuments sets the Documents field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RerankRequest) SetDocuments(documents []*DocumentItem) {
-	r.Documents = documents
-	r.require(rerankRequestFieldDocuments)
-}
-
-// SetQuery sets the Query field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RerankRequest) SetQuery(query string) {
-	r.Query = query
-	r.require(rerankRequestFieldQuery)
-}
-
-func (r *RerankRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler RerankRequest
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*r = RerankRequest(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *r)
-	if err != nil {
-		return err
-	}
-	r.extraProperties = extraProperties
-	r.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (r *RerankRequest) MarshalJSON() ([]byte, error) {
-	type embed RerankRequest
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*r),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (r *RerankRequest) String() string {
-	if r == nil {
-		return "<nil>"
-	}
-	if len(r.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(r); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", r)
 }
 
 var (

@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedPackageYml/SeedPackageYmlClient.cs">EchoAsync</a>(id, EchoRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
+## _
+<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">EchoAsync</a>(EchoRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +13,14 @@
 <dd>
 
 ```csharp
-await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Size = 20 });
+await client._.EchoAsync(
+    new EchoRequest
+    {
+        Id = "id",
+        Name = "name",
+        Size = 1,
+    }
+);
 ```
 </dd>
 </dl>
@@ -23,14 +31,6 @@ await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Si
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -48,7 +48,7 @@ await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Si
 </details>
 
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedPackageYml/Service/ServiceClient.cs">NopAsync</a>(id, nestedId)</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">NopAsync</a>(ServiceNopRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Si
 <dd>
 
 ```csharp
-await client.Service.NopAsync("id-a2ijs82", "id-219xca8");
+await client.Service.NopAsync(new ServiceNopRequest { Id = "id", NestedId = "nestedId" });
 ```
 </dd>
 </dl>
@@ -76,15 +76,7 @@ await client.Service.NopAsync("id-a2ijs82", "id-219xca8");
 <dl>
 <dd>
 
-**id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**nestedId:** `string` 
+**request:** `ServiceNopRequest` 
     
 </dd>
 </dl>

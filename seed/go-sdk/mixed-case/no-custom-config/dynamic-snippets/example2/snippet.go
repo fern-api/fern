@@ -14,13 +14,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.ListResourcesRequest{
-        PageLimit: 10,
+    request := &fern.ServiceListResourcesRequest{
+        PageLimit: 1,
         BeforeDate: fern.MustParseDate(
-            "2023-01-01",
+            "2023-01-15",
         ),
     }
-    client.Service.ListResources(
+    client.Service.Listresources(
         context.TODO(),
         request,
     )

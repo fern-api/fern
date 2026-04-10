@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.UploadJsonDocumentAsync(new UploadDocumentRequest());\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client._.UploadJsonDocumentAsync(new UploadJsonDocumentRequest());\n"
             }
         }
     ]

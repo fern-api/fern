@@ -1,25 +1,21 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.resources.types.object.types.NestedObjectWithRequiredField;
-import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
-import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredNestedObject;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.endpointshttpmethods.requests.EndpointsHttpMethodsTestPatchRequest;
+import com.seed.api.types.TypesObjectWithOptionalField;
 
 public class Example28 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints()
-                .object()
-                .getAndReturnWithRequiredNestedObject(ObjectWithRequiredNestedObject.builder()
-                        .requiredString("hello")
-                        .requiredObject(NestedObjectWithRequiredField.builder()
-                                .string("nested")
-                                .nestedObject(ObjectWithOptionalField.builder().build())
-                                .build())
-                        .build());
+        client.endpointsHttpMethods()
+                .endpointsHttpMethodsTestPatch(
+                        "id",
+                        EndpointsHttpMethodsTestPatchRequest.builder()
+                                .body(TypesObjectWithOptionalField.builder().build())
+                                .build());
     }
 }

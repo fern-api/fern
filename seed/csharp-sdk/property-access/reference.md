@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedPropertyAccess/SeedPropertyAccessClient.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+## _
+<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.CreateUserAsync(
+await client._.CreateUserAsync(
     new User
     {
         Id = "id",

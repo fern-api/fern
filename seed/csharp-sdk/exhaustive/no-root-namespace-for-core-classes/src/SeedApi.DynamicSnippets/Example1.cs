@@ -1,27 +1,22 @@
-using SeedExhaustive;
-using SeedExhaustive.Core;
-using SeedExhaustive.Types;
+using SeedApi;
+using SeedApi.Core;
 
 namespace Usage;
 
 public class Example1
 {
     public async Task Do() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
-            new List<ObjectWithRequiredField>(){
-                new ObjectWithRequiredField {
-                    String = "string"
-                },
-                new ObjectWithRequiredField {
-                    String = "string"
-                },
+        await client.EndpointsContainer.EndpointsContainerGetAndReturnListOfPrimitivesAsync(
+            new List<string>(){
+                "string",
+                "string",
             }
         );
     }

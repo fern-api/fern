@@ -1,10 +1,10 @@
 import Foundation
-import MixedCase
+import Api
 
 private func main() async throws {
-    let client = MixedCaseClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.service.getResource(resourceId: "ResourceID")
+    _ = try await client.service.getresource(resourceId: "ResourceID")
 }
 
 try await main()

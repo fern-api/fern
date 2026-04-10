@@ -29,17 +29,21 @@ public final class Account implements IBaseResource {
 
   private final Memo memo;
 
+  private final AccountResourceType resourceType;
+
   private final String name;
 
   private final Optional<Patient> patient;
 
   private final Optional<Practitioner> practitioner;
 
-  private Account(String id, List<ResourceList> relatedResources, Memo memo, String name,
-      Optional<Patient> patient, Optional<Practitioner> practitioner) {
+  private Account(String id, List<ResourceList> relatedResources, Memo memo,
+      AccountResourceType resourceType, String name, Optional<Patient> patient,
+      Optional<Practitioner> practitioner) {
     this.id = id;
     this.relatedResources = relatedResources;
     this.memo = memo;
+    this.resourceType = resourceType;
     this.name = name;
     this.patient = patient;
     this.practitioner = practitioner;
@@ -64,8 +68,8 @@ public final class Account implements IBaseResource {
   }
 
   @JsonProperty("resource_type")
-  public String getResourceType() {
-    return "Account";
+  public AccountResourceType getResourceType() {
+    return resourceType;
   }
 
   @JsonProperty("name")
@@ -90,12 +94,12 @@ public final class Account implements IBaseResource {
   }
 
   private boolean equalTo(Account other) {
-    return id.equals(other.id) && relatedResources.equals(other.relatedResources) && memo.equals(other.memo) && name.equals(other.name) && patient.equals(other.patient) && practitioner.equals(other.practitioner);
+    return id.equals(other.id) && relatedResources.equals(other.relatedResources) && memo.equals(other.memo) && resourceType.equals(other.resourceType) && name.equals(other.name) && patient.equals(other.patient) && practitioner.equals(other.practitioner);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.id, this.relatedResources, this.memo, this.name, this.patient, this.practitioner);
+    return Objects.hash(this.id, this.relatedResources, this.memo, this.resourceType, this.name, this.patient, this.practitioner);
   }
 
   @java.lang.Override
@@ -114,7 +118,11 @@ public final class Account implements IBaseResource {
   }
 
   public interface MemoStage {
-    NameStage memo(Memo memo);
+    ResourceTypeStage memo(Memo memo);
+  }
+
+  public interface ResourceTypeStage {
+    NameStage resourceType(AccountResourceType resourceType);
   }
 
   public interface NameStage {
@@ -142,10 +150,12 @@ public final class Account implements IBaseResource {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements IdStage, MemoStage, NameStage, _FinalStage {
+  public static final class Builder implements IdStage, MemoStage, ResourceTypeStage, NameStage, _FinalStage {
     private String id;
 
     private Memo memo;
+
+    private AccountResourceType resourceType;
 
     private String name;
 
@@ -163,6 +173,7 @@ public final class Account implements IBaseResource {
       id(other.getId());
       relatedResources(other.getRelatedResources());
       memo(other.getMemo());
+      resourceType(other.getResourceType());
       name(other.getName());
       patient(other.getPatient());
       practitioner(other.getPractitioner());
@@ -178,8 +189,15 @@ public final class Account implements IBaseResource {
 
     @java.lang.Override
     @JsonSetter("memo")
-    public NameStage memo(Memo memo) {
+    public ResourceTypeStage memo(Memo memo) {
       this.memo = Objects.requireNonNull(memo, "memo must not be null");
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("resource_type")
+    public NameStage resourceType(AccountResourceType resourceType) {
+      this.resourceType = Objects.requireNonNull(resourceType, "resourceType must not be null");
       return this;
     }
 
@@ -251,7 +269,7 @@ public final class Account implements IBaseResource {
 
     @java.lang.Override
     public Account build() {
-      return new Account(id, relatedResources, memo, name, patient, practitioner);
+      return new Account(id, relatedResources, memo, resourceType, name, patient, practitioner);
     }
   }
 }

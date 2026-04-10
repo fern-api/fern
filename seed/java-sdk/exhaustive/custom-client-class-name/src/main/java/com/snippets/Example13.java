@@ -1,16 +1,19 @@
 package com.snippets;
 
-import com.seed.exhaustive.Best;
-import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
+import com.seed.api.Best;
+import com.seed.api.types.TypesMixedType;
+import java.util.HashMap;
 
 public class Example13 {
     public static void main(String[] args) {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpoints()
-                .httpMethods()
-                .testPut(
-                        "id", ObjectWithRequiredField.builder().string("string").build());
+        client.endpointsContainer()
+                .endpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion(new HashMap<String, TypesMixedType>() {
+                    {
+                        put("string", TypesMixedType.of(1.1));
+                    }
+                });
     }
 }

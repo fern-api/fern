@@ -1,13 +1,13 @@
 import Foundation
-import Examples
+import Api
 
 private func main() async throws {
-    let client = ExamplesClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.file.service.getFile(filename: "file.txt")
+    _ = try await client.fileNotificationService.fileNotificationServiceGetException(notificationId: "notificationId")
 }
 
 try await main()

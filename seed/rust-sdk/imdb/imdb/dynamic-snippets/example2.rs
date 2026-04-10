@@ -10,6 +10,6 @@ async fn main() {
     let client = ApiClient::new(config).expect("Failed to build client");
     client
         .imdb
-        .get_movie(&MovieId("movieId".to_string()), None)
+        .getmovie(&MovieId("movieId".to_string()), None)
         .await;
 }

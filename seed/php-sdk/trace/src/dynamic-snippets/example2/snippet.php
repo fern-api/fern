@@ -3,9 +3,9 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Submission\Types\TestSubmissionUpdate;
-use DateTime;
-use Seed\Submission\Types\TestSubmissionUpdateInfo;
+use Seed\Admin\Requests\AdminUpdateTestSubmissionStatusRequest;
+use Seed\Types\TestSubmissionStatus;
+use Seed\Types\TestSubmissionStatusStopped;
 
 $client = new SeedClient(
     token: '<token>',
@@ -13,10 +13,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->admin->sendTestSubmissionUpdate(
-    'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    new TestSubmissionUpdate([
-        'updateTime' => new DateTime('2024-01-15T09:30:00Z'),
-        'updateInfo' => TestSubmissionUpdateInfo::running(),
+$client->admin->updatetestsubmissionstatus(
+    'submissionId',
+    new AdminUpdateTestSubmissionStatusRequest([
+        'body' => TestSubmissionStatus::stopped(new TestSubmissionStatusStopped([])),
     ]),
 );

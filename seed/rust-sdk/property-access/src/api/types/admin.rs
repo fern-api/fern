@@ -41,12 +41,8 @@ impl AdminBuilder {
     /// - [`admin_level`](AdminBuilder::admin_level)
     pub fn build(self) -> Result<Admin, BuildError> {
         Ok(Admin {
-            user_fields: self
-                .user_fields
-                .ok_or_else(|| BuildError::missing_field("user_fields"))?,
-            admin_level: self
-                .admin_level
-                .ok_or_else(|| BuildError::missing_field("admin_level"))?,
+            user_fields: self.user_fields.ok_or_else(|| BuildError::missing_field("user_fields"))?,
+            admin_level: self.admin_level.ok_or_else(|| BuildError::missing_field("admin_level"))?,
         })
     }
 }

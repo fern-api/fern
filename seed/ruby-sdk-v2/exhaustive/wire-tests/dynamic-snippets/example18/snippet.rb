@@ -5,8 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.object.get_and_return_with_map_of_map(map: {
-  map: {
-    map: "map"
-  }
-})
+client.endpoints_content_type.endpoints_content_type_post_json_patch_content_with_charset_type

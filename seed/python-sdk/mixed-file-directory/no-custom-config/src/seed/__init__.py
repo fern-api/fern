@@ -6,25 +6,26 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import Id
-    from . import organization, user
+    from .types import Id, Organization, User, UserEvent, UsereventsMetadata
+    from . import organization, user, user_events, user_events_metadata
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedMixedFileDirectory, SeedMixedFileDirectory
-    from .organization import CreateOrganizationRequest, Organization
-    from .user import User
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedMixedFileDirectory": ".client",
-    "CreateOrganizationRequest": ".organization",
+    "AsyncSeedApi": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "Id": ".types",
-    "Organization": ".organization",
-    "SeedMixedFileDirectory": ".client",
-    "User": ".user",
+    "Organization": ".types",
+    "SeedApi": ".client",
+    "User": ".types",
+    "UserEvent": ".types",
+    "UsereventsMetadata": ".types",
     "__version__": ".version",
     "organization": ".organization",
     "user": ".user",
+    "user_events": ".user_events",
+    "user_events_metadata": ".user_events_metadata",
 }
 
 
@@ -50,15 +51,18 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedMixedFileDirectory",
-    "CreateOrganizationRequest",
+    "AsyncSeedApi",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "Id",
     "Organization",
-    "SeedMixedFileDirectory",
+    "SeedApi",
     "User",
+    "UserEvent",
+    "UsereventsMetadata",
     "__version__",
     "organization",
     "user",
+    "user_events",
+    "user_events_metadata",
 ]

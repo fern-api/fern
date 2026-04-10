@@ -1,26 +1,22 @@
-using SeedInferredAuthImplicit;
+using SeedApi;
 
 namespace Usage;
 
 public class Example1
 {
     public async Task Do() {
-        var client = new SeedInferredAuthImplicitClient(
-            clientId: "client_id",
-            clientSecret: "client_secret",
-            scope: "scope",
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Auth.RefreshTokenAsync(
-            new RefreshTokenRequest {
+        await client.Auth.GettokenwithclientcredentialsAsync(
+            new GetTokenRequest {
                 ClientId = "client_id",
                 ClientSecret = "client_secret",
-                RefreshToken = "refresh_token",
-                Audience = "https://api.example.com",
-                GrantType = "refresh_token",
+                Audience = GetTokenRequestAudience.HttpsApiExampleCom,
+                GrantType = GetTokenRequestGrantType.ClientCredentials,
                 Scope = "scope"
             }
         );

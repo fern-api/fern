@@ -5,7 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.file.service.get_file(
-  filename: "filename",
-  x_file_api_version: "X-File-API-Version"
-)
+client.file_service.file_service_get_file(filename: "filename")

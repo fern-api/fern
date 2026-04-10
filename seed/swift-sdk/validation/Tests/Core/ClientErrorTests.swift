@@ -1,4 +1,4 @@
-import Validation
+import Api
 import Foundation
 import Testing
 
@@ -13,33 +13,33 @@ import Testing
             body: Data(#"{"message":"Bad request"}"#.utf8)
         )
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
             Issue.record("Expected error to be thrown")
-        } catch let error as ValidationError {
+        } catch let error as ApiError {
             guard case .httpError(let httpError) = error else {
-                Issue.record("Expected ValidationError.httpError, got \(error)")
+                Issue.record("Expected ApiError.httpError, got \(error)")
                 return
             }
             try #require(httpError.statusCode == 400)
             try #require(httpError.kind == .client)
             try #require(httpError.body?.message == "Bad request")
         } catch {
-            Issue.record("Expected ValidationError, got \(error)")
+            Issue.record("Expected ApiError, got \(error)")
         }
     }
 
@@ -51,33 +51,33 @@ import Testing
             body: Data(#"{"message":"Not found"}"#.utf8)
         )
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
             Issue.record("Expected error to be thrown")
-        } catch let error as ValidationError {
+        } catch let error as ApiError {
             guard case .httpError(let httpError) = error else {
-                Issue.record("Expected ValidationError.httpError, got \(error)")
+                Issue.record("Expected ApiError.httpError, got \(error)")
                 return
             }
             try #require(httpError.statusCode == 404)
             try #require(httpError.kind == .notFound)
             try #require(httpError.body?.message == "Not found")
         } catch {
-            Issue.record("Expected ValidationError, got \(error)")
+            Issue.record("Expected ApiError, got \(error)")
         }
     }
 
@@ -89,33 +89,33 @@ import Testing
             body: Data(#"{"message":"Validation failed"}"#.utf8)
         )
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
             Issue.record("Expected error to be thrown")
-        } catch let error as ValidationError {
+        } catch let error as ApiError {
             guard case .httpError(let httpError) = error else {
-                Issue.record("Expected ValidationError.httpError, got \(error)")
+                Issue.record("Expected ApiError.httpError, got \(error)")
                 return
             }
             try #require(httpError.statusCode == 422)
             try #require(httpError.kind == .validation)
             try #require(httpError.body?.message == "Validation failed")
         } catch {
-            Issue.record("Expected ValidationError, got \(error)")
+            Issue.record("Expected ApiError, got \(error)")
         }
     }
 
@@ -129,33 +129,33 @@ import Testing
             body: Data(#"{"message":"Internal error"}"#.utf8)
         )
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
             Issue.record("Expected error to be thrown")
-        } catch let error as ValidationError {
+        } catch let error as ApiError {
             guard case .httpError(let httpError) = error else {
-                Issue.record("Expected ValidationError.httpError, got \(error)")
+                Issue.record("Expected ApiError.httpError, got \(error)")
                 return
             }
             try #require(httpError.statusCode == 500)
             try #require(httpError.kind == .server)
             try #require(httpError.body?.message == "Internal error")
         } catch {
-            Issue.record("Expected ValidationError, got \(error)")
+            Issue.record("Expected ApiError, got \(error)")
         }
     }
 
@@ -167,33 +167,33 @@ import Testing
             body: Data(#"{"message":"Unavailable"}"#.utf8)
         )
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
             Issue.record("Expected error to be thrown")
-        } catch let error as ValidationError {
+        } catch let error as ApiError {
             guard case .httpError(let httpError) = error else {
-                Issue.record("Expected ValidationError.httpError, got \(error)")
+                Issue.record("Expected ApiError.httpError, got \(error)")
                 return
             }
             try #require(httpError.statusCode == 503)
             try #require(httpError.kind == .serviceUnavailable)
             try #require(httpError.body?.message == "Unavailable")
         } catch {
-            Issue.record("Expected ValidationError, got \(error)")
+            Issue.record("Expected ApiError, got \(error)")
         }
     }
 
@@ -207,33 +207,33 @@ import Testing
             body: Data()
         )
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
             Issue.record("Expected error to be thrown")
-        } catch let error as ValidationError {
+        } catch let error as ApiError {
             guard case .httpError(let httpError) = error else {
-                Issue.record("Expected ValidationError.httpError, got \(error)")
+                Issue.record("Expected ApiError.httpError, got \(error)")
                 return
             }
             try #require(httpError.statusCode == 302)
             try #require(httpError.kind == .redirect)
             try #require(httpError.body == nil)
         } catch {
-            Issue.record("Expected ValidationError, got \(error)")
+            Issue.record("Expected ApiError, got \(error)")
         }
     }
 
@@ -245,33 +245,33 @@ import Testing
             body: Data("Plain text error".utf8)
         )
 
-        let client = ValidationClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.create(
+            _ = try await client..create(
                 request: .init(
-                    decimal: 2.2,
-                    even: 100,
-                    name: "fern",
+                    decimal: 1.1,
+                    even: 1,
+                    name: "name",
                     shape: .square
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
             Issue.record("Expected error to be thrown")
-        } catch let error as ValidationError {
+        } catch let error as ApiError {
             guard case .httpError(let httpError) = error else {
-                Issue.record("Expected ValidationError.httpError, got \(error)")
+                Issue.record("Expected ApiError.httpError, got \(error)")
                 return
             }
             try #require(httpError.statusCode == 500)
             try #require(httpError.kind == .server)
             try #require(httpError.body?.message == "Plain text error")
         } catch {
-            Issue.record("Expected ValidationError, got \(error)")
+            Issue.record("Expected ApiError, got \(error)")
         }
     }
 }

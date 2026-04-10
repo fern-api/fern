@@ -2,9 +2,9 @@
 
 import typing
 
-from ..commons.types.language import Language
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.language import Language
 from .raw_client import AsyncRawSyspropClient, RawSyspropClient
 
 
@@ -23,7 +23,7 @@ class SyspropClient:
         """
         return self._raw_client
 
-    def set_num_warm_instances(
+    def setnumwarminstances(
         self, language: Language, num_warm_instances: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
@@ -42,25 +42,20 @@ class SyspropClient:
 
         Examples
         --------
-        from seed import SeedTrace
+        from seed import SeedApi
 
-        client = SeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
+        client = SeedApi(
             token="YOUR_TOKEN",
         )
-        client.sysprop.set_num_warm_instances(
+        client.sysprop.setnumwarminstances(
             language="JAVA",
             num_warm_instances=1,
         )
         """
-        _response = self._raw_client.set_num_warm_instances(
-            language, num_warm_instances, request_options=request_options
-        )
+        _response = self._raw_client.setnumwarminstances(language, num_warm_instances, request_options=request_options)
         return _response.data
 
-    def get_num_warm_instances(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[Language, int]:
+    def getnumwarminstances(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Dict[str, int]:
         """
         Parameters
         ----------
@@ -69,19 +64,19 @@ class SyspropClient:
 
         Returns
         -------
-        typing.Dict[Language, int]
+        typing.Dict[str, int]
+
 
         Examples
         --------
-        from seed import SeedTrace
+        from seed import SeedApi
 
-        client = SeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
+        client = SeedApi(
             token="YOUR_TOKEN",
         )
-        client.sysprop.get_num_warm_instances()
+        client.sysprop.getnumwarminstances()
         """
-        _response = self._raw_client.get_num_warm_instances(request_options=request_options)
+        _response = self._raw_client.getnumwarminstances(request_options=request_options)
         return _response.data
 
 
@@ -100,7 +95,7 @@ class AsyncSyspropClient:
         """
         return self._raw_client
 
-    async def set_num_warm_instances(
+    async def setnumwarminstances(
         self, language: Language, num_warm_instances: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
@@ -121,16 +116,15 @@ class AsyncSyspropClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedTrace
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.sysprop.set_num_warm_instances(
+            await client.sysprop.setnumwarminstances(
                 language="JAVA",
                 num_warm_instances=1,
             )
@@ -138,14 +132,14 @@ class AsyncSyspropClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.set_num_warm_instances(
+        _response = await self._raw_client.setnumwarminstances(
             language, num_warm_instances, request_options=request_options
         )
         return _response.data
 
-    async def get_num_warm_instances(
+    async def getnumwarminstances(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[Language, int]:
+    ) -> typing.Dict[str, int]:
         """
         Parameters
         ----------
@@ -154,25 +148,25 @@ class AsyncSyspropClient:
 
         Returns
         -------
-        typing.Dict[Language, int]
+        typing.Dict[str, int]
+
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedTrace
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.sysprop.get_num_warm_instances()
+            await client.sysprop.getnumwarminstances()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_num_warm_instances(request_options=request_options)
+        _response = await self._raw_client.getnumwarminstances(request_options=request_options)
         return _response.data

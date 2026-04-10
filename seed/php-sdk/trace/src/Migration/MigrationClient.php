@@ -4,8 +4,8 @@ namespace Seed\Migration;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Migration\Requests\GetAttemptedMigrationsRequest;
-use Seed\Migration\Types\Migration;
+use Seed\Migration\Requests\MigrationGetAttemptedMigrationsRequest;
+use Seed\Types\Migration;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -52,7 +52,7 @@ class MigrationClient
     }
 
     /**
-     * @param GetAttemptedMigrationsRequest $request
+     * @param MigrationGetAttemptedMigrationsRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -65,7 +65,7 @@ class MigrationClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAttemptedMigrations(GetAttemptedMigrationsRequest $request, ?array $options = null): ?array
+    public function getattemptedmigrations(MigrationGetAttemptedMigrationsRequest $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -73,8 +73,8 @@ class MigrationClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
-                    path: "/migration-info/all",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "migration-info/all",
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),

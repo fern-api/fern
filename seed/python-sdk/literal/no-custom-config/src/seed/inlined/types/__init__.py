@@ -6,27 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .a_nested_literal import ANestedLiteral
-    from .a_top_level_literal import ATopLevelLiteral
-    from .discriminated_literal import (
-        DiscriminatedLiteral,
-        DiscriminatedLiteral_CustomName,
-        DiscriminatedLiteral_DefaultName,
-        DiscriminatedLiteral_George,
-        DiscriminatedLiteral_LiteralGeorge,
-    )
-    from .some_aliased_literal import SomeAliasedLiteral
-    from .undiscriminated_literal import UndiscriminatedLiteral
+    from .inlined_send_request_context import InlinedSendRequestContext
+    from .inlined_send_request_prompt import InlinedSendRequestPrompt
 _dynamic_imports: typing.Dict[str, str] = {
-    "ANestedLiteral": ".a_nested_literal",
-    "ATopLevelLiteral": ".a_top_level_literal",
-    "DiscriminatedLiteral": ".discriminated_literal",
-    "DiscriminatedLiteral_CustomName": ".discriminated_literal",
-    "DiscriminatedLiteral_DefaultName": ".discriminated_literal",
-    "DiscriminatedLiteral_George": ".discriminated_literal",
-    "DiscriminatedLiteral_LiteralGeorge": ".discriminated_literal",
-    "SomeAliasedLiteral": ".some_aliased_literal",
-    "UndiscriminatedLiteral": ".undiscriminated_literal",
+    "InlinedSendRequestContext": ".inlined_send_request_context",
+    "InlinedSendRequestPrompt": ".inlined_send_request_prompt",
 }
 
 
@@ -51,14 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "ANestedLiteral",
-    "ATopLevelLiteral",
-    "DiscriminatedLiteral",
-    "DiscriminatedLiteral_CustomName",
-    "DiscriminatedLiteral_DefaultName",
-    "DiscriminatedLiteral_George",
-    "DiscriminatedLiteral_LiteralGeorge",
-    "SomeAliasedLiteral",
-    "UndiscriminatedLiteral",
-]
+__all__ = ["InlinedSendRequestContext", "InlinedSendRequestPrompt"]

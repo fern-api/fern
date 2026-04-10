@@ -35,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Post(
 	ctx context.Context,
-	request *upload.MyRequest,
+	request *upload.ServicePostRequest,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Post(
@@ -49,12 +49,12 @@ func (c *Client) Post(
 	return nil
 }
 
-func (c *Client) JustFile(
+func (c *Client) Justfile(
 	ctx context.Context,
-	request *upload.JustFileRequest,
+	request *upload.ServiceJustFileRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.JustFile(
+	_, err := c.WithRawResponse.Justfile(
 		ctx,
 		request,
 		opts...,
@@ -65,12 +65,12 @@ func (c *Client) JustFile(
 	return nil
 }
 
-func (c *Client) JustFileWithQueryParams(
+func (c *Client) Justfilewithqueryparams(
 	ctx context.Context,
-	request *upload.JustFileWithQueryParamsRequest,
+	request *upload.ServiceJustFileWithQueryParamsRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.JustFileWithQueryParams(
+	_, err := c.WithRawResponse.Justfilewithqueryparams(
 		ctx,
 		request,
 		opts...,
@@ -81,12 +81,12 @@ func (c *Client) JustFileWithQueryParams(
 	return nil
 }
 
-func (c *Client) JustFileWithOptionalQueryParams(
+func (c *Client) Justfilewithoptionalqueryparams(
 	ctx context.Context,
-	request *upload.JustFileWithOptionalQueryParamsRequest,
+	request *upload.ServiceJustFileWithOptionalQueryParamsRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.JustFileWithOptionalQueryParams(
+	_, err := c.WithRawResponse.Justfilewithoptionalqueryparams(
 		ctx,
 		request,
 		opts...,
@@ -97,12 +97,12 @@ func (c *Client) JustFileWithOptionalQueryParams(
 	return nil
 }
 
-func (c *Client) WithContentType(
+func (c *Client) Withcontenttype(
 	ctx context.Context,
-	request *upload.WithContentTypeRequest,
+	request *upload.ServiceWithContentTypeRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.WithContentType(
+	_, err := c.WithRawResponse.Withcontenttype(
 		ctx,
 		request,
 		opts...,
@@ -113,12 +113,12 @@ func (c *Client) WithContentType(
 	return nil
 }
 
-func (c *Client) WithFormEncoding(
+func (c *Client) Withformencoding(
 	ctx context.Context,
-	request *upload.WithFormEncodingRequest,
+	request *upload.ServiceWithFormEncodingRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.WithFormEncoding(
+	_, err := c.WithRawResponse.Withformencoding(
 		ctx,
 		request,
 		opts...,
@@ -129,12 +129,12 @@ func (c *Client) WithFormEncoding(
 	return nil
 }
 
-func (c *Client) WithFormEncodedContainers(
+func (c *Client) Withformencodedcontainers(
 	ctx context.Context,
-	request *upload.MyOtherRequest,
+	request *upload.ServiceWithFormEncodedContainersRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.WithFormEncodedContainers(
+	_, err := c.WithRawResponse.Withformencodedcontainers(
 		ctx,
 		request,
 		opts...,
@@ -145,12 +145,12 @@ func (c *Client) WithFormEncodedContainers(
 	return nil
 }
 
-func (c *Client) OptionalArgs(
+func (c *Client) Optionalargs(
 	ctx context.Context,
-	request *upload.OptionalArgsRequest,
+	request *upload.ServiceOptionalArgsRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.OptionalArgs(
+	response, err := c.WithRawResponse.Optionalargs(
 		ctx,
 		request,
 		opts...,
@@ -161,12 +161,12 @@ func (c *Client) OptionalArgs(
 	return response.Body, nil
 }
 
-func (c *Client) WithInlineType(
+func (c *Client) Withinlinetype(
 	ctx context.Context,
-	request *upload.InlineTypeRequest,
+	request *upload.ServiceWithInlineTypeRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.WithInlineType(
+	response, err := c.WithRawResponse.Withinlinetype(
 		ctx,
 		request,
 		opts...,
@@ -177,12 +177,12 @@ func (c *Client) WithInlineType(
 	return response.Body, nil
 }
 
-func (c *Client) WithJSONProperty(
+func (c *Client) Withjsonproperty(
 	ctx context.Context,
-	request *upload.WithJSONPropertyRequest,
+	request *upload.ServiceWithJSONPropertyRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.WithJSONProperty(
+	response, err := c.WithRawResponse.Withjsonproperty(
 		ctx,
 		request,
 		opts...,
@@ -207,12 +207,12 @@ func (c *Client) Simple(
 	return nil
 }
 
-func (c *Client) WithLiteralAndEnumTypes(
+func (c *Client) Withliteralandenumtypes(
 	ctx context.Context,
-	request *upload.LiteralEnumRequest,
+	request *upload.ServiceWithLiteralAndEnumTypesRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.WithLiteralAndEnumTypes(
+	response, err := c.WithRawResponse.Withliteralandenumtypes(
 		ctx,
 		request,
 		opts...,

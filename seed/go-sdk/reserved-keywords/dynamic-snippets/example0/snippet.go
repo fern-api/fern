@@ -14,7 +14,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.TestRequest{
+    request := &fern.PackageTestRequest{
         For: "for",
     }
     client.Package.Test(

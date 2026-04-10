@@ -43,37 +43,87 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SeedExhaustiveClient = void 0;
-const Client_js_1 = require("./api/resources/endpoints/client/Client.js");
-const Client_js_2 = require("./api/resources/inlinedRequests/client/Client.js");
-const Client_js_3 = require("./api/resources/noAuth/client/Client.js");
-const Client_js_4 = require("./api/resources/noReqBody/client/Client.js");
-const Client_js_5 = require("./api/resources/reqWithHeaders/client/Client.js");
+exports.SeedApiClient = void 0;
+const Client_js_1 = require("./api/resources/endpointsContainer/client/Client.js");
+const Client_js_2 = require("./api/resources/endpointsContentType/client/Client.js");
+const Client_js_3 = require("./api/resources/endpointsEnum/client/Client.js");
+const Client_js_4 = require("./api/resources/endpointsHttpMethods/client/Client.js");
+const Client_js_5 = require("./api/resources/endpointsObject/client/Client.js");
+const Client_js_6 = require("./api/resources/endpointsPagination/client/Client.js");
+const Client_js_7 = require("./api/resources/endpointsParams/client/Client.js");
+const Client_js_8 = require("./api/resources/endpointsPrimitive/client/Client.js");
+const Client_js_9 = require("./api/resources/endpointsPut/client/Client.js");
+const Client_js_10 = require("./api/resources/endpointsUnion/client/Client.js");
+const Client_js_11 = require("./api/resources/endpointsUrLs/client/Client.js");
+const Client_js_12 = require("./api/resources/inlinedrequests/client/Client.js");
+const Client_js_13 = require("./api/resources/noauth/client/Client.js");
+const Client_js_14 = require("./api/resources/noreqbody/client/Client.js");
+const Client_js_15 = require("./api/resources/reqwithheaders/client/Client.js");
 const BaseClient_js_1 = require("./BaseClient.js");
 const core = __importStar(require("./core/index.js"));
-class SeedExhaustiveClient {
+class SeedApiClient {
     constructor(options) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
     }
-    get endpoints() {
+    get endpointsContainer() {
         var _a;
-        return ((_a = this._endpoints) !== null && _a !== void 0 ? _a : (this._endpoints = new Client_js_1.EndpointsClient(this._options)));
+        return ((_a = this._endpointsContainer) !== null && _a !== void 0 ? _a : (this._endpointsContainer = new Client_js_1.EndpointsContainerClient(this._options)));
     }
-    get inlinedRequests() {
+    get endpointsContentType() {
         var _a;
-        return ((_a = this._inlinedRequests) !== null && _a !== void 0 ? _a : (this._inlinedRequests = new Client_js_2.InlinedRequestsClient(this._options)));
+        return ((_a = this._endpointsContentType) !== null && _a !== void 0 ? _a : (this._endpointsContentType = new Client_js_2.EndpointsContentTypeClient(this._options)));
     }
-    get noAuth() {
+    get endpointsEnum() {
         var _a;
-        return ((_a = this._noAuth) !== null && _a !== void 0 ? _a : (this._noAuth = new Client_js_3.NoAuthClient(this._options)));
+        return ((_a = this._endpointsEnum) !== null && _a !== void 0 ? _a : (this._endpointsEnum = new Client_js_3.EndpointsEnumClient(this._options)));
     }
-    get noReqBody() {
+    get endpointsHttpMethods() {
         var _a;
-        return ((_a = this._noReqBody) !== null && _a !== void 0 ? _a : (this._noReqBody = new Client_js_4.NoReqBodyClient(this._options)));
+        return ((_a = this._endpointsHttpMethods) !== null && _a !== void 0 ? _a : (this._endpointsHttpMethods = new Client_js_4.EndpointsHttpMethodsClient(this._options)));
     }
-    get reqWithHeaders() {
+    get endpointsObject() {
         var _a;
-        return ((_a = this._reqWithHeaders) !== null && _a !== void 0 ? _a : (this._reqWithHeaders = new Client_js_5.ReqWithHeadersClient(this._options)));
+        return ((_a = this._endpointsObject) !== null && _a !== void 0 ? _a : (this._endpointsObject = new Client_js_5.EndpointsObjectClient(this._options)));
+    }
+    get endpointsPagination() {
+        var _a;
+        return ((_a = this._endpointsPagination) !== null && _a !== void 0 ? _a : (this._endpointsPagination = new Client_js_6.EndpointsPaginationClient(this._options)));
+    }
+    get endpointsParams() {
+        var _a;
+        return ((_a = this._endpointsParams) !== null && _a !== void 0 ? _a : (this._endpointsParams = new Client_js_7.EndpointsParamsClient(this._options)));
+    }
+    get endpointsPrimitive() {
+        var _a;
+        return ((_a = this._endpointsPrimitive) !== null && _a !== void 0 ? _a : (this._endpointsPrimitive = new Client_js_8.EndpointsPrimitiveClient(this._options)));
+    }
+    get endpointsPut() {
+        var _a;
+        return ((_a = this._endpointsPut) !== null && _a !== void 0 ? _a : (this._endpointsPut = new Client_js_9.EndpointsPutClient(this._options)));
+    }
+    get endpointsUnion() {
+        var _a;
+        return ((_a = this._endpointsUnion) !== null && _a !== void 0 ? _a : (this._endpointsUnion = new Client_js_10.EndpointsUnionClient(this._options)));
+    }
+    get endpointsUrLs() {
+        var _a;
+        return ((_a = this._endpointsUrLs) !== null && _a !== void 0 ? _a : (this._endpointsUrLs = new Client_js_11.EndpointsUrLsClient(this._options)));
+    }
+    get inlinedrequests() {
+        var _a;
+        return ((_a = this._inlinedrequests) !== null && _a !== void 0 ? _a : (this._inlinedrequests = new Client_js_12.InlinedrequestsClient(this._options)));
+    }
+    get noauth() {
+        var _a;
+        return ((_a = this._noauth) !== null && _a !== void 0 ? _a : (this._noauth = new Client_js_13.NoauthClient(this._options)));
+    }
+    get noreqbody() {
+        var _a;
+        return ((_a = this._noreqbody) !== null && _a !== void 0 ? _a : (this._noreqbody = new Client_js_14.NoreqbodyClient(this._options)));
+    }
+    get reqwithheaders() {
+        var _a;
+        return ((_a = this._reqwithheaders) !== null && _a !== void 0 ? _a : (this._reqwithheaders = new Client_js_15.ReqwithheadersClient(this._options)));
     }
     /**
      * Make a passthrough request using the SDK's configured auth, retry, logging, etc.
@@ -100,4 +150,4 @@ class SeedExhaustiveClient {
         });
     }
 }
-exports.SeedExhaustiveClient = SeedExhaustiveClient;
+exports.SeedApiClient = SeedApiClient;

@@ -22,7 +22,7 @@ impl SubmissionClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn create_execution_session(
+    pub async fn createexecutionsession(
         &self,
         language: &Language,
         options: Option<RequestOptions>,
@@ -30,7 +30,7 @@ impl SubmissionClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                &format!("/sessions/create-session/{}", language),
+                &format!("sessions/create-session/{}", language),
                 None,
                 None,
                 options,
@@ -47,15 +47,15 @@ impl SubmissionClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn get_execution_session(
+    pub async fn getexecutionsession(
         &self,
         session_id: &str,
         options: Option<RequestOptions>,
-    ) -> Result<Option<ExecutionSessionResponse>, ApiError> {
+    ) -> Result<ExecutionSessionResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/sessions/{}", session_id),
+                &format!("sessions/{}", session_id),
                 None,
                 None,
                 options,
@@ -72,7 +72,7 @@ impl SubmissionClient {
     /// # Returns
     ///
     /// Empty response
-    pub async fn stop_execution_session(
+    pub async fn stopexecutionsession(
         &self,
         session_id: &str,
         options: Option<RequestOptions>,
@@ -80,7 +80,7 @@ impl SubmissionClient {
         self.http_client
             .execute_request(
                 Method::DELETE,
-                &format!("/sessions/stop/{}", session_id),
+                &format!("sessions/stop/{}", session_id),
                 None,
                 None,
                 options,
@@ -88,14 +88,14 @@ impl SubmissionClient {
             .await
     }
 
-    pub async fn get_execution_sessions_state(
+    pub async fn getexecutionsessionsstate(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<GetExecutionSessionStateResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/sessions/execution-sessions-state",
+                "sessions/execution-sessions-state",
                 None,
                 None,
                 options,

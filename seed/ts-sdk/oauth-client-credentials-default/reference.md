@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> SeedOauthClientCredentialsDefault.TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">gettoken</a>({ ...params }) -> SeedApi.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,9 +13,10 @@
 <dd>
 
 ```typescript
-await client.auth.getToken({
+await client.auth.gettoken({
     client_id: "client_id",
-    client_secret: "client_secret"
+    client_secret: "client_secret",
+    grant_type: "client_credentials"
 });
 
 ```
@@ -32,7 +33,7 @@ await client.auth.getToken({
 <dl>
 <dd>
 
-**request:** `SeedOauthClientCredentialsDefault.GetTokenRequest` 
+**request:** `SeedApi.AuthGetTokenRequest` 
     
 </dd>
 </dl>
@@ -52,8 +53,8 @@ await client.auth.getToken({
 </dl>
 </details>
 
-## NestedNoAuth Api
-<details><summary><code>client.nestedNoAuth.api.<a href="/src/api/resources/nestedNoAuth/resources/api/client/Client.ts">getSomething</a>() -> void</code></summary>
+## NestedNoAuthApi
+<details><summary><code>client.nestedNoAuthApi.<a href="/src/api/resources/nestedNoAuthApi/client/Client.ts">nestedNoAuthApiGetSomething</a>() -> void</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +67,7 @@ await client.auth.getToken({
 <dd>
 
 ```typescript
-await client.nestedNoAuth.api.getSomething();
+await client.nestedNoAuthApi.nestedNoAuthApiGetSomething();
 
 ```
 </dd>
@@ -82,7 +83,7 @@ await client.nestedNoAuth.api.getSomething();
 <dl>
 <dd>
 
-**requestOptions:** `ApiClient.RequestOptions` 
+**requestOptions:** `NestedNoAuthApiClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -94,8 +95,8 @@ await client.nestedNoAuth.api.getSomething();
 </dl>
 </details>
 
-## Nested Api
-<details><summary><code>client.nested.api.<a href="/src/api/resources/nested/resources/api/client/Client.ts">getSomething</a>() -> void</code></summary>
+## NestedApi
+<details><summary><code>client.nestedApi.<a href="/src/api/resources/nestedApi/client/Client.ts">nestedApiGetSomething</a>() -> void</code></summary>
 <dl>
 <dd>
 
@@ -108,7 +109,7 @@ await client.nestedNoAuth.api.getSomething();
 <dd>
 
 ```typescript
-await client.nested.api.getSomething();
+await client.nestedApi.nestedApiGetSomething();
 
 ```
 </dd>
@@ -124,7 +125,7 @@ await client.nested.api.getSomething();
 <dl>
 <dd>
 
-**requestOptions:** `ApiClient.RequestOptions` 
+**requestOptions:** `NestedApiClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -137,7 +138,7 @@ await client.nested.api.getSomething();
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">getSomething</a>() -> void</code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">getsomething</a>() -> void</code></summary>
 <dl>
 <dd>
 
@@ -150,7 +151,7 @@ await client.nested.api.getSomething();
 <dd>
 
 ```typescript
-await client.simple.getSomething();
+await client.simple.getsomething();
 
 ```
 </dd>

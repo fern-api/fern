@@ -1,0 +1,37 @@
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
+use reqwest::{Method};
+use crate::api::{*};
+
+pub struct FileServiceClient {
+    pub http_client: HttpClient,
+}
+
+impl FileServiceClient {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
+        Ok(Self {
+    http_client: HttpClient::new(config.clone())?
+})
+    }
+
+    /// This endpoint returns a file by its name.
+    ///
+    /// # Arguments
+    ///
+    /// * `filename` - This is a filename
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn file_service_get_file(&self, filename: &str, options: Option<RequestOptions>) -> Result<File, ApiError> {
+        self.http_client.execute_request(
+            Method::GET,
+            &format!("file/{}", filename),
+            None,
+            None,
+            options,
+        ).await
+    }
+
+}
+

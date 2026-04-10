@@ -39,17 +39,11 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedObjectsWithImports;
+using SeedApi;
 
-var client = new SeedObjectsWithImportsClient();
-await client.Optional.SendOptionalBodyAsync(
-    new Dictionary<string, object?>()
-    {
-        {
-            "string",
-            new Dictionary<object, object?>() { { "key", "value" } }
-        },
-    }
+var client = new SeedApiClient();
+await client.Optional.SendoptionalbodyAsync(
+    new Dictionary<string, object?>() { { "key", "value" } }
 );
 ```
 
@@ -59,11 +53,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedObjectsWithImports;
+using SeedApi;
 
 try {
-    var response = await client.Optional.SendOptionalBodyAsync(...);
-} catch (SeedObjectsWithImportsApiException e) {
+    var response = await client.Optional.SendoptionalbodyAsync(...);
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -86,7 +80,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Optional.SendOptionalBodyAsync(
+var response = await client.Optional.SendoptionalbodyAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -99,7 +93,7 @@ var response = await client.Optional.SendOptionalBodyAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Optional.SendOptionalBodyAsync(
+var response = await client.Optional.SendoptionalbodyAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -112,10 +106,10 @@ var response = await client.Optional.SendOptionalBodyAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedObjectsWithImports;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.Optional.SendOptionalBodyAsync(...).WithRawResponse();
+var result = await client.Optional.SendoptionalbodyAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -132,7 +126,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.Optional.SendOptionalBodyAsync(...);
+var data = await client.Optional.SendoptionalbodyAsync(...);
 ```
 
 ### Additional Headers
@@ -140,7 +134,7 @@ var data = await client.Optional.SendOptionalBodyAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.Optional.SendOptionalBodyAsync(
+var response = await client.Optional.SendoptionalbodyAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -156,7 +150,7 @@ var response = await client.Optional.SendOptionalBodyAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.Optional.SendOptionalBodyAsync(
+var response = await client.Optional.SendoptionalbodyAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>

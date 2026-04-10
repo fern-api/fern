@@ -13,7 +13,7 @@ impl SimpleClient {
         })
     }
 
-    pub async fn foo_without_endpoint_error(
+    pub async fn foowithoutendpointerror(
         &self,
         request: &FooRequest,
         options: Option<RequestOptions>,
@@ -45,7 +45,7 @@ impl SimpleClient {
             .await
     }
 
-    pub async fn foo_with_examples(
+    pub async fn foowithexamples(
         &self,
         request: &FooRequest,
         options: Option<RequestOptions>,

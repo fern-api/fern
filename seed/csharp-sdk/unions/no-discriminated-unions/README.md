@@ -18,6 +18,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Raw Response](#raw-response)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
+  - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -39,10 +40,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedUnions;
+using SeedApi;
 
-var client = new SeedUnionsClient();
-await client.Bigunion.GetAsync("id");
+var client = new SeedApiClient();
+await client.Bigunion.GetAsync(new BigunionGetRequest { Id = "id" });
 ```
 
 ## Exception Handling
@@ -51,11 +52,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedUnions;
+using SeedApi;
 
 try {
     var response = await client.Bigunion.GetAsync(...);
-} catch (SeedUnionsApiException e) {
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -104,7 +105,7 @@ var response = await client.Bigunion.GetAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedUnions;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
 var result = await client.Bigunion.GetAsync(...).WithRawResponse();
@@ -157,6 +158,35 @@ var response = await client.Bigunion.GetAsync(
         }
     }
 );
+```
+
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedApi;
+
+// Using a built-in value
+var bigUnionZeroType = BigUnionZeroType.NormalSweet;
+
+// Using a custom value
+var customBigUnionZeroType = BigUnionZeroType.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (bigUnionZeroType.Value)
+{
+    case BigUnionZeroType.Values.NormalSweet:
+        Console.WriteLine("NormalSweet");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {bigUnionZeroType.Value}");
+        break;
+}
+
+// Explicit casting
+string bigUnionZeroTypeString = (string)BigUnionZeroType.NormalSweet;
+BigUnionZeroType bigUnionZeroTypeFromString = (BigUnionZeroType)"normalSweet";
 ```
 
 ## Contributing

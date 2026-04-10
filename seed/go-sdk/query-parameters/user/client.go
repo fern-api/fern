@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) GetUsername(
+func (c *Client) Getusername(
 	ctx context.Context,
-	request *fern.GetUsersRequest,
+	request *fern.UserGetUsernameRequest,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
-	response, err := c.WithRawResponse.GetUsername(
+	response, err := c.WithRawResponse.Getusername(
 		ctx,
 		request,
 		opts...,

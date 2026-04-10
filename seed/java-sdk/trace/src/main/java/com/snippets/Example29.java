@@ -1,14 +1,17 @@
 package com.snippets;
 
-import com.seed.trace.SeedTraceClient;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.playlist.requests.PlaylistGetPlaylistRequest;
 
 public class Example29 {
     public static void main(String[] args) {
-        SeedTraceClient client = SeedTraceClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.sysprop().getNumWarmInstances();
+        client.playlist()
+                .getplaylist(
+                        1, "playlistId", PlaylistGetPlaylistRequest.builder().build());
     }
 }

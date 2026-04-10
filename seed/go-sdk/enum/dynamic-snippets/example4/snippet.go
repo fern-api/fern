@@ -14,11 +14,9 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.PathParam.Send(
+    request := &fern.MultipartFormMultipartFormRequest{}
+    client.Multipartform.Multipartform(
         context.TODO(),
-        fern.OperandGreaterThan.Ptr(),
-        &fern.ColorOrOperand{
-            Color: fern.ColorRed,
-        },
+        request,
     )
 }

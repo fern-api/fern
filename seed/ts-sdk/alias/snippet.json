@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedAliasClient } from \"@fern/alias\";\n\nconst client = new SeedAliasClient({ environment: \"YOUR_BASE_URL\" });\nawait client.get(\"typeId\");\n"
+                "client": "import { SeedApiClient } from \"@fern/alias\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client..get({\n    typeId: \"typeId\"\n});\n"
             }
         }
     ],

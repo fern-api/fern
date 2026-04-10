@@ -6,9 +6,12 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .alias_to_prompt import AliasToPrompt
-    from .alias_to_stream import AliasToStream
-_dynamic_imports: typing.Dict[str, str] = {"AliasToPrompt": ".alias_to_prompt", "AliasToStream": ".alias_to_stream"}
+    from .query_send_request_optional_prompt import QuerySendRequestOptionalPrompt
+    from .query_send_request_prompt import QuerySendRequestPrompt
+_dynamic_imports: typing.Dict[str, str] = {
+    "QuerySendRequestOptionalPrompt": ".query_send_request_optional_prompt",
+    "QuerySendRequestPrompt": ".query_send_request_prompt",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -32,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AliasToPrompt", "AliasToStream"]
+__all__ = ["QuerySendRequestOptionalPrompt", "QuerySendRequestPrompt"]

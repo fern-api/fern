@@ -1,12 +1,12 @@
 package com.snippets;
 
-import com.seed.responseProperty.SeedResponsePropertyClient;
+import com.seed.api.SeedApiClient;
 
 public class Example6 {
     public static void main(String[] args) {
-        SeedResponsePropertyClient client =
-                SeedResponsePropertyClient.builder().url("https://api.fern.com").build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.service().getOptionalMovieName("string");
+        client.service().getmoviemetadata("string");
     }
 }

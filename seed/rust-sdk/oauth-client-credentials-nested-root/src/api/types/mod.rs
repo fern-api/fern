@@ -1,5 +1,9 @@
+pub mod auth_auth_get_token_request_audience;
+pub mod auth_auth_get_token_request_grant_type;
+pub mod auth_get_token_request;
 pub mod auth_token_response;
-pub mod get_token_request;
 
-pub use auth_token_response::TokenResponse;
-pub use get_token_request::GetTokenRequest;
+pub use auth_auth_get_token_request_audience::AuthGetTokenRequestAudience;
+pub use auth_auth_get_token_request_grant_type::AuthGetTokenRequestGrantType;
+pub use auth_get_token_request::AuthGetTokenRequest;
+pub use auth_token_response::AuthTokenResponse;

@@ -1,4 +1,4 @@
-//! API client and types for the Trace
+//! API client and types for the trace
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -12,7 +12,7 @@ pub mod resources;
 pub mod types;
 
 pub use resources::{
-    AdminClient, CommonsClient, HomepageClient, LangServerClient, MigrationClient, PlaylistClient,
-    ProblemClient, SubmissionClient, SyspropClient, TraceClient, V2Client,
+    AdminClient, ApiClient, HomepageClient, MigrationClient, PlaylistClient, ProblemClient,
+    SubmissionClient, SyspropClient, V2Client, V2ProblemClient, V2V3ProblemClient,
 };
 pub use types::*;

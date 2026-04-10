@@ -10,7 +10,6 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
-- [Environments](#environments)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -35,27 +34,15 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedMultiUrlEnvironmentNoDefault
+from seed import SeedApi
 
-client = SeedMultiUrlEnvironmentNoDefault(
+client = SeedApi(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
-client.ec2.boot_instance(
+client.ec2.bootinstance(
     size="size",
-)
-```
-
-## Environments
-
-This SDK allows you to configure different environments for API requests.
-
-```python
-from seed import SeedMultiUrlEnvironmentNoDefault
-from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
-
-client = SeedMultiUrlEnvironmentNoDefault(
-    environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
 )
 ```
 
@@ -66,15 +53,16 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedMultiUrlEnvironmentNoDefault
+from seed import AsyncSeedApi
 
-client = AsyncSeedMultiUrlEnvironmentNoDefault(
+client = AsyncSeedApi(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    await client.ec2.boot_instance(
+    await client.ec2.bootinstance(
         size="size",
     )
 
@@ -91,7 +79,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.ec2.boot_instance(...)
+    client.ec2.bootinstance(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -105,10 +93,10 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedMultiUrlEnvironmentNoDefault
+from seed import SeedApi
 
-client = SeedMultiUrlEnvironmentNoDefault(...)
-response = client.ec2.with_raw_response.boot_instance(...)
+client = SeedApi(...)
+response = client.ec2.with_raw_response.bootinstance(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -129,7 +117,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.ec2.boot_instance(..., request_options={
+client.ec2.bootinstance(..., request_options={
     "max_retries": 1
 })
 ```
@@ -139,12 +127,12 @@ client.ec2.boot_instance(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedMultiUrlEnvironmentNoDefault
+from seed import SeedApi
 
-client = SeedMultiUrlEnvironmentNoDefault(..., timeout=20.0)
+client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.ec2.boot_instance(..., request_options={
+client.ec2.bootinstance(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -156,9 +144,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedMultiUrlEnvironmentNoDefault
+from seed import SeedApi
 
-client = SeedMultiUrlEnvironmentNoDefault(
+client = SeedApi(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

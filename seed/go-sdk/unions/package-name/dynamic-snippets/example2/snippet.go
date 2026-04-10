@@ -14,37 +14,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := []*unions.BigUnion{
-        &unions.BigUnion{
-            NormalSweet: &unions.NormalSweet{
-                Value: "value",
-            },
-            ID: "id",
-            CreatedAt: unions.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-            ArchivedAt: unions.Time(
-                unions.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-            ),
-        },
-        &unions.BigUnion{
-            NormalSweet: &unions.NormalSweet{
-                Value: "value",
-            },
-            ID: "id",
-            CreatedAt: unions.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-            ArchivedAt: unions.Time(
-                unions.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-            ),
+    request := &unions.BigUnion{
+        BigUnionZero: &unions.BigUnionZero{
+            Value: "value",
+            Type: unions.BigUnionZeroTypeNormalSweet,
         },
     }
-    client.Bigunion.UpdateMany(
+    client.Bigunion.Update(
         context.TODO(),
         request,
     )

@@ -1,6 +1,6 @@
 # Reference
-## FolderA Service
-<details><summary><code>client.folderA.service.getDirectThread() -> Response</code></summary>
+## FolderAService
+<details><summary><code>client.folderAService.folderAServiceGetDirectThread() -> FolderAResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```java
-client.folderA().service().getDirectThread();
+client.folderAService().folderAServiceGetDirectThread();
 ```
 </dd>
 </dl>
@@ -25,8 +25,8 @@ client.folderA().service().getDirectThread();
 </dl>
 </details>
 
-## FolderD Service
-<details><summary><code>client.folderD.service.getDirectThread() -> Response</code></summary>
+## FolderDService
+<details><summary><code>client.folderDService.folderDServiceGetDirectThread() -> FolderDResponse</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ client.folderA().service().getDirectThread();
 <dd>
 
 ```java
-client.folderD().service().getDirectThread();
+client.folderDService().folderDServiceGetDirectThread();
 ```
 </dd>
 </dl>
@@ -66,11 +66,8 @@ client.folderD().service().getDirectThread();
 
 ```java
 client.foo().find(
-    FindRequest
+    FooFindRequest
         .builder()
-        .optionalString("optionalString")
-        .publicProperty("publicProperty")
-        .privateProperty(1)
         .build()
 );
 ```

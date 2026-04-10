@@ -2,13 +2,13 @@ import Foundation
 
 public struct GradedResponseV2: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
-    public let testCases: [TestCaseId: TestCaseGrade]
+    public let testCases: [String: TestCaseGrade]
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         submissionId: SubmissionId,
-        testCases: [TestCaseId: TestCaseGrade],
+        testCases: [String: TestCaseGrade],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.submissionId = submissionId
@@ -19,7 +19,7 @@ public struct GradedResponseV2: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.submissionId = try container.decode(SubmissionId.self, forKey: .submissionId)
-        self.testCases = try container.decode([TestCaseId: TestCaseGrade].self, forKey: .testCases)
+        self.testCases = try container.decode([String: TestCaseGrade].self, forKey: .testCases)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

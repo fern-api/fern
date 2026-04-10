@@ -31,11 +31,11 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetMovie(
+func (r *RawClient) Getmovie(
 	ctx context.Context,
 	request string,
 	opts ...option.RequestOption,
-) (*core.Response[*fern.Movie], error) {
+) (*core.Response[*fern.Response], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -65,18 +65,18 @@ func (r *RawClient) GetMovie(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*fern.Movie]{
+	return &core.Response[*fern.Response]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
-		Body:       response.Data,
+		Body:       response,
 	}, nil
 }
 
-func (r *RawClient) GetMovieDocs(
+func (r *RawClient) Getmoviedocs(
 	ctx context.Context,
 	request string,
 	opts ...option.RequestOption,
-) (*core.Response[string], error) {
+) (*core.Response[*fern.Response], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -106,18 +106,18 @@ func (r *RawClient) GetMovieDocs(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[string]{
+	return &core.Response[*fern.Response]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
-		Body:       response.Docs,
+		Body:       response,
 	}, nil
 }
 
-func (r *RawClient) GetMovieName(
+func (r *RawClient) Getmoviename(
 	ctx context.Context,
 	request string,
 	opts ...option.RequestOption,
-) (*core.Response[string], error) {
+) (*core.Response[*fern.StringResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -147,18 +147,18 @@ func (r *RawClient) GetMovieName(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[string]{
+	return &core.Response[*fern.StringResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
-		Body:       response.Data,
+		Body:       response,
 	}, nil
 }
 
-func (r *RawClient) GetMovieMetadata(
+func (r *RawClient) Getmoviemetadata(
 	ctx context.Context,
 	request string,
 	opts ...option.RequestOption,
-) (*core.Response[map[string]string], error) {
+) (*core.Response[*fern.Response], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -188,18 +188,18 @@ func (r *RawClient) GetMovieMetadata(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[map[string]string]{
+	return &core.Response[*fern.Response]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
-		Body:       response.Metadata,
+		Body:       response,
 	}, nil
 }
 
-func (r *RawClient) GetOptionalMovie(
+func (r *RawClient) Getoptionalmovie(
 	ctx context.Context,
 	request string,
 	opts ...option.RequestOption,
-) (*core.Response[*fern.Movie], error) {
+) (*core.Response[*fern.Response], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -229,18 +229,18 @@ func (r *RawClient) GetOptionalMovie(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*fern.Movie]{
+	return &core.Response[*fern.Response]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
-		Body:       response.Data,
+		Body:       response,
 	}, nil
 }
 
-func (r *RawClient) GetOptionalMovieDocs(
+func (r *RawClient) Getoptionalmoviedocs(
 	ctx context.Context,
 	request string,
 	opts ...option.RequestOption,
-) (*core.Response[string], error) {
+) (*core.Response[fern.OptionalWithDocs], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -270,18 +270,18 @@ func (r *RawClient) GetOptionalMovieDocs(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[string]{
+	return &core.Response[fern.OptionalWithDocs]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
-		Body:       response.Docs,
+		Body:       response,
 	}, nil
 }
 
-func (r *RawClient) GetOptionalMovieName(
+func (r *RawClient) Getoptionalmoviename(
 	ctx context.Context,
 	request string,
 	opts ...option.RequestOption,
-) (*core.Response[string], error) {
+) (*core.Response[fern.OptionalStringResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -311,9 +311,9 @@ func (r *RawClient) GetOptionalMovieName(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[string]{
+	return &core.Response[fern.OptionalStringResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
-		Body:       response.Data,
+		Body:       response,
 	}, nil
 }

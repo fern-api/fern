@@ -13,9 +13,9 @@
 <dd>
 
 ```python
-from seed import SeedNurseryApi
+from seed import SeedApi
 
-client = SeedNurseryApi(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 

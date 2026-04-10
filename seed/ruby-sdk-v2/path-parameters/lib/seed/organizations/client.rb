@@ -20,13 +20,13 @@ module Seed
       # @option params [String] :tenant_id
       # @option params [String] :organization_id
       #
-      # @return [Seed::Organizations::Types::Organization]
-      def get_organization(request_options: {}, **params)
+      # @return [Seed::Types::Organization]
+      def getorganization(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{URI.encode_uri_component(params[:tenant_id].to_s)}/organizations/#{URI.encode_uri_component(params[:organization_id].to_s)}/",
+          path: "#{URI.encode_uri_component(params[:tenant_id].to_s)}/organizations/#{URI.encode_uri_component(params[:organization_id].to_s)}/",
           request_options: request_options
         )
         begin
@@ -36,7 +36,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Organizations::Types::Organization.load(response.body)
+          Seed::Types::Organization.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -54,13 +54,13 @@ module Seed
       # @option params [String] :organization_id
       # @option params [String] :user_id
       #
-      # @return [Seed::User::Types::User]
-      def get_organization_user(request_options: {}, **params)
+      # @return [Seed::Types::User]
+      def getorganizationuser(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{URI.encode_uri_component(params[:tenant_id].to_s)}/organizations/#{URI.encode_uri_component(params[:organization_id].to_s)}/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
+          path: "#{URI.encode_uri_component(params[:tenant_id].to_s)}/organizations/#{URI.encode_uri_component(params[:organization_id].to_s)}/users/#{URI.encode_uri_component(params[:user_id].to_s)}",
           request_options: request_options
         )
         begin
@@ -70,7 +70,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::User::Types::User.load(response.body)
+          Seed::Types::User.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -88,8 +88,8 @@ module Seed
       # @option params [String] :organization_id
       # @option params [Integer, nil] :limit
       #
-      # @return [Array[Seed::Organizations::Types::Organization]]
-      def search_organizations(request_options: {}, **params)
+      # @return [Array[Seed::Types::Organization]]
+      def searchorganizations(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[limit]
         query_params = {}
@@ -99,7 +99,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{URI.encode_uri_component(params[:tenant_id].to_s)}/organizations/#{URI.encode_uri_component(params[:organization_id].to_s)}/search",
+          path: "#{URI.encode_uri_component(params[:tenant_id].to_s)}/organizations/#{URI.encode_uri_component(params[:organization_id].to_s)}/search",
           query: query_params,
           request_options: request_options
         )

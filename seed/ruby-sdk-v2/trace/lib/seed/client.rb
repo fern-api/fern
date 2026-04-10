@@ -8,7 +8,7 @@ module Seed
     # @return [void]
     def initialize(token:, base_url: nil)
       @raw_client = Seed::Internal::Http::RawClient.new(
-        base_url: base_url || Seed::Environment::PROD,
+        base_url: base_url || Seed::Environment::DEFAULT,
         headers: {
           "User-Agent" => "fern_trace/0.0.1",
           "X-Fern-Language" => "Ruby",
@@ -55,6 +55,16 @@ module Seed
     # @return [Seed::Sysprop::Client]
     def sysprop
       @sysprop ||= Seed::Sysprop::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::V2Problem::Client]
+    def v2problem
+      @v2problem ||= Seed::V2Problem::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::V2V3Problem::Client]
+    def v2v3problem
+      @v2v3problem ||= Seed::V2V3Problem::Client.new(client: @raw_client)
     end
   end
 end

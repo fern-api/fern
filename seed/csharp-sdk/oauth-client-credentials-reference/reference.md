@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentialsReference/Auth/AuthClient.cs">GetTokenAsync</a>(GetTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedApi/Auth/AuthClient.cs">GettokenAsync</a>(GetTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.Auth.GetTokenAsync(
+await client.Auth.GettokenAsync(
     new GetTokenRequest { ClientId = "client_id", ClientSecret = "client_secret" }
 );
 ```
@@ -43,7 +43,7 @@ await client.Auth.GetTokenAsync(
 </details>
 
 ## Simple
-<details><summary><code>client.Simple.<a href="/src/SeedOauthClientCredentialsReference/Simple/SimpleClient.cs">GetSomethingAsync</a>()</code></summary>
+<details><summary><code>client.Simple.<a href="/src/SeedApi/Simple/SimpleClient.cs">GetsomethingAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -56,7 +56,7 @@ await client.Auth.GetTokenAsync(
 <dd>
 
 ```csharp
-await client.Simple.GetSomethingAsync();
+await client.Simple.GetsomethingAsync();
 ```
 </dd>
 </dl>

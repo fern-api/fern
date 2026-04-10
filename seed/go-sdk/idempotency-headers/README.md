@@ -43,7 +43,7 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.CreatePaymentRequest{
+    request := &fern.PaymentCreateRequest{
         Amount: 1,
         Currency: fern.CurrencyUsd,
     }

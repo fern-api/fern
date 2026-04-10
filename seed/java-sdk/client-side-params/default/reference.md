@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.listResources() -> List&amp;lt;Resource&amp;gt;</code></summary>
+<details><summary><code>client.service.listresources() -> List&amp;lt;Resource&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -27,16 +27,14 @@ List resources with pagination
 <dd>
 
 ```java
-client.service().listResources(
-    ListResourcesRequest
+client.service().listresources(
+    ServiceListResourcesRequest
         .builder()
         .page(1)
         .perPage(1)
-        .sort("created_at")
-        .order("desc")
+        .sort("sort")
+        .order("order")
         .includeTotals(true)
-        .fields("fields")
-        .search("search")
         .build()
 );
 ```
@@ -113,7 +111,7 @@ client.service().listResources(
 </dl>
 </details>
 
-<details><summary><code>client.service.getResource(resourceId) -> Resource</code></summary>
+<details><summary><code>client.service.getresource(resourceId) -> Resource</code></summary>
 <dl>
 <dd>
 
@@ -140,12 +138,12 @@ Get a single resource
 <dd>
 
 ```java
-client.service().getResource(
+client.service().getresource(
     "resourceId",
-    GetResourceRequest
+    ServiceGetResourceRequest
         .builder()
         .includeMetadata(true)
-        .format("json")
+        .format("format")
         .build()
 );
 ```
@@ -190,7 +188,7 @@ client.service().getResource(
 </dl>
 </details>
 
-<details><summary><code>client.service.searchResources(request) -> SearchResponse</code></summary>
+<details><summary><code>client.service.searchresources(request) -> SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -217,19 +215,11 @@ Search resources with complex parameters
 <dd>
 
 ```java
-client.service().searchResources(
-    SearchResourcesRequest
+client.service().searchresources(
+    ServiceSearchResourcesRequest
         .builder()
         .limit(1)
         .offset(1)
-        .query("query")
-        .filters(
-            new HashMap<String, Object>() {{
-                put("filters", new 
-                HashMap<String, Object>() {{put("key", "value");
-                }});
-            }}
-        )
         .build()
 );
 ```
@@ -282,7 +272,7 @@ client.service().searchResources(
 </dl>
 </details>
 
-<details><summary><code>client.service.listUsers() -> PaginatedUserResponse</code></summary>
+<details><summary><code>client.service.listusers() -> PaginatedUserResponse</code></summary>
 <dl>
 <dd>
 
@@ -309,17 +299,9 @@ List or search for users
 <dd>
 
 ```java
-client.service().listUsers(
-    ListUsersRequest
+client.service().listusers(
+    ServiceListUsersRequest
         .builder()
-        .page(1)
-        .perPage(1)
-        .includeTotals(true)
-        .sort("sort")
-        .connection("connection")
-        .q("q")
-        .searchEngine("search_engine")
-        .fields("fields")
         .build()
 );
 ```
@@ -404,7 +386,131 @@ client.service().listUsers(
 </dl>
 </details>
 
-<details><summary><code>client.service.getUserById(userId) -> User</code></summary>
+<details><summary><code>client.service.createuser(request) -> User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().createuser(
+    CreateUserRequest
+        .builder()
+        .email("email")
+        .connection("connection")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**email:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**emailVerified:** `Optional<Boolean>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**username:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phoneNumber:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phoneVerified:** `Optional<Boolean>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userMetadata:** `Optional<Map<String, Object>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**appMetadata:** `Optional<Map<String, Object>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connection:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.getuserbyid(userId) -> User</code></summary>
 <dl>
 <dd>
 
@@ -431,12 +537,10 @@ Get a user by ID
 <dd>
 
 ```java
-client.service().getUserById(
+client.service().getuserbyid(
     "userId",
-    GetUserRequest
+    ServiceGetUserByIdRequest
         .builder()
-        .fields("fields")
-        .includeFields(true)
         .build()
 );
 ```
@@ -481,174 +585,7 @@ client.service().getUserById(
 </dl>
 </details>
 
-<details><summary><code>client.service.createUser(request) -> User</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new user
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```java
-client.service().createUser(
-    CreateUserRequest
-        .builder()
-        .email("email")
-        .connection("connection")
-        .emailVerified(true)
-        .username("username")
-        .password("password")
-        .phoneNumber("phone_number")
-        .phoneVerified(true)
-        .userMetadata(
-            new HashMap<String, Object>() {{
-                put("user_metadata", new 
-                HashMap<String, Object>() {{put("key", "value");
-                }});
-            }}
-        )
-        .appMetadata(
-            new HashMap<String, Object>() {{
-                put("app_metadata", new 
-                HashMap<String, Object>() {{put("key", "value");
-                }});
-            }}
-        )
-        .build()
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `CreateUserRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.service.updateUser(userId, request) -> User</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a user
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```java
-client.service().updateUser(
-    "userId",
-    UpdateUserRequest
-        .builder()
-        .email("email")
-        .emailVerified(true)
-        .username("username")
-        .phoneNumber("phone_number")
-        .phoneVerified(true)
-        .userMetadata(
-            new HashMap<String, Object>() {{
-                put("user_metadata", new 
-                HashMap<String, Object>() {{put("key", "value");
-                }});
-            }}
-        )
-        .appMetadata(
-            new HashMap<String, Object>() {{
-                put("app_metadata", new 
-                HashMap<String, Object>() {{put("key", "value");
-                }});
-            }}
-        )
-        .password("password")
-        .blocked(true)
-        .build()
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**userId:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `UpdateUserRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.service.deleteUser(userId)</code></summary>
+<details><summary><code>client.service.deleteuser(userId)</code></summary>
 <dl>
 <dd>
 
@@ -675,7 +612,12 @@ Delete a user
 <dd>
 
 ```java
-client.service().deleteUser("userId");
+client.service().deleteuser(
+    "userId",
+    ServiceDeleteUserRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -702,7 +644,138 @@ client.service().deleteUser("userId");
 </dl>
 </details>
 
-<details><summary><code>client.service.listConnections() -> List&amp;lt;Connection&amp;gt;</code></summary>
+<details><summary><code>client.service.updateuser(userId, request) -> User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().updateuser(
+    "userId",
+    UpdateUserRequest
+        .builder()
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**emailVerified:** `Optional<Boolean>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**username:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phoneNumber:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phoneVerified:** `Optional<Boolean>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userMetadata:** `Optional<Map<String, Object>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**appMetadata:** `Optional<Map<String, Object>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**blocked:** `Optional<Boolean>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.listconnections() -> List&amp;lt;Connection&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -729,12 +802,9 @@ List all connections
 <dd>
 
 ```java
-client.service().listConnections(
-    ListConnectionsRequest
+client.service().listconnections(
+    ServiceListConnectionsRequest
         .builder()
-        .strategy("strategy")
-        .name("name")
-        .fields("fields")
         .build()
 );
 ```
@@ -779,7 +849,7 @@ client.service().listConnections(
 </dl>
 </details>
 
-<details><summary><code>client.service.getConnection(connectionId) -> Connection</code></summary>
+<details><summary><code>client.service.getconnection(connectionId) -> Connection</code></summary>
 <dl>
 <dd>
 
@@ -806,11 +876,10 @@ Get a connection by ID
 <dd>
 
 ```java
-client.service().getConnection(
+client.service().getconnection(
     "connectionId",
-    GetConnectionRequest
+    ServiceGetConnectionRequest
         .builder()
-        .fields("fields")
         .build()
 );
 ```
@@ -847,7 +916,7 @@ client.service().getConnection(
 </dl>
 </details>
 
-<details><summary><code>client.service.listClients() -> PaginatedClientResponse</code></summary>
+<details><summary><code>client.service.listclients() -> PaginatedClientResponse</code></summary>
 <dl>
 <dd>
 
@@ -874,21 +943,9 @@ List all clients/applications
 <dd>
 
 ```java
-client.service().listClients(
-    ListClientsRequest
+client.service().listclients(
+    ServiceListClientsRequest
         .builder()
-        .fields("fields")
-        .includeFields(true)
-        .page(1)
-        .perPage(1)
-        .includeTotals(true)
-        .isGlobal(true)
-        .isFirstParty(true)
-        .appType(
-            Optional.of(
-                Arrays.asList("app_type", "app_type")
-            )
-        )
         .build()
 );
 ```
@@ -973,7 +1030,7 @@ client.service().listClients(
 </dl>
 </details>
 
-<details><summary><code>client.service.getClient(clientId) -> Client</code></summary>
+<details><summary><code>client.service.getclient(clientId) -> Client</code></summary>
 <dl>
 <dd>
 
@@ -1000,12 +1057,10 @@ Get a client by ID
 <dd>
 
 ```java
-client.service().getClient(
+client.service().getclient(
     "clientId",
-    GetClientRequest
+    ServiceGetClientRequest
         .builder()
-        .fields("fields")
-        .includeFields(true)
         .build()
 );
 ```

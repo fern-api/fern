@@ -2,14 +2,6 @@
 
 from .type import Type
 
-"""
-from seed import Type
-
-Type(
-    id="kljasc85",
-    name="bar",
-)
-"""
 Object = Type
 """
 Object is an alias for a type.

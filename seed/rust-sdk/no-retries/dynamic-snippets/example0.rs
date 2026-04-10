@@ -1,4 +1,4 @@
-use seed_no_retries::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,6 +6,6 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = NoRetriesClient::new(config).expect("Failed to build client");
-    client.retries.get_users(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.retries.getusers(None).await;
 }

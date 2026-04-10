@@ -4,7 +4,7 @@ pub use crate::prelude::*;
 pub struct Account {
     #[serde(flatten)]
     pub base_resource_fields: BaseResource,
-    pub resource_type: String,
+    pub resource_type: AccountResourceType,
     #[serde(default)]
     pub name: String,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -23,7 +23,7 @@ impl Account {
 #[non_exhaustive]
 pub struct AccountBuilder {
     base_resource_fields: Option<BaseResource>,
-    resource_type: Option<String>,
+    resource_type: Option<AccountResourceType>,
     name: Option<String>,
     patient: Option<Patient>,
     practitioner: Option<Practitioner>,
@@ -35,8 +35,8 @@ impl AccountBuilder {
         self
     }
 
-    pub fn resource_type(mut self, value: impl Into<String>) -> Self {
-        self.resource_type = Some(value.into());
+    pub fn resource_type(mut self, value: AccountResourceType) -> Self {
+        self.resource_type = Some(value);
         self
     }
 
@@ -62,12 +62,8 @@ impl AccountBuilder {
     /// - [`name`](AccountBuilder::name)
     pub fn build(self) -> Result<Account, BuildError> {
         Ok(Account {
-            base_resource_fields: self
-                .base_resource_fields
-                .ok_or_else(|| BuildError::missing_field("base_resource_fields"))?,
-            resource_type: self
-                .resource_type
-                .ok_or_else(|| BuildError::missing_field("resource_type"))?,
+            base_resource_fields: self.base_resource_fields.ok_or_else(|| BuildError::missing_field("base_resource_fields"))?,
+            resource_type: self.resource_type.ok_or_else(|| BuildError::missing_field("resource_type"))?,
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
             patient: self.patient,
             practitioner: self.practitioner,

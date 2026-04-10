@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Types\TypesObjectWithRequiredField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,6 +11,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->params->getWithInlinePath(
-    'param',
+$client->endpointsObject->endpointsObjectGetAndReturnWithRequiredField(
+    new TypesObjectWithRequiredField([
+        'string' => 'string',
+    ]),
 );

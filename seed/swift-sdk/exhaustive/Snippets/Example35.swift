@@ -1,16 +1,15 @@
 import Foundation
-import Exhaustive
+import Api
 
 private func main() async throws {
-    let client = ExhaustiveClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpoints.params.getWithQuery(
-        query: "query",
-        number: 1
-    )
+    _ = try await client.endpointsObject.endpointsObjectGetAndReturnWithRequiredField(request: TypesObjectWithRequiredField(
+        string: "string"
+    ))
 }
 
 try await main()

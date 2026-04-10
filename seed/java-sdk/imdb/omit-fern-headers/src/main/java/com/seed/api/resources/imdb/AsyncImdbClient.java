@@ -5,8 +5,9 @@ package com.seed.api.resources.imdb;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.resources.imdb.types.CreateMovieRequest;
-import com.seed.api.resources.imdb.types.Movie;
+import com.seed.api.resources.imdb.requests.CreateMovieRequest;
+import com.seed.api.resources.imdb.requests.ImdbGetMovieRequest;
+import com.seed.api.types.Movie;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncImdbClient {
@@ -29,22 +30,31 @@ public class AsyncImdbClient {
     /**
      * Add a movie to the database using the movies/* /... path.
      */
-    public CompletableFuture<String> createMovie(CreateMovieRequest request) {
-        return this.rawClient.createMovie(request).thenApply(response -> response.body());
+    public CompletableFuture<String> createmovie(CreateMovieRequest request) {
+        return this.rawClient.createmovie(request).thenApply(response -> response.body());
     }
 
     /**
      * Add a movie to the database using the movies/* /... path.
      */
-    public CompletableFuture<String> createMovie(CreateMovieRequest request, RequestOptions requestOptions) {
-        return this.rawClient.createMovie(request, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<String> createmovie(CreateMovieRequest request, RequestOptions requestOptions) {
+        return this.rawClient.createmovie(request, requestOptions).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<Movie> getMovie(String movieId) {
-        return this.rawClient.getMovie(movieId).thenApply(response -> response.body());
+    public CompletableFuture<Movie> getmovie(String movieId) {
+        return this.rawClient.getmovie(movieId).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<Movie> getMovie(String movieId, RequestOptions requestOptions) {
-        return this.rawClient.getMovie(movieId, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<Movie> getmovie(String movieId, RequestOptions requestOptions) {
+        return this.rawClient.getmovie(movieId, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Movie> getmovie(String movieId, ImdbGetMovieRequest request) {
+        return this.rawClient.getmovie(movieId, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Movie> getmovie(
+            String movieId, ImdbGetMovieRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getmovie(movieId, request, requestOptions).thenApply(response -> response.body());
     }
 }

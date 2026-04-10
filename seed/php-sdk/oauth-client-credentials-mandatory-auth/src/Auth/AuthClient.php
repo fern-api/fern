@@ -4,15 +4,15 @@ namespace Seed\Auth;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Auth\Requests\GetTokenRequest;
-use Seed\Auth\Types\TokenResponse;
+use Seed\Auth\Requests\AuthGetTokenWithClientCredentialsRequest;
+use Seed\Types\TokenResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Auth\Requests\RefreshTokenRequest;
+use Seed\Auth\Requests\AuthRefreshTokenRequest;
 
 class AuthClient
 {
@@ -51,7 +51,7 @@ class AuthClient
     }
 
     /**
-     * @param GetTokenRequest $request
+     * @param AuthGetTokenWithClientCredentialsRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -64,14 +64,14 @@ class AuthClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getTokenWithClientCredentials(GetTokenRequest $request, ?array $options = null): ?TokenResponse
+    public function gettokenwithclientcredentials(AuthGetTokenWithClientCredentialsRequest $request, ?array $options = null): ?TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/token",
+                    path: "token",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -98,7 +98,7 @@ class AuthClient
     }
 
     /**
-     * @param RefreshTokenRequest $request
+     * @param AuthRefreshTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -111,14 +111,14 @@ class AuthClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function refreshToken(RefreshTokenRequest $request, ?array $options = null): ?TokenResponse
+    public function refreshtoken(AuthRefreshTokenRequest $request, ?array $options = null): ?TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/token/refresh",
+                    path: "token/refresh",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

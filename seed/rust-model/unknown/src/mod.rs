@@ -1,15 +1,16 @@
-//! Request and response types for the UnknownAsAny
+//! Request and response types for the unknown
 //!
 //! This module contains all data structures used for API communication,
 //! including request bodies, response types, and shared models.
 //!
 //! ## Type Categories
 //!
-//! - **Model Types**: 2 types for data representation
+//! - **Request/Response Types**: 1 types for API operations
+//! - **Model Types**: 1 types for data representation
 
-pub mod unknown_my_alias;
-pub mod unknown_my_object;
+pub mod my_alias;
+pub mod my_object;
 
-pub use unknown_my_alias::MyAlias;
-pub use unknown_my_object::MyObject;
+pub use my_alias::MyAlias;
+pub use my_object::MyObject;
 

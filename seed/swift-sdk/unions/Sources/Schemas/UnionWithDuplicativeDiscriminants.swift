@@ -1,40 +1,30 @@
 import Foundation
 
 public enum UnionWithDuplicativeDiscriminants: Codable, Hashable, Sendable {
-    case firstItemType(FirstItemType)
-    case secondItemType(SecondItemType)
+    case unionWithDuplicativeDiscriminantsOne(UnionWithDuplicativeDiscriminantsOne)
+    case unionWithDuplicativeDiscriminantsZero(UnionWithDuplicativeDiscriminantsZero)
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let discriminant = try container.decode(String.self, forKey: .type)
-        switch discriminant {
-        case "firstItemType":
-            self = .firstItemType(try FirstItemType(from: decoder))
-        case "secondItemType":
-            self = .secondItemType(try SecondItemType(from: decoder))
-        default:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: decoder.codingPath,
-                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
-                )
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(UnionWithDuplicativeDiscriminantsOne.self) {
+            self = .unionWithDuplicativeDiscriminantsOne(value)
+        } else if let value = try? container.decode(UnionWithDuplicativeDiscriminantsZero.self) {
+            self = .unionWithDuplicativeDiscriminantsZero(value)
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unexpected value."
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.singleValueContainer()
         switch self {
-        case .firstItemType(let data):
-            try container.encode("firstItemType", forKey: .type)
-            try data.encode(to: encoder)
-        case .secondItemType(let data):
-            try container.encode("secondItemType", forKey: .type)
-            try data.encode(to: encoder)
+        case .unionWithDuplicativeDiscriminantsOne(let value):
+            try container.encode(value)
+        case .unionWithDuplicativeDiscriminantsZero(let value):
+            try container.encode(value)
         }
-    }
-
-    enum CodingKeys: String, CodingKey, CaseIterable {
-        case type
     }
 }

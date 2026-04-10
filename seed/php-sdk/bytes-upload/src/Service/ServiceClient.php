@@ -9,7 +9,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Service\Requests\UploadWithQueryParamsRequest;
+use Seed\Service\Requests\ServiceUploadWithQueryParamsRequest;
 
 class ServiceClient
 {
@@ -86,7 +86,7 @@ class ServiceClient
     }
 
     /**
-     * @param UploadWithQueryParamsRequest $request
+     * @param ServiceUploadWithQueryParamsRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -98,7 +98,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function uploadWithQueryParams(UploadWithQueryParamsRequest $request, ?array $options = null): void
+    public function uploadwithqueryparams(ServiceUploadWithQueryParamsRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];

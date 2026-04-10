@@ -5,8 +5,7 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.service.get_user_by_id(
-  user_id: "userId",
-  fields: "fields",
-  include_fields: true
+client.service.searchresources(
+  limit: 1,
+  offset: 1
 )

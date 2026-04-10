@@ -1,13 +1,12 @@
 package com.snippets;
 
-import com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient;
+import com.seed.api.SeedApiClient;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient.builder()
-                .url("https://api.fern.com")
-                .build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.folderA().service().getDirectThread();
+        client.folderAService().folderAServiceGetDirectThread();
     }
 }

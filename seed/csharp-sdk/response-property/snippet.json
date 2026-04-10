@@ -6,11 +6,11 @@
             "id": {
                 "path": "/movie",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getMovie"
+                "identifier_override": "endpoint_service.getmovie"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponsePropertyClient();\nawait client.Service.GetMovieAsync(\"string\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.GetmovieAsync(\"string\");\n"
             }
         },
         {
@@ -18,11 +18,11 @@
             "id": {
                 "path": "/movie/docs",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getMovieDocs"
+                "identifier_override": "endpoint_service.getmoviedocs"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponsePropertyClient();\nawait client.Service.GetMovieDocsAsync(\"string\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.GetmoviedocsAsync(\"string\");\n"
             }
         },
         {
@@ -30,11 +30,11 @@
             "id": {
                 "path": "/movie/name",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getMovieName"
+                "identifier_override": "endpoint_service.getmoviename"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponsePropertyClient();\nawait client.Service.GetMovieNameAsync(\"string\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.GetmovienameAsync(\"string\");\n"
             }
         },
         {
@@ -42,11 +42,11 @@
             "id": {
                 "path": "/movie/metadata",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getMovieMetadata"
+                "identifier_override": "endpoint_service.getmoviemetadata"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponsePropertyClient();\nawait client.Service.GetMovieMetadataAsync(\"string\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.GetmoviemetadataAsync(\"string\");\n"
             }
         },
         {
@@ -54,11 +54,11 @@
             "id": {
                 "path": "/movie/optional",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getOptionalMovie"
+                "identifier_override": "endpoint_service.getoptionalmovie"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponsePropertyClient();\nawait client.Service.GetOptionalMovieAsync(\"string\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.GetoptionalmovieAsync(\"string\");\n"
             }
         },
         {
@@ -66,11 +66,11 @@
             "id": {
                 "path": "/movie/optional/docs",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getOptionalMovieDocs"
+                "identifier_override": "endpoint_service.getoptionalmoviedocs"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponsePropertyClient();\nawait client.Service.GetOptionalMovieDocsAsync(\"string\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.GetoptionalmoviedocsAsync(\"string\");\n"
             }
         },
         {
@@ -78,11 +78,11 @@
             "id": {
                 "path": "/movie/optional/name",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getOptionalMovieName"
+                "identifier_override": "endpoint_service.getoptionalmoviename"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedResponseProperty;\n\nvar client = new SeedResponsePropertyClient();\nawait client.Service.GetOptionalMovieNameAsync(\"string\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.GetoptionalmovienameAsync(\"string\");\n"
             }
         }
     ]

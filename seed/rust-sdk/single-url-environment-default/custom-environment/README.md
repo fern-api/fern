@@ -51,8 +51,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = SingleUrlEnvironmentDefaultClient::new(config).expect("Failed to build client");
-    client.dummy.get_dummy(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.dummy.getdummy(None).await;
 }
 ```
 
@@ -75,7 +75,7 @@ let client = Client::new(config).expect("Failed to build client");
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-match client.dummy.get_dummy(None)?.await {
+match client.dummy.getdummy(None)?.await {
     Ok(response) => {
         println!("Success: {:?}", response);
     },
@@ -105,7 +105,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-let response = client.dummy.get_dummy(
+let response = client.dummy.getdummy(
     Some(RequestOptions::new().max_retries(3))
 )?.await;
 ```
@@ -115,7 +115,7 @@ let response = client.dummy.get_dummy(
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-let response = client.dummy.get_dummy(
+let response = client.dummy.getdummy(
     Some(RequestOptions::new().timeout_seconds(30))
 )?.await;
 ```
@@ -125,7 +125,7 @@ let response = client.dummy.get_dummy(
 You can add custom headers to requests using `RequestOptions`.
 
 ```rust
-let response = client.dummy.get_dummy(
+let response = client.dummy.getdummy(
     Some(
         RequestOptions::new()
             .additional_header("X-Custom-Header", "custom-value")
@@ -140,7 +140,7 @@ let response = client.dummy.get_dummy(
 You can add custom query parameters to requests using `RequestOptions`.
 
 ```rust
-let response = client.dummy.get_dummy(
+let response = client.dummy.getdummy(
     Some(
         RequestOptions::new()
             .additional_query_param("filter", "active")

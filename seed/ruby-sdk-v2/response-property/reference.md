@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_movie</a>(request) -> Seed::Service::Types::Response</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">getmovie</a>(request) -> Seed::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.service.get_movie(request: "string")
+client.service.getmovie(request: "string")
 ```
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.service.get_movie(request: "string")
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_movie_docs</a>(request) -> Seed::Service::Types::Response</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">getmoviedocs</a>(request) -> Seed::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ client.service.get_movie(request: "string")
 <dd>
 
 ```ruby
-client.service.get_movie_docs(request: "string")
+client.service.getmoviedocs(request: "string")
 ```
 </dd>
 </dl>
@@ -96,7 +96,7 @@ client.service.get_movie_docs(request: "string")
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_movie_name</a>(request) -> Seed::Types::StringResponse</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">getmoviename</a>(request) -> Seed::Types::StringResponse</code></summary>
 <dl>
 <dd>
 
@@ -109,7 +109,7 @@ client.service.get_movie_docs(request: "string")
 <dd>
 
 ```ruby
-client.service.get_movie_name(request: "string")
+client.service.getmoviename(request: "string")
 ```
 </dd>
 </dl>
@@ -144,7 +144,7 @@ client.service.get_movie_name(request: "string")
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_movie_metadata</a>(request) -> Seed::Service::Types::Response</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">getmoviemetadata</a>(request) -> Seed::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -157,7 +157,7 @@ client.service.get_movie_name(request: "string")
 <dd>
 
 ```ruby
-client.service.get_movie_metadata(request: "string")
+client.service.getmoviemetadata(request: "string")
 ```
 </dd>
 </dl>
@@ -192,7 +192,7 @@ client.service.get_movie_metadata(request: "string")
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_optional_movie</a>(request) -> Seed::Service::Types::Response</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">getoptionalmovie</a>(request) -> Seed::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -205,7 +205,7 @@ client.service.get_movie_metadata(request: "string")
 <dd>
 
 ```ruby
-client.service.get_optional_movie(request: "string")
+client.service.getoptionalmovie(request: "string")
 ```
 </dd>
 </dl>
@@ -240,7 +240,7 @@ client.service.get_optional_movie(request: "string")
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_optional_movie_docs</a>(request) -> Seed::Service::Types::WithDocs</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">getoptionalmoviedocs</a>(request) -> Seed::Types::WithDocs</code></summary>
 <dl>
 <dd>
 
@@ -253,7 +253,7 @@ client.service.get_optional_movie(request: "string")
 <dd>
 
 ```ruby
-client.service.get_optional_movie_docs(request: "string")
+client.service.getoptionalmoviedocs(request: "string")
 ```
 </dd>
 </dl>
@@ -288,7 +288,7 @@ client.service.get_optional_movie_docs(request: "string")
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_optional_movie_name</a>(request) -> Seed::Types::StringResponse</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">getoptionalmoviename</a>(request) -> Seed::Types::StringResponse</code></summary>
 <dl>
 <dd>
 
@@ -301,7 +301,7 @@ client.service.get_optional_movie_docs(request: "string")
 <dd>
 
 ```ruby
-client.service.get_optional_movie_name(request: "string")
+client.service.getoptionalmoviename(request: "string")
 ```
 </dd>
 </dl>

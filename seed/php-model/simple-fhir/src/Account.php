@@ -11,7 +11,7 @@ class Account extends JsonSerializableType
     use BaseResource;
 
     /**
-     * @var 'Account' $resourceType
+     * @var value-of<AccountResourceType> $resourceType
      */
     #[JsonProperty('resource_type')]
     public string $resourceType;
@@ -37,14 +37,9 @@ class Account extends JsonSerializableType
     /**
      * @param array{
      *   id: string,
-     *   relatedResources: array<(
-     *    Account
-     *   |Patient
-     *   |Practitioner
-     *   |Script
-     * )>,
+     *   relatedResources: array<ResourceList>,
      *   memo: Memo,
-     *   resourceType: 'Account',
+     *   resourceType: value-of<AccountResourceType>,
      *   name: string,
      *   patient?: ?Patient,
      *   practitioner?: ?Practitioner,

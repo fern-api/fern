@@ -55,17 +55,17 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient;
-import com.seed.crossPackageTypeNames.resources.foo.requests.FindRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.foo.requests.FooFindRequest;
 
 public class Example {
     public static void main(String[] args) {
-        SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .build();
 
         client.foo().find(
-            FindRequest
+            FooFindRequest
                 .builder()
                 .optionalString("optionalString")
                 .publicProperty("publicProperty")
@@ -81,9 +81,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient;
+import com.seed.api.SeedApiClient;
 
-SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient
+SeedApiClient client = SeedApiClient
     .builder()
     .url("https://example.com")
     .build();
@@ -94,11 +94,11 @@ SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesApiException;
+import com.seed.api.core.SeedApiApiException;
 
 try{
     client.foo().find(...);
-} catch (SeedCrossPackageTypeNamesApiException e){
+} catch (SeedApiApiException e){
     // Do something with the API exception...
 }
 ```
@@ -111,12 +111,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient;
+import com.seed.api.SeedApiClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient
+SeedApiClient client = SeedApiClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -139,9 +139,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient;
+import com.seed.api.SeedApiClient;
 
-SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient
+SeedApiClient client = SeedApiClient
     .builder()
     .maxRetries(1)
     .build();
@@ -151,11 +151,11 @@ SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient;
-import com.seed.crossPackageTypeNames.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient
+SeedApiClient client = SeedApiClient
     .builder()
     .timeout(60)
     .build();
@@ -175,11 +175,11 @@ client.foo().find(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient;
-import com.seed.crossPackageTypeNames.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient
+SeedApiClient client = SeedApiClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -203,7 +203,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedCrossPackageTypeNamesHttpResponse response = client.foo().withRawResponse().find(...);
+SeedApiHttpResponse response = client.foo().withRawResponse().find(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

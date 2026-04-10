@@ -6,29 +6,23 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        Client,
-        Connection,
-        CreateUserRequest,
-        Identity,
-        PaginatedClientResponse,
-        PaginatedUserResponse,
-        Resource,
-        SearchResponse,
-        UpdateUserRequest,
-        User,
-    )
+    from .client import Client
+    from .connection import Connection
+    from .identity import Identity
+    from .paginated_client_response import PaginatedClientResponse
+    from .paginated_user_response import PaginatedUserResponse
+    from .resource import Resource
+    from .search_response import SearchResponse
+    from .user import User
 _dynamic_imports: typing.Dict[str, str] = {
-    "Client": ".types",
-    "Connection": ".types",
-    "CreateUserRequest": ".types",
-    "Identity": ".types",
-    "PaginatedClientResponse": ".types",
-    "PaginatedUserResponse": ".types",
-    "Resource": ".types",
-    "SearchResponse": ".types",
-    "UpdateUserRequest": ".types",
-    "User": ".types",
+    "Client": ".client",
+    "Connection": ".connection",
+    "Identity": ".identity",
+    "PaginatedClientResponse": ".paginated_client_response",
+    "PaginatedUserResponse": ".paginated_user_response",
+    "Resource": ".resource",
+    "SearchResponse": ".search_response",
+    "User": ".user",
 }
 
 
@@ -56,12 +50,10 @@ def __dir__():
 __all__ = [
     "Client",
     "Connection",
-    "CreateUserRequest",
     "Identity",
     "PaginatedClientResponse",
     "PaginatedUserResponse",
     "Resource",
     "SearchResponse",
-    "UpdateUserRequest",
     "User",
 ]

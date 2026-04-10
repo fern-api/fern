@@ -1,44 +1,35 @@
 import Foundation
 
 public enum UnionWithMultipleNoProperties: Codable, Hashable, Sendable {
-    case empty1
-    case empty2
-    case foo(Foo)
+    case unionWithMultipleNoPropertiesOne(UnionWithMultipleNoPropertiesOne)
+    case unionWithMultipleNoPropertiesTwo(UnionWithMultipleNoPropertiesTwo)
+    case unionWithMultipleNoPropertiesZero(UnionWithMultipleNoPropertiesZero)
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let discriminant = try container.decode(String.self, forKey: .type)
-        switch discriminant {
-        case "empty1":
-            self = .empty1
-        case "empty2":
-            self = .empty2
-        case "foo":
-            self = .foo(try Foo(from: decoder))
-        default:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: decoder.codingPath,
-                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
-                )
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(UnionWithMultipleNoPropertiesOne.self) {
+            self = .unionWithMultipleNoPropertiesOne(value)
+        } else if let value = try? container.decode(UnionWithMultipleNoPropertiesTwo.self) {
+            self = .unionWithMultipleNoPropertiesTwo(value)
+        } else if let value = try? container.decode(UnionWithMultipleNoPropertiesZero.self) {
+            self = .unionWithMultipleNoPropertiesZero(value)
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unexpected value."
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.singleValueContainer()
         switch self {
-        case .empty1:
-            try container.encode("empty1", forKey: .type)
-        case .empty2:
-            try container.encode("empty2", forKey: .type)
-        case .foo(let data):
-            try container.encode("foo", forKey: .type)
-            try data.encode(to: encoder)
+        case .unionWithMultipleNoPropertiesOne(let value):
+            try container.encode(value)
+        case .unionWithMultipleNoPropertiesTwo(let value):
+            try container.encode(value)
+        case .unionWithMultipleNoPropertiesZero(let value):
+            try container.encode(value)
         }
-    }
-
-    enum CodingKeys: String, CodingKey, CaseIterable {
-        case type
     }
 }

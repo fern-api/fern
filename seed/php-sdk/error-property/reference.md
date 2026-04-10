@@ -1,6 +1,6 @@
 # Reference
-## PropertyBasedError
-<details><summary><code>$client-&gt;propertyBasedError-&gt;throwError() -> ?string</code></summary>
+## Propertybasederror
+<details><summary><code>$client-&gt;propertybasederror-&gt;throwerror() -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request that always throws an error
 <dd>
 
 ```php
-$client->propertyBasedError->throwError();
+$client->propertybasederror->throwerror();
 ```
 </dd>
 </dl>

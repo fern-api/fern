@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_movie</a>(...) -> Response</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">getmovie</a>(...) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,13 @@
 <dd>
 
 ```python
-from seed import SeedResponseProperty
+from seed import SeedApi
 
-client = SeedResponseProperty(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.get_movie(
+client.service.getmovie(
     request="string",
 )
 
@@ -57,7 +57,7 @@ client.service.get_movie(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_movie_docs</a>(...) -> Response</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">getmoviedocs</a>(...) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -70,13 +70,13 @@ client.service.get_movie(
 <dd>
 
 ```python
-from seed import SeedResponseProperty
+from seed import SeedApi
 
-client = SeedResponseProperty(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.get_movie_docs(
+client.service.getmoviedocs(
     request="string",
 )
 
@@ -114,7 +114,7 @@ client.service.get_movie_docs(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_movie_name</a>(...) -> StringResponse</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">getmoviename</a>(...) -> StringResponse</code></summary>
 <dl>
 <dd>
 
@@ -127,13 +127,13 @@ client.service.get_movie_docs(
 <dd>
 
 ```python
-from seed import SeedResponseProperty
+from seed import SeedApi
 
-client = SeedResponseProperty(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.get_movie_name(
+client.service.getmoviename(
     request="string",
 )
 
@@ -171,7 +171,7 @@ client.service.get_movie_name(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_movie_metadata</a>(...) -> Response</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">getmoviemetadata</a>(...) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -184,13 +184,13 @@ client.service.get_movie_name(
 <dd>
 
 ```python
-from seed import SeedResponseProperty
+from seed import SeedApi
 
-client = SeedResponseProperty(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.get_movie_metadata(
+client.service.getmoviemetadata(
     request="string",
 )
 
@@ -228,7 +228,7 @@ client.service.get_movie_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_optional_movie</a>(...) -> typing.Optional[Response]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">getoptionalmovie</a>(...) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -241,13 +241,13 @@ client.service.get_movie_metadata(
 <dd>
 
 ```python
-from seed import SeedResponseProperty
+from seed import SeedApi
 
-client = SeedResponseProperty(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.get_optional_movie(
+client.service.getoptionalmovie(
     request="string",
 )
 
@@ -285,7 +285,7 @@ client.service.get_optional_movie(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_optional_movie_docs</a>(...) -> OptionalWithDocs</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">getoptionalmoviedocs</a>(...) -> OptionalWithDocs</code></summary>
 <dl>
 <dd>
 
@@ -298,13 +298,13 @@ client.service.get_optional_movie(
 <dd>
 
 ```python
-from seed import SeedResponseProperty
+from seed import SeedApi
 
-client = SeedResponseProperty(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.get_optional_movie_docs(
+client.service.getoptionalmoviedocs(
     request="string",
 )
 
@@ -342,7 +342,7 @@ client.service.get_optional_movie_docs(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_optional_movie_name</a>(...) -> OptionalStringResponse</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">getoptionalmoviename</a>(...) -> OptionalStringResponse</code></summary>
 <dl>
 <dd>
 
@@ -355,13 +355,13 @@ client.service.get_optional_movie_docs(
 <dd>
 
 ```python
-from seed import SeedResponseProperty
+from seed import SeedApi
 
-client = SeedResponseProperty(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.get_optional_movie_name(
+client.service.getoptionalmoviename(
     request="string",
 )
 

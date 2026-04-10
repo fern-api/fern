@@ -1,6 +1,6 @@
-//! # Object SDK
+//! # object SDK
 //!
-//! The official Rust SDK for the Object.
+//! The official Rust SDK for the object.
 //!
 //! ## Getting Started
 //!

@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.headers.<a href="/src/api/resources/headers/client.rs">send</a>(request: SendLiteralsInHeadersRequest) -> Result&lt;SendResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.headers.<a href="/src/api/resources/headers/client.rs">send</a>(request: HeadersSendRequest) -> Result&lt;SendResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,19 +13,19 @@
 <dd>
 
 ```rust
-use seed_literal::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = LiteralClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .headers
         .send(
-            &SendLiteralsInHeadersRequest {
-                query: "What is the weather today".to_string(),
+            &HeadersSendRequest {
+                query: "query".to_string(),
             },
             Some(
                 RequestOptions::new()
@@ -62,7 +62,7 @@ async fn main() {
 </details>
 
 ## Inlined
-<details><summary><code>client.inlined.<a href="/src/api/resources/inlined/client.rs">send</a>(request: SendLiteralsInlinedRequest) -> Result&lt;SendResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.inlined.<a href="/src/api/resources/inlined/client.rs">send</a>(request: InlinedSendRequest) -> Result&lt;SendResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -75,30 +75,30 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_literal::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = LiteralClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .inlined
         .send(
-            &SendLiteralsInlinedRequest {
-                prompt: "You are a helpful assistant".to_string(),
-                context: Some("You're super wise".to_string()),
-                query: "What is the weather today".to_string(),
-                temperature: Some(10.1),
-                stream: false,
-                aliased_context: SomeAliasedLiteral("You're super wise".to_string()),
-                maybe_context: Some(SomeAliasedLiteral("You're super wise".to_string())),
+            &InlinedSendRequest {
+                prompt: InlinedSendRequestPrompt::YouAreAHelpfulAssistant,
+                query: "query".to_string(),
+                stream: true,
+                aliased_context: SomeAliasedLiteral::YoureSuperWise,
                 object_with_literal: ATopLevelLiteral {
                     nested_literal: ANestedLiteral {
-                        my_literal: "How super cool".to_string(),
+                        my_literal: ANestedLiteralMyLiteral::HowSuperCool,
                     },
                 },
+                context: None,
+                temperature: None,
+                maybe_context: None,
             },
             None,
         )
@@ -118,7 +118,7 @@ async fn main() {
 <dl>
 <dd>
 
-**prompt:** `String` 
+**prompt:** `InlinedSendRequestPrompt` 
     
 </dd>
 </dl>
@@ -126,7 +126,7 @@ async fn main() {
 <dl>
 <dd>
 
-**context:** `Option<String>` 
+**context:** `Option<Option<InlinedSendRequestContext>>` 
     
 </dd>
 </dl>
@@ -142,7 +142,7 @@ async fn main() {
 <dl>
 <dd>
 
-**temperature:** `Option<f64>` 
+**temperature:** `Option<Option<f64>>` 
     
 </dd>
 </dl>
@@ -187,7 +187,7 @@ async fn main() {
 </details>
 
 ## Path
-<details><summary><code>client.path.<a href="/src/api/resources/path/client.rs">send</a>(id: String) -> Result&lt;SendResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.path.<a href="/src/api/resources/path/client.rs">send</a>(id: PathSendRequestId) -> Result&lt;SendResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -200,15 +200,18 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_literal::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = LiteralClient::new(config).expect("Failed to build client");
-    client.path.send(&"123".to_string(), None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .path
+        .send(&PathSendRequestId::OneHundredTwentyThree, None)
+        .await;
 }
 ```
 </dd>
@@ -224,7 +227,7 @@ async fn main() {
 <dl>
 <dd>
 
-**id:** `String` 
+**id:** `PathSendRequestId` 
     
 </dd>
 </dl>
@@ -237,7 +240,7 @@ async fn main() {
 </details>
 
 ## Query
-<details><summary><code>client.query.<a href="/src/api/resources/query/client.rs">send</a>(prompt: Option&lt;String&gt;, optional_prompt: Option&lt;Option&lt;String&gt;&gt;, alias_prompt: Option&lt;AliasToPrompt&gt;, alias_optional_prompt: Option&lt;Option&lt;AliasToPrompt&gt;&gt;, query: Option&lt;String&gt;, stream: Option&lt;bool&gt;, optional_stream: Option&lt;Option&lt;bool&gt;&gt;, alias_stream: Option&lt;AliasToStream&gt;, alias_optional_stream: Option&lt;Option&lt;AliasToStream&gt;&gt;) -> Result&lt;SendResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.query.<a href="/src/api/resources/query/client.rs">send</a>(prompt: Option&lt;QuerySendRequestPrompt&gt;, optional_prompt: Option&lt;Option&lt;Option&lt;QuerySendRequestOptionalPrompt&gt;&gt;&gt;, alias_prompt: Option&lt;AliasToPrompt&gt;, alias_optional_prompt: Option&lt;Option&lt;AliasToPrompt&gt;&gt;, query: Option&lt;String&gt;, stream: Option&lt;bool&gt;, optional_stream: Option&lt;Option&lt;Option&lt;bool&gt;&gt;&gt;, alias_stream: Option&lt;AliasToStream&gt;, alias_optional_stream: Option&lt;Option&lt;AliasToStream&gt;&gt;) -> Result&lt;SendResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -250,29 +253,27 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_literal::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = LiteralClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .query
         .send(
             &SendQueryRequest {
-                prompt: "You are a helpful assistant".to_string(),
-                optional_prompt: Some("You are a helpful assistant".to_string()),
-                alias_prompt: AliasToPrompt("You are a helpful assistant".to_string()),
-                alias_optional_prompt: Some(AliasToPrompt(
-                    "You are a helpful assistant".to_string(),
-                )),
-                stream: false,
-                optional_stream: Some(false),
-                alias_stream: AliasToStream(false),
-                alias_optional_stream: Some(AliasToStream(false)),
-                query: "What is the weather today".to_string(),
+                prompt: QuerySendRequestPrompt::YouAreAHelpfulAssistant,
+                alias_prompt: AliasToPrompt::YouAreAHelpfulAssistant,
+                query: "query".to_string(),
+                stream: true,
+                alias_stream: AliasToStream(true),
+                optional_prompt: None,
+                alias_optional_prompt: None,
+                optional_stream: None,
+                alias_optional_stream: None,
             },
             None,
         )
@@ -292,7 +293,7 @@ async fn main() {
 <dl>
 <dd>
 
-**prompt:** `String` 
+**prompt:** `QuerySendRequestPrompt` 
     
 </dd>
 </dl>
@@ -300,7 +301,7 @@ async fn main() {
 <dl>
 <dd>
 
-**optional_prompt:** `Option<String>` 
+**optional_prompt:** `Option<Option<QuerySendRequestOptionalPrompt>>` 
     
 </dd>
 </dl>
@@ -340,7 +341,7 @@ async fn main() {
 <dl>
 <dd>
 
-**optional_stream:** `Option<bool>` 
+**optional_stream:** `Option<Option<bool>>` 
     
 </dd>
 </dl>
@@ -382,38 +383,101 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_literal::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = LiteralClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .reference
         .send(
             &SendRequest {
-                prompt: "You are a helpful assistant".to_string(),
-                query: "What is the weather today".to_string(),
-                stream: false,
-                ending: Default::default(),
-                context: SomeLiteral("You're super wise".to_string()),
-                maybe_context: None,
+                prompt: SendRequestPrompt::YouAreAHelpfulAssistant,
+                query: "query".to_string(),
+                stream: true,
+                ending: SendRequestEnding::Ending,
+                context: SomeLiteral::YoureSuperWise,
                 container_object: ContainerObject {
                     nested_objects: vec![NestedObjectWithLiterals {
-                        literal1: "literal1".to_string(),
-                        literal2: "literal2".to_string(),
+                        literal1: NestedObjectWithLiteralsLiteral1::Literal1,
+                        literal2: NestedObjectWithLiteralsLiteral2::Literal2,
                         str_prop: "strProp".to_string(),
                     }],
                     ..Default::default()
                 },
+                maybe_context: None,
             },
             None,
         )
         .await;
 }
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**prompt:** `SendRequestPrompt` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream:** `bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ending:** `SendRequestEnding` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**context:** `SomeLiteral` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**maybe_context:** `Option<SomeLiteral>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container_object:** `ContainerObject` 
+    
 </dd>
 </dl>
 </dd>

@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
-/// Query parameters for listWithOffsetPaginationHasNextPage
+/// Query parameters for inlineUsers_inlineUsers_listWithOffsetPaginationHasNextPage
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest {
     /// Defaults to first page
@@ -12,12 +12,11 @@ pub struct InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest
     #[serde(skip_serializing_if = "Option::is_none")]
     pub limit: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub order: Option<Order>,
+    pub order: Option<InlineUsersOrder>,
 }
 
 impl InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest {
-    pub fn builder() -> InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequestBuilder
-    {
+    pub fn builder() -> InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequestBuilder {
         <InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequestBuilder as Default>::default()
     }
 }
@@ -27,7 +26,7 @@ impl InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest {
 pub struct InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequestBuilder {
     page: Option<i64>,
     limit: Option<i64>,
-    order: Option<Order>,
+    order: Option<InlineUsersOrder>,
 }
 
 impl InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequestBuilder {
@@ -41,22 +40,18 @@ impl InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequestBuilde
         self
     }
 
-    pub fn order(mut self, value: Order) -> Self {
+    pub fn order(mut self, value: InlineUsersOrder) -> Self {
         self.order = Some(value);
         self
     }
 
     /// Consumes the builder and constructs a [`InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest`].
-    pub fn build(
-        self,
-    ) -> Result<InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest, BuildError>
-    {
-        Ok(
-            InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest {
-                page: self.page,
-                limit: self.limit,
-                order: self.order,
-            },
-        )
+    pub fn build(self) -> Result<InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest, BuildError> {
+        Ok(InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest {
+            page: self.page,
+            limit: self.limit,
+            order: self.order,
+        })
     }
 }
+

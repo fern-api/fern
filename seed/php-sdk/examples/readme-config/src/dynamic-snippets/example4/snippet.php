@@ -10,6 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->file->notification->service->getException(
+$client->fileNotificationService->fileNotificationServiceGetException(
     'notificationId',
 );

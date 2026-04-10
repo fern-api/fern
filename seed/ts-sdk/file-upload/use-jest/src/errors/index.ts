@@ -1,2 +1,2 @@
-export { SeedFileUploadError } from "./SeedFileUploadError.js";
-export { SeedFileUploadTimeoutError } from "./SeedFileUploadTimeoutError.js";
+export { SeedApiError } from "./SeedApiError.js";
+export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";

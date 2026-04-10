@@ -1,47 +1,35 @@
 import Foundation
 
 public enum SubmissionStatusForTestCase: Codable, Hashable, Sendable {
-    case graded(TestCaseResultWithStdout)
-    case gradedV2(TestCaseGrade)
-    case traced(TracedTestCase)
+    case submissionStatusForTestCaseTwo(SubmissionStatusForTestCaseTwo)
+    case submissionStatusForTestCaseType(SubmissionStatusForTestCaseType)
+    case submissionStatusForTestCaseZero(SubmissionStatusForTestCaseZero)
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let discriminant = try container.decode(String.self, forKey: .type)
-        switch discriminant {
-        case "graded":
-            self = .graded(try TestCaseResultWithStdout(from: decoder))
-        case "gradedV2":
-            self = .gradedV2(try container.decode(TestCaseGrade.self, forKey: .value))
-        case "traced":
-            self = .traced(try TracedTestCase(from: decoder))
-        default:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: decoder.codingPath,
-                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
-                )
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(SubmissionStatusForTestCaseTwo.self) {
+            self = .submissionStatusForTestCaseTwo(value)
+        } else if let value = try? container.decode(SubmissionStatusForTestCaseType.self) {
+            self = .submissionStatusForTestCaseType(value)
+        } else if let value = try? container.decode(SubmissionStatusForTestCaseZero.self) {
+            self = .submissionStatusForTestCaseZero(value)
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unexpected value."
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.singleValueContainer()
         switch self {
-        case .graded(let data):
-            try container.encode("graded", forKey: .type)
-            try data.encode(to: encoder)
-        case .gradedV2(let data):
-            try container.encode("gradedV2", forKey: .type)
-            try container.encode(data, forKey: .value)
-        case .traced(let data):
-            try container.encode("traced", forKey: .type)
-            try data.encode(to: encoder)
+        case .submissionStatusForTestCaseTwo(let value):
+            try container.encode(value)
+        case .submissionStatusForTestCaseType(let value):
+            try container.encode(value)
+        case .submissionStatusForTestCaseZero(let value):
+            try container.encode(value)
         }
-    }
-
-    enum CodingKeys: String, CodingKey, CaseIterable {
-        case type
-        case value
     }
 }

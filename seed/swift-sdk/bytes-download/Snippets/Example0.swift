@@ -1,8 +1,8 @@
 import Foundation
-import BytesDownload
+import Api
 
 private func main() async throws {
-    let client = BytesDownloadClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
     _ = try await client.service.simple()
 }

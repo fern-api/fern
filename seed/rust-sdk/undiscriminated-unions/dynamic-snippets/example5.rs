@@ -1,4 +1,4 @@
-use seed_undiscriminated_unions::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,16 +6,13 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .union_
-        .call(
-            &Request {
-                union: Some(MetadataUnion::OptionalMetadata(OptionalMetadata(Some(
-                    HashMap::from([("string".to_string(), serde_json::json!({"key":"value"}))]),
-                )))),
-                ..Default::default()
-            },
+        .updatemetadata(
+            &MetadataUnion::NullableOptionalMetadata(Some(OptionalMetadata(Some(HashMap::from(
+                [("string".to_string(), serde_json::json!({"key":"value"}))],
+            ))))),
             None,
         )
         .await;

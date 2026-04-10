@@ -14,19 +14,19 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.SendLiteralsInQueryRequest{
-        AliasPrompt: fern.AliasToPrompt(
-            "You are a helpful assistant",
-        ),
-        AliasOptionalPrompt: fern.String(
-            "You are a helpful assistant",
-        ),
+    request := &fern.QuerySendRequest{
+        Prompt: fern.QuerySendRequestPromptYouAreAHelpfulAssistant,
+        OptionalPrompt: fern.QuerySendRequestOptionalPromptYouAreAHelpfulAssistant.Ptr(),
+        AliasPrompt: fern.AliasToPromptYouAreAHelpfulAssistant,
+        AliasOptionalPrompt: fern.AliasToPromptYouAreAHelpfulAssistant.Ptr(),
         Query: "query",
-        AliasStream: fern.AliasToStream(
-            false,
+        Stream: true,
+        OptionalStream: fern.Bool(
+            true,
         ),
+        AliasStream: true,
         AliasOptionalStream: fern.Bool(
-            false,
+            true,
         ),
     }
     client.Query.Send(

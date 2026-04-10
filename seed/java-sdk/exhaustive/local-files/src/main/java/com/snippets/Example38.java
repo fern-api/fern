@@ -1,21 +1,19 @@
 package com.snippets;
 
-import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
+import com.fern.sdk.SeedApiClient;
+import com.fern.sdk.types.TypesNestedObjectWithOptionalField;
 
 public class Example38 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().params().getWithInlinePathAndQuery(
-            GetWithInlinePathAndQuery
+        client.endpointsObject().endpointsObjectGetAndReturnNestedWithOptionalField(
+            TypesNestedObjectWithOptionalField
                 .builder()
-                .param("param")
-                .query("query")
                 .build()
         );
     }

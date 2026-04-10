@@ -12,11 +12,11 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        option.WithAPIKey(
+        option.WithToken(
             "<token>",
         ),
     )
-    client.Service.GetWithBearerToken(
+    client.Service.Getwithbearertoken(
         context.TODO(),
     )
 }

@@ -7,7 +7,7 @@ public final class RetriesClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getUsers(requestOptions: RequestOptions? = nil) async throws -> [User] {
+    public func getusers(requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get,
             path: "/users",

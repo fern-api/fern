@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "DollarStringExamples",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "DollarStringExamples",
-            targets: ["DollarStringExamples"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "DollarStringExamples",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "DollarStringExamplesTests",
-            dependencies: ["DollarStringExamples"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

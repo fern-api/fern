@@ -10,15 +10,6 @@ from .type_id import TypeId
 class Type(UniversalBaseModel):
     """
     A simple type with just a name.
-
-    Examples
-    --------
-    from seed import Type
-
-    Type(
-        id="type-df89sdg1",
-        name="foo",
-    )
     """
 
     id: TypeId

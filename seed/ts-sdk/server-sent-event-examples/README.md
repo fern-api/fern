@@ -12,7 +12,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Usage](#usage)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
-- [Streaming Response](#streaming-response)
+- [Binary Response](#binary-response)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
@@ -41,15 +41,12 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedServerSentEventsClient } from "@fern/server-sent-event-examples";
+import { SeedApiClient } from "@fern/server-sent-event-examples";
 
-const client = new SeedServerSentEventsClient({ environment: "YOUR_BASE_URL" });
-const response = await client.completions.stream({
-    query: ""
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+await client.completions.stream({
+    query: "query"
 });
-for await (const item of response) {
-    console.log(item);
-}
 ```
 
 ## Request and Response Types
@@ -58,9 +55,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedServerSentEvents } from "@fern/server-sent-event-examples";
+import { SeedApi } from "@fern/server-sent-event-examples";
 
-const request: SeedServerSentEvents.StreamCompletionRequest = {
+const request: SeedApi.CompletionsStreamRequest = {
     ...
 };
 ```
@@ -71,12 +68,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedServerSentEventsError } from "@fern/server-sent-event-examples";
+import { SeedApiError } from "@fern/server-sent-event-examples";
 
 try {
     await client.completions.stream(...);
 } catch (err) {
-    if (err instanceof SeedServerSentEventsError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -85,22 +82,394 @@ try {
 }
 ```
 
-## Streaming Response
+## Binary Response
 
-Some endpoints return streaming responses instead of returning the full response at once.
-The SDK uses async iterators, so you can consume the responses using a `for await...of` loop.
+You can consume binary data from endpoints using the `BinaryResponse` type which lets you choose how to consume the data:
 
 ```typescript
-import { SeedServerSentEventsClient } from "@fern/server-sent-event-examples";
-
-const client = new SeedServerSentEventsClient({ environment: "YOUR_BASE_URL" });
-const response = await client.completions.stream({
-    query: ""
-});
-for await (const item of response) {
-    console.log(item);
-}
+const response = await client.completions.stream(...);
+const stream: ReadableStream<Uint8Array> = response.stream();
+// const arrayBuffer: ArrayBuffer = await response.arrayBuffer();
+// const blob: Blob = response.blob();
+// const bytes: Uint8Array = response.bytes();
+// You can only use the response body once, so you must choose one of the above methods.
+// If you want to check if the response body has been used, you can use the following property.
+const bodyUsed = response.bodyUsed;
 ```
+<details>
+<summary>Save binary response to a file</summary>
+
+<blockquote>
+<details>
+<summary>Node.js</summary>
+
+<blockquote>
+<details>
+<summary>ReadableStream (most-efficient)</summary>
+
+```ts
+import { createWriteStream } from 'fs';
+import { Readable } from 'stream';
+import { pipeline } from 'stream/promises';
+
+const response = await client.completions.stream(...);
+
+const stream = response.stream();
+const nodeStream = Readable.fromWeb(stream);
+const writeStream = createWriteStream('path/to/file');
+
+await pipeline(nodeStream, writeStream);
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>ArrayBuffer</summary>
+
+```ts
+import { writeFile } from 'fs/promises';
+
+const response = await client.completions.stream(...);
+
+const arrayBuffer = await response.arrayBuffer();
+await writeFile('path/to/file', Buffer.from(arrayBuffer));
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>Blob</summary>
+
+```ts
+import { writeFile } from 'fs/promises';
+
+const response = await client.completions.stream(...);
+
+const blob = await response.blob();
+const arrayBuffer = await blob.arrayBuffer();
+await writeFile('output.bin', Buffer.from(arrayBuffer));
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>Bytes (UIntArray8)</summary>
+
+```ts
+import { writeFile } from 'fs/promises';
+
+const response = await client.completions.stream(...);
+
+const bytes = await response.bytes();
+await writeFile('path/to/file', bytes);
+```
+
+</details>
+</blockquote>
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>Bun</summary>
+
+<blockquote>
+<details>
+<summary>ReadableStream (most-efficient)</summary>
+
+```ts
+const response = await client.completions.stream(...);
+
+const stream = response.stream();
+await Bun.write('path/to/file', stream);
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>ArrayBuffer</summary>
+
+```ts
+const response = await client.completions.stream(...);
+
+const arrayBuffer = await response.arrayBuffer();
+await Bun.write('path/to/file', arrayBuffer);
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>Blob</summary>
+
+```ts
+const response = await client.completions.stream(...);
+
+const blob = await response.blob();
+await Bun.write('path/to/file', blob);
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>Bytes (UIntArray8)</summary>
+
+```ts
+const response = await client.completions.stream(...);
+
+const bytes = await response.bytes();
+await Bun.write('path/to/file', bytes);
+```
+
+</details>
+</blockquote>
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>Deno</summary>
+
+<blockquote>
+<details>
+<summary>ReadableStream (most-efficient)</summary>
+
+```ts
+const response = await client.completions.stream(...);
+
+const stream = response.stream();
+const file = await Deno.open('path/to/file', { write: true, create: true });
+await stream.pipeTo(file.writable);
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>ArrayBuffer</summary>
+
+```ts
+const response = await client.completions.stream(...);
+
+const arrayBuffer = await response.arrayBuffer();
+await Deno.writeFile('path/to/file', new Uint8Array(arrayBuffer));
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>Blob</summary>
+
+```ts
+const response = await client.completions.stream(...);
+
+const blob = await response.blob();
+const arrayBuffer = await blob.arrayBuffer();
+await Deno.writeFile('path/to/file', new Uint8Array(arrayBuffer));
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>Bytes (UIntArray8)</summary>
+
+```ts
+const response = await client.completions.stream(...);
+
+const bytes = await response.bytes();
+await Deno.writeFile('path/to/file', bytes);
+```
+
+</details>
+</blockquote>
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>Browser</summary>
+
+<blockquote>
+<details>
+<summary>Blob (most-efficient)</summary>
+
+```ts
+const response = await client.completions.stream(...);
+
+const blob = await response.blob();
+const url = URL.createObjectURL(blob);
+
+// trigger download
+const a = document.createElement('a');
+a.href = url;
+a.download = 'filename';
+a.click();
+URL.revokeObjectURL(url);
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>ReadableStream</summary>
+
+```ts
+const response = await client.completions.stream(...);
+
+const stream = response.stream();
+const reader = stream.getReader();
+const chunks = [];
+
+while (true) {
+  const { done, value } = await reader.read();
+  if (done) break;
+  chunks.push(value);
+}
+
+const blob = new Blob(chunks);
+const url = URL.createObjectURL(blob);
+
+// trigger download
+const a = document.createElement('a');
+a.href = url;
+a.download = 'filename';
+a.click();
+URL.revokeObjectURL(url);
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>ArrayBuffer</summary>
+
+```ts
+const response = await client.completions.stream(...);
+
+const arrayBuffer = await response.arrayBuffer();
+const blob = new Blob([arrayBuffer]);
+const url = URL.createObjectURL(blob);
+
+// trigger download
+const a = document.createElement('a');
+a.href = url;
+a.download = 'filename';
+a.click();
+URL.revokeObjectURL(url);
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>Bytes (UIntArray8)</summary>
+
+```ts
+const response = await client.completions.stream(...);
+
+const bytes = await response.bytes();
+const blob = new Blob([bytes]);
+const url = URL.createObjectURL(blob);
+
+// trigger download
+const a = document.createElement('a');
+a.href = url;
+a.download = 'filename';
+a.click();
+URL.revokeObjectURL(url);
+```
+
+</details>
+</blockquote>
+
+</details>
+</blockquote>
+
+</details>
+</blockquote>
+
+<details>
+<summary>Convert binary response to text</summary>
+
+<blockquote>
+<details>
+<summary>ReadableStream</summary>
+
+```ts
+const response = await client.completions.stream(...);
+
+const stream = response.stream();
+const text = await new Response(stream).text();
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>ArrayBuffer</summary>
+
+```ts
+const response = await client.completions.stream(...);
+
+const arrayBuffer = await response.arrayBuffer();
+const text = new TextDecoder().decode(arrayBuffer);
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>Blob</summary>
+
+```ts
+const response = await client.completions.stream(...);
+
+const blob = await response.blob();
+const text = await blob.text();
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>Bytes (UIntArray8)</summary>
+
+```ts
+const response = await client.completions.stream(...);
+
+const bytes = await response.bytes();
+const text = new TextDecoder().decode(bytes);
+```
+
+</details>
+</blockquote>
+
+</details>
 
 ## Advanced
 
@@ -119,9 +488,9 @@ const client = new CompletionsClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedServerSentEventsClient } from "@fern/server-sent-event-examples";
+import { SeedApiClient } from "@fern/server-sent-event-examples";
 
-const client = new SeedServerSentEventsClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -206,9 +575,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedServerSentEventsClient, logging } from "@fern/server-sent-event-examples";
+import { SeedApiClient, logging } from "@fern/server-sent-event-examples";
 
-const client = new SeedServerSentEventsClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

@@ -1,12 +1,13 @@
 package com.snippets;
 
-import com.seed.exhaustive.Best;
+import com.seed.api.Best;
+import java.util.HashMap;
 
 public class Example46 {
     public static void main(String[] args) {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpoints().primitive().getAndReturnInt(1);
+        client.endpointsObject().endpointsObjectGetAndReturnMapOfDocumentedUnknownType(new HashMap<String, Object>());
     }
 }

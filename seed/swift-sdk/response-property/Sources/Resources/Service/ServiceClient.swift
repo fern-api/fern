@@ -7,7 +7,7 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getMovie(request: String, requestOptions: RequestOptions? = nil) async throws -> Response {
+    public func getmovie(request: String, requestOptions: RequestOptions? = nil) async throws -> Response {
         return try await httpClient.performRequest(
             method: .post,
             path: "/movie",
@@ -17,7 +17,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func getMovieDocs(request: String, requestOptions: RequestOptions? = nil) async throws -> Response {
+    public func getmoviedocs(request: String, requestOptions: RequestOptions? = nil) async throws -> Response {
         return try await httpClient.performRequest(
             method: .post,
             path: "/movie/docs",
@@ -27,7 +27,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func getMovieName(request: String, requestOptions: RequestOptions? = nil) async throws -> StringResponse {
+    public func getmoviename(request: String, requestOptions: RequestOptions? = nil) async throws -> StringResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/movie/name",
@@ -37,7 +37,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func getMovieMetadata(request: String, requestOptions: RequestOptions? = nil) async throws -> Response {
+    public func getmoviemetadata(request: String, requestOptions: RequestOptions? = nil) async throws -> Response {
         return try await httpClient.performRequest(
             method: .post,
             path: "/movie/metadata",
@@ -47,17 +47,17 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func getOptionalMovie(request: String, requestOptions: RequestOptions? = nil) async throws -> Response? {
+    public func getoptionalmovie(request: String, requestOptions: RequestOptions? = nil) async throws -> Response {
         return try await httpClient.performRequest(
             method: .post,
             path: "/movie/optional",
             body: request,
             requestOptions: requestOptions,
-            responseType: Response?.self
+            responseType: Response.self
         )
     }
 
-    public func getOptionalMovieDocs(request: String, requestOptions: RequestOptions? = nil) async throws -> OptionalWithDocs {
+    public func getoptionalmoviedocs(request: String, requestOptions: RequestOptions? = nil) async throws -> OptionalWithDocs {
         return try await httpClient.performRequest(
             method: .post,
             path: "/movie/optional/docs",
@@ -67,7 +67,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func getOptionalMovieName(request: String, requestOptions: RequestOptions? = nil) async throws -> OptionalStringResponse {
+    public func getoptionalmoviename(request: String, requestOptions: RequestOptions? = nil) async throws -> OptionalStringResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/movie/optional/name",

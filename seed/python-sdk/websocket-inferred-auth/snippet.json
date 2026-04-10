@@ -6,11 +6,11 @@
             "id": {
                 "path": "/token",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+                "identifier_override": "endpoint_auth.gettokenwithclientcredentials"
             },
             "snippet": {
-                "sync_client": "from seed import SeedWebsocketAuth\n\nclient = SeedWebsocketAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    x_api_key=\"YOUR_X_API_KEY\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.auth.get_token_with_client_credentials(\n    x_api_key=\"X-Api-Key\",\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n    scope=\"scope\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedWebsocketAuth\n\nclient = AsyncSeedWebsocketAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    x_api_key=\"YOUR_X_API_KEY\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.auth.get_token_with_client_credentials(\n        x_api_key=\"X-Api-Key\",\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n        scope=\"scope\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.auth.gettokenwithclientcredentials(\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n    audience=\"https://api.example.com\",\n    grant_type=\"client_credentials\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.auth.gettokenwithclientcredentials(\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n        audience=\"https://api.example.com\",\n        grant_type=\"client_credentials\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -19,11 +19,11 @@
             "id": {
                 "path": "/token/refresh",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.refreshToken"
+                "identifier_override": "endpoint_auth.refreshtoken"
             },
             "snippet": {
-                "sync_client": "from seed import SeedWebsocketAuth\n\nclient = SeedWebsocketAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    x_api_key=\"YOUR_X_API_KEY\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.auth.refresh_token(\n    x_api_key=\"X-Api-Key\",\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n    refresh_token=\"refresh_token\",\n    scope=\"scope\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedWebsocketAuth\n\nclient = AsyncSeedWebsocketAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    x_api_key=\"YOUR_X_API_KEY\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.auth.refresh_token(\n        x_api_key=\"X-Api-Key\",\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n        refresh_token=\"refresh_token\",\n        scope=\"scope\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.auth.refreshtoken(\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n    refresh_token=\"refresh_token\",\n    audience=\"https://api.example.com\",\n    grant_type=\"refresh_token\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.auth.refreshtoken(\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n        refresh_token=\"refresh_token\",\n        audience=\"https://api.example.com\",\n        grant_type=\"refresh_token\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

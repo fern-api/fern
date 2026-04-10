@@ -1,4 +1,4 @@
-//! Request and response types for the FileUpload
+//! Request and response types for the file-upload
 //!
 //! This module contains all data structures used for API communication,
 //! including request bodies, response types, and shared models.
@@ -8,45 +8,45 @@
 //! - **Request/Response Types**: 11 types for API operations
 //! - **Model Types**: 9 types for data representation
 
-pub mod service_id;
-pub mod service_my_object_with_optional;
-pub mod service_my_alias_object;
-pub mod service_my_collection_alias_object;
-pub mod service_my_object;
-pub mod service_object_type;
-pub mod service_my_inline_type;
-pub mod service_model_type;
-pub mod service_open_enum_type;
+pub mod id;
+pub mod my_object_with_optional;
+pub mod my_alias_object;
+pub mod my_collection_alias_object;
+pub mod my_object;
+pub mod object_type;
+pub mod my_inline_type;
+pub mod model_type;
+pub mod open_enum_type;
 pub mod post_request;
-pub mod just_file_request;
-pub mod just_file_with_query_params_request;
-pub mod just_file_with_optional_query_params_request;
-pub mod with_content_type_request;
-pub mod with_form_encoding_request;
-pub mod with_form_encoded_containers_request;
-pub mod optional_args_request;
-pub mod with_inline_type_request;
-pub mod with_json_property_request;
-pub mod with_literal_and_enum_types_request;
+pub mod justfile_request;
+pub mod justfilewithqueryparams_request;
+pub mod justfilewithoptionalqueryparams_request;
+pub mod withcontenttype_request;
+pub mod withformencoding_request;
+pub mod withformencodedcontainers_request;
+pub mod optionalargs_request;
+pub mod withinlinetype_request;
+pub mod withjsonproperty_request;
+pub mod withliteralandenumtypes_request;
 
-pub use service_id::Id;
-pub use service_my_object_with_optional::MyObjectWithOptional;
-pub use service_my_alias_object::MyAliasObject;
-pub use service_my_collection_alias_object::MyCollectionAliasObject;
-pub use service_my_object::MyObject;
-pub use service_object_type::ObjectType;
-pub use service_my_inline_type::MyInlineType;
-pub use service_model_type::ModelType;
-pub use service_open_enum_type::OpenEnumType;
+pub use id::Id;
+pub use my_object_with_optional::MyObjectWithOptional;
+pub use my_alias_object::MyAliasObject;
+pub use my_collection_alias_object::MyCollectionAliasObject;
+pub use my_object::MyObject;
+pub use object_type::ObjectType;
+pub use my_inline_type::MyInlineType;
+pub use model_type::ModelType;
+pub use open_enum_type::OpenEnumType;
 pub use post_request::PostRequest;
-pub use just_file_request::JustFileRequest;
-pub use just_file_with_query_params_request::JustFileWithQueryParamsRequest;
-pub use just_file_with_optional_query_params_request::JustFileWithOptionalQueryParamsRequest;
-pub use with_content_type_request::WithContentTypeRequest;
-pub use with_form_encoding_request::WithFormEncodingRequest;
-pub use with_form_encoded_containers_request::WithFormEncodedContainersRequest;
-pub use optional_args_request::OptionalArgsRequest;
-pub use with_inline_type_request::WithInlineTypeRequest;
-pub use with_json_property_request::WithJsonPropertyRequest;
-pub use with_literal_and_enum_types_request::WithLiteralAndEnumTypesRequest;
+pub use justfile_request::JustfileRequest;
+pub use justfilewithqueryparams_request::JustfilewithqueryparamsRequest;
+pub use justfilewithoptionalqueryparams_request::JustfilewithoptionalqueryparamsRequest;
+pub use withcontenttype_request::WithcontenttypeRequest;
+pub use withformencoding_request::WithformencodingRequest;
+pub use withformencodedcontainers_request::WithformencodedcontainersRequest;
+pub use optionalargs_request::OptionalargsRequest;
+pub use withinlinetype_request::WithinlinetypeRequest;
+pub use withjsonproperty_request::WithjsonpropertyRequest;
+pub use withliteralandenumtypes_request::WithliteralandenumtypesRequest;
 

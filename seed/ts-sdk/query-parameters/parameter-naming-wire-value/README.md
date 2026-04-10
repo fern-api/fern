@@ -40,26 +40,23 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedQueryParametersClient } from "@fern/query-parameters";
+import { SeedApiClient } from "@fern/query-parameters";
 
-const client = new SeedQueryParametersClient({ environment: "YOUR_BASE_URL" });
-await client.user.getUsername({
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+await client.user.getusername({
     limit: 1,
-    id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    id: "id",
     date: "2023-01-15",
     deadline: "2024-01-15T09:30:00Z",
-    bytes: "SGVsbG8gd29ybGQh",
+    bytes: "bytes",
     user: {
         name: "name",
         tags: ["tags", "tags"]
     },
-    userList: [{
-            name: "name",
-            tags: ["tags", "tags"]
-        }, {
-            name: "name",
-            tags: ["tags", "tags"]
-        }],
+    userList: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
     optionalDeadline: "2024-01-15T09:30:00Z",
     keyValue: {
         "keyValue": "keyValue"
@@ -90,9 +87,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedQueryParameters } from "@fern/query-parameters";
+import { SeedApi } from "@fern/query-parameters";
 
-const request: SeedQueryParameters.GetUsersRequest = {
+const request: SeedApi.UserGetUsernameRequest = {
     ...
 };
 ```
@@ -103,12 +100,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedQueryParametersError } from "@fern/query-parameters";
+import { SeedApiError } from "@fern/query-parameters";
 
 try {
-    await client.user.getUsername(...);
+    await client.user.getusername(...);
 } catch (err) {
-    if (err instanceof SeedQueryParametersError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -134,16 +131,16 @@ const client = new UserClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedQueryParametersClient } from "@fern/query-parameters";
+import { SeedApiClient } from "@fern/query-parameters";
 
-const client = new SeedQueryParametersClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.user.getUsername(..., {
+const response = await client.user.getusername(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -155,7 +152,7 @@ const response = await client.user.getUsername(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.user.getUsername(..., {
+const response = await client.user.getusername(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -177,7 +174,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.user.getUsername(..., {
+const response = await client.user.getusername(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -187,7 +184,7 @@ const response = await client.user.getUsername(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.user.getUsername(..., {
+const response = await client.user.getusername(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -198,7 +195,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.user.getUsername(..., {
+const response = await client.user.getusername(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -210,7 +207,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.user.getUsername(...).withRawResponse();
+const { data, rawResponse } = await client.user.getusername(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -221,9 +218,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedQueryParametersClient, logging } from "@fern/query-parameters";
+import { SeedApiClient, logging } from "@fern/query-parameters";
 
-const client = new SeedQueryParametersClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

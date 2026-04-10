@@ -48,9 +48,7 @@ impl BaseResourceBuilder {
     pub fn build(self) -> Result<BaseResource, BuildError> {
         Ok(BaseResource {
             id: self.id.ok_or_else(|| BuildError::missing_field("id"))?,
-            related_resources: self
-                .related_resources
-                .ok_or_else(|| BuildError::missing_field("related_resources"))?,
+            related_resources: self.related_resources.ok_or_else(|| BuildError::missing_field("related_resources"))?,
             memo: self.memo.ok_or_else(|| BuildError::missing_field("memo"))?,
         })
     }

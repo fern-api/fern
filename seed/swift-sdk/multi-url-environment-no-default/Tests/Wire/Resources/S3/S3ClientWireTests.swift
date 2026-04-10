@@ -1,9 +1,9 @@
 import Foundation
 import Testing
-import MultiUrlEnvironmentNoDefault
+import Api
 
 @Suite("S3Client Wire Tests") struct S3ClientWireTests {
-    @Test func getPresignedUrl1() async throws -> Void {
+    @Test func getpresignedurl1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -12,12 +12,35 @@ import MultiUrlEnvironmentNoDefault
                 """.utf8
             )
         )
-        let client = MultiUrlEnvironmentNoDefaultClient(
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.s3.getPresignedUrl(
+        let response = try await client.s3.getpresignedurl(
+            request: .init(s3Key: "s3Key"),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getpresignedurl2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                string
+                """.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = "string"
+        let response = try await client.s3.getpresignedurl(
             request: .init(s3Key: "s3Key"),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )

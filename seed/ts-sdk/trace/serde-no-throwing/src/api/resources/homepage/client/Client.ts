@@ -2,11 +2,11 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as serializers from "../../../../serialization/index.js";
-import * as SeedTrace from "../../../index.js";
+import * as SeedApi from "../../../index.js";
 
 export declare namespace HomepageClient {
     export type Options = BaseClientOptions;
@@ -25,32 +25,26 @@ export class HomepageClient {
      * @param {HomepageClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.homepage.getHomepageProblems()
+     *     await client.homepage.gethomepageproblems()
      */
-    public getHomepageProblems(
+    public gethomepageproblems(
         requestOptions?: HomepageClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__getHomepageProblems(requestOptions));
+    ): core.HttpResponsePromise<core.APIResponse<SeedApi.ProblemId[], SeedApi.homepage.gethomepageproblems.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__gethomepageproblems(requestOptions));
     }
 
-    private async __getHomepageProblems(
+    private async __gethomepageproblems(
         requestOptions?: HomepageClient.RequestOptions,
     ): Promise<
-        core.WithRawResponse<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>>
+        core.WithRawResponse<core.APIResponse<SeedApi.ProblemId[], SeedApi.homepage.gethomepageproblems.Error>>
     > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/homepage-problems",
+                    environments.SeedApiEnvironment.Default,
+                "homepage-problems",
             ),
             method: "GET",
             headers: _headers,
@@ -65,7 +59,7 @@ export class HomepageClient {
             return {
                 data: {
                     ok: true,
-                    body: serializers.homepage.getHomepageProblems.Response.parseOrThrow(_response.body, {
+                    body: serializers.homepage.gethomepageproblems.Response.parseOrThrow(_response.body, {
                         unrecognizedObjectKeys: "passthrough",
                         allowUnrecognizedUnionMembers: true,
                         allowUnrecognizedEnumValues: true,
@@ -82,7 +76,7 @@ export class HomepageClient {
         return {
             data: {
                 ok: false,
-                error: SeedTrace.homepage.getHomepageProblems.Error._unknown(_response.error),
+                error: SeedApi.homepage.gethomepageproblems.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -90,43 +84,37 @@ export class HomepageClient {
     }
 
     /**
-     * @param {SeedTrace.ProblemId[]} request
+     * @param {SeedApi.ProblemId[]} request
      * @param {HomepageClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.homepage.setHomepageProblems(["string", "string"])
+     *     await client.homepage.sethomepageproblems(["string"])
      */
-    public setHomepageProblems(
-        request: SeedTrace.ProblemId[],
+    public sethomepageproblems(
+        request: SeedApi.ProblemId[],
         requestOptions?: HomepageClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__setHomepageProblems(request, requestOptions));
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedApi.homepage.sethomepageproblems.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__sethomepageproblems(request, requestOptions));
     }
 
-    private async __setHomepageProblems(
-        request: SeedTrace.ProblemId[],
+    private async __sethomepageproblems(
+        request: SeedApi.ProblemId[],
         requestOptions?: HomepageClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedApi.homepage.sethomepageproblems.Error>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/homepage-problems",
+                    environments.SeedApiEnvironment.Default,
+                "homepage-problems",
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.homepage.setHomepageProblems.Request.jsonOrThrow(request, {
+            body: serializers.homepage.sethomepageproblems.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
@@ -151,7 +139,7 @@ export class HomepageClient {
         return {
             data: {
                 ok: false,
-                error: SeedTrace.homepage.setHomepageProblems.Error._unknown(_response.error),
+                error: SeedApi.homepage.sethomepageproblems.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

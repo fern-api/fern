@@ -72,7 +72,7 @@ func (r *RawClient) Get(
 	}, nil
 }
 
-func (r *RawClient) GetMetadata(
+func (r *RawClient) Getmetadata(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[fern.Metadata], error) {
@@ -111,7 +111,7 @@ func (r *RawClient) GetMetadata(
 	}, nil
 }
 
-func (r *RawClient) UpdateMetadata(
+func (r *RawClient) Updatemetadata(
 	ctx context.Context,
 	request *fern.MetadataUnion,
 	opts ...option.RequestOption,
@@ -168,6 +168,7 @@ func (r *RawClient) Call(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response bool
 	raw, err := r.caller.Call(
 		ctx,
@@ -193,7 +194,7 @@ func (r *RawClient) Call(
 	}, nil
 }
 
-func (r *RawClient) DuplicateTypesUnion(
+func (r *RawClient) Duplicatetypesunion(
 	ctx context.Context,
 	request *fern.UnionWithDuplicateTypes,
 	opts ...option.RequestOption,
@@ -234,7 +235,7 @@ func (r *RawClient) DuplicateTypesUnion(
 	}, nil
 }
 
-func (r *RawClient) NestedUnions(
+func (r *RawClient) Nestedunions(
 	ctx context.Context,
 	request *fern.NestedUnionRoot,
 	opts ...option.RequestOption,
@@ -275,9 +276,9 @@ func (r *RawClient) NestedUnions(
 	}, nil
 }
 
-func (r *RawClient) TestCamelCaseProperties(
+func (r *RawClient) Testcamelcaseproperties(
 	ctx context.Context,
-	request *fern.PaymentRequest,
+	request *fern.UnionTestCamelCasePropertiesRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)
@@ -291,6 +292,7 @@ func (r *RawClient) TestCamelCaseProperties(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response string
 	raw, err := r.caller.Call(
 		ctx,

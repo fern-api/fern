@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Unions
+import Api
 
 @Suite("TypesClient Wire Tests") struct TypesClientWireTests {
     @Test func get1() async throws -> Void {
@@ -9,19 +9,26 @@ import Unions
             body: Data(
                 """
                 {
-                  "type": "date",
-                  "value": "1994-01-01"
+                  "value": 1,
+                  "type": "value"
                 }
                 """.utf8
             )
         )
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = UnionWithTime.date(CalendarDate("1994-01-01")!)
+        let expectedResponse = UnionWithTime.value(
+            .init(
+                value: Optional(1),
+                additionalProperties: [
+                    "type": JSONValue.string("value")
+                ]
+            )
+        )
         let response = try await client.types.get(
-            id: "date-example",
+            id: "id",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
@@ -33,41 +40,24 @@ import Unions
             body: Data(
                 """
                 {
-                  "type": "datetime",
-                  "value": "1994-01-01T01:01:01Z"
-                }
-                """.utf8
-            )
-        )
-        let client = UnionsClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = UnionWithTime.datetime(try! Date("1994-01-01T01:01:01Z", strategy: .iso8601))
-        let response = try await client.types.get(
-            id: "datetime-example",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func get3() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
                   "type": "value",
                   "value": 1
                 }
                 """.utf8
             )
         )
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = UnionWithTime.value(1)
+        let expectedResponse = UnionWithTime.value(
+            .init(
+                value: Optional(1),
+                additionalProperties: [
+                    "type": JSONValue.string("value")
+                ]
+            )
+        )
         let response = try await client.types.get(
             id: "id",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -84,14 +74,16 @@ import Unions
                 """.utf8
             )
         )
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = true
         let response = try await client.types.update(
-            request: UnionWithTime.date(
+            request: UnionWithTime.value(
+                UnionWithTimeValue(
 
+                )
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -107,37 +99,16 @@ import Unions
                 """.utf8
             )
         )
-        let client = UnionsClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = true
-        let response = try await client.types.update(
-            request: UnionWithTime.datetime(
-
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func update3() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                true
-                """.utf8
-            )
-        )
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = true
         let response = try await client.types.update(
             request: UnionWithTime.value(
-                1
+                UnionWithTimeValue(
+                    value: 1
+                )
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )

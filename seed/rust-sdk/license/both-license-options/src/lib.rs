@@ -1,19 +1,19 @@
-//! # License SDK
+//! # license SDK
 //!
-//! The official Rust SDK for the License.
+//! The official Rust SDK for the license.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_license::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = LicenseClient::new(config).expect("Failed to build client");
-//!     client.get(None).await;
+//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     client..get(None).await;
 //! }
 //! ```
 //!
@@ -27,14 +27,15 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod client;
-pub mod config;
-pub mod core;
 pub mod error;
+pub mod core;
+pub mod config;
+pub mod client;
 pub mod prelude;
 
-pub use api::*;
-pub use client::*;
-pub use config::*;
-pub use core::*;
 pub use error::{ApiError, BuildError};
+pub use api::{*};
+pub use core::{*};
+pub use config::{*};
+pub use client::{*};
+
