@@ -70,6 +70,18 @@ paths:
               schema:
                 $ref: "#/components/schemas/CombinedEntity"
 
+  /organizations:
+    get:
+      operationId: getOrganization
+      summary: Get an organization with merged object-typed properties
+      responses:
+        "200":
+          description: An organization whose metadata is merged from two parents
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Organization"
+
 components:
   schemas:
     # -----------------------------------------------------------------------
@@ -283,3 +295,56 @@ components:
               enum:
                 - active
                 - archived
+
+    # -----------------------------------------------------------------------
+    # Case 6: allOf merging object-typed properties with partial key overlap
+    #
+    # Two parents define the same property (`metadata`) as an object type.
+    # Each parent's `metadata` shares one common key (`region`, same type)
+    # but also contributes a unique key. The merged result should be an
+    # object with all three keys: region, tier, and domain.
+    # -----------------------------------------------------------------------
+    BaseOrg:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+        metadata:
+          type: object
+          required:
+            - region
+          properties:
+            region:
+              type: string
+              description: Deployment region from BaseOrg.
+            tier:
+              type: string
+              description: Subscription tier.
+
+    DetailedOrg:
+      type: object
+      properties:
+        metadata:
+          type: object
+          required:
+            - region
+          properties:
+            region:
+              type: string
+              description: Deployment region from DetailedOrg.
+            domain:
+              type: string
+              description: Custom domain name.
+
+    Organization:
+      allOf:
+        - $ref: "#/components/schemas/BaseOrg"
+        - $ref: "#/components/schemas/DetailedOrg"
+        - type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
