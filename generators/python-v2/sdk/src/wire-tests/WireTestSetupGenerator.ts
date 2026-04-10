@@ -1,11 +1,10 @@
-import { CaseConverter, File, getWireValue } from "@fern-api/base-generator";
+import { File, getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
+import { PYTHON_CASE_CONVERTER as caseConverter } from "@fern-api/python-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "python", keywords: undefined, smartCasing: true });
 
 /**
  * Generates setup files for wire testing, specifically docker-compose configuration
@@ -628,7 +627,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
         // Process global headers that might require values
         if (this.ir.headers) {
             for (const header of this.ir.headers) {
-                const paramName = caseConverter.snakeSafe(header.name.name);
+                const paramName = caseConverter.snakeSafe(getNameFromWireValue(header.name));
                 // Only add if not already added by auth schemes
                 if (!params.some((p) => p.startsWith(`        ${paramName}=`))) {
                     params.push(`        ${paramName}="test_${paramName}",`);
@@ -660,7 +659,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
             case "header":
                 // Header auth uses a custom header parameter
                 params.push(
-                    `        ${caseConverter.snakeSafe(scheme.name.name)}="test_${caseConverter.snakeSafe(scheme.name.name)}",`
+                    `        ${caseConverter.snakeSafe(getNameFromWireValue(scheme.name))}="test_${caseConverter.snakeSafe(getNameFromWireValue(scheme.name))}",`
                 );
                 break;
 

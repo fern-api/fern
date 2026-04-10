@@ -1,10 +1,9 @@
-import { CaseConverter, ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { getNameFromWireValue, ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { PYTHON_CASE_CONVERTER as caseConverter } from "@fern-api/python-base";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "python", keywords: undefined, smartCasing: true });
 
 export function buildReference({
     context,
@@ -164,7 +163,7 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
             type = getTypeString(queryParam.valueType);
         }
         parameters.push({
-            name: caseConverter.snakeUnsafe(queryParam.name.name),
+            name: caseConverter.snakeUnsafe(getNameFromWireValue(queryParam.name)),
             type,
             description: queryParam.docs,
             required: !isOptional
@@ -173,7 +172,7 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
 
     endpoint.headers.forEach((header) => {
         parameters.push({
-            name: caseConverter.snakeUnsafe(header.name.name),
+            name: caseConverter.snakeUnsafe(getNameFromWireValue(header.name)),
             type: getTypeString(header.valueType),
             description: header.docs,
             required: !isTypeOptional(header.valueType)
@@ -185,7 +184,7 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
         if (endpoint.requestBody.extendedProperties != null) {
             endpoint.requestBody.extendedProperties.forEach((property) => {
                 parameters.push({
-                    name: caseConverter.snakeUnsafe(property.name.name),
+                    name: caseConverter.snakeUnsafe(getNameFromWireValue(property.name)),
                     type: getTypeString(property.valueType),
                     description: property.docs,
                     required: !isTypeOptional(property.valueType)
@@ -194,7 +193,7 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
         }
         endpoint.requestBody.properties.forEach((property) => {
             parameters.push({
-                name: caseConverter.snakeUnsafe(property.name.name),
+                name: caseConverter.snakeUnsafe(getNameFromWireValue(property.name)),
                 type: getTypeString(property.valueType),
                 description: property.docs,
                 required: !isTypeOptional(property.valueType)
@@ -215,14 +214,14 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
                 const fileType = fileProperty.type === "fileArray" ? "typing.List[core.File]" : "core.File";
                 const type = isOptional ? `typing.Optional[${fileType}]` : fileType;
                 parameters.push({
-                    name: caseConverter.snakeUnsafe(fileProperty.key.name),
+                    name: caseConverter.snakeUnsafe(getNameFromWireValue(fileProperty.key)),
                     type,
                     description: fileProperty.docs,
                     required: !isOptional
                 });
             } else if (property.type === "bodyProperty") {
                 parameters.push({
-                    name: caseConverter.snakeUnsafe(property.name.name),
+                    name: caseConverter.snakeUnsafe(getNameFromWireValue(property.name)),
                     type: getTypeString(property.valueType),
                     description: property.docs,
                     required: !isTypeOptional(property.valueType)
@@ -490,32 +489,7 @@ function getEnvironmentInfo({
     const packageName = context.getModulePath();
     const importLine = `from ${packageName}.environment import ${envClassName}`;
 
-    let firstEnvName: string | undefined;
-    if (envConfig.environments.type === "singleBaseUrl") {
-        const defaultEnvId = envConfig.defaultEnvironment;
-        const envs = envConfig.environments.environments;
-        if (defaultEnvId != null) {
-            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
-            if (defaultEnv?.name != null) {
-                firstEnvName = caseConverter.screamingSnakeUnsafe(defaultEnv.name);
-            }
-        }
-        if (firstEnvName == null && envs.length > 0 && envs[0] != null) {
-            firstEnvName = caseConverter.screamingSnakeUnsafe(envs[0].name);
-        }
-    } else if (envConfig.environments.type === "multipleBaseUrls") {
-        const defaultEnvId = envConfig.defaultEnvironment;
-        const envs = envConfig.environments.environments;
-        if (defaultEnvId != null) {
-            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
-            if (defaultEnv?.name != null) {
-                firstEnvName = caseConverter.screamingSnakeUnsafe(defaultEnv.name);
-            }
-        }
-        if (firstEnvName == null && envs.length > 0 && envs[0] != null) {
-            firstEnvName = caseConverter.screamingSnakeUnsafe(envs[0].name);
-        }
-    }
+    const firstEnvName = resolveDefaultEnvironmentName(envConfig);
 
     if (firstEnvName == null) {
         return undefined;
@@ -523,6 +497,31 @@ function getEnvironmentInfo({
 
     const constructorArg = `    environment=${envClassName}.${firstEnvName},`;
     return { importLine, constructorArg };
+}
+
+/**
+ * Resolves the default (or first) environment name as SCREAMING_SNAKE_CASE.
+ * Works for both singleBaseUrl and multipleBaseUrls environment types.
+ */
+export function resolveDefaultEnvironmentName(envConfig: FernIr.EnvironmentsConfig): string | undefined {
+    const envs =
+        envConfig.environments.type === "singleBaseUrl" || envConfig.environments.type === "multipleBaseUrls"
+            ? envConfig.environments.environments
+            : undefined;
+    if (envs == null) {
+        return undefined;
+    }
+    const defaultEnvId = envConfig.defaultEnvironment;
+    if (defaultEnvId != null) {
+        const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+        if (defaultEnv?.name != null) {
+            return caseConverter.screamingSnakeUnsafe(defaultEnv.name);
+        }
+    }
+    if (envs.length > 0 && envs[0] != null) {
+        return caseConverter.screamingSnakeUnsafe(envs[0].name);
+    }
+    return undefined;
 }
 
 function getClientClassName({ context }: { context: SdkGeneratorContext }): string {

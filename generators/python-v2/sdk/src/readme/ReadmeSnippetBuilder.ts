@@ -1,11 +1,11 @@
-import { AbstractReadmeSnippetBuilder, CaseConverter } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, getNameFromWireValue } from "@fern-api/base-generator";
+import { PYTHON_CASE_CONVERTER as caseConverter } from "@fern-api/python-base";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { resolveDefaultEnvironmentName } from "../reference/buildReference.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "python", keywords: undefined, smartCasing: true });
 
 interface EndpointWithFilepath {
     endpoint: FernIr.HttpEndpoint;
@@ -305,8 +305,8 @@ asyncio.run(main())`
                     );
                     break;
                 case "header": {
-                    const headerName = caseConverter.snakeUnsafe(scheme.name.name);
-                    const headerScreaming = caseConverter.screamingSnakeUnsafe(scheme.name.name);
+                    const headerName = caseConverter.snakeUnsafe(getNameFromWireValue(scheme.name));
+                    const headerScreaming = caseConverter.screamingSnakeUnsafe(getNameFromWireValue(scheme.name));
                     args.push(`    ${headerName}="YOUR_${headerScreaming}",`);
                     break;
                 }
@@ -670,32 +670,7 @@ ${constructorArg}
         const envClassName = `${this.clientClassName}Environment`;
         const importLine = `from ${this.packageName}.environment import ${envClassName}`;
 
-        let firstEnvName: string | undefined;
-        if (envConfig.environments.type === "singleBaseUrl") {
-            const defaultEnvId = envConfig.defaultEnvironment;
-            const envs = envConfig.environments.environments;
-            if (defaultEnvId != null) {
-                const defaultEnv = envs.find((e) => e.id === defaultEnvId);
-                if (defaultEnv?.name != null) {
-                    firstEnvName = caseConverter.screamingSnakeUnsafe(defaultEnv.name);
-                }
-            }
-            if (firstEnvName == null && envs.length > 0 && envs[0] != null) {
-                firstEnvName = caseConverter.screamingSnakeUnsafe(envs[0].name);
-            }
-        } else if (envConfig.environments.type === "multipleBaseUrls") {
-            const defaultEnvId = envConfig.defaultEnvironment;
-            const envs = envConfig.environments.environments;
-            if (defaultEnvId != null) {
-                const defaultEnv = envs.find((e) => e.id === defaultEnvId);
-                if (defaultEnv?.name != null) {
-                    firstEnvName = caseConverter.screamingSnakeUnsafe(defaultEnv.name);
-                }
-            }
-            if (firstEnvName == null && envs.length > 0 && envs[0] != null) {
-                firstEnvName = caseConverter.screamingSnakeUnsafe(envs[0].name);
-            }
-        }
+        const firstEnvName = resolveDefaultEnvironmentName(envConfig);
 
         if (firstEnvName == null) {
             return undefined;

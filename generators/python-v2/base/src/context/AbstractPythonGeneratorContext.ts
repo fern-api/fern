@@ -11,7 +11,11 @@ import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomC
 import { PythonProject } from "../project/index.js";
 import { PythonTypeMapper } from "./PythonTypeMapper.js";
 
-const caseConverter = new CaseConverter({ generationLanguage: "python", keywords: undefined, smartCasing: true });
+export const PYTHON_CASE_CONVERTER = new CaseConverter({
+    generationLanguage: "python",
+    keywords: undefined,
+    smartCasing: true
+});
 
 export abstract class AbstractPythonGeneratorContext<
     CustomConfig extends BasePythonCustomConfigSchema
@@ -27,7 +31,9 @@ export abstract class AbstractPythonGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
-        this.packageName = snakeCase(`${this.config.organization}_${caseConverter.snakeUnsafe(this.ir.apiName)}`);
+        this.packageName = snakeCase(
+            `${this.config.organization}_${PYTHON_CASE_CONVERTER.snakeUnsafe(this.ir.apiName)}`
+        );
         this.pythonTypeMapper = new PythonTypeMapper(this);
         this.project = new PythonProject({ context: this });
     }
@@ -53,16 +59,16 @@ export abstract class AbstractPythonGeneratorContext<
         return false;
     }
 
-    public getClassName(name: FernIr.Name): string {
-        return caseConverter.pascalSafe(name);
+    public getClassName(name: FernIr.NameOrString): string {
+        return PYTHON_CASE_CONVERTER.pascalSafe(name);
     }
 
-    public getPascalCaseSafeName(name: FernIr.Name): string {
-        return caseConverter.pascalSafe(name);
+    public getPascalCaseSafeName(name: FernIr.NameOrString): string {
+        return PYTHON_CASE_CONVERTER.pascalSafe(name);
     }
 
-    public getSnakeCaseSafeName(name: FernIr.Name): string {
-        return caseConverter.snakeSafe(name);
+    public getSnakeCaseSafeName(name: FernIr.NameOrString): string {
+        return PYTHON_CASE_CONVERTER.snakeSafe(name);
     }
 
     public getModulePathForId(typeId: string): string[] {

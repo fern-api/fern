@@ -1,16 +1,14 @@
-import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { python } from "@fern-api/python-ast";
-import { WriteablePythonFile } from "@fern-api/python-base";
+import { PYTHON_CASE_CONVERTER as caseConverter, WriteablePythonFile } from "@fern-api/python-base";
 import { DynamicSnippetsGenerator } from "@fern-api/python-dynamic-snippets";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
-
-const caseConverter = new CaseConverter({ generationLanguage: "python", keywords: undefined, smartCasing: true });
 
 /**
  * Local interface for wire test examples.

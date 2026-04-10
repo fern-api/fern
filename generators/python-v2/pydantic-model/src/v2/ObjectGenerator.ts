@@ -1,4 +1,4 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { python } from "@fern-api/python-ast";
 import { core, dt, pydantic, WriteablePythonFile } from "@fern-api/python-base";
@@ -109,9 +109,9 @@ export class ObjectGenerator {
         objectProperty
     }: {
         className: string;
-        objectProperty: FernIr.NameAndWireValue;
+        objectProperty: FernIr.NameAndWireValueOrString;
     }): string {
-        return this.context.getSnakeCaseSafeName(objectProperty.name);
+        return this.context.getSnakeCaseSafeName(getNameFromWireValue(objectProperty));
     }
 
     private getConfigClass(): python.Class {

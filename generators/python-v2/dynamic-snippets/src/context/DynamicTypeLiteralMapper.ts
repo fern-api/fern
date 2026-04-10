@@ -606,7 +606,6 @@ export class DynamicTypeLiteralMapper {
                 if (firstValue == null) {
                     return python.TypeInstantiation.nop();
                 }
-                <<<<<<< HEAD
                 const enumType = this.context.customConfig.pydantic_config?.enum_type;
                 if (enumType === "python_enums" || enumType === "forward_compatible_python_enums") {
                     const classReference = this.context.getTypeClassReference(named.declaration);
