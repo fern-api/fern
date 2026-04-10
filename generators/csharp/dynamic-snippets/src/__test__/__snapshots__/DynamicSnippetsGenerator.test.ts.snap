@@ -703,6 +703,23 @@ exports[`snippets (default) > single-url-environment-default > 'invalid environm
 ]"
 `;
 
+exports[`snippets (endpoint with examples) > generates snippet for EndpointSnippetRequest when endpoint has examples 1`] = `
+"using Acme;
+using Acme.Imdb;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Imdb.CreateMovieAsync(
+    new CreateMovieRequest {
+        Title = "The Matrix",
+        Rating = 8.2
+    }
+);
+"
+`;
+
 exports[`snippets (use-undiscriminated-unions) > POST /container/map-prim-to-union (mixed values) 1`] = `
 "using Acme;
 using System.Collections.Generic;
