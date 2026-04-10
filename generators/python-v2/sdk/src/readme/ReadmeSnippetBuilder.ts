@@ -305,8 +305,9 @@ asyncio.run(main())`
                     );
                     break;
                 case "header": {
-                    const headerName = caseConverter.snakeUnsafe(getNameFromWireValue(scheme.name));
-                    const headerScreaming = caseConverter.screamingSnakeUnsafe(getNameFromWireValue(scheme.name));
+                    const schemeName = getNameFromWireValue(scheme.name);
+                    const headerName = caseConverter.snakeUnsafe(schemeName);
+                    const headerScreaming = caseConverter.screamingSnakeUnsafe(schemeName);
                     args.push(`    ${headerName}="YOUR_${headerScreaming}",`);
                     break;
                 }

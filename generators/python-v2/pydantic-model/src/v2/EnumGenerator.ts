@@ -86,8 +86,9 @@ export class EnumGenerator {
 
         // Add if statements for each enum value
         for (const enumValue of this.enumDeclaration.values) {
-            const memberName = caseConverter.screamingSnakeSafe(getNameFromWireValue(enumValue.name));
-            const parameterName = caseConverter.snakeSafe(getNameFromWireValue(enumValue.name));
+            const enumName = getNameFromWireValue(enumValue.name);
+            const memberName = caseConverter.screamingSnakeSafe(enumName);
+            const parameterName = caseConverter.snakeSafe(enumName);
 
             visitMethod.addStatement(
                 python.codeBlock((writer) => {

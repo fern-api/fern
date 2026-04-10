@@ -42,7 +42,8 @@ export class ObjectGenerator {
                 ? python.codeBlock("None")
                 : undefined;
 
-            const wireValue = propertyName === getWireValue(property.name) ? undefined : getWireValue(property.name);
+            const propertyWireValue = getWireValue(property.name);
+            const wireValue = propertyName === propertyWireValue ? undefined : propertyWireValue;
 
             let initializer = undefined;
 
