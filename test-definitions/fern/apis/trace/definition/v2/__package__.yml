@@ -1,7 +1,0 @@
-service:
-  base-path: /
-  auth: false
-  endpoints:
-    test:
-      path: ""
-      method: GET

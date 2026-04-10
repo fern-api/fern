@@ -1,8 +1,0 @@
-imports:
-  aa: ../a/aa/__package__.yml
-
-types:
-  TestType:
-    properties:
-      a: aa.A
-      b: aa.B

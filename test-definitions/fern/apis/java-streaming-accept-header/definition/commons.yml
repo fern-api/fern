@@ -1,9 +1,0 @@
-errors:
-  BadRequestError:
-    status-code: 400
-    type: ErrorBody
-
-types:
-  ErrorBody:
-    properties:
-      message: string
