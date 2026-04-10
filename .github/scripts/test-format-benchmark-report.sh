@@ -153,7 +153,7 @@ test_baseline_timestamp() {
 
   OUTPUT=$(BASELINE_TIMESTAMP="2026-03-30T04:00:00Z" bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
 
-  assert_contains "$OUTPUT" "cached" "Shows cached baseline label"
+  assert_contains "$OUTPUT" "latest nightly baseline" "Shows nightly baseline label"
   assert_contains "$OUTPUT" "2026-03-30T04:00:00Z" "Shows baseline timestamp"
   assert_contains "$OUTPUT" "benchmark-baseline" "Shows link to refresh workflow"
 }
@@ -522,6 +522,25 @@ test_e2e_column_with_history
 test_e2e_column_missing
 test_e2e_partial_coverage
 test_e2e_median_odd
+
+# Test 22: E2E column from flat e2e/ directory (artifacts API layout)
+test_e2e_flat_layout() {
+  echo "Test: E2E column populated from flat e2e/ directory (artifacts API)"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":50,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+
+  # Flat layout: generator-only at root, E2E in e2e/ subdir
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":45,"exit_code":0}' > "$MAIN_DIR/ts-sdk.jsonl"
+  mkdir -p "$MAIN_DIR/e2e"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$MAIN_DIR/e2e/ts-sdk.jsonl"
+
+  OUTPUT=$(BASELINE_TIMESTAMP="2026-04-06T04:00:00Z" bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_contains "$OUTPUT" "| ts-sdk | square | 45s | 200s | 50s |" "Flat layout: both gen and E2E shown"
+  assert_contains "$OUTPUT" "latest nightly baseline" "Flat layout: shows nightly baseline label"
+}
+
+test_e2e_flat_layout
 echo ""
 echo "=== PostHog JSON validation tests ==="
 echo ""

@@ -27,7 +27,7 @@ import Api
                     "key": JSONValue.string("value")
                 ]
             )),
-            dryRun: JSONValue.bool(true)
+            dryRun: true
         )
         let response = try await client.conversations.outboundCall(
             request: .init(toPhoneNumber: "to_phone_number"),
@@ -60,7 +60,7 @@ import Api
                     "key": JSONValue.string("value")
                 ]
             )),
-            dryRun: JSONValue.bool(true)
+            dryRun: true
         )
         let response = try await client.conversations.outboundCall(
             request: .init(

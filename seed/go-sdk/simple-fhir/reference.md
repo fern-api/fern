@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.GetAccount(AccountId) -> *fern.Account</code></summary>
+<details><summary><code>client.GetAccount(AccountID) -> *fern.Account</code></summary>
 <dl>
 <dd>
 
@@ -31,7 +31,7 @@ client.GetAccount(
 <dl>
 <dd>
 
-**accountId:** `string` 
+**accountID:** `string` 
     
 </dd>
 </dl>

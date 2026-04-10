@@ -110,7 +110,7 @@ export class OAuthWireTestGenerator {
         }
 
         // Extract client accessor path from fernFilepath (e.g., "OAuth2" or "Auth")
-        const clientAccessPath = getClientAccessPath(service);
+        const clientAccessPath = getClientAccessPath(service, this.context.caseConverter);
 
         // Use context.getMethodName for consistent method naming
         const methodName = this.context.getMethodName(endpoint.name);

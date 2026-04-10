@@ -186,7 +186,7 @@ func (d *Docs) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
-type Json struct {
+type JSON struct {
 	Docs string `json:"docs" url:"docs"`
 	Raw  string `json:"raw" url:"raw"`
 
@@ -194,36 +194,36 @@ type Json struct {
 	rawJSON         json.RawMessage
 }
 
-func (j *Json) GetDocs() string {
+func (j *JSON) GetDocs() string {
 	if j == nil {
 		return ""
 	}
 	return j.Docs
 }
 
-func (j *Json) GetRaw() string {
+func (j *JSON) GetRaw() string {
 	if j == nil {
 		return ""
 	}
 	return j.Raw
 }
 
-func (j *Json) GetExtraProperties() map[string]any {
+func (j *JSON) GetExtraProperties() map[string]any {
 	if j == nil {
 		return nil
 	}
 	return j.extraProperties
 }
 
-func (j *Json) UnmarshalJSON(
+func (j *JSON) UnmarshalJSON(
 	data []byte,
 ) error {
-	type unmarshaler Json
+	type unmarshaler JSON
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*j = Json(value)
+	*j = JSON(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *j)
 	if err != nil {
 		return err
@@ -233,7 +233,7 @@ func (j *Json) UnmarshalJSON(
 	return nil
 }
 
-func (j *Json) String() string {
+func (j *JSON) String() string {
 	if len(j.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(j.rawJSON); err == nil {
 			return value

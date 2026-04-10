@@ -9,6 +9,6 @@ public class Example51 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints().urls().withMixedCase();
+        client.endpoints().primitive().getAndReturnDate("2023-01-15");
     }
 }

@@ -15,7 +15,7 @@ func do() {
         ),
     )
     request := &fern.UpdatePlantRequest{
-        PlantId: "plantId",
+        PlantID: "plantId",
         Body: map[string]any{
             "care": map[string]any{
                 "light": "partial shade",

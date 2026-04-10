@@ -111,7 +111,7 @@
             "requestBodyType": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "Company",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -142,7 +142,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "Company",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -234,7 +234,7 @@
                 "requestBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "Company",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -269,7 +269,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "Company",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -394,7 +394,7 @@
                 "optional": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "File",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,

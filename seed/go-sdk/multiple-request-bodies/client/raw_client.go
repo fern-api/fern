@@ -32,7 +32,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) UploadJsonDocument(
+func (r *RawClient) UploadJSONDocument(
 	ctx context.Context,
 	request *fern.UploadDocumentRequest,
 	opts ...option.RequestOption,

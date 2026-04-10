@@ -209,7 +209,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "Item",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -305,7 +305,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "Item",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -623,7 +623,7 @@
                     "list": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "Item",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -729,7 +729,7 @@
                         "list": {
                           "_visit": [Function],
                           "default": undefined,
-                          "displayName": undefined,
+                          "displayName": "Item",
                           "fernFilepath": {
                             "allParts": [],
                             "file": undefined,
@@ -883,7 +883,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "ItemDetails",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -977,7 +977,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "ItemDetails",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,

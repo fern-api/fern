@@ -9,21 +9,21 @@ import (
 	internal "github.com/version-no-default/fern/internal"
 )
 
-type UserId = string
+type UserID = string
 
 type User struct {
-	Id   UserId `json:"id" url:"id"`
+	ID   UserID `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (u *User) GetId() UserId {
+func (u *User) GetID() UserID {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetName() string {

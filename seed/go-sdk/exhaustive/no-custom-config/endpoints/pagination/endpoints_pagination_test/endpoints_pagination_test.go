@@ -73,6 +73,7 @@ func TestEndpointsPaginationListItemsWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &endpoints.ListItemsRequest{
 		Cursor: fern.String(

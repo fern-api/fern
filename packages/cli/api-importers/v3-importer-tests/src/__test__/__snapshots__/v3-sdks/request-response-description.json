@@ -104,6 +104,7 @@
               "name": "Schema1",
               "typeId": "Schema1",
               "inline": false,
+              "displayName": "Schema1",
               "type": "named"
             }
           }

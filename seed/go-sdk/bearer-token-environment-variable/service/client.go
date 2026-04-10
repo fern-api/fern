@@ -20,8 +20,8 @@ type Client struct {
 }
 
 func NewClient(options *core.RequestOptions) *Client {
-	if options.ApiKey == "" {
-		options.ApiKey = os.Getenv("COURIER_API_KEY")
+	if options.APIKey == "" {
+		options.APIKey = os.Getenv("COURIER_API_KEY")
 	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),

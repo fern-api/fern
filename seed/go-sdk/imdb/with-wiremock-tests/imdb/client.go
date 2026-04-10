@@ -38,7 +38,7 @@ func (c *Client) CreateMovie(
 	ctx context.Context,
 	request *testPackageName.CreateMovieRequest,
 	opts ...option.RequestOption,
-) (testPackageName.MovieId, error) {
+) (testPackageName.MovieID, error) {
 	response, err := c.WithRawResponse.CreateMovie(
 		ctx,
 		request,
@@ -52,12 +52,12 @@ func (c *Client) CreateMovie(
 
 func (c *Client) GetMovie(
 	ctx context.Context,
-	movieId testPackageName.MovieId,
+	movieID testPackageName.MovieID,
 	opts ...option.RequestOption,
 ) (*testPackageName.Movie, error) {
 	response, err := c.WithRawResponse.GetMovie(
 		ctx,
-		movieId,
+		movieID,
 		opts...,
 	)
 	if err != nil {

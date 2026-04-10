@@ -7,11 +7,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class ApiVersion {
-    public static final ApiVersion _1_0_0 = new ApiVersion(Value._1_0_0, "1.0.0");
+    public static final ApiVersion _200 = new ApiVersion(Value._200, "2.0.0");
 
     public static final ApiVersion LATEST = new ApiVersion(Value.LATEST, "latest");
 
-    public static final ApiVersion _2_0_0 = new ApiVersion(Value._2_0_0, "2.0.0");
+    public static final ApiVersion _100 = new ApiVersion(Value._100, "1.0.0");
 
     private final Value value;
 
@@ -44,12 +44,12 @@ public final class ApiVersion {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case _1_0_0:
-                return visitor.visit_100();
+            case _200:
+                return visitor.visit_200();
             case LATEST:
                 return visitor.visitLatest();
-            case _2_0_0:
-                return visitor.visit_200();
+            case _100:
+                return visitor.visit_100();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -59,21 +59,21 @@ public final class ApiVersion {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static ApiVersion valueOf(String value) {
         switch (value) {
-            case "1.0.0":
-                return _1_0_0;
+            case "2.0.0":
+                return _200;
             case "latest":
                 return LATEST;
-            case "2.0.0":
-                return _2_0_0;
+            case "1.0.0":
+                return _100;
             default:
                 return new ApiVersion(Value.UNKNOWN, value);
         }
     }
 
     public enum Value {
-        _1_0_0,
+        _100,
 
-        _2_0_0,
+        _200,
 
         LATEST,
 

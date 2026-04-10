@@ -31,18 +31,20 @@ export function isNpmGenerator(generatorName: string): boolean {
 export function overrideGroupOutputForPreview({
     group,
     packageName,
-    token
+    token,
+    registryUrl
 }: {
     group: generatorsYml.GeneratorGroup;
     packageName: string;
     token: string;
+    registryUrl: string;
 }): generatorsYml.GeneratorGroup {
     const modifiedGenerators = group.generators.map((generator) => {
         const modifiedGenerator: generatorsYml.GeneratorInvocation = {
             ...generator,
             outputMode: FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
-                    registryUrl: PREVIEW_REGISTRY_URL,
+                    registryUrl,
                     packageName,
                     token,
                     downloadSnippets: false

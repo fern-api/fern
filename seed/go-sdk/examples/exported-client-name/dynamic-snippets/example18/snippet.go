@@ -26,7 +26,7 @@ func do() {
                 "tag",
             ),
         },
-        XApiVersion: "X-API-Version",
+        XAPIVersion: "X-API-Version",
     }
     client.Service.GetMetadata(
         context.TODO(),

@@ -93,6 +93,22 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return python.reference({ name: className, modulePath });
     }
 
+    public getDiscriminatedUnionVariantClassReference({
+        unionDeclaration,
+        discriminantValue
+    }: {
+        unionDeclaration: FernIr.dynamic.Declaration;
+        discriminantValue: FernIr.dynamic.NameAndWireValue;
+    }): python.Reference {
+        const unionClassName = this.getClassName(unionDeclaration.name);
+        const variantSuffix = discriminantValue.name.pascalCase.safeName;
+        const modulePath = [
+            ...this.getRootModulePath(),
+            ...unionDeclaration.fernFilepath.allParts.map((part) => part.snakeCase.safeName)
+        ];
+        return python.reference({ name: `${unionClassName}_${variantSuffix}`, modulePath });
+    }
+
     public useTypedDictRequests(): boolean {
         return this.customConfig.use_typeddict_requests === true;
     }
@@ -183,6 +199,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         const cleanOrganizationName = this.cleanOrganizationName();
         if (this.customConfig.use_api_name_in_package) {
             return [cleanOrganizationName, this.getApiName()];
+        }
+        if (this.customConfig.package_path != null) {
+            const pathSegments = this.customConfig.package_path.replace(/\//g, ".").split(".");
+            return [cleanOrganizationName, ...pathSegments];
         }
         return [cleanOrganizationName];
     }

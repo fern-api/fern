@@ -33,8 +33,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options.SetTokenGetter(func() (string, error) {
 		return inferredAuthProvider.GetOrFetch(func() (string, int, error) {
 			response, err := authClient.GetTokenWithClientCredentials(context.Background(), &fern.GetTokenRequest{
-				XApiKey:      options.XApiKey,
-				ClientId:     options.ClientId,
+				XAPIKey:      options.XAPIKey,
+				ClientID:     options.ClientID,
 				ClientSecret: options.ClientSecret,
 			})
 			if err != nil {

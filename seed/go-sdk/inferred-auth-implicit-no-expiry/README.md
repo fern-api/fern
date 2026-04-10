@@ -39,10 +39,10 @@ import (
 
 func do() {
     client := client.NewClient(
-        option.WithXApiKey(
+        option.WithXAPIKey(
             "X-Api-Key",
         ),
-        option.WithClientId(
+        option.WithClientID(
             "client_id",
         ),
         option.WithClientSecret(
@@ -50,8 +50,8 @@ func do() {
         ),
     )
     request := &fern.GetTokenRequest{
-        XApiKey: "X-Api-Key",
-        ClientId: "client_id",
+        XAPIKey: "X-Api-Key",
+        ClientID: "client_id",
         ClientSecret: "client_secret",
         Scope: fern.String(
             "scope",

@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/null-type/fern\"\n\tfernclient \"github.com/null-type/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Users.Get(\n\tcontext.TODO(),\n\t\u0026fern.GetUsersRequest{\n\t\tId: \"id\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/null-type/fern\"\n\tfernclient \"github.com/null-type/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Users.Get(\n\tcontext.TODO(),\n\t\u0026fern.GetUsersRequest{\n\t\tID: \"id\",\n\t},\n)\n"
             }
         }
     ]

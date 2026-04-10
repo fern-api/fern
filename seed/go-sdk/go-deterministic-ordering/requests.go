@@ -10,11 +10,11 @@ import (
 )
 
 var (
-	putRequestFieldId = big.NewInt(1 << 0)
+	putRequestFieldID = big.NewInt(1 << 0)
 )
 
 type PutRequest struct {
-	Id string `json:"-" url:"-"`
+	ID string `json:"-" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -27,11 +27,11 @@ func (p *PutRequest) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PutRequest) SetId(id string) {
-	p.Id = id
-	p.require(putRequestFieldId)
+func (p *PutRequest) SetID(id string) {
+	p.ID = id
+	p.require(putRequestFieldID)
 }
 
 var (
@@ -200,12 +200,12 @@ func (c *CreateRequestC) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	getRequestCFieldId      = big.NewInt(1 << 0)
+	getRequestCFieldID      = big.NewInt(1 << 0)
 	getRequestCFieldVerbose = big.NewInt(1 << 1)
 )
 
 type GetRequestC struct {
-	Id      string `json:"-" url:"-"`
+	ID      string `json:"-" url:"-"`
 	Verbose *bool  `json:"-" url:"verbose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -219,11 +219,11 @@ func (g *GetRequestC) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetRequestC) SetId(id string) {
-	g.Id = id
-	g.require(getRequestCFieldId)
+func (g *GetRequestC) SetID(id string) {
+	g.ID = id
+	g.require(getRequestCFieldID)
 }
 
 // SetVerbose sets the Verbose field and marks it as non-optional;
@@ -234,12 +234,12 @@ func (g *GetRequestC) SetVerbose(verbose *bool) {
 }
 
 var (
-	getRequestAFieldId     = big.NewInt(1 << 0)
+	getRequestAFieldID     = big.NewInt(1 << 0)
 	getRequestAFieldFilter = big.NewInt(1 << 1)
 )
 
 type GetRequestA struct {
-	Id     string  `json:"-" url:"-"`
+	ID     string  `json:"-" url:"-"`
 	Filter *string `json:"-" url:"filter,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -253,11 +253,11 @@ func (g *GetRequestA) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetRequestA) SetId(id string) {
-	g.Id = id
-	g.require(getRequestAFieldId)
+func (g *GetRequestA) SetID(id string) {
+	g.ID = id
+	g.require(getRequestAFieldID)
 }
 
 // SetFilter sets the Filter field and marks it as non-optional;
@@ -268,12 +268,12 @@ func (g *GetRequestA) SetFilter(filter *string) {
 }
 
 var (
-	getRequestBFieldId     = big.NewInt(1 << 0)
+	getRequestBFieldID     = big.NewInt(1 << 0)
 	getRequestBFieldExpand = big.NewInt(1 << 1)
 )
 
 type GetRequestB struct {
-	Id     string `json:"-" url:"-"`
+	ID     string `json:"-" url:"-"`
 	Expand *bool  `json:"-" url:"expand,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -287,11 +287,11 @@ func (g *GetRequestB) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetRequestB) SetId(id string) {
-	g.Id = id
-	g.require(getRequestBFieldId)
+func (g *GetRequestB) SetID(id string) {
+	g.ID = id
+	g.require(getRequestBFieldID)
 }
 
 // SetExpand sets the Expand field and marks it as non-optional;

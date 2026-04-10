@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>client.Bigunion.Get(Id) -> *unions.BigUnion</code></summary>
+<details><summary><code>client.Bigunion.Get(ID) -> *unions.BigUnion</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ request := &unions.BigUnion{
         NormalSweet: &unions.NormalSweet{
             Value: "value",
         },
-        Id: "id",
+        ID: "id",
         CreatedAt: unions.MustParseDateTime(
             "2024-01-15T09:30:00Z",
         ),
@@ -120,7 +120,7 @@ request := []*unions.BigUnion{
             NormalSweet: &unions.NormalSweet{
                 Value: "value",
             },
-            Id: "id",
+            ID: "id",
             CreatedAt: unions.MustParseDateTime(
                 "2024-01-15T09:30:00Z",
             ),
@@ -134,7 +134,7 @@ request := []*unions.BigUnion{
             NormalSweet: &unions.NormalSweet{
                 Value: "value",
             },
-            Id: "id",
+            ID: "id",
             CreatedAt: unions.MustParseDateTime(
                 "2024-01-15T09:30:00Z",
             ),
@@ -177,7 +177,7 @@ client.Bigunion.UpdateMany(
 </details>
 
 ## Union
-<details><summary><code>client.Union.Get(Id) -> *unions.Shape</code></summary>
+<details><summary><code>client.Union.Get(ID) -> *unions.Shape</code></summary>
 <dl>
 <dd>
 
@@ -238,7 +238,7 @@ request := &unions.Shape{
         Circle: &unions.Circle{
             Radius: 1.1,
         },
-        Id: "id",
+        ID: "id",
     }
 client.Union.Update(
         context.TODO(),

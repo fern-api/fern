@@ -44,6 +44,60 @@ export class WebhooksHelper {
 "
 `;
 
+exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with ALPHABETICAL bodySort and BODY-only payload 1`] = `
+"/**
+ * Verify an HMAC webhook signature.
+ *
+ * Extract the signature from the "X-Webhook-Signature" header and pass it as the signatureHeader parameter.
+ * The requestBody parameter accepts either a raw string or a Record<string, string> of POST body parameters.
+ * When a Record is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string | Record<string, string>, signatureHeader: string, signatureKey: string): Promise<boolean> {
+        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+            throw new Error("Missing required parameters for webhook signature verification");
+        }
+
+        const bodyString = typeof requestBody === "string"
+            ? requestBody
+            : Object.keys(requestBody).sort().map(key => key + requestBody[key]).join("");
+        const payload = bodyString;
+
+        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
+
+        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+    }
+}
+"
+`;
+
+exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with ALPHABETICAL bodySort and NOTIFICATION_URL + BODY payload 1`] = `
+"/**
+ * Verify an HMAC webhook signature.
+ *
+ * Extract the signature from the "X-Webhook-Signature" header and pass it as the signatureHeader parameter.
+ * The requestBody parameter accepts either a raw string or a Record<string, string> of POST body parameters.
+ * When a Record is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string | Record<string, string>, signatureHeader: string, signatureKey: string, notificationUrl: string): Promise<boolean> {
+        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+            throw new Error("Missing required parameters for webhook signature verification");
+        }
+
+        const bodyString = typeof requestBody === "string"
+            ? requestBody
+            : Object.keys(requestBody).sort().map(key => key + requestBody[key]).join("");
+        const payload = [notificationUrl, bodyString].join("");
+
+        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "base64" });
+
+        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+    }
+}
+"
+`;
+
 exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with ISO8601 timestamp format 1`] = `
 "const TIMESTAMP_TOLERANCE_SECONDS = 300;
 

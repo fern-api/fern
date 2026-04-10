@@ -14,7 +14,7 @@ async fn main() {
             &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
             &StoreTracedWorkspaceRequest {
                 workspace_run_details: WorkspaceRunDetails {
-                    exception_v_2: Some(ExceptionV2::Generic {
+                    exception_v2: Some(ExceptionV2::Generic {
                         data: ExceptionInfo {
                             exception_type: "exceptionType".to_string(),
                             exception_message: "exceptionMessage".to_string(),

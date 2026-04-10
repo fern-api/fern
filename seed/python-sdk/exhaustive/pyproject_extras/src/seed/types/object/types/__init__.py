@@ -14,8 +14,10 @@ if typing.TYPE_CHECKING:
     from .object_with_datetime_like_string import ObjectWithDatetimeLikeString
     from .object_with_documented_unknown_type import ObjectWithDocumentedUnknownType
     from .object_with_map_of_map import ObjectWithMapOfMap
+    from .object_with_mixed_required_and_optional_fields import ObjectWithMixedRequiredAndOptionalFields
     from .object_with_optional_field import ObjectWithOptionalField
     from .object_with_required_field import ObjectWithRequiredField
+    from .object_with_required_nested_object import ObjectWithRequiredNestedObject
     from .object_with_unknown_field import ObjectWithUnknownField
     from .optional_alias import OptionalAlias
 _dynamic_imports: typing.Dict[str, str] = {
@@ -27,8 +29,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ObjectWithDatetimeLikeString": ".object_with_datetime_like_string",
     "ObjectWithDocumentedUnknownType": ".object_with_documented_unknown_type",
     "ObjectWithMapOfMap": ".object_with_map_of_map",
+    "ObjectWithMixedRequiredAndOptionalFields": ".object_with_mixed_required_and_optional_fields",
     "ObjectWithOptionalField": ".object_with_optional_field",
     "ObjectWithRequiredField": ".object_with_required_field",
+    "ObjectWithRequiredNestedObject": ".object_with_required_nested_object",
     "ObjectWithUnknownField": ".object_with_unknown_field",
     "OptionalAlias": ".optional_alias",
 }
@@ -64,8 +68,10 @@ __all__ = [
     "ObjectWithDatetimeLikeString",
     "ObjectWithDocumentedUnknownType",
     "ObjectWithMapOfMap",
+    "ObjectWithMixedRequiredAndOptionalFields",
     "ObjectWithOptionalField",
     "ObjectWithRequiredField",
+    "ObjectWithRequiredNestedObject",
     "ObjectWithUnknownField",
     "OptionalAlias",
 ]

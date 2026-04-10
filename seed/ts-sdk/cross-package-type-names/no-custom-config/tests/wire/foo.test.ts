@@ -24,8 +24,6 @@ describe("FooClient", () => {
             publicProperty: "publicProperty",
             privateProperty: 1,
         });
-        expect(response).toEqual({
-            imported: "imported",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

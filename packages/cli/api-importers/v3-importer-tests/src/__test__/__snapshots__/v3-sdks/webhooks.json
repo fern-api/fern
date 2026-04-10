@@ -118,6 +118,7 @@
             "name": "Pet",
             "typeId": "Pet",
             "inline": false,
+            "displayName": "Pet",
             "type": "named"
           },
           "type": "reference"
@@ -159,6 +160,7 @@
             "name": "Pet",
             "typeId": "Pet",
             "inline": false,
+            "displayName": "Pet",
             "type": "named"
           },
           "docs": "Information about a new pet in the system",

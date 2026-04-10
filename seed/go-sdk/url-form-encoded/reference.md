@@ -69,7 +69,7 @@ client.SubmitFormData(
 
 ```go
 request := &fern.TokenRequest{
-        ClientId: "client_id",
+        ClientID: "client_id",
         ClientSecret: "client_secret",
     }
 client.GetToken(

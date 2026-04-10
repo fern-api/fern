@@ -71,18 +71,18 @@ func (t *TokenResponse) String() string {
 
 // The request body for getting an OAuth token.
 type GetTokenRequest struct {
-	ClientId     string `json:"client_id" url:"client_id"`
+	ClientID     string `json:"client_id" url:"client_id"`
 	ClientSecret string `json:"client_secret" url:"client_secret"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (g *GetTokenRequest) GetClientId() string {
+func (g *GetTokenRequest) GetClientID() string {
 	if g == nil {
 		return ""
 	}
-	return g.ClientId
+	return g.ClientID
 }
 
 func (g *GetTokenRequest) GetClientSecret() string {

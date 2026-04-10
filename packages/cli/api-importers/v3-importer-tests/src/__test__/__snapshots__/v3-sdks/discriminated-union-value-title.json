@@ -143,7 +143,7 @@
         "types": [
           {
             "discriminantValue": "request",
-            "displayName": "request",
+            "displayName": "A simple request title",
             "shape": {
               "typeId": "Request",
               "name": "Request",
@@ -151,13 +151,13 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "displayName": "request",
+              "displayName": "A simple request title",
               "propertiesType": "samePropertiesAsObject"
             }
           },
           {
             "discriminantValue": "response",
-            "displayName": "response",
+            "displayName": "A simple response title",
             "shape": {
               "typeId": "Response",
               "name": "Response",
@@ -165,7 +165,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "displayName": "response",
+              "displayName": "A simple response title",
               "propertiesType": "samePropertiesAsObject"
             }
           }
@@ -396,6 +396,7 @@
               "name": "Request",
               "typeId": "Request",
               "inline": false,
+              "displayName": "A simple request title",
               "type": "named"
             },
             "v2Examples": {
@@ -419,6 +420,7 @@
                   "name": "Request",
                   "typeId": "Request",
                   "inline": false,
+                  "displayName": "A simple request title",
                   "type": "named"
                 },
                 "v2Examples": {
@@ -443,6 +445,7 @@
                   "name": "Response",
                   "typeId": "Response",
                   "inline": false,
+                  "displayName": "A simple response title",
                   "type": "named"
                 },
                 "docs": "A simple API response.",
@@ -501,6 +504,7 @@
                       "name": "Response",
                       "typeId": "Response",
                       "inline": false,
+                      "displayName": "A simple response title",
                       "type": "named"
                     },
                     "docs": "A simple API response.",

@@ -1,3 +1,4 @@
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -7,8 +8,8 @@ from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 import fern.generator_exec as generator_exec
 
 # v2BinPath is the path to the python-v2 binary included in the SDK
-# generator docker image.
-V2_BIN_PATH = "/bin/python-v2"
+# generator docker image. Can be overridden via PYTHON_V2_PATH for local execution.
+V2_BIN_PATH = os.environ.get("PYTHON_V2_PATH", "/bin/python-v2")
 
 
 class PythonV2Generator:

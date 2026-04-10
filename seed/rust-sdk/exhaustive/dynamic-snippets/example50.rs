@@ -10,15 +10,9 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .union_
-        .get_and_return_union(
-            &Animal::Dog {
-                data: Dog {
-                    name: "name".to_string(),
-                    likes_to_woof: true,
-                    ..Default::default()
-                },
-            },
+        .primitive
+        .get_and_return_datetime(
+            &DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
             None,
         )
         .await;

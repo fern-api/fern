@@ -8,6 +8,7 @@ type ExampleTypeReference = FernIr.ExampleTypeReference;
 type HttpEndpoint = FernIr.HttpEndpoint;
 type ObjectPropertyAccess = FernIr.ObjectPropertyAccess;
 const ObjectPropertyAccess = FernIr.ObjectPropertyAccess;
+type ObjectProperty = FernIr.ObjectProperty;
 type TypeId = FernIr.TypeId;
 type TypeReference = FernIr.TypeReference;
 
@@ -610,6 +611,126 @@ export class MockEndpointGenerator extends WithGeneration {
                 result[getWireValue(extraProp.name)] = this.filterExampleTypeReference(extraProp.value, options);
             }
         }
+
+        // Include default JSON values for required properties missing from the example
+        // so mock server request JSON matches the SDK's serialized output.
+        if (typeDeclaration.shape.type === "object") {
+            const allProps: ObjectProperty[] = [
+                ...typeDeclaration.shape.properties,
+                ...(typeDeclaration.shape.extendedProperties ?? [])
+            ];
+            for (const prop of allProps) {
+                const wireValue = getWireValue(prop.name);
+                if (wireValue in result) {
+                    continue;
+                }
+                if (propertiesToFilter.has(wireValue)) {
+                    continue;
+                }
+                if (this.isRequiredProperty(prop.valueType)) {
+                    const defaultValue = this.getDefaultJsonValueForType(prop.valueType);
+                    if (defaultValue !== undefined) {
+                        result[wireValue] = defaultValue;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Returns true if a property's type will be marked as `required` in C#.
+     */
+    private isRequiredProperty(typeReference: TypeReference): boolean {
+        if (this.context.isOptional(typeReference) || this.context.isNullable(typeReference)) {
+            return false;
+        }
+        if (typeReference.type === "container") {
+            const ct = typeReference.container.type;
+            if (ct === "list" || ct === "set" || ct === "map") {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns the JSON default value for a type reference.
+     * Used when a required property is missing from an example.
+     */
+    private getDefaultJsonValueForType(typeReference: TypeReference, visitedTypeIds?: Set<string>): unknown {
+        switch (typeReference.type) {
+            case "primitive":
+                return FernIr.PrimitiveTypeV1._visit<unknown>(typeReference.primitive.v1, {
+                    integer: () => 0,
+                    long: () => 0,
+                    uint: () => 0,
+                    uint64: () => 0,
+                    float: () => 0.0,
+                    double: () => 0.0,
+                    boolean: () => false,
+                    string: () => "",
+                    date: () => "0001-01-01",
+                    dateTime: () => "0001-01-01T00:00:00.000Z",
+                    uuid: () => "",
+                    base64: () => "",
+                    bigInteger: () => "",
+                    dateTimeRfc2822: () => "0001-01-01T00:00:00.000Z",
+                    _other: () => undefined
+                });
+            case "named": {
+                const typeDeclaration = this.context.model.dereferenceType(typeReference.typeId).typeDeclaration;
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.getDefaultJsonValueForType(typeDeclaration.shape.aliasOf, visitedTypeIds);
+                }
+                if (typeDeclaration.shape.type === "enum" && typeDeclaration.shape.values.length > 0) {
+                    const firstEnumValue = typeDeclaration.shape.values[0];
+                    if (firstEnumValue != null) {
+                        return getWireValue(firstEnumValue.name);
+                    }
+                }
+                if (typeDeclaration.shape.type === "object") {
+                    return this.getDefaultJsonValueForObject(
+                        typeReference.typeId,
+                        typeDeclaration.shape,
+                        visitedTypeIds
+                    );
+                }
+                return undefined;
+            }
+            default:
+                return undefined;
+        }
+    }
+
+    /**
+     * Returns a default JSON object for a required nested object type.
+     * Recursively fills in required properties with defaults.
+     */
+    private getDefaultJsonValueForObject(
+        typeId: TypeId,
+        objectShape: { properties: ObjectProperty[]; extendedProperties?: ObjectProperty[] },
+        visitedTypeIds?: Set<string>
+    ): Record<string, unknown> | undefined {
+        const visited = visitedTypeIds ?? new Set<string>();
+        if (visited.has(typeId)) {
+            return undefined;
+        }
+        visited.add(typeId);
+
+        const result: Record<string, unknown> = {};
+        const allProps = [...objectShape.properties, ...(objectShape.extendedProperties ?? [])];
+        for (const prop of allProps) {
+            if (this.isRequiredProperty(prop.valueType)) {
+                const defaultValue = this.getDefaultJsonValueForType(prop.valueType, visited);
+                if (defaultValue !== undefined) {
+                    result[getWireValue(prop.name)] = defaultValue;
+                }
+            }
+        }
+
+        visited.delete(typeId);
 
         return result;
     }

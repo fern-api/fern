@@ -23,7 +23,7 @@ describe("NoAuthClient", () => {
             key: "value",
         });
         expect(response).toEqual({
-            body: true,
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

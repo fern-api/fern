@@ -11,7 +11,7 @@ import (
 
 // A request to obtain an OAuth token.
 type GetTokenRequest struct {
-	ClientId     string  `json:"client_id" url:"client_id"`
+	ClientID     string  `json:"client_id" url:"client_id"`
 	ClientSecret string  `json:"client_secret" url:"client_secret"`
 	Scope        *string `json:"scope,omitempty" url:"scope,omitempty"`
 
@@ -21,11 +21,11 @@ type GetTokenRequest struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetTokenRequest) GetClientId() string {
+func (g *GetTokenRequest) GetClientID() string {
 	if g == nil {
 		return ""
 	}
-	return g.ClientId
+	return g.ClientID
 }
 
 func (g *GetTokenRequest) GetClientSecret() string {
@@ -123,7 +123,7 @@ func (g *GetTokenRequest) String() string {
 
 // A request to refresh an OAuth token.
 type RefreshTokenRequest struct {
-	ClientId     string  `json:"client_id" url:"client_id"`
+	ClientID     string  `json:"client_id" url:"client_id"`
 	ClientSecret string  `json:"client_secret" url:"client_secret"`
 	RefreshToken string  `json:"refresh_token" url:"refresh_token"`
 	Scope        *string `json:"scope,omitempty" url:"scope,omitempty"`
@@ -134,11 +134,11 @@ type RefreshTokenRequest struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *RefreshTokenRequest) GetClientId() string {
+func (r *RefreshTokenRequest) GetClientID() string {
 	if r == nil {
 		return ""
 	}
-	return r.ClientId
+	return r.ClientID
 }
 
 func (r *RefreshTokenRequest) GetClientSecret() string {
