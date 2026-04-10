@@ -36,7 +36,7 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         [GeneratorName.CSHARP_MODEL]: "0.9.0-rc.0",
         [GeneratorName.CSHARP_SDK]: "2.57.0-rc.0",
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.SWIFT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.SWIFT_SDK]: "0.32.0-rc.0",
         [GeneratorName.PHP_MODEL]: "0.1.0-rc.0",
         [GeneratorName.PHP_SDK]: "2.3.2-rc.0",
         [GeneratorName.RUST_MODEL]: "0.5.0-rc.0",
