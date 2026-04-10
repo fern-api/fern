@@ -67,7 +67,7 @@ public record DescribeResponse : IJsonOnDeserialized
         }
         if (Fullness != null)
         {
-            result.Fullness = Fullness ?? 0.0f;
+            result.Fullness = Fullness ?? 0.0;
         }
         if (TotalCount != null)
         {

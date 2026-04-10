@@ -622,7 +622,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
             long: () => this.csharp.codeblock("0"),
             uint: () => this.csharp.codeblock("0"),
             uint64: () => this.csharp.codeblock("0"),
-            float: () => this.csharp.codeblock("0.0f"),
+            float: () => this.csharp.codeblock("0.0"),
             double: () => this.csharp.codeblock("0.0"),
             boolean: () => this.csharp.codeblock("false"),
             string: () => this.csharp.codeblock('""'),

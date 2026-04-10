@@ -58,7 +58,7 @@ public record ScoredColumn : IJsonOnDeserialized
         result.Id = Id;
         if (Score != null)
         {
-            result.Score = Score ?? 0.0f;
+            result.Score = Score ?? 0.0;
         }
         if (Values != null && Values.Any())
         {

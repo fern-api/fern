@@ -16,7 +16,7 @@ public record Column : IJsonOnDeserialized
     public required string Id { get; set; }
 
     [JsonPropertyName("values")]
-    public IEnumerable<double> Values { get; set; } = new List<double>();
+    public ReadOnlyMemory<double> Values { get; set; }
 
     [JsonPropertyName("metadata")]
     public Metadata? Metadata { get; set; }
@@ -35,7 +35,7 @@ public record Column : IJsonOnDeserialized
         return new Column
         {
             Id = value.Id,
-            Values = value.Values?.ToArray() ?? new List<double>(),
+            Values = value.Values?.ToArray() ?? new ReadOnlyMemory<double>(),
             Metadata = value.Metadata != null ? SeedApi.Metadata.FromProto(value.Metadata) : null,
             IndexedData =
                 value.IndexedData != null ? SeedApi.IndexedData.FromProto(value.IndexedData) : null,
