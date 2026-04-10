@@ -927,11 +927,11 @@ components:
         - '>'
         - '~'
         - '!~'
+        - ^
+        - $
       x-fern-enum:
         '~':
           name: Tilde
-        - ^
-        - $
     SearchRequest:
       title: SearchRequest
       type: object
