@@ -1,0 +1,28 @@
+types:
+  AutomationSchema:
+    docs: |
+      Controls which automation features (GitHub Actions workflows) are enabled.
+      Can be set at root, group, or generator level. Resolution order:
+      generator → group → root → default (all enabled).
+    properties:
+      generate:
+        type: optional<boolean>
+        docs: |
+          Enable or disable SDK generation automation (fern-generate workflow).
+          Defaults to true.
+      upgrade:
+        type: optional<boolean>
+        docs: |
+          Enable or disable CLI and generator upgrade automation (fern-upgrade workflow).
+          Defaults to true.
+      preview:
+        type: optional<boolean>
+        docs: |
+          Enable or disable SDK preview validation on PRs (fern-preview workflow).
+          Defaults to true.
+      verify:
+        type: optional<boolean>
+        docs: |
+          Enable or disable self-verification (install, build, test) of generated SDK output.
+          Runs on PRs and on merge to main.
+          Defaults to true.

@@ -1,4 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.59.5
+  changelogEntry:
+    - summary: |
+        Skip mock server test examples with empty string path parameters. An
+        empty path parameter causes the mock server to register a collapsed URL
+        (e.g. `/v0/tools/version/1`) while the SDK client sends a double-slash
+        URL (e.g. `/v0/tools//version/1`), resulting in a 404 from WireMock.
+      type: fix
+    - summary: |
+        Fix dynamic snippet generation for literal types when `generate-literals`
+        (or `experimental-readonly-constants`) is enabled. Inline literal
+        properties now correctly omit the value (relying on the `= new()`
+        default initializer), and named literal alias types emit `new TypeName()`
+        instead of a raw string, preventing CS0029 compilation errors.
+      type: fix
+    - summary: |
+        Fix file upload request properties declared as `list<file>` generating
+        a single `FileParameter` field instead of `List<FileParameter>`.
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
+
 - version: 2.59.4
   changelogEntry:
     - summary: |

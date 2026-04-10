@@ -10,6 +10,7 @@ import type { PipelineLogger } from "../PipelineLogger";
 import { formatReplayPrBody } from "../replay-summary";
 import type { GithubStepConfig, GithubStepResult, PipelineContext, ReplayStepResult } from "../types";
 import { BaseStep } from "./BaseStep";
+
 export class GithubStep extends BaseStep {
     readonly name = "github";
 
@@ -93,11 +94,14 @@ export class GithubStep extends BaseStep {
         const octokit = new Octokit({ auth: this.config.token });
         const { owner, repo } = parseRepository(this.config.uri);
 
-        const existingPR = await findExistingUpdatablePR(octokit, owner, repo, baseBranch, this.logger);
-
         let prBranch: string;
         let isUpdatingExistingPR = false;
         let generationBaseSha: string | undefined;
+        let existingPR: Awaited<ReturnType<typeof findExistingUpdatablePR>> | undefined;
+
+        if (!this.config.automationMode) {
+            existingPR = await findExistingUpdatablePR(octokit, owner, repo, baseBranch, this.logger);
+        }
 
         if (existingPR != null) {
             this.logger.info(
@@ -105,21 +109,22 @@ export class GithubStep extends BaseStep {
             );
             prBranch = existingPR.headBranch;
             isUpdatingExistingPR = true;
-            if (skipCommit) {
-                generationBaseSha = await createReplayBranch(
-                    repository,
-                    prBranch,
-                    this.config.commitMessage,
-                    replayConflictInfo,
-                    this.logger
-                );
-            } else {
-                await repository.checkoutRemoteBranch(prBranch);
-            }
         } else {
-            this.logger.debug(`No existing updatable PR found, creating new branch ${newPrBranch}`);
+            this.logger.debug(
+                this.config.automationMode
+                    ? `Automation mode: creating new branch ${newPrBranch}`
+                    : `No existing updatable PR found, creating new branch ${newPrBranch}`
+            );
             prBranch = newPrBranch;
-            if (skipCommit) {
+        }
+
+        const branchAction = resolveBranchAction({
+            automationMode: this.config.automationMode === true,
+            skipCommit,
+            existingPR
+        });
+        switch (branchAction) {
+            case "replay-branch":
                 generationBaseSha = await createReplayBranch(
                     repository,
                     prBranch,
@@ -127,8 +132,16 @@ export class GithubStep extends BaseStep {
                     replayConflictInfo,
                     this.logger
                 );
-            } else {
-                await repository.checkout(prBranch);
+                break;
+            case "create-from-head":
+                await repository.createBranchFromHead(prBranch);
+                break;
+            case "checkout-remote":
+                await repository.checkoutRemoteBranch(prBranch);
+                break;
+            default: {
+                const _exhaustive: never = branchAction;
+                throw new Error(`Unexpected branch action: ${String(_exhaustive)}`);
             }
         }
 
@@ -139,6 +152,18 @@ export class GithubStep extends BaseStep {
             const finalCommitMessage = this.config.commitMessage ?? "SDK Generation";
             await repository.commitAllChanges(finalCommitMessage);
             this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
+        }
+
+        // In automation mode, detect no-diff before pushing.
+        // --version AUTO already returns shouldCommit=false for NO_CHANGE, which prevents the
+        // pipeline from running at all. This tree-hash check is a safety net for edge cases
+        // where the version changes but the generated output doesn't.
+        if (this.config.automationMode) {
+            const noDiff = await repository.treeHashEquals(`origin/${baseBranch}`);
+            if (noDiff) {
+                this.logger.info("No changes detected after generation — skipping PR creation");
+                return { executed: true, success: true, skippedNoDiff: true };
+            }
         }
 
         const result: GithubStepResult = {
@@ -181,7 +206,8 @@ export class GithubStep extends BaseStep {
             this.config.versionBumpReason
         );
         const replaySection = formatReplayPrBody(replayResult, { branchName: prBranch, repoUri: this.config.uri });
-        const enrichedBody = replaySection != null ? prBody + "\n\n---\n\n" + replaySection : prBody;
+        let enrichedBody = replaySection != null ? prBody + "\n\n---\n\n" + replaySection : prBody;
+        enrichedBody = enrichPrBodyForAutomation(enrichedBody, this.config);
 
         if (isUpdatingExistingPR && existingPR != null) {
             this.logger.info(`Updated existing pull request: ${existingPR.htmlUrl}`);
@@ -216,6 +242,28 @@ export class GithubStep extends BaseStep {
                 this.logger.info(`Created pull request: ${pullRequest.html_url}`);
                 result.prUrl = pullRequest.html_url;
                 result.prNumber = pullRequest.number;
+
+                // In automation mode, enable GitHub automerge on non-breaking PRs.
+                // Uses the built-in octokit.graphql() from @octokit/core (no extra dependency).
+                // The SDK repo's own branch protection rules govern whether the PR actually merges.
+                if (shouldEnableAutomerge(this.config) && pullRequest.node_id) {
+                    try {
+                        await octokit.graphql(
+                            `mutation($pullRequestId: ID!) {
+                                enablePullRequestAutoMerge(input: {
+                                    pullRequestId: $pullRequestId,
+                                    mergeMethod: SQUASH
+                                }) { clientMutationId }
+                            }`,
+                            { pullRequestId: pullRequest.node_id }
+                        );
+                        this.logger.info(`Enabled automerge on PR #${pullRequest.number}`);
+                        result.autoMergeEnabled = true;
+                    } catch (autoMergeError) {
+                        // Automerge may not be available (repo settings, branch protection, permissions)
+                        this.logger.warn(`Could not enable automerge: ${extractErrorMessage(autoMergeError)}`);
+                    }
+                }
             } catch (error) {
                 const message = extractErrorMessage(error);
                 if (message.includes("A pull request already exists for")) {
@@ -230,6 +278,8 @@ export class GithubStep extends BaseStep {
     }
 
     private async executePushMode(repository: ClonedRepository): Promise<GithubStepResult> {
+        const baseBranch = this.config.branch ?? (await repository.getDefaultBranch());
+
         if (this.config.branch != null) {
             this.logger.debug(`Checking out branch ${this.config.branch}`);
             await repository.checkout(this.config.branch);
@@ -241,6 +291,15 @@ export class GithubStep extends BaseStep {
         const finalCommitMessage = this.config.commitMessage ?? "SDK Generation";
         await repository.commitAllChanges(finalCommitMessage);
         this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
+
+        // In automation mode, detect no-diff before pushing
+        if (this.config.automationMode) {
+            const noDiff = await repository.treeHashEquals(`origin/${baseBranch}`);
+            if (noDiff) {
+                this.logger.info("No changes detected after generation — skipping push");
+                return { executed: true, success: true, skippedNoDiff: true };
+            }
+        }
 
         const result: GithubStepResult = {
             executed: true,
@@ -296,4 +355,67 @@ export class GithubStep extends BaseStep {
         }
         return undefined;
     }
+}
+
+/**
+ * Appends automation-specific sections to the PR body.
+ * Exported for testing.
+ */
+export function enrichPrBodyForAutomation(
+    body: string,
+    config: { automationMode?: boolean; hasBreakingChanges?: boolean; breakingChangesSummary?: string; runId?: string }
+): string {
+    if (!config.automationMode) {
+        return body;
+    }
+    let result = body;
+    if (config.hasBreakingChanges && config.breakingChangesSummary) {
+        result +=
+            "\n\n---\n\n## ⚠️ Breaking Changes\n\n" +
+            "This release contains breaking changes that require manual review:\n\n" +
+            config.breakingChangesSummary;
+    }
+    if (config.runId) {
+        result += `\n\n---\n\n_Fern Run ID: \`${config.runId}\`_`;
+    }
+    return result;
+}
+
+/**
+ * Determines whether automerge should be enabled on a PR.
+ * Exported for testing.
+ */
+export function shouldEnableAutomerge(config: {
+    automationMode?: boolean;
+    autoMerge?: boolean;
+    hasBreakingChanges?: boolean;
+}): boolean {
+    return config.automationMode === true && config.autoMerge === true && config.hasBreakingChanges !== true;
+}
+
+/**
+ * Determines which git branch operation to perform for pull-request mode.
+ * New branches must use "create" (git checkout -b), existing remote branches use "checkout-remote".
+ * When replay already committed (skipCommit), branch creation is handled by createReplayBranch instead.
+ * Exported for testing.
+ */
+export function resolveBranchAction({
+    automationMode,
+    skipCommit,
+    existingPR
+}: {
+    automationMode: boolean;
+    skipCommit: boolean;
+    existingPR: { headBranch: string } | null | undefined;
+}): "create-from-head" | "checkout-remote" | "replay-branch" {
+    if (skipCommit) {
+        return "replay-branch";
+    }
+    if (automationMode) {
+        return "create-from-head";
+    }
+    if (existingPR != null) {
+        return "checkout-remote";
+    }
+    return "create-from-head";
 }

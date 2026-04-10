@@ -7816,8 +7816,8 @@ importers:
         specifier: workspace:*
         version: link:../commons/core-utils
       '@fern-api/replay':
-        specifier: ^0.10.1
-        version: 0.10.1
+        specifier: 0.10.2
+        version: 0.10.2
       '@octokit/rest':
         specifier: 'catalog:'
         version: 22.0.1
@@ -7986,6 +7986,12 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../commons/fs-utils
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../cli/generation/ir-generator
+      '@fern-api/lazy-fern-workspace':
+        specifier: workspace:*
+        version: link:../cli/workspace/lazy-fern-workspace
       '@fern-api/local-workspace-runner':
         specifier: workspace:*
         version: link:../cli/generation/local-generation/local-workspace-runner
@@ -7998,6 +8004,9 @@ importers:
       '@fern-api/login':
         specifier: workspace:*
         version: link:../cli/login
+      '@fern-api/source-resolver':
+        specifier: workspace:*
+        version: link:../cli/generation/source-resolver
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../cli/task-context
@@ -9327,6 +9336,11 @@ packages:
 
   '@fern-api/replay@0.10.1':
     resolution: {integrity: sha512-WjBT2GiEnsYlybLOLE13Cy0z389+45s+zN7RAf1AcxnCmc2P/JVtPwxVUReoVlFtnAxlyb3YMGPsKdsYIN+maw==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  '@fern-api/replay@0.10.2':
+    resolution: {integrity: sha512-lUkmqtHqQw5H6Zm6efC+qYcOAVJ+XbeVs+BR/X1Ug39DjupaIjxUT3ADBks0A/2wtWQmkxb1ZSEUdc+J4kBT1g==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -16352,6 +16366,15 @@ snapshots:
       chalk: 5.6.2
 
   '@fern-api/replay@0.10.1':
+    dependencies:
+      minimatch: 10.2.5
+      node-diff3: 3.2.0
+      simple-git: 3.35.2
+      yaml: 2.8.3
+    transitivePeerDependencies:
+      - supports-color
+
+  '@fern-api/replay@0.10.2':
     dependencies:
       minimatch: 10.2.5
       node-diff3: 3.2.0

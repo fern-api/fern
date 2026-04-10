@@ -42,7 +42,9 @@ export async function runRemoteGenerationForGenerator({
     skipFernignore,
     dynamicIrOnly,
     retryRateLimited,
-    requireEnvVars
+    requireEnvVars,
+    automationMode,
+    autoMerge
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -62,6 +64,8 @@ export async function runRemoteGenerationForGenerator({
     dynamicIrOnly: boolean;
     retryRateLimited: boolean;
     requireEnvVars: boolean;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -268,7 +272,9 @@ export async function runRemoteGenerationForGenerator({
         absolutePathToPreview,
         fernignorePath,
         skipFernignore,
-        retryRateLimited
+        retryRateLimited,
+        automationMode,
+        autoMerge
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 
