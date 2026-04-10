@@ -14,9 +14,9 @@
         when OpenAPI descriptions contain Python code examples with triple-quoted strings.
       type: fix
     - summary: |
-        Add type ignore comment to exported client wrapper super().__init__() call
-        to suppress mypy call-overload errors when the base client has overloaded
-        __init__ signatures (e.g., OAuth + bearer token auth).
+        Fix mypy call-overload errors in exported client wrapper by mirroring the
+        base client's @overload signatures and using **kwargs pass-through, instead
+        of suppressing the error with a type: ignore comment.
       type: fix
   createdAt: "2026-04-10"
   irVersion: 65

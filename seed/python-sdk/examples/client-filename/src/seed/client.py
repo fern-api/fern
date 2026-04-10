@@ -21,7 +21,7 @@ class SeedExhaustive(BaseSeedExhaustive):
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        super().__init__(  # type: ignore[call-overload, misc]
+        super().__init__(
             base_url=base_url,
             environment=environment,
             token=token,
@@ -47,7 +47,7 @@ class AsyncSeedExhaustive(AsyncBaseSeedExhaustive):
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        super().__init__(  # type: ignore[call-overload, misc]
+        super().__init__(
             base_url=base_url,
             environment=environment,
             token=token,

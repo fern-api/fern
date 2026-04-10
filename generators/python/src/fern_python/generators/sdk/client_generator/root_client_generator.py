@@ -184,6 +184,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             base_url_example_value=base_url_example_value,
             sync_init_parameters=self._get_constructor_parameters(is_async=False),
             async_init_parameters=self._get_constructor_parameters(is_async=True),
+            sync_constructor_overloads=self._get_constructor_overloads(is_async=False),
+            async_constructor_overloads=self._get_constructor_overloads(is_async=True),
         )
         self._generated_root_client = root_client_builder.build()
 
@@ -1650,6 +1652,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             base_url_example_value: Optional[AST.Expression] = None,
             sync_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
             async_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
+            sync_constructor_overloads: Optional[List[AST.FunctionSignature]] = None,
+            async_constructor_overloads: Optional[List[AST.FunctionSignature]] = None,
         ):
             self._module_path = module_path
             self._class_name = class_name
@@ -1664,6 +1668,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             self._oauth_token_override = oauth_token_override
             self._use_kwargs_snippets = use_kwargs_snippets
             self._base_url_example_value = base_url_example_value
+            self._sync_constructor_overloads = sync_constructor_overloads
+            self._async_constructor_overloads = async_constructor_overloads
 
         def build(self) -> GeneratedRootClient:
             def create_class_reference(class_name: str) -> AST.ClassReference:
@@ -1831,11 +1837,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     class_reference=async_class_reference,
                     parameters=self._constructor_parameters,
                     init_parameters=self._async_init_parameters,
+                    constructor_overloads=self._async_constructor_overloads,
                 ),
                 sync_instantiations=sync_instantiations,
                 sync_client=RootClient(
                     class_reference=sync_class_reference,
                     parameters=self._constructor_parameters,
                     init_parameters=self._sync_init_parameters,
+                    constructor_overloads=self._sync_constructor_overloads,
                 ),
             )
