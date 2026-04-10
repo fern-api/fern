@@ -745,6 +745,9 @@ components:
             - type
     UnionWithDiscriminant:
       title: UnionWithDiscriminant
+      x-fern-discriminant:
+        name: type
+        value: _type
       oneOf:
         - type: object
           properties:

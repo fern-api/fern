@@ -262,6 +262,13 @@ components:
         - '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}'
         - transcript[transcriptType="final"]
         - transcript[transcriptType='final']
+      x-fern-enum:
+        Hello 世界:
+          name: HelloWorld
+        🚀:
+          name: Rocket
+        \\:
+          name: Backslash
     Status:
       title: Status
       type: string

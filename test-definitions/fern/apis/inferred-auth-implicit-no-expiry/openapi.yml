@@ -136,4 +136,7 @@ components:
           nullable: true
       required:
         - access_token
-  securitySchemes: {}
+  securitySchemes:
+    InferredAuth:
+      type: http
+      scheme: bearer

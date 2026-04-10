@@ -927,6 +927,9 @@ components:
         - '>'
         - '~'
         - '!~'
+      x-fern-enum:
+        '~':
+          name: Tilde
         - ^
         - $
     SearchRequest:

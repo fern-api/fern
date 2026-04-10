@@ -71,4 +71,7 @@ components:
         - access_token
         - token_type
         - expires_in
-  securitySchemes: {}
+  securitySchemes:
+    InferredAuth:
+      type: http
+      scheme: bearer

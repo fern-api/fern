@@ -137,4 +137,7 @@ components:
       required:
         - access_token
         - expires_in
-  securitySchemes: {}
+  securitySchemes:
+    InferredAuth:
+      type: http
+      scheme: bearer

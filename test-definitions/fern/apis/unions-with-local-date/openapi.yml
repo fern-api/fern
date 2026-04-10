@@ -732,6 +732,9 @@ components:
       description: This is a simple union.
     UnionWithDiscriminant:
       title: UnionWithDiscriminant
+      x-fern-discriminant:
+        name: type
+        value: _type
       oneOf:
         - type: object
           properties:
