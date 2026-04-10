@@ -10,6 +10,12 @@
         decimal representation than the original JSON string (e.g.
         0.10722749680280685 vs 0.1072275).
       type: fix
+    - summary: |
+        Skip mock server test examples with empty string path parameters. An
+        empty path parameter causes the mock server to register a collapsed URL
+        (e.g. `/v0/tools/version/1`) while the SDK client sends a double-slash
+        URL (e.g. `/v0/tools//version/1`), resulting in a 404 from WireMock.
+      type: fix
   createdAt: "2026-04-10"
   irVersion: 66
 
