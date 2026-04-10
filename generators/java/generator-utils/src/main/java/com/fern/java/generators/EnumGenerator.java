@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.ir.model.types.EnumTypeDeclaration;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
@@ -60,8 +61,10 @@ public final class EnumGenerator extends AbstractTypeGenerator {
             TypeSpec.Builder enumTypeSpecBuilder = TypeSpec.enumBuilder(className);
             enumTypeDeclaration.getValues().forEach(enumValue -> {
                 enumTypeSpecBuilder.addEnumConstant(
-                        enumValue.getName().getName().getScreamingSnakeCase().getSafeName(),
-                        TypeSpec.anonymousClassBuilder("$S", enumValue.getName().getWireValue())
+                        NameUtils.getName(enumValue.getName())
+                                .getScreamingSnakeCase()
+                                .getSafeName(),
+                        TypeSpec.anonymousClassBuilder("$S", NameUtils.getWireValue(enumValue.getName()))
                                 .build());
             });
             enumTypeSpecBuilder

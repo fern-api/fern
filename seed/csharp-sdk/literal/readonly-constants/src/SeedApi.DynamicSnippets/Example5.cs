@@ -12,7 +12,6 @@ public class Example5
         );
 
         await client.Path.SendAsync(
-            "123"
         );
     }
 
