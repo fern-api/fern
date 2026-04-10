@@ -161,8 +161,12 @@ async function createJob({
         }),
         whitelabel,
         // fiddlePreview overrides what we send to Fiddle as `preview`.
-        // For sdk preview: fiddlePreview=false so Fiddle doesn't set dryRun=true.
-        // For fern generate --preview: fiddlePreview is undefined, falls back to isPreview (true).
+        // For sdk preview: fiddlePreview=false so Fiddle doesn't set dryRun=true
+        //   (Fiddle uses `dryRun = generatePreview`, so preview=false → actual publish).
+        // For fern generate --preview: fiddlePreview is undefined, falls back to
+        //   isPreview (true) → Fiddle sets dryRun=true → npm publish --dry-run.
+        // This is the only mechanism preventing dryRun for sdk preview jobs;
+        // Fiddle's dryRun logic is intentionally unchanged.
         preview: fiddlePreview ?? isPreviewOverride ?? absolutePathToPreview != null,
         // TODO: Send pushPreviewBranch to Fiddle once @fern-fern/fiddle-sdk is bumped
         // to include the pushPreviewBranch field on CreateJobRequestV2.

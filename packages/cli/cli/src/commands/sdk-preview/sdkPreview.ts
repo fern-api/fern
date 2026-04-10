@@ -13,7 +13,12 @@ import { GROUP_CLI_OPTION } from "../../constants.js";
 import { computePreviewVersion } from "./computePreviewVersion.js";
 
 import { getPreviewId } from "./getPreviewId.js";
-import { isNpmGenerator, overrideGroupOutputForPreview, PREVIEW_REGISTRY_URL } from "./overrideOutputForPreview.js";
+import {
+    getGithubOwnerRepo,
+    isNpmGenerator,
+    overrideGroupOutputForPreview,
+    PREVIEW_REGISTRY_URL
+} from "./overrideOutputForPreview.js";
 import { toPreviewPackageName } from "./toPreviewPackageName.js";
 
 interface SdkPreviewSuccess {
@@ -68,6 +73,26 @@ export async function sdkPreview({
     let publishToRegistry = true;
 
     try {
+        // Validate flag combinations early.
+        // --push-diff requires remote generation (no --output) because it needs Fiddle
+        // to push the preview branch to the SDK repo.
+        if (pushDiff && output != null) {
+            return cliContext.failAndThrow(
+                "--push-diff requires remote generation and cannot be combined with --output. " +
+                    "Remove --output to use --push-diff."
+            );
+        }
+
+        // --push-diff is gated until the fiddle-sdk is bumped to include the
+        // pushPreviewBranch field on CreateJobRequestV2. Without it, Fiddle would
+        // receive a githubV2(push) job without pushPreviewBranch=true and treat it
+        // as a normal push — writing to the default branch, which is dangerous.
+        if (pushDiff) {
+            return cliContext.failAndThrow(
+                "--push-diff is not yet available. It requires a server-side update that has not been deployed."
+            );
+        }
+
         // 1. Auth
         const token = await cliContext.runTask(async (context) => {
             return askToLogin(context);
@@ -208,6 +233,14 @@ export async function sdkPreview({
                 // token.value is the Fern org token (FERN_TOKEN) — the registry
                 // must accept this token for publish authentication.
                 const singleGeneratorGroup = { ...group, generators: [generator] };
+                // Warn if --push-diff was requested but the generator has no github config
+                if (pushDiff && useRemoteGeneration && getGithubOwnerRepo(generator.outputMode) == null) {
+                    cliContext.logger.warn(
+                        `Generator '${generator.name}' has no github output configuration. ` +
+                            `--push-diff will be ignored; falling back to registry-only publish.`
+                    );
+                }
+
                 const modifiedGroup =
                     publishToRegistry && registryUrl != null
                         ? overrideGroupOutputForPreview({

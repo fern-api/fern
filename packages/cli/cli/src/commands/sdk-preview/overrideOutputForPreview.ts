@@ -21,7 +21,9 @@ export function isNpmGenerator(generatorName: string): boolean {
  * Extracts the GitHub owner and repo from a generator's existing output mode.
  * Returns undefined if the generator doesn't have a githubV2 or github output mode.
  */
-function getGithubOwnerRepo(outputMode: FernFiddle.remoteGen.OutputMode): { owner: string; repo: string } | undefined {
+export function getGithubOwnerRepo(
+    outputMode: FernFiddle.remoteGen.OutputMode
+): { owner: string; repo: string } | undefined {
     return outputMode._visit<{ owner: string; repo: string } | undefined>({
         downloadFiles: () => undefined,
         github: (val) => ({ owner: val.owner, repo: val.repo }),
