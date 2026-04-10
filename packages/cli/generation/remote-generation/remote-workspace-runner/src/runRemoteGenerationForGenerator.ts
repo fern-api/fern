@@ -37,6 +37,9 @@ export async function runRemoteGenerationForGenerator({
     whitelabel,
     irVersionOverride,
     absolutePathToPreview,
+    isPreview: isPreviewOverride,
+    fiddlePreview,
+    pushPreviewBranch,
     readme,
     fernignorePath,
     skipFernignore,
@@ -58,6 +61,12 @@ export async function runRemoteGenerationForGenerator({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    /** Controls CLI-side behavior (lenient env vars, skip version check). Falls back to absolutePathToPreview != null. */
+    isPreview?: boolean;
+    /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to isPreview. */
+    fiddlePreview?: boolean;
+    /** When true, tells Fiddle to push a preview branch to the SDK repo. */
+    pushPreviewBranch?: boolean;
     readme: generatorsYml.ReadmeSchema | undefined;
     fernignorePath: string | undefined;
     skipFernignore?: boolean;
@@ -75,7 +84,7 @@ export async function runRemoteGenerationForGenerator({
     const packageName = generatorsYml.getPackageName({ generatorInvocation });
 
     /** Sugar to substitute templated env vars in a standard way */
-    const isPreview = absolutePathToPreview != null;
+    const isPreview = isPreviewOverride ?? absolutePathToPreview != null;
 
     const substituteEnvVars = <T>(stringOrObject: T) =>
         replaceEnvVariables(
@@ -270,6 +279,8 @@ export async function runRemoteGenerationForGenerator({
         whitelabel: whitelabel != null ? substituteEnvVars(whitelabel) : undefined,
         irVersionOverride,
         absolutePathToPreview,
+        fiddlePreview,
+        pushPreviewBranch,
         fernignorePath,
         skipFernignore,
         retryRateLimited,

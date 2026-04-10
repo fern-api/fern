@@ -8,6 +8,14 @@
   createdAt: "2026-04-10"
   irVersion: 66
 
+- version: 5.3.10
+  changelogEntry:
+    - summary: |
+        Bump generator-cli to 0.9.6 which upgrades @fern-api/replay to 0.10.3.
+      type: chore
+  createdAt: "2026-04-10"
+  irVersion: 65
+
 - version: 5.3.9
   changelogEntry:
     - summary: |

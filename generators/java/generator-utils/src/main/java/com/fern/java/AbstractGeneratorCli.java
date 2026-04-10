@@ -24,7 +24,8 @@ import com.fern.generator.exec.model.logging.PackageCoordinate;
 import com.fern.generator.exec.model.logging.SuccessfulStatusUpdate;
 import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.commons.Name;
-import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.NameAndWireValueOrString;
+import com.fern.ir.model.commons.NameOrString;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.ir.model.publish.DirectPublish;
 import com.fern.ir.model.publish.Filesystem;
@@ -127,14 +128,16 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             CasingConfiguration casingConfig = CasingConfiguration.fromIrJson(rootNode);
 
             SimpleModule nameModule = new SimpleModule("NameOrStringModule");
-            nameModule.addDeserializer(Name.class, new NameDeserializer(casingConfig));
-            nameModule.addDeserializer(NameAndWireValue.class, new NameAndWireValueDeserializer(casingConfig));
+            nameModule.addDeserializer(Name.class, new NameDeserializer.RawNameDeserializer(casingConfig));
+            nameModule.addDeserializer(NameOrString.class, new NameDeserializer(casingConfig));
+            nameModule.addDeserializer(NameAndWireValueOrString.class, new NameAndWireValueDeserializer(casingConfig));
 
             ObjectMapper irMapper = ObjectMappers.JSON_MAPPER.copy();
             // Mix-in annotations override class-level @JsonDeserialize(builder=...) annotations,
             // allowing the module-level custom deserializers to take effect.
             irMapper.addMixIn(Name.class, NameOrStringMixIn.class);
-            irMapper.addMixIn(NameAndWireValue.class, NameOrStringMixIn.class);
+            irMapper.addMixIn(NameOrString.class, NameOrStringMixIn.class);
+            irMapper.addMixIn(NameAndWireValueOrString.class, NameOrStringMixIn.class);
             irMapper.registerModule(nameModule);
 
             return irMapper.treeToValue(rootNode, IntermediateRepresentation.class);

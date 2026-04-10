@@ -10,14 +10,14 @@ public final class ExecutionSessionStatus {
     public static final ExecutionSessionStatus LIVE_CONTAINER =
             new ExecutionSessionStatus(Value.LIVE_CONTAINER, "LIVE_CONTAINER");
 
-    public static final ExecutionSessionStatus PENDING_CONTAINER =
-            new ExecutionSessionStatus(Value.PENDING_CONTAINER, "PENDING_CONTAINER");
-
     public static final ExecutionSessionStatus CREATING_CONTAINER =
             new ExecutionSessionStatus(Value.CREATING_CONTAINER, "CREATING_CONTAINER");
 
     public static final ExecutionSessionStatus PROVISIONING_CONTAINER =
             new ExecutionSessionStatus(Value.PROVISIONING_CONTAINER, "PROVISIONING_CONTAINER");
+
+    public static final ExecutionSessionStatus PENDING_CONTAINER =
+            new ExecutionSessionStatus(Value.PENDING_CONTAINER, "PENDING_CONTAINER");
 
     public static final ExecutionSessionStatus RUNNING_CONTAINER =
             new ExecutionSessionStatus(Value.RUNNING_CONTAINER, "RUNNING_CONTAINER");
@@ -60,12 +60,12 @@ public final class ExecutionSessionStatus {
         switch (value) {
             case LIVE_CONTAINER:
                 return visitor.visitLiveContainer();
-            case PENDING_CONTAINER:
-                return visitor.visitPendingContainer();
             case CREATING_CONTAINER:
                 return visitor.visitCreatingContainer();
             case PROVISIONING_CONTAINER:
                 return visitor.visitProvisioningContainer();
+            case PENDING_CONTAINER:
+                return visitor.visitPendingContainer();
             case RUNNING_CONTAINER:
                 return visitor.visitRunningContainer();
             case FAILED_TO_LAUNCH:
@@ -81,12 +81,12 @@ public final class ExecutionSessionStatus {
         switch (value) {
             case "LIVE_CONTAINER":
                 return LIVE_CONTAINER;
-            case "PENDING_CONTAINER":
-                return PENDING_CONTAINER;
             case "CREATING_CONTAINER":
                 return CREATING_CONTAINER;
             case "PROVISIONING_CONTAINER":
                 return PROVISIONING_CONTAINER;
+            case "PENDING_CONTAINER":
+                return PENDING_CONTAINER;
             case "RUNNING_CONTAINER":
                 return RUNNING_CONTAINER;
             case "FAILED_TO_LAUNCH":

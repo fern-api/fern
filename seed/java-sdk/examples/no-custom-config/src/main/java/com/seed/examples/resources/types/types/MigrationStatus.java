@@ -7,11 +7,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class MigrationStatus {
-    public static final MigrationStatus RUNNING = new MigrationStatus(Value.RUNNING, "RUNNING");
-
     public static final MigrationStatus FAILED = new MigrationStatus(Value.FAILED, "FAILED");
 
     public static final MigrationStatus FINISHED = new MigrationStatus(Value.FINISHED, "FINISHED");
+
+    public static final MigrationStatus RUNNING = new MigrationStatus(Value.RUNNING, "RUNNING");
 
     private final Value value;
 
@@ -45,12 +45,12 @@ public final class MigrationStatus {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case RUNNING:
-                return visitor.visitRunning();
             case FAILED:
                 return visitor.visitFailed();
             case FINISHED:
                 return visitor.visitFinished();
+            case RUNNING:
+                return visitor.visitRunning();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -60,12 +60,12 @@ public final class MigrationStatus {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static MigrationStatus valueOf(String value) {
         switch (value) {
-            case "RUNNING":
-                return RUNNING;
             case "FAILED":
                 return FAILED;
             case "FINISHED":
                 return FINISHED;
+            case "RUNNING":
+                return RUNNING;
             default:
                 return new MigrationStatus(Value.UNKNOWN, value);
         }

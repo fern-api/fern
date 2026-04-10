@@ -12,4 +12,14 @@ export interface AgentsConfig {
      * og:description, headline, excerpt).
      */
     pageDescriptionSource?: FernDocsConfig.PageDescriptionSource;
+    /**
+     * Relative filepath to a custom `llms.txt` file that Fern should host at `/llms.txt`,
+     * overriding the auto-generated version. The file should follow the llmstxt.org specification.
+     */
+    llmsTxt?: string;
+    /**
+     * Relative filepath to a custom `llms-full.txt` file that Fern should host at `/llms-full.txt`,
+     * overriding the auto-generated version. The file should contain the full concatenated documentation content.
+     */
+    llmsFullTxt?: string;
 }

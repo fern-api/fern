@@ -163,6 +163,16 @@ types:
           in llms.txt. Defaults to "description". If the preferred field is not present
           in a page's frontmatter, falls back to other fields (description, subtitle,
           og:description, headline, excerpt).
+      llms-txt:
+        type: optional<string>
+        docs: |
+          Relative filepath to a custom `llms.txt` file that Fern should host at `/llms.txt`,
+          overriding the auto-generated version. The file should follow the llmstxt.org specification.
+      llms-full-txt:
+        type: optional<string>
+        docs: |
+          Relative filepath to a custom `llms-full.txt` file that Fern should host at `/llms-full.txt`,
+          overriding the auto-generated version. The file should contain the full concatenated documentation content.
 
   CheckRuleSeverity:
     enum:
